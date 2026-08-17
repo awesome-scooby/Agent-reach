@@ -1,0 +1,666 @@
+<title>Weekend Income Register</title>
+<style>
+  :root{
+    --ground:#F4F6F5; --surface:#FCFCFB; --surface-2:#EFF2F1; --sunk:#E7EBEA;
+    --ink:#111817; --ink-2:#38443F; --muted:#65726E; --faint:#8B9793;
+    --rule:#D8DEDC; --rule-strong:#B9C3C0;
+    --accent:#076A93; --accent-soft:#E2EDF3; --accent-ink:#05516F; --accent-on:#FFFFFF;
+    --good:#3E7B3A; --good-bg:#E7F0E4;
+    --warn:#9A6608; --warn-bg:#F6EEDC;
+    --crit:#AB3A2A; --crit-bg:#F7E7E3;
+    --track:#DEE4E2;
+    --shadow:0 1px 2px rgba(17,24,23,.05);
+    --serif:Georgia,"Iowan Old Style","Times New Roman",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"DejaVu Sans Mono",monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#0E1211; --surface:#161B1A; --surface-2:#1D2423; --sunk:#121817;
+      --ink:#E7ECEA; --ink-2:#C3CDCA; --muted:#93A09C; --faint:#71807C;
+      --rule:#28312F; --rule-strong:#3A4643;
+      --accent:#2C9CC9; --accent-soft:#12303B; --accent-ink:#63B9DC; --accent-on:#08171E;
+      --good:#79BE68; --good-bg:#17281A;
+      --warn:#DFA945; --warn-bg:#2B2413;
+      --crit:#E8806B; --crit-bg:#2E1B18;
+      --track:#28312F;
+      --shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0E1211; --surface:#161B1A; --surface-2:#1D2423; --sunk:#121817;
+    --ink:#E7ECEA; --ink-2:#C3CDCA; --muted:#93A09C; --faint:#71807C;
+    --rule:#28312F; --rule-strong:#3A4643;
+    --accent:#2C9CC9; --accent-soft:#12303B; --accent-ink:#63B9DC; --accent-on:#08171E;
+    --good:#79BE68; --good-bg:#17281A;
+    --warn:#DFA945; --warn-bg:#2B2413;
+    --crit:#E8806B; --crit-bg:#2E1B18;
+    --track:#28312F;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    background:var(--ground); color:var(--ink);
+    font-family:var(--sans); font-size:15px; line-height:1.55;
+    -webkit-font-smoothing:antialiased; margin:0;
+  }
+  .sheet{max-width:1180px;margin:0 auto;padding:0 20px 80px}
+  .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .num{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+
+  /* ---------- title block ---------- */
+  .titleblock{
+    border:1px solid var(--rule-strong); border-top:none;
+    background:var(--surface); box-shadow:var(--shadow);
+  }
+  .tb-bar{height:4px;background:var(--accent)}
+  .tb-main{padding:26px 24px 20px;border-bottom:1px solid var(--rule)}
+  .eyebrow{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--muted);margin:0 0 10px;
+  }
+  h1{
+    font-family:var(--serif);font-weight:400;font-size:clamp(30px,5.2vw,46px);
+    line-height:1.05;letter-spacing:-.015em;margin:0 0 12px;text-wrap:balance;
+  }
+  .standfirst{max-width:64ch;color:var(--ink-2);margin:0;font-size:15.5px}
+  .tb-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+  .tb-field{padding:12px 24px;border-right:1px solid var(--rule);border-top:1px solid var(--rule);margin-top:-1px}
+  .tb-field:last-child{border-right:none}
+  .tb-field dt{
+    font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--faint);margin:0 0 3px;
+  }
+  .tb-field dd{margin:0;font-size:13.5px;color:var(--ink);font-weight:500}
+
+  /* ---------- section ---------- */
+  section{margin-top:40px}
+  h2{
+    font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+    color:var(--muted);font-weight:600;margin:0 0 14px;
+    padding-bottom:8px;border-bottom:1px solid var(--rule);
+  }
+  h2 .h2-note{float:right;text-transform:none;letter-spacing:0;color:var(--faint);font-weight:400}
+
+  /* ---------- controls ---------- */
+  .controls{
+    position:sticky;top:0;z-index:20;background:var(--surface);
+    border:1px solid var(--rule-strong);box-shadow:var(--shadow);
+  }
+  .ctl-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--rule)}
+  .ctl-row:last-child{border-bottom:none}
+  .ctl-label{
+    font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--faint);margin-right:2px;
+  }
+  input[type=search],select{
+    font-family:var(--sans);font-size:13.5px;color:var(--ink);
+    background:var(--surface-2);border:1px solid var(--rule);border-radius:3px;
+    padding:6px 9px;
+  }
+  input[type=search]{min-width:190px;flex:1 1 190px;max-width:320px}
+  .chip{
+    font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+    background:var(--surface-2);color:var(--ink-2);
+    border:1px solid var(--rule);border-radius:3px;padding:5px 9px;cursor:pointer;
+  }
+  .chip:hover{border-color:var(--rule-strong)}
+  .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-on);font-weight:600}
+  .chip:focus-visible,.row-main:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .spacer{flex:1}
+  .count{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+
+  /* weights */
+  .weights{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px 18px;padding:14px}
+  .wt label{display:flex;justify-content:space-between;align-items:baseline;gap:6px;margin-bottom:4px}
+  .wt .wt-name{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .wt .wt-val{font-family:var(--mono);font-size:11px;color:var(--accent-ink);font-weight:600}
+  input[type=range]{width:100%;accent-color:var(--accent);height:18px}
+
+  /* ---------- table ---------- */
+  .tablewrap{border:1px solid var(--rule-strong);border-top:none;background:var(--surface);box-shadow:var(--shadow)}
+  .thead,.row-main{
+    display:grid;
+    grid-template-columns:34px minmax(210px,2.1fr) 128px 96px 92px 82px 84px 30px;
+    gap:12px;align-items:center;
+  }
+  .thead{
+    padding:9px 14px;border-bottom:1px solid var(--rule-strong);background:var(--surface-2);
+    font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  }
+  .thead .r{text-align:right}
+  .rowitem{border-bottom:1px solid var(--rule)}
+  .rowitem:last-child{border-bottom:none}
+  .row-main{
+    width:100%;padding:11px 14px;background:none;border:none;text-align:left;
+    color:inherit;font:inherit;cursor:pointer;
+  }
+  .row-main:hover{background:var(--surface-2)}
+  .row-main:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+  .rank{font-family:var(--mono);font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums}
+  .gname{display:block;font-weight:600;font-size:14.5px;line-height:1.25;letter-spacing:-.005em}
+  .gfam{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:2px}
+  .scorecell{display:flex;align-items:center;gap:8px}
+  .bar{flex:1;height:6px;background:var(--track);border-radius:3px;overflow:hidden}
+  .bar>i{display:block;height:100%;background:var(--accent);border-radius:0 3px 3px 0}
+  .scoreval{font-family:var(--mono);font-size:12.5px;font-weight:600;min-width:22px;text-align:right;font-variant-numeric:tabular-nums}
+  .cell{font-family:var(--mono);font-size:12.5px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+  .cell small{display:block;font-size:9.5px;color:var(--faint);letter-spacing:.06em}
+  .risk{
+    justify-self:end;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+    padding:3px 7px;border-radius:3px;border:1px solid transparent;white-space:nowrap;
+  }
+  .risk-low{background:var(--good-bg);color:var(--good);border-color:var(--good)}
+  .risk-med{background:var(--warn-bg);color:var(--warn);border-color:var(--warn)}
+  .risk-high{background:var(--crit-bg);color:var(--crit);border-color:var(--crit)}
+  .caret{color:var(--faint);font-size:11px;justify-self:center;transition:transform .18s ease}
+  .rowitem.open .caret{transform:rotate(90deg)}
+
+  /* detail */
+  .detail{display:none;padding:4px 14px 22px 60px;background:var(--sunk);border-top:1px solid var(--rule)}
+  .rowitem.open .detail{display:block}
+  .dgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px 26px;margin-top:16px}
+  .dblock h4{
+    font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--accent-ink);margin:0 0 5px;font-weight:600;
+  }
+  .dblock p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.6;max-width:62ch}
+  .meters{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:10px 16px;margin-top:16px;padding-top:14px;border-top:1px solid var(--rule)}
+  .meter .mlab{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+  .meter .mval{color:var(--ink);font-weight:600}
+  .mbar{height:4px;background:var(--track);border-radius:2px;overflow:hidden}
+  .mbar>i{display:block;height:100%;background:var(--accent);border-radius:0 2px 2px 0}
+
+  /* ---------- notes ---------- */
+  .notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--rule-strong);border:1px solid var(--rule-strong);box-shadow:var(--shadow)}
+  .note{background:var(--surface);padding:18px 20px}
+  .note h3{font-size:14.5px;margin:0 0 8px;letter-spacing:-.01em}
+  .note p{margin:0 0 9px;font-size:13.5px;color:var(--ink-2);line-height:1.6}
+  .note p:last-child{margin-bottom:0}
+  .note strong{color:var(--ink);font-weight:600}
+  .note .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent-ink);display:block;margin-bottom:6px}
+
+  .callout{border:1px solid var(--rule-strong);border-left:3px solid var(--accent);background:var(--surface);padding:16px 20px;box-shadow:var(--shadow)}
+  .callout h3{font-size:14.5px;margin:0 0 7px}
+  .callout p{margin:0 0 9px;font-size:13.5px;color:var(--ink-2);line-height:1.6;max-width:78ch}
+  .callout p:last-child{margin-bottom:0}
+  ul.tight{margin:0;padding-left:18px;font-size:13.5px;color:var(--ink-2);line-height:1.65}
+  ul.tight li{margin-bottom:5px}
+  ul.tight li:last-child{margin-bottom:0}
+
+  .foot{margin-top:36px;padding-top:14px;border-top:1px solid var(--rule);font-size:12px;color:var(--muted);line-height:1.65}
+  .foot a{color:var(--accent-ink)}
+  .empty{padding:40px 14px;text-align:center;color:var(--muted);font-family:var(--mono);font-size:12px}
+
+  @media (max-width:900px){
+    .controls{position:static}
+    .thead{display:none}
+    .row-main{grid-template-columns:26px 1fr 96px 26px;grid-template-areas:"rank name score caret" ". meta meta meta";gap:8px 10px;row-gap:8px}
+    .row-main>.rank{grid-area:rank}
+    .row-main>.namewrap{grid-area:name}
+    .row-main>.scorecell{grid-area:score}
+    .row-main>.caret{grid-area:caret}
+    .row-main>.m-meta{grid-area:meta;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+    .cell{text-align:left;display:flex;align-items:baseline;gap:5px}
+    .cell small{display:inline;letter-spacing:.08em}
+    .risk{justify-self:start}
+    .detail{padding-left:14px}
+  }
+  @media (min-width:901px){ .m-meta{display:contents} }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="sheet">
+
+  <div class="titleblock">
+    <div class="tb-bar"></div>
+    <div class="tb-main">
+      <p class="eyebrow">Options assessment &middot; Second income</p>
+      <h1>Weekend Income Register</h1>
+      <p class="standfirst">Twenty-two side incomes assessed against one specific brief: twelve weekend hours, six thousand dollars of capital, nothing that touches the day job, never on camera, and a strong preference for things that keep paying after you stop working on them.</p>
+    </div>
+    <dl class="tb-fields">
+      <div class="tb-field"><dt>Base</dt><dd>Perth, WA</dd></div>
+      <div class="tb-field"><dt>Relocation</dt><dd>Melbourne, 12&ndash;18 mo</dd></div>
+      <div class="tb-field"><dt>Availability</dt><dd>Weekends, 8&ndash;16 h</dd></div>
+      <div class="tb-field"><dt>Capital</dt><dd class="num">$6,000+</dd></div>
+      <div class="tb-field"><dt>Constraint</dt><dd>No day-job overlap</dd></div>
+      <div class="tb-field"><dt>Currency</dt><dd>AUD, ex GST</dd></div>
+    </dl>
+  </div>
+
+  <section>
+    <h2>Register <span class="h2-note">Tap any row for the honest read</span></h2>
+
+    <div class="controls">
+      <div class="ctl-row">
+        <input type="search" id="q" placeholder="Search the register&hellip;" aria-label="Search options">
+        <span class="ctl-label">Sort</span>
+        <select id="sort" aria-label="Sort by">
+          <option value="score">Composite score</option>
+          <option value="rate">Net $/hr</option>
+          <option value="setup">Startup cost, lowest</option>
+          <option value="cash">Time to first dollar</option>
+          <option value="ceiling">Ceiling</option>
+          <option value="portable">Ports to Melbourne</option>
+        </select>
+        <span class="spacer"></span>
+        <span class="count" id="count"></span>
+      </div>
+      <div class="ctl-row">
+        <span class="ctl-label">Filter</span>
+        <button class="chip" data-filter="ports" aria-pressed="false">Survives the move</button>
+        <button class="chip" data-filter="cheap" aria-pressed="false">Under $1k to start</button>
+        <button class="chip" data-filter="fast" aria-pressed="false">Pays inside 90 days</button>
+        <button class="chip" data-filter="compounds" aria-pressed="false">Actually compounds</button>
+        <button class="chip" data-filter="lowrisk" aria-pressed="false">Low risk only</button>
+      </div>
+      <div class="ctl-row">
+        <span class="ctl-label">Weighting</span>
+        <button class="chip" data-preset="balanced" aria-pressed="true">Balanced</button>
+        <button class="chip" data-preset="compound" aria-pressed="false">Compounding</button>
+        <button class="chip" data-preset="cash" aria-pressed="false">Cash now</button>
+        <button class="chip" data-preset="light" aria-pressed="false">Capital light</button>
+      </div>
+      <div class="weights" id="weights"></div>
+    </div>
+
+    <div class="tablewrap">
+      <div class="thead">
+        <span>#</span><span>Option</span><span>Composite</span>
+        <span class="r">Net $/hr</span><span class="r">Startup</span><span class="r">To cash</span>
+        <span class="r">Risk</span><span></span>
+      </div>
+      <div id="rows"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>How to read this</h2>
+    <div class="callout">
+      <p>The composite is a weighted blend of five sub-scores, all 0&ndash;100, and the sliders above are live &mdash; drag them and the register re-ranks. Defaults are weighted the way you asked: ceiling 30, return 25, weekend fit 20, portability 15, capital 10.</p>
+      <ul class="tight">
+        <li><strong>Return</strong> &mdash; realistic money for the effort, net of costs. Not the number the platform advertises.</li>
+        <li><strong>Ceiling</strong> &mdash; how high it goes and whether it compounds. Risk-adjusted, so a lottery ticket with a huge best case still scores mid.</li>
+        <li><strong>Weekend fit</strong> &mdash; how well it survives being done only Saturday and Sunday.</li>
+        <li><strong>Portable</strong> &mdash; how much of it you keep when you move to Melbourne.</li>
+        <li><strong>Capital</strong> &mdash; how light it is on your $6k. High score means cheap to start.</li>
+      </ul>
+      <p>Risk is deliberately <em>outside</em> the score, shown as its own badge, because a high-risk 70 and a low-risk 70 are not the same bet. Read the two together.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Advice that applies to all of them</h2>
+    <div class="notes">
+      <div class="note">
+        <span class="tag">Before anything else</span>
+        <h3>Read your employment contract</h3>
+        <p>You said keep it separate from engineering, which sidesteps most of the risk. But plenty of contracts also carry a general <strong>secondary employment</strong> or "full time and attention" clause that catches any outside work, not just competing work.</p>
+        <p>Check it once, now. If it needs consent, ask in writing and keep the reply. It is a five-minute job that protects everything below it.</p>
+      </div>
+      <div class="note">
+        <span class="tag">Structure</span>
+        <h3>Sole trader first, always</h3>
+        <p>Get a free ABN and stay a sole trader. A company costs ~$600 to register plus ~$300/yr ASIC review fees and an accountant, and buys you nothing until you have real profit or real liability.</p>
+        <p><strong>You only have to register for GST at $75k turnover.</strong> Below that, staying out of GST is a genuine 10% price advantage against the franchises &mdash; unless you are selling mostly to businesses who claim it back, in which case registering early lets you claim GST on that fusion splicer.</p>
+      </div>
+      <div class="note">
+        <span class="tag">Tax</span>
+        <h3>Your side income stacks on your salary</h3>
+        <p>Side income is taxed at your <strong>marginal rate</strong>, not from zero. On an engineer's salary that is likely 37% plus Medicare, so a $1,000 weekend nets you around $600.</p>
+        <p>Put 35&ndash;40% of every dollar aside the day it lands. Claim what is genuinely yours &mdash; tools, course fees, insurance, the business share of your phone and car &mdash; and keep a logbook if you drive. Business losses may not be deductible against salary unless you pass one of the ATO's non-commercial loss tests, so don't plan around it.</p>
+      </div>
+      <div class="note">
+        <span class="tag">Protection</span>
+        <h3>Insurance before your first paid job</h3>
+        <p>Public liability is roughly $400&ndash;$900/yr for a low-risk trade service and most commercial clients will not let you on site without a $10&ndash;20m certificate.</p>
+        <p>Anything where you touch a client's equipment or property also wants care, custody and control cover. And check that your car insurer knows if you are doing rideshare or delivery &mdash; a standard policy can be void during a paid trip.</p>
+      </div>
+      <div class="note">
+        <span class="tag">The strategy</span>
+        <h3>Run one cash track and one compounding track</h3>
+        <p>You said a 6&ndash;12 month zero is acceptable, which is the right posture &mdash; but it is much easier to sustain when something else is paying for the gear and the courses.</p>
+        <p>The pattern that works: a <strong>service business</strong> that turns weekend hours into cash and recurring contracts, funding a <strong>content or product asset</strong> that pays nothing for a year and then pays without you. Don't run three. Two is already a lot on twelve hours.</p>
+      </div>
+      <div class="note">
+        <span class="tag">The move</span>
+        <h3>Build for the suitcase</h3>
+        <p>Melbourne in 12&ndash;18 months is the quiet filter on this whole list. Anything whose value sits in <strong>local physical placement</strong> &mdash; vending sites, a dog-boarding clientele, a co-hosting portfolio &mdash; is an asset you will have to sell or abandon.</p>
+        <p>That is not automatically a reason to skip them; a vending route sells as a going concern. Just enter them knowing you have an 18-month horizon, and price the exit into the decision.</p>
+      </div>
+      <div class="note">
+        <span class="tag">Ticket sequencing</span>
+        <h3>Do the paperwork while employed</h3>
+        <p>Courses, registrations and supervised hours are far easier to accumulate with a stable salary and no pressure to earn. The ACMA open registration in particular needs <strong>360 hours of practical cabling experience</strong> signed off before full registration &mdash; that is the long pole, and it is a clock you want started early.</p>
+        <p>Same logic for the test and tag competency. It is one day and a few hundred dollars, and it never expires on you.</p>
+      </div>
+      <div class="note">
+        <span class="tag">Gear discipline</span>
+        <h3>Hire until the work is proven</h3>
+        <p>Your $6k is the scarcest thing you have and the fastest way to lose it is buying capability you have not yet sold. Fusion splicers hire. So do OTDRs, trailers, pressure washers and vans.</p>
+        <p>The rule: <strong>buy the tool only after the work it does has paid for it once.</strong> The one exception is cheap consumable kit that gets you to a first paying job &mdash; a PAT tester is $1,200 and pays for itself inside three site visits.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Deliberately left out</h2>
+    <div class="callout">
+      <h3>The highest-paying options on the board, excluded at your request</h3>
+      <p>You asked to keep this separate from the day job, so the engineering-leverage family is not in the register. For the record, this is what that decision costs: <strong>freelance electrical design and drafting ($90&ndash;160/hr), solar and energy consulting, compliance auditing, expert reports, and sessional TAFE or RTO teaching ($60&ndash;110/hr)</strong>. Every one of them beats the top of this list on hourly rate, needs almost no capital, and is entirely weekend-shaped.</p>
+      <p>They are excluded for good reasons &mdash; conflict of interest, contract clauses, and the fact that you probably do not want your weekend to feel like your week. But if the contract check comes back clean and you ever want the money more than the separation, that is where it is. Sessional teaching in particular is the mildest version: it is adjacent to your expertise without competing with your employer, and it ports to Victoria intact.</p>
+      <p>Also left out entirely: anything requiring an A-grade electrical licence, since you hold the degree and not the trade licence. Note that this does <em>not</em> block test and tag &mdash; that one is competency-based, which is a large part of why it ranks where it does.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Assumptions &amp; sources</h2>
+    <div class="foot">
+      <p>All figures AUD and exclusive of GST unless noted, current to August 2026. "Net $/hr" is after direct running costs (fuel, consumables, platform commission, depreciation) but <em>before</em> income tax. Scores are my judgement calls against your specific brief, not objective measures &mdash; a different person with a different constraint set would score these differently, which is what the sliders are for. Time to first dollar assumes you start this weekend and hit no licensing delays.</p>
+      <p>Rate and cost figures grounded in: <a href="https://thelocalguystestandtag.com.au/blog/test-and-tag-costs-in-melbourne-prices-rates-charges-explained/">test and tag pricing</a>, <a href="https://testtagcourses.com.au/courses/standard-test-and-tag-training-course/">test and tag course costs</a>, <a href="https://www.etatraining.com.au/training-articles/test-and-tag-training-everything-you-need-to-know">AS/NZS 3760 competent person rules</a>, <a href="https://www.portableappliancetesters.com.au/collections/pat-testers">PAT tester prices</a>, <a href="https://milcom.edu.au/courses/open-registration/">ACMA open cabling registration</a>, <a href="https://www.acma.gov.au/work-registered-cabler">ACMA registered cabler requirements</a>, <a href="https://www.salaryexpert.com/salary/job/fiber-optic-splicer/australia">fibre splicer earnings</a>, <a href="https://newlifeinaus.com.au/uber-driver-earnings-australia/">Uber driver earnings</a>, <a href="https://www.uber.com/au/en/newsroom/perth-earnings-update/">Uber Perth earnings</a>, <a href="https://earnsmartau.com/guide/amazon-flex-australia-review-2026">Amazon Flex Australia</a>, <a href="https://kineclip.com/blog/how-much-faceless-youtube-channels-make/">faceless YouTube earnings</a>, <a href="https://trueprofit.io/blog/dropshipping-success-rate">dropshipping success rates</a>, <a href="https://www.mseries.com.au/vending-machine-business-model-explained-costs-profits-maintenance/">vending machine economics</a>.</p>
+      <p>Not financial, tax or legal advice &mdash; check anything material with your accountant before you commit capital.</p>
+    </div>
+  </section>
+</div>
+
+<script>
+const DATA=[
+{n:"Test &amp; tag micro-business",f:"Licensed-free trade service",rl:45,rh:70,setup:2200,setupN:"course + tester",cw:5,risk:"low",
+ s:{ret:80,ceil:74,wknd:90,port:88,cap:60},
+ read:"The strongest fit on this list, and it is not close. WA does not require an electrical licence to test and tag &mdash; AS/NZS 3760 requires a &lsquo;competent person&rsquo;, which a one-day course makes you. Crucially it compounds: testing runs on legislated retest cycles of three, six or twelve months, so a client you win once becomes revenue next year without selling again. That is an annuity, not a gig. Weekends are a selling point rather than a limitation, because offices, gyms, childcare centres, churches and hospitality all want testing done when they are closed.",
+ takes:"One-day competency course ($330&ndash;500), a portable appliance tester ($1,200&ndash;1,500), a tag printer and tags (~$300), public liability insurance ($400&ndash;900/yr), an ABN. Nothing expires and nothing needs supervised hours.",
+ first:"Price at $3.50&ndash;5.00 per item with a $150 minimum call-out, and chase portfolios rather than one-offs &mdash; childcare groups, gym chains, strata managers, real estate agencies with multiple offices. Fifty sites of forty items beats two thousand scattered items.",
+ watch:"Franchises will undercut you to $2.50/item. Do not fight there. Compete on out-of-hours availability, a clean asset register they can hand to an auditor, and actually turning up when you said you would &mdash; which is a genuinely low bar in this trade."},
+
+{n:"Fibre splicing subcontract",f:"Telecommunications",rl:60,rh:95,setup:6500,setupN:"tickets + splicer",cw:22,risk:"med",
+ s:{ret:94,ceil:78,wknd:42,port:94,cap:22},
+ read:"Highest hourly rate on the register, and you already have hands-on splicing time &mdash; which is the part most people cannot shortcut. Two real frictions. ACMA open registration needs 360 hours of practical cabling experience signed off through a registrar such as TITAB or ARCS, so it is a months-long process even though the course is days. And most splicing work is weekday, night shift or planned-shutdown work; genuine Saturday splicing exists but it is not the bulk of the market.",
+ takes:"ACMA open registration course ($775&ndash;795), optical fibre endorsement ($550, or ~$995 for a combined endorsement pack), registrar application fee (~$100&ndash;200), then 360 supervised hours. Gear: fusion splicer and cleaver ($4,500&ndash;9,000 used), OTDR ($2,500&ndash;6,000), consumables and PPE.",
+ first:"Do the registration and fibre endorsement now, while employed and unhurried. Then hire a splicer at roughly $150&ndash;250/day for your first jobs rather than buying one. Victoria has substantially more fibre work than WA, so this is the option that gets <em>better</em> when you move.",
+ watch:"Buying a $9k splicer before you have a signed contract is the classic way to turn $6k of capital into a very expensive paperweight. Also be realistic that weekend-only availability limits you to overflow and shutdown work until you are established."},
+
+{n:"Faceless AI-assisted YouTube",f:"Content asset",rl:0,rh:0,rn:"varies wildly",rsub:"OUTCOME",setup:900,setupN:"tools + stock, per year",cw:35,risk:"high",
+ s:{ret:40,ceil:88,wknd:92,port:100,cap:86},
+ read:"The highest ceiling here, and it matches your constraints exactly: never on camera, fine with a long zero, fully portable, weekend-batchable. Be clear-eyed about the distribution though &mdash; the median channel earns approximately nothing, and the outcomes you read about are the survivors. What decides it is RPM, which is set almost entirely by niche: finance, tech, AI tools and business case studies run $8&ndash;25 per thousand views, while general entertainment runs $2&ndash;8. Same effort, three times the money.",
+ takes:"Monetisation needs 1,000 subscribers and 4,000 watch hours. Budget for scripting and research tools, stock or generated footage, and a synthetic voice &mdash; realistically $600&ndash;1,500/yr. The real cost is 6&ndash;12 months of Sundays before the first meaningful payment.",
+ first:"Pick a high-RPM niche you would happily read about anyway, and commit to forty videos before you allow yourself to judge the results. Batch on Sundays: one day scripting, one day assembling. The channel is also a sellable asset at roughly 30&ndash;40&times; monthly profit, which is the part most people forget.",
+ watch:"Low-effort AI slop is being actively downranked and demonetised, and that will only tighten. The version that works is AI-<em>assisted</em> research and production with a genuine original angle &mdash; not one-click generation. If you would not watch it, it will not earn."},
+
+{n:"Niche content site or newsletter",f:"Content asset",rl:0,rh:0,rn:"varies wildly",rsub:"OUTCOME",setup:400,setupN:"hosting + domain",cw:40,risk:"high",
+ s:{ret:35,ceil:88,wknd:90,port:100,cap:88},
+ read:"The same shape as YouTube but slower, quieter and more durable. Written assets survive algorithm changes better than video and sell on the same multiples, but discovery is harder now that search results are saturated with AI content &mdash; which cuts both ways, because genuinely expert writing stands out more than it did.",
+ takes:"Almost nothing in cash: a domain, hosting, and consistent weekends for a year. Monetises through affiliate, display ads at scale, or a paid tier.",
+ first:"Choose a topic with commercial intent behind it &mdash; people researching a purchase &mdash; and where you can write from real experience rather than research. Publish on a fixed weekly cadence; irregularity kills these faster than quality does.",
+ watch:"The 12-month zero here is real and most people quit at month four. If you cannot name twenty articles you would enjoy writing before you start, pick a different topic."},
+
+{n:"Buy a small cash-flowing website",f:"Acquisition",rl:0,rh:0,rn:"25&ndash;40%",rsub:"ANNUAL YIELD",setup:6000,setupN:"the whole $6k",cw:4,risk:"high",
+ s:{ret:58,ceil:82,wknd:88,port:100,cap:28},
+ read:"An underrated use of exactly your position: you have capital and scarce time, which is the opposite of most people entering this market. At typical multiples of 30&ndash;40&times; monthly profit, $6k buys something earning $150&ndash;350/month &mdash; a 25&ndash;40% annual yield if it holds, plus whatever you add by working on it on weekends. It skips the brutal zero-to-one phase that kills most content projects.",
+ takes:"A marketplace account (Flippa, Acquire, Motion Invest), a fortnight of diligence, and the discipline to walk away from ninety listings.",
+ first:"Only buy with verified analytics you view yourself in a live screen-share &mdash; never screenshots. Check traffic concentration (one keyword or one referrer is a red flag), revenue concentration, and whether traffic has been sliding since the last search algorithm update. Prefer boring, stable and unsexy.",
+ watch:"Most of what is listed is junk, dressed to sell. Assume the seller knows something you do not and price that in. This is the highest-variance option on the register that is not outright gambling."},
+
+{n:"Solar panel cleaning",f:"Recurring service",rl:70,rh:110,setup:3200,setupN:"pole, tank, safety",cw:6,risk:"med",
+ s:{ret:76,ceil:66,wknd:90,port:62,cap:58},
+ read:"Perth has among the highest rooftop solar penetration in the world, and dusty panels lose real output &mdash; so this is one of the few local-market advantages you have that Melbourne will not replicate. It recurs on a six-to-twelve month cycle, which makes it an annuity like test and tag, and it pairs naturally with test and tag on the same commercial sites.",
+ takes:"Water-fed pole system, deionised water tank, harness and height-safety gear, public liability, and a vehicle that can carry it. Working-at-heights training strongly advised even where not strictly mandated.",
+ first:"Target commercial arrays &mdash; schools, warehouses, small solar farms &mdash; over residential. One 200-panel commercial job beats a full day of houses, and commercial clients renew on a schedule.",
+ watch:"Two things. Heights are the genuine risk here, so do not improvise the safety side. And stay strictly on the cleaning side of the line: the moment you touch DC wiring, isolators or inverters you are in licensed electrical territory, which you are not licensed for. Cleaning and visual reporting only."},
+
+{n:"Mobile car detailing",f:"Recurring service",rl:60,rh:100,setup:4000,setupN:"kit, tank, trailer",cw:5,risk:"low",
+ s:{ret:70,ceil:62,wknd:92,port:82,cap:52},
+ read:"An honest weekend business with a low failure rate and a clear scaling path. Weekend-shaped almost by definition, since that is when people are home with their cars. Ports to Melbourne intact as a skill and a kit, though you rebuild the client list. Scales by hiring rather than by working more hours, which is what gives it a ceiling above pure labour.",
+ takes:"Pressure washer, water tank, polisher, chemicals, vacuum, and ideally a trailer or van setup. Around $3,000&ndash;5,000 for gear that will not embarrass you on a nice car.",
+ first:"Go straight for detail packages on prestige and enthusiast cars rather than $50 washes &mdash; the effort gap is small and the price gap is enormous. Build a before-and-after photo set from your first ten jobs; it is the only marketing this business needs.",
+ watch:"Competitive and easy to enter, so the bottom of the market is a grind. Water restrictions and access to power and water at client sites are practical constraints worth solving before your first booking."},
+
+{n:"Drone photography, sub-2kg",f:"Skilled service",rl:80,rh:150,setup:3000,setupN:"drone + accreditation",cw:7,risk:"med",
+ s:{ret:72,ceil:55,wknd:84,port:86,cap:48},
+ read:"Sits in a useful regulatory sweet spot: CASA's excluded category lets you fly commercially sub-2kg with just an aviation reference number and a free online accreditation &mdash; no ReOC, no RePL. Real estate progress shots, construction site documentation and event work are all weekend-shaped and pay well per hour on site. Not engineering work, so it stays clear of your day job.",
+ takes:"A capable sub-2kg drone ($2,000&ndash;3,500), ARN and CASA accreditation, drone-specific liability insurance, and editing time.",
+ first:"Pick one vertical and go deep. Construction progress photography is the best of them &mdash; recurring monthly captures of the same sites, businesses paying rather than individuals, and it values reliability over artistry.",
+ watch:"Billable hours are lower than the rate suggests once you count editing and travel, so quote per job not per hour. Airspace restrictions around Perth Airport and helipads rule out a meaningful chunk of the metro area &mdash; check the maps before you promise anything."},
+
+{n:"Tutoring, maths and physics",f:"Skilled service",rl:60,rh:100,setup:150,setupN:"almost nothing",cw:3,risk:"low",
+ s:{ret:68,ceil:30,wknd:80,port:92,cap:94},
+ read:"Uses your technical brain without touching engineering practice, so it stays inside your separation rule. Excellent rate for near-zero capital, weekend-shaped, and it ports perfectly &mdash; online students do not care which city you are in. The catch is that it is strictly hours-for-dollars with almost no ceiling unless you build an agency or productise it.",
+ takes:"A working credit history of your own results, a Working with Children Check, and a quiet room. That is genuinely it.",
+ first:"Charge $80&ndash;100/hr and go direct rather than through an agency that takes 40%. ATAR-year maths and physics is where parents pay without arguing. Two Saturday-morning students is $200 for two hours before lunch.",
+ watch:"Seasonal, and it evaporates over school holidays. Also the hardest option here to ever escape from &mdash; if you stop, the income stops the same week."},
+
+{n:"Airbnb co-hosting",f:"Managed asset",rl:50,rh:90,setup:200,setupN:"essentially none",cw:6,risk:"med",
+ s:{ret:66,ceil:68,wknd:58,port:45,cap:96},
+ read:"You manage other people's listings for 10&ndash;20% of booking revenue, with no property and no capital. It compounds properly &mdash; each additional property adds margin without proportional effort once your cleaner and linen systems exist. The problem is that it is genuinely on-call, and guests do not restrict their lockout problems to weekends.",
+ takes:"No capital, but a reliable cleaning contractor, a linen solution, and a phone you answer. Realistically you need three or four properties before the money is interesting.",
+ first:"Approach owners of underperforming listings directly &mdash; the ones with poor photography and thin occupancy. Offer to fix the listing for free and take a percentage of the improvement.",
+ watch:"The weekday-evening reality conflicts with a full-time job more than the numbers suggest. And this one does not travel: your properties, cleaners and reputation are all in Perth, so the move means starting again."},
+
+{n:"Vending machine route",f:"Placed asset",rl:0,rh:0,rn:"$350&ndash;500",rsub:"NET/MO PER UNIT",setup:5500,setupN:"per machine, installed",cw:8,risk:"med",
+ s:{ret:62,ceil:70,wknd:78,port:32,cap:26},
+ read:"Semi-passive and genuinely compounding &mdash; each machine is an income unit and the route scales by adding units, not hours. A well-placed combo machine grosses $700&ndash;1,000/month and nets $350&ndash;500 after stock, card fees and site commission, paying back the hardware in 18&ndash;36 months. Restocking is weekend-compatible.",
+ takes:"$3,500&ndash;8,000 per machine depending on type, plus $200&ndash;800 install, plus stock float. Your $6k realistically buys one good machine or two modest used ones.",
+ first:"The machine is the easy part &mdash; <strong>the location is the entire business</strong>. Secure the site before you buy the hardware, not after. Target places with a captive audience and no alternative: gyms, workshops, apprentice-heavy workplaces, medical waiting rooms.",
+ watch:"This is the option most damaged by your Melbourne move, since the value sits in Perth site agreements. Sell the route as a going concern when you go &mdash; established routes do sell &mdash; but factor that 18-month horizon in now. Also: &lsquo;passive&rsquo; is marketing. Restocking, cash handling and breakdowns are real work."},
+
+{n:"Flipping tools and test gear",f:"Trading",rl:40,rh:80,setup:1200,setupN:"stock float",cw:3,risk:"low",
+ s:{ret:62,ceil:44,wknd:86,port:55,cap:74},
+ read:"Your genuine edge, and it costs nothing to exploit: you can value electrical and test equipment accurately, and most sellers cannot. Perth verge collections, deceased estates, auction clearances and Marketplace all move gear at a fraction of worth because the seller has no idea what it is. This is knowledge arbitrage, not luck.",
+ takes:"A float of $500&ndash;2,000, storage space, and a willingness to spend Saturday mornings driving. Nothing else.",
+ first:"Specialise narrowly &mdash; test instruments, quality hand tools, or industrial control gear. Learn what five or six specific models actually sell for and ignore everything else. Buy at 25&ndash;30% of resale to leave room for duds.",
+ watch:"It does not compound &mdash; you are trading time and capital for margin, every single time. And it half-travels: the skill comes to Melbourne, the supply relationships do not. Best treated as a way to grow your capital base for something else, not as a destination."},
+
+{n:"Print-on-demand products",f:"Content asset",rl:0,rh:0,rn:"$2&ndash;8",rsub:"PER ITEM",setup:250,setupN:"design tools",cw:10,risk:"med",
+ s:{ret:28,ceil:40,wknd:90,port:100,cap:90},
+ read:"The honest version of e-commerce for someone who does not want inventory: you upload designs, a supplier prints and ships, you never touch stock or front cash. Margins are thin ($2&ndash;8 an item) but the risk is close to zero and it compounds slowly &mdash; a design that sells keeps selling for years with no further work.",
+ takes:"Design software or AI generation, a storefront (Etsy, Redbubble, or your own), and a lot of uploads. Volume is the entire strategy.",
+ first:"Go after narrow interest groups rather than general audiences &mdash; niche trades, specific hobbies, in-jokes a particular community recognises. Broad designs compete with everyone; specific ones compete with nobody.",
+ watch:"The ceiling is genuinely low without a marketing engine, and the marketplaces are saturated with AI-generated designs. Treat this as a small compounding trickle, not a business."},
+
+{n:"Amazon Flex delivery blocks",f:"Platform labour",rl:22,rh:30,setup:200,setupN:"phone mount, bags",cw:2,risk:"low",
+ s:{ret:55,ceil:8,wknd:86,port:96,cap:92},
+ read:"The best of the app-based options by a clear margin. Blocks pay $28&ndash;35/hr gross and net $22&ndash;30 after vehicle costs &mdash; better than rideshare because there are no passengers, no waiting, and you book fixed blocks rather than chasing demand. Available in Perth and Melbourne both, so it survives the move perfectly.",
+ takes:"A car, an ABN, a phone, and the willingness to compete for blocks the moment they drop.",
+ first:"Use this as the <strong>funding track</strong>, not the destination. Two Saturday blocks a fortnight covers your test and tag course, insurance and first year of tools without touching savings. Then taper it off as the real business grows.",
+ watch:"Zero ceiling &mdash; it will never pay you more per hour than it does on day one, and it builds nothing. Every hour here is an hour not spent on something that compounds. Also confirm your insurer covers commercial delivery use."},
+
+{n:"Weekend courier contract",f:"Platform labour",rl:25,rh:40,setup:900,setupN:"van hire, insurance",cw:3,risk:"med",
+ s:{ret:52,ceil:18,wknd:80,port:88,cap:80},
+ read:"A step up from parcel apps if you have or can hire a van: fixed Saturday runs for a courier company or furniture retailer pay better than per-parcel work and are predictable enough to plan around. Some become standing contracts, which is a mild form of compounding.",
+ takes:"Van access, commercial vehicle insurance, ABN. Hire before you buy &mdash; a van bought for a contract you have not signed is $6k gone.",
+ first:"Approach local courier operators and furniture or appliance retailers directly about weekend overflow. They routinely have Saturday backlogs and no staff who want them.",
+ watch:"Physical work, and the margin dies quickly if you buy the van. Also genuinely check whether the &lsquo;contract&rsquo; leaves you carrying costs the operator should."},
+
+{n:"Peer-to-peer storage and parking",f:"Placed asset",rl:0,rh:0,rn:"$50&ndash;300",rsub:"NET/MO TOTAL",setup:0,setupN:"nothing",cw:4,risk:"low",
+ s:{ret:35,ceil:20,wknd:98,port:40,cap:98},
+ read:"Included because it is the only genuinely passive thing on the register. If you have a spare garage, driveway, shed or side space, platforms like Spacer will rent it out for $50&ndash;300/month for roughly zero ongoing effort. The absolute numbers are small, but the effort is so close to nil that the rate per hour is absurd.",
+ takes:"Spare space, a listing, and a photo. That is the entire setup.",
+ first:"List it this weekend. It takes twenty minutes and there is no downside to finding out what your unused space is worth.",
+ watch:"Tiny money, and it does not move with you unless the Melbourne place also has spare space. Check your lease or strata rules and whether income affects your home insurance."},
+
+{n:"Camper or caravan hire out",f:"Placed asset",rl:0,rh:0,rn:"$80&ndash;200",rsub:"PER NIGHT",setup:6000,setupN:"the whole $6k, used",cw:10,risk:"high",
+ s:{ret:58,ceil:45,wknd:76,port:35,cap:20},
+ read:"Platforms like Camplify let you rent out a camper you own, and WA's touring season generates real demand. The maths can work &mdash; a $6k used camper at $100/night for eight nights a month covers itself quickly. But it converts your entire capital base into one depreciating, damageable asset.",
+ takes:"All of your $6k, plus insurance, storage space, and handover time on Fridays and Sundays.",
+ first:"If this appeals, hire out something you would want anyway and would otherwise own regardless. As a pure investment it is too concentrated.",
+ watch:"Seasonal, damage-prone, and the handovers land exactly on the weekend hours you wanted to sell elsewhere. Moving to Melbourne means towing it across the Nullarbor or selling it. Hard to recommend ahead of the alternatives."},
+
+{n:"Dog boarding and sitting",f:"Recurring service",rl:35,rh:60,setup:250,setupN:"bedding, insurance",cw:3,risk:"low",
+ s:{ret:44,ceil:26,wknd:70,port:50,cap:92},
+ read:"Low capital, low risk, genuinely pleasant, and repeat clients rebook without being sold to &mdash; a mild annuity. But it occupies your house rather than your calendar, and the ceiling is set by how many dogs you can physically have at once.",
+ takes:"A suitable yard, pet-sitting insurance, a platform profile, and a household that agrees to it.",
+ first:"Boarding pays far better than walking or drop-in visits. School holidays and Christmas are where the money is; book them early.",
+ watch:"It constrains your own travel, which matters if you are planning trips to Melbourne to organise the move. Client base does not travel with you."},
+
+{n:"Weekend market stall, maker goods",f:"Trading",rl:25,rh:60,setup:3500,setupN:"tools + stall fees",cw:8,risk:"med",
+ s:{ret:40,ceil:48,wknd:70,port:70,cap:55},
+ read:"3D printing or laser cutting into a weekend stall is a real path and your technical skills transfer well. But stall fees, stock production time and weather make the effective hourly rate much worse than the gross suggests, and Saturdays get consumed entirely rather than partially.",
+ takes:"A printer or laser cutter ($1,500&ndash;3,000), materials, stall fees ($50&ndash;150/day), a marquee and display.",
+ first:"Validate online first &mdash; sell the products on Etsy before committing to stalls. If they do not sell without you standing next to them, the stall is subsidising a product nobody wants.",
+ watch:"The classic failure is buying the machine first and finding the product second. Also: markets take the whole day including setup and pack-down, so a &lsquo;four-hour&rsquo; market is really nine."},
+
+{n:"Food delivery apps",f:"Platform labour",rl:12,rh:20,setup:150,setupN:"bag, mount",cw:2,risk:"low",
+ s:{ret:34,ceil:6,wknd:88,port:96,cap:90},
+ read:"Included for completeness because you asked about it, but the numbers do not support it. Gross $18&ndash;28/hr in peak, and after fuel, tyres, servicing and the depreciation you are quietly paying, realistically $12&ndash;20 net. That is below minimum wage for the worse hours, with none of the protections.",
+ takes:"A car or bike, a phone, an insulated bag, an ABN.",
+ first:"If you do it at all, do it only in Friday and Saturday dinner peaks with surge, on a bike in the CBD where parking is free and distances are short. Never off-peak.",
+ watch:"Vehicle depreciation is the cost everyone ignores and it is the biggest one. Also builds nothing whatsoever &mdash; the ceiling is not low, it is absent."},
+
+{n:"Uber or DiDi rideshare",f:"Platform labour",rl:15,rh:22,setup:1100,setupN:"inspection, insurance",cw:3,risk:"med",
+ s:{ret:30,ceil:6,wknd:84,port:96,cap:70},
+ read:"Perth drivers see $16&ndash;26/hr gross and $20&ndash;26 in peak, but that is <em>after</em> the platform's 25&ndash;30% is already out and <em>before</em> your costs. Take out fuel, insurance, servicing, rego and real depreciation and you land around $15&ndash;20/hr. For a project engineer this is close to the worst use of a weekend hour available.",
+ takes:"An eligible vehicle, WA passenger transport driver authorisation, vehicle inspection, rideshare-endorsed insurance, and roughly $1,000&ndash;1,200 to get compliant.",
+ first:"Honestly: only peak Friday and Saturday nights and major events, or not at all. If you want vehicle-based cash, Amazon Flex pays materially better for the same wear.",
+ watch:"You are converting a depreciating asset into cash at a poor exchange rate. Standard insurance is void while carrying a paying passenger &mdash; you must have the endorsement."},
+
+{n:"Dropshipping store",f:"E-commerce",rl:0,rh:0,rn:"3&ndash;5%",rsub:"NET MARGIN",setup:2000,setupN:"store + ad spend",cw:20,risk:"high",
+ s:{ret:18,ceil:50,wknd:82,port:100,cap:46},
+ read:"You asked about it, so here is the straight answer: roughly 90&ndash;95% of dropshipping stores fail, and margins run 15&ndash;30% before advertising but only 3&ndash;5% after everything. The model is not dead, but the version sold in tutorials &mdash; a general store of AliExpress products driven by paid ads &mdash; has been arbitraged out. Ad costs now exceed what those margins can carry.",
+ takes:"A storefront, apps, product samples and &mdash; the real cost &mdash; a meaningful advertising budget you should expect to lose while learning.",
+ first:"If you want e-commerce, build a <strong>branded niche store</strong> in a category you genuinely understand, with real supplier relationships, repeat-purchase products and organic traffic. That works. It is also a different, slower business than dropshipping is usually sold as.",
+ watch:"The high ceiling in the score is theoretical and already discounted for failure rate. Of everything here, this is the one where the gap between the marketing and the outcome is widest. Your $6k has better homes."}
+];
+
+const W={ret:25,ceil:30,wknd:20,port:15,cap:10};
+const PRESETS={
+  balanced:{ret:25,ceil:30,wknd:20,port:15,cap:10},
+  compound:{ret:15,ceil:45,wknd:15,port:20,cap:5},
+  cash:{ret:45,ceil:5,wknd:25,port:10,cap:15},
+  light:{ret:25,ceil:25,wknd:15,port:10,cap:25}
+};
+const LABELS={ret:"Return",ceil:"Ceiling",wknd:"Weekend fit",port:"Portable",cap:"Capital"};
+const RISKLAB={low:"Low",med:"Med",high:"High"};
+let weights={...W}, filters=new Set(), sortBy="score", query="";
+
+const score=g=>{
+  const t=weights.ret+weights.ceil+weights.wknd+weights.port+weights.cap;
+  if(!t) return 0;
+  return (g.s.ret*weights.ret+g.s.ceil*weights.ceil+g.s.wknd*weights.wknd+
+          g.s.port*weights.port+g.s.cap*weights.cap)/t;
+};
+const money=n=>"$"+n.toLocaleString("en-AU");
+const cashLab=w=>w<=4?w+" wk":w<52?Math.round(w/4.33)+" mo":"12 mo+";
+const strip=h=>h.replace(/<[^>]*>/g,"").replace(/&[a-z]+;/g," ");
+
+function buildWeights(){
+  const el=document.getElementById("weights");
+  el.innerHTML=Object.keys(LABELS).map(k=>`
+    <div class="wt">
+      <label for="w-${k}">
+        <span class="wt-name">${LABELS[k]}</span>
+        <span class="wt-val" id="wv-${k}">${weights[k]}</span>
+      </label>
+      <input type="range" id="w-${k}" min="0" max="50" step="5" value="${weights[k]}" aria-label="${LABELS[k]} weight">
+    </div>`).join("");
+  Object.keys(LABELS).forEach(k=>{
+    document.getElementById("w-"+k).addEventListener("input",e=>{
+      weights[k]=+e.target.value;
+      document.getElementById("wv-"+k).textContent=weights[k];
+      document.querySelectorAll("[data-preset]").forEach(b=>b.setAttribute("aria-pressed","false"));
+      render();
+    });
+  });
+}
+function syncWeights(){
+  Object.keys(LABELS).forEach(k=>{
+    document.getElementById("w-"+k).value=weights[k];
+    document.getElementById("wv-"+k).textContent=weights[k];
+  });
+}
+
+function render(){
+  let list=DATA.map(g=>({...g,sc:score(g)}));
+  if(query){
+    const q=query.toLowerCase();
+    list=list.filter(g=>(strip(g.n)+" "+g.f+" "+strip(g.read)).toLowerCase().includes(q));
+  }
+  if(filters.has("ports"))     list=list.filter(g=>g.s.port>=80);
+  if(filters.has("cheap"))     list=list.filter(g=>g.setup<1000);
+  if(filters.has("fast"))      list=list.filter(g=>g.cw<=13);
+  if(filters.has("compounds")) list=list.filter(g=>g.s.ceil>=60);
+  if(filters.has("lowrisk"))   list=list.filter(g=>g.risk==="low");
+
+  const cmp={
+    score:(a,b)=>b.sc-a.sc,
+    rate:(a,b)=>((b.rh+b.rl)/2)-((a.rh+a.rl)/2),
+    setup:(a,b)=>a.setup-b.setup,
+    cash:(a,b)=>a.cw-b.cw,
+    ceiling:(a,b)=>b.s.ceil-a.s.ceil,
+    portable:(a,b)=>b.s.port-a.s.port
+  }[sortBy];
+  list.sort(cmp);
+
+  document.getElementById("count").textContent=list.length+" of "+DATA.length+" shown";
+  const rows=document.getElementById("rows");
+  if(!list.length){ rows.innerHTML='<p class="empty">No options match those filters.</p>'; return; }
+
+  rows.innerHTML=list.map((g,i)=>{
+    const rate=g.rn?`<span>${g.rn}</span>`:`<span>${g.rl}&ndash;${g.rh}</span>`;
+    const meters=Object.keys(LABELS).map(k=>`
+      <div class="meter">
+        <div class="mlab"><span>${LABELS[k]}</span><span class="mval">${g.s[k]}</span></div>
+        <div class="mbar"><i style="width:${g.s[k]}%"></i></div>
+      </div>`).join("");
+    return `
+    <div class="rowitem" data-i="${i}">
+      <button class="row-main" aria-expanded="false">
+        <span class="rank">${String(i+1).padStart(2,"0")}</span>
+        <span class="namewrap">
+          <span class="gname">${g.n}</span>
+          <span class="gfam">${g.f}</span>
+        </span>
+        <span class="scorecell">
+          <span class="bar"><i style="width:${g.sc}%"></i></span>
+          <span class="scoreval">${Math.round(g.sc)}</span>
+        </span>
+        <span class="m-meta">
+          <span class="cell">${rate}<small>${g.rsub||"NET/HR"}</small></span>
+          <span class="cell">${money(g.setup)}<small>${g.setupN.toUpperCase()}</small></span>
+          <span class="cell">${cashLab(g.cw)}<small>TO CASH</small></span>
+          <span class="risk risk-${g.risk}">${RISKLAB[g.risk]} risk</span>
+        </span>
+        <span class="caret" aria-hidden="true">&#9654;</span>
+      </button>
+      <div class="detail">
+        <div class="dgrid">
+          <div class="dblock"><h4>The honest read</h4><p>${g.read}</p></div>
+          <div class="dblock"><h4>What it takes</h4><p>${g.takes}</p></div>
+          <div class="dblock"><h4>First move</h4><p>${g.first}</p></div>
+          <div class="dblock"><h4>Watch out</h4><p>${g.watch}</p></div>
+        </div>
+        <div class="meters">${meters}</div>
+      </div>
+    </div>`;
+  }).join("");
+
+  rows.querySelectorAll(".row-main").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const item=btn.parentElement, open=item.classList.toggle("open");
+      btn.setAttribute("aria-expanded",open?"true":"false");
+    });
+  });
+}
+
+document.getElementById("q").addEventListener("input",e=>{query=e.target.value;render();});
+document.getElementById("sort").addEventListener("change",e=>{sortBy=e.target.value;render();});
+document.querySelectorAll("[data-filter]").forEach(b=>{
+  b.addEventListener("click",()=>{
+    const f=b.dataset.filter, on=filters.has(f);
+    on?filters.delete(f):filters.add(f);
+    b.setAttribute("aria-pressed",on?"false":"true");
+    render();
+  });
+});
+document.querySelectorAll("[data-preset]").forEach(b=>{
+  b.addEventListener("click",()=>{
+    weights={...PRESETS[b.dataset.preset]};
+    document.querySelectorAll("[data-preset]").forEach(x=>x.setAttribute("aria-pressed","false"));
+    b.setAttribute("aria-pressed","true");
+    syncWeights(); render();
+  });
+});
+
+buildWeights();
+render();
+</script>
