@@ -1,0 +1,834 @@
+<title>Dry Eye Quest Log</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --ground:#EDEFF3; --surface:#FFFFFF; --surface-2:#F5F6F9; --sunk:#E4E7ED;
+    --ink:#141820; --ink-2:#333B49; --muted:#5D6675; --faint:#858E9C;
+    --rule:#D9DEE6; --rule-strong:#BCC4D0;
+
+    --heat:#C87A05;            /* oil / warmth / light therapy */
+    --heat-bg:#FBEFD8;
+    --heat-ink:#8A5403;
+    --wet:#0E7C7B;             /* moisture / drops */
+    --wet-bg:#DCEFEE;
+    --good:#2C7A50; --good-bg:#DFEEE4;
+    --alert:#B0432A; --alert-bg:#F8E3DD;
+    --on-accent:#FFFFFF;
+
+    --track:#DDE1E8;
+    --shadow:0 1px 2px rgba(20,24,32,.06), 0 6px 18px -12px rgba(20,24,32,.25);
+    --shadow-lift:0 2px 4px rgba(20,24,32,.08), 0 14px 30px -18px rgba(20,24,32,.4);
+
+    --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+    --sans:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --mono:"DM Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+
+    --r:14px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#0C0F15; --surface:#151A23; --surface-2:#1B212C; --sunk:#10151D;
+      --ink:#E9ECF2; --ink-2:#C3CAD6; --muted:#929BAA; --faint:#727C8C;
+      --rule:#252C38; --rule-strong:#38414F;
+
+      --heat:#EFAE3C; --heat-bg:#2E2311; --heat-ink:#F5C670;
+      --wet:#49B3AC; --wet-bg:#0F2B2B;
+      --good:#5FB183; --good-bg:#152A1E;
+      --alert:#E4805F; --alert-bg:#2E1A15;
+      --on-accent:#14100A;
+
+      --track:#252C38;
+      --shadow:0 1px 2px rgba(0,0,0,.5), 0 6px 18px -12px rgba(0,0,0,.8);
+      --shadow-lift:0 2px 4px rgba(0,0,0,.55), 0 14px 30px -18px rgba(0,0,0,.9);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0C0F15; --surface:#151A23; --surface-2:#1B212C; --sunk:#10151D;
+    --ink:#E9ECF2; --ink-2:#C3CAD6; --muted:#929BAA; --faint:#727C8C;
+    --rule:#252C38; --rule-strong:#38414F;
+
+    --heat:#EFAE3C; --heat-bg:#2E2311; --heat-ink:#F5C670;
+    --wet:#49B3AC; --wet-bg:#0F2B2B;
+    --good:#5FB183; --good-bg:#152A1E;
+    --alert:#E4805F; --alert-bg:#2E1A15;
+    --on-accent:#14100A;
+
+    --track:#252C38;
+    --shadow:0 1px 2px rgba(0,0,0,.5), 0 6px 18px -12px rgba(0,0,0,.8);
+    --shadow-lift:0 2px 4px rgba(0,0,0,.55), 0 14px 30px -18px rgba(0,0,0,.9);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:var(--sans); font-size:16px; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:0 18px 110px}
+  h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-.02em}
+  p{margin:0}
+  .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+  /* ---------------- HUD ---------------- */
+  .hud{
+    position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb, var(--ground) 88%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--rule);
+  }
+  .hud-in{
+    max-width:880px;margin:0 auto;padding:10px 18px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .hud-name{
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);flex:1;min-width:0;
+  }
+  .hud-name b{color:var(--ink);font-weight:500}
+  .ring{width:38px;height:38px;display:block;flex:none}
+  .ring circle{fill:none;stroke-width:5}
+  .ring .bg{stroke:var(--track)}
+  .ring .fg{stroke:var(--heat);stroke-linecap:round;transition:stroke-dashoffset .45s cubic-bezier(.4,0,.2,1)}
+  .ring.done .fg{stroke:var(--good)}
+  .hud-score{font-family:var(--mono);font-size:13px;color:var(--ink-2);flex:none}
+  .streak{
+    display:flex;align-items:center;gap:6px;flex:none;
+    background:var(--heat-bg);color:var(--heat-ink);
+    border:1px solid color-mix(in srgb,var(--heat) 35%,transparent);
+    padding:4px 10px;border-radius:999px;
+    font-family:var(--mono);font-size:12.5px;
+  }
+  .streak svg{width:13px;height:13px;fill:var(--heat)}
+
+  /* ---------------- hero ---------------- */
+  .hero{padding:44px 0 30px}
+  .kicker{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--heat-ink);margin-bottom:14px;
+  }
+  h1{font-size:clamp(34px,6.4vw,54px);line-height:1.04;font-weight:800}
+  h1 em{font-style:normal;color:var(--heat)}
+  .lede{margin-top:16px;font-size:17.5px;color:var(--ink-2);max-width:60ch}
+  .lede b{font-weight:600;color:var(--ink)}
+
+  /* day counter */
+  .daybar{
+    margin-top:26px;background:var(--surface);border:1px solid var(--rule);
+    border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;
+  }
+  .daybar-top{display:flex;align-items:center;gap:14px;padding:14px 16px;flex-wrap:wrap}
+  .daynum{font-family:var(--display);font-weight:800;font-size:26px;letter-spacing:-.03em;line-height:1}
+  .daynum span{font-size:12px;font-family:var(--mono);color:var(--muted);letter-spacing:0;font-weight:400}
+  .phase-label{font-size:14px;color:var(--muted);flex:1;min-width:180px}
+  .phase-label b{color:var(--ink);font-weight:600}
+  .btn{
+    font:inherit;font-size:13px;cursor:pointer;background:var(--surface-2);color:var(--ink-2);
+    border:1px solid var(--rule-strong);padding:6px 12px;border-radius:999px;
+  }
+  .btn:hover{background:var(--sunk)}
+  .btn:focus-visible,.check:focus-visible,summary:focus-visible{outline:2px solid var(--heat);outline-offset:2px}
+  .phases{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule)}
+  .phase{padding:12px 16px;border-left:1px solid var(--rule);position:relative}
+  .phase:first-child{border-left:none}
+  .phase .pw{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+  .phase .pt{font-weight:600;font-size:14px;margin-top:3px}
+  .phase .pd{font-size:13px;color:var(--muted);margin-top:2px;line-height:1.4}
+  .phase.on{background:var(--heat-bg)}
+  .phase.on .pw{color:var(--heat-ink)}
+  .phase.on::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--heat)}
+
+  /* ---------------- blocks ---------------- */
+  section{margin-top:44px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+  h2{font-size:23px;font-weight:700}
+  .sec-when{
+    font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--muted);
+  }
+  .sec-note{font-size:14.5px;color:var(--muted);margin-bottom:14px;max-width:62ch}
+
+  .card{
+    background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);
+    box-shadow:var(--shadow);overflow:hidden;
+  }
+
+  /* task rows */
+  .task{
+    display:grid;grid-template-columns:auto 1fr auto;gap:0 14px;align-items:start;
+    padding:14px 16px;border-top:1px solid var(--rule);cursor:pointer;
+    transition:background .15s;
+  }
+  .task:first-child{border-top:none}
+  .task:hover{background:var(--surface-2)}
+  .task input{position:absolute;opacity:0;width:0;height:0}
+  .box{
+    width:26px;height:26px;border-radius:8px;border:2px solid var(--rule-strong);
+    display:grid;place-items:center;flex:none;margin-top:1px;
+    transition:background .18s,border-color .18s,transform .18s;
+  }
+  .box svg{width:15px;height:15px;stroke:var(--on-accent);stroke-width:3.2;fill:none;
+    stroke-linecap:round;stroke-linejoin:round;
+    stroke-dasharray:22;stroke-dashoffset:22;transition:stroke-dashoffset .22s ease .04s}
+  .task.on .box{background:var(--good);border-color:var(--good);transform:scale(1.05)}
+  .task.on .box svg{stroke-dashoffset:0;stroke:#fff}
+  .t-body{min-width:0}
+  .t-title{font-weight:600;font-size:15.5px;line-height:1.35;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+  .t-num{font-family:var(--mono);font-size:12px;color:var(--heat-ink);background:var(--heat-bg);
+    border-radius:6px;padding:1px 6px;flex:none}
+  .t-why{font-size:14px;color:var(--muted);margin-top:3px;line-height:1.45}
+  .task.on .t-title{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--rule-strong)}
+  .cost{
+    font-family:var(--mono);font-size:11.5px;color:var(--muted);
+    background:var(--surface-2);border:1px solid var(--rule);border-radius:999px;
+    padding:3px 9px;white-space:nowrap;flex:none;margin-top:2px;
+  }
+  .task.bonus .box{border-radius:999px}
+  .task.bonus.on .box{background:var(--wet);border-color:var(--wet)}
+
+  .block-foot{
+    padding:11px 16px;border-top:1px solid var(--rule);background:var(--surface-2);
+    font-size:13.5px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;
+  }
+  .block-foot b{color:var(--ink-2);font-weight:600}
+
+  /* one thing callout */
+  .onething{
+    display:flex;gap:14px;align-items:flex-start;
+    background:var(--heat-bg);border:1px solid color-mix(in srgb,var(--heat) 40%,transparent);
+    border-radius:var(--r);padding:16px 18px;margin-top:26px;
+  }
+  .onething .mark{
+    font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--on-accent);background:var(--heat);border-radius:6px;padding:3px 8px;flex:none;margin-top:2px;
+  }
+  .onething p{font-size:15.5px;color:var(--heat-ink)}
+  .onething b{font-weight:700}
+
+  /* details */
+  details{border-top:1px solid var(--rule);background:var(--surface-2)}
+  details summary{
+    cursor:pointer;padding:11px 16px;font-family:var(--mono);font-size:12px;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--muted);list-style:none;
+    display:flex;align-items:center;gap:8px;
+  }
+  details summary::-webkit-details-marker{display:none}
+  details summary::after{content:"+";font-size:15px;line-height:1}
+  details[open] summary::after{content:"–"}
+  .det-body{padding:0 16px 16px;font-size:14.5px;color:var(--ink-2);display:grid;gap:9px}
+  .det-body ul{margin:0;padding-left:18px;display:grid;gap:6px}
+
+  /* kit grid */
+  .kit{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+  .kit-item{
+    background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);
+    padding:14px 15px;box-shadow:var(--shadow);display:grid;gap:6px;align-content:start;
+    border-left:3px solid var(--rule-strong);
+  }
+  .kit-item.have{border-left-color:var(--good)}
+  .kit-item.gap{border-left-color:var(--heat)}
+  .kit-item.avoid{border-left-color:var(--alert)}
+  .tag{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+    display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:999px;width:fit-content;
+  }
+  .tag.have{background:var(--good-bg);color:var(--good)}
+  .tag.gap{background:var(--heat-bg);color:var(--heat-ink)}
+  .tag.avoid{background:var(--alert-bg);color:var(--alert)}
+  .kit-name{font-weight:600;font-size:15.5px;line-height:1.3}
+  .kit-desc{font-size:14px;color:var(--muted);line-height:1.45}
+  .kit-desc b{color:var(--ink-2);font-weight:600}
+
+  /* desk diagram */
+  .desk{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);
+    box-shadow:var(--shadow);padding:18px 16px 6px;overflow:hidden}
+  .desk svg{width:100%;height:auto;display:block;max-width:520px;margin:0 auto}
+  .rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0;margin-top:14px;
+    border-top:1px solid var(--rule)}
+  .rule-i{padding:14px 4px;border-left:1px solid var(--rule)}
+  .rule-i:first-child{border-left:none;padding-left:0}
+  .rule-i .rt{font-weight:600;font-size:14.5px;display:flex;gap:8px;align-items:baseline}
+  .rule-i .rv{font-family:var(--mono);font-size:12px;color:var(--wet)}
+  .rule-i .rd{font-size:13.5px;color:var(--muted);margin-top:3px;line-height:1.45}
+
+  /* timeline / reality */
+  .reality{display:grid;gap:10px}
+  .rrow{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:baseline;
+    padding:12px 0;border-top:1px dashed var(--rule)}
+  .rrow:first-child{border-top:none}
+  .rwhen{font-family:var(--mono);font-size:12.5px;color:var(--heat-ink);background:var(--heat-bg);
+    padding:3px 8px;border-radius:6px;text-align:center;white-space:nowrap}
+  .rwhat{font-size:15px;color:var(--ink-2)}
+  .rwhat b{color:var(--ink);font-weight:600}
+
+  .flags{background:var(--alert-bg);border:1px solid color-mix(in srgb,var(--alert) 32%,transparent);
+    border-radius:var(--r);padding:16px 18px}
+  .flags h3{font-size:16.5px;color:var(--alert);margin-bottom:8px}
+  .flags ul{margin:0;padding-left:19px;display:grid;gap:5px;font-size:14.5px;color:var(--ink-2)}
+
+  footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--rule);
+    font-size:13px;color:var(--faint);line-height:1.6}
+
+  .toast{
+    position:fixed;left:50%;bottom:24px;transform:translate(-50%,140%);
+    background:var(--good);color:#fff;font-family:var(--mono);font-size:13px;
+    padding:11px 18px;border-radius:999px;box-shadow:var(--shadow-lift);z-index:40;
+    opacity:0;transition:transform .4s cubic-bezier(.2,.9,.3,1.2),opacity .3s;
+  }
+  .toast.show{transform:translate(-50%,0);opacity:1}
+
+  @media (max-width:560px){
+    .phases{grid-template-columns:1fr}
+    .phase{border-left:none;border-top:1px solid var(--rule)}
+    .phase:first-child{border-top:none}
+    .rule-i{border-left:none;border-top:1px solid var(--rule);padding-left:0}
+    .rule-i:first-child{border-top:none}
+    .task{grid-template-columns:auto 1fr;gap:0 12px}
+    .cost{grid-column:2;justify-self:start;margin-top:7px}
+    .rrow{grid-template-columns:1fr;gap:5px}
+    .rwhen{justify-self:start}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important}
+  }
+</style>
+
+<div class="hud">
+  <div class="hud-in">
+    <svg class="ring" id="ring" viewBox="0 0 40 40" aria-hidden="true">
+      <circle class="bg" cx="20" cy="20" r="16"></circle>
+      <circle class="fg" id="ringFg" cx="20" cy="20" r="16"
+              stroke-dasharray="100.5" stroke-dashoffset="100.5"
+              transform="rotate(-90 20 20)"></circle>
+    </svg>
+    <div class="hud-name">Today &middot; <b id="hudCount">0 of 10</b> core</div>
+    <div class="streak" title="Consecutive days with every core task done">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c1 4-3 5-3 8a3 3 0 0 0 6 0c0-1-.4-1.8-1-2.6 3 1.3 4 3.6 4 6.1a6 6 0 1 1-12 0C6 9.6 9.4 6.6 12 2z"/></svg>
+      <span id="streakN">0</span>&nbsp;day streak
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">Post-IPL &middot; post-expression &middot; meibomian gland dysfunction</div>
+    <h1>Your glands got unblocked. <em>Now keep the oil moving.</em></h1>
+    <p class="lede">The clinic did the hard reset — light therapy plus squeezing out the hardened oil. What decides whether it lasts is <b>heat, pressure and blinking, every single day</b>. This is the whole job, in tick boxes. Miss a day, tick nothing, come back tomorrow.</p>
+
+    <div class="daybar">
+      <div class="daybar-top">
+        <div class="daynum" id="dayNum">Day 1 <span>since you started</span></div>
+        <div class="phase-label" id="phaseLabel">Phase: <b>Unclogging</b> — daily heat is non-negotiable right now.</div>
+        <button class="btn" id="resetDay" type="button">Set today as day 1</button>
+      </div>
+      <div class="phases">
+        <div class="phase" data-phase="0">
+          <div class="pw">Days 1–14</div>
+          <div class="pt">Unclogging</div>
+          <div class="pd">Heat twice a day. Glands are open but the oil is still thick.</div>
+        </div>
+        <div class="phase" data-phase="1">
+          <div class="pw">Weeks 3–8</div>
+          <div class="pt">Rebuilding</div>
+          <div class="pd">Where real improvement shows up. Do not quit here — this is the part people quit.</div>
+        </div>
+        <div class="phase" data-phase="2">
+          <div class="pw">Week 9 onward</div>
+          <div class="pt">Holding</div>
+          <div class="pd">Drop to once a day if comfortable. Twice a day again the moment it gets gritty.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="onething">
+      <span class="mark">If you do one thing</span>
+      <p><b>Ten minutes of proper heat, then massage.</b> Heat without the massage just warms the oil and lets it set again. Drops alone treat the symptom and change nothing.</p>
+    </div>
+  </header>
+
+  <!-- ============ MORNING ============ -->
+  <section>
+    <div class="sec-head">
+      <h2>Morning ritual</h2>
+      <span class="sec-when mono">~15 min &middot; do it in this order</span>
+    </div>
+    <p class="sec-note">This is the only part where the order actually matters. Heat melts the oil, massage pushes it out, cleaning clears the exit, drops go on last so you're not washing them straight off.</p>
+
+    <div class="card">
+      <label class="task" data-id="m1" data-core="1">
+        <input type="checkbox">
+        <span class="box"><svg viewBox="0 0 24 24"><polyline points="4,12.5 9.5,18 20,6.5"/></svg></span>
+        <span class="t-body">
+          <span class="t-title"><span class="t-num">1</span> Heated mask on — a full 10 minutes</span>
+          <span class="t-why">Reheat it halfway if it cools. Meibum only melts around 40&deg;C, and a mask that has gone lukewarm is doing nothing.</span>
+        </span>
+        <span class="cost">10 min</span>
+      </label>
+
+      <label class="task" data-id="m2" data-core="1">
+        <input type="checkbox">
+        <span class="box"><svg viewBox="0 0 24 24"><polyline points="4,12.5 9.5,18 20,6.5"/></svg></span>
+        <span class="t-body">
+          <span class="t-title"><span class="t-num">2</span> Massage the lids while they're still warm</span>
+          <span class="t-why">Clean finger, eyes shut. Upper lid: sweep down toward the lashes &times;10. Lower lid: sweep up &times;10. Firm, not painful. Do it within a minute of the mask coming off.</span>
+        </span>
+        <span class="cost">1 min</span>
+      </label>
+
+      <label class="task" data-id="m3" data-core="1">
+        <input type="checkbox">
+        <span class="box"><svg viewBox="0 0 24 24"><polyline points="4,12.5 9.5,18 20,6.5"/></svg></span>
+        <span class="t-body">
+          <span class="t-title"><span class="t-num">3</span> Wipe along the lash line</span>
+          <span class="t-why">Lid wipe, lid lotion on cotton pad, or a clean warm flannel. Along the base of the lashes, not the eyeball. This is what stops the glands crusting shut again.</span>
+        </span>
+        <span class="cost">1 min</span>
+      </label>
+
+      <label class="task" data-id="m4" data-core="1">
+        <input type="checkbox">
+        <span class="box"><svg viewBox="0 0 24 24"><polyline points="4,12.5 9.5,18 20,6.5"/></svg></span>
+        <span class="t-body">
+          <span class="t-title"><span class="t-num">4</span> One preservative-free drop in each eye</span>
+          <span class="t-why">Last step, before screens start. You're topping up the water layer that the fresh oil now has a chance of holding in.</span>
+        </span>
+        <span class="cost">30 sec</span>
+      </label>
+
+      <details>
+        <summary>Make it happen when your brain won't</summary>
+        <div class="det-body">
+          <ul>
+            <li><b>Stack it onto something you already do.</b> Mask goes on the second you sit down with coffee, or while the shower runs. Never as its own free-floating task.</li>
+            <li><b>Keep the mask where you'll be, not where it belongs.</b> On the desk, on the pillow, next to the kettle. Out of a drawer.</li>
+            <li><b>Ten minutes is a video, not a wait.</b> Podcast, an episode, a phone call — eyes shut, ears busy.</li>
+            <li><b>Buy a second mask.</b> One in the wash is the single most common reason this routine dies in week two.</li>
+          </ul>
+        </div>
+      </details>
+
+      <div class="block-foot"><b>Skip rule:</b>&nbsp;short on time? Heat and massage. Those two are the treatment; everything else is support.</div>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN HOURS ============ -->
+  <section>
+    <div class="sec-head">
+      <h2>Screen hours</h2>
+      <span class="sec-when mono">All day &middot; damage control</span>
+    </div>
+    <p class="sec-note">Screens don't dry your eyes by glowing at you. They cut your blink rate by roughly two thirds, and most of the blinks you do manage never fully close — so the oil never gets spread and the tear film evaporates. Everything here is about blinking properly and losing less water.</p>
+
+    <div class="card">
+      <label class="task" data-id="s1" data-core="1">
+        <input type="checkbox">
+        <span class="box"><svg viewBox="0 0 24 24"><polyline points="4,12.5 9.5,18 20,6.5"/></svg></span>
+        <span class="t-body">
+          <span class="t-title">Blink drill &times;5, at least four times today</span>
+          <span class="t-why">Close &rarr; squeeze for 2 seconds &rarr; open. Five in a row. Tie it to something that already repeats: every meeting join, every coffee, every time you stand up.</span>
+        </span>
+        <span class="cost">20 sec</span>
+      </label>
+
+      <label class="task" data-id="s2" data-core="1">
+        <input type="checkbox">
+        <span class="box"><svg viewBox="0 0 24 24"><polyline points="4,12.5 9.5,18 20,6.5"/></svg></span>
+        <span class="t-body">
+          <span class="t-title">Drops on a schedule, not on symptoms</span>
+          <span class="t-why">Three to four times across the day, spread out. By the time eyes feel gritty the surface is already irritated — you're playing catch-up. Set repeating phone alarms; do not rely on noticing.</span>
+        </span>
+        <span class="cost">30 sec &times;4</span>
+      </label>
+
+      <label class="task" data-id="s3" data-core="1">
+        <input type="checkbox">
+        <span class="box"><svg viewBox="0 0 24 24"><polyline points="4,12.5 9.5,18 20,6.5"/></svg></span>
+        <span class="t-body">
+          <span class="t-title">Screen sitting below eye level all day</span>
+          <span class="t-why">Looking slightly down narrows the eyelid opening and cuts evaporation. Top of the monitor at or just under eye height, an arm's length away. Laptop on the desk with no stand is the worst case — you stare up into it.</span>
+        </span>
+        <span class="cost">once</span>
+      </label>
+
+      <label class="task" data-id="s4" data-core="1">
+        <input type="checkbox">
+        <span class="box"><svg viewBox="0 0 24 24"><polyline points="4,12.5 9.5,18 20,6.5"/></svg></span>
+        <span class="t-body">
+          <span class="t-title">Nothing blowing at your face</span>
+          <span class="t-why">Aircon, car vents, a desk fan, a heater — moving dry air over open eyes for hours beats any drop you can buy. Point it at the wall.</span>
+        </span>
+        <span class="cost">once</span>
+      </label>
+
+      <label class="task bonus" data-id="s5">
+        <input type="checkbox">
+        <span class="box"><svg viewBox="0 0 24 24"><polyline points="4,12.5 9.5,18 20,6.5"/></svg></span>
+        <span class="t-body">
+          <span class="t-title">Bonus: one proper 20-20-20 break</span>
+          <span class="t-why">Every 20 minutes, look 20 feet away for 20 seconds. Realistically you'll forget — one deliberate long look out of a window an hour still counts for something.</span>
+        </span>
+        <span class="cost">20 sec</span>
+      </label>
+
+      <label class="task bonus" data-id="s6">
+        <input type="checkbox">
+        <span class="box"><svg viewBox="0 0 24 24"><polyline points="4,12.5 9.5,18 20,6.5"/></svg></span>
+        <span class="t-body">
+          <span class="t-title">Bonus: water, and room air that isn't a desert</span>
+          <span class="t-why">Dehydration thins the tear film. Indoor humidity under 40% dries it from outside. A £5 hygrometer tells you which problem you actually have.</span>
+        </span>
+        <span class="cost">ongoing</span>
+      </label>
+
+      <details>
+        <summary>Screen settings that genuinely help (and one that doesn't)</summary>
+        <div class="det-body">
+          <ul>
+            <li><b>Brightness matched to the room</b> — a screen brighter than its surroundings makes you stare. Dim it until it stops feeling like a light source.</li>
+            <li><b>Bigger text, fewer squints.</b> Squinting is a blink you didn't take. Zoom to 110–125% and stop leaning in.</li>
+            <li><b>Kill the glare.</b> Window at 90&deg; to the screen, never behind it or behind you.</li>
+            <li><b>Blue-light glasses are the one that doesn't.</b> The evidence doesn't support them for dry eye or eye strain. The blink rate is the problem, not the wavelength.</li>
+          </ul>
+        </div>
+      </details>
+
+      <div class="block-foot"><b>Evening screens count too.</b>&nbsp;Phone, TV and gaming are the same load on the same eyes — the drill applies after work as well.</div>
+    </div>
+  </section>
+
+  <!-- ============ WIND DOWN ============ -->
+  <section>
+    <div class="sec-head">
+      <h2>Wind-down</h2>
+      <span class="sec-when mono">Last hour &middot; ~12 min</span>
+    </div>
+    <p class="sec-note">Overnight is when the surface either recovers or gets worse. If you wake up with eyes stuck or stinging, this block is the one to fix first.</p>
+
+    <div class="card">
+      <label class="task" data-id="e1" data-core="1">
+        <input type="checkbox">
+        <span class="box"><svg viewBox="0 0 24 24"><polyline points="4,12.5 9.5,18 20,6.5"/></svg></span>
+        <span class="t-body">
+          <span class="t-title">Second heat + massage</span>
+          <span class="t-why">Twice a day is what actually clears a backed-up gland in the first few weeks. Same 10 minutes, same sweep. Do it on the sofa, not as a special event.</span>
+        </span>
+        <span class="cost">11 min</span>
+      </label>
+
+      <label class="task" data-id="e2" data-core="1">
+        <input type="checkbox">
+        <span class="box"><svg viewBox="0 0 24 24"><polyline points="4,12.5 9.5,18 20,6.5"/></svg></span>
+        <span class="t-body">
+          <span class="t-title">Lids clean before bed</span>
+          <span class="t-why">Whatever the day put on your lash line — makeup, product, oil, dust — comes off. Anything left sits in the gland openings for eight hours.</span>
+        </span>
+        <span class="cost">1 min</span>
+      </label>
+
+      <label class="task bonus" data-id="e3">
+        <input type="checkbox">
+        <span class="box"><svg viewBox="0 0 24 24"><polyline points="4,12.5 9.5,18 20,6.5"/></svg></span>
+        <span class="t-body">
+          <span class="t-title">Bonus: night gel or ointment</span>
+          <span class="t-why">Only if you wake up dry, gritty or stuck shut. It blurs vision, so it's a lights-out step. Ask your optometrist whether your lids fully close in sleep — plenty of people's don't.</span>
+        </span>
+        <span class="cost">30 sec</span>
+      </label>
+
+      <div class="block-foot"><b>Bedroom check:</b>&nbsp;no fan or aircon pointed at the bed, and if the room runs dry, a humidifier does more overnight than any drop.</div>
+    </div>
+  </section>
+
+  <!-- ============ KIT ============ -->
+  <section>
+    <div class="sec-head">
+      <h2>The kit</h2>
+      <span class="sec-when mono">2 sorted &middot; 3 gaps</span>
+    </div>
+    <p class="sec-note">You already have the two that matter most. The gaps below are what usually decides whether the clinic work holds or you're back in six months.</p>
+
+    <div class="kit">
+      <div class="kit-item have">
+        <span class="tag have">Sorted</span>
+        <span class="kit-name">Heated eye mask</span>
+        <span class="kit-desc">Yours works. Two things: <b>wash the cover weekly</b>, and <b>buy a second one</b> so laundry day never breaks the streak. If it's cool by minute five, reheat mid-session.</span>
+      </div>
+
+      <div class="kit-item have">
+        <span class="tag have">Sorted</span>
+        <span class="kit-name">Preservative-free drops</span>
+        <span class="kit-desc">Right call — preserved drops used four times a day irritate the surface they're meant to soothe. Next bottle, look for a <b>lipid or oil-containing</b> formula: your problem is the oil layer, not the water.</span>
+      </div>
+
+      <div class="kit-item gap">
+        <span class="tag gap">Gap &middot; get first</span>
+        <span class="kit-name">Lid cleanser</span>
+        <span class="kit-desc">Sterile lid wipes, a lid lotion on a cotton pad, or a <b>hypochlorous acid spray</b>. Baby shampoo is the old advice and it's out of favour — it strips the oil you're trying to keep.</span>
+      </div>
+
+      <div class="kit-item gap">
+        <span class="tag gap">Gap &middot; slow burn</span>
+        <span class="kit-name">Omega-3</span>
+        <span class="kit-desc">Aim for roughly <b>1,000–2,000&nbsp;mg combined EPA + DHA daily</b>, triglyceride form. Honest framing: the big trial (DREAM) failed to beat placebo, but it's low-risk and many clinics still back it. Three months before you judge it. Check with your GP if you're on blood thinners.</span>
+      </div>
+
+      <div class="kit-item gap">
+        <span class="tag gap">Gap &middot; if rooms run dry</span>
+        <span class="kit-name">Hygrometer, then maybe a humidifier</span>
+        <span class="kit-desc">Measure before you buy. Under 40% humidity at the desk means the room is pulling water off your eyes all day — that's a humidifier's job, not a drop's.</span>
+      </div>
+
+      <div class="kit-item avoid">
+        <span class="tag avoid">Don't buy</span>
+        <span class="kit-name">"Redness relief" drops</span>
+        <span class="kit-desc">Vasoconstrictors (tetrahydrozoline, naphazoline) whiten the eye by squeezing blood vessels and cause <b>rebound redness</b> when you stop. Nothing to do with dry eye. Skip preserved drops for frequent use too.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DESK ============ -->
+  <section>
+    <div class="sec-head">
+      <h2>Desk geometry</h2>
+      <span class="sec-when mono">Set once &middot; pays out daily</span>
+    </div>
+    <p class="sec-note">The single highest-leverage change for an all-day screen user: get the screen lower. Gazing downward covers more of the eye surface, so less of it is exposed to evaporate.</p>
+
+    <div class="desk">
+      <svg viewBox="0 0 520 268" role="img" aria-label="Desk setup diagram: the top edge of the monitor sits at or below eye level, gaze angled 15 to 20 degrees downward, screen about an arm's length away, and fans or vents pointed away from the face.">
+        <defs>
+          <marker id="ar-heat" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto">
+            <path d="M0,1 L7,4.5 L0,8 z" fill="var(--heat)"/>
+          </marker>
+          <marker id="ar-wet" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto">
+            <path d="M0,1 L7,4.5 L0,8 z" fill="var(--wet)"/>
+          </marker>
+          <marker id="ar-wet-s" markerWidth="9" markerHeight="9" refX="2.5" refY="4.5" orient="auto">
+            <path d="M7,1 L0,4.5 L7,8 z" fill="var(--wet)"/>
+          </marker>
+          <marker id="ar-alert" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto">
+            <path d="M0,1 L7,4.5 L0,8 z" fill="var(--alert)"/>
+          </marker>
+        </defs>
+
+        <!-- fan / vent, blowing at the face -->
+        <g>
+          <circle cx="330" cy="46" r="16" fill="var(--surface-2)" stroke="var(--rule-strong)" stroke-width="2"/>
+          <path d="M330 34 q9 6 0 12 q-9 6 0 12 M318 46 q6 -9 12 0 q6 9 12 0" fill="none" stroke="var(--rule-strong)" stroke-width="1.8"/>
+          <path d="M310 46 H182" stroke="var(--alert)" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#ar-alert)"/>
+          <g stroke="var(--alert)" stroke-width="2.6" stroke-linecap="round">
+            <path d="M240 39 L254 53 M254 39 L240 53"/>
+          </g>
+          <text x="246" y="76" text-anchor="middle" font-family="DM Mono, monospace" font-size="11" fill="var(--alert)">vents + fans: not at your face</text>
+        </g>
+
+        <!-- desk -->
+        <path d="M30 212 H492" stroke="var(--rule-strong)" stroke-width="2.5" fill="none"/>
+        <path d="M64 212 V254 M462 212 V254" stroke="var(--rule-strong)" stroke-width="2.5" fill="none"/>
+
+        <!-- person -->
+        <circle cx="108" cy="124" r="27" fill="var(--surface-2)" stroke="var(--rule-strong)" stroke-width="2"/>
+        <circle cx="126" cy="119" r="3.6" fill="var(--ink)"/>
+        <path d="M96 151 q-14 26 -18 61" fill="none" stroke="var(--rule-strong)" stroke-width="2"/>
+        <path d="M120 151 q16 24 18 61" fill="none" stroke="var(--rule-strong)" stroke-width="2"/>
+
+        <!-- eye level -->
+        <path d="M140 119 H478" stroke="var(--rule-strong)" stroke-width="1" stroke-dasharray="4 5" fill="none"/>
+        <text x="478" y="113" text-anchor="end" font-family="DM Mono, monospace" font-size="10.5" fill="var(--muted)">eye level</text>
+
+        <!-- monitor: top edge sits just under eye level -->
+        <rect x="300" y="126" width="158" height="78" rx="6" fill="var(--sunk)" stroke="var(--rule-strong)" stroke-width="2"/>
+        <rect x="309" y="135" width="140" height="60" rx="3" fill="var(--surface)"/>
+        <path d="M379 204 v6" stroke="var(--rule-strong)" stroke-width="4" fill="none"/>
+        <path d="M352 212 h54" stroke="var(--rule-strong)" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+        <!-- gaze -->
+        <path d="M132 125 L296 156" stroke="var(--heat)" stroke-width="2.5" fill="none" marker-end="url(#ar-heat)"/>
+        <text x="168" y="178" font-family="DM Mono, monospace" font-size="11.5" fill="var(--heat)">gaze 15–20° down</text>
+
+        <!-- distance -->
+        <path d="M148 232 H292" stroke="var(--wet)" stroke-width="1.5" fill="none" marker-end="url(#ar-wet)" marker-start="url(#ar-wet-s)"/>
+        <path d="M148 226 v12 M292 226 v12" stroke="var(--wet)" stroke-width="1.5" fill="none"/>
+        <text x="220" y="252" text-anchor="middle" font-family="DM Mono, monospace" font-size="11" fill="var(--wet)">an arm's length</text>
+      </svg>
+
+      <div class="rules">
+        <div class="rule-i">
+          <div class="rt">Screen height <span class="rv">top edge ≤ eye level</span></div>
+          <div class="rd">If you use a laptop all day, a stand plus a separate keyboard is the fix. Otherwise you're looking up into it with your eyes wide open.</div>
+        </div>
+        <div class="rule-i">
+          <div class="rt">Distance <span class="rv">50–70 cm</span></div>
+          <div class="rd">Close screens pull you into a fixed stare. Further back, bigger text.</div>
+        </div>
+        <div class="rule-i">
+          <div class="rt">Air <span class="rv">nothing at your face</span></div>
+          <div class="rd">Vents, fans, heaters, car blowers. Redirect all of them.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REALITY ============ -->
+  <section>
+    <div class="sec-head">
+      <h2>What to expect, honestly</h2>
+      <span class="sec-when mono">So you don't quit at week three</span>
+    </div>
+
+    <div class="card" style="padding:6px 18px 14px">
+      <div class="reality">
+        <div class="rrow">
+          <span class="rwhen">Week 1</span>
+          <span class="rwhat">Some relief from the expression itself, and it may partly fade. <b>That's normal and not a failure.</b> The glands were just emptied; they need to start producing thin, clean oil again.</span>
+        </div>
+        <div class="rrow">
+          <span class="rwhen">Weeks 2–4</span>
+          <span class="rwhat">Mornings get easier before evenings do. Gritty afternoons on heavy screen days are still expected.</span>
+        </div>
+        <div class="rrow">
+          <span class="rwhen">Weeks 6–12</span>
+          <span class="rwhat"><b>This is when to judge whether the routine is working.</b> Gland tissue turns over slowly — judging at week two tells you nothing.</span>
+        </div>
+        <div class="rrow">
+          <span class="rwhen">Ongoing</span>
+          <span class="rwhat">IPL is usually a course of <b>3–4 sessions</b>, then top-ups every 6–12 months. Book the follow-up your optometrist recommended — home care extends the result, it doesn't replace the course.</span>
+        </div>
+        <div class="rrow">
+          <span class="rwhen">Forever</span>
+          <span class="rwhat">MGD is managed, not cured. The day you stop the heat is the day the glands start backing up again. Once a day, indefinitely, is the realistic finish line.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flags" style="margin-top:18px">
+      <h3>Stop the routine and get seen</h3>
+      <ul>
+        <li>Actual pain rather than grittiness, or new sensitivity to light</li>
+        <li>Any change in vision that doesn't clear when you blink</li>
+        <li>A red eye that stays red, discharge, or a swollen lump on the lid</li>
+        <li>Getting steadily worse after four to six weeks of doing this properly</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    Built for one person's post-IPL, post-expression meibomian gland dysfunction, on an all-day screen schedule. General information from standard dry-eye management — not a substitute for your optometrist, who has actually looked at your glands. Take anything here that contradicts their instructions and follow theirs instead.
+    <br>Ticks and streak are stored in this browser only. Nothing is sent anywhere.
+  </footer>
+</div>
+
+<div class="toast" id="toast">Day complete. Streak +1</div>
+
+<script>
+(function(){
+  var KEY = "dryeye.v1";
+  var store = {};
+  function load(){
+    try{ store = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; }
+    catch(e){ store = {}; }
+    if(!store.days) store.days = {};
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(store)); }catch(e){}
+  }
+  function todayKey(){
+    var d = new Date();
+    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  }
+  function dateFromKey(k){ var p=k.split("-"); return new Date(+p[0], +p[1]-1, +p[2]); }
+  function dayDiff(a,b){ return Math.round((a-b)/86400000); }
+
+  load();
+  var tk = todayKey();
+  if(!store.days[tk]) store.days[tk] = {};
+  var today = store.days[tk];
+
+  var tasks = Array.prototype.slice.call(document.querySelectorAll(".task"));
+  var coreTasks = tasks.filter(function(t){ return t.dataset.core === "1"; });
+  var ringFg = document.getElementById("ringFg");
+  var ring = document.getElementById("ring");
+  var hudCount = document.getElementById("hudCount");
+  var streakN = document.getElementById("streakN");
+  var toast = document.getElementById("toast");
+  var CIRC = 2 * Math.PI * 16;
+  var wasComplete = false, firstPaint = true;
+
+  function computeStreak(){
+    var n = 0;
+    var cursor = new Date();
+    for(var i=0;i<400;i++){
+      var k = cursor.getFullYear()+"-"+String(cursor.getMonth()+1).padStart(2,"0")+"-"+String(cursor.getDate()).padStart(2,"0");
+      var d = store.days[k];
+      var done = d && coreTasks.every(function(t){ return d[t.dataset.id]; });
+      if(done){ n++; }
+      else if(i > 0){ break; }        /* today not yet finished doesn't break the streak */
+      cursor.setDate(cursor.getDate() - 1);
+    }
+    return n;
+  }
+
+  function render(){
+    var done = coreTasks.filter(function(t){ return today[t.dataset.id]; }).length;
+    var total = coreTasks.length;
+    var pct = total ? done/total : 0;
+    ringFg.setAttribute("stroke-dasharray", CIRC.toFixed(1));
+    ringFg.setAttribute("stroke-dashoffset", (CIRC*(1-pct)).toFixed(1));
+    ring.classList.toggle("done", done === total);
+    hudCount.textContent = done + " of " + total;
+    var s = computeStreak();
+    streakN.textContent = s;
+
+    var complete = done === total;
+    if(complete && !wasComplete && !firstPaint){
+      toast.classList.add("show");
+      setTimeout(function(){ toast.classList.remove("show"); }, 2600);
+    }
+    wasComplete = complete;
+    firstPaint = false;
+  }
+
+  tasks.forEach(function(t){
+    var input = t.querySelector("input");
+    var id = t.dataset.id;
+    if(today[id]){ input.checked = true; t.classList.add("on"); }
+    input.addEventListener("change", function(){
+      if(input.checked){ today[id] = 1; } else { delete today[id]; }
+      t.classList.toggle("on", input.checked);
+      store.days[tk] = today;
+      save();
+      render();
+    });
+  });
+
+  /* ---- day counter & phase ---- */
+  var dayNum = document.getElementById("dayNum");
+  var phaseLabel = document.getElementById("phaseLabel");
+  var phaseEls = Array.prototype.slice.call(document.querySelectorAll(".phase"));
+  var PHASES = [
+    ["Unclogging", "daily heat twice a day is non-negotiable right now."],
+    ["Rebuilding", "keep going — this is the stretch where people quit early."],
+    ["Holding", "once a day is fine while it's comfortable; twice the moment it isn't."]
+  ];
+
+  function renderDay(){
+    if(!store.start) store.start = tk;
+    var n = dayDiff(dateFromKey(tk), dateFromKey(store.start)) + 1;
+    if(n < 1) n = 1;
+    dayNum.innerHTML = "Day " + n + " <span>since you started</span>";
+    var idx = n <= 14 ? 0 : (n <= 56 ? 1 : 2);
+    phaseEls.forEach(function(el){ el.classList.toggle("on", +el.dataset.phase === idx); });
+    phaseLabel.innerHTML = "Phase: <b>" + PHASES[idx][0] + "</b> — " + PHASES[idx][1];
+  }
+
+  document.getElementById("resetDay").addEventListener("click", function(){
+    store.start = tk; save(); renderDay();
+  });
+
+  renderDay();
+  save();
+  render();
+})();
+</script>
