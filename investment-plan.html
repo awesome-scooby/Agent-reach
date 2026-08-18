@@ -1,0 +1,1271 @@
+<title>The 130k Question</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --paper:#F1F3F0; --card:#FBFCFA; --card-2:#E9EDE9;
+  --ink:#111F1A; --ink-2:#47574F; --ink-3:#77877E;
+  --rule:#DBE2DC; --rule-2:#C6D0C8;
+  --accent:#1B5E4A; --accent-ink:#FFFFFF; --accent-soft:#E2EDE7; --accent-line:#9EC4B4;
+  --brass:#8A5F0F; --brass-soft:#F4EBD8; --brass-line:#D9BE83;
+  --good:#197A4D; --warn:#A45B06; --crit:#AD2A20;
+  --good-soft:#E1F0E7; --warn-soft:#F8ECDC; --crit-soft:#F8E5E3;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100;
+  --s5:#e87ba4; --s6:#008300; --s7:#4a3aa7; --s8:#e34948;
+  --shadow:0 1px 2px rgba(17,31,26,.06), 0 6px 20px -12px rgba(17,31,26,.18);
+  --maxw:1000px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --paper:#0D1411; --card:#161F1A; --card-2:#1E2823;
+    --ink:#ECF2EE; --ink-2:#A6B8AE; --ink-3:#7A8B82;
+    --rule:#26332C; --rule-2:#34443B;
+    --accent:#4FBF9B; --accent-ink:#08140F; --accent-soft:#14302A; --accent-line:#2C6153;
+    --brass:#D9A63C; --brass-soft:#2C2413; --brass-line:#5C4A1E;
+    --good:#3FAE78; --warn:#D89A3A; --crit:#E5776C;
+    --good-soft:#142C20; --warn-soft:#2C2413; --crit-soft:#301A18;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+    --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 6px 20px -12px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --paper:#0D1411; --card:#161F1A; --card-2:#1E2823;
+  --ink:#ECF2EE; --ink-2:#A6B8AE; --ink-3:#7A8B82;
+  --rule:#26332C; --rule-2:#34443B;
+  --accent:#4FBF9B; --accent-ink:#08140F; --accent-soft:#14302A; --accent-line:#2C6153;
+  --brass:#D9A63C; --brass-soft:#2C2413; --brass-line:#5C4A1E;
+  --good:#3FAE78; --warn:#D89A3A; --crit:#E5776C;
+  --good-soft:#142C20; --warn-soft:#2C2413; --crit-soft:#301A18;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+  --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 6px 20px -12px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:"Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16.5px; line-height:1.6; margin:0;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:"Bricolage Grotesque","Figtree",sans-serif; text-wrap:balance; margin:0; line-height:1.12; letter-spacing:-.02em}
+h1{font-size:clamp(2.1rem,5.5vw,3.4rem); font-weight:800}
+h2{font-size:clamp(1.5rem,3.2vw,2.05rem); font-weight:700}
+h3{font-size:1.16rem; font-weight:700; letter-spacing:-.01em}
+h4{font-size:.98rem; font-weight:700}
+p{margin:0}
+a{color:var(--accent)}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+.num{font-family:"JetBrains Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums; letter-spacing:-.03em}
+.eyebrow{font-size:.7rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3); font-family:"Figtree",sans-serif}
+
+/* ---------- sticky command bar ---------- */
+.bar{
+  position:sticky; top:0; z-index:60; background:var(--card);
+  border-bottom:1px solid var(--rule); box-shadow:var(--shadow);
+}
+.bar-in{max-width:var(--maxw); margin:0 auto; padding:.55rem 1.1rem; display:flex; gap:.5rem; align-items:center; flex-wrap:wrap}
+.bar-item{display:flex; flex-direction:column; gap:1px; padding:.15rem .7rem .15rem 0; min-width:0}
+.bar-item + .bar-item{border-left:1px solid var(--rule); padding-left:.85rem}
+.bar-k{font-size:.6rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); white-space:nowrap}
+.bar-v{font-size:1.02rem; font-weight:700; line-height:1.15; white-space:nowrap}
+.bar-spacer{flex:1 1 auto}
+@media(max-width:560px){
+  .bar-in{padding:.45rem .8rem; gap:.35rem}
+  .bar-v{font-size:.9rem}
+  .bar-item + .bar-item{padding-left:.6rem}
+  .bar-item{padding-right:.5rem}
+}
+
+/* ---------- shell ---------- */
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 1.1rem 5rem}
+section{padding-top:2.6rem}
+.sec-head{display:flex; align-items:baseline; gap:.7rem; flex-wrap:wrap; margin-bottom:.35rem}
+.sec-sub{color:var(--ink-2); font-size:1.02rem; max-width:66ch; margin-bottom:1.1rem}
+
+.card{background:var(--card); border:1px solid var(--rule); border-radius:6px; padding:1.15rem 1.25rem; box-shadow:var(--shadow)}
+.card + .card{margin-top:.85rem}
+.grid{display:grid; gap:.85rem}
+@media(min-width:780px){ .g2{grid-template-columns:1fr 1fr} .g3{grid-template-columns:repeat(3,1fr)} }
+
+/* bottom line strip */
+.bl{
+  display:flex; gap:.6rem; align-items:flex-start;
+  background:var(--accent-soft); border-left:3px solid var(--accent);
+  padding:.7rem .85rem; border-radius:0 4px 4px 0; margin-bottom:.9rem;
+}
+.bl-k{font-size:.62rem; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:var(--accent); white-space:nowrap; padding-top:.22rem; flex:0 0 auto}
+.bl p{flex:1 1 auto; min-width:0}
+@media(max-width:560px){ .bl{flex-direction:column; gap:.3rem} .bl-k{padding-top:0} }
+.bl p{font-weight:600; font-size:.97rem; line-height:1.45}
+.bl.brass{background:var(--brass-soft); border-left-color:var(--brass)} .bl.brass .bl-k{color:var(--brass)}
+.bl.crit{background:var(--crit-soft); border-left-color:var(--crit)} .bl.crit .bl-k{color:var(--crit)}
+
+/* pills */
+.pill{display:inline-flex; align-items:center; gap:.34rem; font-size:.72rem; font-weight:700; padding:.16rem .5rem; border-radius:20px; border:1px solid var(--rule-2); background:var(--card-2); color:var(--ink-2); white-space:nowrap}
+.pill .dot{width:7px; height:7px; border-radius:50%; background:currentColor; flex:none}
+.pill.good{color:var(--good); background:var(--good-soft); border-color:transparent}
+.pill.warn{color:var(--warn); background:var(--warn-soft); border-color:transparent}
+.pill.crit{color:var(--crit); background:var(--crit-soft); border-color:transparent}
+.pill.acc{color:var(--accent); background:var(--accent-soft); border-color:transparent}
+.pills{display:flex; flex-wrap:wrap; gap:.35rem}
+
+ul.tight{margin:0; padding-left:1.05rem; display:flex; flex-direction:column; gap:.42rem}
+ul.tight li{padding-left:.15rem}
+ul.tight li::marker{color:var(--accent)}
+strong{font-weight:700}
+
+/* controls */
+.ctl{display:flex; flex-direction:column; gap:.3rem; padding:.5rem 0}
+.ctl-top{display:flex; justify-content:space-between; align-items:baseline; gap:.6rem}
+.ctl-lab{font-size:.87rem; font-weight:600; display:flex; align-items:center; gap:.45rem}
+.swatch{width:11px; height:11px; border-radius:2px; flex:none; border:1px solid rgba(0,0,0,.12)}
+.ctl-val{font-size:.9rem; font-weight:700; font-family:"JetBrains Mono",monospace; font-variant-numeric:tabular-nums}
+.ctl-sub{font-size:.74rem; color:var(--ink-3)}
+input[type=range]{
+  -webkit-appearance:none; appearance:none; width:100%; height:22px; background:transparent; cursor:pointer; margin:0;
+}
+input[type=range]::-webkit-slider-runnable-track{height:6px; border-radius:3px; background:var(--card-2); border:1px solid var(--rule)}
+input[type=range]::-moz-range-track{height:6px; border-radius:3px; background:var(--card-2); border:1px solid var(--rule)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:20px; height:20px; border-radius:50%; background:var(--accent); border:3px solid var(--card); box-shadow:0 1px 4px rgba(0,0,0,.3); margin-top:-8px}
+input[type=range]::-moz-range-thumb{width:20px; height:20px; border-radius:50%; background:var(--accent); border:3px solid var(--card); box-shadow:0 1px 4px rgba(0,0,0,.3)}
+input[type=range]:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px}
+input[type=range].big::-webkit-slider-runnable-track{height:10px; border-radius:5px}
+input[type=range].big::-webkit-slider-thumb{width:28px; height:28px; margin-top:-10px}
+input[type=range].big{height:30px}
+input[type=range].big::-moz-range-track{height:10px; border-radius:5px}
+input[type=range].big::-moz-range-thumb{width:28px; height:28px}
+
+.btnrow{display:flex; gap:.4rem; flex-wrap:wrap}
+button.preset{
+  font-family:inherit; font-size:.82rem; font-weight:600; padding:.42rem .75rem; border-radius:4px;
+  border:1px solid var(--rule-2); background:var(--card); color:var(--ink-2); cursor:pointer;
+}
+button.preset:hover{border-color:var(--accent-line); color:var(--ink)}
+button.preset[aria-pressed="true"]{background:var(--accent); color:var(--accent-ink); border-color:var(--accent)}
+button.preset:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.toggle{display:inline-flex; align-items:center; gap:.5rem; font-size:.87rem; font-weight:600; cursor:pointer; padding:.3rem 0}
+.toggle input{width:17px; height:17px; accent-color:var(--accent); cursor:pointer; flex:none}
+
+/* stat tiles */
+.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(135px,1fr)); background:var(--card); border:1px solid var(--rule); border-right:0; border-bottom:0; border-radius:5px; overflow:hidden}
+.tile{background:var(--card); padding:.7rem .8rem; display:flex; flex-direction:column; gap:2px; border-right:1px solid var(--rule); border-bottom:1px solid var(--rule)}
+.tile-k{font-size:.63rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3)}
+.tile-v{font-size:1.5rem; font-weight:700; font-family:"JetBrains Mono",monospace; font-variant-numeric:tabular-nums; letter-spacing:-.04em; line-height:1.1}
+.tile-n{font-size:.72rem; color:var(--ink-3); line-height:1.3}
+
+/* allocation bar */
+.allocbar{display:flex; width:100%; height:34px; gap:2px; margin:.5rem 0 .7rem}
+.allocseg{border-radius:2px; min-width:0; transition:width .18s ease}
+.legend{display:flex; flex-direction:column; gap:1px; background:var(--rule); border:1px solid var(--rule); border-radius:5px; overflow:hidden}
+.lrow{display:grid; grid-template-columns:14px 1fr auto auto; gap:.55rem; align-items:center; background:var(--card); padding:.42rem .7rem; font-size:.85rem}
+@media(max-width:560px){ .lrow{gap:.4rem; font-size:.8rem; padding:.42rem .5rem} .lrow .lamt{min-width:64px} }
+.lrow .lname{font-weight:600; min-width:0; line-height:1.3}
+.lrow .lpct,.lrow .lamt{font-family:"JetBrains Mono",monospace; font-variant-numeric:tabular-nums; font-weight:600; text-align:right}
+.lrow .lamt{color:var(--ink-2); min-width:76px}
+.lrow .lpct{min-width:44px}
+
+/* tables */
+.twrap{overflow-x:auto; border:1px solid var(--rule); border-radius:5px; background:var(--card)}
+table{border-collapse:collapse; width:100%; font-size:.855rem; min-width:540px}
+th,td{padding:.5rem .7rem; text-align:right; border-bottom:1px solid var(--rule); white-space:nowrap}
+th:first-child,td:first-child{text-align:left; white-space:normal; min-width:150px}
+thead th{font-size:.63rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3); background:var(--card-2); border-bottom:1px solid var(--rule-2); position:sticky; top:0}
+tbody tr:last-child td{border-bottom:none}
+td.n{font-family:"JetBrains Mono",monospace; font-variant-numeric:tabular-nums}
+tr.total td{font-weight:700; background:var(--card-2)}
+.pos{color:var(--good)} .neg{color:var(--crit)}
+
+/* details */
+details{border:1px solid var(--rule); border-radius:5px; background:var(--card); overflow:hidden; box-shadow:var(--shadow)}
+details + details{margin-top:.5rem}
+summary{
+  cursor:pointer; padding:.8rem 1rem; display:flex; align-items:center; gap:.7rem; flex-wrap:wrap;
+  font-weight:700; font-size:1rem; list-style:none; background:var(--card);
+}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+"; margin-left:auto; font-family:"JetBrains Mono",monospace; font-size:1.25rem; color:var(--ink-3); font-weight:400; line-height:1}
+details[open] summary::after{content:"–"}
+details[open] summary{border-bottom:1px solid var(--rule)}
+summary:hover{background:var(--card-2)}
+summary:focus-visible{outline:2px solid var(--accent); outline-offset:-2px}
+.dbody{padding:1rem; display:flex; flex-direction:column; gap:.8rem; font-size:.94rem}
+.dbody p{color:var(--ink-2)} .dbody p strong{color:var(--ink)}
+.verdict{border-left:3px solid var(--accent); background:var(--accent-soft); padding:.65rem .8rem; border-radius:0 4px 4px 0}
+.verdict .vk{font-size:.62rem; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:.2rem}
+.verdict p{color:var(--ink) !important; font-weight:500; font-size:.93rem}
+
+/* steps */
+.step{display:grid; grid-template-columns:34px 1fr; gap:.9rem; align-items:start}
+.step + .step{margin-top:.6rem}
+.stepn{
+  width:34px; height:34px; border-radius:50%; background:var(--accent); color:var(--accent-ink);
+  display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.95rem;
+  font-family:"JetBrains Mono",monospace; flex:none;
+}
+.step.brass .stepn{background:var(--brass)}
+.chk{display:flex; gap:.6rem; align-items:flex-start; padding:.45rem 0; border-bottom:1px solid var(--rule); font-size:.93rem}
+.chk:last-child{border-bottom:none}
+.chk input{width:19px; height:19px; accent-color:var(--accent); flex:none; margin-top:.15rem; cursor:pointer}
+.chk label{cursor:pointer}
+.chk input:checked + label{color:var(--ink-3); text-decoration:line-through}
+
+.grid > *, .step > *, .card > *, .dbody > *{min-width:0}
+.twrap{max-width:100%}
+svg{display:block; max-width:100%}
+.chartwrap{position:relative; overflow-x:auto}
+.tip{
+  position:absolute; pointer-events:none; opacity:0; transition:opacity .1s;
+  background:var(--ink); color:var(--paper); font-size:.76rem; padding:.45rem .6rem; border-radius:4px;
+  font-family:"JetBrains Mono",monospace; font-variant-numeric:tabular-nums; white-space:nowrap; z-index:20;
+  box-shadow:0 4px 14px rgba(0,0,0,.3); line-height:1.45;
+}
+.note{font-size:.78rem; color:var(--ink-3); line-height:1.5}
+hr.rule{border:none; border-top:1px solid var(--rule); margin:1rem 0}
+@media (prefers-reduced-motion:reduce){ *{transition:none !important; animation:none !important} }
+.skip{position:absolute; left:-9999px}
+.skip:focus{left:.5rem; top:.5rem; z-index:100; background:var(--accent); color:var(--accent-ink); padding:.5rem .8rem; border-radius:4px}
+</style>
+
+<a class="skip" href="#studio">Skip to the allocation sliders</a>
+
+<div class="bar">
+  <div class="bar-in">
+    <div class="bar-item"><span class="bar-k">Pot</span><span class="bar-v num">$130,000</span></div>
+    <div class="bar-item"><span class="bar-k">Safe / At risk</span><span class="bar-v num" id="bar-split">—</span></div>
+    <div class="bar-item"><span class="bar-k">In 12 months</span><span class="bar-v num" id="bar-12">—</span></div>
+    <div class="bar-item"><span class="bar-k">Worst case</span><span class="bar-v num" id="bar-worst">—</span></div>
+    <div class="bar-spacer"></div>
+    <span class="pill" id="bar-mode"><span class="dot"></span><span id="bar-mode-t">Balanced</span></span>
+  </div>
+</div>
+
+<div class="wrap">
+
+<header style="padding:2.4rem 0 .4rem">
+  <span class="eyebrow">Investment plan · August 2026 · Australian tax resident</span>
+  <h1 style="margin:.5rem 0 .7rem">The 130k Question</h1>
+  <p style="font-size:1.12rem; color:var(--ink-2); max-width:62ch">
+    You have $130,000, a house you might buy, and eight things you're thinking of putting money into.
+    This works out how much of it can safely go into markets — and what happens to the rest.
+  </p>
+  <div class="pills" style="margin-top:1rem">
+    <span class="pill acc"><span class="dot"></span>AU resident · PK/AU citizen</span>
+    <span class="pill">$113k salary + super</span>
+    <span class="pill">32% marginal rate</span>
+    <span class="pill">Saving ~$2k/mo</span>
+    <span class="pill warn"><span class="dot"></span>No emergency fund yet</span>
+    <span class="pill">Shariah-preferred</span>
+  </div>
+</header>
+
+<section id="start">
+  <div class="sec-head"><h2>Read this first</h2><span class="pill acc"><span class="dot"></span>60 seconds</span></div>
+  <p class="sec-sub">If you close the page after this bit, you'll still have got the five things that matter most.</p>
+
+  <div class="card">
+    <div class="bl crit">
+      <span class="bl-k">The hard part</span>
+      <p>Money you might need in 6–12 months should not be in shares. Not in the S&amp;P 500, not in Nasdaq, not in a stock fund. That isn't caution — it's arithmetic. A 12-month horizon isn't long enough to recover from a bad quarter, and the one time you'd be forced to sell is exactly when prices are down.</p>
+    </div>
+
+    <div class="grid g2">
+      <div>
+        <h3 style="margin-bottom:.5rem">The five things</h3>
+        <ul class="tight">
+          <li><strong>Build a $15k emergency fund first.</strong> Right now $130k is all you have. Without a buffer, one bad month forces you to sell investments at the worst moment.</li>
+          <li><strong>The First Home Super Saver is the best return available to you.</strong> Salary-sacrificing into it converts 32c tax into 15c tax. That's roughly a <strong>15% guaranteed gain</strong>. No market beats that reliably over 12 months.</li>
+          <li><strong>You may already have enough deposit.</strong> Under the expanded Home Guarantee Scheme, an eligible first home buyer can buy with 5% down and no LMI. On an $850k place that's ~$42.5k, not $170k.</li>
+          <li><strong>Franked dividends are genuinely special for you.</strong> At a 32% marginal rate, a fully franked Australian dividend arrives essentially tax-free. Foreign dividends don't do this.</li>
+          <li><strong>The Pakistan sleeve is a no for this money.</strong> Not because it's bad, but because the currency drag and your Australian tax residency remove nearly all the benefit. Detail in its own section below.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin-bottom:.5rem">What I'd actually do</h3>
+        <p style="font-size:.93rem; color:var(--ink-2); margin-bottom:.6rem">Short version. The full reasoning and the numbers are further down.</p>
+        <div class="twrap">
+          <table style="min-width:0">
+            <thead><tr><th>Where</th><th>Amount</th></tr></thead>
+            <tbody>
+              <tr><td>Emergency fund (HISA)</td><td class="n">$15,000</td></tr>
+              <tr><td>House deposit — cash &amp; term deposits</td><td class="n">$85,000</td></tr>
+              <tr><td>Growth sleeve — global shares</td><td class="n">$30,000</td></tr>
+              <tr><td>Pakistan / VPS</td><td class="n">$0</td></tr>
+              <tr class="total"><td>Total</td><td class="n">$130,000</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note" style="margin-top:.5rem">Plus: salary-sacrifice $15,000/yr into First Home Super Saver out of income, not out of the $130k. And check what your super is invested in — it's probably the largest single lever here and it costs nothing to change.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="you">
+  <div class="sec-head"><h2>Your numbers</h2></div>
+  <p class="sec-sub">Everything below is built on these. Adjust the ones that are wrong — the whole page recalculates.</p>
+  <div class="card">
+    <div class="grid g2">
+      <div>
+        <div class="ctl">
+          <div class="ctl-top"><span class="ctl-lab">Monthly living costs</span><span class="ctl-val" id="v-exp">$2,800</span></div>
+          <input type="range" id="s-exp" min="1200" max="5000" step="100" value="2800" aria-label="Monthly living costs">
+          <span class="ctl-sub">Drives the size of your emergency buffer.</span>
+        </div>
+        <div class="ctl">
+          <div class="ctl-top"><span class="ctl-lab">Emergency buffer</span><span class="ctl-val" id="v-buf">5 months · $14,000</span></div>
+          <input type="range" id="s-bufm" min="0" max="9" step="1" value="5" aria-label="Months of emergency buffer">
+          <span class="ctl-sub">Held in cash, outside the investment pot. Below 3 months is thin.</span>
+        </div>
+        <div class="ctl">
+          <div class="ctl-top"><span class="ctl-lab">Saving each month</span><span class="ctl-val" id="v-sav">$2,000</span></div>
+          <input type="range" id="s-sav" min="0" max="4500" step="100" value="2000" aria-label="Monthly savings">
+          <span class="ctl-sub">Take-home on $113k is roughly $7,150/mo. At $2,800 of costs, $2,000 may be understating you.</span>
+        </div>
+      </div>
+      <div>
+        <div class="tiles" style="margin-bottom:.7rem">
+          <div class="tile"><span class="tile-k">Marginal rate</span><span class="tile-v">32%</span><span class="tile-n">30% + 2% Medicare</span></div>
+          <div class="tile"><span class="tile-k">Take-home</span><span class="tile-v num">$7.2k</span><span class="tile-n">per month, approx</span></div>
+          <div class="tile"><span class="tile-k">Investable</span><span class="tile-v num" id="t-investable">$116k</span><span class="tile-n">after the buffer</span></div>
+        </div>
+        <label class="toggle"><input type="checkbox" id="t-partner"> Count partner's help toward the deposit</label>
+        <p class="note" style="margin-bottom:.5rem">On $90k + super she's also on a 32% marginal rate and also eligible for her own $50k First Home Super Saver. As a couple that's up to $100k of tax-advantaged deposit — but you said it's uncertain, so this is <strong>off by default</strong> and every headline number ignores it.</p>
+        <label class="toggle"><input type="checkbox" id="t-shariah" checked> Show Shariah-compliant products first</label>
+        <p class="note">You said "prefer Shariah but flexible", so each asset section names the compliant option and the conventional one, with the cost difference.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="floor">
+  <div class="sec-head"><h2>Before any of it</h2><span class="pill crit"><span class="dot"></span>Do these first</span></div>
+  <p class="sec-sub">Three things that outrank every allocation decision on this page. They're worth more than getting the portfolio mix right.</p>
+
+  <div class="card">
+    <div class="step">
+      <div class="stepn">1</div>
+      <div>
+        <h3>Emergency fund — <span class="num" id="f-buf">$14,000</span></h3>
+        <p style="color:var(--ink-2); font-size:.94rem; margin-top:.25rem">You told me the $130k is everything. That's the single biggest risk in your setup — bigger than any market risk. Park <span class="num" id="f-bufm">5</span> months of costs in a high-interest savings account you don't touch. Boring, and it's what stops a car repair from becoming a forced sale of shares in a down month.</p>
+      </div>
+    </div>
+    <hr class="rule">
+    <div class="step brass">
+      <div class="stepn">2</div>
+      <div>
+        <h3>First Home Super Saver — the best risk-free return you can get</h3>
+        <p style="color:var(--ink-2); font-size:.94rem; margin-top:.25rem">Salary-sacrifice up to $15,000/yr (max $50,000 total) into super, earmarked for a first home. It's taxed at 15% going in instead of your 32%. On withdrawal you pay your marginal rate minus a 30% offset — about 2%.</p>
+        <div class="twrap" style="margin-top:.7rem">
+          <table style="min-width:0">
+            <thead><tr><th>$15,000 of salary</th><th>Take as pay</th><th>Via FHSS</th></tr></thead>
+            <tbody>
+              <tr><td>Tax paid</td><td class="n">$4,800</td><td class="n">$2,250 + ~$255</td></tr>
+              <tr class="total"><td>Lands in your deposit</td><td class="n">$10,200</td><td class="n neg" style="color:var(--good)">~$12,495</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="bl brass" style="margin:.75rem 0 0">
+          <span class="bl-k">Watch out</span>
+          <p>You must apply to the ATO for a determination <em>before</em> you sign a contract to buy, and release takes a couple of weeks. Also: if you never buy a home, that money is stuck in super until you're 60. Given you're unsure about the house, that's a real cost — which is why I'd fund it from salary, not from the $130k.</p>
+        </div>
+      </div>
+    </div>
+    <hr class="rule">
+    <div class="step">
+      <div class="stepn">3</div>
+      <div>
+        <h3>Check what your super is actually invested in</h3>
+        <p style="color:var(--ink-2); font-size:.94rem; margin-top:.25rem">Most people sit in the default "Balanced" option and never look. On a 30+ year horizon, a high-growth option has historically added roughly 1–2% a year. On a balance that will run for decades, that difference is measured in hundreds of thousands. It takes ten minutes and costs nothing.</p>
+        <p style="color:var(--ink-2); font-size:.94rem; margin-top:.5rem">If you want the Shariah-compliant route here: <strong>Crescent Wealth</strong> and <strong>Hejaz</strong> both run Islamic super funds in Australia. Their fees run higher than an industry fund's, so compare the fee against the screening benefit before switching.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="studio">
+  <div class="sec-head"><h2>The allocation studio</h2><span class="pill acc"><span class="dot"></span>Live</span></div>
+  <p class="sec-sub">One dial moves everything. Start there, then fine-tune individual sleeves if you want. Every number on the page follows this.</p>
+
+  <div class="card">
+    <div class="ctl">
+      <div class="ctl-top">
+        <span class="ctl-lab" style="font-size:1rem">Risk dial — how much of this is the house?</span>
+        <span class="ctl-val" style="font-size:1.05rem" id="v-dial">Balanced</span>
+      </div>
+      <input type="range" class="big" id="s-dial" min="0" max="100" step="1" value="25" aria-label="Master risk dial">
+      <div style="display:flex; justify-content:space-between; font-size:.72rem; color:var(--ink-3); font-weight:600">
+        <span>← Buying a house soon</span><span>Not buying, investing for years →</span>
+      </div>
+    </div>
+    <div class="btnrow" style="margin-top:.6rem">
+      <button class="preset" data-dial="0">Buying within 12 months</button>
+      <button class="preset" data-dial="25">Probably buying</button>
+      <button class="preset" data-dial="55">Undecided, leaning invest</button>
+      <button class="preset" data-dial="85">Not buying — long horizon</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="allocbar" id="allocbar" role="img" aria-label="Portfolio allocation bar"></div>
+    <div class="legend" id="legend"></div>
+    <p class="note" style="margin-top:.6rem">Percentages are of your investable pot (<span class="num" id="pool-note">$116,000</span>) — the emergency buffer sits outside this and is not at risk.</p>
+
+    <details style="margin-top:.8rem">
+      <summary>Fine-tune each sleeve <span class="pill" style="font-weight:600">optional</span></summary>
+      <div class="dbody">
+        <p class="note">Move one and the others rebalance proportionally to keep the total at 100%.</p>
+        <div id="sliders"></div>
+        <hr class="rule">
+        <div class="ctl">
+          <div class="ctl-top"><span class="ctl-lab">Currency hedging on international shares</span><span class="ctl-val" id="v-hedge">0% hedged</span></div>
+          <input type="range" id="s-hedge" min="0" max="100" step="5" value="0" aria-label="Currency hedging">
+          <span class="ctl-sub">You asked me to explain this and let you choose. See the note below — then set it here.</span>
+        </div>
+        <div class="bl">
+          <span class="bl-k">Hedged or not</span>
+          <p>When global markets crash, the Australian dollar almost always falls too. If you're <strong>unhedged</strong>, that falling AUD cushions your loss — in 2008 the S&amp;P 500 lost about 55% in US dollars but only around 28% for an unhedged Australian investor. Hedging removes that cushion and costs more in fees. <strong>My call: stay unhedged</strong> unless the money is being spent in AUD within a year, in which case it shouldn't be in shares at all.</p>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Return &amp; risk assumptions <span class="pill warn"><span class="dot"></span>check these</span></summary>
+      <div class="dbody">
+        <p>Every projection depends on these. They're my estimates, not facts, and interest rates in particular move — <strong>check the current cash rate and savings account rates before you act</strong>, and change the numbers here if they're stale.</p>
+        <div class="ctl">
+          <div class="ctl-top"><span class="ctl-lab">Cash / savings rate</span><span class="ctl-val" id="v-cash">4.0%</span></div>
+          <input type="range" id="s-cash" min="1" max="7" step="0.1" value="4" aria-label="Cash rate">
+        </div>
+        <div class="ctl">
+          <div class="ctl-top"><span class="ctl-lab">Expected global share return</span><span class="ctl-val" id="v-eq">7.3%</span></div>
+          <input type="range" id="s-eq" min="3" max="12" step="0.1" value="7.3" aria-label="Expected equity return">
+          <span class="ctl-sub">Below the ~10% long-run average on purpose: US valuations are historically high, and most forecasters expect the next decade to be softer than the last.</span>
+        </div>
+        <div class="ctl">
+          <div class="ctl-top"><span class="ctl-lab">Inflation</span><span class="ctl-val" id="v-inf">2.8%</span></div>
+          <input type="range" id="s-inf" min="1" max="6" step="0.1" value="2.8" aria-label="Inflation">
+          <span class="ctl-sub">Used for the "real" (after-inflation) row.</span>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:.6rem">What this mix looks like</h3>
+    <div class="tiles">
+      <div class="tile"><span class="tile-k">Expected return</span><span class="tile-v" id="m-ret">—</span><span class="tile-n">per year, before fees &amp; tax</span></div>
+      <div class="tile"><span class="tile-k">Volatility</span><span class="tile-v" id="m-vol">—</span><span class="tile-n">typical yearly swing</span></div>
+      <div class="tile"><span class="tile-k">Income yield</span><span class="tile-v" id="m-yld">—</span><span class="tile-n" id="m-yld-n">dividends &amp; interest</span></div>
+      <div class="tile"><span class="tile-k">Weighted fees</span><span class="tile-v" id="m-fee">—</span><span class="tile-n" id="m-fee-n">per year</span></div>
+      <div class="tile"><span class="tile-k">Safe money</span><span class="tile-v" id="m-safe">—</span><span class="tile-n">cash + bonds + buffer</span></div>
+    </div>
+    <div id="m-flag" style="margin-top:.8rem"></div>
+  </div>
+</section>
+
+<section id="project">
+  <div class="sec-head"><h2>What it could be worth</h2></div>
+  <p class="sec-sub">The line is the middle outcome. The shaded band is where it lands 8 times out of 10 — the band is the honest part, because the middle outcome almost never happens exactly.</p>
+
+  <div class="card">
+    <div class="chartwrap"><div id="tip-proj" class="tip"></div><svg id="chart-proj" role="img" aria-label="Projected portfolio value over five years with an 80 percent range band"></svg></div>
+    <p class="note" style="margin-top:.5rem">Includes your <span class="num" id="p-sav">$2,000</span>/month of new savings. Assumes contributions earn the same middle return. A range this wide over 6–12 months is exactly why short-horizon money doesn't belong in shares.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:.2rem">Gross → after fees → after tax → real</h3>
+    <p class="note" style="margin-bottom:.7rem">You asked for all three layers. This is the same middle-outcome projection with each layer of cost stripped out in turn. The last row is what your money is actually worth in today's purchasing power.</p>
+    <div class="twrap">
+      <table id="tbl-layers">
+        <thead><tr><th>Layer</th><th>6 months</th><th>1 year</th><th>3 years</th><th>5 years</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="note" style="margin-top:.55rem">Tax assumes your 32% marginal rate: interest and unfranked income taxed in full, franked Australian dividends nearly free, capital gains taxed at 32% inside 12 months and 16% after (the 50% CGT discount). Selling at 11 months instead of 13 genuinely costs you double the tax on the gain.</p>
+  </div>
+</section>
+
+<section id="stress">
+  <div class="sec-head"><h2>If it goes wrong</h2><span class="pill crit"><span class="dot"></span>Stress test</span></div>
+  <p class="sec-sub">Three real crashes, applied to your current mix, in dollars. You said you'd hold through a 25% fall but lose sleep over it — so this is worth looking at while you're calm rather than during.</p>
+
+  <div class="card">
+    <div class="chartwrap"><div id="tip-stress" class="tip"></div><svg id="chart-stress" role="img" aria-label="Portfolio loss under three historical crash scenarios"></svg></div>
+    <div class="twrap" style="margin-top:.8rem">
+      <table id="tbl-stress">
+        <thead><tr><th>Scenario</th><th>Portfolio falls</th><th>You'd be left with</th><th>Deposit still intact?</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="note" style="margin-top:.55rem">Peak-to-trough falls, in Australian dollars, with the currency effect applied at your chosen hedge setting. Recovery took about 4 years after 2008, 5 months after the 2020 crash, and roughly 18 months after 2022 — which is the number that matters for a 6–12 month horizon.</p>
+  </div>
+</section>
+
+<section id="house">
+  <div class="sec-head"><h2>Deposit readiness</h2></div>
+  <p class="sec-sub">The question isn't really "how do I invest $130k" — it's "when can I buy, and does investing get me there sooner". Usually it doesn't.</p>
+
+  <div class="card">
+    <div class="grid g2">
+      <div>
+        <div class="ctl">
+          <div class="ctl-top"><span class="ctl-lab">Property price</span><span class="ctl-val" id="v-price">$850,000</span></div>
+          <input type="range" id="s-price" min="400000" max="1600000" step="25000" aria-label="Property price" value="850000">
+        </div>
+        <div class="ctl">
+          <div class="ctl-top"><span class="ctl-lab">Deposit</span><span class="ctl-val" id="v-dep">5%</span></div>
+          <input type="range" id="s-dep" min="5" max="20" step="5" value="5" aria-label="Deposit percentage">
+          <span class="ctl-sub" id="dep-note">5% needs the Home Guarantee Scheme to avoid LMI. 20% avoids it outright.</span>
+        </div>
+        <div class="ctl">
+          <div class="ctl-top"><span class="ctl-lab">Upfront costs</span><span class="ctl-val" id="v-costs">3.0%</span></div>
+          <input type="range" id="s-costs" min="0" max="6" step="0.5" value="3" aria-label="Upfront costs">
+          <span class="ctl-sub">Stamp duty, conveyancing, inspections. First-home concessions cut stamp duty sharply — in some states to zero — so drop this if that's you.</span>
+        </div>
+        <label class="toggle"><input type="checkbox" id="t-fhss" checked> Include First Home Super Saver contributions</label>
+      </div>
+      <div>
+        <div class="tiles">
+          <div class="tile"><span class="tile-k">Cash needed</span><span class="tile-v num" id="h-need">—</span><span class="tile-n">deposit + upfront costs</span></div>
+          <div class="tile"><span class="tile-k">You have now</span><span class="tile-v num" id="h-have">—</span><span class="tile-n">safe money only</span></div>
+          <div class="tile"><span class="tile-k">Ready</span><span class="tile-v" id="h-when">—</span><span class="tile-n" id="h-when-n">at current savings rate</span></div>
+        </div>
+        <div id="h-flag" style="margin-top:.8rem"></div>
+      </div>
+    </div>
+    <hr class="rule">
+    <p style="font-size:.94rem; color:var(--ink-2)"><strong style="color:var(--ink)">Only safe money counts here.</strong> I deliberately exclude the growth sleeve from your deposit total. Money in shares might be worth more when you go to buy — or 20% less. A deposit you can't count on isn't a deposit.</p>
+  </div>
+</section>
+
+<section id="assets">
+  <div class="sec-head"><h2>The eight, one by one</h2></div>
+  <p class="sec-sub">Your list, each with what it's actually done, what I expect, and a straight verdict for <em>your</em> situation. Tap to open — they're closed so the page stays short.</p>
+
+  <div class="card" style="margin-bottom:.85rem">
+    <h3 style="margin-bottom:.2rem">Past returns, side by side</h3>
+    <p class="note" style="margin-bottom:.7rem">Annualised, approximate, in Australian dollars, to end-2025. Treat as orders of magnitude, not precise figures — <strong>verify current numbers before you act</strong>. The last two columns matter more than the first: they tell you what you'd have had to sit through.</p>
+    <div class="twrap">
+      <table>
+        <thead><tr><th>Asset</th><th>10-yr p.a.</th><th>Long-run p.a.</th><th>Worst year</th><th>Worst fall</th><th>Yield</th></tr></thead>
+        <tbody>
+          <tr><td><span class="swatch" style="background:var(--s1); display:inline-block; margin-right:.4rem"></span>Money market / cash</td><td class="n">2.1%</td><td class="n">4.5%</td><td class="n pos">+0.1%</td><td class="n pos">0%</td><td class="n">4.0%</td></tr>
+          <tr><td><span class="swatch" style="background:var(--s2); display:inline-block; margin-right:.4rem"></span>Fixed income (AU bonds)</td><td class="n">2.0%</td><td class="n">5.8%</td><td class="n neg">−9.7%</td><td class="n neg">−13%</td><td class="n">4.3%</td></tr>
+          <tr><td><span class="swatch" style="background:var(--s3); display:inline-block; margin-right:.4rem"></span>Stock fund (global)</td><td class="n">11.5%</td><td class="n">8.5%</td><td class="n neg">−24%</td><td class="n neg">−35%</td><td class="n">2.0%</td></tr>
+          <tr><td><span class="swatch" style="background:var(--s4); display:inline-block; margin-right:.4rem"></span>Stocks (ASX direct)</td><td class="n">8.5%</td><td class="n">9.2%</td><td class="n neg">−38%</td><td class="n neg">−54%</td><td class="n">4.0%</td></tr>
+          <tr><td><span class="swatch" style="background:var(--s5); display:inline-block; margin-right:.4rem"></span>VPS equity (Pakistan)</td><td class="n">~3%</td><td class="n">~4%</td><td class="n neg">−60%</td><td class="n neg">−70%</td><td class="n">0%</td></tr>
+          <tr><td><span class="swatch" style="background:var(--s6); display:inline-block; margin-right:.4rem"></span>Nasdaq 100</td><td class="n">17.5%</td><td class="n">13.5%</td><td class="n neg">−41%</td><td class="n neg">−83%</td><td class="n">0.6%</td></tr>
+          <tr><td><span class="swatch" style="background:var(--s7); display:inline-block; margin-right:.4rem"></span>S&amp;P 500</td><td class="n">14.0%</td><td class="n">10.3%</td><td class="n neg">−37%</td><td class="n neg">−57%</td><td class="n">1.2%</td></tr>
+          <tr><td><span class="swatch" style="background:var(--s8); display:inline-block; margin-right:.4rem"></span>Other equity &amp; markets</td><td class="n">5.5%</td><td class="n">7.0%</td><td class="n neg">−45%</td><td class="n neg">−60%</td><td class="n">2.5%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note" style="margin-top:.55rem">Notice the Nasdaq row: the best 10-year number on the page sits next to the worst fall on the page. Those two facts are the same fact.</p>
+  </div>
+
+  <details>
+    <summary><span class="swatch" style="background:var(--s1)"></span>Money market fund <span class="pill good"><span class="dot"></span>Yes — core holding</span></summary>
+    <div class="dbody">
+      <p><strong>What it is.</strong> A fund holding very short-term government and bank paper. In practice, for you, an Australian high-interest savings account or term deposit does the same job with less complexity and government guarantee protection up to $250k per institution.</p>
+      <p><strong>Past.</strong> Tracked the cash rate — roughly 2.1% a year over the past decade, dragged down by the near-zero years, and around 4% recently. It has never had a negative year. That's the whole point of it.</p>
+      <p><strong>Forward.</strong> Whatever the cash rate does. Rates have been falling, so assume this drifts down rather than up. After 32% tax and ~2.8% inflation, a 4% return is roughly break-even in real terms — you're preserving purchasing power, not growing it.</p>
+      <p><strong>Shariah option.</strong> Conventional savings interest is riba. The compliant equivalents are an Islamic cash-management fund (Hejaz and Crescent both offer one) or a sukuk fund. Expect slightly lower net returns after their higher fees.</p>
+      <div class="verdict"><span class="vk">My recommendation</span><p>This is the single most important holding you own right now, and that's not a compliment to it — it's a statement about your timeline. Every dollar you might need within 12 months belongs here. Shop the rate: the gap between a lazy account and a competitive one is often more than 1%, which on $85,000 is $850 a year for one afternoon's work.</p></div>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="swatch" style="background:var(--s2)"></span>Fixed income fund <span class="pill warn"><span class="dot"></span>Small role only</span></summary>
+    <div class="dbody">
+      <p><strong>What it is.</strong> A bond fund — lending to governments and companies. Prices move opposite to interest rates, which is why it isn't the same as cash.</p>
+      <p><strong>Past.</strong> Poor: about 2.0% a year over ten years, because 2022 delivered −9.7%, the worst bond year in modern history. That year taught a lot of "conservative" investors that bonds are not cash.</p>
+      <p><strong>Forward.</strong> Better than the past decade, roughly 4.5%, because you're now buying at higher starting yields. The real case for bonds is that they usually rise when shares crash — but "usually" failed in 2022, when both fell together.</p>
+      <p><strong>Shariah option.</strong> Sukuk rather than conventional bonds — SPSK is the best-known listed sukuk fund. Returns are broadly comparable, fees a bit higher, and the market is thinner.</p>
+      <div class="verdict"><span class="vk">My recommendation</span><p>For a 6–12 month horizon, skip it — a term deposit pays similarly with no chance of a capital loss. Bonds only earn their place once your horizon stretches past three years, where they genuinely cushion an equity crash. Keep this at zero for now and revisit if the house doesn't happen.</p></div>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="swatch" style="background:var(--s3)"></span>Stock fund (diversified) <span class="pill acc"><span class="dot"></span>Best growth option</span></summary>
+    <div class="dbody">
+      <p><strong>What it is.</strong> One fund holding thousands of companies across many countries. The boring, correct default for almost everyone.</p>
+      <p><strong>Past.</strong> About 11.5% a year over the last decade in AUD, against a long-run average nearer 8.5%. The last ten years were unusually good — don't extrapolate them.</p>
+      <p><strong>Forward.</strong> I'd plan on roughly 7%, with a bad year meaning −25% or worse. Fees of 0.18% or under, and it needs no maintenance from you.</p>
+      <p><strong>Shariah option.</strong> A screened global or US fund — HLAL or SPUS — at around 0.5% a year. That's roughly 0.3% more than the conventional equivalent. On a $30,000 sleeve that's about $90 a year, which is a reasonable price if compliance matters to you. Both hold more tech and no financials, so expect them to behave more like the Nasdaq than the broad market.</p>
+      <div class="verdict"><span class="vk">My recommendation</span><p>If you only own one growth asset, make it this. It's where I'd put the entire $30,000 growth sleeve. The single-fund approach also suits you practically — nothing to rebalance, nothing to check, no temptation to fiddle.</p></div>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="swatch" style="background:var(--s4)"></span>Individual stocks <span class="pill crit"><span class="dot"></span>Not with this money</span></summary>
+    <div class="dbody">
+      <p><strong>What it is.</strong> Picking companies yourself. Australian shares carry franking credits, which genuinely matter at your tax rate.</p>
+      <p><strong>Past.</strong> The ASX 200 returned about 8.5% a year over ten years including dividends. But that's the index — the average individual stock-picker reliably does worse, and the gap is mostly bad timing rather than bad picks.</p>
+      <p><strong>Forward.</strong> Around 8% for the index including franking. For a concentrated personal portfolio, the range of outcomes is enormous in both directions.</p>
+      <div class="verdict"><span class="vk">My recommendation</span><p>No — not for money attached to a house. If you want individual stocks, treat it as a separate hobby allocation of a few thousand dollars you're willing to lose entirely, and keep it strictly out of the deposit maths. The franking benefit is real, but you can get it through a low-cost Australian index fund without taking single-company risk.</p></div>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="swatch" style="background:var(--s5)"></span>VPS equity (Pakistan) <span class="pill crit"><span class="dot"></span>No</span></summary>
+    <div class="dbody">
+      <p><strong>What it is.</strong> The equity sub-fund of a Pakistani Voluntary Pension Scheme. Its main attraction is a tax credit — and that credit is worth nothing to you, because you're an Australian tax resident.</p>
+      <p><strong>Past.</strong> The KSE-100 has had spectacular runs in rupee terms. In Australian dollars, most of it evaporates: the rupee has lost a large share of its value against hard currency over the past decade. A 13% rupee return minus roughly 9–10% depreciation leaves you around 3%, with equity-level volatility and a −70% drawdown in your history.</p>
+      <p><strong>The tax problem.</strong> As an Australian resident you're taxed on worldwide income. Gains in a Pakistani fund are assessable here, with no franking credits and messy foreign-income reporting. You'd take emerging-market risk, currency risk and administrative burden, and hand back the one benefit that justified the product.</p>
+      <div class="verdict"><span class="vk">My recommendation</span><p>Don't open one. The VPS is a good product for someone paying Pakistani income tax and retiring in Pakistan. That isn't you. If you want emerging-market exposure, take it through a diversified EM fund on the ASX — same growth thesis, a fraction of the friction. If you already had a balance I'd say leave it and stop contributing; since you don't, simply don't start.</p></div>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="swatch" style="background:var(--s6)"></span>Nasdaq 100 <span class="pill warn"><span class="dot"></span>Small slice at most</span></summary>
+    <div class="dbody">
+      <p><strong>What it is.</strong> The 100 largest non-financial companies on the Nasdaq — overwhelmingly big tech. Roughly half the index sits in a handful of names.</p>
+      <p><strong>Past.</strong> The best long-run number on this page: about 17.5% a year over ten years, 13.5% since 1985. And the worst drawdown on this page: −83% from 2000, which took 15 years to recover. It also fell about 35% in 2022 alone.</p>
+      <p><strong>Forward.</strong> Perhaps 8.5%, with volatility around 20% — meaning a 30% fall is an ordinary event, not a disaster scenario.</p>
+      <div class="verdict"><span class="vk">My recommendation</span><p>Cap it at 15% of your growth sleeve — around $4,500 — and understand you already own these companies inside any global fund, so this is a concentration bet on top, not diversification. Absolutely not for deposit money. On the ASX, NDQ charges 0.48%; the US-listed QQQM is cheaper but brings W-8BEN paperwork and US estate-tax exposure above US$60,000.</p></div>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="swatch" style="background:var(--s7)"></span>S&amp;P 500 <span class="pill acc"><span class="dot"></span>Yes — as the core</span></summary>
+    <div class="dbody">
+      <p><strong>What it is.</strong> The 500 largest US companies. About 10.3% a year since 1957, and roughly 14% a year over the last decade in AUD.</p>
+      <p><strong>Forward.</strong> I'd use 7.3%, not the historical 10%. US valuations are well above their long-run average, and starting valuation is the single best predictor of the next decade's returns. It could beat that. Planning on it would be optimistic.</p>
+      <p><strong>How to hold it.</strong> IVV on the ASX costs 0.04% and settles in AUD — that's the easy, correct answer for you. The US-listed VOO is fractionally cheaper but not worth the paperwork at this size. Unhedged, for the reasons in the hedging note above.</p>
+      <p><strong>Shariah option.</strong> SPUS screens the S&amp;P 500 for compliance at about 0.49%. It has tracked reasonably closely, though it skews further into tech because financials are excluded.</p>
+      <div class="verdict"><span class="vk">My recommendation</span><p>This is the backbone of the growth sleeve — around 60% of it, roughly $18,000. Buy it once, don't watch it, and mentally write it off for at least five years. If the house happens, this money doesn't move; you buy the house with the cash sleeve and leave this alone.</p></div>
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="swatch" style="background:var(--s8)"></span>Other equity &amp; markets <span class="pill"><span class="dot"></span>Optional</span></summary>
+    <div class="dbody">
+      <p><strong>What it is.</strong> Emerging markets, small companies, Europe, Japan — everything outside the US large-cap story.</p>
+      <p><strong>Past.</strong> Disappointing: emerging markets returned about 5.5% a year over the decade while the US ran away. That's precisely why some people think the next decade favours them — cheaper starting valuations.</p>
+      <p><strong>Forward.</strong> About 7%, with higher volatility than developed markets and real political risk.</p>
+      <div class="verdict"><span class="vk">My recommendation</span><p>Optional, and only if you're genuinely not buying a house. A global fund already gives you a slice of these. If you want to lean in deliberately, cap it at 10–15% of the growth sleeve. This is also where any Pakistan exposure should live if you want it — through a diversified EM fund, not a single-country one.</p></div>
+    </div>
+  </details>
+</section>
+
+<section id="income">
+  <div class="sec-head"><h2>Making the money work — dividends</h2></div>
+  <p class="sec-sub">You asked whether you can get income from this. Yes, and in Australia there's a genuine edge — but it isn't where most people think it is.</p>
+
+  <div class="card">
+    <div class="bl">
+      <span class="bl-k">The edge</span>
+      <p>Australian companies have already paid 30% tax on their profits before paying you. You get a credit for that tax. At your 32% marginal rate, a fully franked dividend arrives <strong>almost entirely tax-free</strong> — you owe about 2c in the dollar. The same dollar of interest from a savings account costs you 32c.</p>
+    </div>
+
+    <div class="twrap">
+      <table>
+        <thead><tr><th>$1,000 of income from…</th><th>Tax you pay</th><th>You keep</th></tr></thead>
+        <tbody>
+          <tr><td>Savings account interest</td><td class="n">$320</td><td class="n">$680</td></tr>
+          <tr><td>Bond fund distribution</td><td class="n">$320</td><td class="n">$680</td></tr>
+          <tr><td>US / global dividend</td><td class="n">$320</td><td class="n">$680</td></tr>
+          <tr class="total"><td>Fully franked Australian dividend</td><td class="n">~$21</td><td class="n" style="color:var(--good)">~$979</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note" style="margin-top:.5rem">The franked row includes the grossed-up credit. This is why Australian investors on middle-to-high incomes hold local shares even when global returns look better.</p>
+
+    <hr class="rule">
+    <h3 style="margin-bottom:.4rem">Three things to be honest about</h3>
+    <ul class="tight" style="font-size:.94rem">
+      <li><strong>A dividend isn't free money.</strong> The share price drops by roughly the dividend when it's paid. What's genuinely valuable here is the franking credit, not the dividend itself.</li>
+      <li><strong>High-yield funds have a cost.</strong> Funds like VHY yield 5–6% mostly franked, but they concentrate into banks and miners and have generally lagged the broad index on total return. You're trading growth for income.</li>
+      <li><strong>For a 12-month horizon it's not worth it.</strong> A savings account pays a similar headline rate with zero chance of capital loss. Chasing a 5% franked yield while risking a 20% capital fall is a bad trade when the money is spoken for.</li>
+    </ul>
+    <div class="verdict" style="margin-top:.8rem"><span class="vk">My recommendation</span><p>Don't build an income portfolio yet. If the house doesn't happen and this becomes long-term money, then adding an Australian index fund for the franking makes real sense — perhaps a quarter of the growth sleeve. Reinvest the dividends automatically; at your stage you want compounding, not cash flow. Note that franking has no Shariah-compliant equivalent, since compliant funds screen out the banks that generate most of it — that's a genuine cost of the compliant route, worth roughly 1% a year after tax.</p></div>
+  </div>
+</section>
+
+<section id="plan">
+  <div class="sec-head"><h2>The plan, in order</h2></div>
+  <p class="sec-sub">Genuinely sequential — each step assumes the one above is done. Tick them off as you go.</p>
+
+  <div class="card">
+    <h4 class="eyebrow" style="margin-bottom:.5rem">This week</h4>
+    <div class="chk"><input type="checkbox" id="c1"><label for="c1">Open a high-interest savings account and move <span class="num" id="c-buf">$14,000</span> in. Label it "do not touch".</label></div>
+    <div class="chk"><input type="checkbox" id="c2"><label for="c2">Log into your super. Find out which investment option you're in and what it costs.</label></div>
+    <div class="chk"><input type="checkbox" id="c3"><label for="c3">Check the current cash rate and the best savings rates available — the assumptions on this page need verifying.</label></div>
+    <div class="chk"><input type="checkbox" id="c4"><label for="c4">Decide honestly: is the house a real 12-month plan, or a someday? Everything else follows from that one answer.</label></div>
+
+    <hr class="rule">
+    <h4 class="eyebrow" style="margin-bottom:.5rem">This month</h4>
+    <div class="chk"><input type="checkbox" id="c5"><label for="c5">Set up salary sacrifice for First Home Super Saver — up to $15,000 this financial year. Confirm your fund accepts it.</label></div>
+    <div class="chk"><input type="checkbox" id="c6"><label for="c6">Ladder the house sleeve: split it across 3, 6 and 12-month term deposits so cash keeps coming available.</label></div>
+    <div class="chk"><input type="checkbox" id="c7"><label for="c7">Open one brokerage account. One is enough — CommSec, Stake or Pearler for ASX-listed funds.</label></div>
+    <div class="chk"><input type="checkbox" id="c8"><label for="c8">Buy the growth sleeve in a single transaction. Don't drip it in over months; at this size the brokerage costs outweigh the benefit.</label></div>
+    <div class="chk"><input type="checkbox" id="c9"><label for="c9">Talk to your partner about whether you're buying together. It changes the deposit maths more than any allocation choice on this page.</label></div>
+
+    <hr class="rule">
+    <h4 class="eyebrow" style="margin-bottom:.5rem">Ongoing</h4>
+    <div class="chk"><input type="checkbox" id="c10"><label for="c10">Automate the monthly transfer the day after payday. Don't rely on willpower at month's end.</label></div>
+    <div class="chk"><input type="checkbox" id="c11"><label for="c11">Look at the portfolio once every six months. Not weekly — checking more often makes people sell at the bottom.</label></div>
+    <div class="chk"><input type="checkbox" id="c12"><label for="c12">If you're within 3 months of buying, move nothing new into shares and don't sell existing holdings in a down market unless you must.</label></div>
+  </div>
+</section>
+
+<section id="verdict">
+  <div class="sec-head"><h2>What I'd do, and why</h2></div>
+  <div class="card">
+    <div class="bl">
+      <span class="bl-k">Bottom line</span>
+      <p>Keep about 88% of the $130k completely safe, put roughly $30k into a single global share fund and forget it exists, and put your monthly savings through First Home Super Saver rather than into the market. The tax saving is a bigger, more certain win than anything the allocation choice can deliver over 12 months.</p>
+    </div>
+
+    <p style="color:var(--ink-2); margin-bottom:.8rem">The reason isn't pessimism about markets — it's that your timeline and your certainty don't match. You're moderately comfortable with risk, which would normally justify a decent equity allocation. But "might buy a house, depends on prices" plus "this $130k is everything" plus "no emergency fund" is a combination where the downside of being wrong is severe and the upside is modest. On $100,000 over 12 months, the difference between cash and a 100% share portfolio is maybe $4,000 in the good case — and $25,000 in the bad one.</p>
+
+    <p style="color:var(--ink-2); margin-bottom:.8rem">The $30,000 growth sleeve exists because you're not certain about the house, and because if you hold nothing but cash for three years while markets run, you'll feel it. Size it so that a 30% fall — around $9,000 — is annoying rather than plan-changing. That's the number I'd anchor to.</p>
+
+    <p style="color:var(--ink-2); margin-bottom:.8rem">On the Pakistan side: your dual citizenship is genuinely useful for family, property and options later in life. It is not useful for this portfolio. Australian tax residency strips the VPS of its point, and the rupee has historically taken back most of what Pakistani markets gave. Keep that connection for things it's actually good for.</p>
+
+    <p style="color:var(--ink-2)">And the thing I'd most want you to act on isn't an investment at all: find out what your super is invested in this week. On a 30-year horizon that single decision will very likely outweigh everything else discussed here.</p>
+
+    <hr class="rule">
+    <div class="bl crit" style="margin:0">
+      <span class="bl-k">Please read</span>
+      <p>This is general information, not personal financial advice, and I'm not licensed to give it. It doesn't account for everything about your circumstances. The return figures are estimates and the historical numbers are approximate — verify them before acting. Rules for the First Home Super Saver, the Home Guarantee Scheme, stamp duty concessions and tax rates change, and eligibility conditions apply that I can't confirm for you. Before committing $130,000, a one-off session with a licensed financial adviser is worth the few hundred dollars — and given the FHSS timing traps, so is a quick word with an accountant.</p>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+
+var POT = 130000;
+
+var A = [
+  {k:"cash", n:"Money market / cash",      c:"--s1", ret:4.0,  vol:0.5,  yld:4.0, fee:0.00, fr:0,    fx:0, safe:1},
+  {k:"bond", n:"Fixed income fund",        c:"--s2", ret:4.6,  vol:5.5,  yld:4.3, fee:0.10, fr:0,    fx:0, safe:1},
+  {k:"glob", n:"Stock fund (global)",      c:"--s3", ret:7.2,  vol:14.0, yld:2.0, fee:0.18, fr:0,    fx:1, safe:0},
+  {k:"au",   n:"Stocks (ASX direct)",      c:"--s4", ret:8.0,  vol:20.0, yld:4.0, fee:0.10, fr:0.85, fx:0, safe:0},
+  {k:"pk",   n:"VPS equity (Pakistan)",    c:"--s5", ret:6.5,  vol:28.0, yld:0.0, fee:1.75, fr:0,    fx:0, safe:0},
+  {k:"ndx",  n:"Nasdaq 100",               c:"--s6", ret:8.5,  vol:20.0, yld:0.6, fee:0.48, fr:0,    fx:1, safe:0},
+  {k:"spx",  n:"S&P 500",                  c:"--s7", ret:7.3,  vol:13.5, yld:1.2, fee:0.04, fr:0,    fx:1, safe:0},
+  {k:"oth",  n:"Other equity & markets",   c:"--s8", ret:7.0,  vol:17.0, yld:2.5, fee:0.30, fr:0.10, fx:1, safe:0}
+];
+
+var ANCHOR_LO = [95,5,0,0,0,0,0,0];
+var ANCHOR_HI = [5,5,35,5,0,10,30,10];
+
+var CORR = (function(){
+  var m=[[1,0,0,0,0,0,0,0],
+         [0,1,.15,.10,.05,.10,.15,.10],
+         [0,.15,1,.75,.30,.90,.97,.85],
+         [0,.10,.75,1,.25,.60,.70,.70],
+         [0,.05,.30,.25,1,.20,.25,.40],
+         [0,.10,.90,.60,.20,1,.93,.70],
+         [0,.15,.97,.70,.25,.93,1,.78],
+         [0,.10,.85,.70,.40,.70,.78,1]];
+  return m;
+})();
+
+var SCEN = [
+  {n:"2008 crisis", sub:"Peak to trough, ~16 months", fx:0.35,
+   loc:[.03,.08,-.42,-.54,-.72,-.49,-.55,-.55], pkAud:1, rec:"~4 years to recover"},
+  {n:"2020 covid crash", sub:"33 days", fx:0.21,
+   loc:[0,.02,-.32,-.37,-.40,-.28,-.34,-.33], pkAud:1, rec:"~5 months to recover"},
+  {n:"2022 rate shock", sub:"Calendar year", fx:0.07,
+   loc:[.01,-.13,-.24,-.16,-.35,-.35,-.25,-.22], pkAud:1, rec:"~18 months to recover"}
+];
+
+var S = {
+  exp:2800, bufm:5, sav:2000, dial:25, hedge:0,
+  cash:4.0, eq:7.3, inf:2.8,
+  price:850000, dep:5, costs:3,
+  partner:false, shariah:true, fhss:true,
+  w:ANCHOR_LO.slice(), custom:false
+};
+
+function $(id){ return document.getElementById(id); }
+function money(v){ return "$" + Math.round(v).toLocaleString("en-AU"); }
+function moneyK(v){
+  var sign = v < 0 ? "\u2212" : "", a = Math.abs(v);
+  if(a >= 1000000) return sign + "$" + (a/1000000).toFixed(2) + "m";
+  if(a >= 1000) return sign + "$" + Math.round(a/1000) + "k";
+  return sign + "$" + Math.round(a);
+}
+function pct(v,d){ var a=Math.abs(v).toFixed(d===undefined?1:d); return (v<0?"\u2212":"") + a + "%"; }
+function cvar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || "#888"; }
+
+/* ---------- model ---------- */
+function buffer(){ return S.exp * S.bufm; }
+function pool(){ return Math.max(0, POT - buffer()); }
+
+function lerpW(d){
+  var t = d/100, out = [];
+  for(var i=0;i<8;i++) out.push(ANCHOR_LO[i] + (ANCHOR_HI[i]-ANCHOR_LO[i])*t);
+  return out;
+}
+
+var SHARIAH_FEE = {cash:0.10, bond:0.55, glob:0.50, au:0.10, pk:1.75, ndx:0.55, spx:0.49, oth:0.55};
+function assetFee(i){
+  return S.shariah ? SHARIAH_FEE[A[i].k] : A[i].fee;
+}
+
+function assetRet(i){
+  var a = A[i];
+  if(a.k === "cash") return S.cash;
+  if(a.k === "bond") return S.cash + 0.6;
+  if(a.k === "spx")  return S.eq;
+  if(a.k === "glob") return S.eq - 0.1;
+  if(a.k === "ndx")  return S.eq + 1.2;
+  if(a.k === "au")   return S.eq + 0.7;
+  if(a.k === "oth")  return S.eq - 0.3;
+  return a.ret;
+}
+
+function portfolio(){
+  var w = S.w, r=0, y=0, f=0, safe=0, vol2=0, i, j;
+  for(i=0;i<8;i++){
+    var wi = w[i]/100;
+    r += wi*assetRet(i); y += wi*A[i].yld; f += wi*assetFee(i);
+    if(A[i].safe) safe += wi;
+    for(j=0;j<8;j++) vol2 += wi*(w[j]/100)*A[i].vol*A[j].vol*CORR[i][j];
+  }
+  return { ret:r, yld:y, fee:f, vol:Math.sqrt(Math.max(0,vol2)), safeFrac:safe };
+}
+
+function incomeTaxRate(){
+  var w = S.w, fr=0, tot=0;
+  for(var i=0;i<8;i++){ var inc = (w[i]/100)*A[i].yld; tot += inc; fr += inc*A[i].fr; }
+  if(tot <= 0) return 0.32;
+  var frac = fr/tot;
+  return frac*0.029 + (1-frac)*0.32;
+}
+
+function fvContrib(months, monthlyRate){
+  var m = S.sav * (S.partner ? 2 : 1);
+  if(monthlyRate === 0) return m*months;
+  return m * (Math.pow(1+monthlyRate, months) - 1) / monthlyRate;
+}
+
+/* value of the invested pot at t years, at a given annual rate, plus contributions */
+function project(t, rate){
+  var P = pool();
+  var mr = Math.pow(1+rate/100, 1/12) - 1;
+  return P*Math.pow(1+rate/100, t) + fvContrib(Math.round(t*12), mr);
+}
+
+function contributed(t){ return S.sav*(S.partner?2:1)*Math.round(t*12); }
+
+function layers(t){
+  var p = portfolio();
+  var gross = project(t, p.ret);
+  var afterFee = project(t, p.ret - p.fee);
+
+  var taxInc = incomeTaxRate();
+  var netRate = p.yld*(1-taxInc) + (p.ret - p.fee - p.yld);
+  var v = project(t, netRate);
+  var basis = pool() + contributed(t);
+  var gain = Math.max(0, v - basis);
+  var cgt = (t <= 1) ? 0.32 : 0.16;
+  var afterTax = v - gain*cgt;
+
+  var real = afterTax / Math.pow(1+S.inf/100, t);
+  return { gross:gross, fee:afterFee, tax:afterTax, real:real };
+}
+
+function band(t){
+  var p = portfolio();
+  var P = pool();
+  var r = Math.log(1 + p.ret/100), sg = p.vol/100;
+  var m = r - sg*sg/2;
+  var med = P*Math.exp(m*t);
+  var lo = P*Math.exp(m*t - 1.2816*sg*Math.sqrt(t));
+  var hi = P*Math.exp(m*t + 1.2816*sg*Math.sqrt(t));
+  var mr = Math.pow(1+p.ret/100, 1/12) - 1;
+  var c = fvContrib(Math.round(t*12), mr);
+  var cz = 1.2816*sg*Math.sqrt(t/2);
+  return { med:med+c, lo:lo + c*Math.exp(-cz), hi:hi + c*Math.exp(cz) };
+}
+
+function scenario(s){
+  var w = S.w, tot = 0;
+  for(var i=0;i<8;i++){
+    var loc = s.loc[i];
+    var fxadj = A[i].fx * s.fx * (1 - S.hedge/100);
+    var aud = (1+loc)*(1+fxadj) - 1;
+    tot += (w[i]/100)*aud;
+  }
+  return tot;
+}
+
+function safeMoney(){
+  var w = S.w;
+  return pool() * ((w[0]+w[1])/100);
+}
+
+function fhssNet(months){
+  if(!S.fhss) return 0;
+  var perYear = 12495 * (S.partner ? 2 : 1);
+  var capTotal = 41650 * (S.partner ? 2 : 1);
+  return Math.min(capTotal, perYear * months/12);
+}
+
+function houseCalc(){
+  var need = S.price*(S.dep/100) + S.price*(S.costs/100);
+  var have = safeMoney() + fhssNet(0);
+  var monthly = S.sav * (S.partner ? 2 : 1);
+  var months = -1;
+  for(var m=0; m<=120; m++){
+    if(safeMoney() + monthly*m + fhssNet(m) >= need){ months = m; break; }
+  }
+  return { need:need, have:have, months:months, monthly:monthly };
+}
+
+/* ---------- render ---------- */
+function renderAlloc(){
+  var bar = $("allocbar"), leg = $("legend"), p = pool();
+  bar.innerHTML = ""; leg.innerHTML = "";
+  for(var i=0;i<8;i++){
+    if(S.w[i] > 0.05){
+      var d = document.createElement("div");
+      d.className = "allocseg";
+      d.style.width = S.w[i] + "%";
+      d.style.background = "var(" + A[i].c + ")";
+      d.title = A[i].n + " " + S.w[i].toFixed(1) + "%";
+      bar.appendChild(d);
+    }
+    var row = document.createElement("div");
+    row.className = "lrow";
+    if(S.w[i] < 0.05) row.style.opacity = ".42";
+    row.innerHTML = '<span class="swatch" style="background:var(' + A[i].c + ')"></span>' +
+      '<span class="lname">' + A[i].n + '</span>' +
+      '<span class="lpct">' + S.w[i].toFixed(1) + '%</span>' +
+      '<span class="lamt">' + money(p*S.w[i]/100) + '</span>';
+    leg.appendChild(row);
+  }
+  $("pool-note").textContent = money(p);
+}
+
+function renderSliders(){
+  var host = $("sliders");
+  if(host.childElementCount === 0){
+    for(var i=0;i<8;i++){
+      var d = document.createElement("div");
+      d.className = "ctl";
+      d.innerHTML = '<div class="ctl-top"><span class="ctl-lab"><span class="swatch" style="background:var(' + A[i].c + ')"></span>' +
+        A[i].n + '</span><span class="ctl-val" id="wv' + i + '"></span></div>' +
+        '<input type="range" id="ws' + i + '" min="0" max="100" step="1" aria-label="' + A[i].n + ' weight">';
+      host.appendChild(d);
+      (function(idx){
+        $("ws"+idx).addEventListener("input", function(e){ setWeight(idx, +e.target.value); });
+      })(i);
+    }
+  }
+  for(var j=0;j<8;j++){
+    $("ws"+j).value = Math.round(S.w[j]);
+    $("wv"+j).textContent = S.w[j].toFixed(1) + "%  ·  " + money(pool()*S.w[j]/100);
+  }
+}
+
+function setWeight(idx, val){
+  var rest = 100 - val, cur = 0, i;
+  for(i=0;i<8;i++) if(i!==idx) cur += S.w[i];
+  var next = [];
+  for(i=0;i<8;i++){
+    if(i===idx) next.push(val);
+    else next.push(cur > 0 ? S.w[i]/cur*rest : rest/7);
+  }
+  S.w = next; S.custom = true;
+  update();
+}
+
+function dialLabel(d){
+  if(d < 12) return "Fortress";
+  if(d < 35) return "Balanced";
+  if(d < 60) return "Growth-leaning";
+  if(d < 82) return "Growth";
+  return "Aggressive";
+}
+
+function renderMetrics(){
+  var p = portfolio();
+  $("m-ret").textContent = pct(p.ret);
+  $("m-vol").textContent = pct(p.vol);
+  $("m-yld").textContent = pct(p.yld);
+  $("m-fee").textContent = pct(p.fee, 2);
+  $("m-fee-n").textContent = money(pool()*p.fee/100) + "/yr" + (S.shariah ? " · Shariah pricing" : " · conventional");
+  var safeDollars = pool()*p.safeFrac + buffer();
+  $("m-safe").textContent = Math.round(safeDollars/POT*100) + "%";
+  $("m-yld-n").textContent = money(pool()*p.yld/100) + " a year, pre-tax";
+
+  var growth = pool()*(1-p.safeFrac);
+  var flag = $("m-flag"), html = "", gf = 1 - p.safeFrac;
+  if(gf > 0.45){
+    html = '<div class="bl crit" style="margin:0"><span class="bl-k">Too risky for a deposit</span><p>' +
+      money(growth) + ' is exposed to markets. A bad year here means losing around ' + money(growth*0.28) +
+      '. If the house is a real 12-month plan, this mix puts it at risk.</p></div>';
+  } else if(gf > 0.15){
+    html = '<div class="bl" style="margin:0"><span class="bl-k">Reasonable</span><p>' +
+      money(growth) + ' at risk, ' + money(pool()*p.safeFrac + buffer()) +
+      ' safe. A bad year costs you roughly ' + money(growth*0.28) + ' on paper — recoverable if you are not forced to sell.</p></div>';
+  } else {
+    html = '<div class="bl brass" style="margin:0"><span class="bl-k">Very defensive</span><p>Almost nothing at risk. Correct if you are buying within 12 months. If you are not, you are giving up roughly ' +
+      money(pool()*0.03) + ' a year in expected return to avoid volatility you could afford.</p></div>';
+  }
+  flag.innerHTML = html;
+
+  $("bar-split").textContent = moneyK(pool()*p.safeFrac + buffer()) + " / " + moneyK(growth);
+  var one = layers(1);
+  $("bar-12").textContent = moneyK(one.tax + buffer()*(1 + S.cash/100*0.68));
+  var worst = Math.min(scenario(SCEN[0]), scenario(SCEN[1]), scenario(SCEN[2]));
+  $("bar-worst").textContent = moneyK(pool()*worst);
+  $("bar-mode-t").textContent = S.custom ? "Custom" : dialLabel(S.dial);
+}
+
+function renderLayers(){
+  var ts = [0.5,1,3,5], rows = [
+    {k:"Gross", f:function(l){return l.gross;}, note:""},
+    {k:"After fees", f:function(l){return l.fee;}},
+    {k:"After tax", f:function(l){return l.tax;}},
+    {k:"After inflation (real)", f:function(l){return l.real;}}
+  ];
+  var start = pool();
+  var tb = $("tbl-layers").querySelector("tbody");
+  tb.innerHTML = "";
+  rows.forEach(function(r, ri){
+    var tr = document.createElement("tr");
+    if(ri === 3) tr.className = "total";
+    var h = "<td>" + r.k + "</td>";
+    ts.forEach(function(t){
+      var v = r.f(layers(t));
+      var invested = start + contributed(t);
+      var d = v - invested;
+      var cls = d >= 0 ? "pos" : "neg";
+      h += '<td class="n">' + money(v) + ' <span class="' + cls + '" style="font-size:.78em">' +
+           (d>=0?"+":"−") + moneyK(Math.abs(d)) + '</span></td>';
+    });
+    tr.innerHTML = h;
+    tb.appendChild(tr);
+  });
+}
+
+function renderStress(){
+  var tb = $("tbl-stress").querySelector("tbody");
+  tb.innerHTML = "";
+  var h = houseCalc();
+  SCEN.forEach(function(s){
+    var r = scenario(s);
+    var loss = pool()*r;
+    var left = pool() + loss;
+    var safeLeft = pool() * (S.w[0]/100*(1+s.loc[0]) + S.w[1]/100*(1+s.loc[1]));
+    var ok = safeLeft >= h.need;
+    var tr = document.createElement("tr");
+    tr.innerHTML = "<td>" + s.n + '<div style="font-size:.76em;color:var(--ink-3)">' + s.rec + "</div></td>" +
+      '<td class="n neg">' + pct(r*100) + "</td>" +
+      '<td class="n">' + money(left) + "</td>" +
+      "<td>" + (ok ? '<span class="pill good"><span class="dot"></span>Yes — deposit is in cash</span>'
+                   : '<span class="pill crit"><span class="dot"></span>No — short by ' + money(h.need-safeLeft) + "</span>") + "</td>";
+    tb.appendChild(tr);
+  });
+}
+
+function renderHouse(){
+  var h = houseCalc();
+  $("h-need").textContent = money(h.need);
+  $("h-have").textContent = money(h.have);
+  if(h.months === 0){ $("h-when").textContent = "Now"; $("h-when-n").textContent = "you already have enough"; }
+  else if(h.months < 0){ $("h-when").textContent = "10+ yrs"; $("h-when-n").textContent = "not reachable at this savings rate"; }
+  else {
+    $("h-when").textContent = h.months < 12 ? h.months + " mo" : (h.months/12).toFixed(1) + " yrs";
+    $("h-when-n").textContent = "at " + money(h.monthly) + "/month";
+  }
+
+  var f = $("h-flag"), html;
+  if(h.months === 0){
+    html = '<div class="bl" style="margin:0"><span class="bl-k">You are there</span><p>Your safe money already covers the deposit and costs. The question is no longer "how do I grow this" — it is whether you want to buy at this price. Investing the deposit from here adds risk without adding much.</p></div>';
+  } else if(h.months > 0 && h.months <= 18){
+    html = '<div class="bl brass" style="margin:0"><span class="bl-k">Close</span><p>About ' + h.months + ' months away. Over that window markets are a coin flip, so keep this money in cash and let the savings rate do the work. Investing to close an 18-month gap is how people end up buying nothing.</p></div>';
+  } else {
+    html = '<div class="bl" style="margin:0"><span class="bl-k">Some way off</span><p>' + (h.months<0? "Beyond ten years" : "About " + (h.months/12).toFixed(1) + " years") + ' at this price. That is long enough that investing genuinely helps — either lower the target price, raise the savings rate, or accept this is long-term money and shift the risk dial up.</p></div>';
+  }
+  f.innerHTML = html;
+  $("dep-note").textContent = S.dep <= 5
+    ? "5% needs the Home Guarantee Scheme to avoid LMI — worth checking your eligibility, it removes a huge hurdle."
+    : (S.dep < 20 ? S.dep + "% means lenders mortgage insurance unless you qualify for a guarantee scheme." : "20% avoids lenders mortgage insurance outright.");
+}
+
+/* ---------- charts ---------- */
+function chartProj(){
+  var svg = $("chart-proj"), tip = $("tip-proj");
+  var host = svg.parentElement;
+  var W = Math.max(320, host.clientWidth), H = 300;
+  var mL = 58, mR = 14, mT = 14, mB = 34;
+  var iw = W-mL-mR, ih = H-mT-mB;
+  var N = 61, pts = [];
+  for(var i=0;i<N;i++){
+    var t = i/12;
+    pts.push(i===0 ? {t:0, med:pool(), lo:pool(), hi:pool()} : Object.assign({t:t}, band(t)));
+  }
+  var maxV = 0, minV = Infinity;
+  pts.forEach(function(p){ maxV = Math.max(maxV, p.hi); minV = Math.min(minV, p.lo); });
+  maxV *= 1.04; minV = Math.min(minV*0.97, pool()*0.9);
+  var x = function(t){ return mL + (t/5)*iw; };
+  var y = function(v){ return mT + ih - (v-minV)/(maxV-minV)*ih; };
+
+  var ink3 = cvar("--ink-3"), rule = cvar("--rule"), acc = cvar("--accent");
+  var s = '';
+  /* grid + y labels */
+  var steps = 5;
+  for(var g=0; g<=steps; g++){
+    var v = minV + (maxV-minV)*g/steps, yy = y(v);
+    s += '<line x1="'+mL+'" x2="'+(W-mR)+'" y1="'+yy.toFixed(1)+'" y2="'+yy.toFixed(1)+'" stroke="'+rule+'" stroke-width="1"/>';
+    s += '<text x="'+(mL-8)+'" y="'+(yy+4).toFixed(1)+'" text-anchor="end" font-size="11" fill="'+ink3+'" font-family="JetBrains Mono, monospace">'+moneyK(v)+'</text>';
+  }
+  /* x labels */
+  [0,1,2,3,4,5].forEach(function(yr){
+    s += '<text x="'+x(yr).toFixed(1)+'" y="'+(H-12)+'" text-anchor="middle" font-size="11" fill="'+ink3+'" font-family="Figtree, sans-serif">'+(yr===0?"now":yr+"y")+'</text>';
+  });
+  /* band */
+  var up = '', dn = '';
+  pts.forEach(function(p,i){ up += (i?"L":"M") + x(p.t).toFixed(1) + " " + y(p.hi).toFixed(1) + " "; });
+  for(var j=pts.length-1;j>=0;j--){ dn += "L" + x(pts[j].t).toFixed(1) + " " + y(pts[j].lo).toFixed(1) + " "; }
+  s += '<path d="'+up+dn+'Z" fill="'+acc+'" fill-opacity="0.14"/>';
+  /* median */
+  var md = '';
+  pts.forEach(function(p,i){ md += (i?"L":"M") + x(p.t).toFixed(1) + " " + y(p.med).toFixed(1) + " "; });
+  s += '<path d="'+md+'" fill="none" stroke="'+acc+'" stroke-width="2" stroke-linejoin="round"/>';
+  /* start marker */
+  s += '<circle cx="'+x(0).toFixed(1)+'" cy="'+y(pool()).toFixed(1)+'" r="4.5" fill="'+acc+'" stroke="'+cvar("--card")+'" stroke-width="2"/>';
+  /* 1y marker */
+  var b1 = band(1);
+  s += '<line x1="'+x(1).toFixed(1)+'" x2="'+x(1).toFixed(1)+'" y1="'+mT+'" y2="'+(mT+ih)+'" stroke="'+ink3+'" stroke-width="1" stroke-dasharray="3 3"/>';
+  s += '<circle cx="'+x(1).toFixed(1)+'" cy="'+y(b1.med).toFixed(1)+'" r="4.5" fill="'+acc+'" stroke="'+cvar("--card")+'" stroke-width="2"/>';
+  s += '<text x="'+(x(1)+7).toFixed(1)+'" y="'+(mT+13)+'" font-size="10.5" fill="'+ink3+'" font-family="Figtree, sans-serif" font-weight="600">1 year</text>';
+  s += '<rect id="proj-hit" x="'+mL+'" y="'+mT+'" width="'+iw+'" height="'+ih+'" fill="transparent"/>';
+  s += '<line id="proj-cross" x1="0" x2="0" y1="'+mT+'" y2="'+(mT+ih)+'" stroke="'+cvar("--ink-2")+'" stroke-width="1" opacity="0"/>';
+
+  svg.setAttribute("viewBox","0 0 "+W+" "+H);
+  svg.setAttribute("width", W); svg.setAttribute("height", H);
+  svg.innerHTML = s;
+
+  var hit = $("proj-hit"), cross = $("proj-cross");
+  function move(ev){
+    var r = svg.getBoundingClientRect();
+    var cx = (ev.touches ? ev.touches[0].clientX : ev.clientX) - r.left;
+    var sx = W / r.width;
+    var px = cx*sx;
+    var t = Math.max(0, Math.min(5, (px-mL)/iw*5));
+    var i = Math.round(t*12), p = pts[Math.max(0,Math.min(N-1,i))];
+    cross.setAttribute("x1", x(p.t)); cross.setAttribute("x2", x(p.t)); cross.setAttribute("opacity","1");
+    var mo = Math.round(p.t*12);
+    tip.innerHTML = "<b>" + (mo===0?"today":(mo<12? mo+" months" : (p.t%1===0? p.t+" years" : p.t.toFixed(1)+" years"))) + "</b><br>" +
+      "middle&nbsp; " + money(p.med) + "<br>" +
+      "range&nbsp;&nbsp; " + money(p.lo) + " – " + money(p.hi);
+    tip.style.opacity = "1";
+    var lx = x(p.t)/sx, ly = y(p.med)/sx;
+    tip.style.left = Math.min(Math.max(6, lx+12), r.width-190) + "px";
+    tip.style.top = Math.max(4, ly-58) + "px";
+  }
+  hit.addEventListener("mousemove", move);
+  hit.addEventListener("touchmove", function(e){ move(e); e.preventDefault(); }, {passive:false});
+  hit.addEventListener("mouseleave", function(){ tip.style.opacity="0"; cross.setAttribute("opacity","0"); });
+  $("p-sav").textContent = money(S.sav*(S.partner?2:1));
+}
+
+function chartStress(){
+  var svg = $("chart-stress"), tip = $("tip-stress");
+  var host = svg.parentElement;
+  var W = Math.max(320, host.clientWidth);
+  var rowH = 52, mT = 26, mB = 8, mL = 108, mR = 76;
+  var H = mT + SCEN.length*rowH + mB;
+  var iw = W-mL-mR;
+  var vals = SCEN.map(function(s){ return scenario(s); });
+  var worst = Math.min.apply(null, vals.concat([-0.05]));
+  var scale = function(v){ return Math.abs(v)/Math.abs(worst)*iw; };
+  var crit = cvar("--crit"), ink3 = cvar("--ink-3"), ink = cvar("--ink"), rule = cvar("--rule");
+  var s = '<text x="'+mL+'" y="14" font-size="10.5" fill="'+ink3+'" font-family="Figtree, sans-serif" font-weight="700" letter-spacing="1">LOSS ON '+moneyK(pool())+' INVESTED</text>';
+  SCEN.forEach(function(sc, i){
+    var yv = mT + i*rowH + 8;
+    var w = scale(vals[i]);
+    s += '<text x="'+(mL-10)+'" y="'+(yv+16)+'" text-anchor="end" font-size="12" fill="'+ink+'" font-family="Figtree, sans-serif" font-weight="600">'+sc.n+'</text>';
+    s += '<text x="'+(mL-10)+'" y="'+(yv+29)+'" text-anchor="end" font-size="10" fill="'+ink3+'" font-family="Figtree, sans-serif">'+sc.sub+'</text>';
+    s += '<line x1="'+mL+'" x2="'+(W-mR)+'" y1="'+(yv+34)+'" y2="'+(yv+34)+'" stroke="'+rule+'"/>';
+    s += '<rect class="sbar" data-i="'+i+'" x="'+mL+'" y="'+yv+'" width="'+Math.max(2,w).toFixed(1)+'" height="24" rx="4" fill="'+crit+'" fill-opacity="0.9"/>';
+    s += '<text x="'+(mL+Math.max(2,w)+8).toFixed(1)+'" y="'+(yv+17)+'" font-size="12.5" fill="'+ink+'" font-family="JetBrains Mono, monospace" font-weight="700">'+moneyK(pool()*vals[i])+'</text>';
+  });
+  svg.setAttribute("viewBox","0 0 "+W+" "+H);
+  svg.setAttribute("width", W); svg.setAttribute("height", H);
+  svg.innerHTML = s;
+
+  Array.prototype.forEach.call(svg.querySelectorAll(".sbar"), function(el){
+    el.addEventListener("mouseenter", function(ev){
+      var i = +el.getAttribute("data-i"), r = svg.getBoundingClientRect();
+      var br = el.getBoundingClientRect();
+      tip.innerHTML = "<b>"+SCEN[i].n+"</b><br>portfolio&nbsp; "+pct(vals[i]*100)+"<br>loss&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "+money(pool()*vals[i])+"<br>"+SCEN[i].rec;
+      tip.style.opacity = "1";
+      tip.style.left = Math.min(br.left - r.left + 12, r.width-200) + "px";
+      tip.style.top = (br.top - r.top - 66) + "px";
+    });
+    el.addEventListener("mouseleave", function(){ tip.style.opacity="0"; });
+  });
+}
+
+/* ---------- wiring ---------- */
+function update(){
+  if(!S.custom) S.w = lerpW(S.dial);
+  $("v-exp").textContent = money(S.exp);
+  $("v-buf").textContent = S.bufm + (S.bufm===1?" month · ":" months · ") + money(buffer());
+  $("v-sav").textContent = money(S.sav);
+  $("v-dial").textContent = S.custom ? "Custom" : dialLabel(S.dial);
+  $("v-hedge").textContent = S.hedge + "% hedged";
+  $("v-cash").textContent = pct(S.cash);
+  $("v-eq").textContent = pct(S.eq);
+  $("v-inf").textContent = pct(S.inf);
+  $("v-price").textContent = money(S.price);
+  $("v-dep").textContent = S.dep + "%";
+  $("v-costs").textContent = S.costs.toFixed(1) + "%";
+  $("t-investable").textContent = moneyK(pool());
+  $("f-buf").textContent = money(buffer());
+  $("f-bufm").textContent = S.bufm;
+  $("c-buf").textContent = money(buffer());
+
+  Array.prototype.forEach.call(document.querySelectorAll(".preset"), function(b){
+    b.setAttribute("aria-pressed", (!S.custom && +b.dataset.dial === S.dial) ? "true" : "false");
+  });
+
+  renderAlloc(); renderSliders(); renderMetrics(); renderLayers(); renderStress(); renderHouse();
+  chartProj(); chartStress();
+}
+
+function bind(id, key, mult){
+  var el = $(id);
+  el.addEventListener("input", function(e){ S[key] = +e.target.value * (mult||1); update(); });
+}
+bind("s-exp","exp"); bind("s-bufm","bufm"); bind("s-sav","sav");
+bind("s-hedge","hedge"); bind("s-cash","cash"); bind("s-eq","eq"); bind("s-inf","inf");
+bind("s-price","price"); bind("s-dep","dep"); bind("s-costs","costs");
+
+$("s-dial").addEventListener("input", function(e){ S.dial = +e.target.value; S.custom = false; update(); });
+Array.prototype.forEach.call(document.querySelectorAll(".preset"), function(b){
+  b.addEventListener("click", function(){ S.dial = +b.dataset.dial; S.custom = false; $("s-dial").value = S.dial; update(); });
+});
+$("t-partner").addEventListener("change", function(e){ S.partner = e.target.checked; update(); });
+$("t-shariah").addEventListener("change", function(e){ S.shariah = e.target.checked; update(); });
+$("t-fhss").addEventListener("change", function(e){ S.fhss = e.target.checked; update(); });
+
+var rt;
+window.addEventListener("resize", function(){ clearTimeout(rt); rt = setTimeout(function(){ chartProj(); chartStress(); }, 140); });
+if(window.matchMedia){
+  var mq = window.matchMedia("(prefers-color-scheme: dark)");
+  if(mq.addEventListener) mq.addEventListener("change", function(){ setTimeout(function(){ chartProj(); chartStress(); }, 60); });
+}
+
+update();
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ chartProj(); chartStress(); });
+})();
+</script>
