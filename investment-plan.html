@@ -275,12 +275,14 @@ hr.rule{border:none; border-top:1px solid var(--rule); margin:1rem 0}
 
     <div class="grid g2">
       <div>
-        <h3 style="margin-bottom:.5rem">The five things</h3>
+        <h3 style="margin-bottom:.5rem">The seven things</h3>
         <ul class="tight">
           <li><strong>Build a $15k emergency fund first.</strong> Right now $130k is all you have. Without a buffer, one bad month forces you to sell investments at the worst moment.</li>
           <li><strong>The First Home Super Saver is the best return available to you.</strong> Salary-sacrificing into it converts 32c tax into 15c tax. That's roughly a <strong>15% guaranteed gain</strong>. No market beats that reliably over 12 months.</li>
           <li><strong>You may already have enough deposit.</strong> Under the expanded Home Guarantee Scheme, an eligible first home buyer can buy with 5% down and no LMI. On an $850k place that's ~$42.5k, not $170k.</li>
           <li><strong>Franked dividends are genuinely special for you.</strong> At a 32% marginal rate, a fully franked Australian dividend arrives essentially tax-free. Foreign dividends don't do this.</li>
+          <li><strong>Your deposit isn't the constraint — your borrowing power is.</strong> On $113k alone you can likely borrow around $510k, so a Perth median house at $850k is out of reach no matter how well you invest. Applying with your partner roughly doubles that ceiling. That one decision matters more than every allocation choice here.</li>
+          <li><strong>If you buy, an offset account beats shares.</strong> A dollar in offset saves you the mortgage rate, tax-free — worth about 8.8% pre-tax at your marginal rate. That's more than shares are expected to return, with none of the risk.</li>
           <li><strong>The Pakistan sleeve is a no for this money.</strong> Not because it's bad, but because the currency drag and your Australian tax residency remove nearly all the benefit. Detail in its own section below.</li>
         </ul>
       </div>
@@ -478,11 +480,36 @@ hr.rule{border:none; border-top:1px solid var(--rule); margin:1rem 0}
   </div>
 
   <div class="card">
+    <div class="ctl">
+      <div class="ctl-top"><span class="ctl-lab" style="font-size:1rem">Your horizon — how long until you need this money?</span><span class="ctl-val" style="font-size:1.05rem" id="v-hz">14 months</span></div>
+      <input type="range" class="big" id="s-hz" min="3" max="120" step="1" value="14" aria-label="Investment horizon in months">
+      <div style="display:flex; justify-content:space-between; font-size:.72rem; color:var(--ink-3); font-weight:600">
+        <span>3 months</span><span>5 years</span><span>10 years</span>
+      </div>
+    </div>
+    <div class="btnrow" style="margin:.5rem 0 .9rem">
+      <button class="preset hz" data-hz="6">6 months</button>
+      <button class="preset hz" data-hz="12">12 months</button>
+      <button class="preset hz" data-hz="14">14 months</button>
+      <button class="preset hz" data-hz="24">2 years</button>
+      <button class="preset hz" data-hz="60">5 years</button>
+      <button class="preset hz" data-hz="120">10 years</button>
+    </div>
+    <div class="tiles">
+      <div class="tile"><span class="tile-k">Middle outcome</span><span class="tile-v num" id="hz-med">—</span><span class="tile-n" id="hz-med-n">after fees and tax</span></div>
+      <div class="tile"><span class="tile-k">Bad case (1 in 10)</span><span class="tile-v num" id="hz-lo">—</span><span class="tile-n">or worse</span></div>
+      <div class="tile"><span class="tile-k">Good case (1 in 10)</span><span class="tile-v num" id="hz-hi">—</span><span class="tile-n">or better</span></div>
+      <div class="tile"><span class="tile-k">Chance of a loss</span><span class="tile-v" id="hz-loss">—</span><span class="tile-n">ending below what you put in</span></div>
+    </div>
+    <div id="hz-flag" style="margin-top:.8rem"></div>
+  </div>
+
+  <div class="card">
     <h3 style="margin-bottom:.2rem">Gross → after fees → after tax → real</h3>
     <p class="note" style="margin-bottom:.7rem">You asked for all three layers. This is the same middle-outcome projection with each layer of cost stripped out in turn. The last row is what your money is actually worth in today's purchasing power.</p>
     <div class="twrap">
       <table id="tbl-layers">
-        <thead><tr><th>Layer</th><th>6 months</th><th>1 year</th><th>3 years</th><th>5 years</th></tr></thead>
+        <thead><tr><th>Layer</th><th>6 months</th><th>1 year</th><th id="lay-hz">14 months</th><th>3 years</th><th>5 years</th></tr></thead>
         <tbody></tbody>
       </table>
     </div>
@@ -540,6 +567,233 @@ hr.rule{border:none; border-top:1px solid var(--rule); margin:1rem 0}
     </div>
     <hr class="rule">
     <p style="font-size:.94rem; color:var(--ink-2)"><strong style="color:var(--ink)">Only safe money counts here.</strong> I deliberately exclude the growth sleeve from your deposit total. Money in shares might be worth more when you go to buy — or 20% less. A deposit you can't count on isn't a deposit.</p>
+  </div>
+</section>
+
+<section id="odds">
+  <div class="sec-head"><h2>The odds, not just the average</h2><span class="pill acc"><span class="dot"></span>5,000 simulations</span></div>
+  <p class="sec-sub">A single projected number is the least useful thing in finance. This runs your mix through five thousand possible market paths and counts how often each outcome happens.</p>
+
+  <div class="card">
+    <h3 style="margin-bottom:.5rem">Where you land at <span id="odds-hz">14 months</span></h3>
+    <div class="chartwrap"><div id="tip-dist" class="tip"></div><svg id="chart-dist" role="img" aria-label="Distribution of simulated outcomes"></svg></div>
+    <div class="twrap" style="margin-top:.8rem">
+      <table id="tbl-cases">
+        <thead><tr><th>Case</th><th>Happens</th><th>You end with</th><th>vs money in</th><th>What it means</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:.5rem">Chance of having the deposit in time</h3>
+    <div class="tiles">
+      <div class="tile"><span class="tile-k">At your horizon</span><span class="tile-v" id="od-goal">—</span><span class="tile-n" id="od-goal-n">of simulations reach the cash you need</span></div>
+      <div class="tile"><span class="tile-k">If you went all cash</span><span class="tile-v" id="od-cash">—</span><span class="tile-n">certainty, but no growth</span></div>
+      <div class="tile"><span class="tile-k">If you went all shares</span><span class="tile-v" id="od-eq">—</span><span class="tile-n">higher ceiling, real chance of falling short</span></div>
+    </div>
+    <div id="od-flag" style="margin-top:.8rem"></div>
+    <p class="note" style="margin-top:.6rem">Simulated with your mix's expected return and volatility, using a lognormal random walk. Real markets have fatter tails than this model — treat the bad case as optimistic rather than worst possible.</p>
+  </div>
+</section>
+
+<section id="mortgage">
+  <div class="sec-head"><h2>What you can actually borrow</h2><span class="pill warn"><span class="dot"></span>Read this one</span></div>
+  <p class="sec-sub">This turned out to be the most important number in the whole plan, and it isn't about investing at all.</p>
+
+  <div class="card">
+    <div class="bl crit">
+      <span class="bl-k">The constraint</span>
+      <p>On $113k alone, your borrowing capacity — not your deposit — is what limits the house you can buy. You could have a perfect deposit and still not be approved for the loan. Buying with your partner roughly doubles it. That single decision moves your ceiling more than every allocation choice on this page combined.</p>
+    </div>
+
+    <div class="grid g2">
+      <div>
+        <div class="ctl">
+          <div class="ctl-top"><span class="ctl-lab">Mortgage rate</span><span class="ctl-val" id="v-mrate">6.0%</span></div>
+          <input type="range" id="s-mrate" min="3" max="10" step="0.1" value="6" aria-label="Mortgage rate">
+          <span class="ctl-sub">Lenders assess you at this rate plus a 3% buffer, which is why capacity feels low.</span>
+        </div>
+        <label class="toggle"><input type="checkbox" id="t-couple"> Apply with your partner ($90k + super)</label>
+        <p class="note">Turning this on changes almost every number below.</p>
+      </div>
+      <div>
+        <div class="tiles">
+          <div class="tile"><span class="tile-k">Max loan</span><span class="tile-v num" id="mg-loan">—</span><span class="tile-n">assessed with the buffer</span></div>
+          <div class="tile"><span class="tile-k">Price ceiling</span><span class="tile-v num" id="mg-ceil">—</span><span class="tile-n">loan + your deposit</span></div>
+          <div class="tile"><span class="tile-k">Repayment</span><span class="tile-v num" id="mg-rep">—</span><span class="tile-n">per month, 30 years</span></div>
+          <div class="tile"><span class="tile-k">Total interest</span><span class="tile-v num" id="mg-int">—</span><span class="tile-n">over the full term</span></div>
+        </div>
+      </div>
+    </div>
+    <div id="mg-flag" style="margin-top:.9rem"></div>
+
+    <hr class="rule">
+    <h3 style="margin-bottom:.4rem">The offset account changes the whole investing question</h3>
+    <p style="font-size:.94rem; color:var(--ink-2); margin-bottom:.7rem">Once you have a mortgage, every dollar sitting in an offset account saves you the mortgage rate — and that saving is <strong>tax-free</strong>, because you aren't earning income, you're avoiding interest. To match it in the share market you'd need to earn considerably more, then pay tax on it.</p>
+    <div class="twrap">
+      <table id="tbl-offset">
+        <thead><tr><th>Option</th><th>Return</th><th>After tax</th><th>Risk</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="verdict" style="margin-top:.8rem"><span class="vk">What this means for you</span><p>If you buy, the investing question largely dissolves. Money in the offset beats the expected after-tax return on shares, with zero volatility and complete liquidity. Most people with a mortgage and a moderate risk appetite should fill the offset before buying shares in a taxable account. That is a genuinely unusual situation and it is worth knowing before you commit.</p></div>
+  </div>
+</section>
+
+<section id="rentbuy">
+  <div class="sec-head"><h2>Buy, or rent and invest?</h2></div>
+  <p class="sec-sub">You said you might never buy. That's a legitimate strategy, not a failure — but it only works if you actually invest the difference. Here's the honest comparison.</p>
+
+  <div class="card">
+    <div class="btnrow" style="margin-bottom:.8rem">
+      <button class="preset city" data-city="perth">Perth — where you live</button>
+      <button class="preset city" data-city="melbourne">Melbourne — where you'd like to</button>
+      <button class="preset" id="btn-afford">Set price to what I can borrow</button>
+    </div>
+    <div class="twrap">
+      <table id="tbl-city">
+        <thead><tr><th>&nbsp;</th><th>Perth</th><th>Melbourne</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="note" style="margin-top:.55rem">Approximate figures — median prices, duty thresholds and yields all move, so verify before acting. The relocation row is my estimate of a realistic interstate move including a gap between jobs.</p>
+  </div>
+
+  <div class="card">
+    <div class="grid g2">
+      <div>
+        <div class="ctl">
+          <div class="ctl-top"><span class="ctl-lab">Your rent</span><span class="ctl-val" id="v-rent">$520/wk</span></div>
+          <input type="range" id="s-rent" min="250" max="1200" step="10" value="520" aria-label="Weekly rent">
+          <span class="ctl-sub" id="rent-note">$27,040 a year.</span>
+        </div>
+        <div class="ctl">
+          <div class="ctl-top"><span class="ctl-lab">House price growth</span><span class="ctl-val" id="v-hgrowth">5.0%</span></div>
+          <input type="range" id="s-hgrowth" min="0" max="10" step="0.25" value="5" aria-label="House price growth">
+          <span class="ctl-sub">The single most sensitive assumption here. Long-run Australian growth has been around 5–7%, but Melbourne has been near flat for years while Perth ran hard.</span>
+        </div>
+        <div class="ctl">
+          <div class="ctl-top"><span class="ctl-lab">Ownership costs</span><span class="ctl-val" id="v-owncost">1.2%</span></div>
+          <input type="range" id="s-owncost" min="0.4" max="2.5" step="0.1" value="1.2" aria-label="Ownership costs">
+          <span class="ctl-sub">Rates, insurance, strata and maintenance, per year, as a share of the property's value. Renters pay none of this.</span>
+        </div>
+      </div>
+      <div>
+        <div class="tiles">
+          <div class="tile"><span class="tile-k">Break-even</span><span class="tile-v" id="rb-be">—</span><span class="tile-n">when buying overtakes renting</span></div>
+          <div class="tile"><span class="tile-k">Wealth at 10 yrs — buy</span><span class="tile-v num" id="rb-b10">—</span><span class="tile-n">equity after selling costs</span></div>
+          <div class="tile"><span class="tile-k">Wealth at 10 yrs — rent</span><span class="tile-v num" id="rb-r10">—</span><span class="tile-n">portfolio value</span></div>
+        </div>
+        <div id="rb-flag" style="margin-top:.8rem"></div>
+      </div>
+    </div>
+    <div class="chartwrap" style="margin-top:1rem"><div id="tip-rb" class="tip"></div><svg id="chart-rb" role="img" aria-label="Wealth over twenty years, buying versus renting and investing"></svg></div>
+    <p class="note" style="margin-top:.5rem">Both paths start from the same $130k and the same monthly savings. The renter invests the deposit, the stamp duty and any month where owning would have cost more than renting. The buyer's wealth is home equity net of 2.5% selling costs, plus anything they could still save.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:.5rem">The honest scorecard</h3>
+    <div class="grid g2">
+      <div>
+        <h4 style="margin-bottom:.4rem; color:var(--accent)">Where buying genuinely wins</h4>
+        <ul class="tight" style="font-size:.92rem">
+          <li><strong>Leverage.</strong> Your deposit controls a property worth many times it. Nobody will lend you half a million dollars at 6% to buy index funds. If prices rise 5%, you gain 5% of the whole property, not 5% of your deposit — that multiplier is the real argument for buying.</li>
+          <li><strong>Forced saving.</strong> A mortgage makes you build equity whether you feel like it or not. Most people save far more as owners than as renters.</li>
+          <li><strong>No capital gains tax</strong> on your main residence — a genuinely large exemption over decades.</li>
+          <li><strong>Security.</strong> No lease ending, no inspections, no landlord selling.</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="margin-bottom:.4rem; color:var(--brass)">Where renting and investing wins</h4>
+        <ul class="tight" style="font-size:.92rem">
+          <li><strong>Liquidity.</strong> You can sell shares on a Tuesday. Selling a house takes months and about 2.5%.</li>
+          <li><strong>Mobility.</strong> At a 1-in-4 chance of leaving Australia, this is worth real money — see the section below.</li>
+          <li><strong>No transaction drag.</strong> Buying and selling a house costs 5–8% all-in. Buying an ETF costs $10.</li>
+          <li><strong>Diversification.</strong> Buying puts your entire net worth into one asset, in one suburb, in one city, funded by debt.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="bl brass" style="margin:.9rem 0 0">
+      <span class="bl-k">The catch</span>
+      <p>Rent-and-invest beats buying on paper far more often than it does in practice, for one reason: most renters don't invest the difference. They spend it. If you genuinely will not maintain the discipline over twenty years, buying wins by default — not because the maths says so, but because the mortgage enforces the saving for you.</p>
+    </div>
+  </div>
+</section>
+
+<section id="waiting">
+  <div class="sec-head"><h2>What waiting actually costs</h2></div>
+  <p class="sec-sub">You asked about delaying the decision — say, investing for 14 months and revisiting. This prices that choice in both directions rather than assuming it goes badly.</p>
+
+  <div class="card">
+    <div class="twrap">
+      <table id="tbl-wait">
+        <thead><tr><th>If you wait <span id="wait-hz">14 months</span> and…</th><th>Price becomes</th><th>Deposit needed</th><th>You'd have</th><th>Loan needed</th><th>Can you borrow it?</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div id="wait-flag" style="margin-top:.85rem"></div>
+    <p class="note" style="margin-top:.6rem">Deposit needed moves with the property price. Your savings keep accumulating either way, and the portfolio grows at the middle outcome for your current mix. Rising prices hurt you twice — a bigger deposit and a bigger loan — which is why waiting is not free even when markets are kind.</p>
+  </div>
+</section>
+
+<section id="timing">
+  <div class="sec-head"><h2>Can you time it?</h2><span class="pill crit"><span class="dot"></span>Straight answer</span></div>
+  <p class="sec-sub">You asked for timing forecasts for buying versus investing. I'm going to be direct with you rather than give you a number I'd be making up.</p>
+
+  <div class="card">
+    <div class="bl crit">
+      <span class="bl-k">No</span>
+      <p>Nobody can reliably forecast house prices or share markets over one to two years — not me, not economists, not the bank forecasts you'll read. Anyone giving you a confident 12-month number is guessing with a chart attached. What I can give you is what's actually knowable, which turns out to be more useful.</p>
+    </div>
+
+    <h3 style="margin-bottom:.5rem">What we do know</h3>
+    <ul class="tight" style="font-size:.94rem">
+      <li><strong>Time in the market beats timing it, on the evidence.</strong> Studies of perfect-timing versus buy-immediately consistently show the gap is small, and that waiting for a better entry usually costs more than it saves — because markets rise in most years.</li>
+      <li><strong>Your binding constraint is borrowing capacity, not price forecasts.</strong> If rates fall, your capacity rises — but so does everyone else's, which pushes prices up. Falling rates are not the buying opportunity people expect.</li>
+      <li><strong>Perth and Melbourne have moved very differently.</strong> Perth has run hard recently while Melbourne has been broadly flat for several years. That's an argument for looking at Melbourne on relative value — but "it hasn't gone up lately" has never been a reliable forecast that it will.</li>
+      <li><strong>The two things you control are worth more than the forecast:</strong> your savings rate and your borrowing capacity. Both respond to your decisions. Neither requires predicting anything.</li>
+    </ul>
+
+    <hr class="rule">
+    <h3 style="margin-bottom:.5rem">A rule instead of a forecast</h3>
+    <p style="font-size:.94rem; color:var(--ink-2); margin-bottom:.7rem">Since you can't forecast, set conditions in advance and act when they're met. This removes the decision from the moment, which is when people get it wrong.</p>
+    <div class="step"><div class="stepn">1</div><div><strong>Buy when</strong> you and your partner have both confirmed you're doing this together, your combined borrowing capacity covers the property, and you've held the deposit in cash for at least three months. Not before — regardless of what prices are doing.</div></div>
+    <div class="step"><div class="stepn">2</div><div><strong>Keep investing when</strong> the house is more than two years away or genuinely undecided. Set the monthly amount and don't change it based on headlines.</div></div>
+    <div class="step brass"><div class="stepn">3</div><div><strong>Revisit on a date, not on a feeling</strong> — put a reminder 14 months out. Decide then with fresh numbers rather than reacting between now and then.</div></div>
+  </div>
+</section>
+
+<section id="leaving">
+  <div class="sec-head"><h2>The 1-in-4 you mentioned</h2><span class="pill crit"><span class="dot"></span>Expensive if missed</span></div>
+  <p class="sec-sub">You put the chance of leaving Australia at around one in four in the next five years. That's high enough to change the recommendation, and it interacts with a tax rule most people don't know about.</p>
+
+  <div class="card">
+    <div class="bl crit">
+      <span class="bl-k">The trap</span>
+      <p>If you own an Australian home and <strong>sell it while you are a foreign resident for tax purposes</strong>, you can lose the main residence exemption <em>entirely</em> — not proportionally for the years you were away, but for the whole ownership period. On a property that gained $200,000, that can mean a tax bill in the tens of thousands that an Australian resident would not have paid at all. Verify the current rules and the limited exceptions with an accountant before you buy, not after you leave.</p>
+    </div>
+
+    <div class="grid g2">
+      <div>
+        <h4 style="margin-bottom:.4rem">If you buy and then leave</h4>
+        <ul class="tight" style="font-size:.92rem">
+          <li>Sell before departing, and the exemption is intact — but you're forced to sell on someone else's timetable.</li>
+          <li>Keep it and rent it out, and you're a landlord from another country, paying management fees and non-resident tax rates on the rent from the first dollar.</li>
+          <li>Victoria also charges an absentee owner surcharge on land tax, which is a recurring cost on top.</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="margin-bottom:.4rem">If you rent and invest instead</h4>
+        <ul class="tight" style="font-size:.92rem">
+          <li>Shares travel. You can hold or sell them from anywhere with a few clicks.</li>
+          <li>Leaving Australia triggers a deemed disposal on shares — but you can elect to defer it, and you control the timing either way.</li>
+          <li>No property to manage, no tenant, no surcharge, no forced sale.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="verdict" style="margin-top:.9rem"><span class="vk">How I'd weigh it</span><p>A one-in-four chance isn't enough to rule out buying, but it is enough to rule out buying <em>marginally</em> — stretching to the edge of your borrowing capacity for a place you'd need to sell in three years. If you buy, buy something you'd be comfortable holding and renting out from overseas. And get the residency and main-residence rules checked by an accountant before you sign, because that conversation costs a few hundred dollars and the mistake costs tens of thousands.</p></div>
   </div>
 </section>
 
@@ -728,6 +982,12 @@ hr.rule{border:none; border-top:1px solid var(--rule); margin:1rem 0}
 
     <p style="color:var(--ink-2); margin-bottom:.8rem">On the Pakistan side: your dual citizenship is genuinely useful for family, property and options later in life. It is not useful for this portfolio. Australian tax residency strips the VPS of its point, and the rupee has historically taken back most of what Pakistani markets gave. Keep that connection for things it's actually good for.</p>
 
+    <p style="color:var(--ink-2); margin-bottom:.8rem">On the 14-month question you raised: it's a genuinely sensible horizon, and better than 12 for a specific reason — holding past twelve months halves the tax on your gains. If you're going to delay the decision anyway, delaying past the one-year mark rather than just short of it is close to free money. But be honest that 14 months is still short enough that a bad quarter can undo a year of gains, which is why the deposit itself stays in cash even on that timeline.</p>
+
+    <p style="color:var(--ink-2); margin-bottom:.8rem">On never buying: it's a real option and I've modelled it properly rather than treating it as the fallback. Renting and investing wins on the numbers more often than people expect, especially at Melbourne's growth rates and your $520 a week rent. It fails for one reason only — most people don't actually invest the difference. If you'd genuinely automate it and leave it alone for twenty years, renting and investing is defensible. If you know you'd spend it, the mortgage is a savings mechanism disguised as a house.</p>
+
+    <p style="color:var(--ink-2); margin-bottom:.8rem">The single most useful thing this expansion turned up: at $113k on your own, you can borrow roughly $510k. Perth's median house is around $850k. That gap doesn't close by picking better investments — it closes by applying with your partner, buying something cheaper, or waiting for rates to fall. Any plan that ignores it is fiction, however good the portfolio looks.</p>
+
     <p style="color:var(--ink-2)">And the thing I'd most want you to act on isn't an investment at all: find out what your super is invested in this week. On a 30-year horizon that single decision will very likely outweigh everything else discussed here.</p>
 
     <hr class="rule">
@@ -782,7 +1042,9 @@ var SCEN = [
 ];
 
 var S = {
-  exp:2800, bufm:5, sav:2000, dial:25, hedge:0,
+  exp:2800, bufm:5, sav:2000, dial:25, hedge:0, hz:14,
+  rent:520, city:"perth", hold:10, mrate:6.0, hgrowth:5.0, rentg:3.0, owncost:1.2,
+  couple:false,
   cash:4.0, eq:7.3, inf:2.8,
   price:850000, dep:5, costs:3,
   partner:false, shariah:true, fhss:true,
@@ -805,6 +1067,7 @@ function buffer(){ return S.exp * S.bufm; }
 function pool(){ return Math.max(0, POT - buffer()); }
 
 function lerpW(d){
+  if(!isFinite(d)) d = 25;
   var t = d/100, out = [];
   for(var i=0;i<8;i++) out.push(ANCHOR_LO[i] + (ANCHOR_HI[i]-ANCHOR_LO[i])*t);
   return out;
@@ -1028,7 +1291,7 @@ function renderMetrics(){
 }
 
 function renderLayers(){
-  var ts = [0.5,1,3,5], rows = [
+  var ts = [0.5, 1, S.hz/12, 3, 5], hzCol = 2, rows = [
     {k:"Gross", f:function(l){return l.gross;}, note:""},
     {k:"After fees", f:function(l){return l.fee;}},
     {k:"After tax", f:function(l){return l.tax;}},
@@ -1041,12 +1304,12 @@ function renderLayers(){
     var tr = document.createElement("tr");
     if(ri === 3) tr.className = "total";
     var h = "<td>" + r.k + "</td>";
-    ts.forEach(function(t){
+    ts.forEach(function(t, ci){
       var v = r.f(layers(t));
       var invested = start + contributed(t);
       var d = v - invested;
       var cls = d >= 0 ? "pos" : "neg";
-      h += '<td class="n">' + money(v) + ' <span class="' + cls + '" style="font-size:.78em">' +
+      h += '<td class="n"' + (ci===hzCol ? ' style="background:var(--accent-soft)"' : '') + '>' + money(v) + ' <span class="' + cls + '" style="font-size:.78em">' +
            (d>=0?"+":"−") + moneyK(Math.abs(d)) + '</span></td>';
     });
     tr.innerHTML = h;
@@ -1097,6 +1360,360 @@ function renderHouse(){
   $("dep-note").textContent = S.dep <= 5
     ? "5% needs the Home Guarantee Scheme to avoid LMI — worth checking your eligibility, it removes a huge hurdle."
     : (S.dep < 20 ? S.dep + "% means lenders mortgage insurance unless you qualify for a guarantee scheme." : "20% avoids lenders mortgage insurance outright.");
+}
+
+/* ---------- monte carlo ---------- */
+var _g2 = null;
+function gauss(){
+  if(_g2 !== null){ var g = _g2; _g2 = null; return g; }
+  var u1, u2, r;
+  do { u1 = Math.random(); } while(u1 <= 1e-12);
+  u2 = Math.random();
+  r = Math.sqrt(-2*Math.log(u1));
+  _g2 = r*Math.sin(2*Math.PI*u2);
+  return r*Math.cos(2*Math.PI*u2);
+}
+
+var _mcCache = null, _mcKey = "";
+function mc(){
+  var p = portfolio();
+  var months = S.hz;
+  var key = [months, p.ret.toFixed(3), p.vol.toFixed(3), pool(), S.sav, S.partner].join("|");
+  if(_mcKey === key && _mcCache) return _mcCache;
+  var PATHS = 5000;
+  var mu = Math.log(1 + (p.ret - p.fee)/100)/12;
+  var sg = (p.vol/100)/Math.sqrt(12);
+  var P0 = pool(), c = S.sav*(S.partner?2:1);
+  var out = new Float64Array(PATHS);
+  for(var i=0;i<PATHS;i++){
+    var v = P0;
+    for(var m=0;m<months;m++){
+      v = v*Math.exp(mu - sg*sg/2 + sg*gauss()) + c;
+    }
+    out[i] = v;
+  }
+  out.sort();
+  _mcKey = key; _mcCache = out;
+  return out;
+}
+function q(arr, f){ return arr[Math.min(arr.length-1, Math.max(0, Math.floor(f*arr.length)))]; }
+function shareAbove(arr, x){
+  var lo=0, hi=arr.length;
+  while(lo<hi){ var mid=(lo+hi)>>1; if(arr[mid] < x) lo=mid+1; else hi=mid; }
+  return (arr.length-lo)/arr.length;
+}
+function contributedM(months){ return S.sav*(S.partner?2:1)*months; }
+
+/* deterministic goal odds for the all-cash and all-shares comparators */
+function goalOdds(ret, vol){
+  var months = S.hz, need = houseCalc().need;
+  var mu = Math.log(1+ret/100)/12, sg = (vol/100)/Math.sqrt(12);
+  var PATHS = 2000, P0 = pool(), c = S.sav*(S.partner?2:1), hit = 0;
+  for(var i=0;i<PATHS;i++){
+    var v = P0;
+    for(var m=0;m<months;m++) v = v*Math.exp(mu - sg*sg/2 + sg*gauss()) + c;
+    if(v >= need) hit++;
+  }
+  return hit/PATHS;
+}
+
+/* ---------- mortgage ---------- */
+var NET_SOLO = 86050/12, NET_PARTNER = 70680/12;
+function borrow(){
+  var net = NET_SOLO + (S.couple ? NET_PARTNER : 0);
+  var exp = S.exp * (S.couple ? 1.55 : 1);
+  var avail = Math.max(0, net - exp - 250);
+  var ar = (S.mrate + 3)/100/12, n = 360;
+  var maxLoan = avail * (1 - Math.pow(1+ar, -n)) / ar;
+  var D = safeMoney() + fhssNet(0);
+  var ceiling = (maxLoan + D) / (1 + S.costs/100);
+  var loan = Math.max(0, Math.min(maxLoan, S.price - S.price*S.dep/100));
+  var r = S.mrate/100/12;
+  var pay = loan > 0 ? loan*r/(1 - Math.pow(1+r,-n)) : 0;
+  return { max:maxLoan, ceiling:ceiling, loan:loan, pay:pay, interest:pay*n - loan, avail:avail };
+}
+
+/* ---------- cities ---------- */
+function dutyWA(p){
+  if(p<=120000) return p*0.019;
+  if(p<=150000) return 2280 + (p-120000)*0.0285;
+  if(p<=360000) return 3135 + (p-150000)*0.038;
+  if(p<=725000) return 11115 + (p-360000)*0.0475;
+  return 28453 + (p-725000)*0.0515;
+}
+function dutyVIC(p){
+  if(p<=25000) return p*0.014;
+  if(p<=130000) return 350 + (p-25000)*0.024;
+  if(p<=960000) return 2870 + (p-130000)*0.06;
+  return p*0.055;
+}
+var CITY = {
+  perth:     {name:"Perth",     house:850000, unit:560000, yld:4.6, g10:4.2, g3:13.0, ex:500000, ph:700000, duty:dutyWA,  move:0,
+              note:"Where you live. Strong recent growth, better yields, lower entry price."},
+  melbourne: {name:"Melbourne", house:950000, unit:610000, yld:3.6, g10:4.0, g3:0.5,  ex:600000, ph:750000, duty:dutyVIC, move:12000,
+              note:"Where you'd like to be. Broadly flat for years, higher duty, weaker yields."}
+};
+function fhbDuty(c, price){
+  var full = c.duty(price);
+  if(price <= c.ex) return 0;
+  if(price <= c.ph) return full * (price - c.ex)/(c.ph - c.ex);
+  return full;
+}
+
+/* ---------- rent vs buy ---------- */
+function rentBuy(){
+  var YEARS = 20, c = CITY[S.city];
+  var price = S.price;
+  var dep = price*S.dep/100;
+  var duty = fhbDuty(c, price);
+  var upfront = dep + duty + 3000 + c.move;
+  var loan = price - dep;
+  var r = S.mrate/100/12, n = 360;
+  var pay = loan*r/(1 - Math.pow(1+r,-n));
+  var invM = Math.pow(1 + S.eq/100, 1/12) - 1;
+  var hgM  = Math.pow(1 + S.hgrowth/100, 1/12) - 1;
+  var rgM  = Math.pow(1 + S.rentg/100, 1/12) - 1;
+  var msav = S.sav*(S.partner?2:1);
+
+  var buyInv = POT - upfront, rentInv = POT;
+  var bal = loan, val = price, rentM = S.rent*52/12;
+  var rows = [{y:0, buy: val*0.975 - bal + buyInv, rent: rentInv, strain:0}];
+  var strainMonths = 0;
+  for(var y=1; y<=YEARS; y++){
+    for(var m=0;m<12;m++){
+      var own = pay + val*(S.owncost/100)/12;
+      var surplus = msav - (own - rentM);
+      if(surplus < 0) strainMonths++;
+      buyInv  = buyInv*(1+invM) + surplus;
+      rentInv = rentInv*(1+invM) + msav;
+      bal = Math.max(0, bal*(1+r) - pay);
+      val *= (1+hgM);
+      rentM *= (1+rgM);
+    }
+    rows.push({ y:y, buy: val*0.975 - bal + buyInv, rent: rentInv, strain:strainMonths });
+  }
+  var be = -1;
+  for(var i=1;i<rows.length;i++){ if(rows[i].buy >= rows[i].rent){ be = i; break; } }
+  return { rows:rows, be:be, upfront:upfront, duty:duty, pay:pay, affordable: upfront <= POT, strain:strainMonths };
+}
+
+/* ---------- renders ---------- */
+function hzLabel(m){
+  if(m < 12) return m + " months";
+  if(m === 12) return "12 months";
+  if(m % 12 === 0) return (m/12) + " years";
+  return m + " months";
+}
+
+function renderHorizon(){
+  var arr = mc(), inMoney = pool() + contributedM(S.hz);
+  var p = portfolio();
+  var med = q(arr,0.5), lo = q(arr,0.10), hi = q(arr,0.90);
+  var taxDrag = function(v){
+    var gain = Math.max(0, v - inMoney);
+    return v - gain*(S.hz <= 12 ? 0.32 : 0.16);
+  };
+  $("v-hz").textContent = hzLabel(S.hz);
+  $("lay-hz").textContent = hzLabel(S.hz);
+  $("odds-hz").textContent = hzLabel(S.hz);
+  $("wait-hz").textContent = hzLabel(S.hz);
+  $("hz-med").textContent = money(taxDrag(med));
+  $("hz-med-n").textContent = "after fees and " + (S.hz <= 12 ? "32% tax on gains" : "16% tax on gains");
+  $("hz-lo").textContent = money(lo);
+  $("hz-hi").textContent = money(taxDrag(hi));
+  var pLoss = 1 - shareAbove(arr, inMoney);
+  $("hz-loss").textContent = Math.round(pLoss*100) + "%";
+
+  var f = $("hz-flag"), html;
+  if(S.hz <= 18 && p.vol > 8){
+    html = '<div class="bl crit" style="margin:0"><span class="bl-k">Mismatch</span><p>At ' + hzLabel(S.hz) + ' there is a ' + Math.round(pLoss*100) +
+      '% chance you end up with less than you put in. That is not a small risk on money attached to a house — it is roughly a one-in-' + Math.max(2,Math.round(1/Math.max(0.01,pLoss))) + ' chance of the plan going backwards.</p></div>';
+  } else if(S.hz >= 60){
+    html = '<div class="bl" style="margin:0"><span class="bl-k">This is where shares earn their keep</span><p>Over ' + hzLabel(S.hz) +
+      ', the chance of ending below what you put in falls to ' + Math.round(pLoss*100) + '%. Time is what converts share-market volatility from a risk into an advantage — and it is the one ingredient a 12-month plan cannot have.</p></div>';
+  } else if(S.hz >= 13 && S.hz <= 24){
+    html = '<div class="bl brass" style="margin:0"><span class="bl-k">You just cleared the tax cliff</span><p>Holding past 12 months halves the tax on your gains — 16% instead of 32% at your rate. That is why ' + hzLabel(S.hz) +
+      ' can leave you better off after tax than 12 months would, even before any extra growth. If you are anywhere near the line, waiting the extra weeks is close to free money. Chance of a loss at this horizon: ' + Math.round(pLoss*100) + '%.</p></div>';
+  } else {
+    html = '<div class="bl brass" style="margin:0"><span class="bl-k">The awkward middle</span><p>' + hzLabel(S.hz) +
+      ' is long enough to be tempting and short enough to hurt. Chance of a loss: ' + Math.round(pLoss*100) +
+      '%. If the house is genuinely undecided, this is the horizon where keeping the deposit in cash and investing only the surplus makes the most sense.</p></div>';
+  }
+  f.innerHTML = html;
+}
+
+function renderCases(){
+  var arr = mc(), inMoney = pool() + contributedM(S.hz);
+  var cases = [
+    {n:"Disaster",  f:0.025, lab:"1 in 40", w:"A serious market fall right when you need the money."},
+    {n:"Bad",       f:0.10,  lab:"1 in 10",  w:"An ordinary bad run. Expect this sometimes."},
+    {n:"Base",      f:0.50,  lab:"50/50",    w:"The middle outcome. Half of paths do better, half worse."},
+    {n:"Good",      f:0.90,  lab:"1 in 10",  w:"A strong run. Pleasant, but do not plan around it."},
+    {n:"Dream",     f:0.975, lab:"1 in 40",  w:"Everything goes right. Treat as a bonus, never a forecast."}
+  ];
+  var tb = $("tbl-cases").querySelector("tbody");
+  tb.innerHTML = "";
+  cases.forEach(function(c){
+    var v = q(arr, c.f), d = v - inMoney;
+    var tr = document.createElement("tr");
+    if(c.f === 0.5) tr.className = "total";
+    tr.innerHTML = "<td>" + c.n + "</td>" +
+      '<td class="n">' + c.lab + "</td>" +
+      '<td class="n">' + money(v) + "</td>" +
+      '<td class="n ' + (d>=0?"pos":"neg") + '">' + (d>=0?"+":"−") + money(Math.abs(d)) + "</td>" +
+      '<td style="white-space:normal; text-align:left; font-size:.86em; color:var(--ink-2)">' + c.w + "</td>";
+    tb.appendChild(tr);
+  });
+}
+
+function renderOdds(){
+  var arr = mc(), h = houseCalc();
+  var pg = shareAbove(arr, h.need);
+  $("od-goal").textContent = Math.round(pg*100) + "%";
+  $("od-goal-n").textContent = "of paths reach " + money(h.need);
+  $("od-cash").textContent = Math.round(goalOdds(S.cash, 0.5)*100) + "%";
+  $("od-eq").textContent = Math.round(goalOdds(S.eq, 14)*100) + "%";
+
+  var f = $("od-flag");
+  if(pg >= 0.95){
+    f.innerHTML = '<div class="bl" style="margin:0"><span class="bl-k">Comfortable</span><p>You reach the deposit in ' + Math.round(pg*100) +
+      '% of simulated paths. At those odds the deposit is not the problem — borrowing capacity is. See the next section.</p></div>';
+  } else if(pg >= 0.7){
+    f.innerHTML = '<div class="bl brass" style="margin:0"><span class="bl-k">Likely, not certain</span><p>You get there in ' + Math.round(pg*100) +
+      '% of paths, which means roughly a one-in-' + Math.round(1/Math.max(0.01,1-pg)) + ' chance of falling short at your chosen horizon. Shifting the risk dial down raises this number; it is the cleanest way to buy certainty.</p></div>';
+  } else {
+    f.innerHTML = '<div class="bl crit" style="margin:0"><span class="bl-k">Not reliable</span><p>Only ' + Math.round(pg*100) +
+      '% of paths get you there. Either extend the horizon, lower the property price, raise the savings rate, or bring your partner in — hoping for a good market is not a plan.</p></div>';
+  }
+}
+
+function renderMortgage(){
+  var b = borrow();
+  $("mg-loan").textContent = moneyK(b.max);
+  $("mg-ceil").textContent = moneyK(b.ceiling);
+  $("mg-rep").textContent = money(b.pay);
+  $("mg-int").textContent = moneyK(b.interest);
+  $("v-mrate").textContent = pct(S.mrate);
+
+  var f = $("mg-flag"), gap = S.price - b.ceiling;
+  if(gap > 0){
+    f.innerHTML = '<div class="bl crit" style="margin:0"><span class="bl-k">Short by ' + moneyK(gap) + '</span><p>At ' + money(S.price) +
+      ' you cannot borrow enough' + (S.couple ? '' : ' on your own') + '. Your ceiling is about ' + moneyK(b.ceiling) + '.' +
+      (S.couple ? ' Lower the price, or wait for rates to fall.' : ' Applying with your partner would raise it substantially — try the toggle.') + '</p></div>';
+  } else {
+    f.innerHTML = '<div class="bl" style="margin:0"><span class="bl-k">Within reach</span><p>Your ceiling of about ' + moneyK(b.ceiling) +
+      ' covers a ' + money(S.price) + ' purchase, with repayments of ' + money(b.pay) + ' a month. That is ' +
+      Math.round(b.pay/(NET_SOLO + (S.couple?NET_PARTNER:0))*100) + '% of take-home pay — above 35% is generally considered mortgage stress.</p></div>';
+  }
+
+  var rows = [
+    {n:"Offset account", r:S.mrate, at:S.mrate, risk:"None", hi:true},
+    {n:"Savings account", r:S.cash, at:S.cash*0.68, risk:"None"},
+    {n:"Bond fund", r:S.cash+0.6, at:(S.cash+0.6)*0.68, risk:"Low — fell 13% in 2022"},
+    {n:"Shares, held long term", r:S.eq, at:S.eq*0.84, risk:"High — falls of 30%+ happen"}
+  ];
+  var tb = $("tbl-offset").querySelector("tbody");
+  tb.innerHTML = "";
+  rows.forEach(function(x){
+    var tr = document.createElement("tr");
+    if(x.hi) tr.className = "total";
+    tr.innerHTML = "<td>" + x.n + "</td><td class='n'>" + pct(x.r) + "</td><td class='n'>" + pct(x.at) +
+      "</td><td style='text-align:left; white-space:normal; font-size:.86em; color:var(--ink-2)'>" + x.risk + "</td>";
+    tb.appendChild(tr);
+  });
+}
+
+function renderCity(){
+  var tb = $("tbl-city").querySelector("tbody");
+  var P = CITY.perth, M = CITY.melbourne;
+  var rows = [
+    ["Median house", money(P.house), money(M.house)],
+    ["Median unit", money(P.unit), money(M.unit)],
+    ["Stamp duty as a first home buyer", money(fhbDuty(P, P.house)), money(fhbDuty(M, M.house))],
+    ["Duty-free threshold", money(P.ex), money(M.ex)],
+    ["Rental yield", pct(P.yld), pct(M.yld)],
+    ["Growth, last 10 yrs p.a.", pct(P.g10), pct(M.g10)],
+    ["Growth, last 3 yrs p.a.", pct(P.g3), pct(M.g3)],
+    ["Cost of relocating there", "—", money(M.move) + " plus job risk"]
+  ];
+  tb.innerHTML = "";
+  rows.forEach(function(r, i){
+    var tr = document.createElement("tr");
+    if(i === 2) tr.className = "total";
+    tr.innerHTML = "<td>" + r[0] + "</td><td class='n'>" + r[1] + "</td><td class='n'>" + r[2] + "</td>";
+    tb.appendChild(tr);
+  });
+  Array.prototype.forEach.call(document.querySelectorAll(".preset.city"), function(b){
+    b.setAttribute("aria-pressed", b.dataset.city === S.city ? "true" : "false");
+  });
+}
+
+function renderRentBuy(){
+  var rb = rentBuy();
+  $("v-rent").textContent = "$" + S.rent + "/wk";
+  $("rent-note").textContent = money(S.rent*52) + " a year, rising " + pct(S.rentg) + " a year.";
+  $("v-hgrowth").textContent = pct(S.hgrowth);
+  $("v-owncost").textContent = pct(S.owncost);
+  var r10 = rb.rows[10];
+  $("rb-be").textContent = rb.be < 0 ? "Never" : "Year " + rb.be;
+  $("rb-b10").textContent = moneyK(r10.buy);
+  $("rb-r10").textContent = moneyK(r10.rent);
+
+  var f = $("rb-flag"), html, bor = borrow();
+  if(S.price > bor.ceiling){
+    html = '<div class="bl crit" style="margin:0"><span class="bl-k">You cannot borrow this much</span><p>At ' + money(S.price) +
+      ' the repayments are ' + money(rb.pay) + ' a month against a ceiling of about ' + moneyK(bor.ceiling) +
+      '. The comparison below is academic until the price drops or you apply with your partner. Use the button above to set a price you could actually be approved for.</p></div>';
+  } else if(!rb.affordable){
+    html = '<div class="bl crit" style="margin:0"><span class="bl-k">Cannot buy at this price</span><p>Deposit plus stamp duty comes to ' +
+      money(rb.upfront) + ', more than your ' + money(POT) + '. Lower the price or the deposit percentage.</p></div>';
+  } else if(rb.be < 0){
+    html = '<div class="bl brass" style="margin:0"><span class="bl-k">Renting wins across 20 years</span><p>At ' + pct(S.hgrowth) +
+      ' house growth against ' + pct(S.eq) + ' from shares, buying never catches up. That result is very sensitive to the growth assumption — nudge it up a point and it flips. This is why nobody agrees about rent versus buy.</p></div>';
+  } else if(rb.be <= 7){
+    html = '<div class="bl" style="margin:0"><span class="bl-k">Buying wins from year ' + rb.be + '</span><p>If you would stay at least ' + rb.be +
+      ' years, buying comes out ahead. Below that, transaction costs eat the gain. Given you are unsure how long you would stay, ' + rb.be + ' years is the number to hold onto.</p></div>';
+  } else {
+    html = '<div class="bl brass" style="margin:0"><span class="bl-k">A long wait to break even</span><p>Buying does not overtake renting until year ' + rb.be +
+      '. With a one-in-four chance of leaving Australia within five years, that is a meaningful risk of selling before you are ahead.</p></div>';
+  }
+  if(rb.strain > 0 && rb.affordable){
+    html += '<p class="note" style="margin-top:.5rem"><strong>Note:</strong> for ' + Math.round(rb.strain/12) +
+      ' of the 20 years, owning costs more per month than renting plus your savings target — so the buyer saves nothing and draws down.</p>';
+  }
+  f.innerHTML = html;
+  return rb;
+}
+
+function renderWait(){
+  var arr = mc(), scen = [
+    {n:"prices rise 8%", g:0.08},
+    {n:"prices rise 4%", g:0.04},
+    {n:"prices stay flat", g:0.0},
+    {n:"prices fall 8%", g:-0.08}
+  ];
+  var med = q(arr, 0.5);
+  var tb = $("tbl-wait").querySelector("tbody");
+  tb.innerHTML = "";
+  var base = houseCalc().need, b = borrow();
+  scen.forEach(function(x){
+    var scale = Math.pow(1+x.g, S.hz/12);
+    var price = S.price*scale;
+    var need = base*scale;
+    var have = med + buffer();
+    var loan = Math.max(0, price - Math.min(have, price*S.dep/100));
+    var ok = loan <= b.max;
+    var tr = document.createElement("tr");
+    tr.innerHTML = "<td>" + x.n + "</td><td class='n'>" + moneyK(price) + "</td><td class='n'>" + money(need) +
+      "</td><td class='n'>" + money(have) + "</td><td class='n'>" + moneyK(loan) + "</td>" +
+      "<td>" + (ok ? '<span class="pill good"><span class="dot"></span>Yes</span>'
+                   : '<span class="pill crit"><span class="dot"></span>No — short ' + moneyK(loan-b.max) + '</span>') + "</td>";
+    tb.appendChild(tr);
+  });
+  var f = $("wait-flag");
+  f.innerHTML = '<div class="bl" style="margin:0"><span class="bl-k">The asymmetry</span><p>Waiting is not a neutral act. If prices rise 8% over ' +
+    hzLabel(S.hz) + ', the deposit you need grows by about ' + money(base*(Math.pow(1.08, S.hz/12)-1)) +
+    ' — more than your portfolio is likely to earn in the same period at your current mix. Delay works in your favour only if prices stall or fall, or if you use the time to raise your borrowing capacity rather than just your balance.</p></div>';
 }
 
 /* ---------- charts ---------- */
@@ -1215,6 +1832,129 @@ function chartStress(){
   });
 }
 
+function chartDist(){
+  var svg = $("chart-dist"), tip = $("tip-dist");
+  var host = svg.parentElement;
+  var W = Math.max(320, host.clientWidth), H = 240;
+  var mL = 44, mR = 14, mT = 30, mB = 40;
+  var iw = W-mL-mR, ih = H-mT-mB;
+  var arr = mc(), inMoney = pool() + contributedM(S.hz);
+  var lo = q(arr,0.005), hi = q(arr,0.995);
+  if(hi - lo < 1) hi = lo + 1;
+  var BINS = 34, counts = new Array(BINS).fill(0);
+  for(var i=0;i<arr.length;i++){
+    var b = Math.floor((arr[i]-lo)/(hi-lo)*BINS);
+    if(b>=0 && b<BINS) counts[b]++;
+  }
+  var maxC = Math.max.apply(null, counts);
+  var x = function(v){ return mL + (v-lo)/(hi-lo)*iw; };
+  var acc = cvar("--accent"), ink3 = cvar("--ink-3"), ink = cvar("--ink"), rule = cvar("--rule"), crit = cvar("--crit");
+  var bw = iw/BINS;
+  var out = '';
+  for(var j=0;j<BINS;j++){
+    var h = counts[j]/maxC*ih;
+    var binLo = lo + (hi-lo)*j/BINS;
+    var below = (binLo + (hi-lo)/BINS/2) < inMoney;
+    out += '<rect class="dbar" data-j="'+j+'" x="'+(mL+j*bw+1).toFixed(1)+'" y="'+(mT+ih-h).toFixed(1)+'" width="'+Math.max(1,bw-2).toFixed(1)+
+           '" height="'+h.toFixed(1)+'" rx="2" fill="'+(below?crit:acc)+'" fill-opacity="'+(below?0.75:0.85)+'"/>';
+  }
+  out += '<line x1="'+mL+'" x2="'+(W-mR)+'" y1="'+(mT+ih)+'" y2="'+(mT+ih)+'" stroke="'+rule+'"/>';
+  var xm = x(inMoney);
+  if(xm > mL && xm < W-mR){
+    out += '<line x1="'+xm.toFixed(1)+'" x2="'+xm.toFixed(1)+'" y1="'+mT+'" y2="'+(mT+ih)+'" stroke="'+ink+'" stroke-width="1.5" stroke-dasharray="4 3"/>';
+    out += '<text x="'+xm.toFixed(1)+'" y="'+(mT-16)+'" text-anchor="middle" font-size="10.5" font-weight="700" fill="'+ink+'" font-family="Figtree, sans-serif">money you put in</text>';
+    out += '<text x="'+xm.toFixed(1)+'" y="'+(mT-4)+'" text-anchor="middle" font-size="10.5" fill="'+ink3+'" font-family="JetBrains Mono, monospace">'+moneyK(inMoney)+'</text>';
+  }
+  [[lo,"start"], [(lo+hi)/2,"middle"], [hi,"end"]].forEach(function(pair){
+    out += '<text x="'+x(pair[0]).toFixed(1)+'" y="'+(H-20)+'" text-anchor="'+pair[1]+'" font-size="11" fill="'+ink3+'" font-family="JetBrains Mono, monospace">'+moneyK(pair[0])+'</text>';
+  });
+  out += '<text x="'+mL+'" y="'+(H-5)+'" font-size="10" fill="'+ink3+'" font-family="Figtree, sans-serif">worse outcomes</text>';
+  out += '<text x="'+(W-mR)+'" y="'+(H-5)+'" text-anchor="end" font-size="10" fill="'+ink3+'" font-family="Figtree, sans-serif">better outcomes</text>';
+  svg.setAttribute("viewBox","0 0 "+W+" "+H);
+  svg.setAttribute("width",W); svg.setAttribute("height",H);
+  svg.innerHTML = out;
+
+  Array.prototype.forEach.call(svg.querySelectorAll(".dbar"), function(el){
+    el.addEventListener("mouseenter", function(){
+      var j = +el.getAttribute("data-j");
+      var a = lo + (hi-lo)*j/BINS, b = lo + (hi-lo)*(j+1)/BINS;
+      var r = svg.getBoundingClientRect(), br = el.getBoundingClientRect();
+      tip.innerHTML = "<b>"+moneyK(a)+" – "+moneyK(b)+"</b><br>"+(counts[j]/arr.length*100).toFixed(1)+"% of outcomes";
+      tip.style.opacity = "1";
+      tip.style.left = Math.min(Math.max(4, br.left - r.left - 60), r.width-170) + "px";
+      tip.style.top = Math.max(2, br.top - r.top - 44) + "px";
+    });
+    el.addEventListener("mouseleave", function(){ tip.style.opacity="0"; });
+  });
+}
+
+function chartRB(rb){
+  var svg = $("chart-rb"), tip = $("tip-rb");
+  var host = svg.parentElement;
+  var W = Math.max(320, host.clientWidth), H = 300;
+  var mL = 56, mR = 62, mT = 28, mB = 38;
+  var iw = W-mL-mR, ih = H-mT-mB;
+  var rows = rb.rows;
+  var maxV = 0, minV = 0;
+  rows.forEach(function(r){ maxV = Math.max(maxV, r.buy, r.rent); minV = Math.min(minV, r.buy, r.rent); });
+  maxV *= 1.06;
+  var x = function(y){ return mL + y/20*iw; };
+  var yy = function(v){ return mT + ih - (v-minV)/(maxV-minV)*ih; };
+  var acc = cvar("--accent"), s2 = cvar("--s2"), ink3 = cvar("--ink-3"), ink = cvar("--ink"), rule = cvar("--rule");
+  var out = '';
+  for(var g=0; g<=4; g++){
+    var v = minV + (maxV-minV)*g/4, py = yy(v);
+    out += '<line x1="'+mL+'" x2="'+(W-mR)+'" y1="'+py.toFixed(1)+'" y2="'+py.toFixed(1)+'" stroke="'+rule+'"/>';
+    out += '<text x="'+(mL-8)+'" y="'+(py+4).toFixed(1)+'" text-anchor="end" font-size="11" fill="'+ink3+'" font-family="JetBrains Mono, monospace">'+moneyK(v)+'</text>';
+  }
+  [0,5,10,15,20].forEach(function(y){
+    out += '<text x="'+x(y).toFixed(1)+'" y="'+(H-14)+'" text-anchor="middle" font-size="11" fill="'+ink3+'" font-family="Figtree, sans-serif">'+(y===0?"now":y+"y")+'</text>';
+  });
+  if(minV < 0){
+    out += '<line x1="'+mL+'" x2="'+(W-mR)+'" y1="'+yy(0).toFixed(1)+'" y2="'+yy(0).toFixed(1)+'" stroke="'+ink3+'" stroke-width="1"/>';
+  }
+  function path(key){
+    var d = '';
+    rows.forEach(function(r,i){ d += (i?"L":"M") + x(r.y).toFixed(1) + " " + yy(r[key]).toFixed(1) + " "; });
+    return d;
+  }
+  if(rb.be > 0){
+    out += '<line x1="'+x(rb.be).toFixed(1)+'" x2="'+x(rb.be).toFixed(1)+'" y1="'+mT+'" y2="'+(mT+ih)+'" stroke="'+ink3+'" stroke-dasharray="3 3"/>';
+    out += '<text x="'+(x(rb.be)+6).toFixed(1)+'" y="'+(mT+12)+'" font-size="10.5" font-weight="700" fill="'+ink+'" font-family="Figtree, sans-serif">break-even</text>';
+  }
+  out += '<path d="'+path("rent")+'" fill="none" stroke="'+s2+'" stroke-width="2" stroke-linejoin="round"/>';
+  out += '<path d="'+path("buy")+'" fill="none" stroke="'+acc+'" stroke-width="2" stroke-linejoin="round"/>';
+  var last = rows[rows.length-1];
+  out += '<circle cx="'+x(20).toFixed(1)+'" cy="'+yy(last.buy).toFixed(1)+'" r="4" fill="'+acc+'"/>';
+  out += '<circle cx="'+x(20).toFixed(1)+'" cy="'+yy(last.rent).toFixed(1)+'" r="4" fill="'+s2+'"/>';
+  out += '<text x="'+(x(20)+7).toFixed(1)+'" y="'+(yy(last.buy)+4).toFixed(1)+'" font-size="11" font-weight="700" fill="'+ink+'" font-family="Figtree, sans-serif">Buy</text>';
+  out += '<text x="'+(x(20)+7).toFixed(1)+'" y="'+(yy(last.rent)+4).toFixed(1)+'" font-size="11" font-weight="700" fill="'+ink+'" font-family="Figtree, sans-serif">Rent</text>';
+  out += '<rect id="rb-hit" x="'+mL+'" y="'+mT+'" width="'+iw+'" height="'+ih+'" fill="transparent"/>';
+  out += '<line id="rb-cross" x1="0" x2="0" y1="'+mT+'" y2="'+(mT+ih)+'" stroke="'+cvar("--ink-2")+'" stroke-width="1" opacity="0"/>';
+  svg.setAttribute("viewBox","0 0 "+W+" "+H);
+  svg.setAttribute("width",W); svg.setAttribute("height",H);
+  svg.innerHTML = out;
+
+  var hit = $("rb-hit"), cross = $("rb-cross");
+  function move(ev){
+    var r = svg.getBoundingClientRect();
+    var cx = (ev.touches ? ev.touches[0].clientX : ev.clientX) - r.left;
+    var sx = W / r.width, px = cx*sx;
+    var yv = Math.max(0, Math.min(20, Math.round((px-mL)/iw*20)));
+    var row = rows[yv];
+    cross.setAttribute("x1", x(yv)); cross.setAttribute("x2", x(yv)); cross.setAttribute("opacity","1");
+    var d = row.buy - row.rent;
+    tip.innerHTML = "<b>year "+yv+"</b><br>buy&nbsp;&nbsp; "+moneyK(row.buy)+"<br>rent&nbsp; "+moneyK(row.rent)+
+                    "<br>gap&nbsp;&nbsp; "+(d>=0?"+":"−")+moneyK(Math.abs(d)).replace("−","");
+    tip.style.opacity = "1";
+    tip.style.left = Math.min(Math.max(6, x(yv)/sx + 12), r.width-160) + "px";
+    tip.style.top = "12px";
+  }
+  hit.addEventListener("mousemove", move);
+  hit.addEventListener("touchmove", function(e){ move(e); e.preventDefault(); }, {passive:false});
+  hit.addEventListener("mouseleave", function(){ tip.style.opacity="0"; cross.setAttribute("opacity","0"); });
+}
+
 /* ---------- wiring ---------- */
 function update(){
   if(!S.custom) S.w = lerpW(S.dial);
@@ -1234,12 +1974,18 @@ function update(){
   $("f-bufm").textContent = S.bufm;
   $("c-buf").textContent = money(buffer());
 
-  Array.prototype.forEach.call(document.querySelectorAll(".preset"), function(b){
+  Array.prototype.forEach.call(document.querySelectorAll(".preset[data-dial]"), function(b){
     b.setAttribute("aria-pressed", (!S.custom && +b.dataset.dial === S.dial) ? "true" : "false");
   });
 
   renderAlloc(); renderSliders(); renderMetrics(); renderLayers(); renderStress(); renderHouse();
-  chartProj(); chartStress();
+  renderHorizon(); renderCases(); renderOdds(); renderMortgage(); renderCity(); renderWait();
+  var rb = renderRentBuy();
+  chartProj(); chartStress(); chartDist(); chartRB(rb);
+
+  Array.prototype.forEach.call(document.querySelectorAll(".preset.hz"), function(b){
+    b.setAttribute("aria-pressed", +b.dataset.hz === S.hz ? "true" : "false");
+  });
 }
 
 function bind(id, key, mult){
@@ -1249,9 +1995,29 @@ function bind(id, key, mult){
 bind("s-exp","exp"); bind("s-bufm","bufm"); bind("s-sav","sav");
 bind("s-hedge","hedge"); bind("s-cash","cash"); bind("s-eq","eq"); bind("s-inf","inf");
 bind("s-price","price"); bind("s-dep","dep"); bind("s-costs","costs");
+bind("s-hz","hz"); bind("s-rent","rent"); bind("s-mrate","mrate");
+bind("s-hgrowth","hgrowth"); bind("s-owncost","owncost");
+
+Array.prototype.forEach.call(document.querySelectorAll(".preset.hz"), function(b){
+  b.addEventListener("click", function(){ S.hz = +b.dataset.hz; $("s-hz").value = S.hz; update(); });
+});
+Array.prototype.forEach.call(document.querySelectorAll(".preset.city"), function(b){
+  b.addEventListener("click", function(){
+    S.city = b.dataset.city;
+    S.price = CITY[S.city].house;
+    $("s-price").value = S.price;
+    update();
+  });
+});
+$("t-couple").addEventListener("change", function(e){ S.couple = e.target.checked; update(); });
+$("btn-afford").addEventListener("click", function(){
+  S.price = Math.max(400000, Math.min(1600000, Math.round(borrow().ceiling/25000)*25000));
+  $("s-price").value = S.price;
+  update();
+});
 
 $("s-dial").addEventListener("input", function(e){ S.dial = +e.target.value; S.custom = false; update(); });
-Array.prototype.forEach.call(document.querySelectorAll(".preset"), function(b){
+Array.prototype.forEach.call(document.querySelectorAll(".preset[data-dial]"), function(b){
   b.addEventListener("click", function(){ S.dial = +b.dataset.dial; S.custom = false; $("s-dial").value = S.dial; update(); });
 });
 $("t-partner").addEventListener("change", function(e){ S.partner = e.target.checked; update(); });
@@ -1259,13 +2025,13 @@ $("t-shariah").addEventListener("change", function(e){ S.shariah = e.target.chec
 $("t-fhss").addEventListener("change", function(e){ S.fhss = e.target.checked; update(); });
 
 var rt;
-window.addEventListener("resize", function(){ clearTimeout(rt); rt = setTimeout(function(){ chartProj(); chartStress(); }, 140); });
+window.addEventListener("resize", function(){ clearTimeout(rt); rt = setTimeout(function(){ chartProj(); chartStress(); chartDist(); chartRB(rentBuy()); }, 140); });
 if(window.matchMedia){
   var mq = window.matchMedia("(prefers-color-scheme: dark)");
-  if(mq.addEventListener) mq.addEventListener("change", function(){ setTimeout(function(){ chartProj(); chartStress(); }, 60); });
+  if(mq.addEventListener) mq.addEventListener("change", function(){ setTimeout(function(){ chartProj(); chartStress(); chartDist(); chartRB(rentBuy()); }, 60); });
 }
 
 update();
-if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ chartProj(); chartStress(); });
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ chartProj(); chartStress(); chartDist(); chartRB(rentBuy()); });
 })();
 </script>
