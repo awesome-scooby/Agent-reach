@@ -1,0 +1,610 @@
+<title>Switchboard Onboarding Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+*{box-sizing:border-box}
+:root{
+  --paper:#E9EEF2; --card:#FFFFFF; --card-2:#F4F7F9;
+  --ink:#131A20; --ink-2:#46586A; --ink-3:#6E8296;
+  --line:#C6D2DC; --line-soft:#DDE5EB;
+  --copper:#A85526; --copper-ink:#8A4520; --copper-wash:#F6E6DA;
+  --steel:#1F6288; --steel-wash:#DEEBF3;
+  --hazard:#9A6B00; --hazard-wash:#FBEFCF;
+  --danger:#A81E14; --danger-wash:#F8DFDC;
+  --go:#1F6B45; --go-wash:#DCEFE3;
+  --shadow:0 1px 0 rgba(19,26,32,.04), 0 6px 18px -10px rgba(19,26,32,.28);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#10161B; --card:#19222A; --card-2:#1F2A33;
+    --ink:#E6EDF3; --ink-2:#A3B6C6; --ink-3:#7C93A6;
+    --line:#2E3D49; --line-soft:#26333D;
+    --copper:#E0904F; --copper-ink:#EFA96C; --copper-wash:#33210F;
+    --steel:#63B4DC; --steel-wash:#132836;
+    --hazard:#E0B24A; --hazard-wash:#332811;
+    --danger:#F1786C; --danger-wash:#38191A;
+    --go:#63C48D; --go-wash:#122C1F;
+    --shadow:0 1px 0 rgba(0,0,0,.3), 0 10px 24px -14px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#10161B; --card:#19222A; --card-2:#1F2A33;
+  --ink:#E6EDF3; --ink-2:#A3B6C6; --ink-3:#7C93A6;
+  --line:#2E3D49; --line-soft:#26333D;
+  --copper:#E0904F; --copper-ink:#EFA96C; --copper-wash:#33210F;
+  --steel:#63B4DC; --steel-wash:#132836;
+  --hazard:#E0B24A; --hazard-wash:#332811;
+  --danger:#F1786C; --danger-wash:#38191A;
+  --go:#63C48D; --go-wash:#122C1F;
+  --shadow:0 1px 0 rgba(0,0,0,.3), 0 10px 24px -14px rgba(0,0,0,.9);
+}
+
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:Archivo,"Arial Narrow",Helvetica,sans-serif;font-stretch:115%;text-wrap:balance;margin:0}
+code,.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace}
+a{color:var(--copper-ink)}
+:focus-visible{outline:2px solid var(--copper);outline-offset:2px;border-radius:4px}
+
+.wrap{max-width:1120px;margin:0 auto;padding:0 26px 90px}
+
+.masthead{padding:44px 0 26px;border-bottom:3px solid var(--copper)}
+.eyebrow{font-family:"IBM Plex Mono";font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper);font-weight:600}
+h1{font-size:clamp(30px,4.6vw,48px);font-weight:800;line-height:1.04;letter-spacing:-.02em;margin-top:12px}
+.masthead p{font-size:17px;color:var(--ink-2);max-width:64ch;margin:14px 0 0}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.meta span{font-size:12px;padding:5px 10px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink-2)}
+.meta b{color:var(--ink)}
+
+section{padding:38px 0;border-bottom:1px solid var(--line);scroll-margin-top:12px}
+.shead{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+.shead .n{font-family:"IBM Plex Mono";font-size:12px;font-weight:600;color:var(--copper);border:1px solid var(--copper);border-radius:6px;padding:3px 7px;flex:none}
+.shead h2{font-size:clamp(22px,3vw,30px);font-weight:800;letter-spacing:-.015em;line-height:1.1}
+.lede{color:var(--ink-2);max-width:70ch;font-size:16px;margin:8px 0 0}
+
+.grid{display:grid;gap:16px;margin-top:20px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow);break-inside:avoid}
+.card h3{font-size:16px;font-weight:700;margin-bottom:4px}
+.card p{margin:6px 0;font-size:14.5px;color:var(--ink-2)}
+.card ul{margin:6px 0;padding-left:17px;font-size:14.5px;color:var(--ink-2)}
+.card li{margin:3px 0}
+.card li strong,.card p strong{color:var(--ink)}
+.tag{display:inline-block;font-family:"IBM Plex Mono";font-size:10px;letter-spacing:.07em;text-transform:uppercase;font-weight:600;padding:2px 7px;border-radius:5px;background:var(--steel-wash);color:var(--steel);margin-bottom:7px}
+.tag.cu{background:var(--copper-wash);color:var(--copper-ink)}
+.tag.hz{background:var(--hazard-wash);color:var(--hazard)}
+.tag.dg{background:var(--danger-wash);color:var(--danger)}
+.tag.go{background:var(--go-wash);color:var(--go)}
+
+.warn,.note,.win{display:grid;grid-template-columns:auto 1fr;gap:11px;align-items:start;border-radius:10px;padding:12px 15px;margin:16px 0;font-size:14.5px;break-inside:avoid}
+.warn{background:var(--danger-wash);border:1px solid color-mix(in srgb,var(--danger) 35%,transparent)}
+.note{background:var(--steel-wash);border:1px solid color-mix(in srgb,var(--steel) 32%,transparent)}
+.win{background:var(--go-wash);border:1px solid color-mix(in srgb,var(--go) 32%,transparent)}
+.warn b,.note b,.win b{display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;font-family:"IBM Plex Mono"}
+.warn b{color:var(--danger)} .note b{color:var(--steel)} .win b{color:var(--go)}
+.warn p,.note p,.win p{margin:0;color:var(--ink)}
+
+/* checklist rows */
+.list{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden;margin-top:18px}
+.list > .row{display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:start;padding:11px 16px;border-bottom:1px solid var(--line-soft)}
+.list > .row:last-child{border-bottom:0}
+.list > .row:nth-child(even){background:var(--card-2)}
+.list input[type=checkbox]{width:18px;height:18px;accent-color:var(--copper);margin:3px 0 0;cursor:pointer}
+.list .t{font-size:14.5px;color:var(--ink)}
+.list .t small{display:block;color:var(--ink-3);font-size:13px;margin-top:2px}
+
+/* week blocks */
+.wk{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden;break-inside:avoid}
+.wk header{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--card-2);border-bottom:1px solid var(--line)}
+.wk .num{font-family:Archivo;font-stretch:118%;font-weight:800;font-size:12px;letter-spacing:.06em;background:var(--copper);color:#fff;padding:4px 9px;border-radius:6px;flex:none}
+:root[data-theme="dark"] .wk .num,:root:not([data-theme="light"]) .wk .num{color:#1a1005}
+.wk h3{font-size:15.5px;font-weight:700;flex:1;min-width:0}
+.wk .mods{font-family:"IBM Plex Mono";font-size:11px;color:var(--ink-3);white-space:nowrap}
+.wk .inner{padding:13px 16px}
+.wk ul{margin:0;padding-left:0;list-style:none;font-size:14.5px;color:var(--ink-2)}
+.wk ul li{display:grid;grid-template-columns:16px 1fr;gap:9px;margin:6px 0;align-items:start}
+.wk ul li::before{content:"";width:11px;height:11px;border:1.5px solid var(--ink-3);border-radius:3px;margin-top:5px}
+.wk ul li strong{color:var(--ink)}
+.wk .why{margin-top:11px;padding:9px 12px;border-radius:8px;background:var(--go-wash);border:1px solid color-mix(in srgb,var(--go) 30%,transparent);font-size:13.5px;color:var(--ink)}
+.wk .why b{font-family:"IBM Plex Mono";font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--go);display:block;margin-bottom:2px}
+
+figure{margin:22px 0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 18px 12px;box-shadow:var(--shadow);break-inside:avoid}
+figure .scroll{overflow-x:auto}
+figure svg{max-width:100%;height:auto;display:block;color:var(--ink)}
+figcaption{margin-top:12px;padding-top:11px;border-top:1px solid var(--line-soft);font-size:13.5px;color:var(--ink-2)}
+figcaption b{color:var(--ink)}
+svg text{font-family:"IBM Plex Sans",sans-serif}
+svg .m{font-family:"IBM Plex Mono",monospace}
+.s-box{fill:var(--card-2);stroke:currentColor;stroke-width:1.6}
+.s-line{stroke:currentColor;fill:none;stroke-width:1.6}
+.s-thin{stroke:currentColor;fill:none;stroke-width:1.2}
+.s-dash{stroke:currentColor;fill:none;stroke-width:1.3;stroke-dasharray:5 4}
+.t{font-size:12px;fill:currentColor}
+.t-s{font-size:10.5px;fill:currentColor;opacity:.75}
+.t-b{font-size:12.5px;fill:currentColor;font-weight:600}
+.c-cu{stroke:var(--copper);fill:none;stroke-width:2.4}
+.f-cu{fill:var(--copper)}
+.t-cu{fill:var(--copper)}
+.t-go{fill:var(--go)}
+.t-dg{fill:var(--danger)}
+
+.tw{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:12px;background:var(--card);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:540px}
+th,td{text-align:left;padding:9px 13px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:"IBM Plex Mono";font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);font-weight:600;background:var(--card-2);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.mono{font-family:"IBM Plex Mono";font-size:13px}
+
+.sign{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;box-shadow:var(--shadow);break-inside:avoid}
+.sign .r{display:grid;grid-template-columns:1fr 150px 110px;gap:14px;align-items:end;padding:13px 0;border-bottom:1px solid var(--line-soft)}
+.sign .r:last-child{border-bottom:0}
+.sign .r .lbl{font-size:14.5px;color:var(--ink)}
+.sign .r .ln{border-bottom:1px solid var(--ink-3);height:22px}
+.sign .r .cap{font-family:"IBM Plex Mono";font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:3px}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:22px 0 0}
+.btn{font:inherit;font-size:13.5px;font-weight:600;padding:9px 16px;border-radius:9px;cursor:pointer;background:var(--copper);color:#fff;border:0;box-shadow:var(--shadow)}
+:root[data-theme="dark"] .btn,:root:not([data-theme="light"]) .btn{color:#1a1005}
+.btn.ghost{background:transparent;color:var(--ink-2);border:1px solid var(--line);box-shadow:none}
+.btn.ghost:hover{color:var(--ink);border-color:var(--ink-3)}
+.prog{display:flex;align-items:center;gap:10px;font-family:"IBM Plex Mono";font-size:12.5px;color:var(--ink-3)}
+.prog .bar{width:150px;height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.prog .bar i{display:block;height:100%;background:var(--copper);width:0;transition:width .3s ease}
+
+.footer{padding:30px 0 0;color:var(--ink-3);font-size:13px}
+
+@media(max-width:700px){
+  .wrap{padding:0 18px 70px}
+  .sign .r{grid-template-columns:1fr;gap:6px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{
+  body{background:#fff;color:#000;font-size:10.5pt}
+  .wrap{max-width:none;padding:0}
+  .toolbar,.noprint{display:none!important}
+  section{border-bottom:1px solid #bbb;padding:16px 0}
+  .card,.wk,.list,.sign,figure{box-shadow:none;border-color:#999;break-inside:avoid}
+  .card p,.card ul,.wk ul,.lede,.list .t small{color:#222}
+  .masthead{padding:0 0 14px}
+  a{color:#000;text-decoration:underline}
+  .grid{gap:10px}
+}
+</style>
+
+<div class="wrap">
+
+<div class="masthead">
+  <div class="eyebrow">For the person doing the onboarding · not for the new starter</div>
+  <h1>Switchboard Onboarding Kit</h1>
+  <p>The other half of the <a href="https://claude.ai/code/artifact/f4e7348d-47bd-404d-91e9-5d65c8caa7e7">Switchboard Decoder</a>. That one teaches him the drawings; this one tells you what to hand him, when, what to strip out first, and how to tell in twenty minutes a week whether it's landing.</p>
+  <div class="meta">
+    <span><b>10</b> weeks of documents</span>
+    <span><b>6-rung</b> exposure ladder</span>
+    <span>Weekly <b>20-min</b> check-in</span>
+    <span><b>Print-ready</b> — the whole page</span>
+    <span>Ticks save <b>automatically</b></span>
+  </div>
+  <div class="toolbar noprint">
+    <button class="btn" id="printBtn" type="button">Print the whole kit</button>
+    <button class="btn ghost" id="resetBtn" type="button">Reset ticks</button>
+    <span class="prog"><span class="bar"><i id="pbar"></i></span><span id="pnum">0/0</span></span>
+  </div>
+</div>
+<section id="s1">
+  <div class="shead"><div class="n">01</div><h2>Day one: the six things that must exist before anything else</h2></div>
+  <p class="lede">None of this is training. It's the frame that makes training legal and safe. Do it in the first week or the whole plan sits on sand.</p>
+
+  <div class="list" id="l-day1">
+    <label class="row"><input type="checkbox" data-k="d1"><span class="t"><strong>Scope of practice, in writing.</strong><small>Exactly what an unlicensed engineer may and may not do here. Name the tasks, don't gesture at them. Check it against your state regulator's own guidance — SafeWork/Fair Trading NSW, Energy Safe Victoria, the Electrical Safety Office in Queensland, and so on. Give him a copy; keep a signed copy.</small></span></label>
+    <label class="row"><input type="checkbox" data-k="d2"><span class="t"><strong>A named supervising licence holder.</strong><small>One person, named, who is responsible for any electrical work he is involved in. He needs to know who that is on day one, not "whoever's around".</small></span></label>
+    <label class="row"><input type="checkbox" data-k="d3"><span class="t"><strong>Site and workshop induction, isolation procedure, permit process.</strong><small>Including where the isolation points are, where the LOTO kit lives, what the permit forms look like, and who issues them. Coming from telecom, his instinct about live work is wrong for this industry — this is where you correct it.</small></span></label>
+    <label class="row"><input type="checkbox" data-k="d4"><span class="t"><strong>Access to the standards.</strong><small>AS/NZS 3000, AS/NZS 61439, AS/NZS 3008.1.1, AS/NZS 3017, AS 2067, AS/NZS 4836. Whether that's the office subscription, the shelf copies or a login — he needs to be able to look something up the day he wonders about it.</small></span></label>
+    <label class="row"><input type="checkbox" data-k="d5"><span class="t"><strong>The house drawing standard and legend sheet.</strong><small>Your conventions beat every general rule in the Decoder — device tagging, source-destination ferruling, title block format, layer/CAD standards, label wording. If it only exists in people's heads, this is a good excuse to write one page of it down.</small></span></label>
+    <label class="row"><input type="checkbox" data-k="d6"><span class="t"><strong>One complete drawing pack for one finished board.</strong><small>Every sheet, cover to schedules, for a board he can physically go and look at. This single artefact is worth more than any three others on this page.</small></span></label>
+  </div>
+
+  <div class="warn"><span>⚠</span><div><b>The one to not skip</b><p>He is used to a world where working on a live 48 V bus is normal, trained-for practice. Until someone explicitly tells him that the default answer here is <em>isolate</em>, his instincts are calibrated for the wrong energy. Say it out loud in week 1, and say it again the first time you see him near an open board.</p></div></div>
+</section>
+
+<section id="s2">
+  <div class="shead"><div class="n">02</div><h2>The exposure ladder</h2></div>
+  <p class="lede">He can be genuinely useful long before he can be licensed. Move him up a rung when he's shown you the one below — not on a calendar.</p>
+
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 880 400" role="img" aria-label="A six step staircase of increasing involvement: read, watch, check, witness, specify, direct. A dashed licence line runs above the staircase, with a greyed box above it marked do the electrical work, which requires a licence and sits outside his scope.">
+      <text x="0" y="16" class="t-b t-cu">SIX RUNGS HE CAN CLIMB — AND THE ONE HE CAN'T</text>
+
+      <path class="s-dash" d="M0 68 H880" opacity=".8"/>
+      <text x="4" y="60" class="t-s t-dg">THE LICENCE LINE</text>
+      <rect x="560" y="16" width="290" height="40" rx="7" class="s-box" style="stroke-dasharray:6 4;opacity:.55"/>
+      <text x="576" y="34" class="t-b" opacity=".6">DO — carry out the electrical work</text>
+      <text x="576" y="49" class="t-s" opacity=".6">terminate, install, energise, test live · licensed only</text>
+
+      <g>
+        <rect x="20" y="320" width="130" height="42" rx="7" class="s-box"/>
+        <text x="32" y="340" class="t-b">1 · READ</text>
+        <text x="32" y="354" class="t-s">drawings, at a desk</text>
+        <path class="s-line" d="M150 341 H160 V300"/>
+        <rect x="160" y="272" width="130" height="42" rx="7" class="s-box"/>
+        <text x="172" y="292" class="t-b">2 · WATCH</text>
+        <text x="172" y="306" class="t-s">narrated, behind the line</text>
+        <path class="s-line" d="M290 293 H300 V252"/>
+        <rect x="300" y="224" width="130" height="42" rx="7" class="s-box"/>
+        <text x="312" y="244" class="t-b">3 · CHECK</text>
+        <text x="312" y="258" class="t-s">finished work vs drawing</text>
+        <path class="s-line" d="M430 245 H440 V204"/>
+        <rect x="440" y="176" width="130" height="42" rx="7" class="s-box"/>
+        <text x="452" y="196" class="t-b">4 · WITNESS</text>
+        <text x="452" y="210" class="t-s">observe, record a test</text>
+        <path class="s-line" d="M570 197 H580 V156"/>
+        <rect x="580" y="128" width="130" height="42" rx="7" class="s-box"/>
+        <text x="592" y="148" class="t-b">5 · SPECIFY</text>
+        <text x="592" y="162" class="t-s">write what others do</text>
+        <path class="s-line" d="M710 149 H720 V108"/>
+        <rect x="720" y="80" width="130" height="42" rx="7" class="s-box" style="stroke:var(--copper);stroke-width:2"/>
+        <text x="732" y="100" class="t-b t-cu">6 · DIRECT</text>
+        <text x="732" y="114" class="t-s">supervise and sign off</text>
+      </g>
+
+      <text x="20" y="388" class="t-s">Everything below the dashed line is real engineering work he can do from week one.</text>
+      <text x="20" y="374" class="t-s">Rungs 1–3 need no supervision. Rungs 4–6 need someone to hand him the authority.</text>
+    </svg>
+    </div>
+    <figcaption><b>The ladder exists because "he can't touch anything" is not the same as "he can't contribute".</b> Rung 3 alone — checking finished work against the drawing pack and writing down the differences — is a job most shops are quietly short of, and it's the fastest way for a drawings-literate engineer to earn credibility on the floor.</figcaption>
+  </figure>
+
+  <div class="grid g3">
+    <div class="card"><span class="tag cu">Rungs 1–3</span><h3>What you provide</h3><ul><li>Drawings, schedules and standards</li><li>Someone willing to narrate what they're doing while they do it</li><li>A finished board and its pack, and permission to mark up a copy</li></ul><p><strong>Move him up when:</strong> his mark-ups start finding real discrepancies instead of formatting nits.</p></div>
+    <div class="card"><span class="tag">Rungs 4–5</span><h3>What you provide</h3><ul><li>A test schedule or ITP to witness against</li><li>An existing test plan to copy the shape of</li><li>Ten minutes explaining the pass criteria before the test, not after</li></ul><p><strong>Move him up when:</strong> he rejects an incomplete test sheet without being asked to.</p></div>
+    <div class="card"><span class="tag go">Rung 6</span><h3>What you provide</h3><ul><li>Explicit, named authority for a defined scope</li><li>A licensed person who reports into that scope</li><li>Clarity on what he still escalates rather than decides</li></ul><p><strong>The trap:</strong> letting him direct work he hasn't yet checked or witnessed. Skipping rungs is how supervision becomes theatre.</p></div>
+  </div>
+</section>
+<section id="s3">
+  <div class="shead"><div class="n">03</div><h2>What to hand him, week by week</h2></div>
+  <p class="lede">Each block matches a week of the Decoder's 10-week plan. Give him the documents at the <em>start</em> of the week, not when he asks — the reading only works if the real thing is on the desk beside it.</p>
+
+  <div class="grid g2">
+    <div class="wk">
+      <header><span class="num">W1</span><h3>Orientation and scope</h3><span class="mods">modules 00–01</span></header>
+      <div class="inner">
+        <ul>
+          <li>The written <strong>scope of practice</strong> and the named supervising licence holder</li>
+          <li><strong>Org chart</strong> — who designs, who checks, who approves, who signs test sheets</li>
+          <li>The <strong>house drawing standard</strong> / legend sheet / CAD standard</li>
+          <li><strong>Isolation, LOTO and permit</strong> procedures</li>
+          <li>One <strong>complete drawing pack</strong> for a board he can walk up to</li>
+        </ul>
+        <div class="why"><b>Why</b>The complete pack is the spine of the next nine weeks. Everything he learns gets hung on it.</div>
+      </div>
+    </div>
+
+    <div class="wk">
+      <header><span class="num">W2</span><h3>Three-phase power</h3><span class="mods">module 02</span></header>
+      <div class="inner">
+        <ul>
+          <li>A <strong>transformer nameplate</strong> — photo or datasheet, with kVA, vector group and Z%</li>
+          <li>Two or three <strong>motor nameplates</strong>, or a motor schedule with kW / FLC / pf / poles</li>
+          <li>A <strong>fault level or short-circuit study</strong> from a past job</li>
+          <li>A <strong>PFC bank</strong> spec or kVAr calculation, if you have one</li>
+        </ul>
+        <div class="why"><b>Why</b>He can check every rule of thumb in module 02 against your real plant in an afternoon.</div>
+      </div>
+    </div>
+
+    <div class="wk">
+      <header><span class="num">W3</span><h3>The drawing pack</h3><span class="mods">module 03</span></header>
+      <div class="inner">
+        <ul>
+          <li>The same pack again, plus a <strong>superseded revision</strong> of it</li>
+          <li>A <strong>drawing register</strong> and one <strong>transmittal</strong></li>
+          <li>An example sheet with <strong>rev clouds and deltas</strong> on it</li>
+          <li>One <strong>IFA</strong> and one <strong>IFC</strong> stamped sheet, side by side</li>
+        </ul>
+        <div class="why"><b>Why</b>Comparing two revisions of one drawing teaches revision control faster than any procedure document.</div>
+      </div>
+    </div>
+
+    <div class="wk">
+      <header><span class="num">W4</span><h3>Symbols</h3><span class="mods">module 04</span></header>
+      <div class="inner">
+        <ul>
+          <li><strong>Legend sheets from two or three different clients</strong> — they never agree</li>
+          <li>A schematic with symbols your shop uses that aren't in the general set</li>
+          <li>Any in-house symbol block library from your CAD system</li>
+        </ul>
+        <div class="why"><b>Why</b>Seeing the same device drawn three ways by three clients is the lesson. It removes the fear that he's "missing the real symbol set".</div>
+      </div>
+    </div>
+
+    <div class="wk">
+      <header><span class="num">W5</span><h3>Colours, MEN and the gear</h3><span class="mods">modules 05–06</span></header>
+      <div class="inner">
+        <ul>
+          <li>Your <strong>wiring colour standard</strong>, written down</li>
+          <li>A complete <strong>BOM</strong> from a finished board</li>
+          <li>Catalogues: Schneider <strong>ComPact NSX</strong>, <strong>Acti9</strong>, <strong>TeSys</strong>; NHP <strong>Terasaki TemBreak</strong></li>
+          <li>Scrap or demo gear he can hold — an MCCB, a contactor, an overload, a CT</li>
+        </ul>
+        <div class="why"><b>Why</b>Matching a BOM line to a catalogue page to a physical device is what turns part numbers into objects.</div>
+      </div>
+    </div>
+
+    <div class="wk">
+      <header><span class="num">W6</span><h3>Reading an SLD</h3><span class="mods">module 07</span></header>
+      <div class="inner">
+        <ul>
+          <li><strong>Three SLDs of increasing size</strong> — a small DB, a mid-size MSB, and one with a generator, PFC or HV on it</li>
+          <li>The <strong>discrimination study</strong> for one of them</li>
+          <li>The <strong>maximum demand calculation</strong> for one of them</li>
+        </ul>
+        <div class="why"><b>Why</b>Three SLDs at different scales show him the grammar is identical and only the vocabulary grows.</div>
+      </div>
+    </div>
+
+    <div class="wk">
+      <header><span class="num">W7</span><h3>The DOL schematic</h3><span class="mods">module 08</span></header>
+      <div class="inner">
+        <ul>
+          <li>A plain <strong>DOL starter schematic</strong></li>
+          <li>A <strong>star-delta</strong> schematic, ideally from the same job</li>
+          <li>One schematic with a real <strong>interlock or safety circuit</strong> in it</li>
+          <li>The <strong>functional description</strong> / control philosophy for that plant</li>
+        </ul>
+        <div class="why"><b>Why</b>The functional description is the sentence the ladder is a drawing of. Reading them together is the moment control circuits click.</div>
+      </div>
+    </div>
+
+    <div class="wk">
+      <header><span class="num">W8</span><h3>Schematic to real wires</h3><span class="mods">module 09</span></header>
+      <div class="inner">
+        <ul>
+          <li>The <strong>wiring schedule</strong> and the <strong>cable schedule</strong> for the same board</li>
+          <li>The <strong>label schedule</strong></li>
+          <li>Your <strong>ferruling and labelling standard</strong> — source-destination, in writing</li>
+          <li>Photos of a good loom, and if you have one, a bad one</li>
+        </ul>
+        <div class="why"><b>Why</b>This is the week the source-destination convention has to be nailed down. Coming from potential-numbered drawings, two different ferrules on one wire looks like an error until someone says otherwise.</div>
+      </div>
+    </div>
+
+    <div class="wk">
+      <header><span class="num">W9</span><h3>The numbers and motor control</h3><span class="mods">modules 10–11</span></header>
+      <div class="inner">
+        <ul>
+          <li><strong>Cable sizing calculations</strong> from a real job, with the AS/NZS 3008 rows used</li>
+          <li><strong>Volt drop</strong> calcs for a long run</li>
+          <li>A <strong>motor schedule</strong> with starter type per motor</li>
+          <li>A <strong>VSD parameter sheet</strong> from a commissioned drive</li>
+        </ul>
+        <div class="why"><b>Why</b>Re-deriving one of your own numbers and landing on the same answer is the confidence moment for an engineer.</div>
+      </div>
+    </div>
+
+    <div class="wk">
+      <header><span class="num">W10</span><h3>Control, instruments and the board</h3><span class="mods">modules 12–13</span></header>
+      <div class="inner">
+        <ul>
+          <li>An <strong>I/O schedule</strong>, and a loop drawing if you have one</li>
+          <li>A <strong>GA</strong>, a <strong>gear plate layout</strong> and a <strong>shipping split</strong> drawing</li>
+          <li>Photos of a Form 2, a Form 3b and a Form 4b board, internals open</li>
+          <li>A photo of a <strong>compliance / rating plate</strong></li>
+        </ul>
+        <div class="why"><b>Why</b>Forms are almost impossible to learn from a definition and obvious from three photos.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-size:19px;margin-top:30px">Then, timed to the first real job of each kind</h3>
+  <div class="grid g2">
+    <div class="wk">
+      <header><span class="num">F1</span><h3>Before his first design review</h3><span class="mods">module 14</span></header>
+      <div class="inner">
+        <ul>
+          <li>A completed <strong>ITP</strong> with hold points signed</li>
+          <li><strong>Routine verification</strong> test sheets from a shipped board</li>
+          <li>A <strong>FAT report</strong></li>
+          <li>Whatever documents your verified-system claim rests on — the original manufacturer's <strong>design verification</strong> data, or your own</li>
+          <li>An <strong>RFI log</strong> and a transmittal history from one job</li>
+        </ul>
+        <div class="why"><b>Why</b>This is the paperwork that makes AS/NZS 61439 concrete. It's also where an outsider's eye finds gaps fastest.</div>
+      </div>
+    </div>
+
+    <div class="wk">
+      <header><span class="num">F2</span><h3>Before his first HV switchroom</h3><span class="mods">module 15</span></header>
+      <div class="inner">
+        <ul>
+          <li>An <strong>HV SLD</strong> with the RMU, transformer and protection on it</li>
+          <li>A <strong>protection settings schedule</strong></li>
+          <li>A blank or redacted <strong>switching program</strong> and <strong>permit to work</strong> form</li>
+          <li>The site's <strong>arc flash study</strong> summary and label examples</li>
+        </ul>
+        <div class="why"><b>Why</b>He needs to understand what the HV crew are doing well before he's ever near it — and to know exactly where the line he doesn't cross is.</div>
+      </div>
+    </div>
+
+    <div class="wk">
+      <header><span class="num">F3</span><h3>Before his first site visit</h3><span class="mods">module 16</span></header>
+      <div class="inner">
+        <ul>
+          <li>A <strong>switchroom GA</strong> and the matching <strong>board GA</strong></li>
+          <li>A full <strong>cable schedule</strong></li>
+          <li>A <strong>lifting plan</strong> and delivery method statement</li>
+          <li>A fire-stopping / penetration certificate</li>
+        </ul>
+        <div class="why"><b>Why</b>Overlaying the two GAs before the visit turns the site walk into a verification exercise instead of a tour.</div>
+      </div>
+    </div>
+
+    <div class="wk">
+      <header><span class="num">F4</span><h3>Before his first commissioning</h3><span class="mods">modules 17–18</span></header>
+      <div class="inner">
+        <ul>
+          <li>Completed <strong>commissioning test sheets</strong> — IR, earth continuity, RCD, phase rotation, functional</li>
+          <li>A <strong>punch list</strong> from a live job</li>
+          <li>A set of <strong>as-built mark-ups</strong> and the handover pack index</li>
+          <li>The <strong>calibration register</strong> and instrument list</li>
+        </ul>
+        <div class="why"><b>Why</b>Reading completed test sheets before witnessing one means he arrives knowing what "good" looks like on paper.</div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="s4">
+  <div class="shead"><div class="n">04</div><h2>What to strip out before you hand anything over</h2></div>
+  <p class="lede">Almost every document above belongs to a client. Two minutes of redaction now is cheaper than a conversation with their legal team later.</p>
+
+  <div class="grid g2">
+    <div class="card"><span class="tag dg">Remove</span><h3>Take these out</h3>
+      <ul>
+        <li><strong>Client name, logo and site address</strong> — including in the title block and the file name</li>
+        <li><strong>Anything commercial</strong>: pricing, margins, rates, purchase order values, subcontractor quotes, variation costs</li>
+        <li><strong>Personal data</strong>: named individuals' contact details, signatures, licence numbers</li>
+        <li><strong>Security-relevant detail</strong> on utility, defence, telecommunications, water, health or other critical infrastructure sites — SLDs and switchroom layouts are exactly what you don't circulate</li>
+        <li><strong>Live access credentials</strong> — PLC passwords, VSD parameter passwords, SCADA logins that sometimes ride along in commissioning notes</li>
+      </ul></div>
+
+    <div class="card"><span class="tag go">Keep</span><h3>Leave these in</h3>
+      <ul>
+        <li>Drawing numbers, sheet numbers, <strong>revision letters and dates</strong> — the revision story is half the lesson</li>
+        <li>All technical content: ratings, cable sizes, tags, wire numbers, settings</li>
+        <li>Drawn / checked / approved <em>initials</em> — they teach him who to ask</li>
+        <li>The standard references and the Form / IP notes in the border</li>
+      </ul>
+      <p><strong>Don't over-redact.</strong> A drawing with the ratings blanked out teaches nothing.</p></div>
+
+    <div class="card"><span class="tag hz">Check first</span><h3>Before you copy anything</h3>
+      <ul>
+        <li>Does the contract or NDA for that job allow internal training use? Most do; some explicitly don't.</li>
+        <li>Does your IP policy allow drawings on personal laptops or phones? Assume no unless it says yes.</li>
+        <li>Is there an <strong>internal reference or demo job</strong> you own outright? If so, use that first and save the client work for later weeks.</li>
+      </ul></div>
+
+    <div class="card"><span class="tag">Best option</span><h3>Build one teaching pack</h3>
+      <p>If redaction is going to be a recurring argument, spend half a day once: take a completed, non-sensitive job, redact it properly, and save it as <span class="mono">TRAINING-PACK-01</span>.</p>
+      <p>It pays for itself the second time you hire someone, and it doubles as the example you show clients when they ask what your documentation looks like.</p></div>
+  </div>
+
+  <div class="note"><span>ℹ</span><div><b>A quiet upside</b><p>Redacting a pack forces someone to open every sheet of it. More than one shop has found a missing schedule, a superseded sheet still in circulation, or an unanswered RFI while preparing one for a new starter.</p></div></div>
+</section>
+
+<section id="s5">
+  <div class="shead"><div class="n">05</div><h2>The 20-minute weekly check-in</h2></div>
+  <p class="lede">Same four questions every week, plus one that's specific to what he just covered. Twenty minutes, standing up, in front of a board if you can.</p>
+
+  <div class="card" style="margin-top:18px">
+    <span class="tag cu">Every week</span>
+    <h3>The four standing questions</h3>
+    <ol style="font-size:15px;color:var(--ink-2);padding-left:20px;margin:10px 0 0">
+      <li><strong>What's one thing you couldn't explain this week?</strong> — the most useful question on this page. If the answer is "nothing", he isn't reading properly or isn't comfortable saying so.</li>
+      <li><strong>Show me something on a real drawing you can now read.</strong> — make him point at it. Recognition is not the same as reading.</li>
+      <li><strong>What did the Friday task turn up?</strong> — the Decoder's weekly at-work task. If he skipped it, the week didn't happen.</li>
+      <li><strong>Did you see anything that looked wrong or unsafe?</strong> — a new pair of eyes catches things. Make it explicitly safe to answer, or he'll stop looking.</li>
+    </ol>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Week</th><th>The one extra question</th><th>What a good answer sounds like</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">W1</td><td>What are you not allowed to do here, and who do you go to?</td><td>Names the tasks and the person, without hedging.</td></tr>
+        <tr><td class="mono">W2</td><td>Where does 415 V come from, and what does the neutral actually carry?</td><td>√3 between phases; neutral carries imbalance plus triplen harmonics.</td></tr>
+        <tr><td class="mono">W3</td><td>Pick up any sheet — what is it and what question does it answer?</td><td>Names the type in seconds; knows IFA means don't build.</td></tr>
+        <tr><td class="mono">W4</td><td>Draw me a breaker, an isolator and a contactor.</td><td>Gets the decoration right and can say why an isolator isn't a breaker.</td></tr>
+        <tr><td class="mono">W5</td><td>Explain the MEN link to me like I don't know.</td><td>Describes the fault current loop, not just "it bonds N to E".</td></tr>
+        <tr><td class="mono">W6</td><td>Read me one outgoing way off this SLD.</td><td>Tag, rating, cable, length, destination — in order, without prompting.</td></tr>
+        <tr><td class="mono">W7</td><td>What's the seal-in for, and why is stop normally closed?</td><td>Holds the contactor in; a broken wire must stop the motor, not hide the stop.</td></tr>
+        <tr><td class="mono">W8</td><td>Take a wire and tell me where its other end is.</td><td>Reads the ferrule as an address and walks to it, no schedule.</td></tr>
+        <tr><td class="mono">W9</td><td>Re-derive this circuit's current — did you land where the drawing did?</td><td>Shows the working, and asks the right question if he didn't.</td></tr>
+        <tr><td class="mono">W10</td><td>What Form is this board, and how can you tell by looking?</td><td>Uses the four questions rather than reading the label.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="s6">
+  <div class="shead"><div class="n">06</div><h2>Signals — is it landing?</h2></div>
+
+  <div class="grid g2">
+    <div class="card"><span class="tag go">Going well</span><h3>What progress actually looks like</h3>
+      <ul>
+        <li>His questions get <strong>more specific</strong> — from "what's this symbol" to "why is this a D curve and that one a C".</li>
+        <li>He starts finding <strong>real discrepancies</strong>: a BOM line that doesn't match the SLD, a label schedule that disagrees with the drawing, an RFI answer that never made it back onto a sheet.</li>
+        <li>He reaches for the <strong>drawing before the person</strong>, then asks a sharper question.</li>
+        <li>People on the floor start explaining things to him unprompted. That's the real signal.</li>
+        <li>He raises an RFI rather than guessing.</li>
+      </ul></div>
+
+    <div class="card"><span class="tag dg">Watch out</span><h3>Red flags, and what they usually mean</h3>
+      <ul>
+        <li><strong>"It's all making sense"</strong> with no questions → he's reading passively. Ask him to point at something on a real drawing.</li>
+        <li><strong>Skipping the Friday task</strong> two weeks running → the plan has become homework. Do the next one <em>with</em> him.</li>
+        <li><strong>Reaching for tools</strong> — even helpfully, even trivially → the telecom instinct hasn't been recalibrated. Stop and repeat the scope conversation, once, plainly.</li>
+        <li><strong>Confident about ratings he hasn't checked</strong> → engineers from adjacent fields can pattern-match too fast. Ask him where the number came from.</li>
+        <li><strong>Quiet for three weeks</strong> → usually means he's embarrassed about something basic. The four standing questions exist for exactly this.</li>
+      </ul></div>
+  </div>
+
+  <div class="win"><span>★</span><div><b>What to give him as soon as he's ready</b><p>The highest-value early job for a drawings-literate engineer who can't yet touch anything: <strong>own the drawing-pack consistency check</strong> — BOM against SLD, label schedule against drawing, revisions consistent across every sheet, RFI answers actually incorporated, ITP signed at each hold point. It's within scope, it's real work, and most shops are quietly short of someone doing it.</p></div></div>
+</section>
+
+<section id="s7">
+  <div class="shead"><div class="n">07</div><h2>Sign-off</h2></div>
+  <p class="lede">Print this page, fill this in, and keep it on file. It's your record that the scope conversation happened.</p>
+
+  <div class="sign">
+    <div class="r"><div class="lbl">Written scope of practice issued and read</div><div><div class="cap">Signed</div><div class="ln"></div></div><div><div class="cap">Date</div><div class="ln"></div></div></div>
+    <div class="r"><div class="lbl">Supervising licence holder named and introduced</div><div><div class="cap">Signed</div><div class="ln"></div></div><div><div class="cap">Date</div><div class="ln"></div></div></div>
+    <div class="r"><div class="lbl">Induction, isolation and permit procedures completed</div><div><div class="cap">Signed</div><div class="ln"></div></div><div><div class="cap">Date</div><div class="ln"></div></div></div>
+    <div class="r"><div class="lbl">Standards access provided</div><div><div class="cap">Signed</div><div class="ln"></div></div><div><div class="cap">Date</div><div class="ln"></div></div></div>
+    <div class="r"><div class="lbl">House drawing standard issued</div><div><div class="cap">Signed</div><div class="ln"></div></div><div><div class="cap">Date</div><div class="ln"></div></div></div>
+    <div class="r"><div class="lbl">Weeks 1–10 documents issued</div><div><div class="cap">Signed</div><div class="ln"></div></div><div><div class="cap">Date</div><div class="ln"></div></div></div>
+    <div class="r"><div class="lbl">Moved to ladder rung 4 (witness) — authority given by</div><div><div class="cap">Signed</div><div class="ln"></div></div><div><div class="cap">Date</div><div class="ln"></div></div></div>
+    <div class="r"><div class="lbl">Moved to ladder rung 6 (direct) — scope defined in writing</div><div><div class="cap">Signed</div><div class="ln"></div></div><div><div class="cap">Date</div><div class="ln"></div></div></div>
+  </div>
+
+  <div class="warn"><span>⚠</span><div><b>This kit is not legal or safety advice</b><p>Licensing of electrical work in Australia is set by each state and territory regulator, and your own WHS obligations sit on top. Use this as a planning aid, and confirm the actual boundaries with your regulator and your safety adviser before relying on any of it.</p></div></div>
+</section>
+
+<div class="footer">
+  <p>Companion to <a href="https://claude.ai/code/artifact/f4e7348d-47bd-404d-91e9-5d65c8caa7e7"><strong>Switchboard Decoder</strong></a> — the 22-module resource he works through. Ticks on this page are stored in this browser only. Print for the file.</p>
+</div>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY="sbk-kit-v1";
+  var boxes=Array.prototype.slice.call(document.querySelectorAll('input[type=checkbox][data-k]'));
+  var state={};
+  try{ state=JSON.parse(localStorage.getItem(KEY)||"{}")||{}; }catch(e){ state={}; }
+  function paint(){
+    var done=boxes.filter(function(b){return b.checked;}).length;
+    document.getElementById('pnum').textContent=done+"/"+boxes.length;
+    document.getElementById('pbar').style.width=boxes.length?(done/boxes.length*100)+"%":"0%";
+  }
+  boxes.forEach(function(b){
+    if(state[b.dataset.k]) b.checked=true;
+    b.addEventListener('change',function(){
+      state[b.dataset.k]=b.checked;
+      try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){}
+      paint();
+    });
+  });
+  paint();
+  document.getElementById('resetBtn').addEventListener('click',function(){
+    boxes.forEach(function(b){ b.checked=false; });
+    state={};
+    try{ localStorage.removeItem(KEY); }catch(e){}
+    paint();
+  });
+  document.getElementById('printBtn').addEventListener('click',function(){ window.print(); });
+})();
+</script>
