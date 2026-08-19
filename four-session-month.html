@@ -249,6 +249,33 @@ html{scroll-behavior:smooth}
   .week{grid-template-columns:1fr;gap:8px}
   .card{padding:18px}
 }
+
+/* ---------- league table additions ---------- */
+.tier{
+  font-family:var(--f-mono);font-size:.64rem;font-weight:600;letter-spacing:.08em;
+  padding:2px 7px;border-radius:4px;white-space:nowrap;
+}
+.tier-s{background:var(--money);color:var(--surface)}
+.tier-a{background:var(--money-soft);color:var(--money)}
+.tier-b{background:var(--warn-soft);color:var(--warn)}
+.tier-c{background:var(--accent-soft);color:var(--accent)}
+tr.is-yours td{background:color-mix(in srgb,var(--money) 8%,transparent)}
+td .sub{display:block;font-size:.82rem;color:var(--ink-faint);margin-top:2px}
+.verdict{
+  display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;
+  border:1px solid var(--rule);border-radius:12px;padding:20px;background:var(--surface);
+}
+.verdict .mark{
+  font-family:var(--f-display);font-size:1.6rem;font-weight:800;line-height:1;
+  padding:10px 14px;border-radius:9px;white-space:nowrap;
+}
+.mark-no{background:var(--accent-soft);color:var(--accent)}
+.mark-yes{background:var(--money-soft);color:var(--money)}
+.mark-maybe{background:var(--warn-soft);color:var(--warn)}
+.verdict-body{display:flex;flex-direction:column;gap:10px}
+.bigstat{display:flex;flex-wrap:wrap;gap:26px;padding:18px 20px;border:1px solid var(--rule);border-radius:12px;background:var(--surface)}
+.bigstat .kv .v{font-size:1.9rem}
+@media(max-width:520px){ .verdict{grid-template-columns:1fr} }
 </style>
 
 <div class="wrap">
@@ -256,27 +283,30 @@ html{scroll-behavior:smooth}
 <header class="masthead">
   <div class="rule-top"></div>
   <div>
-    <div class="eyebrow">Operating plan · 12 months · built for your constraints</div>
+    <div class="eyebrow">Niche analysis + 12-month operating plan · researched Aug 2026</div>
     <h1>The Four-Session Month</h1>
   </div>
-  <p class="lede">You have under 5 hours a week. That is not enough for a daily grind — but it is exactly enough for <strong>four deep sessions a month</strong>. This is the whole plan built around that one fact.</p>
+  <p class="lede">Every niche ranked by what it actually pays <em>you</em>, on under 5 hours a week, with AI doing the work and your voice on top. Then the plan, and an honest answer to whether it's worth doing at all.</p>
   <div class="chips">
     <span class="chip"><b>&lt;5 hrs</b> / week</span>
     <span class="chip"><b>$500–2k</b> budget</span>
     <span class="chip"><b>No face</b>, own voice</span>
+    <span class="chip"><b>AI-generated</b> visuals</span>
     <span class="chip"><b>Organic</b> only</span>
     <span class="chip"><b>Global / US</b> audience</span>
-    <span class="chip"><b>AU</b> sole trader, ABN</span>
-    <span class="chip">Target <b>$500–1k</b>/mo by mo. 12</span>
+    <span class="chip"><b>AU</b> sole trader</span>
   </div>
 </header>
 
 <nav class="navbar">
   <div class="navbar-inner">
     <div class="navscroll">
-      <a href="#verdict">Verdict</a>
-      <a href="#niche">Niche</a>
-      <a href="#money">Money</a>
+      <a href="#league">Rankings</a>
+      <a href="#three">Your 3 ideas</a>
+      <a href="#earn">Earnings</a>
+      <a href="#aistack">AI stack</a>
+      <a href="#worth">Worth it?</a>
+      <a href="#pick">The pick</a>
       <a href="#rhythm">Rhythm</a>
       <a href="#video">Video</a>
       <a href="#phases">Phases</a>
@@ -284,7 +314,6 @@ html{scroll-behavior:smooth}
       <a href="#build">Automation</a>
       <a href="#au">Australia</a>
       <a href="#budget">Budget</a>
-      <a href="#truth">Reality</a>
       <a href="#week1">Week 1</a>
     </div>
     <div class="progress-mini" title="Week-1 checklist progress">
@@ -294,221 +323,448 @@ html{scroll-behavior:smooth}
   </div>
 </nav>
 
-<!-- ================= TL;DR ================= -->
 <section id="tldr" style="padding-top:40px">
   <div class="tldr">
     <div class="eyebrow">If you read nothing else</div>
-    <h2>The 30-second version</h2>
+    <h2>The six things that decide this</h2>
     <ol>
-      <li><span><b>YouTube, not dropshipping.</b> Dropshipping needs daily attention and ad spend. You have neither. It fails your constraints on day one.</span></li>
-      <li><span><b>One channel: AI &amp; automation for brains that hate admin.</b> It sits exactly where your two interests overlap, and you have real authority in it.</span></li>
-      <li><span><b>Your voice, no face.</b> This is your unfair advantage — YouTube now demonetises templated AI narration. A real voice over real screen recordings does not get caught in that net.</span></li>
-      <li><span><b>Ad revenue is the bonus, not the plan.</b> The $500–1k comes from affiliate commissions plus one small digital product. Ads alone would need ~40,000 views a month.</span></li>
-      <li><span><b>Four sessions a month, not daily work.</b> Script day, record day, edit day, publish day. Four videos come out the other end.</span></li>
-      <li><span><b>It is not passive for 12 months.</b> It becomes semi-passive after, because the library keeps earning while you sleep. Anyone selling you faster is selling you something.</span></li>
+      <li><span><b>The niche multiplies everything by up to 28×.</b> Same 15,000 views a month earns ~$30 on a kids cartoon channel and ~$850 on a software/AI channel. Niche choice matters more than every other decision combined.</span></li>
+      <li><span><b>Kids cartoons: don't.</b> "Made for kids" forces non-personalised ads only — roughly $1–3 RPM against $13–38 elsewhere — and switches off comments, memberships and end screens, killing every non-ad income layer. Animation is also the most expensive thing AI can make.</span></li>
+      <li><span><b>Review channel: yes — but software, not physical products.</b> Amazon pays 1–2% on electronics with a 24-hour cookie. SaaS pays 20–50% <em>recurring, for the life of the customer</em>. Same work, roughly 50× the economics.</span></li>
+      <li><span><b>Finance: the best RPM on the board, and a real legal line for you.</b> As an Australian creator, ASIC's finfluencer rules mean specific recommendations can constitute unlicensed financial advice. Education is fine; "buy this" is not.</span></li>
+      <li><span><b>Never let AI hold the microphone.</b> Your real voice over AI visuals is your defence against the inauthentic-content policy that terminated channels in January 2026. It is also the single biggest retention factor.</span></li>
+      <li><span><b>Twelve months, four sessions a month.</b> Median realistic outcome is $200–400/month at month 12, not $1,000. Read section 05 before you commit — there's an option that pays better in year one.</span></li>
     </ol>
   </div>
 </section>
 
-<!-- ================= 01 VERDICT ================= -->
-<section id="verdict">
-  <div class="sec-head"><span class="sec-num">01</span><h2>The verdict</h2></div>
-  <p class="lede">You said "whatever earns best." Given your actual constraints, that is not a close call.</p>
+<section id="league">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Every niche, ranked</h2></div>
+  <p class="lede">Ranked for <strong>your</strong> situation: AI-produced video, your voiceover, under 5 hours a week, US-weighted audience, no ad spend. RPM figures are US-weighted industry reporting for 2026 — treat them as ranges, not promises.</p>
   <div class="sec-body">
-    <div class="grid2">
-      <div class="card">
-        <div class="card-label"><span class="tag pick">Do this</span></div>
-        <h3>Faceless YouTube + affiliate + one product</h3>
-        <ul class="tight">
-          <li>Works in batched sessions — fits &lt;5 hrs/week</li>
-          <li>Zero ad spend required</li>
-          <li>Every video is an asset that keeps earning</li>
-          <li>No customers, no refunds, no inventory</li>
-          <li>Rewards your technical skill directly</li>
-        </ul>
-      </div>
-      <div class="card">
-        <div class="card-label"><span class="tag risk">Skip this</span></div>
-        <h3>Dropshipping</h3>
-        <ul class="tight">
-          <li>Needs <em>daily</em> attention: orders, suppliers, refunds</li>
-          <li>Runs on paid ads — you chose organic only</li>
-          <li>Margins are thin; a bad ad week costs real money</li>
-          <li>Under Australian Consumer Law <strong>you</strong>, not your supplier, are liable for delivery and refunds</li>
-          <li>It is a job with a boss called "the algorithm," not passive income</li>
-        </ul>
-      </div>
-    </div>
-    <div class="callout">
-      <div class="eyebrow">The honest framing</div>
-      <p>Dropshipping <em>can</em> make money faster than YouTube. It just can't make money for <em>you</em>, on 5 hours a week with no ad budget. Choosing based on someone else's constraints is how most people lose their first $2,000.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 02 NICHE ================= -->
-<section id="niche">
-  <div class="sec-head"><span class="sec-num">02</span><h2>Your niche</h2></div>
-  <p class="lede">You picked tech/AI <em>and</em> health/psychology/self-improvement. Don't choose between them — the money is in the overlap.</p>
-  <div class="sec-body">
-    <div class="callout money">
-      <div class="eyebrow">The intersection</div>
-      <h3 style="margin:0">Practical AI &amp; automation for people whose brains don't do boring admin.</h3>
-      <p>Tech-level ad rates. Self-improvement-level audience size. Evergreen search demand. And you are not researching it — you are living it right now.</p>
-    </div>
-
-    <h4>Pick one concept and commit for 6 months</h4>
-    <div class="grid3">
-      <div class="card">
-        <div class="card-label"><span class="tag pick">Recommended</span></div>
-        <h4>A · "Automate the boring bit"</h4>
-        <p style="font-size:.93rem;color:var(--ink-soft)">One annoying task per video, automated end to end, on screen. 8–12 min. Highest search intent, easiest to batch, most affiliate-friendly.</p>
-      </div>
-      <div class="card">
-        <h4>B · Tool teardowns</h4>
-        <p style="font-size:.93rem;color:var(--ink-soft)">"I used X for 30 days." Honest verdicts, side-by-sides. Great affiliate fit, but you must keep buying tools.</p>
-      </div>
-      <div class="card">
-        <h4>C · "Build this in 20 minutes"</h4>
-        <p style="font-size:.93rem;color:var(--ink-soft)">Live-ish builds with Claude Code / agents. Most fun for you, smallest audience, hardest to batch.</p>
-      </div>
-    </div>
-
-    <details>
-      <summary>Why your real voice is the whole strategy</summary>
-      <div class="details-body">
-        <p>In July 2025 YouTube renamed its "repetitious content" policy to <strong>inauthentic content</strong>, explicitly targeting mass-produced and templated videos. In January 2026 it ran its largest enforcement wave yet against AI-generated channels. AI-<em>assisted</em> content is still fully monetisable — what gets killed is content that looks machine-stamped: identical structure, synthetic narration, stock slideshows.</p>
-        <p><strong>Your setup is on the safe side of that line by construction:</strong></p>
-        <ul class="tight">
-          <li>Real human narration (not text-to-speech)</li>
-            <li>Real screen recordings of you actually doing the thing</li>
-          <li>An original result or opinion in every video</li>
-          <li>Structure that varies because the task varies</li>
-        </ul>
-        <p>Use AI for research, scripting, editing, thumbnails, and packaging — all fine. Just don't let it hold the microphone. And toggle the <strong>"altered or synthetic content"</strong> disclosure in YouTube Studio when you use realistic AI-generated visuals.</p>
-      </div>
-    </details>
-
-    <details>
-      <summary>How to name the channel (and what not to do)</summary>
-      <div class="details-body">
-        <p>Pick a name that describes the <em>outcome</em>, not you. It should survive you changing your mind about format. Two or three words, easy to spell out loud, handle available on YouTube and one social.</p>
-        <p><strong>Don't</strong> use your own name (kills resale value and pins you to one topic), don't put "AI" and "Hub"/"Lab"/"Central" together, and don't spend more than 45 minutes on this. The name is worth roughly 2% of your outcome; the 48 videos are worth the other 98%.</p>
-      </div>
-    </details>
-  </div>
-</section>
-
-<!-- ================= 03 MONEY ================= -->
-<section id="money">
-  <div class="sec-head"><span class="sec-num">03</span><h2>How the money actually works</h2></div>
-  <p class="lede">Most people plan for ad revenue and quit at month 8 when it's $40. Here is the correct stack, in the order it switches on.</p>
-  <div class="sec-body">
-
-    <div class="rhythm">
-      <div class="week">
-        <div class="week-num">Layer<b>1</b></div>
-        <div class="week-body">
-          <div class="mode">YouTube ads · switches on ~month 6–9</div>
-          <div class="out">Needs 1,000 subs + 4,000 watch hours for full ad revenue (500 subs + 3,000 hours unlocks the early tier — tips and memberships, no ads). Treat every dollar here as a bonus. <strong>Estimated $150–250/mo by month 12.</strong></div>
-        </div>
-      </div>
-      <div class="week">
-        <div class="week-num">Layer<b>2</b></div>
-        <div class="week-body">
-          <div class="mode">Affiliate — recurring commissions · from month 4</div>
-          <div class="out">The real engine. AI and software tools pay 20–30% <em>recurring</em> on $20–50/mo subscriptions. Forty active referrals compounds into a base that doesn't reset each month. <strong>Estimated $250–400/mo by month 12.</strong></div>
-        </div>
-      </div>
-      <div class="week">
-        <div class="week-num">Layer<b>3</b></div>
-        <div class="week-body">
-          <div class="mode">One digital product · from month 7</div>
-          <div class="out">Sell the actual automations you built for yourself — templates, prompts, scripts — as a $29–49 pack. You need very few buyers. <strong>Estimated $200–400/mo by month 12.</strong></div>
-        </div>
-      </div>
-    </div>
 
     <div class="tablewrap">
       <table>
-        <thead><tr><th>Month 12 target mix</th><th>Conservative</th><th>Good outcome</th></tr></thead>
+        <thead>
+          <tr><th>Tier</th><th>Niche</th><th>RPM (USD)</th><th>Effort</th><th>Why it lands here</th></tr>
+        </thead>
         <tbody>
-          <tr><td>Ad revenue</td><td class="num">$150</td><td class="num">$250</td></tr>
-          <tr><td>Affiliate (recurring)</td><td class="num">$250</td><td class="num">$400</td></tr>
-          <tr><td>Digital product</td><td class="num">$150</td><td class="num">$400</td></tr>
+          <tr class="is-yours">
+            <td><span class="tier tier-s">S</span></td>
+            <td><strong>B2B software &amp; SaaS reviews</strong><span class="sub">"Best CRM for small teams"</span></td>
+            <td class="num">$18–38</td>
+            <td class="num">Low</td>
+            <td>Highest RPM on YouTube, plus 20–50% <em>recurring</em> affiliate. Test everything from your desk. Dry, but the economics are unmatched.</td>
+          </tr>
+          <tr class="is-yours">
+            <td><span class="tier tier-s">S</span></td>
+            <td><strong>AI tools &amp; automation</strong><span class="sub">Your existing skill set</span></td>
+            <td class="num">$13–22</td>
+            <td class="num">Low</td>
+            <td>Buyer-intent audience, recurring SaaS commissions, screen recordings are cheap to make, and you already do this daily.</td>
+          </tr>
+          <tr>
+            <td><span class="tier tier-a">A</span></td>
+            <td><strong>Personal finance &amp; investing</strong></td>
+            <td class="num">$12–35</td>
+            <td class="num">Med</td>
+            <td>Top-tier RPM. But regulated for you as an Australian, and errors are punished hard. See section 02.</td>
+          </tr>
+          <tr>
+            <td><span class="tier tier-a">A</span></td>
+            <td><strong>Business case studies</strong><span class="sub">"How Costco actually makes money"</span></td>
+            <td class="num">$10–25</td>
+            <td class="num">Med</td>
+            <td>Finance-level RPM with none of the licensing risk — you're describing companies, not recommending investments. Superb AI-research fit.</td>
+          </tr>
+          <tr>
+            <td><span class="tier tier-a">A</span></td>
+            <td>Insurance &amp; financial planning</td>
+            <td class="num">$15–32</td>
+            <td class="num">Med</td>
+            <td>Enormous RPM, tiny audience, same regulatory exposure as finance. Viable only with real domain knowledge.</td>
+          </tr>
+          <tr>
+            <td><span class="tier tier-a">A</span></td>
+            <td>Real estate &amp; property investing</td>
+            <td class="num">$15–30</td>
+            <td class="num">Med</td>
+            <td>Great rates, evergreen demand. Advice on property investment can also stray into regulated territory.</td>
+          </tr>
+          <tr>
+            <td><span class="tier tier-b">B</span></td>
+            <td>Tech how-to &amp; coding</td>
+            <td class="num">$8–24</td>
+            <td class="num">Low</td>
+            <td>Solid, easy to produce, but weaker buyer intent than the SaaS lane above and heavier competition from free docs.</td>
+          </tr>
+          <tr>
+            <td><span class="tier tier-b">B</span></td>
+            <td>Health, fitness &amp; longevity</td>
+            <td class="num">$8–18</td>
+            <td class="num">Med</td>
+            <td>Big audience and decent rates, but medical claims draw extra platform scrutiny and real liability. Not a niche to fake.</td>
+          </tr>
+          <tr>
+            <td><span class="tier tier-b">B</span></td>
+            <td>Psychology &amp; self-improvement</td>
+            <td class="num">$5–12</td>
+            <td class="num">Low</td>
+            <td>Huge reach, weak buyer intent, and the most crowded lane in faceless YouTube. Works only with a sharp, narrow angle.</td>
+          </tr>
+          <tr>
+            <td><span class="tier tier-b">B</span></td>
+            <td>True crime, mystery, horror</td>
+            <td class="num">$5–12</td>
+            <td class="num">High</td>
+            <td>Excellent retention, but needs high volume, careful sourcing, and it's now flooded with AI narration channels.</td>
+          </tr>
+          <tr>
+            <td><span class="tier tier-b">B</span></td>
+            <td>History &amp; documentary</td>
+            <td class="num">$4–10</td>
+            <td class="num">High</td>
+            <td>Genuinely enjoyable to make, but research cost per video is brutal and AI gets historical detail wrong constantly.</td>
+          </tr>
+          <tr>
+            <td><span class="tier tier-c">C</span></td>
+            <td><strong>Consumer product reviews</strong><span class="sub">Amazon-affiliate model</span></td>
+            <td class="num">$6–14</td>
+            <td class="num">High</td>
+            <td>Amazon pays 1–2% on electronics with a 24-hour cookie. You must own the products, or you're producing spec-sheet slop.</td>
+          </tr>
+          <tr>
+            <td><span class="tier tier-c">C</span></td>
+            <td>Gaming, listicles, compilations</td>
+            <td class="num">$3–7</td>
+            <td class="num">High</td>
+            <td>Low rates, infinite competition, first in line for inauthentic-content enforcement.</td>
+          </tr>
+          <tr>
+            <td><span class="tier tier-c">C</span></td>
+            <td>Motivation, stoicism, quotes</td>
+            <td class="num">$3–8</td>
+            <td class="num">Low</td>
+            <td>Zero barrier to entry means zero moat. The most AI-saturated corner of the platform.</td>
+          </tr>
+          <tr>
+            <td><span class="tier tier-c">C</span></td>
+            <td><strong>Kids cartoons &amp; nursery rhymes</strong></td>
+            <td class="num">$1–3</td>
+            <td class="num">Very high</td>
+            <td>Non-personalised ads only, most monetisation features disabled, hardest content for AI to produce consistently. See section 02.</td>
+          </tr>
+          <tr>
+            <td><span class="tier tier-c">C</span></td>
+            <td>Sleep, ambient, meditation</td>
+            <td class="num">$1–4</td>
+            <td class="num">Low</td>
+            <td>Long watch time, almost no advertiser value, no path to selling anything.</td>
+          </tr>
         </tbody>
-        <tfoot><tr><td>Monthly total</td><td class="num">$550</td><td class="num">$1,050</td></tr></tfoot>
       </table>
     </div>
-    <p style="font-size:.86rem;color:var(--ink-faint)">Figures are planning estimates in AUD, not forecasts. They exist so you can see which lever to pull, not to be believed.</p>
 
-    <div class="callout warn">
-      <div class="eyebrow">The number that should reset your expectations</div>
-      <p>At a realistic $9–15 RPM for a US-weighted tech audience, <strong>$500/month from ads alone needs roughly 35,000–55,000 views every month</strong>. That is why layers 2 and 3 exist. A channel with 8,000 monthly views and good affiliate placement out-earns a channel with 40,000 views and none.</p>
+    <div class="callout money">
+      <div class="eyebrow">The single most important row</div>
+      <p>A kids channel and a SaaS channel with <strong>identical view counts</strong> differ by roughly <strong>20–28×</strong> in ad revenue alone — before you count affiliate income, which the kids channel structurally cannot earn. You will do the same amount of work either way.</p>
+    </div>
+
+    <details>
+      <summary>What "effort" means in that table</summary>
+      <div class="details-body">
+        <p><strong>Low</strong> — screen recordings, diagrams, or stock/AI b-roll over narration. You can produce a video in 3–4 hours end to end with AI assistance.</p>
+        <p><strong>Medium</strong> — requires genuine research or domain knowledge you must verify yourself, because being wrong has consequences.</p>
+        <p><strong>High</strong> — requires either buying things, deep original research, or animation with consistent characters, none of which AI meaningfully shortcuts yet.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section id="three">
+  <div class="sec-head"><span class="sec-num">02</span><h2>Your three ideas, examined</h2></div>
+  <p class="lede">You named children's cartoons, a review channel, and finance. Here's what the research says about each, in the order you should take them seriously.</p>
+  <div class="sec-body">
+
+    <div class="verdict">
+      <div class="mark mark-no">No</div>
+      <div class="verdict-body">
+        <h3>Children's cartoon channel</h3>
+        <p>This is the trap option. It <em>looks</em> perfect for you — no face needed, AI can draw, kids rewatch endlessly — and it is the worst fit on the board. Four independent reasons:</p>
+        <ul class="tight">
+          <li><strong>The RPM collapse.</strong> Anything marked "made for kids" can only serve non-personalised, contextual ads under COPPA. That's roughly $1–3 RPM against $13–38 in the S-tier niches.</li>
+          <li><strong>The features that earn are switched off.</strong> Made-for-kids disables comments, personalised ads, the notification bell, channel memberships, and end screens. No email list, no funnel, no product upsell — the two income layers that were going to carry you are simply unavailable.</li>
+          <li><strong>Animation is the most expensive AI output.</strong> Keeping a character consistent across episodes is still where AI video is weakest. This is a 15+ hour-per-video format, not a 4-hour one.</li>
+          <li><strong>It's the most heavily policed corner of YouTube.</strong> Kids content sits at the intersection of AI-slop enforcement and tightening child-privacy regulation. Highest risk, lowest reward.</li>
+        </ul>
+        <p><strong>Verdict:</strong> maximum effort, minimum revenue, maximum regulatory risk. If you want to make animation, make it as a hobby, not as the income plan.</p>
+      </div>
+    </div>
+
+    <div class="verdict">
+      <div class="mark mark-yes">Yes*</div>
+      <div class="verdict-body">
+        <h3>Review channel — with one swap</h3>
+        <p>Keep the format. Change what you review. This is probably the highest-value single change in this document.</p>
+        <div class="tablewrap" style="margin:4px 0">
+          <table>
+            <thead><tr><th></th><th>Physical products (Amazon)</th><th>Software / SaaS</th></tr></thead>
+            <tbody>
+              <tr><td>Commission</td><td>1–2% on electronics</td><td>20–50%</td></tr>
+              <tr><td>Paid</td><td>Once</td><td><strong>Every month, for the customer's life</strong></td></tr>
+              <tr><td>Cookie window</td><td>24 hours</td><td>30–120 days typical</td></tr>
+              <tr><td>Cost to review</td><td>You buy the product</td><td>Free trial</td></tr>
+              <tr><td>One referral is worth</td><td class="num">~$10–20 once</td><td class="num">~$15–25 / month</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>A $1,000 laptop review earns you $10–20, once, and only if they buy within a day. One referral to a $69/month tool at 30% recurring pays about $21 <em>every month</em> for as long as they stay subscribed. Forty of those is roughly $840/month that doesn't reset.</p>
+        <p><strong>Verdict:</strong> review software, AI tools, and business apps — not gadgets. Same scripts, same format, same effort, roughly 50× the economics, and no shipping.</p>
+      </div>
+    </div>
+
+    <div class="verdict">
+      <div class="mark mark-maybe">Careful</div>
+      <div class="verdict-body">
+        <h3>Finance — best rates, real legal line</h3>
+        <p>You're right that the money is there: $12–35 RPM, the highest-paying category on the platform, because viewers researching credit cards and index funds are worth $22–65 CPM to advertisers.</p>
+        <p><strong>But there's something specific to you being in Australia that you need to know before you start.</strong> ASIC's information sheet INFO 269 sets out how financial services laws apply to "finfluencers". Sharing general financial information and education does not require a licence. Making specific recommendations can constitute providing unlicensed financial advice, which requires an AFS licence or authorised-representative status. Penalties for individuals reach up to five years imprisonment and substantial fines, and ASIC has issued warning notices to influencers and is actively reviewing licensees supervising them as of 2026.</p>
+        <p>This applies to you as an Australian-based creator <em>regardless of where your audience is</em>.</p>
+        <div class="grid2" style="margin-top:4px">
+          <div class="card" style="box-shadow:none">
+            <div class="card-label"><span class="tag pick">Safe lane</span></div>
+            <ul class="tight">
+              <li>"How compound interest actually works"</li>
+              <li>"What an ETF is, explained in 8 minutes"</li>
+              <li>"How the US tax bracket system works"</li>
+              <li>"How Costco makes money on $1.50 hot dogs"</li>
+            </ul>
+          </div>
+          <div class="card" style="box-shadow:none">
+            <div class="card-label"><span class="tag risk">Do not</span></div>
+            <ul class="tight">
+              <li>"Buy this stock before it runs"</li>
+              <li>"My portfolio — copy it"</li>
+              <li>"This fund will outperform"</li>
+              <li>Anything a viewer could act on as personal advice</li>
+            </ul>
+          </div>
+        </div>
+        <p><strong>The other problem:</strong> you said you'd need to learn finance first. Explaining a regulated subject you learned last week, from an AI-generated script, is the highest-risk content on this list — wrong facts in finance get you destroyed in the comments and potentially noticed by a regulator.</p>
+        <p><strong>Verdict:</strong> viable and lucrative in the <em>education and case-study</em> lane. Not as your first channel while you're still learning the subject. If the finance pull is strong, start with business case studies — nearly the same RPM, none of the licensing exposure.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ================= 04 RHYTHM ================= -->
-<section id="rhythm">
-  <div class="sec-head"><span class="sec-num">04</span><h2>The four-session month</h2></div>
-  <p class="lede">This is the centrepiece. Don't make one video a week — that means task-switching seven times per video. Instead do <strong>one mode per session</strong>, and finish four videos a month.</p>
+<section id="earn">
+  <div class="sec-head"><span class="sec-num">03</span><h2>What you'd actually earn</h2></div>
+  <p class="lede">Here is the comparison that should decide your niche. <strong>Same channel, same effort, same 15,000 views a month</strong> — a realistic figure for 48 decent evergreen videos by month 12.</p>
   <div class="sec-body">
-    <div class="rhythm">
-      <div class="week">
-        <div class="week-num">Week<b>1</b></div>
-        <div class="week-body">
-          <div class="mode">SCRIPT DAY · 3 hrs</div>
-          <div class="out">Pick 4 topics from your idea list. AI drafts 4 scripts from your locked template; you rewrite the hooks and the opinions. <strong>Out: 4 finished scripts.</strong></div>
-        </div>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Niche</th><th>Ad revenue</th><th>Affiliate</th><th>Product</th><th>Monthly total</th></tr></thead>
+        <tbody>
+          <tr class="is-yours"><td><strong>AI tools / SaaS</strong></td><td class="num">$255</td><td class="num">$400</td><td class="num">$200</td><td class="num"><strong>~$855</strong></td></tr>
+          <tr><td>Business case studies</td><td class="num">$270</td><td class="num">$150</td><td class="num">$200</td><td class="num"><strong>~$620</strong></td></tr>
+          <tr><td>Finance education</td><td class="num">$300</td><td class="num">$200</td><td class="num">$250</td><td class="num"><strong>~$750</strong></td></tr>
+          <tr><td>Psychology / self-help</td><td class="num">$120</td><td class="num">$60</td><td class="num">$150</td><td class="num"><strong>~$330</strong></td></tr>
+          <tr><td>Consumer product reviews</td><td class="num">$150</td><td class="num">$60</td><td class="num">$0</td><td class="num"><strong>~$210</strong></td></tr>
+          <tr><td>Kids cartoons</td><td class="num">$30</td><td class="num">$0</td><td class="num">$0</td><td class="num"><strong>~$30</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:.86rem;color:var(--ink-faint)">Illustrative modelling in AUD at 15,000 monthly views, using mid-range published RPMs and typical affiliate conversion. Not a forecast — the point is the <em>ratio between rows</em>, which is stable even when the absolute numbers aren't.</p>
+
+    <div class="bigstat">
+      <div class="kv"><span class="k">Best niche</span><span class="v money">~$855</span></div>
+      <div class="kv"><span class="k">Worst niche</span><span class="v">~$30</span></div>
+      <div class="kv"><span class="k">Difference in effort</span><span class="v">None</span></div>
+    </div>
+
+    <h4>How the same channel scales</h4>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Monthly views</th><th>Roughly when</th><th>AI/SaaS niche</th><th>Kids niche</th></tr></thead>
+        <tbody>
+          <tr><td class="num">2,000</td><td>Month 3–4</td><td class="num">~$60</td><td class="num">~$4</td></tr>
+          <tr><td class="num">8,000</td><td>Month 6–8</td><td class="num">~$350</td><td class="num">~$16</td></tr>
+          <tr><td class="num">15,000</td><td>Month 10–12</td><td class="num">~$855</td><td class="num">~$30</td></tr>
+          <tr><td class="num">40,000</td><td>Year 2</td><td class="num">~$2,200</td><td class="num">~$80</td></tr>
+          <tr><td class="num">100,000</td><td>Year 2–3, if it works</td><td class="num">~$5,000+</td><td class="num">~$200</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warn">
+      <div class="eyebrow">The month-1-to-5 reality</div>
+      <p>Every row above is month 6 or later. <strong>Months 1–5 earn approximately zero</strong> — you need 1,000 subscribers and 4,000 watch hours before ad revenue switches on at all. Budget emotionally for five months of working for nothing. That's the phase where nearly everyone quits, and it's the entire reason the four-session rhythm in section 06 exists.</p>
+    </div>
+  </div>
+</section>
+
+<section id="aistack">
+  <div class="sec-head"><span class="sec-num">04</span><h2>What AI does at each step</h2></div>
+  <p class="lede">You want AI doing most of it. Here's exactly where it helps, where it must not, and what each step costs you in real time.</p>
+  <div class="sec-body">
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Step</th><th>What AI does</th><th>What you do</th><th>Manual</th><th>With AI</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1 · Keyword research</strong></td><td>Clusters search terms, finds low-competition gaps, ranks by intent</td><td>Pick 4</td><td class="num">2 hr</td><td class="num">20 min</td></tr>
+          <tr><td><strong>2 · Idea list</strong></td><td>Generates 50 title variants from your seed topics</td><td>Cut to 10</td><td class="num">1 hr</td><td class="num">10 min</td></tr>
+          <tr><td><strong>3 · Research</strong></td><td>Summarises sources into a fact sheet with citations</td><td><strong>Verify every fact</strong></td><td class="num">3 hr</td><td class="num">30 min</td></tr>
+          <tr><td><strong>4 · Script</strong></td><td>Drafts the middle from your locked template</td><td><strong>Write the hook + the opinion</strong></td><td class="num">2 hr</td><td class="num">30 min</td></tr>
+          <tr><td><strong>5 · Voice</strong></td><td>Cleans audio, removes filler words and silence</td><td><strong>Record it yourself</strong></td><td class="num">45 min</td><td class="num">30 min</td></tr>
+          <tr><td><strong>6 · Visuals</strong></td><td>Generates b-roll, diagrams, motion graphics to the script</td><td>Direct the look</td><td class="num">3 hr</td><td class="num">45 min</td></tr>
+          <tr><td><strong>7 · Edit</strong></td><td>Text-based editing — delete words, video follows</td><td>Final pass</td><td class="num">3 hr</td><td class="num">1 hr</td></tr>
+          <tr><td><strong>8 · Thumbnail</strong></td><td>Generates 6 variants on your template</td><td>Pick with your eyes</td><td class="num">45 min</td><td class="num">15 min</td></tr>
+          <tr><td><strong>9 · Packaging</strong></td><td>Titles, description, chapters, tags from the transcript</td><td>Approve</td><td class="num">30 min</td><td class="num">5 min</td></tr>
+          <tr><td><strong>10 · Shorts</strong></td><td>Finds the clippable moments, reframes vertical, captions</td><td>Approve</td><td class="num">1 hr</td><td class="num">10 min</td></tr>
+          <tr><td><strong>11 · Analytics</strong></td><td>Weekly stats pulled into one dashboard</td><td>Decide</td><td class="num">30 min</td><td class="num">5 min</td></tr>
+        </tbody>
+        <tfoot><tr><td>Per video</td><td>AI does ~75% of the labour</td><td>You do 100% of the judgement</td><td class="num">~17 hr</td><td class="num">~4 hr</td></tr></tfoot>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="eyebrow">The two things AI must never do</div>
+      <p><strong>1 · Hold the microphone.</strong> A flat synthetic voice signals low effort and kills retention inside 30 seconds — and it is the exact signature YouTube's inauthentic-content enforcement looks for. Your voice over AI visuals is a completely different category from AI voice over AI visuals. That distinction is worth your entire channel.</p>
+      <p><strong>2 · Be the final word on facts.</strong> AI research is a first draft with confident errors in it. In finance, health, or anything a viewer acts on, an unverified claim is the thing that ends the channel. Verify before you record, every time.</p>
+    </div>
+
+    <details>
+      <summary>The tool stack, by job</summary>
+      <div class="details-body">
+        <p><strong>Scripting &amp; research:</strong> a capable AI assistant with a locked style guide — the single highest-leverage thing you'll set up, and it costs one hour.</p>
+        <p><strong>Voice cleanup:</strong> an audio-enhancement tool that strips room noise and filler. Turns a cheap recording into a professional one.</p>
+        <p><strong>Editing:</strong> text-based editors let you cut video by deleting words in a transcript. This is the tool that takes editing from 3 hours to 1.</p>
+        <p><strong>Visuals:</strong> AI image and video generation for b-roll, plus screen recordings for anything you're demonstrating. Screen recordings are free and outperform generated b-roll for tutorials.</p>
+        <p><strong>Shorts:</strong> automatic clip detection and vertical reframing from your long-form video.</p>
+        <p><strong>Rule:</strong> pick one per row in week one and don't change any of them for 90 days. Tool-shopping feels exactly like progress and produces exactly zero videos.</p>
       </div>
-      <div class="week">
-        <div class="week-num">Week<b>2</b></div>
-        <div class="week-body">
-          <div class="mode">RECORD DAY · 3 hrs</div>
-          <div class="out">Mic on, same setup, four in a row. Voice + screen capture. Don't re-record for small stumbles — you cut them later. <strong>Out: 4 raw recordings.</strong></div>
-        </div>
+    </details>
+  </div>
+</section>
+
+<section id="worth">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Is it actually worth it?</h2></div>
+  <p class="lede">You asked directly, so here's a direct answer, including the part that argues against the whole plan.</p>
+  <div class="sec-body">
+
+    <div class="card">
+      <h3>The honest expected value</h3>
+      <p style="color:var(--ink-soft)">Of people who start a faceless channel with your constraints, roughly speaking: <strong>most earn under $50/month at twelve months</strong>, largely because they stop publishing before video 20. Among those who actually publish 48 videos in a high-RPM niche, a median outcome lands somewhere around <strong>$200–400/month</strong>, and a good outcome is <strong>$800–1,500/month</strong>. The $5k/month faceless-channel screenshots you've seen are the top few percent, usually with more hours and several channels.</p>
+      <div class="divider"></div>
+      <p style="color:var(--ink-soft)">So: the honest expectation for 12 months of four-session months is <strong>a few hundred dollars a month and an asset that keeps compounding</strong> — not a replacement income. If that's worth ~200 hours to you, it's a good deal, because the asset keeps paying in year two and three while the hours don't repeat.</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="eyebrow">The argument against doing this at all</div>
+      <p>You're technical enough to build automation pipelines. That skill currently bills at <strong>$60–150/hour</strong> as freelance or contract work, starting immediately, with no 12-month ramp and no algorithm risk. Five hours a week of that is $1,200–3,000 a month — <em>from month one</em>, and reliably.</p>
+      <p>On pure money-per-hour in year one, freelancing beats this plan decisively and it isn't close. YouTube only wins on one axis: <strong>the freelance hours stop paying the moment you stop working, and the video library doesn't.</strong> That's the actual trade you're making. Choose it knowingly.</p>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="card-label"><span class="tag pick">Do it if</span></div>
+        <ul class="tight">
+          <li>You can genuinely commit 12 months before judging it</li>
+          <li>You pick an S-tier niche and stay in it</li>
+          <li>You want an asset, not a wage</li>
+          <li>You'd find the work interesting even unpaid for 5 months</li>
+        </ul>
       </div>
-      <div class="week">
-        <div class="week-num">Week<b>3</b></div>
-        <div class="week-body">
-          <div class="mode">EDIT DAY · 4 hrs</div>
-          <div class="out">Text-based editing (Descript or similar): delete words, video follows. Same template on all four. One hour each, hard stop. <strong>Out: 4 exported videos.</strong></div>
-        </div>
-      </div>
-      <div class="week">
-        <div class="week-num">Week<b>4</b></div>
-        <div class="week-body">
-          <div class="mode">PACKAGE DAY · 3 hrs</div>
-          <div class="out">Thumbnails, titles, descriptions, chapters, affiliate links. Cut 8 Shorts from the four transcripts. Schedule everything. <strong>Out: a month published, in advance.</strong></div>
-        </div>
+      <div class="card">
+        <div class="card-label"><span class="tag risk">Don't if</span></div>
+        <ul class="tight">
+          <li>You need money inside 6 months</li>
+          <li>You'd pick kids, motivation, or compilations</li>
+          <li>You'd use a synthetic voice to save 30 minutes</li>
+          <li>You'd quit at month 3 because nothing happened</li>
+        </ul>
       </div>
     </div>
 
+    <div class="callout money">
+      <div class="eyebrow">The option most people miss</div>
+      <p><strong>Do both, deliberately.</strong> Freelance for the income now; run the channel as the long asset on four sessions a month. The channel then doubles as your portfolio — "here's the automation pipeline I built" is a better sales pitch than any proposal, and the two feed each other instead of competing.</p>
+    </div>
+  </div>
+</section>
+
+<section id="pick">
+  <div class="sec-head"><span class="sec-num">06</span><h2>The recommendation</h2></div>
+  <div class="sec-body">
+    <div class="callout money">
+      <div class="eyebrow">If you take one thing from this document</div>
+      <h3 style="margin:0">Software &amp; AI tool reviews for small business and solo operators.</h3>
+      <p>It is the top of the RPM table ($18–38), it has the best affiliate economics on the internet (20–50% recurring, for the customer's lifetime), it's the cheapest content type to produce (screen recordings), you already have the expertise, and it carries none of the regulatory exposure of finance or the structural handicaps of kids content.</p>
+      <p>It's also the review channel you already wanted to make — pointed at software instead of gadgets.</p>
+    </div>
+
+    <h4>Three formats inside that niche</h4>
+    <div class="grid3">
+      <div class="card">
+        <div class="card-label"><span class="tag pick">Start here</span></div>
+        <h4>A · "Best X for Y"</h4>
+        <p style="font-size:.93rem;color:var(--ink-soft)">"Best invoicing tool for freelancers." Pure buyer intent, evergreen search, highest affiliate conversion of any video format.</p>
+      </div>
+      <div class="card">
+        <h4>B · "I used X for 30 days"</h4>
+        <p style="font-size:.93rem;color:var(--ink-soft)">Honest single-tool verdicts. Builds trust fast, ranks for brand searches, easy to script from real notes.</p>
+      </div>
+      <div class="card">
+        <h4>C · "Automate this with AI"</h4>
+        <p style="font-size:.93rem;color:var(--ink-soft)">One workflow per video, built on screen. Your natural strength, and it sells the tools inside the demo.</p>
+      </div>
+    </div>
+    <p style="font-size:.95rem;color:var(--ink-soft)">Run roughly 2 × A, 1 × B, 1 × C each month. Format A pays the bills, C builds the audience, B keeps you credible.</p>
+
+    <details>
+      <summary>Why your real voice matters even more in this niche</summary>
+      <div class="details-body">
+        <p>In July 2025 YouTube renamed its "repetitious content" policy to <strong>inauthentic content</strong>, explicitly covering mass-produced and templated videos, and in January 2026 it ran its largest enforcement wave against AI-generated channels. AI-<em>assisted</em> content remains fully monetisable — what gets terminated is content that looks machine-stamped: synthetic narration, identical structure, stock slideshows.</p>
+        <p>Software reviews are also a trust purchase. Nobody signs up for a $69/month tool on the recommendation of a robot voice. Your voice is simultaneously your policy defence and your conversion rate.</p>
+        <p>Do toggle the <strong>"altered or synthetic content"</strong> disclosure in YouTube Studio when you use realistic AI-generated visuals.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section id="rhythm">
+  <div class="sec-head"><span class="sec-num">07</span><h2>The four-session month</h2></div>
+  <p class="lede">Under 5 hours a week isn't enough for a daily grind, but it is exactly enough for <strong>four deep sessions a month</strong>. Don't make one video a week — that means task-switching seven times per video. Do <strong>one mode per session</strong> and finish four videos.</p>
+  <div class="sec-body">
+    <div class="rhythm">
+      <div class="week"><div class="week-num">Week<b>1</b></div><div class="week-body"><div class="mode">SCRIPT DAY · 3 hrs</div><div class="out">Pick 4 topics from your idea list. AI drafts 4 scripts from your locked template; you rewrite the hooks and the verdicts. <strong>Out: 4 finished scripts.</strong></div></div></div>
+      <div class="week"><div class="week-num">Week<b>2</b></div><div class="week-body"><div class="mode">RECORD DAY · 3 hrs</div><div class="out">Mic on, same setup, four in a row, plus the screen captures. Don't re-record small stumbles — you cut them later. <strong>Out: 4 raw recordings.</strong></div></div></div>
+      <div class="week"><div class="week-num">Week<b>3</b></div><div class="week-body"><div class="mode">EDIT DAY · 4 hrs</div><div class="out">Text-based editing: delete words, video follows. Same template on all four. One hour each, hard stop. <strong>Out: 4 exported videos.</strong></div></div></div>
+      <div class="week"><div class="week-num">Week<b>4</b></div><div class="week-body"><div class="mode">PACKAGE DAY · 3 hrs</div><div class="out">Thumbnails, titles, descriptions, chapters, affiliate links. Cut 8 Shorts from the transcripts. Schedule everything. <strong>Out: a month published, in advance.</strong></div></div></div>
+    </div>
     <div class="grid3">
       <div class="card"><div class="kv"><span class="k">Committed</span><span class="v">13 hrs</span></div><p style="font-size:.9rem;color:var(--ink-soft);margin:0">per month, four sessions</p></div>
       <div class="card"><div class="kv"><span class="k">Slack left over</span><span class="v">~7 hrs</span></div><p style="font-size:.9rem;color:var(--ink-soft);margin:0">comments, learning, overruns</p></div>
       <div class="card"><div class="kv"><span class="k">Videos per year</span><span class="v money">48</span></div><p style="font-size:.9rem;color:var(--ink-soft);margin:0">the only number that matters</p></div>
     </div>
-
     <div class="callout">
       <div class="eyebrow">Make it stick</div>
       <p>Put four recurring calendar events in now, named by <strong>mode</strong> — "SCRIPT DAY", not "YouTube stuff". Same day of the week, same time, same 3-hour block. A vague intention to "work on the channel" is how this dies in month two.</p>
     </div>
-
     <details>
       <summary>What to do when you miss a session (you will)</summary>
       <div class="details-body">
-        <p><strong>Never try to catch up.</strong> Catching up is how a missed week becomes a missed quarter. Instead, shrink the month: miss script day, ship 2 videos instead of 4. The rhythm survives; the volume flexes.</p>
-        <p>The one session you never skip is <strong>PACKAGE DAY</strong>, because unpublished finished videos earn exactly nothing and sit there generating guilt.</p>
+        <p><strong>Never try to catch up.</strong> Catching up is how a missed week becomes a missed quarter. Shrink the month instead: miss script day, ship 2 videos instead of 4. The rhythm survives; the volume flexes.</p>
+        <p>The one session you never skip is <strong>PACKAGE DAY</strong> — finished videos sitting unpublished earn nothing and generate guilt.</p>
       </div>
     </details>
   </div>
 </section>
 
-<!-- ================= 05 VIDEO ================= -->
 <section id="video">
-  <div class="sec-head"><span class="sec-num">05</span><h2>The video formula</h2></div>
+  <div class="sec-head"><span class="sec-num">08</span><h2>The video formula</h2></div>
   <p class="lede">One template, used 48 times. Decide it once so you never decide it again at 9pm on a Tuesday.</p>
   <div class="sec-body">
     <div class="tablewrap">
@@ -518,7 +774,7 @@ html{scroll-behavior:smooth}
           <tr><td class="num">0:00–0:15</td><td>Show the finished result</td><td>Show it, don't describe it</td></tr>
           <tr><td class="num">0:15–0:40</td><td>The promise + why you'd know</td><td>"I run this every day" beats credentials</td></tr>
           <tr><td class="num">0:40–8:00</td><td>Three steps, each with a visible outcome</td><td>Never more than three</td></tr>
-          <tr><td class="num">last 0:45</td><td>The one thing to do next + soft ask</td><td>One call to action, never two</td></tr>
+          <tr><td class="num">last 0:45</td><td>The verdict + one next action</td><td>One call to action, never two</td></tr>
         </tbody>
       </table>
     </div>
@@ -528,34 +784,34 @@ html{scroll-behavior:smooth}
         <ul class="tight">
           <li>No intro animation. Ever.</li>
           <li>No "hey guys, welcome back"</li>
-          <li>Cut every pause, "so", and "um" — the edit tool does this in one pass</li>
+          <li>Cut every pause and filler word — one pass in the editor</li>
           <li>Titles are search queries, not clever</li>
           <li>Thumbnail: 3 words maximum</li>
         </ul>
       </div>
       <div class="card">
-        <h4>Title patterns that work</h4>
+        <h4>Title patterns that convert</h4>
         <ul class="tight">
-          <li>"How I [outcome] with [tool]"</li>
-          <li>"[Tool] vs [Tool] for [specific use]"</li>
-          <li>"Stop doing [task] manually"</li>
-          <li>"I automated [task]. Here's what broke."</li>
+          <li>"Best [tool type] for [specific person]"</li>
+          <li>"[Tool] vs [Tool] — honest comparison"</li>
+          <li>"I used [tool] for 30 days"</li>
+          <li>"Stop paying for [expensive tool]"</li>
         </ul>
       </div>
     </div>
     <details>
-      <summary>Where the affiliate money actually goes</summary>
+      <summary>Affiliate placement and the disclosure you must make</summary>
       <div class="details-body">
-        <p>Link placement beats link volume. Put the tool link <strong>first line of the description</strong> and say once, out loud, mid-video, "link's in the description." That's it. No link dumps.</p>
-        <p><strong>Disclosure is not optional in Australia.</strong> The ACCC requires clear disclosure of commercial relationships — say "these are affiliate links" in the video and write it in the description. Also flip YouTube's <strong>paid promotion</strong> toggle where a brand relationship exists. This costs you nothing in conversion and protects you completely.</p>
+        <p>Placement beats volume. Tool link on the <strong>first line of the description</strong>, and say once, mid-video, "link's in the description." That's it. No link dumps.</p>
+        <p><strong>Disclosure is not optional in Australia.</strong> The ACCC requires clear disclosure of commercial relationships — say "these are affiliate links" in the video and write it in the description. Also flip YouTube's <strong>paid promotion</strong> toggle where a brand relationship exists. It costs nothing in conversion and protects you completely.</p>
+        <p>Sign up to affiliate programs <em>before</em> you need them — most take a few days to approve, and several require an existing channel.</p>
       </div>
     </details>
   </div>
 </section>
 
-<!-- ================= 06 PHASES ================= -->
 <section id="phases">
-  <div class="sec-head"><span class="sec-num">06</span><h2>Twelve months, four phases</h2></div>
+  <div class="sec-head"><span class="sec-num">09</span><h2>Twelve months, four phases</h2></div>
   <p class="lede">Each phase has one job and one gate. Don't judge yourself on anything except the gate.</p>
   <div class="sec-body">
     <details open>
@@ -570,200 +826,195 @@ html{scroll-behavior:smooth}
       <summary>Phase 1 · Months 1–3 — Find the format</summary>
       <div class="details-body">
         <p><strong>Job:</strong> publish 12 videos and find out which format the algorithm likes from you.</p>
-        <p><strong>Watch only two numbers:</strong> click-through rate (aim &gt;4%) and average view duration (aim &gt;50%). <em>Ignore subscribers entirely.</em> Subs are a lagging indicator and watching them daily is pure self-harm.</p>
+        <p><strong>Watch two numbers only:</strong> click-through rate (aim &gt;4%) and average view duration (aim &gt;50%). <em>Ignore subscribers entirely</em> — a lagging indicator, and checking it daily is self-harm.</p>
         <p><strong>Gate at month 3:</strong> has any single video passed 1,000 views? If yes, make four more like it. If no, change the <em>format</em> — not the niche.</p>
       </div>
     </details>
     <details>
-      <summary>Phase 2 · Months 4–6 — Double down + first dollars</summary>
+      <summary>Phase 2 · Months 4–6 — Affiliate first, ads later</summary>
       <div class="details-body">
-        <p><strong>Job:</strong> make more of whatever worked. Apply to the Partner Program at 500 subs + 3,000 watch hours (early access tier). Add affiliate links to your top 3 videos and every new one.</p>
-        <p><strong>Gate at month 6:</strong> 500+ subscribers and at least one affiliate commission — any amount. The first dollar proves the path exists.</p>
+        <p><strong>Job:</strong> more of whatever worked. Apply to the Partner Program at 500 subscribers + 3,000 watch hours (early tier — memberships and tips, no ads yet). Get affiliate links into your top 3 videos and every new one.</p>
+        <p>In this niche affiliate revenue arrives <em>before</em> ad revenue. A video with 800 views and two SaaS signups beats a video with 8,000 views and none.</p>
+        <p><strong>Gate at month 6:</strong> 500+ subscribers and at least one recurring commission — any amount.</p>
       </div>
     </details>
     <details>
       <summary>Phase 3 · Months 7–9 — Product + list</summary>
       <div class="details-body">
-        <p><strong>Job:</strong> hit 1,000 subs + 4,000 watch hours for full ad revenue. Start an email list (free tier is fine to 1,000 subscribers). Ship v1 of your digital product to your first few hundred subscribers — ugly, cheap, real.</p>
-        <p><strong>Gate at month 9:</strong> $100+/month total across all three layers.</p>
+        <p><strong>Job:</strong> hit 1,000 subscribers + 4,000 watch hours for full ad revenue. Start an email list — it's insurance, not a nice-to-have, because a channel termination takes you to zero overnight and the list is the only asset you own outright.</p>
+        <p>Ship v1 of a digital product: the actual automations and templates you built for yourself, $29–49. Ugly, cheap, real.</p>
+        <p><strong>Gate at month 9:</strong> $100+/month total across all layers.</p>
       </div>
     </details>
     <details>
       <summary>Phase 4 · Months 10–12 — Automate and compound</summary>
       <div class="details-body">
-        <p><strong>Job:</strong> now build the pipeline (section 08). If it genuinely halves your production time, go to 2 videos a week. If it doesn't, stay at one and put the hours into the product instead.</p>
-        <p><strong>Gate at month 12:</strong> $500+/month, and — more importantly — a library of 48 videos that keeps earning whether or not you show up in month 13.</p>
+        <p><strong>Job:</strong> now build the pipeline in section 11. If it genuinely halves production time, go to 2 videos a week. If not, stay at one and put the hours into the product.</p>
+        <p><strong>Gate at month 12:</strong> $500+/month, and a library of 48 videos that keeps earning whether or not you show up in month 13.</p>
       </div>
     </details>
   </div>
 </section>
 
-<!-- ================= 07 RULES ================= -->
 <section id="rules">
-  <div class="sec-head"><span class="sec-num">07</span><h2>Operating rules</h2></div>
-  <p class="lede">The plan above is ordinary. These rules are the part that decides whether you're still doing it in March.</p>
+  <div class="sec-head"><span class="sec-num">10</span><h2>Operating rules</h2></div>
+  <p class="lede">The plan above is ordinary. These are the part that decides whether you're still doing it in March.</p>
   <div class="sec-body">
     <div class="grid2">
-      <div class="card"><h4>One mode per session</h4><p style="font-size:.93rem;color:var(--ink-soft)">Never script and edit on the same day. Switching modes costs you 20 minutes of ramp-up each time, and you only have twelve.</p></div>
-      <div class="card"><h4>Publish at 80%</h4><p style="font-size:.93rem;color:var(--ink-soft)">A video you don't publish earns $0 forever. Your video 40 will be better than your video 4 — that only happens if video 4 goes out.</p></div>
-      <div class="card"><h4>Write "done" before you start</h4><p style="font-size:.93rem;color:var(--ink-soft)">One line at the top of each session: what finished looks like. Without it you will polish until the session ends and produce nothing.</p></div>
-      <div class="card"><h4>No new tools for 90 days</h4><p style="font-size:.93rem;color:var(--ink-soft)">Tool-shopping feels exactly like progress and produces exactly zero videos. Lock your stack in week one.</p></div>
-      <div class="card"><h4>One metric per month</h4><p style="font-size:.93rem;color:var(--ink-soft)">Check analytics once a month, on Package Day, for ten minutes. Daily dashboard-checking is a slot machine with worse odds.</p></div>
-      <div class="card"><h4>Novelty budget: 1 in 4</h4><p style="font-size:.93rem;color:var(--ink-soft)">One video a month can be a weird experiment. This contains the itch <em>inside</em> the channel instead of it becoming a new channel.</p></div>
+      <div class="card"><h4>One mode per session</h4><p style="font-size:.93rem;color:var(--ink-soft)">Never script and edit on the same day. Switching modes costs ~20 minutes of ramp-up each time, and you only have twelve hours.</p></div>
+      <div class="card"><h4>Publish at 80%</h4><p style="font-size:.93rem;color:var(--ink-soft)">A video you don't publish earns $0 forever. Video 40 will be better than video 4 — but only if video 4 goes out.</p></div>
+      <div class="card"><h4>Write "done" before you start</h4><p style="font-size:.93rem;color:var(--ink-soft)">One line at the top of each session defining what finished looks like. Without it you'll polish until the session ends and produce nothing.</p></div>
+      <div class="card"><h4>No new tools for 90 days</h4><p style="font-size:.93rem;color:var(--ink-soft)">Tool-shopping feels exactly like progress and produces exactly zero videos. Lock the stack in week one.</p></div>
+      <div class="card"><h4>One metric per month</h4><p style="font-size:.93rem;color:var(--ink-soft)">Check analytics once a month on Package Day, for ten minutes. Daily dashboard-checking is a slot machine with worse odds.</p></div>
+      <div class="card"><h4>Novelty budget: 1 in 4</h4><p style="font-size:.93rem;color:var(--ink-soft)">One video a month can be an experiment. This contains the itch <em>inside</em> the channel instead of it becoming a new channel.</p></div>
       <div class="card"><h4>Start with the worst part</h4><p style="font-size:.93rem;color:var(--ink-soft)">First 10 minutes of every session: the bit you're avoiding. Momentum is easier to steer than to summon.</p></div>
-      <div class="card"><h4>Tell one person the schedule</h4><p style="font-size:.93rem;color:var(--ink-soft)">Send them your four session dates each month. External accountability does more than any productivity app you'll be tempted to buy.</p></div>
+      <div class="card"><h4>Tell one person the schedule</h4><p style="font-size:.93rem;color:var(--ink-soft)">Send them your four session dates each month. External accountability beats any productivity app you'll be tempted to buy.</p></div>
     </div>
     <div class="callout warn">
-      <div class="eyebrow">The failure mode to watch for</div>
-      <p>You are technical, which means <strong>building the system will always feel better than using it</strong>. Rewriting your pipeline is procrastination wearing a lab coat. The rule in section 08 exists specifically to protect you from this, and it is the most important rule in the document.</p>
+      <div class="eyebrow">Your specific failure mode</div>
+      <p>You're technical, which means <strong>building the system will always feel better than using it</strong>. Rewriting your pipeline is procrastination wearing a lab coat. The rule in section 11 exists specifically to protect you from this, and it's the most important line in the document.</p>
     </div>
   </div>
 </section>
 
-<!-- ================= 08 BUILD ================= -->
 <section id="build">
-  <div class="sec-head"><span class="sec-num">08</span><h2>The automation pipeline</h2></div>
+  <div class="sec-head"><span class="sec-num">11</span><h2>The automation pipeline</h2></div>
   <div class="sec-body">
     <div class="callout">
       <div class="eyebrow">Hard rule</div>
       <h3 style="margin:0">Do not build any of this until 8 videos are published.</h3>
       <p>You cannot automate a process you haven't run manually eight times — you'll automate the wrong steps beautifully. Month 3 at the earliest.</p>
     </div>
-
-    <p>Then build it in this order, cheapest win first:</p>
-
+    <p>Then build in this order, cheapest win first:</p>
     <div class="rhythm">
-      <div class="week"><div class="week-num">Build<b>1</b></div><div class="week-body"><div class="mode">The locked style guide</div><div class="out">A <code>STYLE.md</code> + <code>SCRIPT_TEMPLATE.md</code> your AI assistant reads every time. Biggest quality jump, costs one hour, no code. Do this even if you build nothing else.</div></div></div>
-      <div class="week"><div class="week-num">Build<b>2</b></div><div class="week-body"><div class="mode">Transcript → packaging</div><div class="out">One script that takes the finished transcript and emits title variants, description, chapter markers, tags, and timestamps for 2–3 Shorts. Saves ~40 min per video, every video, forever.</div></div></div>
-      <div class="week"><div class="week-num">Build<b>3</b></div><div class="week-body"><div class="mode">Idea pipeline</div><div class="out">Pull YouTube autocomplete + related searches for your seed terms into a ranked <code>ideas.md</code>. Turns Script Day's hardest 30 minutes into a 5-minute pick.</div></div></div>
-      <div class="week"><div class="week-num">Build<b>4</b></div><div class="week-body"><div class="mode">Scheduled upload</div><div class="out">YouTube Data API v3 for metadata + scheduling straight from your files. Only worth it once you're doing 8+ videos a month.</div></div></div>
-      <div class="week"><div class="week-num">Build<b>5</b></div><div class="week-body"><div class="mode">Weekly stats pull</div><div class="out">YouTube Analytics API into one tiny dashboard, refreshed weekly. Replaces the urge to check Studio daily with one honest weekly number.</div></div></div>
+      <div class="week"><div class="week-num">Build<b>1</b></div><div class="week-body"><div class="mode">The locked style guide</div><div class="out">A <code>STYLE.md</code> + <code>SCRIPT_TEMPLATE.md</code> your AI assistant reads every time. Biggest quality jump, one hour, no code. Do this even if you build nothing else.</div></div></div>
+      <div class="week"><div class="week-num">Build<b>2</b></div><div class="week-body"><div class="mode">Transcript → packaging</div><div class="out">One script taking the finished transcript and emitting title variants, description, chapters, tags, and Shorts cut points. Saves ~40 min per video, forever.</div></div></div>
+      <div class="week"><div class="week-num">Build<b>3</b></div><div class="week-body"><div class="mode">Idea pipeline</div><div class="out">Pull search autocomplete and related queries for your seed terms into a ranked <code>ideas.md</code>. Turns Script Day's hardest 30 minutes into a 5-minute pick.</div></div></div>
+      <div class="week"><div class="week-num">Build<b>4</b></div><div class="week-body"><div class="mode">Scheduled upload</div><div class="out">YouTube Data API for metadata and scheduling straight from your files. Only worth it at 8+ videos a month.</div></div></div>
+      <div class="week"><div class="week-num">Build<b>5</b></div><div class="week-body"><div class="mode">Weekly stats pull</div><div class="out">Analytics API into one small dashboard, refreshed weekly. Replaces the urge to check Studio daily with one honest weekly number.</div></div></div>
     </div>
-
     <details>
-      <summary>What to keep manual, permanently</summary>
+      <summary>What stays manual, permanently</summary>
       <div class="details-body">
-        <p><strong>Your voice.</strong> Never synthesise it — it's your entire defence against the inauthentic-content policy and the reason people subscribe.</p>
-        <p><strong>The hook and the opinion.</strong> AI writes competent middles. It cannot write the first 15 seconds or the one honest take that makes a video worth watching. Those two things are the video.</p>
-        <p><strong>Thumbnail final call.</strong> Generate options, but pick with your own eyes.</p>
+        <p><strong>Your voice.</strong> Never synthesise it — it's your entire defence against the inauthentic-content policy and the reason people trust a recommendation.</p>
+        <p><strong>The hook and the verdict.</strong> AI writes competent middles. It cannot write the first 15 seconds or the honest opinion that makes a review worth watching. Those two things <em>are</em> the video.</p>
+        <p><strong>Fact verification and the thumbnail call.</strong> Generate options; decide with your own eyes and your own checking.</p>
       </div>
     </details>
   </div>
 </section>
 
-<!-- ================= 09 AU ================= -->
 <section id="au">
-  <div class="sec-head"><span class="sec-num">09</span><h2>The Australian admin</h2></div>
-  <p class="lede">You already have an ABN as a sole trader, which covers most of it. Four things left.</p>
+  <div class="sec-head"><span class="sec-num">12</span><h2>The Australian admin</h2></div>
+  <p class="lede">You already have an ABN as a sole trader, which covers most of it. Five things left.</p>
   <div class="sec-body">
     <div class="grid2">
       <div class="card">
         <div class="card-label"><span class="tag time">Do in week 1</span></div>
         <h4>Submit US tax info in AdSense</h4>
-        <p style="font-size:.93rem;color:var(--ink-soft)">Google withholds US tax on the share of your earnings from US viewers. Australian residents claim treaty benefits via the W-8BEN inside AdSense, which reduces that rate substantially. <strong>Skip this form and you get withheld at the maximum default rate on worldwide earnings.</strong> It takes about ten minutes.</p>
+        <p style="font-size:.93rem;color:var(--ink-soft)">Google withholds US tax on the share of earnings from US viewers. Australian residents claim treaty benefits via the W-8BEN inside AdSense, reducing that rate substantially. <strong>Skip the form and you're withheld at the maximum default rate on worldwide earnings.</strong> Ten minutes.</p>
       </div>
       <div class="card">
         <h4>GST: almost certainly not yet</h4>
-        <p style="font-size:.93rem;color:var(--ink-soft)">Registration is required once turnover reaches the $75,000/year threshold. At a $500–1k/month target you're nowhere near it — but check annually rather than assuming.</p>
+        <p style="font-size:.93rem;color:var(--ink-soft)">Registration is required once turnover reaches the $75,000/year threshold. At a $500–1k/month target you're well below it — but check annually rather than assuming.</p>
       </div>
       <div class="card">
         <h4>Income goes in your personal return</h4>
-        <p style="font-size:.93rem;color:var(--ink-soft)">Sole-trader income is reported in the business section of your individual tax return — there's no separate company return. Set aside a portion of every payout for tax from the first dollar.</p>
+        <p style="font-size:.93rem;color:var(--ink-soft)">Sole-trader income is reported in the business section of your individual tax return — no separate company return. Set aside a portion of every payout for tax from the first dollar.</p>
       </div>
       <div class="card">
         <h4>Separate account + receipts, day one</h4>
-        <p style="font-size:.93rem;color:var(--ink-soft)">One bank account for this only, and keep every receipt. Your microphone, software subscriptions, and a reasonable portion of internet costs are likely deductible business expenses.</p>
+        <p style="font-size:.93rem;color:var(--ink-soft)">One bank account for this only, and keep every receipt. Microphone, software subscriptions, and a reasonable portion of internet costs are likely deductible.</p>
+      </div>
+      <div class="card">
+        <div class="card-label"><span class="tag risk">If you go near finance</span></div>
+        <h4>ASIC's finfluencer rules</h4>
+        <p style="font-size:.93rem;color:var(--ink-soft)">General financial information and education doesn't require a licence. Specific recommendations can constitute unlicensed financial advice, requiring an AFS licence or authorised-representative status — with penalties up to five years imprisonment and substantial fines. Get advice before publishing anything in this lane.</p>
+      </div>
+      <div class="card">
+        <h4>Disclose affiliate relationships</h4>
+        <p style="font-size:.93rem;color:var(--ink-soft)">The ACCC requires clear disclosure of commercial relationships. Say it out loud in the video and write it in the description, every time.</p>
       </div>
     </div>
     <div class="callout warn">
       <div class="eyebrow">Verify before you rely on this</div>
-      <p>These are the general rules as I understand them, not tax advice, and I wasn't able to re-verify current rates and thresholds while writing this. Confirm the specifics with the ATO or an accountant before your first return — it's one cheap conversation and it covers hobby-vs-business classification too, which matters for whether you can deduct anything.</p>
+      <p>These are general rules as I understand them, not tax or legal advice, and thresholds change. Confirm specifics with the ATO or an accountant before your first return — one cheap conversation, and it covers hobby-versus-business classification too, which decides whether you can deduct anything at all.</p>
     </div>
   </div>
 </section>
 
-<!-- ================= 10 BUDGET ================= -->
 <section id="budget">
-  <div class="sec-head"><span class="sec-num">10</span><h2>Where the money goes</h2></div>
-  <p class="lede">You have $500–2,000. Spend under half of it in year one, and spend it in this order.</p>
+  <div class="sec-head"><span class="sec-num">13</span><h2>Where the money goes</h2></div>
+  <p class="lede">You have $500–2,000. Spend under half in year one, in this order.</p>
   <div class="sec-body">
     <div class="tablewrap">
       <table>
         <thead><tr><th>Item</th><th>Why</th><th>Year 1 (AUD)</th></tr></thead>
         <tbody>
           <tr><td><strong>A good dynamic USB mic</strong></td><td>Single biggest quality lever for a voice-led channel. Buy once, keep forever.</td><td class="num">$200–350</td></tr>
-          <tr><td>Text-based video editor</td><td>Cuts editing from 3 hrs to 1 hr per video. The tool that buys back your time.</td><td class="num">$250–350</td></tr>
+          <tr><td>Text-based video editor</td><td>Cuts editing from 3 hrs to 1 hr per video — the tool that buys back your time.</td><td class="num">$250–350</td></tr>
           <tr><td>AI assistant subscription</td><td>Scripting, research, packaging. You already have this.</td><td class="num">$0–350</td></tr>
-          <tr><td>Thumbnails / design</td><td>Free tier works fine at this stage.</td><td class="num">$0–165</td></tr>
+          <tr><td>Software you review</td><td>Most have free trials; budget a little for the ones that don't.</td><td class="num">$0–300</td></tr>
+          <tr><td>Thumbnails / design</td><td>Free tier is fine at this stage.</td><td class="num">$0–165</td></tr>
           <tr><td>Domain + email platform</td><td>Free to your first 1,000 email subscribers.</td><td class="num">$20–60</td></tr>
-          <tr><td>Stock footage / AI visuals</td><td>Only if your format needs b-roll. Screen recordings mostly don't.</td><td class="num">$0–200</td></tr>
         </tbody>
-        <tfoot><tr><td>Realistic year-1 spend</td><td>Leaves $500+ in reserve for month-6 decisions</td><td class="num">$700–1,300</td></tr></tfoot>
+        <tfoot><tr><td>Realistic year-1 spend</td><td>Leaves $500+ in reserve for month-6 decisions</td><td class="num">$700–1,400</td></tr></tfoot>
       </table>
     </div>
     <div class="callout warn">
       <div class="eyebrow">Do not spend money on</div>
-      <p>Faceless-channel courses. "Done-for-you" channel kits. Subscribers or views of any kind — that's a fast route to termination, not monetisation. Anything promising passive income in 30 days. A logo designer. A second camera you'll never point at your face.</p>
+      <p>Faceless-channel courses. "Done-for-you" channel kits. Subscribers or views of any kind — a fast route to termination, not monetisation. Anything promising passive income in 30 days. A logo designer. A camera you'll never point at your face.</p>
     </div>
   </div>
 </section>
 
-<!-- ================= 11 TRUTH ================= -->
 <section id="truth">
-  <div class="sec-head"><span class="sec-num">11</span><h2>Reality check &amp; exit rules</h2></div>
+  <div class="sec-head"><span class="sec-num">14</span><h2>Exit rules</h2></div>
   <div class="sec-body">
-    <div class="card">
-      <h3>The odds, said plainly</h3>
-      <p style="color:var(--ink-soft)">Most channels started with these constraints do not reach $500/month in twelve months. The single strongest predictor of the ones that do isn't niche, gear, or thumbnails — it's whether all 48 videos got published. Consistency is the entire edge, which is precisely why the rhythm in section 04 matters more than every strategy note in this document.</p>
-      <div class="divider"></div>
-      <p style="color:var(--ink-soft)">And to be direct about the word in your question: <strong>this is not passive income for twelve months.</strong> It's a part-time job that builds an asset. The passive part starts in year two, when a library of 48 evergreen videos keeps earning ad and affiliate revenue in months where you publish nothing at all. That's real — it's just on the far side of the work, not instead of it.</p>
-    </div>
-
-    <h4>Pre-commit to these now, while you're calm</h4>
+    <p class="lede">Pre-commit to these now, while you're calm, so a bad month doesn't get to make the decision.</p>
     <div class="tablewrap">
       <table>
         <thead><tr><th>Checkpoint</th><th>If this happens</th><th>Do this — not something else</th></tr></thead>
         <tbody>
           <tr><td class="num">Month 3</td><td>No video above 200 views</td><td>Change format. Keep the niche.</td></tr>
           <tr><td class="num">Month 6</td><td>Under 200 subscribers</td><td>Narrow the angle. Keep the channel.</td></tr>
-          <tr><td class="num">Month 9</td><td>Zero affiliate revenue</td><td>Shift to buyer-intent topics: comparisons, "best X for Y".</td></tr>
+          <tr><td class="num">Month 9</td><td>Zero affiliate revenue</td><td>Move hard into "best X for Y" buyer-intent videos.</td></tr>
           <tr><td class="num">Month 12</td><td>Under $100/month</td><td>Stop spending money. Keep publishing only if you enjoy it.</td></tr>
         </tbody>
       </table>
     </div>
     <div class="callout">
       <div class="eyebrow">What never to do at a checkpoint</div>
-      <p>Delete the channel. Start a second one. Change niche before month 6. Every one of these resets your compounding to zero, and all three are what a bad month <em>feels</em> like it's asking for.</p>
+      <p>Delete the channel. Start a second one. Change niche before month 6. Every one of these resets your compounding to zero — and all three are exactly what a bad month feels like it's asking for.</p>
     </div>
   </div>
 </section>
 
-<!-- ================= 12 WEEK 1 ================= -->
 <section id="week1">
-  <div class="sec-head"><span class="sec-num">12</span><h2>Your first seven days</h2></div>
-  <p class="lede">Roughly 5.5 hours total. One task per day. Nothing here requires a decision you haven't already made.</p>
+  <div class="sec-head"><span class="sec-num">15</span><h2>Your first seven days</h2></div>
+  <p class="lede">About 5.5 hours total. One task per day. Nothing here needs a decision you haven't already made.</p>
   <div class="sec-body">
     <div class="card">
       <div class="tasklist" id="tasks">
-        <label class="task"><input type="checkbox" data-id="d1"><span class="task-txt"><span class="t">Day 1 — Pick concept A, B, or C</span><span class="d">Write one sentence: "I show [who] how to [what] using [tool]." Then stop.</span></span><span class="mins">45 min</span></label>
-        <label class="task"><input type="checkbox" data-id="d2"><span class="task-txt"><span class="t">Day 2 — List 20 video titles</span><span class="d">Type your topic into YouTube search and steal the autocomplete. These are real questions real people typed.</span></span><span class="mins">30 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d1"><span class="task-txt"><span class="t">Day 1 — Lock the niche and format</span><span class="d">Software/AI tool reviews. Pick format A, B, or C from section 06 and write one sentence: "I show [who] which [tools] to use for [job]."</span></span><span class="mins">45 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d2"><span class="task-txt"><span class="t">Day 2 — List 20 video titles</span><span class="d">Type "best [tool type] for" into YouTube search and steal the autocomplete. These are real questions real buyers typed.</span></span><span class="mins">30 min</span></label>
         <label class="task"><input type="checkbox" data-id="d3"><span class="task-txt"><span class="t">Day 3 — Create the channel + AdSense</span><span class="d">Name, handle, banner, about section. Submit the US tax info while you're in there.</span></span><span class="mins">45 min</span></label>
-        <label class="task"><input type="checkbox" data-id="d4"><span class="task-txt"><span class="t">Day 4 — Write script #1</span><span class="d">Use the section 05 structure. AI drafts the middle; you write the first 15 seconds yourself.</span></span><span class="mins">60 min</span></label>
-        <label class="task"><input type="checkbox" data-id="d5"><span class="task-txt"><span class="t">Day 5 — Record it</span><span class="d">Voice plus screen capture. Stumble, keep going, fix it in the edit. One take.</span></span><span class="mins">60 min</span></label>
-        <label class="task"><input type="checkbox" data-id="d6"><span class="task-txt"><span class="t">Day 6 — Edit and export</span><span class="d">Cut the pauses, add nothing else. Hard stop at 60 minutes whatever state it's in.</span></span><span class="mins">60 min</span></label>
-        <label class="task"><input type="checkbox" data-id="d7"><span class="task-txt"><span class="t">Day 7 — Thumbnail, title, publish</span><span class="d">Then put your four session dates in the calendar for next month. You're a creator now.</span></span><span class="mins">45 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d4"><span class="task-txt"><span class="t">Day 4 — Write script #1</span><span class="d">Use the section 08 structure. AI drafts the middle; you write the first 15 seconds and the verdict yourself.</span></span><span class="mins">60 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d5"><span class="task-txt"><span class="t">Day 5 — Record it</span><span class="d">Your voice plus screen capture. Stumble, keep going, fix it in the edit. One take.</span></span><span class="mins">60 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d6"><span class="task-txt"><span class="t">Day 6 — Edit and export</span><span class="d">Cut the pauses, add nothing else. Hard stop at 60 minutes, whatever state it's in.</span></span><span class="mins">60 min</span></label>
+        <label class="task"><input type="checkbox" data-id="d7"><span class="task-txt"><span class="t">Day 7 — Thumbnail, title, publish</span><span class="d">Then put your four session dates in the calendar for next month, and apply to 3 affiliate programs.</span></span><span class="mins">45 min</span></label>
       </div>
     </div>
     <div class="callout money">
       <div class="eyebrow">Start here, today</div>
-      <p><strong>Day 1 only.</strong> Pick A, B, or C and write the one sentence. Everything in this document is downstream of that single decision, and it takes 45 minutes.</p>
+      <p><strong>Day 1 only.</strong> Lock the niche and write the one sentence. Everything else in this document is downstream of that single decision, and it takes 45 minutes.</p>
     </div>
   </div>
 </section>
 
 <footer>
-  <p>Planning document · built around a stated profile of under 5 hrs/week, $500–2,000 budget, organic-only, own voice, global English audience, Australian sole trader.</p>
-  <p>Revenue figures are planning estimates in AUD, not forecasts. Tax and disclosure notes are general information, not professional advice — confirm with the ATO or an accountant.</p>
+  <p>Niche analysis and 12-month plan, built around a stated profile: under 5 hrs/week, $500–2,000 budget, organic only, AI-generated visuals with your own voiceover, global English audience, Australian sole trader.</p>
+  <p>RPM ranges are US-weighted industry reporting for 2026 and vary widely by video, season, and audience mix. Revenue tables are illustrative modelling in AUD, not forecasts — the ratios between niches are the durable part. Tax, licensing, and disclosure notes are general information, not professional advice; confirm with the ATO, ASIC guidance, or a qualified adviser.</p>
   <button class="reset" id="reset">Reset checklist</button>
 </footer>
 
