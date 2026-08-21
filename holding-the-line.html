@@ -1,0 +1,635 @@
+<title>Holding the Line</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --ground:#EDEEF0;
+  --surface:#F8F8FA;
+  --sunk:#E3E5E9;
+  --ink:#14171C;
+  --muted:#5A616B;
+  --hair:#C9CDD4;
+  --hair-soft:#DCDFE4;
+  --indigo:#2A3573;
+  --brick:#9C4636;
+  --pine:#1E5A4A;
+  --tint-brick:rgba(156,70,54,.07);
+  --tint-pine:rgba(30,90,74,.07);
+  --tint-indigo:rgba(42,53,115,.06);
+
+  --display:'Archivo','Helvetica Neue',Arial,sans-serif;
+  --body:'Newsreader','Iowan Old Style',Georgia,serif;
+  --mono:'IBM Plex Mono','SF Mono',Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0F1216;
+    --surface:#161A20;
+    --sunk:#1C2128;
+    --ink:#E4E7EB;
+    --muted:#949BA6;
+    --hair:#2C333C;
+    --hair-soft:#232931;
+    --indigo:#93A0E8;
+    --brick:#DE8B78;
+    --pine:#5FC2A2;
+    --tint-brick:rgba(222,139,120,.09);
+    --tint-pine:rgba(95,194,162,.09);
+    --tint-indigo:rgba(147,160,232,.08);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0F1216;
+  --surface:#161A20;
+  --sunk:#1C2128;
+  --ink:#E4E7EB;
+  --muted:#949BA6;
+  --hair:#2C333C;
+  --hair-soft:#232931;
+  --indigo:#93A0E8;
+  --brick:#DE8B78;
+  --pine:#5FC2A2;
+  --tint-brick:rgba(222,139,120,.09);
+  --tint-pine:rgba(95,194,162,.09);
+  --tint-indigo:rgba(147,160,232,.08);
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:18px;
+  line-height:1.62;
+  margin:0;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{
+  max-width:44rem;
+  margin:0 auto;
+  padding:0 1.5rem 8rem;
+}
+
+/* ---------- masthead ---------- */
+.mast{
+  padding:5rem 0 3rem;
+  border-bottom:1px solid var(--hair);
+  display:flex;
+  flex-direction:column;
+  gap:1.5rem;
+}
+.kicker{
+  font-family:var(--mono);
+  font-size:.7rem;
+  font-weight:500;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.mast h1{
+  font-family:var(--display);
+  font-weight:700;
+  font-size:clamp(2.7rem,8vw,4.1rem);
+  line-height:.98;
+  letter-spacing:-.03em;
+  margin:0;
+  text-wrap:balance;
+}
+.mast h1 .crease{
+  display:block;
+  color:var(--indigo);
+}
+.standfirst{
+  font-size:1.16rem;
+  color:var(--muted);
+  max-width:34rem;
+  margin:0;
+}
+
+/* ---------- sections ---------- */
+section{
+  padding:3.5rem 0 0;
+  display:flex;
+  flex-direction:column;
+  gap:1.25rem;
+}
+section > *{margin:0}
+.eyebrow{
+  font-family:var(--mono);
+  font-size:.7rem;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--indigo);
+  padding-bottom:.85rem;
+  border-bottom:2px solid var(--indigo);
+  align-self:flex-start;
+}
+h2{
+  font-family:var(--display);
+  font-weight:700;
+  font-size:clamp(1.65rem,4.4vw,2.15rem);
+  line-height:1.08;
+  letter-spacing:-.02em;
+  text-wrap:balance;
+}
+h3{
+  font-family:var(--display);
+  font-weight:600;
+  font-size:1.12rem;
+  letter-spacing:-.01em;
+  line-height:1.3;
+}
+p{max-width:36rem}
+strong{font-weight:600}
+em{font-style:italic}
+.lead{font-size:1.1rem}
+
+/* ---------- the spine: four beats ---------- */
+.beats{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  border-top:1px solid var(--hair);
+}
+.beat{
+  display:grid;
+  grid-template-columns:3.5rem 1fr;
+  gap:0 1.5rem;
+  padding:1.6rem 0;
+  border-bottom:1px solid var(--hair-soft);
+  align-items:start;
+}
+.beat-n{
+  font-family:var(--mono);
+  font-size:.72rem;
+  font-weight:600;
+  letter-spacing:.1em;
+  color:var(--indigo);
+  padding-top:.42rem;
+}
+.beat-word{
+  font-family:var(--display);
+  font-weight:700;
+  font-size:1.5rem;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+  line-height:1.1;
+  margin:0 0 .4rem;
+}
+.beat p{font-size:1rem;margin:0 0 .5rem}
+.beat p:last-child{margin-bottom:0}
+
+/* ---------- spoken lines ---------- */
+.say{
+  font-family:var(--mono);
+  font-size:.92rem;
+  line-height:1.55;
+  color:var(--ink);
+  background:var(--tint-indigo);
+  border-left:2px solid var(--indigo);
+  padding:.7rem 1rem;
+  margin:.6rem 0 0;
+  max-width:100%;
+}
+.say + .say{margin-top:.4rem}
+
+/* ---------- swap table ---------- */
+.swap{
+  border-top:1px solid var(--hair);
+  display:flex;
+  flex-direction:column;
+}
+.swap-head{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1.5rem;
+  padding:.7rem 0;
+  border-bottom:1px solid var(--hair);
+  font-family:var(--mono);
+  font-size:.68rem;
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.swap-head span:first-child{color:var(--brick)}
+.swap-head span:last-child{color:var(--pine)}
+.swap-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:.3rem 1.5rem;
+  padding:.8rem 0;
+  border-bottom:1px solid var(--hair-soft);
+  font-family:var(--mono);
+  font-size:.86rem;
+  line-height:1.45;
+}
+.fold{color:var(--brick)}
+.hold{color:var(--pine)}
+.cut{opacity:.75;font-style:italic}
+
+/* ---------- playbook ---------- */
+.plays{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  border-top:1px solid var(--hair);
+}
+.play{
+  padding:1.5rem 0;
+  border-bottom:1px solid var(--hair-soft);
+  display:flex;
+  flex-direction:column;
+  gap:.55rem;
+}
+.play h3{margin:0}
+.play p{font-size:.98rem;color:var(--muted);margin:0;max-width:34rem}
+
+/* ---------- log format ---------- */
+.logbox{
+  background:var(--sunk);
+  border:1px solid var(--hair);
+  padding:1.1rem 1.2rem;
+  overflow-x:auto;
+}
+.logbox pre{
+  font-family:var(--mono);
+  font-size:.8rem;
+  line-height:1.7;
+  margin:0;
+  white-space:pre;
+}
+.logbox .lbl{color:var(--indigo);font-weight:600}
+
+/* ---------- questions ---------- */
+.qs{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  border-top:1px solid var(--hair);
+  counter-reset:q;
+}
+.q{
+  display:grid;
+  grid-template-columns:2.5rem 1fr;
+  gap:1rem;
+  padding:1.05rem 0;
+  border-bottom:1px solid var(--hair-soft);
+  align-items:baseline;
+}
+.q::before{
+  counter-increment:q;
+  content:counter(q,decimal-leading-zero);
+  font-family:var(--mono);
+  font-size:.75rem;
+  font-weight:600;
+  color:var(--indigo);
+}
+.q span{font-size:1.02rem}
+
+/* ---------- 30 day arc ---------- */
+.arc{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  border-top:1px solid var(--hair);
+}
+.leg{
+  display:grid;
+  grid-template-columns:6.5rem 1fr;
+  gap:.4rem 1.5rem;
+  padding:1.4rem 0;
+  border-bottom:1px solid var(--hair-soft);
+}
+.leg-days{
+  font-family:var(--mono);
+  font-size:.72rem;
+  font-weight:600;
+  letter-spacing:.09em;
+  color:var(--muted);
+  padding-top:.3rem;
+  font-variant-numeric:tabular-nums;
+}
+.leg h3{margin:0 0 .35rem}
+.leg p{font-size:.98rem;margin:0;max-width:32rem}
+.leg ul{margin:.45rem 0 0;padding-left:1.05rem;font-size:.96rem;color:var(--muted)}
+.leg li{margin-bottom:.2rem}
+
+/* ---------- rules card ---------- */
+.card{
+  background:var(--surface);
+  border:1px solid var(--hair);
+  padding:2rem 1.9rem;
+  margin-top:.5rem;
+}
+.card ol{
+  margin:0;
+  padding-left:1.4rem;
+  font-family:var(--mono);
+  font-size:.92rem;
+  line-height:1.55;
+  display:flex;
+  flex-direction:column;
+  gap:.75rem;
+}
+.card li::marker{color:var(--indigo);font-weight:600}
+
+/* ---------- misc ---------- */
+ul.plain{margin:0;padding-left:1.15rem;max-width:36rem}
+ul.plain li{margin-bottom:.5rem}
+.foot{
+  margin-top:4rem;
+  padding-top:1.5rem;
+  border-top:1px solid var(--hair);
+  font-family:var(--mono);
+  font-size:.75rem;
+  letter-spacing:.06em;
+  color:var(--muted);
+}
+@media (max-width:560px){
+  body{font-size:17px}
+  .beat,.q,.leg{grid-template-columns:1fr;gap:.5rem}
+  .beat-n,.leg-days{padding-top:0}
+  .q::before{display:none}
+  .swap-row,.swap-head{grid-template-columns:1fr}
+  .swap-head span:last-child{display:none}
+}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="kicker">Personal operating manual &nbsp;/&nbsp; v1 &nbsp;/&nbsp; 30-day build</div>
+  <h1>Holding<span class="crease">the Line</span></h1>
+  <p class="standfirst">A plan for being sharp under pressure, saying the thing once, and finishing what you started. Read the diagnosis, answer the ten questions, run the thirty days.</p>
+</header>
+
+<section>
+  <div class="eyebrow">The diagnosis</div>
+  <h2>Folding is a latency problem, not a courage problem.</h2>
+  <p class="lead">When someone pushes, your mouth starts before your position is formed. And everything you say while you are still forming a position <em>sounds like a concession</em> — because it is hedging, and hedging reads as an opening.</p>
+  <p>So they push harder. So you hedge more. Twenty seconds later you are agreeing with something you don't believe, and you can't reconstruct how you got there.</p>
+  <p>That is good news. Courage is hard to install. Latency is mechanical — you fix it with a two-second pause and a fixed word order. Most of what you're calling weakness is a timing bug.</p>
+</section>
+
+<section>
+  <div class="eyebrow">Know your tell</div>
+  <h2>Three ways people fold</h2>
+  <p>You almost certainly do one of these far more than the other two. Name yours before you train.</p>
+  <ul class="plain">
+    <li><strong>The Drift.</strong> You had the right position and kept talking past it. By sentence four you've argued yourself down.</li>
+    <li><strong>The Pre-Concession.</strong> You soften before anyone has pushed. "This might be dumb, but—" You lost before the exchange started.</li>
+    <li><strong>The Collapse.</strong> One round of pushback and you switch — not because they were right, but to end the discomfort.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="eyebrow">Framework 01 — real time</div>
+  <h2>The Spine: Beat, Frame, Land, Hold</h2>
+  <p>Four moves, always in this order. It's a sequence because the order is the whole point — folders run it backwards, opening with reasoning and never arriving at a position.</p>
+
+  <div class="beats">
+    <div class="beat">
+      <div class="beat-n">01</div>
+      <div>
+        <p class="beat-word">Beat</p>
+        <p>Two full seconds of silence before you answer. Count them. They feel like ten to you and zero to everyone else.</p>
+        <p>This is the highest-leverage habit on this page. Folding lives in the rush. If you install nothing else, install the beat.</p>
+      </div>
+    </div>
+    <div class="beat">
+      <div class="beat-n">02</div>
+      <div>
+        <p class="beat-word">Frame</p>
+        <p>Say out loud what's actually on the table. It buys four more seconds, forces them to confirm or correct — they often correct into something much smaller — and makes you the person defining the terms.</p>
+        <p class="say">"So the question is whether we ship Thursday or wait for the audit."</p>
+      </div>
+    </div>
+    <div class="beat">
+      <div class="beat-n">03</div>
+      <div>
+        <p class="beat-word">Land</p>
+        <p>Your position. One sentence. No runway, no throat-clearing, no reasoning first.</p>
+        <p class="say">"We ship Thursday."</p>
+        <p style="margin-top:.6rem">Never bury the verdict at the end of a paragraph. If you lead with reasoning, you are asking permission to have a view.</p>
+      </div>
+    </div>
+    <div class="beat">
+      <div class="beat-n">04</div>
+      <div>
+        <p class="beat-word">Hold</p>
+        <p>One reason. Then <em>stop talking.</em> The silence after your reason is the entire skill.</p>
+        <p>Stacking reasons is the tell — three reasons means you don't believe any one of them, and each extra reason is a new surface to attack. Your strongest case is your single best reason, undefended.</p>
+        <p class="say">"The audit doesn't change the launch decision, only the rollback plan."</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:2rem">The move-or-hold test</h3>
+  <p>You will be tempted to shift. Ask one question before you do:</p>
+  <p class="say">New information, or new pressure?</p>
+  <p>Information moves you — and moving on information is <em>strength</em>, so say it out loud: "That changes it. I'm moving to X, because of Y." Pressure alone doesn't move you. Volume, seniority, repetition, sighing, and impatience are not information.</p>
+</section>
+
+<section>
+  <div class="eyebrow">Framework 02 — sentence level</div>
+  <h2>The Language Swap</h2>
+  <p>Folding shows up as vocabulary before it shows up as behaviour. Cut these and half the problem goes with them. Start in writing — you get to edit before sending, so they're the cheapest reps you'll ever run.</p>
+
+  <div class="swap">
+    <div class="swap-head"><span>Fold</span><span>Hold</span></div>
+    <div class="swap-row"><span class="fold">"I think maybe we could possibly…"</span><span class="hold">"We should…"</span></div>
+    <div class="swap-row"><span class="fold">"Sorry to bother you—"</span><span class="hold">"Quick one:"</span></div>
+    <div class="swap-row"><span class="fold">"I could be wrong, but…"</span><span class="hold cut">cut entirely</span></div>
+    <div class="swap-row"><span class="fold">"I'm not an expert, but…"</span><span class="hold cut">cut entirely</span></div>
+    <div class="swap-row"><span class="fold">"…if that's okay?"</span><span class="hold cut">cut entirely</span></div>
+    <div class="swap-row"><span class="fold">"Does that make sense?"</span><span class="hold cut">silence</span></div>
+    <div class="swap-row"><span class="fold">"Just checking in on this"</span><span class="hold">"Where does X stand? I need it Thursday."</span></div>
+    <div class="swap-row"><span class="fold">"Whatever works for you"</span><span class="hold">"Thursday, 2pm. Work?"</span></div>
+    <div class="swap-row"><span class="fold">"It might be a bit risky maybe"</span><span class="hold">"It's risky. Here's the risk:"</span></div>
+    <div class="swap-row"><span class="fold">"Happy to be told I'm wrong!"</span><span class="hold">"Push back if you see it differently."</span></div>
+    <div class="swap-row"><span class="fold">"Sorry for the delay"</span><span class="hold">"Thanks for waiting."</span></div>
+    <div class="swap-row"><span class="fold">"I'll try to get it done"</span><span class="hold">"You'll have it Thursday."</span></div>
+  </div>
+
+  <h3 style="margin-top:2rem">Four standing rules</h3>
+  <ul class="plain">
+    <li><strong>Cut every word before the point.</strong> "So, basically, I was just thinking that maybe—" is four seconds of surrender.</li>
+    <li><strong>Never ask permission to speak.</strong> "Sorry, can I just—" becomes "One thing:".</li>
+    <li><strong>End statements down, not up.</strong> An upward inflection turns a position into a request for approval.</li>
+    <li><strong>Two sentences, in writing.</strong> Position in the first, reason in the second, send. Length is where nerve leaks out.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="eyebrow">Framework 03 — scripts</div>
+  <h2>The Pressure Playbook</h2>
+  <p>Nine situations where people fold, with the line to use. Learn them cold. Under pressure you don't rise to the occasion — you fall back to what you rehearsed.</p>
+
+  <div class="plays">
+    <div class="play">
+      <h3>You don't know the answer</h3>
+      <p class="say">"I don't have that in front of me. You'll have it by four."</p>
+      <p>Never guess, never apologise. Then actually deliver by four — this is where credibility compounds fastest.</p>
+    </div>
+    <div class="play">
+      <h3>Someone senior disagrees</h3>
+      <p class="say">"You may be right. What would change my mind is ___. Do we have that?"</p>
+      <p>Moves the fight from hierarchy to evidence without ever challenging their standing.</p>
+    </div>
+    <div class="play">
+      <h3>Same argument, third time round</h3>
+      <p class="say">"Understood. My answer's the same: ___."</p>
+      <p>Broken record. Same words, flatter tone. Do <em>not</em> generate a fresh reason — a new reason restarts the debate and tells them repetition works on you.</p>
+    </div>
+    <div class="play">
+      <h3>Work gets dumped on you</h3>
+      <p class="say">"I can take that. It moves X to Friday. Which do you want first?"</p>
+      <p>Trade, never absorb. Silently absorbing is folding with extra steps, and nobody finds out until you miss both.</p>
+    </div>
+    <div class="play">
+      <h3>You get talked over</h3>
+      <p class="say">"Hold on — let me finish."</p>
+      <p>Then finish the thought at its original size. Don't restart it smaller.</p>
+    </div>
+    <div class="play">
+      <h3>You're being rushed into a decision</h3>
+      <p class="say">"I'm not deciding that on the spot. I'll come back to you by end of day."</p>
+      <p>Refusing a rushed decision is the highest form of not folding. Urgency is the most common lever used on people who cave.</p>
+    </div>
+    <div class="play">
+      <h3>Public criticism — and it's fair</h3>
+      <p class="say">"Fair. Here's the fix: ___."</p>
+      <p>One sentence, then move. The over-apology is itself a fold, and it makes a small error look like a big one.</p>
+    </div>
+    <div class="play">
+      <h3>Public criticism — and it's not</h3>
+      <p class="say">"That's not what happened. Let's walk through it straight after this."</p>
+      <p>Never litigate in the room. You lose on tone even when you win on facts.</p>
+    </div>
+    <div class="play">
+      <h3>They go quiet after you state your position</h3>
+      <p><strong>Say nothing.</strong> The silence is a test, not a vacuum. Whoever fills it concedes — and if you fill it, you will fill it with a qualification.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Framework 04 — measurement</div>
+  <h2>The Fold Log</h2>
+  <p>This is the engine. You cannot fix a pattern you have never seen written down, and "be more confident" is not a pattern. One line, thirty seconds, same day it happens.</p>
+
+  <div class="logbox"><pre><span class="lbl">DATE</span>   <span class="lbl">WHO</span>      <span class="lbl">THEY SAID</span>              <span class="lbl">I SAID</span>              <span class="lbl">SHOULD HAVE SAID</span>
+21/08  Priya    "Can't we just do both?"  "Yeah, we can try"   "Both means neither ships. Pick."
+22/08  Standup  silence after my number   nothing — HELD       —</pre></div>
+
+  <p style="margin-top:1.25rem"><strong>Log the holds too.</strong> You need the ratio, not just the failures. A week of pure failure logging will make you quit by Thursday.</p>
+  <p>Friday, fifteen minutes: read the week. Within two weeks one trigger will account for most entries — a specific person, a specific room, or written-versus-spoken. <em>That</em> is what you train against. Not confidence in the abstract.</p>
+</section>
+
+<section>
+  <div class="eyebrow">Framework 05 — execution</div>
+  <h2>Getting the work done</h2>
+  <p>The same failure runs against your own to-do list. Undone work is a slow fold: you conceded to your own discomfort instead of someone else's.</p>
+  <ul class="plain">
+    <li><strong>One Hard Thing, named the night before.</strong> Written down, as a verb plus a done-condition. It gets your first ninety minutes — no Slack, no mail, no meetings. If it isn't named the night before, the morning will eat it.</li>
+    <li><strong>Write "done" before you start.</strong> One sentence: <em>"Done = the draft is in Priya's inbox."</em> Undefined done is how a two-day task drifts for two weeks.</li>
+    <li><strong>The two-avoidance rule.</strong> Anything you have dodged twice gets scheduled with a date, delegated, or killed out loud. There is no third dodge.</li>
+    <li><strong>Never say "try."</strong> Say a date or say no. "I'll try" is a fold that arrives disguised as cooperation.</li>
+    <li><strong>Close out in three lines.</strong> Two minutes, end of day: <em>Shipped / Stuck / Tomorrow's Hard Thing.</em> That's the whole system.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="eyebrow">The build</div>
+  <h2>Thirty days, in four legs</h2>
+  <p>The order matters. You do not start by being brave in the highest-stakes room in the building — that's how people try this for four days and conclude they aren't built for it. You start by counting.</p>
+
+  <div class="arc">
+    <div class="leg">
+      <div class="leg-days">DAYS 1—7</div>
+      <div>
+        <h3>Count. Don't fix.</h3>
+        <p>No behaviour change at all on the pressure side. Just run the Fold Log and name which of the three tells is yours.</p>
+        <ul>
+          <li>Start One Hard Thing on day one — execution needs no diagnosis.</li>
+          <li>Friday: read the log, circle the recurring trigger.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="leg">
+      <div class="leg-days">DAYS 8—14</div>
+      <div>
+        <h3>Cut the words.</h3>
+        <p>Language only, and written first. Pick three phrases from the swap table and eliminate them completely.</p>
+        <ul>
+          <li>Re-read every message before sending; delete everything before the point.</li>
+          <li>One message this week that is exactly two sentences.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="leg">
+      <div class="leg-days">DAYS 15—21</div>
+      <div>
+        <h3>Beat and land.</h3>
+        <p>Add the two-second pause and position-first ordering — in low-stakes settings only. Standups, friends, ordering coffee.</p>
+        <ul>
+          <li>Say one number or date this week with no hedge attached to it.</li>
+          <li>Answer three questions with a position in the first sentence.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="leg">
+      <div class="leg-days">DAYS 22—30</div>
+      <div>
+        <h3>Hold.</h3>
+        <p>Now it costs something. Run the broken record once, for real, and take one deliberate disagreement.</p>
+        <ul>
+          <li>Disagree on purpose in one meeting where you'd normally stay quiet.</li>
+          <li>Use the trade line once when work lands on you.</li>
+          <li>Let one silence sit without filling it.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Carry this</div>
+  <h2>Seven rules that don't bend</h2>
+  <div class="card">
+    <ol>
+      <li>Two seconds before you speak. Every time.</li>
+      <li>Position first. Reason second. Nothing before the position.</li>
+      <li>One reason — then stop talking.</li>
+      <li>New information moves you. New pressure does not.</li>
+      <li>Never say "try." Say a date, or say no.</li>
+      <li>Apologise for impact, never for existing.</li>
+      <li>Log the fold the same day.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Your turn</div>
+  <h2>Ten questions</h2>
+  <p>Answer these and the plan above stops being generic. Short answers are fine — but be concrete, and use real names and real sentences. Vague answers produce a vague plan.</p>
+  <div class="qs">
+    <div class="q"><span>Describe the last time you folded. What were the actual words said to you, and what did you say back?</span></div>
+    <div class="q"><span>Who do you fold with specifically — a named person, a rank, a room above a certain size, or written versus spoken?</span></div>
+    <div class="q"><span>In the second before you cave, what's the feeling: fear of conflict, of looking stupid, of being disliked, or of being wrong?</span></div>
+    <div class="q"><span>Which of the three tells is yours — the Drift, the Pre-Concession, or the Collapse?</span></div>
+    <div class="q"><span>What's your role, and which decisions are actually yours to make? (Sometimes "folding" is just undefined authority.)</span></div>
+    <div class="q"><span>What did you agree to in the last month that you now resent?</span></div>
+    <div class="q"><span>When you're right and you know you're right — what specifically stops you from saying it flatly?</span></div>
+    <div class="q"><span>Name the work that isn't getting done. The actual task, not the category.</span></div>
+    <div class="q"><span>When a day disappears, where does it go: meetings, other people's requests, or your own avoidance?</span></div>
+    <div class="q"><span>Describe one concrete scene, ninety days out, where you handled it sharply. What happened in the room?</span></div>
+  </div>
+</section>
+
+<p class="foot">Reread the seven rules before any conversation you're dreading. That is the whole ritual.</p>
+
+</div>
