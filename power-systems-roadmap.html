@@ -1,0 +1,638 @@
+<title>The Grid Track</title>
+<style>
+  :root{
+    --ground:#F4F6F5; --surface:#FCFCFB; --surface-2:#EFF2F1; --sunk:#E7EBEA;
+    --ink:#111817; --ink-2:#38443F; --muted:#65726E; --faint:#8B9793;
+    --rule:#D8DEDC; --rule-strong:#B9C3C0;
+    --accent:#076A93; --accent-soft:#E2EDF3; --accent-ink:#05516F; --accent-on:#FFFFFF;
+    --good:#3E7B3A; --good-bg:#E7F0E4;
+    --warn:#9A6608; --warn-bg:#F6EEDC;
+    --crit:#AB3A2A; --crit-bg:#F7E7E3;
+    --track:#DEE4E2;
+    --shadow:0 1px 2px rgba(17,24,23,.05);
+    --serif:Georgia,"Iowan Old Style","Times New Roman",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"DejaVu Sans Mono",monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#0E1211; --surface:#161B1A; --surface-2:#1D2423; --sunk:#121817;
+      --ink:#E7ECEA; --ink-2:#C3CDCA; --muted:#93A09C; --faint:#71807C;
+      --rule:#28312F; --rule-strong:#3A4643;
+      --accent:#2C9CC9; --accent-soft:#12303B; --accent-ink:#63B9DC; --accent-on:#08171E;
+      --good:#79BE68; --good-bg:#17281A;
+      --warn:#DFA945; --warn-bg:#2B2413;
+      --crit:#E8806B; --crit-bg:#2E1B18;
+      --track:#28312F;
+      --shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0E1211; --surface:#161B1A; --surface-2:#1D2423; --sunk:#121817;
+    --ink:#E7ECEA; --ink-2:#C3CDCA; --muted:#93A09C; --faint:#71807C;
+    --rule:#28312F; --rule-strong:#3A4643;
+    --accent:#2C9CC9; --accent-soft:#12303B; --accent-ink:#63B9DC; --accent-on:#08171E;
+    --good:#79BE68; --good-bg:#17281A;
+    --warn:#DFA945; --warn-bg:#2B2413;
+    --crit:#E8806B; --crit-bg:#2E1B18;
+    --track:#28312F;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    background:var(--ground); color:var(--ink);
+    font-family:var(--sans); font-size:15px; line-height:1.55;
+    -webkit-font-smoothing:antialiased; margin:0;
+  }
+  .sheet{max-width:1100px;margin:0 auto;padding:0 20px 80px}
+  .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .num{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+
+  /* ---------- title block ---------- */
+  .titleblock{border:1px solid var(--rule-strong);border-top:none;background:var(--surface);box-shadow:var(--shadow)}
+  .tb-bar{height:4px;background:var(--accent)}
+  .tb-main{padding:26px 24px 20px;border-bottom:1px solid var(--rule)}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+  h1{font-family:var(--serif);font-weight:400;font-size:clamp(30px,5.2vw,46px);line-height:1.05;letter-spacing:-.015em;margin:0 0 12px;text-wrap:balance}
+  .standfirst{max-width:66ch;color:var(--ink-2);margin:0;font-size:15.5px}
+  .tb-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+  .tb-field{padding:12px 24px;border-right:1px solid var(--rule);border-top:1px solid var(--rule);margin-top:-1px}
+  .tb-field:last-child{border-right:none}
+  .tb-field dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:0 0 3px}
+  .tb-field dd{margin:0;font-size:13.5px;color:var(--ink);font-weight:500}
+
+  /* ---------- section ---------- */
+  section{margin-top:40px}
+  h2{
+    font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+    color:var(--muted);font-weight:600;margin:0 0 14px;
+    padding-bottom:8px;border-bottom:1px solid var(--rule);
+  }
+  h2 .h2-note{float:right;text-transform:none;letter-spacing:0;color:var(--faint);font-weight:400}
+
+  /* ---------- next action banner ---------- */
+  .nextbar{
+    position:sticky;top:0;z-index:30;background:var(--surface);
+    border:1px solid var(--rule-strong);border-left:3px solid var(--accent);box-shadow:var(--shadow);
+  }
+  .nb-top{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:baseline;padding:12px 16px}
+  .nb-lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);font-weight:600;flex:0 0 auto}
+  .nb-task{font-size:15px;font-weight:600;letter-spacing:-.005em;flex:1 1 260px;min-width:0}
+  .nb-where{font-family:var(--mono);font-size:10.5px;color:var(--faint);display:block;margin-top:3px;font-weight:400;letter-spacing:.04em}
+  .nb-do{
+    font-family:var(--mono);font-size:11px;letter-spacing:.06em;background:var(--accent);color:var(--accent-on);
+    border:1px solid var(--accent);border-radius:3px;padding:6px 12px;cursor:pointer;font-weight:600;flex:0 0 auto;
+  }
+  .nb-do:hover{background:var(--accent-ink);border-color:var(--accent-ink)}
+  .nb-bottom{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;padding:10px 16px;border-top:1px solid var(--rule);background:var(--surface-2)}
+  .bigbar{flex:1 1 200px;height:8px;background:var(--track);border-radius:4px;overflow:hidden;min-width:120px}
+  .bigbar>i{display:block;height:100%;background:var(--accent);border-radius:0 4px 4px 0;transition:width .3s ease}
+  .stat{font-family:var(--mono);font-size:11.5px;color:var(--muted);white-space:nowrap}
+  .stat b{color:var(--ink);font-weight:600}
+
+  /* ---------- controls ---------- */
+  .ctl-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 16px;border-top:1px solid var(--rule)}
+  .ctl-label{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+  .chip{
+    font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+    background:var(--surface-2);color:var(--ink-2);
+    border:1px solid var(--rule);border-radius:3px;padding:5px 9px;cursor:pointer;
+  }
+  .chip:hover{border-color:var(--rule-strong)}
+  .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-on);font-weight:600}
+  .chip:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .spacer{flex:1}
+
+  /* ---------- phases ---------- */
+  .phase{border:1px solid var(--rule-strong);background:var(--surface);box-shadow:var(--shadow);margin-bottom:22px}
+  .ph-head{
+    width:100%;display:grid;grid-template-columns:44px 1fr 150px 84px 24px;gap:14px;align-items:center;
+    padding:14px 16px;background:var(--surface-2);border:none;border-bottom:1px solid var(--rule-strong);
+    text-align:left;color:inherit;font:inherit;cursor:pointer;
+  }
+  .ph-head:hover{background:var(--sunk)}
+  .ph-n{
+    font-family:var(--mono);font-size:16px;font-weight:600;color:var(--accent-on);background:var(--accent);
+    width:32px;height:32px;border-radius:3px;display:grid;place-items:center;
+  }
+  .ph-done .ph-n{background:var(--good)}
+  .ph-name{display:block;font-weight:600;font-size:15.5px;letter-spacing:-.008em}
+  .ph-span{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-top:2px}
+  .ph-bar{height:6px;background:var(--track);border-radius:3px;overflow:hidden}
+  .ph-bar>i{display:block;height:100%;background:var(--accent);border-radius:0 3px 3px 0;transition:width .3s ease}
+  .ph-done .ph-bar>i{background:var(--good)}
+  .ph-pct{font-family:var(--mono);font-size:12.5px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+  .ph-hrs{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+  .caret{color:var(--faint);font-size:11px;justify-self:center;transition:transform .18s ease}
+  .phase.open .caret{transform:rotate(90deg)}
+  .ph-body{display:none}
+  .phase.open .ph-body{display:block}
+
+  .ph-goal{padding:14px 16px;border-bottom:1px solid var(--rule);background:var(--sunk);display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px 24px}
+  .ph-goal h4{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent-ink);margin:0 0 4px;font-weight:600}
+  .ph-goal p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.6}
+
+  /* ---------- modules & tasks ---------- */
+  .mod{border-bottom:1px solid var(--rule)}
+  .mod:last-child{border-bottom:none}
+  .mod-head{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;padding:12px 16px 8px}
+  .mod-name{font-weight:600;font-size:14px;letter-spacing:-.005em}
+  .mod-hrs{font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.06em}
+  .mod-note{flex:1 1 100%;font-size:12.5px;color:var(--muted);margin:0;line-height:1.5}
+
+  .task{display:grid;grid-template-columns:26px 1fr 108px 74px;gap:10px;align-items:start;padding:7px 16px 7px 16px}
+  .task:hover{background:var(--surface-2)}
+  .task.is-done .t-text{color:var(--faint);text-decoration:line-through;text-decoration-thickness:1px}
+  .task input[type=checkbox]{width:17px;height:17px;margin:2px 0 0;accent-color:var(--accent);cursor:pointer}
+  .t-text{font-size:13.5px;color:var(--ink-2);line-height:1.5;cursor:pointer}
+  .t-time{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums;padding-top:2px}
+  .t-time small{display:block;font-size:9.5px;color:var(--faint);letter-spacing:.06em}
+  .tag{
+    font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+    padding:2px 6px;border-radius:3px;border:1px solid transparent;white-space:nowrap;justify-self:end;margin-top:2px;
+  }
+  .tag-read{background:var(--accent-soft);color:var(--accent-ink);border-color:var(--accent)}
+  .tag-calc{background:var(--warn-bg);color:var(--warn);border-color:var(--warn)}
+  .tag-build{background:var(--good-bg);color:var(--good);border-color:var(--good)}
+  .tag-ship{background:var(--crit-bg);color:var(--crit);border-color:var(--crit)}
+  .tag-people{background:var(--surface-2);color:var(--muted);border-color:var(--rule-strong)}
+
+  /* ---------- tables ---------- */
+  .tablewrap{border:1px solid var(--rule-strong);background:var(--surface);box-shadow:var(--shadow);overflow-x:auto}
+  table{border-collapse:collapse;width:100%;min-width:520px}
+  th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--rule);font-size:13.5px;vertical-align:top}
+  th{
+    font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+    background:var(--surface-2);border-bottom:1px solid var(--rule-strong);font-weight:600;white-space:nowrap;
+  }
+  tbody tr:last-child td{border-bottom:none}
+  td.r{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+  td strong{color:var(--ink);font-weight:600}
+  .you{background:var(--accent-soft)}
+
+  /* ---------- notes ---------- */
+  .notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--rule-strong);border:1px solid var(--rule-strong);box-shadow:var(--shadow)}
+  .note{background:var(--surface);padding:18px 20px}
+  .note h3{font-size:14.5px;margin:0 0 8px;letter-spacing:-.01em}
+  .note p{margin:0 0 9px;font-size:13.5px;color:var(--ink-2);line-height:1.6}
+  .note p:last-child{margin-bottom:0}
+  .note strong{color:var(--ink);font-weight:600}
+  .note .tag-h{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent-ink);display:block;margin-bottom:6px}
+
+  .callout{border:1px solid var(--rule-strong);border-left:3px solid var(--accent);background:var(--surface);padding:16px 20px;box-shadow:var(--shadow)}
+  .callout h3{font-size:14.5px;margin:0 0 7px}
+  .callout p{margin:0 0 9px;font-size:13.5px;color:var(--ink-2);line-height:1.6;max-width:78ch}
+  .callout p:last-child{margin-bottom:0}
+  ul.tight{margin:0;padding-left:18px;font-size:13.5px;color:var(--ink-2);line-height:1.65}
+  ul.tight li{margin-bottom:5px}
+  ul.tight li:last-child{margin-bottom:0}
+
+  .foot{margin-top:36px;padding-top:14px;border-top:1px solid var(--rule);font-size:12px;color:var(--muted);line-height:1.65}
+  .foot p{margin:0 0 8px;max-width:80ch}
+
+  @media (max-width:820px){
+    .nextbar{position:static}
+    .ph-head{grid-template-columns:36px 1fr 56px 20px;gap:10px}
+    .ph-head .ph-bar{display:none}
+    .ph-hrs{display:none}
+    .task{grid-template-columns:24px 1fr;gap:8px;row-gap:4px;padding:9px 14px}
+    .t-time{grid-column:2;text-align:left;display:flex;gap:8px;align-items:baseline}
+    .t-time small{display:inline}
+    .tag{grid-column:2;justify-self:start;margin-top:0}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="sheet">
+
+  <div class="titleblock">
+    <div class="tb-bar"></div>
+    <div class="tb-main">
+      <p class="eyebrow">Career roadmap &middot; Power systems &amp; renewables</p>
+      <h1>The Grid Track</h1>
+      <p class="standfirst">Twelve months of evenings, turning three years of electrical project engineering into a power systems r&eacute;sum&eacute; that Victoria&rsquo;s transmission buildout is actively hiring for. Every task is atomic, timed, and safe to abandon mid&#8209;way. There is no streak to lose.</p>
+    </div>
+    <dl class="tb-fields">
+      <div class="tb-field"><dt>From</dt><dd>Electrical Project Eng, 3 yr</dd></div>
+      <div class="tb-field"><dt>To</dt><dd>Power Systems Engineer</dd></div>
+      <div class="tb-field"><dt>Market</dt><dd>Melbourne / VIC</dd></div>
+      <div class="tb-field"><dt>Pace</dt><dd class="num">5&ndash;8 h / week</dd></div>
+      <div class="tb-field"><dt>Total effort</dt><dd class="num">340 h</dd></div>
+      <div class="tb-field"><dt>Currency</dt><dd>AUD, base ex super</dd></div>
+    </dl>
+  </div>
+
+  <section>
+    <h2>Progress <span class="h2-note">Saved in this browser only</span></h2>
+
+    <div class="nextbar">
+      <div class="nb-top">
+        <span class="nb-lab">Next</span>
+        <span class="nb-task" id="nextTask">&mdash;<span class="nb-where" id="nextWhere"></span></span>
+        <button class="nb-do" id="nextDone" type="button">Mark done</button>
+      </div>
+      <div class="nb-bottom">
+        <span class="bigbar"><i id="bigBar" style="width:0%"></i></span>
+        <span class="stat"><b id="pctAll">0%</b> complete</span>
+        <span class="stat"><b id="hrsDone">0</b> / 340 h</span>
+        <span class="stat"><b id="wksLeft">52</b> wks left at 6.5 h/wk</span>
+      </div>
+      <div class="ctl-row">
+        <span class="ctl-label">View</span>
+        <button class="chip" id="fHide" type="button" aria-pressed="false">Hide finished</button>
+        <button class="chip" id="fExpand" type="button" aria-pressed="false">Expand all</button>
+        <span class="spacer"></span>
+        <button class="chip" id="fReset" type="button">Reset progress</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The four phases <span class="h2-note">Tap a phase to open it</span></h2>
+    <div id="phases"></div>
+  </section>
+
+  <section>
+    <h2>Pay ladder <span class="h2-note">Indicative VIC bands, base ex super</span></h2>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>When</th><th>Role you can credibly apply for</th><th class="r">Base band</th><th>What unlocks it</th></tr>
+        </thead>
+        <tbody>
+          <tr class="you"><td><strong>Today</strong></td><td>Electrical Project Engineer, 3 yr</td><td class="r">$95k&ndash;120k</td><td>Where you are now</td></tr>
+          <tr><td>End Phase 2</td><td>Power Systems Engineer &mdash; lateral entry</td><td class="r">$115k&ndash;140k</td><td>PSS&reg;E load flow + dynamics, Python automation</td></tr>
+          <tr><td>End Phase 4</td><td>Grid Connection / Power Systems Engineer</td><td class="r">$140k&ndash;175k</td><td>PSCAD, S5.2.5 fluency, one real study report</td></tr>
+          <tr><td>+2 years in role</td><td>Senior Power Systems Engineer</td><td class="r">$170k&ndash;210k</td><td>Owning connection applications end to end</td></tr>
+          <tr><td>+4&ndash;5 years</td><td>Principal / Technical Lead</td><td class="r">$210k&ndash;260k</td><td>Chartered, plus a signed-off project history</td></tr>
+          <tr><td>Alternative</td><td>Contract grid connection specialist</td><td class="r">$900&ndash;1,400/day</td><td>Proven scarcity skill, no employer loyalty</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="foot" style="margin-top:12px;padding-top:0;border:none">Bands are indicative ranges assembled from Australian engineering salary guides and advertised VIC roles, not a quote. Superannuation sits on top at the current 12% guarantee. Verify against live listings before you negotiate &mdash; the market moves with the transmission pipeline.</p>
+  </section>
+
+  <section>
+    <h2>Who hires this in Victoria <span class="h2-note">Target list, by segment</span></h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Segment</th><th>Organisations</th><th>Why they matter to you</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Market &amp; state bodies</strong></td>
+            <td>AEMO (Melbourne HQ), VicGrid, SEC Victoria (Morwell), Transmission Company Victoria</td>
+            <td>Set the rules you are learning. AEMO on a CV is a permanent credential.</td>
+          </tr>
+          <tr>
+            <td><strong>Networks</strong></td>
+            <td>AusNet Services, Powercor / CitiPower / United Energy, Jemena, Mondo</td>
+            <td>Steady work, strong graduate-to-senior pipelines, own the connection queue.</td>
+          </tr>
+          <tr>
+            <td><strong>Consultancies</strong></td>
+            <td>Aurecon, GHD, Arup, WSP, Jacobs, SMEC, Stantec, Entura</td>
+            <td>Fastest skill accumulation. Best entry point for a lateral mover with project experience.</td>
+          </tr>
+          <tr>
+            <td><strong>Developers &amp; owners</strong></td>
+            <td>Neoen, Pacific Blue, Tilt Renewables, Squadron Energy, Star of the South</td>
+            <td>Owner-side roles pay well and value your project delivery background directly.</td>
+          </tr>
+          <tr>
+            <td><strong>OEM &amp; EPC</strong></td>
+            <td>GE Vernova, Hitachi Energy, Siemens Energy, Fluence, Tesla Energy, Zinfra, Downer, UGL, Beon</td>
+            <td>Where BESS and inverter knowledge converts to money quickest.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tool stack <span class="h2-note">What to install, in what order</span></h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Tool</th><th>Used for</th><th>Learning at home</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Python</strong> &mdash; pandas, pandapower, matplotlib</td><td>Automation, batch studies, data, charts</td><td>Free, no barrier</td><td><span class="tag tag-ship">Start here</span></td></tr>
+          <tr><td><strong>PSS&reg;E</strong></td><td>Load flow, contingency, dynamics &mdash; the NEM reference tool</td><td>Free university edition, bus-count limited</td><td><span class="tag tag-ship">Essential</span></td></tr>
+          <tr><td><strong>PSCAD / EMTDC</strong></td><td>EMT studies, inverter behaviour, weak grids</td><td>Free edition, node-count limited</td><td><span class="tag tag-ship">Essential</span></td></tr>
+          <tr><td><strong>DIgSILENT PowerFactory</strong></td><td>Alternative planning and protection platform</td><td>Student / demo licence</td><td><span class="tag tag-calc">Useful</span></td></tr>
+          <tr><td><strong>ETAP</strong></td><td>Industrial and site power systems</td><td>Demo only, hard to self-teach</td><td><span class="tag tag-people">Optional</span></td></tr>
+          <tr><td><strong>MATLAB / Simulink</strong></td><td>Control design, research-flavoured roles</td><td>Paid home licence</td><td><span class="tag tag-people">Optional</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="foot" style="margin-top:12px;padding-top:0;border:none">Free-edition terms and bus limits change &mdash; confirm current licensing on each vendor&rsquo;s site before you plan a study around it. Where a free edition is too small, ask a consultancy contact whether they run public training on it.</p>
+  </section>
+
+  <section>
+    <h2>How to actually run this <span class="h2-note">Built for an ADHD brain, not a disciplined one</span></h2>
+    <div class="notes">
+      <div class="note">
+        <span class="tag-h">Rule 1</span>
+        <h3>Read the banner, not the page</h3>
+        <p>The sticky bar at the top names <strong>one</strong> task. That is the whole instruction. Scrolling the full roadmap to &ldquo;plan&rdquo; is avoidance wearing a hard hat.</p>
+      </div>
+      <div class="note">
+        <span class="tag-h">Rule 2</span>
+        <h3>45 minutes is the hard ceiling</h3>
+        <p>Long tasks are pre-split into sessions. <strong>Set a timer, stop when it rings</strong>, even mid-sentence. Stopping while it still feels good is what makes you come back.</p>
+      </div>
+      <div class="note">
+        <span class="tag-h">Rule 3</span>
+        <h3>There is no streak</h3>
+        <p>Every task is self-contained and resumable cold. Miss three weeks and you lose <strong>nothing</strong> &mdash; the plan has an order, not a calendar. Just reopen and read the banner.</p>
+      </div>
+      <div class="note">
+        <span class="tag-h">Rule 4</span>
+        <h3>Tick the box the moment you stop</h3>
+        <p>Partial credit beats accurate credit. An unticked half-done task is the thing that makes you avoid opening this page tomorrow. <strong>Tick it, move on.</strong></p>
+      </div>
+      <div class="note">
+        <span class="tag-h">Rule 5</span>
+        <h3>Boring modules get the 25-minute treatment</h3>
+        <p>Standards and rules reading is the module people quit on. Do it in <strong>25-minute blocks with a 5-minute break</strong>, and only ever right after something you enjoyed.</p>
+      </div>
+      <div class="note">
+        <span class="tag-h">Rule 6</span>
+        <h3>Build tasks over read tasks, always</h3>
+        <p>If motivation is low, skip ahead to any <span class="tag tag-build">build</span> task in the current phase. Order matters less than momentum. Come back for the reading later.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The honest read</h2>
+    <div class="callout">
+      <h3>Why this track, and where it can go wrong</h3>
+      <p><strong>Why it works:</strong> Victoria is rebuilding its transmission network and firming capacity at the same time, and the constraint is people who can run and defend connection studies. Your project engineering background is not wasted &mdash; owner-side and consultancy roles specifically want engineers who have stood on a site and managed a contractor, provided you can also open PSS&reg;E.</p>
+      <p><strong>Where it goes wrong:</strong> people learn the tools and never produce an artefact. A hiring manager cannot see a completed course. They can read a twenty-page study report with your name on it. <strong>Phase 4 is the phase that gets you paid</strong> &mdash; the first three only make it possible.</p>
+      <p><strong>The shortcut worth taking:</strong> if a consultancy offers a lateral move at Phase 2 pay, take it. Learning Phase 3 on someone else&rsquo;s licence, with a senior reviewing your work, is worth more than six months of solo evenings.</p>
+      <p><strong>The trap:</strong> chasing every certification. Chartered status pays. A stack of short-course certificates does not.</p>
+    </div>
+  </section>
+
+  <div class="foot">
+    <p><strong>Assumptions.</strong> 340 hours across twelve months at 5&ndash;8 hours per week, averaging 6.5. Session counts assume a 45-minute working block. Hour estimates are for someone with an accredited electrical engineering degree who has not used it for analysis in three years &mdash; if the fundamentals come back faster than expected, Phase 1 compresses.</p>
+    <p><strong>Sources to verify against, not to trust me on.</strong> AEMO publications (Integrated System Plan, Power System Model Guidelines, system strength framework), the National Electricity Rules Chapter 5 and Schedule 5.2.5, VicGrid&rsquo;s Victorian Transmission Plan, Engineers Australia&rsquo;s Chartered competencies, the Victorian professional engineer registration scheme, and live Seek listings for current salary reality.</p>
+    <p><strong>Progress storage.</strong> Ticks are saved in this browser&rsquo;s local storage only. They do not sync between devices and will be lost if you clear site data. Nothing is uploaded anywhere.</p>
+  </div>
+
+</div>
+
+<script>
+const DATA=[
+ {n:1,name:"Grid literacy",span:"Months 1–3",
+  goal:"You can open any AEMO document and follow it without a glossary. Every acronym in a job ad means something to you.",
+  unlock:"No pay change yet. This is the phase that lets you hold a technical conversation without bluffing.",
+  mods:[
+   {name:"The NEM, end to end",hrs:20,note:"How electricity is actually traded and dispatched in this country. Skipping this is why lateral movers fail interviews.",tasks:[
+    ["Read AEMO's National Electricity Market fact sheet and draw the dispatch timeline by hand",2,"read"],
+    ["Map the five NEM regions and every interconnector on one page from memory",2,"calc"],
+    ["Read the current AEMO Integrated System Plan: executive summary plus every Victorian section",6,"read"],
+    ["Watch live dispatch on OpenElectricity twice, a week apart, and log how the fuel mix moves",2,"read"],
+    ["Write a one-page explainer of how a MWh gets priced every five minutes",4,"build"],
+    ["Learn the FCAS markets: name each service and what physical problem it solves",4,"read"]]},
+   {name:"Victoria's buildout",hrs:18,note:"The specific projects your future interviewers work on. Naming them correctly is disproportionately persuasive.",tasks:[
+    ["List Victoria's renewable, storage and offshore wind targets with their legislated dates",2,"read"],
+    ["Read VicGrid's Victorian Transmission Plan summary and note every named REZ",4,"read"],
+    ["Profile VNI West and Western Renewables Link: route, capacity, proponent, timeline",4,"read"],
+    ["Profile Marinus Link and the Gippsland offshore wind zone",4,"read"],
+    ["Profile SEC Victoria: mandate, Morwell base, and what it is actually building",2,"read"],
+    ["Build a one-page Victorian project map — who builds what, and when",2,"build"]]},
+   {name:"Fundamentals refresh",hrs:32,note:"Your degree covered all of this. Three years of project work buried it. Dig it out by hand, not by watching videos.",tasks:[
+    ["Per-unit system: work five base-conversion problems on paper until it is automatic",3,"calc"],
+    ["Symmetrical components: derive positive, negative and zero sequence from first principles",4,"calc"],
+    ["Fault calculations: one fully worked example each for 3-phase, SLG, LL and LLG",5,"calc"],
+    ["Load flow: hand-solve a three-bus case with Gauss–Seidel, then follow Newton–Raphson through",6,"calc"],
+    ["Transformer vector groups, tap changers and on-load tap changer control",3,"read"],
+    ["Line parameters R, X and B — and why shunt B decides your voltage profile",3,"calc"],
+    ["Reactive power and voltage control: build the physical intuition, not just the equations",4,"calc"],
+    ["Short circuit ratio, system strength, and the mechanism by which inverters trip on weak grids",4,"read"]]},
+   {name:"Rules and standards literacy",hrs:15,note:"The boring module. Do it in 25-minute blocks, immediately after something you enjoyed.",tasks:[
+    ["Read NER Chapter 5 and diagram the connection process start to finish",5,"read"],
+    ["Compare NER S5.2.5 automatic access standards against minimum access standards",3,"read"],
+    ["Read the headline requirements of AS/NZS 4777.2 and AS 2067",4,"read"],
+    ["Build a 60-term acronym glossary you can recite without looking",3,"build"]]}]},
+
+ {n:2,name:"Tools in your hands",span:"Months 4–6",
+  goal:"You can build a network model, solve it, break it, and automate the whole thing. You have public artefacts.",
+  unlock:"$115k–140k. This is the point a consultancy can justify hiring you sideways.",
+  mods:[
+   {name:"Python for power engineers",hrs:25,note:"Start here, not with PSS®E. Python gives you wins in week one and never stops being useful.",tasks:[
+    ["Install Python and VS Code, run your first script, commit it to a new GitHub repo",1,"build"],
+    ["pandas: load a real AEMO dispatch data file and answer three questions about it",4,"build"],
+    ["matplotlib: build a Victorian duck-curve chart from actual demand data",3,"build"],
+    ["pandapower: build a five-bus network from scratch and run a load flow",6,"build"],
+    ["pandapower: run a short-circuit calculation and reconcile it against your hand calc",4,"calc"],
+    ["Write a script that sizes a cable to AS/NZS 3008 and validates against a known answer",4,"build"],
+    ["Publish the lot to GitHub with a README a stranger could follow",3,"ship"]]},
+   {name:"PSS®E",hrs:35,note:"The tool AEMO and every NEM planner uses. Free edition is bus-limited but more than enough to learn on.",tasks:[
+    ["Get a licence sorted — free university edition, or a PowerFactory student licence as fallback",2,"build"],
+    ["Build a three-bus case from scratch and solve the load flow",4,"build"],
+    ["Import the IEEE 14-bus case and read the raw file until every column makes sense",3,"calc"],
+    ["Run an N-1 contingency analysis on the 14-bus and interpret every violation",5,"calc"],
+    ["Dynamic simulation: add a synchronous machine model, apply a fault, plot the rotor angle",6,"calc"],
+    ["Swap in a generic inverter-based resource model and re-run the same fault",6,"calc"],
+    ["Automate a batch of runs with the Python API instead of clicking",6,"build"],
+    ["Write one of these studies up as a formal report with figures and conclusions",3,"ship"]]},
+   {name:"Protection fundamentals",hrs:25,note:"Protection is the fastest side-door into power systems roles, and the skill most project engineers never build.",tasks:[
+    ["Overcurrent grading: hand-grade a three-relay radial feeder and plot the curves",4,"calc"],
+    ["Distance protection: understand zones 1, 2 and 3 and why zone 3 causes cascades",4,"read"],
+    ["Differential protection for transformers and busbars, including bias characteristics",4,"read"],
+    ["CT saturation: what causes it, and how it ruins an otherwise correct scheme",3,"read"],
+    ["Read a real relay setting sheet line by line and explain every setting to yourself",4,"read"],
+    ["Build the grading study in Python and plot the coordination curves programmatically",6,"build"]]}]},
+
+ {n:3,name:"Connection studies",span:"Months 7–9",
+  goal:"You understand what a generator connection actually requires, and can run the studies that prove it.",
+  unlock:"$140k–175k territory. This is the scarce skill — the reason the pipeline is short of people.",
+  mods:[
+   {name:"EMT and PSCAD",hrs:30,note:"Where inverter-dominated grids stop behaving like textbooks. This is the module that separates you from the field.",tasks:[
+    ["Install PSCAD Free Edition and run the bundled tutorial case end to end",3,"build"],
+    ["Write a one-page comparison of RMS versus EMT simulation and when each lies to you",2,"build"],
+    ["Build an RL circuit and observe switching transients you would never see in load flow",4,"calc"],
+    ["Model a simple grid-following inverter with a phase-locked loop",8,"build"],
+    ["Apply a fault and study the fault ride-through response against S5.2.5 requirements",6,"calc"],
+    ["Reduce the short circuit ratio step by step until the inverter goes unstable, and explain why",7,"calc"]]},
+   {name:"The connection process",hrs:30,note:"The paperwork spine of every renewable project in the NEM. Fluency here is directly billable.",tasks:[
+    ["Map the NER 5.3 connection stages onto a single page",2,"build"],
+    ["Read a real published set of generator performance standards, cover to cover",4,"read"],
+    ["Work through every S5.2.5 clause in order and summarise each in one sentence",12,"read"],
+    ["Understand R1 and R2 model requirements and why model quality delays projects",4,"read"],
+    ["Read AEMO's system strength framework and the system strength impact assessment",4,"read"],
+    ["Write a mock connection study scope for a 100 MW battery in a Victorian REZ",4,"ship"]]},
+   {name:"Batteries and inverter-based resources",hrs:25,note:"Where the Victorian money is right now. BESS knowledge is the single most portable asset on this list.",tasks:[
+    ["Grid-following versus grid-forming: build one comparison table you could defend in interview",3,"build"],
+    ["Read AEMO's grid-forming battery material and note what it changes for system strength",3,"read"],
+    ["Size a 100 MW / 200 MWh battery: power, energy, degradation, augmentation plan",6,"calc"],
+    ["Revenue stacking: model energy arbitrage plus FCAS across a week of real prices",5,"build"],
+    ["Model the battery in PSS®E or pandapower and study its effect on local voltage",8,"build"]]}]},
+
+ {n:4,name:"Proof, credentials, switch",span:"Months 10–12",
+  goal:"You have one artefact a hiring manager can read, a credential path underway, and interviews booked.",
+  unlock:"This is the phase that converts everything above into salary. Do not skip it to keep studying.",
+  mods:[
+   {name:"The flagship study",hrs:35,note:"One artefact beats ten certificates. Treat this as if a client is paying for it.",tasks:[
+    ["Pick and scope one study — connecting a 150 MW solar farm in a named Victorian REZ",2,"ship"],
+    ["Run the steady-state work: load flow, N-1 contingency, voltage and thermal limits",8,"calc"],
+    ["Run the dynamic work: fault ride-through, system strength, and stability margins",10,"calc"],
+    ["Write it as a real consultant report — 15 to 20 pages, figures, assumptions, conclusions",10,"ship"],
+    ["Publish a sanitised version plus the model repository, and post about it once",5,"ship"]]},
+   {name:"Credentials",hrs:20,note:"Chartered status is the credential that moves Australian salaries. Start the evidence trail now, not later.",tasks:[
+    ["Check Victoria's professional engineer registration requirements for the electrical area of practice",2,"read"],
+    ["Map your three years of project work against Engineers Australia's chartered competencies",6,"build"],
+    ["Draft four written competency claims using real project evidence",8,"ship"],
+    ["Book a chartered mentor conversation or an Engineers Australia information session",2,"people"],
+    ["Join Engineers Australia Victoria and attend one industry event in person",2,"people"]]},
+   {name:"Market entry",hrs:30,note:"Do this in parallel with the flagship study, not after it. Applications take weeks to convert.",tasks:[
+    ["Rewrite your CV around power systems evidence rather than project administration",5,"ship"],
+    ["Rebuild LinkedIn: headline, banner, and three posts about the studies you ran",5,"ship"],
+    ["Build a target list of 25 Victorian employers with a named contact at each",4,"people"],
+    ["Reach out to ten power systems engineers for twenty-minute conversations",6,"people"],
+    ["Run five mock technical interviews on fault, stability and connection questions",6,"people"],
+    ["Apply to fifteen roles with a cover letter tailored to each study you can discuss",4,"ship"]]}]}
+];
+
+const KEY="gridtrack.v1";
+const TOTAL=340;
+let done=new Set();
+let hideDone=false;
+
+function load(){
+  try{const r=localStorage.getItem(KEY); if(r) done=new Set(JSON.parse(r));}catch(e){}
+}
+function save(){
+  try{localStorage.setItem(KEY,JSON.stringify([...done]));}catch(e){}
+}
+
+const flat=[];
+DATA.forEach((p,pi)=>p.mods.forEach((m,mi)=>m.tasks.forEach((t,ti)=>{
+  flat.push({id:pi+"."+mi+"."+ti,text:t[0],hrs:t[1],tag:t[2],phase:p,mod:m});
+})));
+
+function sessions(h){return Math.max(1,Math.ceil(h/0.75));}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+function build(){
+  const host=document.getElementById("phases");
+  host.innerHTML=DATA.map((p,pi)=>{
+    const mods=p.mods.map((m,mi)=>{
+      const rows=m.tasks.map((t,ti)=>{
+        const id=pi+"."+mi+"."+ti;
+        const isDone=done.has(id);
+        return '<div class="task'+(isDone?" is-done":"")+'" data-id="'+id+'">'+
+          '<input type="checkbox" id="cb'+id+'"'+(isDone?" checked":"")+' aria-label="'+esc(t[0])+'">'+
+          '<label class="t-text" for="cb'+id+'">'+esc(t[0])+'</label>'+
+          '<span class="t-time">'+t[1]+' h<small>'+sessions(t[1])+' sessions</small></span>'+
+          '<span class="tag tag-'+t[2]+'">'+t[2]+'</span>'+
+        '</div>';
+      }).join("");
+      return '<div class="mod"><div class="mod-head">'+
+        '<span class="mod-name">'+esc(m.name)+'</span>'+
+        '<span class="mod-hrs">'+m.hrs+' h</span>'+
+        '<p class="mod-note">'+esc(m.note)+'</p></div>'+rows+'</div>';
+    }).join("");
+    return '<div class="phase'+(pi===0?" open":"")+'" data-p="'+pi+'">'+
+      '<button class="ph-head" type="button" aria-expanded="'+(pi===0)+'">'+
+        '<span class="ph-n">'+p.n+'</span>'+
+        '<span><span class="ph-name">'+esc(p.name)+'</span><span class="ph-span">'+p.span+'</span></span>'+
+        '<span class="ph-bar"><i style="width:0%"></i></span>'+
+        '<span class="ph-pct">0%</span>'+
+        '<span class="caret">&#9654;</span>'+
+      '</button>'+
+      '<div class="ph-body">'+
+        '<div class="ph-goal">'+
+          '<div><h4>Milestone</h4><p>'+esc(p.goal)+'</p></div>'+
+          '<div><h4>What it unlocks</h4><p>'+esc(p.unlock)+'</p></div>'+
+        '</div>'+mods+
+      '</div></div>';
+  }).join("");
+}
+
+function refresh(){
+  let hrsDone=0;
+  flat.forEach(t=>{if(done.has(t.id))hrsDone+=t.hrs;});
+  const pct=Math.round(hrsDone/TOTAL*100);
+  document.getElementById("bigBar").style.width=pct+"%";
+  document.getElementById("pctAll").textContent=pct+"%";
+  document.getElementById("hrsDone").textContent=Math.round(hrsDone);
+  document.getElementById("wksLeft").textContent=Math.max(0,Math.ceil((TOTAL-hrsDone)/6.5));
+
+  DATA.forEach((p,pi)=>{
+    let ph=0,pd=0;
+    p.mods.forEach((m,mi)=>m.tasks.forEach((t,ti)=>{ph+=t[1];if(done.has(pi+"."+mi+"."+ti))pd+=t[1];}));
+    const el=document.querySelector('.phase[data-p="'+pi+'"]');
+    const q=Math.round(pd/ph*100);
+    el.querySelector(".ph-bar>i").style.width=q+"%";
+    el.querySelector(".ph-pct").textContent=q+"%";
+    el.classList.toggle("ph-done",q===100);
+  });
+
+  const next=flat.find(t=>!done.has(t.id));
+  const nt=document.getElementById("nextTask"),btn=document.getElementById("nextDone");
+  if(next){
+    nt.innerHTML=esc(next.text)+'<span class="nb-where">Phase '+next.phase.n+' &middot; '+esc(next.mod.name)+' &middot; '+next.hrs+' h &middot; '+sessions(next.hrs)+' sessions</span>';
+    btn.style.display="";
+    btn.dataset.id=next.id;
+  }else{
+    nt.innerHTML='All 340 hours done. Go and get the job.<span class="nb-where">Nothing left on the board</span>';
+    btn.style.display="none";
+  }
+
+  document.querySelectorAll(".task").forEach(el=>{
+    el.style.display=(hideDone&&done.has(el.dataset.id))?"none":"";
+  });
+}
+
+function toggle(id,on){
+  if(on)done.add(id);else done.delete(id);
+  const el=document.querySelector('.task[data-id="'+id+'"]');
+  if(el){el.classList.toggle("is-done",on);el.querySelector("input").checked=on;}
+  save();refresh();
+}
+
+load();build();refresh();
+
+document.getElementById("phases").addEventListener("change",e=>{
+  if(e.target.type==="checkbox"){
+    const row=e.target.closest(".task");
+    toggle(row.dataset.id,e.target.checked);
+  }
+});
+document.getElementById("phases").addEventListener("click",e=>{
+  const h=e.target.closest(".ph-head");
+  if(!h)return;
+  const ph=h.closest(".phase");
+  const open=!ph.classList.contains("open");
+  ph.classList.toggle("open",open);
+  h.setAttribute("aria-expanded",String(open));
+});
+document.getElementById("nextDone").addEventListener("click",e=>{
+  const id=e.currentTarget.dataset.id;
+  if(id)toggle(id,true);
+});
+document.getElementById("fHide").addEventListener("click",e=>{
+  hideDone=!hideDone;
+  e.currentTarget.setAttribute("aria-pressed",String(hideDone));
+  refresh();
+});
+document.getElementById("fExpand").addEventListener("click",e=>{
+  const on=e.currentTarget.getAttribute("aria-pressed")!=="true";
+  e.currentTarget.setAttribute("aria-pressed",String(on));
+  document.querySelectorAll(".phase").forEach(p=>{
+    p.classList.toggle("open",on);
+    p.querySelector(".ph-head").setAttribute("aria-expanded",String(on));
+  });
+});
+document.getElementById("fReset").addEventListener("click",()=>{
+  if(!confirm("Clear every tick and start from zero?"))return;
+  done=new Set();save();
+  document.querySelectorAll(".task").forEach(el=>{
+    el.classList.remove("is-done");el.querySelector("input").checked=false;
+  });
+  refresh();
+});
+</script>
