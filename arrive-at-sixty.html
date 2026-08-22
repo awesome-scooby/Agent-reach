@@ -1,0 +1,967 @@
+<title>Arrive at Sixty</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
+
+<style>
+:root{
+  --ground:#F6F8F7; --surface:#FFFFFF; --surface-2:#EDF2F0;
+  --ink:#16211F; --ink-2:#4A5B57; --ink-3:#788A85;
+  --line:#DBE3E0; --line-strong:#C1CECA;
+  --accent:#0E6E6E; --accent-soft:#DDEDEA; --accent-ink:#0A5252;
+  --amber:#8F5E14; --amber-soft:#F5E9D3;
+  --clay:#9B3B29; --clay-soft:#F6E1DB;
+  --good:#2C6B43; --on-accent:#FFFFFF;
+  --shadow:0 1px 2px rgba(22,33,31,.05), 0 8px 24px -16px rgba(22,33,31,.28);
+  --measure:66ch;
+  --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Newsreader",Georgia,"Times New Roman",serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0D1413; --surface:#141D1B; --surface-2:#1B2523;
+    --ink:#E6ECEA; --ink-2:#A6B5B1; --ink-3:#7B8A86;
+    --line:#26312F; --line-strong:#36443F;
+    --accent:#4FBAB1; --accent-soft:#123230; --accent-ink:#84D9D1;
+    --amber:#D9A155; --amber-soft:#2D2416;
+    --clay:#DE8570; --clay-soft:#33201B;
+    --good:#68B78A; --on-accent:#08201F;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0D1413; --surface:#141D1B; --surface-2:#1B2523;
+  --ink:#E6ECEA; --ink-2:#A6B5B1; --ink-3:#7B8A86;
+  --line:#26312F; --line-strong:#36443F;
+  --accent:#4FBAB1; --accent-soft:#123230; --accent-ink:#84D9D1;
+  --amber:#D9A155; --amber-soft:#2D2416;
+  --clay:#DE8570; --clay-soft:#33201B;
+  --good:#68B78A; --on-accent:#08201F;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:var(--f-body); font-size:17px; line-height:1.62;
+  -webkit-font-smoothing:antialiased; margin:0;
+  padding:0 20px 96px;
+}
+.wrap{max-width:1000px;margin:0 auto}
+.prose{max-width:var(--measure)}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.1rem,6vw,3.3rem);font-weight:700;letter-spacing:-.025em}
+h2{font-size:clamp(1.45rem,3.2vw,1.9rem);font-weight:600;letter-spacing:-.018em}
+h3{font-size:1.12rem;font-weight:600;letter-spacing:-.008em}
+h4{font-size:.95rem;font-weight:600;letter-spacing:-.004em}
+p{margin:0}
+a{color:var(--accent-ink)}
+strong{font-weight:500;color:var(--ink)}
+em{font-style:italic}
+.lede{font-size:1.16rem;color:var(--ink-2);line-height:1.6}
+.eyebrow{
+  font-family:var(--f-mono);font-size:.7rem;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);
+}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* ---------- masthead ---------- */
+header.masthead{padding:64px 0 40px;border-bottom:1px solid var(--line)}
+.mast-grid{display:flex;flex-direction:column;gap:22px}
+.mast-meta{display:flex;flex-wrap:wrap;gap:8px}
+.tag{
+  font-family:var(--f-mono);font-size:.7rem;letter-spacing:.06em;
+  padding:4px 9px;border:1px solid var(--line-strong);border-radius:2px;
+  color:var(--ink-2);background:var(--surface);
+}
+.tag.on{border-color:var(--accent);color:var(--accent-ink);background:var(--accent-soft)}
+
+/* ---------- nav ---------- */
+nav.jump{
+  position:sticky;top:0;z-index:20;background:var(--ground);
+  border-bottom:1px solid var(--line);margin-bottom:8px;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;
+}
+nav.jump ol{display:flex;gap:0;list-style:none;margin:0;padding:0}
+nav.jump a{
+  display:block;white-space:nowrap;font-family:var(--f-mono);font-size:.72rem;
+  letter-spacing:.05em;text-transform:uppercase;text-decoration:none;
+  color:var(--ink-3);padding:11px 14px;border-bottom:2px solid transparent;
+}
+nav.jump a:hover{color:var(--ink);border-bottom-color:var(--line-strong)}
+
+section{padding:52px 0;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:0}
+.sec-head{display:flex;flex-direction:column;gap:10px;margin-bottom:26px;max-width:var(--measure)}
+.stack{display:flex;flex-direction:column;gap:18px}
+.stack-sm{display:flex;flex-direction:column;gap:10px}
+
+/* ---------- cards ---------- */
+.card{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:3px;padding:20px 22px;box-shadow:var(--shadow);
+}
+.card-flat{background:var(--surface-2);border:1px solid var(--line);border-radius:3px;padding:18px 20px}
+
+/* ---------- stat row ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.stat{background:var(--surface);padding:16px 18px;display:flex;flex-direction:column;gap:5px}
+.stat .k{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3)}
+.stat .v{font-family:var(--f-display);font-size:1.42rem;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat .n{font-size:.82rem;color:var(--ink-2);line-height:1.45}
+.v.ok{color:var(--good)} .v.watch{color:var(--amber)} .v.open{color:var(--clay)}
+
+/* severity chip */
+.chip{
+  display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);
+  font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 8px;border-radius:2px;
+}
+.chip.now{background:var(--clay-soft);color:var(--clay)}
+.chip.soon{background:var(--amber-soft);color:var(--amber)}
+.chip.hold{background:var(--accent-soft);color:var(--accent-ink)}
+.chip.done{background:var(--surface-2);color:var(--ink-3)}
+
+/* ---------- console ---------- */
+.console{background:var(--surface);border:1px solid var(--line-strong);border-radius:3px;box-shadow:var(--shadow);overflow:hidden}
+.console-bar{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  padding:12px 20px;background:var(--surface-2);border-bottom:1px solid var(--line);
+}
+.console-body{padding:22px 20px;display:flex;flex-direction:column;gap:26px}
+.panel{display:flex;flex-direction:column;gap:12px}
+
+/* menu items */
+.menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.opt{
+  display:flex;gap:12px;align-items:flex-start;padding:13px 14px;cursor:pointer;
+  background:var(--surface);border:1px solid var(--line);border-radius:3px;
+  transition:border-color .12s ease, background .12s ease;
+}
+.opt:hover{border-color:var(--line-strong)}
+.opt input{
+  appearance:none;-webkit-appearance:none;flex:0 0 auto;
+  width:19px;height:19px;margin:2px 0 0;border:1.5px solid var(--line-strong);
+  border-radius:2px;background:var(--surface);cursor:pointer;position:relative;
+}
+.opt input:checked{background:var(--accent);border-color:var(--accent)}
+.opt input:checked::after{
+  content:"";position:absolute;left:5.5px;top:1.5px;width:5px;height:10px;
+  border:solid var(--on-accent);border-width:0 2px 2px 0;transform:rotate(42deg);
+}
+.opt:has(input:checked){background:var(--accent-soft);border-color:var(--accent)}
+.opt .txt{display:flex;flex-direction:column;gap:3px;min-width:0}
+.opt .lab{font-family:var(--f-display);font-size:.93rem;font-weight:600}
+.opt .sub{font-size:.8rem;color:var(--ink-2);line-height:1.4}
+.cost{font-family:var(--f-mono);font-size:.66rem;color:var(--ink-3);letter-spacing:.06em}
+
+/* day grid */
+.grid30{display:grid;grid-template-columns:repeat(15,1fr);gap:5px;max-width:520px}
+.cell{
+  aspect-ratio:1;border-radius:2px;background:var(--surface-2);
+  border:1px solid var(--line);position:relative;
+}
+.cell[data-lvl="1"]{background:var(--accent-soft);border-color:var(--accent-soft)}
+.cell[data-lvl="2"]{background:var(--accent);border-color:var(--accent);opacity:.62}
+.cell[data-lvl="3"]{background:var(--accent);border-color:var(--accent)}
+.cell[data-today="1"]{outline:2px solid var(--amber);outline-offset:1px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+
+/* buttons */
+button{font-family:var(--f-display);font-size:.85rem;font-weight:600;cursor:pointer;border-radius:2px;transition:background .12s ease,border-color .12s ease}
+.btn{background:var(--accent);color:var(--on-accent);border:1px solid var(--accent);padding:9px 15px}
+.btn:hover{background:var(--accent-ink);border-color:var(--accent-ink);color:var(--on-accent)}
+.btn-quiet{background:var(--surface);color:var(--ink);border:1px solid var(--line-strong);padding:8px 14px}
+.btn-quiet:hover{background:var(--surface-2)}
+.btn-sm{font-size:.76rem;padding:6px 11px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+input[type="text"],input[type="date"],textarea{
+  font-family:var(--f-mono);font-size:.82rem;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line-strong);
+  border-radius:2px;padding:8px 10px;width:100%;
+}
+textarea{font-family:var(--f-body);font-size:.92rem;line-height:1.5;resize:vertical}
+label.fld{display:flex;flex-direction:column;gap:5px}
+label.fld > span{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+
+/* details */
+details{border:1px solid var(--line);border-radius:3px;background:var(--surface);overflow:hidden}
+details + details{margin-top:10px}
+summary{
+  cursor:pointer;padding:15px 18px;display:flex;align-items:center;gap:12px;
+  list-style:none;background:var(--surface);
+}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";margin-left:auto;font-family:var(--f-mono);font-size:1.1rem;color:var(--ink-3)}
+details[open] summary::after{content:"\2013"}
+details[open] summary{border-bottom:1px solid var(--line)}
+summary:hover{background:var(--surface-2)}
+.det-body{padding:20px 18px;display:flex;flex-direction:column;gap:16px}
+.det-body .prose{max-width:62ch}
+
+/* lists */
+ul.plain,ol.plain{margin:0;padding-left:1.15em;display:flex;flex-direction:column;gap:8px}
+ul.plain li::marker{color:var(--ink-3)}
+ol.plain li::marker{font-family:var(--f-mono);font-size:.85em;color:var(--accent)}
+ul.tight{margin:0;padding-left:1.15em;display:flex;flex-direction:column;gap:4px;font-size:.95rem}
+
+/* pull quote / thesis */
+.thesis{
+  border-left:3px solid var(--accent);padding:4px 0 4px 20px;
+  font-size:1.2rem;line-height:1.5;color:var(--ink);max-width:58ch;
+}
+.callout{border:1px solid var(--line);border-left:3px solid var(--amber);background:var(--amber-soft);border-radius:2px;padding:16px 18px;font-size:.94rem;line-height:1.55}
+.callout.danger{border-left-color:var(--clay);background:var(--clay-soft)}
+.callout.calm{border-left-color:var(--accent);background:var(--accent-soft)}
+.callout h4{margin-bottom:6px}
+
+/* ramp */
+.ramp{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.rung{display:grid;grid-template-columns:76px 1fr;gap:0;background:var(--surface);border-bottom:1px solid var(--line)}
+.rung:last-child{border-bottom:0}
+.rung .wk{
+  background:var(--surface-2);border-right:1px solid var(--line);
+  padding:16px 12px;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-3);display:flex;flex-direction:column;gap:2px;
+}
+.rung .wk b{font-family:var(--f-display);font-size:1.3rem;color:var(--accent);letter-spacing:-.02em}
+.rung .what{padding:16px 18px;display:flex;flex-direction:column;gap:5px}
+.rung .what .t{font-family:var(--f-display);font-weight:600;font-size:.98rem}
+.rung .what .d{font-size:.9rem;color:var(--ink-2);line-height:1.5}
+
+table.swap{width:100%;border-collapse:collapse;font-size:.92rem}
+table.swap th,table.swap td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+table.swap th{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);font-weight:400}
+table.swap td:first-child{color:var(--ink-2)}
+.scroll-x{overflow-x:auto}
+
+footer{padding:40px 0 0;color:var(--ink-3);font-size:.86rem;line-height:1.55;max-width:var(--measure)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+@media (max-width:560px){
+  body{font-size:16px;padding:0 16px 72px}
+  .grid30{grid-template-columns:repeat(10,1fr)}
+  .rung{grid-template-columns:62px 1fr}
+}
+</style>
+
+<div class="wrap">
+
+<header class="masthead">
+  <div class="mast-grid">
+    <span class="eyebrow">Cardiovascular prevention &middot; built around one desk chair</span>
+    <h1>Arrive at Sixty</h1>
+    <p class="lede prose">You are not trying to survive next year. At your age, with your risk profile, a heart attack in the near term is genuinely unlikely. What you are actually doing is deciding what your arteries look like in twenty-five years &mdash; because plaque accumulates quietly from your thirties, and the bill is presented much later. That reframe is the whole point of this plan. Fear fades in about nine days. Building something doesn't.</p>
+    <div class="mast-meta">
+      <span class="tag on">No tobacco</span>
+      <span class="tag on">No alcohol</span>
+      <span class="tag">30&ndash;39</span>
+      <span class="tag">Prior high cholesterol, normalised</span>
+      <span class="tag">10+ hrs seated</span>
+      <span class="tag">Coccydynia</span>
+      <span class="tag">Dry eye</span>
+      <span class="tag">ADHD</span>
+    </div>
+  </div>
+</header>
+
+<nav class="jump">
+  <ol>
+    <li><a href="#stand">Where you stand</a></li>
+    <li><a href="#console">Daily console</a></li>
+    <li><a href="#bloods">The one medical thing</a></li>
+    <li><a href="#convergence">The convergence</a></li>
+    <li><a href="#plan">The five levers</a></li>
+    <li><a href="#ramp">Four-week ramp</a></li>
+    <li><a href="#collapse">When it collapses</a></li>
+    <li><a href="#checkin">Weekly check-in</a></li>
+    <li><a href="#flags">Red flags</a></li>
+  </ol>
+</nav>
+
+<!-- ============ HOW THIS IS BUILT ============ -->
+<section id="how">
+  <div class="sec-head">
+    <span class="eyebrow">How this plan is built</span>
+    <h2>Three design rules, taken from your own answers</h2>
+  </div>
+  <div class="stack prose">
+    <p>You told me two things that most health plans ignore, and they are the reason this one is shaped strangely. First: routines die for you when they stop being novel. Second: being told what to do makes you want to stop doing it &mdash; even when you were the one who set the rule. That is not a character flaw and it is not a discipline problem. It is a fairly ordinary way an ADHD brain handles low-stimulation obligation, and it is predictable enough to design around.</p>
+    <div class="card-flat stack-sm">
+      <div><h4>1. Nothing here is an instruction.</h4><p style="font-size:.94rem;color:var(--ink-2)">Every daily item is a menu you choose from, never a list you must complete. You pick two. Which two is genuinely yours. The research term is autonomy support; the practical version is that a choice you made survives roughly three times longer than a rule you were handed.</p></div>
+      <div><h4>2. The slot stays, the content rotates.</h4><p style="font-size:.94rem;color:var(--ink-2)">Habits fail when the <em>activity</em> is fixed. So the time-of-day anchor is permanent and the thing you actually do inside it changes every fortnight. Boredom is treated as scheduled maintenance, not as failure.</p></div>
+      <div><h4>3. The floor is embarrassingly low, and I'm the check-in.</h4><p style="font-size:.94rem;color:var(--ink-2)">You said external accountability works and that things need to be stupidly easy. So: a five-minute walk counts as a complete day, and once a week I ask you three questions. There is no streak on this page to break, on purpose.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHERE YOU STAND ============ -->
+<section id="stand">
+  <div class="sec-head">
+    <span class="eyebrow">The honest read</span>
+    <h2>Where you actually stand</h2>
+    <p class="lede">Before the plan, the assessment &mdash; including the parts that are better news than you probably expect.</p>
+  </div>
+
+  <div class="stack">
+    <div class="stats">
+      <div class="stat"><span class="k">Tobacco</span><span class="v ok">None</span><span class="n">The single largest modifiable risk factor for heart disease, already permanently off your board.</span></div>
+      <div class="stat"><span class="k">Alcohol</span><span class="v ok">None</span><span class="n">Removes a driver of blood pressure, triglycerides and disrupted sleep.</span></div>
+      <div class="stat"><span class="k">Family history</span><span class="v ok">Low loading</span><span class="n">Both parents' blood pressure issues appeared after 60. Premature family history means a heart attack or stroke in a father before 55 or a mother before 65. Yours doesn't meet that.</span></div>
+      <div class="stat"><span class="k">Lipids</span><span class="v watch">Unverified</span><span class="n">Was high, then normalised &mdash; but the last test is over a year old. Cholesterol drifts back when whatever fixed it lapses.</span></div>
+      <div class="stat"><span class="k">Sedentary load</span><span class="v open">10+ hrs/day</span><span class="n">Prolonged uninterrupted sitting carries cardiovascular risk somewhat independently of whether you exercise. This is your largest open exposure.</span></div>
+      <div class="stat"><span class="k">Sleep</span><span class="v open">Late, irregular</span><span class="n">Short and shifting sleep raises blood pressure, worsens insulin sensitivity and dysregulates appetite. Untouched so far.</span></div>
+    </div>
+
+    <div class="prose stack">
+      <p>Put plainly: <strong>you are starting from a better position than you think.</strong> Not smoking and not drinking are not small things people say to be encouraging &mdash; they are the two heaviest levers in cardiovascular prevention, and you have both pulled already, permanently, with no ongoing effort required. Your family history is mild rather than threatening. Your age puts you well outside the window where near-term events are common in the absence of smoking, diabetes, or premature family disease.</p>
+      <p>What is genuinely open is narrower and much more fixable: <strong>a lipid picture nobody has looked at in over a year, ten-plus hours a day of stillness, and a sleep pattern that quietly taxes everything else.</strong> Those three are the plan. Everything else on this page is in service of them.</p>
+      <div class="callout calm">
+        <h4>The reframe that has to stick</h4>
+        <p>Prevention framed as <em>avoiding a heart attack</em> is a fear campaign, and fear is a stimulant with a very short half-life &mdash; it works for about a week and then your brain habituates and stops paying. Prevention framed as <em>arriving at sixty with clean arteries and a spine that still tolerates a chair</em> is a construction project. Construction projects survive boredom. That is why this document is named what it is named.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONSOLE ============ -->
+<section id="console">
+  <div class="sec-head">
+    <span class="eyebrow">Daily console</span>
+    <h2>The part you actually touch</h2>
+    <p class="lede">Pick any two. Two is a complete day. One is a floor day, and a floor day still counts.</p>
+  </div>
+
+  <div class="console">
+    <div class="console-bar">
+      <span class="eyebrow" id="todayLabel">Today</span>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <span class="chip hold mono" id="dayState">0 of 2 chosen</span>
+        <button class="btn-quiet btn-sm" id="floorBtn" type="button">It's a bad day &mdash; show me the floor</button>
+      </div>
+    </div>
+
+    <div class="console-body">
+
+      <!-- blood test status -->
+      <div class="panel">
+        <h3>Step zero: the blood test</h3>
+        <div id="testPanel" class="card-flat" style="display:flex;flex-direction:column;gap:12px"></div>
+      </div>
+
+      <!-- daily menu -->
+      <div class="panel">
+        <h3>Today's menu</h3>
+        <div class="menu" id="menu"></div>
+      </div>
+
+      <!-- 30 day -->
+      <div class="panel">
+        <h3>The last thirty days</h3>
+        <div class="grid30" id="grid30"></div>
+        <div class="legend">
+          <span><i style="background:var(--surface-2);border:1px solid var(--line)"></i>nothing</span>
+          <span><i style="background:var(--accent-soft)"></i>floor day</span>
+          <span><i style="background:var(--accent);opacity:.62"></i>two</span>
+          <span><i style="background:var(--accent)"></i>three or more</span>
+          <span><i style="border:2px solid var(--amber);background:transparent"></i>today</span>
+        </div>
+        <p class="mono" style="font-size:.8rem;color:var(--ink-2)" id="counter"></p>
+        <p style="font-size:.87rem;color:var(--ink-3);max-width:56ch">This counts up and never resets. There is deliberately no streak here to break, because a broken streak is the single most reliable way to make someone abandon a plan entirely.</p>
+      </div>
+
+      <!-- season -->
+      <div class="panel">
+        <h3>This fortnight's flavour</h3>
+        <div class="card-flat" id="seasonPanel" style="display:flex;flex-direction:column;gap:12px"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ BLOODS ============ -->
+<section id="bloods">
+  <div class="sec-head">
+    <span class="eyebrow">Lever zero &middot; do this before anything else</span>
+    <h2>The one medical thing</h2>
+    <p class="lede">Everything below this line is educated guessing until you have current numbers. Your last lipid panel is over a year old, and it followed a period of genuinely high cholesterol. That is the one gap worth closing this month.</p>
+  </div>
+
+  <div class="stack">
+    <div class="callout">
+      <h4>Why this matters more than any habit on this page</h4>
+      <p>Cholesterol that normalises and then drifts back is extremely common, because the thing that fixed it &mdash; a diet phase, a medication, a period of more activity &mdash; usually lapses without anyone noticing. You cannot feel your LDL. There is no symptom to alert you. A single blood draw replaces a year of guesswork, and it is the only item here that has a defined end point rather than an ongoing demand.</p>
+    </div>
+
+    <details open>
+      <summary><span class="chip now">Ask for</span><h3 style="font-weight:600">The exact list to hand your GP</h3></summary>
+      <div class="det-body">
+        <div class="scroll-x">
+          <table class="swap">
+            <thead><tr><th>Test</th><th>Why you're asking for it</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Fasting lipid panel</strong></td><td>Total cholesterol, LDL, HDL, triglycerides, and <em>non-HDL</em>. Non-HDL is the number to actually watch &mdash; it captures all the atherogenic particles, not just LDL.</td></tr>
+              <tr><td><strong>ApoB</strong></td><td>A direct count of atherogenic particles. Better than LDL-C at predicting risk, especially if triglycerides are raised. Not always standard &mdash; worth asking whether it's available.</td></tr>
+              <tr><td><strong>Lipoprotein(a)</strong></td><td>Genetic, largely unchangeable by lifestyle, and measured <em>once in your life</em>. Roughly one in five people carry a raised level and never find out. It doesn't change what you do day to day, but it changes how aggressively you and your GP treat everything else. If you ask for one unusual test, ask for this one.</td></tr>
+              <tr><td><strong>HbA1c</strong></td><td>Three-month average blood sugar. Insulin resistance is the quiet partner in most cardiovascular disease, and ten hours of sitting is a direct contributor.</td></tr>
+              <tr><td><strong>Blood pressure</strong></td><td>Seated, after five minutes of rest, and ideally both arms. Given both parents developed blood pressure abnormalities, ask whether home monitoring is worth starting now as a baseline rather than at fifty.</td></tr>
+              <tr><td><strong>TSH (thyroid)</strong></td><td>An underactive thyroid raises cholesterol and is frequently missed as the cause.</td></tr>
+              <tr><td><strong>Vitamin D</strong></td><td>Reasonable given ten-plus hours indoors daily.</td></tr>
+              <tr><td><strong>Kidney &amp; liver baseline</strong></td><td>eGFR, creatinine, LFTs. Not alarming &mdash; just a baseline worth owning at your age.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout calm">
+          <h4>The question to actually ask, out loud</h4>
+          <p>&ldquo;My cholesterol was high, then normalised. What should my non-HDL or ApoB target be, and how often should I retest given that history?&rdquo; That one sentence turns a routine appointment into a plan, and it puts the target in your hands rather than leaving it as &lsquo;it was fine last time&rsquo;.</p>
+        </div>
+        <p style="font-size:.9rem;color:var(--ink-2)">Then retest in three months. Not to obsess over numbers &mdash; to find out whether what you are doing actually moves them, which is the only way to know if this plan deserves your time. <em>I've assumed you're in Australia from the Steggles reference; if so this is an ordinary GP visit and a pathology request form. Formal Heart Health Checks generally start at 45, so at your age expect a plain lipid and glucose request rather than a structured risk assessment.</em></p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ============ CONVERGENCE ============ -->
+<section id="convergence">
+  <div class="sec-head">
+    <span class="eyebrow">The structural insight</span>
+    <h2>Three problems, one cause</h2>
+  </div>
+
+  <div class="stack prose">
+    <p class="thesis">Your tailbone pain, your dry eyes, and your largest open cardiovascular exposure are not three problems. They are three invoices from the same behaviour: ten-plus hours a day, still, in front of a screen.</p>
+    <p>This is genuinely good news, and it is the most important paragraph on this page. You do not need three plans, three routines, or three sets of willpower. Interrupting <em>one</em> behaviour pays into all three accounts simultaneously:</p>
+    <ul class="plain">
+      <li><strong>Your coccyx</strong> is loaded by sustained sitting pressure and by the slouched, backward-tilted pelvis that appears after about forty minutes in a chair. The fix is not a better cushion. It is a shorter sitting bout.</li>
+      <li><strong>Your eyes</strong> dry out because sustained screen focus cuts your blink rate substantially and, worse, produces <em>incomplete</em> blinks that never fully resurface the eye. Looking away and blinking properly is the treatment.</li>
+      <li><strong>Your cardiovascular system</strong> responds to uninterrupted stillness with worse glucose handling and worse lipid clearance. Notably, breaking up sitting appears to matter partly on its own &mdash; a gym session in the evening does not fully undo ten unbroken hours.</li>
+    </ul>
+    <p>So the anchor habit of this entire plan is not exercise, or diet, or anything that requires a decision. It is <strong>a three-minute interruption, roughly every forty-five minutes</strong>. It costs you close to zero additional time, because it replaces a break you were already taking &mdash; you were just taking it on your phone, seated, staring at a screen at the same distance.</p>
+
+    <div class="card stack-sm">
+      <h3>The interruption itself</h3>
+      <p style="font-size:.94rem;color:var(--ink-2)">Three things, in whatever order. The whole thing is shorter than the average scroll break.</p>
+      <ul class="plain">
+        <li><strong>Change your posture.</strong> You already have a standing desk &mdash; the switch <em>is</em> the break. Sit thirty, stand twenty to thirty, alternate. Standing all day creates its own problems; alternating is the goal, not standing.</li>
+        <li><strong>Twenty seconds looking at something more than six metres away, and ten deliberate, fully-closed blinks.</strong> Squeeze them shut. The full closure is the part that matters &mdash; incomplete blinking is the actual mechanism behind screen-related dry eye.</li>
+        <li><strong>Move to a different room.</strong> Water, kettle, window, anything. The relocation is what stops you sitting back down in eight seconds.</li>
+      </ul>
+      <div class="callout" style="margin-top:4px">
+        <h4>Pick your trigger &mdash; one of three, your choice</h4>
+        <ul class="tight" style="margin-top:6px">
+          <li><strong>A timer.</strong> Works if you find timers tolerable. Many ADHD brains do not.</li>
+          <li><strong>An existing event.</strong> Every time a meeting ends, every time you finish a task, every time your water runs out. No new thing to remember &mdash; it rides on something already happening.</li>
+          <li><strong>The symptom itself.</strong> When your eyes feel gritty or your tailbone starts complaining, that <em>is</em> the alarm. It's already firing several times a day. You just haven't been treating it as a signal.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FIVE LEVERS ============ -->
+<section id="plan">
+  <div class="sec-head">
+    <span class="eyebrow">The detail &middot; open what you need, ignore the rest</span>
+    <h2>The five levers</h2>
+    <p class="lede">Ordered by how much they matter <em>for you specifically</em>. These are collapsed on purpose &mdash; nobody with ADHD reads a wall of health text, and pretending otherwise is how documents like this get closed and never reopened.</p>
+  </div>
+
+  <div>
+    <details>
+      <summary><span class="chip now">Largest gap</span><h3 style="font-weight:600">1 &middot; Sleep &mdash; your most neglected lever</h3></summary>
+      <div class="det-body">
+        <div class="prose stack">
+          <p>Late nights that are hard to stop is not laziness, and it is not a willpower deficit. It has a name in the literature &mdash; <em>revenge bedtime procrastination</em> &mdash; and it is disproportionately common with ADHD, for a reason that is worth stating plainly: after a day of doing what other people needed, the late evening is often the only stretch of time that feels genuinely yours. Going to bed feels like surrendering the last autonomous hours of the day. Any plan that treats this as a discipline problem will fail, because it is not one.</p>
+          <p><strong>Why it belongs in a heart plan at all:</strong> consistently short sleep is associated with higher blood pressure, worse insulin sensitivity and disrupted appetite regulation. It is also the reason every other item on this page feels impossible the next day. It's the multiplier.</p>
+          <h4>What actually works, none of which is &ldquo;go to bed earlier&rdquo;</h4>
+          <ul class="plain">
+            <li><strong>Anchor the wake time, not the bedtime.</strong> This is the single highest-leverage change on this page. Your wake time is what actually shifts your body clock; bedtime follows it downstream. Pick one wake time and hold it within about an hour, weekends included. Trying to force an earlier bedtime directly almost never works &mdash; you just lie there.</li>
+            <li><strong>Daylight within an hour of waking.</strong> Ten minutes outdoors, cloudy is fine, no sunglasses. It is the strongest signal your circadian system responds to and it is free. Bundle it with a coffee or the first walk so it isn't a separate task.</li>
+            <li><strong>Give the evening an ending, not a ban.</strong> Don't remove the scroll &mdash; it's meeting a real need. Give the need a defined container instead: a window that is explicitly yours, with an ending signal that isn't a person or an app telling you off. Lights changing, an audiobook starting, a playlist that ends.</li>
+            <li><strong>Put the phone across the room.</strong> The friction <em>is</em> the whole intervention. A ten-dollar alarm clock removes the phone's last legitimate reason to be within arm's reach at night.</li>
+            <li><strong>Move in fifteen-minute steps.</strong> Fifteen minutes earlier per week, not two hours at once. Two hours at once fails by night three and takes the rest of the plan down with it.</li>
+          </ul>
+          <div class="callout danger">
+            <h4>One thing worth ruling out with your GP</h4>
+            <p>If you snore heavily, wake unrefreshed regardless of hours slept, or anyone has noticed you stop breathing in your sleep &mdash; ask about obstructive sleep apnoea. Unlike most sleep complaints, it is an independent cardiovascular risk factor in its own right, it's treatable, and it is very commonly missed for a decade or more.</p>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="chip now">Daily anchor</span><h3 style="font-weight:600">2 &middot; Breaking up sitting &mdash; and the tailbone</h3></summary>
+      <div class="det-body">
+        <div class="prose stack">
+          <p>Your doctor has already assessed the coccyx pain, so this is management rather than diagnosis. The central point is unintuitive: <strong>the fix is time, not equipment.</strong> No single sitting bout longer than about forty-five minutes will do more for your tailbone than any cushion ever will.</p>
+          <h4>Sitting mechanics that matter</h4>
+          <ul class="plain">
+            <li><strong>Cushion:</strong> a firm <em>wedge with a coccyx cut-out</em> at the back beats a donut ring. Firm beats soft &mdash; counterintuitively, soft surfaces are worse.</li>
+            <li><strong>Sofas and car seats are the enemy,</strong> more than your office chair. You sink, your pelvis rolls backwards, and your weight transfers off the sit bones directly onto the coccyx. If your evening scroll happens slumped on a couch, that posture is doing more damage than your workday.</li>
+            <li><strong>Sit on the sit bones.</strong> Slight forward pelvic tilt, feet flat on the floor, weight through the two bony points you can feel under you. Slouching is the loading mechanism.</li>
+            <li><strong>Alternate, don't just stand.</strong> Roughly thirty minutes seated, twenty to thirty standing. All-day standing swaps one problem for another.</li>
+          </ul>
+          <h4>Five minutes of strength, two or three times a week</h4>
+          <p>Sitting shortens the hip flexors, which tilts the pelvis and increases the load on the coccyx, while the glutes progressively stop firing. Three movements address the whole chain:</p>
+          <ul class="plain">
+            <li><strong>Glute bridges</strong> &mdash; two sets of twelve. Restores the muscle that should be carrying you.</li>
+            <li><strong>Half-kneeling hip flexor stretch</strong> &mdash; thirty seconds each side. Directly undoes the shortening.</li>
+            <li><strong>Dead bugs</strong> &mdash; two sets of eight each side. Deep core, no spinal loading, safe with tailbone pain.</li>
+          </ul>
+          <div class="callout danger">
+            <h4>Go back to the doctor if</h4>
+            <p>Pain radiates down a leg, you get numbness or tingling, there's any change in bowel or bladder function, the pain wakes you at night independently of sitting, or it follows a fall. Those are outside routine coccydynia management.</p>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="chip soon">Same anchor</span><h3 style="font-weight:600">3 &middot; The eyes &mdash; mostly free fixes</h3></summary>
+      <div class="det-body">
+        <div class="prose stack">
+          <p>Also already assessed, so again: management. Most of what works here costs nothing and takes no time, which makes it unusually good value for a brain that resists effortful obligations.</p>
+          <ul class="plain">
+            <li><strong>Drop your monitor below eye level.</strong> Top of the screen at or slightly under eye height, so your gaze angles downward. Looking down narrows the eyelid opening, exposes less ocular surface, and slows evaporation. It is the single largest free improvement available to you and it takes ninety seconds to do once.</li>
+            <li><strong>Train the blink, not just the break.</strong> Ten deliberate, fully-closed blinks per break, squeezed shut. Incomplete blinking &mdash; where the lids never quite meet &mdash; is the actual mechanism, so a fast partial blink doesn't count.</li>
+            <li><strong>Check what air is hitting your face.</strong> Air conditioning vents, fans, car vents, heaters. This is the most commonly missed cause by a wide margin, and it's solved by pointing something in a different direction.</li>
+            <li><strong>Warm compress, five to ten minutes,</strong> if your optometrist mentioned meibomian gland dysfunction or blocked oil glands. Heat first, then gentle lid massage. Worth asking them directly whether that's your diagnosis, because it changes the treatment entirely.</li>
+            <li><strong>Preservative-free drops</strong> if you're using artificial tears more than about four times a day. Preservatives such as benzalkonium chloride irritate the ocular surface with frequent use &mdash; people often make themselves worse with the cheap bottle.</li>
+            <li><strong>The late-night phone is the worst case for both problems at once:</strong> a bright screen, close range, in a dark room, with a blink rate near its floor &mdash; and it's also what's wrecking your sleep. Fixing the evening pays double.</li>
+          </ul>
+          <div class="callout">
+            <h4>Don't waste money on this one</h4>
+            <p>Omega-3 supplements are widely recommended for dry eye, but the largest randomised trial on the question found no meaningful benefit over placebo. Save the money. Oily fish as <em>food</em> still earns its place in this plan &mdash; just for your heart, not your eyes.</p>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="chip soon">15&ndash;20 min</span><h3 style="font-weight:600">4 &middot; Movement &mdash; two things, not five</h3></summary>
+      <div class="det-body">
+        <div class="prose stack">
+          <p>You have fifteen to twenty minutes. That is genuinely enough, provided it isn't spread across five different ambitions. Two things:</p>
+          <h4>Walking volume</h4>
+          <p>The mortality benefit curve for daily steps rises steeply from around 2,500 and flattens out somewhere near 7,000. <strong>Ten thousand is a marketing number from a 1960s pedometer campaign</strong>, not a clinical threshold. Your target is simply to move from wherever you currently are toward roughly seven thousand, by whatever route annoys you least.</p>
+          <ul class="plain">
+            <li><strong>Bundle it with something you actually want.</strong> Pick one podcast, audiobook or show and make it walk-only &mdash; you don't get it sitting down. This is a well-evidenced technique and it works especially well when the barrier is boredom rather than time.</li>
+            <li><strong>Walk after dinner specifically.</strong> Ten to fifteen minutes after your largest meal blunts the post-meal glucose rise more than the same walk taken at another time of day. Same effort, two benefits, no extra minutes.</li>
+          </ul>
+          <h4>Strength, twice a week, ten minutes</h4>
+          <p>Legs, glutes, back. Bodyweight is completely fine. This is doing double duty: muscle is where glucose goes, which improves insulin sensitivity, and it's the same work that takes load off your coccyx. If you only ever do the three movements from the tailbone section, that counts.</p>
+          <div class="callout calm">
+            <h4>The rotation is the point</h4>
+            <p>The console above swaps the flavour every fortnight, and there's a button to swap early. Use it. When you notice boredom, that is the system working as designed &mdash; it's a maintenance signal, not evidence that you've failed again.</p>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="chip hold">Add, don't subtract</span><h3 style="font-weight:600">5 &middot; Food &mdash; explicitly not a diet</h3></summary>
+      <div class="det-body">
+        <div class="prose stack">
+          <p>You eat about half home-cooked, a quarter out, a quarter air-fryer chicken. That is a workable baseline and I'm not going to ask you to overhaul it, because restrictive eating plans fail on roughly the same timeline as fear-based motivation and take the rest of the plan with them.</p>
+          <p><strong>The air fryer is fine.</strong> Plain chicken breast or tenderloins are lean protein and there is nothing wrong with them. The only thing worth changing is <em>crumbed</em> versus plain &mdash; the coating is where the sodium and refined starch live, and sodium matters given the family blood pressure picture. Same appliance, same convenience, different packet.</p>
+          <h4>The highest-yield change: add fibre, don't remove food</h4>
+          <p>Soluble fibre genuinely lowers LDL cholesterol &mdash; it binds bile acids in the gut and forces your liver to pull cholesterol from your blood to replace them. It is a real mechanism, not a wellness claim. Most people eat about fifteen grams of fibre a day; the target is closer to thirty.</p>
+          <p><strong>The cheapest possible version:</strong> a tin of chickpeas, lentils or beans thrown into whatever is already cooking, two or three times a week. It requires no new recipe, no new skill, and no decision at the point of eating. Oats and psyllium are the other two heavy hitters.</p>
+          <div class="scroll-x">
+            <table class="swap">
+              <thead><tr><th>Instead of</th><th>Try</th><th>Why</th></tr></thead>
+              <tbody>
+                <tr><td>Crumbed frozen chicken</td><td>Plain breast or tenderloins, same air fryer</td><td>Cuts sodium and refined coating, keeps the convenience</td></tr>
+                <tr><td>Butter, ghee, coconut oil</td><td>Olive oil</td><td>Saturated fat is the dietary lever that moves LDL most</td></tr>
+                <tr><td>Processed and fatty red meat</td><td>Fish, chicken, legumes</td><td>Saturated fat and sodium at once</td></tr>
+                <tr><td>Nothing, as a snack</td><td>A handful of nuts</td><td>Consistently associated with better lipids and lower cardiac risk</td></tr>
+                <tr><td>Takeaway twice in a row</td><td>Alternate with the home meal</td><td>Restaurant food is where most hidden sodium lives</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="font-size:.9rem;color:var(--ink-2)">Note what this list doesn't contain: calorie counting, tracking, forbidden foods, or a single meal you have to give up permanently. It's five swaps, and if you only ever manage the fibre one, that's still the biggest one.</p>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ============ RAMP ============ -->
+<section id="ramp">
+  <div class="sec-head">
+    <span class="eyebrow">A real sequence &mdash; the order matters</span>
+    <h2>The four-week ramp</h2>
+    <p class="lede">One new thing per week. Not four at once. Starting everything simultaneously is the single most common way plans like this die in week two, and it's the mistake almost everyone makes because week one feels so good.</p>
+  </div>
+
+  <div class="ramp">
+    <div class="rung">
+      <div class="wk"><b>01</b><span>this week</span></div>
+      <div class="what"><span class="t">Book the blood test. Lower your monitor. Stop.</span><span class="d">Two actions, both finite, neither of them a habit. Genuinely do nothing else this week &mdash; the restraint is the intervention. If you add more now, week three collapses.</span></div>
+    </div>
+    <div class="rung">
+      <div class="wk"><b>02</b><span>+ anchor</span></div>
+      <div class="what"><span class="t">The three-minute interruption</span><span class="d">Stand, look far, ten full blinks, change rooms. Pick your trigger from the three options. Still nothing else added.</span></div>
+    </div>
+    <div class="rung">
+      <div class="wk"><b>03</b><span>+ movement</span></div>
+      <div class="what"><span class="t">The after-dinner walk, with the walk-only podcast</span><span class="d">Ten to fifteen minutes. Pick the show now, before you need it &mdash; deciding in the moment is where this one fails.</span></div>
+    </div>
+    <div class="rung">
+      <div class="wk"><b>04</b><span>+ sleep</span></div>
+      <div class="what"><span class="t">Fixed wake time, daylight within the hour, phone across the room</span><span class="d">The hardest one, deliberately placed last, when three other things are already carrying themselves and this is the only thing asking for attention.</span></div>
+    </div>
+    <div class="rung">
+      <div class="wk"><b>05+</b><span>hold</span></div>
+      <div class="what"><span class="t">Hold. Add strength only if the rest is holding.</span><span class="d">If weeks one to four are steady, add ten minutes of strength twice a week. If they aren't, add nothing &mdash; holding four things is a better outcome than losing six.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COLLAPSE ============ -->
+<section id="collapse">
+  <div class="sec-head">
+    <span class="eyebrow">Assume this happens &mdash; it's in the design</span>
+    <h2>When it falls apart</h2>
+  </div>
+  <div class="stack prose">
+    <p>It will. Not as a possibility to guard against &mdash; as a scheduled event. Every plan you have started before collapsed at some point, and the collapse is never actually what ended it. What ended it was the story you told yourself afterwards. So here is the protocol, written down in advance while you're not in it:</p>
+    <ul class="plain">
+      <li><strong>A missed day is data, not a verdict.</strong> There is no streak on this page. Nothing resets. The thirty-day counter only ever counts upward, specifically so that a bad Tuesday cannot be turned into evidence about your character.</li>
+      <li><strong>The floor day is a real, complete day.</strong> One break, one set of blinks, a five-minute walk. That is a full entry. It is not a lesser version and it doesn't come with an asterisk.</li>
+      <li><strong>Boredom is the maintenance light, not the failure light.</strong> When something stops being interesting, that's the fortnight rotation asking to happen early. Press the swap button. You're allowed to be bored of your own plan.</li>
+      <li><strong>If you drop the whole thing for three weeks:</strong> restart at the week one row. Book the test, lower the monitor, nothing else. Not as punishment &mdash; because that's the entry point that works, and it worked the first time.</li>
+      <li><strong>You are permitted to renegotiate any of this with me.</strong> It's a draft, not a prescription. If an item is stupid, or doesn't fit your life, say so and it comes out. A plan you had a hand in editing is one you're far more likely to still be running in March.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ CHECKIN ============ -->
+<section id="checkin">
+  <div class="sec-head">
+    <span class="eyebrow">Your external accountability</span>
+    <h2>The weekly check-in</h2>
+    <p class="lede">You said someone checking in on you is what actually works. So once a week, I ask three questions. It takes about sixty seconds and there is no wrong answer to any of them.</p>
+  </div>
+
+  <div class="card stack">
+    <ol class="plain">
+      <li><strong>How many days did you move at all?</strong> Any amount. Five minutes counts.</li>
+      <li><strong>What time did you get to sleep on the worst night?</strong> Not the average &mdash; the worst one. The average hides the problem.</li>
+      <li><strong>What bored you?</strong> This is the one that matters most. It drives the fortnight rotation, and it's the question no health plan ever asks.</li>
+    </ol>
+    <div class="stack-sm" id="checkinForm"></div>
+  </div>
+</section>
+
+<!-- ============ FLAGS ============ -->
+<section id="flags">
+  <div class="sec-head">
+    <span class="eyebrow">Non-negotiable</span>
+    <h2>Red flags</h2>
+  </div>
+  <div class="stack">
+    <div class="callout danger">
+      <h4>Emergency &mdash; call an ambulance, don't drive yourself, don't wait to see if it passes</h4>
+      <ul class="tight" style="margin-top:8px">
+        <li>Chest pain, pressure, tightness or heaviness &mdash; particularly if it comes on with exertion and eases with rest</li>
+        <li>Pain spreading to the jaw, neck, shoulder, back or either arm</li>
+        <li>Shortness of breath out of proportion to what you're doing</li>
+        <li>Sudden cold sweat, nausea, or a feeling of impending doom alongside any of the above</li>
+        <li>Fainting, or a racing heartbeat with light-headedness</li>
+      </ul>
+      <p style="margin-top:10px">Heart attack symptoms in women, and in people with diabetes, are more often breathlessness, nausea, extreme fatigue or back and jaw pain rather than classic chest pain. Worth knowing regardless of who you are.</p>
+    </div>
+    <div class="callout">
+      <h4>Same-week appointment, not an emergency</h4>
+      <ul class="tight" style="margin-top:8px">
+        <li><strong>Eyes:</strong> sudden vision change, genuine eye pain rather than dryness, new light sensitivity, or discharge</li>
+        <li><strong>Tailbone:</strong> leg radiation, numbness, bowel or bladder changes, night pain unrelated to sitting, or pain following a fall</li>
+        <li><strong>Sleep:</strong> heavy snoring with unrefreshing sleep, or witnessed pauses in breathing</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><strong>What this document is.</strong> General health information, assembled around the answers you gave me, to help you have better conversations with actual clinicians. I'm not a doctor and this isn't a diagnosis. Anything involving medication, your lipid targets, your coccyx imaging or your eye treatment is your GP's and optometrist's call, not mine &mdash; this page is designed to make you a well-prepared patient, not to replace one.</p>
+  <p style="margin-top:14px"><strong>Where your ticks live.</strong> Everything you check on this page is stored in this browser on this device only. It never reaches me, and it doesn't sync to your phone. Clearing site data will wipe it, so if it matters, use the export button below.</p>
+  <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
+    <button class="btn-quiet btn-sm" id="exportBtn" type="button">Export my data</button>
+    <button class="btn-quiet btn-sm" id="importBtn" type="button">Import</button>
+    <button class="btn-quiet btn-sm" id="resetBtn" type="button">Reset everything</button>
+  </div>
+  <div id="ioZone" style="margin-top:12px"></div>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "arrive-at-sixty:v1";
+
+  var SEASONS = [
+    {name:"Podcast walks", note:"One show, walk-only. You don't get it sitting down."},
+    {name:"The stair block", note:"Find a flight. Sets of up-and-down. Brutally time-efficient."},
+    {name:"Ten-minute weights", note:"One dumbbell or kettlebell, one circuit, no gym trip."},
+    {name:"Cycling", note:"Stationary while watching something, or actually outside."},
+    {name:"Skipping or shadow-boxing", note:"High heart rate, tiny footprint, ends before it gets boring."},
+    {name:"Somewhere new", note:"Walk a street you've never walked. Novelty is the whole workout."}
+  ];
+
+  var ITEMS = [
+    {id:"brk",  lab:"Broke up sitting",   sub:"Three or more stand-and-blink interruptions", cost:"0 min"},
+    {id:"walk", lab:"Walked",             sub:"Any amount over five minutes",                cost:"5–20 min"},
+    {id:"str",  lab:"Strength",           sub:"Glutes, hip flexors, dead bugs — twice a week",  cost:"10 min"},
+    {id:"slp",  lab:"Protected sleep",    sub:"Held the wake time, or phone across the room", cost:"0 min"},
+    {id:"fib",  lab:"Added fibre",        sub:"Beans, lentils, oats — into whatever was cooking", cost:"1 min"}
+  ];
+
+  function todayKey(d){
+    d = d || new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+
+  function blank(){
+    return {v:1, test:{booked:false, done:false, date:""}, days:{}, season:{idx:0, started:todayKey()}, checkin:{moved:"",worst:"",bored:""}};
+  }
+
+  var state = blank();
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(raw){
+      var p = JSON.parse(raw);
+      if(p && typeof p === "object"){
+        state = Object.assign(blank(), p);
+        state.test = Object.assign(blank().test, p.test||{});
+        state.season = Object.assign(blank().season, p.season||{});
+        state.checkin = Object.assign(blank().checkin, p.checkin||{});
+        state.days = p.days || {};
+      }
+    }
+  }catch(e){ /* private mode, blocked storage — run with defaults */ }
+
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  function todayList(){
+    var k = todayKey();
+    if(!Array.isArray(state.days[k])) state.days[k] = [];
+    return state.days[k];
+  }
+
+  /* ---------- test panel ---------- */
+  var testPanel = document.getElementById("testPanel");
+  function renderTest(){
+    var t = state.test;
+    var chip, msg, btns;
+    if(t.done){
+      chip = '<span class="chip done">Done</span>';
+      msg = "Blood test done" + (t.date ? " on <span class=\"mono\">"+esc(t.date)+"</span>" : "") + ". Next thing: put a retest three months out, and ask your GP what your non-HDL or ApoB target is.";
+      btns = '<button class="btn-quiet btn-sm" data-test="reset" type="button">Not actually done</button>';
+    } else if(t.booked){
+      chip = '<span class="chip soon">Booked</span>';
+      msg = "Appointment booked" + (t.date ? " for <span class=\"mono\">"+esc(t.date)+"</span>" : "") + ". Take the test list with you — especially Lp(a), which nobody offers unprompted.";
+      btns = '<button class="btn btn-sm" data-test="done" type="button">Test done</button> <button class="btn-quiet btn-sm" data-test="reset" type="button">Cancelled it</button>';
+    } else {
+      chip = '<span class="chip now">Not booked</span>';
+      msg = "This is the only item on the whole page with an end point. One phone call and it's finished forever — everything else here is ongoing.";
+      btns = '<button class="btn btn-sm" data-test="book" type="button">Booked it</button>';
+    }
+    testPanel.innerHTML =
+      '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">'+chip+
+      '<span style="font-size:.94rem;color:var(--ink-2)">'+msg+'</span></div>'+
+      '<div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap">'+
+      '<label class="fld" style="max-width:190px"><span>Date</span><input type="date" id="testDate" value="'+esc(state.test.date)+'"></label>'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap">'+btns+'</div></div>';
+
+    var di = document.getElementById("testDate");
+    if(di) di.addEventListener("change", function(){ state.test.date = di.value; save(); });
+  }
+  testPanel.addEventListener("click", function(ev){
+    var b = ev.target.closest("[data-test]");
+    if(!b) return;
+    var a = b.getAttribute("data-test");
+    if(a === "book"){ state.test.booked = true; }
+    else if(a === "done"){ state.test.done = true; state.test.booked = true; }
+    else if(a === "reset"){ state.test.booked = false; state.test.done = false; }
+    save(); renderTest();
+  });
+
+  /* ---------- menu ---------- */
+  var menu = document.getElementById("menu");
+  function renderMenu(){
+    var picked = todayList();
+    menu.innerHTML = ITEMS.map(function(it){
+      var on = picked.indexOf(it.id) > -1;
+      return '<label class="opt"><input type="checkbox" data-item="'+it.id+'"'+(on?" checked":"")+'>'+
+        '<span class="txt"><span class="lab">'+it.lab+'</span>'+
+        '<span class="sub">'+it.sub+'</span>'+
+        '<span class="cost">'+it.cost+'</span></span></label>';
+    }).join("");
+  }
+  menu.addEventListener("change", function(ev){
+    var cb = ev.target.closest("[data-item]");
+    if(!cb) return;
+    var id = cb.getAttribute("data-item");
+    var list = todayList();
+    var i = list.indexOf(id);
+    if(cb.checked && i < 0) list.push(id);
+    if(!cb.checked && i > -1) list.splice(i,1);
+    save(); renderDayState(); renderGrid();
+  });
+
+  /* ---------- day state ---------- */
+  var dayState = document.getElementById("dayState");
+  var todayLabel = document.getElementById("todayLabel");
+  function renderDayState(){
+    var n = todayList().length;
+    var txt, cls;
+    if(n === 0){ txt = "0 of 2 chosen"; cls = "chip hold mono"; }
+    else if(n === 1){ txt = "Floor day — this counts"; cls = "chip soon mono"; }
+    else { txt = n + " done — full day"; cls = "chip done mono"; }
+    dayState.className = cls;
+    dayState.textContent = txt;
+  }
+
+  /* ---------- 30 day grid ---------- */
+  var grid = document.getElementById("grid30");
+  var counter = document.getElementById("counter");
+  function renderGrid(){
+    var html = "", moved = 0, now = new Date(), tk = todayKey();
+    for(var i = 29; i >= 0; i--){
+      var d = new Date(now.getTime() - i*86400000);
+      var k = todayKey(d);
+      var n = (state.days[k] || []).length;
+      var lvl = n === 0 ? 0 : (n === 1 ? 1 : (n === 2 ? 2 : 3));
+      if(n > 0) moved++;
+      html += '<div class="cell" data-lvl="'+lvl+'"'+(k===tk?' data-today="1"':'')+' title="'+k+' — '+n+'"></div>';
+    }
+    grid.innerHTML = html;
+    counter.textContent = moved + " of the last 30 days had something in them.";
+  }
+
+  /* ---------- season ---------- */
+  var seasonPanel = document.getElementById("seasonPanel");
+  function daysSince(k){
+    var a = new Date(k + "T00:00:00");
+    if(isNaN(a.getTime())) return 0;
+    return Math.floor((new Date(todayKey()+"T00:00:00") - a) / 86400000);
+  }
+  function renderSeason(){
+    var s = SEASONS[state.season.idx % SEASONS.length];
+    var d = daysSince(state.season.started);
+    var due = d >= 14;
+    seasonPanel.innerHTML =
+      '<div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">'+
+        '<h4 style="font-size:1.15rem">'+esc(s.name)+'</h4>'+
+        '<span class="'+(due?"chip soon":"chip hold")+' mono">'+(due ? "rotation due" : "day "+(d+1)+" of 14")+'</span>'+
+      '</div>'+
+      '<p style="font-size:.94rem;color:var(--ink-2)">'+esc(s.note)+'</p>'+
+      '<div><button class="btn-quiet btn-sm" id="swapBtn" type="button">'+(due ? "Rotate to the next one" : "I'm bored — swap it early")+'</button></div>';
+    document.getElementById("swapBtn").addEventListener("click", function(){
+      state.season.idx = (state.season.idx + 1) % SEASONS.length;
+      state.season.started = todayKey();
+      save(); renderSeason();
+    });
+  }
+
+  /* ---------- floor button ---------- */
+  document.getElementById("floorBtn").addEventListener("click", function(){
+    var el = document.getElementById("collapse");
+    if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
+  });
+
+  /* ---------- check-in form ---------- */
+  var cf = document.getElementById("checkinForm");
+  function renderCheckin(){
+    cf.innerHTML =
+      '<label class="fld"><span>Days moved</span><input type="text" data-ci="moved" value="'+esc(state.checkin.moved)+'" placeholder="e.g. 4"></label>'+
+      '<label class="fld"><span>Worst night’s bedtime</span><input type="text" data-ci="worst" value="'+esc(state.checkin.worst)+'" placeholder="e.g. 2:40am"></label>'+
+      '<label class="fld"><span>What bored you</span><textarea data-ci="bored" rows="2" placeholder="Be specific — this is what drives the rotation">'+esc(state.checkin.bored)+'</textarea></label>'+
+      '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">'+
+        '<button class="btn btn-sm" id="copyCi" type="button">Copy for the check-in</button>'+
+        '<span class="mono" id="copyMsg" style="font-size:.72rem;color:var(--ink-3)"></span>'+
+      '</div>';
+    cf.querySelectorAll("[data-ci]").forEach(function(el){
+      el.addEventListener("input", function(){
+        state.checkin[el.getAttribute("data-ci")] = el.value;
+        save();
+      });
+    });
+    document.getElementById("copyCi").addEventListener("click", function(){
+      var c = state.checkin;
+      var txt = "Weekly check-in\nDays moved: "+(c.moved||"—")+"\nWorst night: "+(c.worst||"—")+"\nWhat bored me: "+(c.bored||"—");
+      var msg = document.getElementById("copyMsg");
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(txt).then(function(){ msg.textContent = "Copied — paste it to me"; },
+          function(){ showIO(txt, "Select and copy this:"); msg.textContent = ""; });
+      } else {
+        showIO(txt, "Select and copy this:"); msg.textContent = "";
+      }
+    });
+  }
+
+  /* ---------- export / import ---------- */
+  var ioZone = document.getElementById("ioZone");
+  function showIO(text, label, withApply){
+    ioZone.innerHTML = '<label class="fld"><span>'+esc(label)+'</span><textarea rows="5" id="ioBox" style="font-family:var(--f-mono);font-size:.75rem">'+esc(text)+'</textarea></label>'+
+      (withApply ? '<div style="margin-top:8px"><button class="btn btn-sm" id="applyIO" type="button">Apply this data</button></div>' : "");
+    var box = document.getElementById("ioBox");
+    if(box && !withApply){ box.focus(); box.select(); }
+    if(withApply){
+      document.getElementById("applyIO").addEventListener("click", function(){
+        try{
+          var p = JSON.parse(document.getElementById("ioBox").value);
+          state = Object.assign(blank(), p);
+          state.test = Object.assign(blank().test, p.test||{});
+          state.season = Object.assign(blank().season, p.season||{});
+          state.checkin = Object.assign(blank().checkin, p.checkin||{});
+          state.days = p.days || {};
+          save(); renderAll();
+          ioZone.innerHTML = '<p class="mono" style="font-size:.75rem;color:var(--good)">Imported.</p>';
+        }catch(e){
+          ioZone.insertAdjacentHTML("beforeend", '<p class="mono" style="font-size:.75rem;color:var(--clay);margin-top:8px">That isn’t valid export data. Paste the whole block, including the outer braces.</p>');
+        }
+      });
+    }
+  }
+  document.getElementById("exportBtn").addEventListener("click", function(){
+    showIO(JSON.stringify(state), "Your data — copy and keep this somewhere", false);
+  });
+  document.getElementById("importBtn").addEventListener("click", function(){
+    showIO("", "Paste exported data here", true);
+  });
+  document.getElementById("resetBtn").addEventListener("click", function(){
+    ioZone.innerHTML = '<div class="callout danger"><p>This wipes every tick, the test status and the rotation. It cannot be undone.</p>'+
+      '<div style="margin-top:10px;display:flex;gap:8px"><button class="btn-quiet btn-sm" id="reallyReset" type="button">Yes, wipe it</button>'+
+      '<button class="btn-quiet btn-sm" id="cancelReset" type="button">Keep my data</button></div></div>';
+    document.getElementById("reallyReset").addEventListener("click", function(){
+      state = blank(); save(); renderAll();
+      ioZone.innerHTML = '<p class="mono" style="font-size:.75rem;color:var(--ink-3)">Wiped. Week one row is where you start again.</p>';
+    });
+    document.getElementById("cancelReset").addEventListener("click", function(){ ioZone.innerHTML = ""; });
+  });
+
+  function esc(s){
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+
+  function renderAll(){
+    var d = new Date();
+    todayLabel.textContent = d.toLocaleDateString(undefined,{weekday:"long", day:"numeric", month:"long"});
+    renderTest(); renderMenu(); renderDayState(); renderGrid(); renderSeason(); renderCheckin();
+  }
+  renderAll();
+})();
+</script>
