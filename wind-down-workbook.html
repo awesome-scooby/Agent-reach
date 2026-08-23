@@ -1,0 +1,1137 @@
+<title>Wind-Down Workbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+:root{
+  --ground:#ECE8EF;
+  --surface:#F8F6FA;
+  --surface-2:#E3DDE9;
+  --ink:#221C2E;
+  --ink-soft:#5B5370;
+  --ink-faint:#847C95;
+  --line:#D6CFDE;
+  --line-soft:#E2DCE8;
+  --amber:#8F5D12;
+  --amber-bright:#C08526;
+  --glow:rgba(192,133,38,.20);
+  --calm:#2F6285;
+  --calm-bg:rgba(47,98,133,.09);
+  --shadow:0 1px 2px rgba(34,28,46,.05),0 8px 24px -12px rgba(34,28,46,.18);
+  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --f-body:"Newsreader",Georgia,"Times New Roman",serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#16121F;
+    --surface:#1E1929;
+    --surface-2:#2A2338;
+    --ink:#EDE6F2;
+    --ink-soft:#B4A9C3;
+    --ink-faint:#8A7E9B;
+    --line:#342C44;
+    --line-soft:#282137;
+    --amber:#E9B26A;
+    --amber-bright:#F2C387;
+    --glow:rgba(233,178,106,.15);
+    --calm:#93BCD8;
+    --calm-bg:rgba(147,188,216,.11);
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#16121F;
+  --surface:#1E1929;
+  --surface-2:#2A2338;
+  --ink:#EDE6F2;
+  --ink-soft:#B4A9C3;
+  --ink-faint:#8A7E9B;
+  --line:#342C44;
+  --line-soft:#282137;
+  --amber:#E9B26A;
+  --amber-bright:#F2C387;
+  --glow:rgba(233,178,106,.15);
+  --calm:#93BCD8;
+  --calm-bg:rgba(147,188,216,.11);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:1.0625rem;
+  line-height:1.68;
+  -webkit-font-smoothing:antialiased;
+}
+.ambient{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(60rem 34rem at 50% -8rem,var(--glow),transparent 68%);
+}
+.wrap{position:relative;z-index:1;max-width:41rem;margin:0 auto;padding:2.6rem 1.25rem 7rem}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.18;letter-spacing:-.015em}
+h1{font-size:clamp(2.05rem,7vw,2.85rem);font-weight:700}
+h2{font-size:1.4rem;font-weight:600}
+h3{font-size:1.06rem;font-weight:600}
+p{margin:0}
+a{color:var(--amber)}
+.label{
+  font-family:var(--f-mono);font-size:.68rem;text-transform:uppercase;
+  letter-spacing:.14em;color:var(--ink-faint);font-weight:500;
+}
+.soft{color:var(--ink-soft)}
+.stack{display:flex;flex-direction:column}
+.g4{gap:.4rem}.g6{gap:.6rem}.g8{gap:.8rem}.g12{gap:1.2rem}.g16{gap:1.6rem}.g24{gap:2.4rem}
+.hide{display:none !important}
+
+/* ---------- buttons ---------- */
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
+.btn{
+  font-family:var(--f-display);font-weight:600;font-size:.97rem;
+  background:var(--ink);color:var(--ground);
+  border-radius:999px;padding:.72rem 1.5rem;border:1px solid var(--ink);
+  transition:transform .12s ease,opacity .12s ease;
+}
+.btn:hover{opacity:.88}
+.btn:active{transform:translateY(1px)}
+.btn[disabled]{opacity:.32;cursor:not-allowed}
+.btn.ghost{background:none;color:var(--ink-soft);border-color:var(--line)}
+.btn.ghost:hover{color:var(--ink);border-color:var(--ink-faint)}
+.btn.small{padding:.44rem 1rem;font-size:.85rem}
+.linkish{
+  font-family:var(--f-mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-faint);border-bottom:1px solid var(--line);padding-bottom:2px;
+}
+.linkish:hover{color:var(--ink);border-color:var(--ink-faint)}
+
+/* ---------- cards ---------- */
+.card{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:14px;padding:1.35rem 1.3rem;box-shadow:var(--shadow);
+}
+.card.flat{box-shadow:none;background:none}
+.aside{
+  border-left:2px solid var(--line);padding:.1rem 0 .1rem .95rem;
+  color:var(--ink-soft);font-size:.95rem;font-style:italic;
+}
+.note{
+  background:var(--calm-bg);border:1px solid color-mix(in srgb,var(--calm) 30%,transparent);
+  border-radius:12px;padding:1.05rem 1.1rem;font-size:.96rem;color:var(--ink);
+}
+.note .label{color:var(--calm)}
+
+/* ---------- quiz ---------- */
+.lamps{display:flex;gap:.4rem;align-items:center}
+.lamp{width:7px;height:7px;border-radius:50%;background:var(--line);transition:background .3s ease,box-shadow .3s ease}
+.lamp.on{background:var(--amber-bright);box-shadow:0 0 8px var(--glow)}
+.lamp.now{background:var(--amber-bright);box-shadow:0 0 0 3px var(--glow)}
+.qcard{animation:rise .34s cubic-bezier(.22,.7,.3,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.opt{
+  display:flex;gap:.75rem;align-items:flex-start;width:100%;text-align:left;
+  background:var(--surface);border:1px solid var(--line);border-radius:12px;
+  padding:.8rem .95rem;transition:border-color .15s ease,background .15s ease;
+}
+.opt:hover{border-color:var(--ink-faint)}
+.opt .tick{
+  flex:none;width:1.15rem;height:1.15rem;border-radius:50%;border:1.5px solid var(--line);
+  margin-top:.28rem;display:grid;place-items:center;transition:all .15s ease;
+}
+.opt[aria-pressed="true"]{border-color:var(--amber);background:color-mix(in srgb,var(--amber) 8%,var(--surface))}
+.opt[aria-pressed="true"] .tick{border-color:var(--amber);background:var(--amber)}
+.opt[aria-pressed="true"] .tick::after{content:"";width:.42rem;height:.42rem;border-radius:50%;background:var(--surface)}
+.opt em{display:block;font-size:.86rem;color:var(--ink-faint);font-style:normal;margin-top:.1rem}
+.scale{display:flex;gap:.3rem;flex-wrap:wrap}
+.scale button{
+  flex:1 1 2rem;min-width:2.1rem;padding:.6rem 0;border:1px solid var(--line);border-radius:9px;
+  background:var(--surface);font-family:var(--f-mono);font-size:.9rem;font-variant-numeric:tabular-nums;
+  transition:all .15s ease;
+}
+.scale button:hover{border-color:var(--ink-faint)}
+.scale button[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:var(--surface);font-weight:500}
+.scale-ends{display:flex;justify-content:space-between;font-size:.78rem;color:var(--ink-faint)}
+
+/* ---------- plan ---------- */
+.section{scroll-margin-top:1rem}
+.rule{height:1px;background:var(--line-soft);border:0;margin:0}
+.driver{display:flex;gap:.9rem;align-items:flex-start}
+.driver .dot{flex:none;width:.5rem;height:.5rem;border-radius:50%;background:var(--amber);margin-top:.62rem}
+.level{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+.level > header{display:flex;gap:.85rem;align-items:center;padding:1rem 1.15rem;border-bottom:1px solid var(--line-soft)}
+.bulbs{display:flex;gap:3px;flex:none}
+.bulb{width:.55rem;height:.55rem;border-radius:50%;background:var(--line)}
+.bulb.lit{background:var(--amber-bright)}
+.level h3{font-size:1rem}
+.level .dur{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-faint);letter-spacing:.06em}
+.tech{padding:1.05rem 1.15rem;border-top:1px solid var(--line-soft)}
+.tech:first-of-type{border-top:none}
+.tech h4{font-family:var(--f-display);font-size:.98rem;font-weight:600;margin:0 0 .2rem}
+.tech ol{margin:.6rem 0 0;padding-left:1.1rem;font-size:.95rem;color:var(--ink-soft)}
+.tech ol li{margin-bottom:.28rem}
+.tech .why{margin-top:.7rem;font-size:.9rem;color:var(--ink-faint);font-style:italic}
+.picked{font-family:var(--f-mono);font-size:.73rem;letter-spacing:.02em;color:var(--amber);opacity:.9;margin-top:.5rem}
+.chips{display:flex;flex-wrap:wrap;gap:.45rem}
+.chip{
+  font-family:var(--f-mono);font-size:.72rem;letter-spacing:.05em;padding:.3rem .65rem;
+  border:1px solid var(--line);border-radius:999px;color:var(--ink-soft);background:var(--surface);
+}
+.chip[aria-pressed="true"]{border-color:var(--amber);color:var(--amber);background:color-mix(in srgb,var(--amber) 8%,transparent)}
+textarea{
+  width:100%;min-height:8rem;resize:vertical;background:var(--surface);color:var(--ink);
+  border:1px solid var(--line);border-radius:12px;padding:.9rem;font-family:var(--f-body);
+  font-size:1rem;line-height:1.6;
+}
+textarea::placeholder{color:var(--ink-faint)}
+.row{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.emergency{border:1px solid color-mix(in srgb,var(--amber) 45%,var(--line));border-radius:14px;padding:1.3rem;background:color-mix(in srgb,var(--amber) 6%,var(--surface))}
+.emergency ol{margin:.9rem 0 0;padding-left:1.15rem}
+.emergency ol li{margin-bottom:.55rem}
+.kept{display:flex;gap:.6rem;align-items:baseline;padding:.55rem 0;border-bottom:1px dashed var(--line-soft)}
+.kept:last-child{border-bottom:none}
+
+/* ---------- breathing pacer ---------- */
+.pacer{display:grid;place-items:center;gap:.9rem;padding:1.4rem 0 .4rem}
+.orb{
+  width:8.5rem;height:8.5rem;border-radius:50%;
+  background:radial-gradient(circle at 50% 45%,var(--glow),transparent 70%);
+  border:1px solid var(--amber);
+  transform:scale(.62);transition:transform 4s cubic-bezier(.4,0,.5,1);
+  display:grid;place-items:center;
+}
+.orb.out{transition-duration:6s;transform:scale(.62)}
+.orb.in{transform:scale(1)}
+.orb span{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber)}
+@media (prefers-reduced-motion:reduce){
+  .orb,.orb.in,.orb.out{transition:none;transform:scale(.85)}
+  .qcard{animation:none}
+}
+footer{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--line-soft);font-size:.85rem;color:var(--ink-faint)}
+</style>
+
+<div class="ambient" aria-hidden="true"></div>
+<div class="wrap">
+
+<!-- ============ INTRO ============ -->
+<section id="view-intro" class="stack g16">
+  <div class="stack g8">
+    <p class="label">A quiet workbook for the end of the day</p>
+    <h1>You don't have to do anything with this tonight.</h1>
+  </div>
+  <p class="soft">Seven short questions — taps, not typing. About three minutes. Then this becomes a small page you can open on a bad evening and find something that takes two minutes.</p>
+  <div class="card stack g8">
+    <p class="label">What this is not</p>
+    <p style="font-size:.97rem">It isn't therapy, and it won't tell you what's wrong with you. It isn't a habit tracker — there are no streaks, no scores, and nothing to keep up with. Skipping it costs you nothing.</p>
+  </div>
+  <p class="aside">Your answers stay in this browser, on this device. Nothing is sent anywhere, and no one else can read them — not even the person who sent you this.</p>
+  <div class="row">
+    <button class="btn" id="start">Start the questions</button>
+    <button class="btn ghost" id="skip-to-emergency">I'm too flat for this &rarr;</button>
+  </div>
+  <button class="linkish" id="resume" style="align-self:flex-start" hidden>Pick up where I left off</button>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section id="view-quiz" class="stack g16 hide">
+  <div class="row" style="justify-content:space-between">
+    <div class="lamps" id="lamps" aria-hidden="true"></div>
+    <span class="label" id="qcount"></span>
+  </div>
+  <div id="qhost"></div>
+  <div class="row" style="justify-content:space-between">
+    <button class="linkish" id="qback">Back</button>
+    <button class="btn" id="qnext" disabled>Next</button>
+  </div>
+</section>
+
+<!-- ============ PLAN ============ -->
+<section id="view-plan" class="stack g24 hide"></section>
+
+<footer>
+  <p>Made for one person, by someone who noticed you were tired. Nothing here is a diagnosis or medical advice.</p>
+</footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============================================================
+   1. THE QUESTIONS
+   ============================================================ */
+var QUESTIONS = [
+ {id:"drain", kind:"multi", max:2,
+  ask:"What's taking the most out of you right now?",
+  sub:"Pick up to two. There's no right answer and you can change it later.",
+  opts:[
+   {v:"office",  t:"Office work",            n:"The job itself — volume, people, pressure"},
+   {v:"house",   t:"House work",             n:"The endless, invisible, never-finished kind"},
+   {v:"caring",  t:"Holding things together for other people", n:"Remembering, organising, being the one who notices"},
+   {v:"notime",  t:"There's no time that's just mine", n:"The day is spoken for before it starts"},
+   {v:"sleep",   t:"Sleep",                  n:"Not enough of it, or not the good kind"},
+   {v:"expect",  t:"Feeling like I should be doing more", n:"From people around me, or from myself"},
+   {v:"switch",  t:"The switching",           n:"Work to house to everyone else, with no gap between"}
+  ]},
+
+ {id:"tank", kind:"scale",
+  ask:"By the end of a normal day, how much is left in the tank?",
+  sub:"1 is running on fumes. 10 is plenty left over.",
+  lo:"Nothing left", hi:"Plenty left"},
+
+ {id:"evening", kind:"single",
+  ask:"It's 9:40pm. The kitchen is half-done and you're flat.",
+  sub:"What honestly happens next?",
+  opts:[
+   {v:"finish",  t:"I finish the kitchen anyway, then fall into bed"},
+   {v:"scroll",  t:"I sit down to rest and the phone eats an hour"},
+   {v:"sofa",    t:"I fall asleep on the sofa without meaning to"},
+   {v:"racing",  t:"I sit down but my head keeps working"},
+   {v:"screen",  t:"I put something on with someone else and half-watch it"},
+   {v:"relax",   t:"I actually manage to switch off"}
+  ]},
+
+ {id:"type", kind:"multi", max:2,
+  ask:"A good hour that belonged only to you would look like…",
+  sub:"Pick up to two. Go with what you'd actually enjoy, not what sounds healthy.",
+  opts:[
+   {v:"quiet",   t:"Quiet",        n:"Alone, low light, nobody needing anything"},
+   {v:"physical",t:"Moving",       n:"A walk, a stretch, being out of the house"},
+   {v:"creative",t:"Making something", n:"Drawing, writing, crafting, cooking for fun"},
+   {v:"social",  t:"People",       n:"A proper conversation with someone you like"},
+   {v:"fun",     t:"Entertainment",n:"A show, music, a book, something absorbing"}
+  ]},
+
+ {id:"time", kind:"single",
+  ask:"On a normal evening, how much time is genuinely yours?",
+  sub:"Be pessimistic. The plan should fit the worst version of the week.",
+  opts:[
+   {v:"t5",  t:"Barely five minutes"},
+   {v:"t20", t:"Ten or twenty minutes, if I'm lucky"},
+   {v:"t30", t:"About half an hour"},
+   {v:"t60", t:"An hour or more — but it's unpredictable"}
+  ]},
+
+ {id:"block", kind:"multi", max:2,
+  ask:"What usually gets in the way of winding down?",
+  sub:"Pick up to two.",
+  opts:[
+   {v:"guilt",   t:"Guilt about what's still undone"},
+   {v:"phone",   t:"The phone — I mean to rest and end up scrolling"},
+   {v:"needed",  t:"Someone always needs something"},
+   {v:"nospace", t:"There's no quiet corner in the house"},
+   {v:"mind",    t:"My mind won't stop"},
+   {v:"tired",   t:"I'm too tired to decide what to do"},
+   {v:"blank",   t:"I don't know what I'd even do with the time"}
+  ]},
+
+ {id:"weeks", kind:"single",
+  ask:"One last, gentler question.",
+  sub:"Over the last couple of weeks, how often has everything felt heavier than usual?",
+  opts:[
+   {v:"rarely", t:"Rarely — the odd rough day"},
+   {v:"some",   t:"Some days"},
+   {v:"most",   t:"Most days"},
+   {v:"nearly", t:"Nearly every day, and it's been going on a while"}
+  ]}
+];
+
+/* ============================================================
+   2. WHAT THE ANSWERS MEAN
+   ============================================================ */
+var DRIVERS = {
+ overload:  {name:"A head that never gets to close the tab",
+   read:"Your attention is still running long after your body has sat down.",
+   why:"Rest doesn't work while your mind is still holding the list. The list has to go somewhere else first — onto paper, into your breathing, into your feet — before your body reads the room as safe."},
+ transition:{name:"No gap between the roles",
+   read:"Work ends and house work starts, with nothing in between to mark it.",
+   why:"Your brain switches state on cues, not on clock time. Without a signal that one shift has ended, it keeps both jobs open — which is why the evening can feel like an extension of the day rather than the end of it."},
+ ownership: {name:"None of the day is yours",
+   read:"Every hour belongs to a job, a house, or a person.",
+   why:"Tiredness from work you chose feels different from tiredness with no space of your own on the other side. Even twenty unclaimed minutes changes how the same day feels, because the day now has an edge."},
+ sleep:     {name:"Sleep isn't repairing you",
+   read:"You're going to bed depleted rather than settled.",
+   why:"Falling asleep exhausted isn't the same as falling asleep wound down. A short runway before bed does more for how you feel tomorrow than an extra twenty minutes of lying there."},
+ load:      {name:"The load isn't shared",
+   read:"You're carrying the house — including the remembering and the noticing.",
+   why:"The invisible half — knowing what's running out, what's due, who needs what — is real work, and it doesn't stop when you sit down. No wind-down technique fixes an unfair split; that part is a conversation, not a breathing exercise."},
+ depletion: {name:"You're running on empty, not just busy",
+   read:"There's very little left by the evening.",
+   why:"At this level, anything that asks for motivation will fail — not because you lack discipline, but because deciding is itself tiring. What you need is small, fixed and already decided."},
+ guilt:     {name:"Rest feels like something you haven't earned",
+   read:"Sitting down comes with a running commentary.",
+   why:"If rest is only allowed once everything is finished, it never arrives — house work is designed never to finish. Rest has to be taken on time, not on merit."},
+ digital:   {name:"The phone is eating the recovery",
+   read:"The hour you meant to rest in goes somewhere else.",
+   why:"Scrolling is a break from doing, but not a break from input. You stand up as tired as you sat down, which is why the evening can vanish and still leave you flat."}
+};
+
+function scoreDrivers(a){
+  var s={overload:0,transition:0,ownership:0,sleep:0,load:0,depletion:0,guilt:0,digital:0};
+  var d=a.drain||[], b=a.block||[], t=a.type||[];
+  function has(arr,v){return arr.indexOf(v)>-1;}
+  if(has(d,"office"))s.overload+=2;
+  if(has(d,"switch")){s.transition+=3;s.overload+=1;}
+  if(has(d,"house")){s.load+=3;s.transition+=1;}
+  if(has(d,"caring")){s.load+=3;s.overload+=2;}
+  if(has(d,"notime")){s.ownership+=3;}
+  if(has(d,"sleep")){s.sleep+=3;}
+  if(has(d,"expect")){s.guilt+=3;s.ownership+=1;}
+  if(has(d,"office")&&has(d,"house"))s.transition+=2;
+  if(a.evening==="finish"){s.transition+=2;s.guilt+=2;}
+  if(a.evening==="scroll"){s.digital+=3;s.ownership+=1;}
+  if(a.evening==="sofa"){s.sleep+=2;s.depletion+=2;}
+  if(a.evening==="racing"){s.overload+=3;s.sleep+=1;}
+  if(a.evening==="screen"){s.ownership+=1;}
+  if(has(b,"guilt"))s.guilt+=3;
+  if(has(b,"phone"))s.digital+=3;
+  if(has(b,"needed")){s.ownership+=2;s.load+=1;}
+  if(has(b,"nospace"))s.ownership+=2;
+  if(has(b,"mind")){s.overload+=3;s.sleep+=1;}
+  if(has(b,"tired"))s.depletion+=3;
+  if(has(b,"blank"))s.ownership+=2;
+  if(a.tank<=3)s.depletion+=3; else if(a.tank<=5)s.depletion+=1;
+  if(a.tank<=2)s.sleep+=1;
+  if(t.length===0)s.ownership+=1;
+  return s;
+}
+function topDrivers(a,n){
+  var s=scoreDrivers(a), keys=Object.keys(s);
+  keys.sort(function(x,y){return s[y]-s[x];});
+  return keys.filter(function(k){return s[k]>0;}).slice(0,n||3);
+}
+
+/* ============================================================
+   3. THE TECHNIQUE LIBRARY
+   ============================================================ */
+var TECHNIQUES = [
+/* ---- LEVEL 1 : 2-5 minutes, almost nothing left ---- */
+{id:"sigh",lvl:1,dur:"90 seconds",name:"The long-exhale breath",
+ types:["quiet"],drivers:["overload","depletion","sleep"],blocks:["mind","tired"],
+ what:"The fastest way to tell your body the emergency is over.",
+ steps:["Breathe in through your nose, then take a second small sip of air on top.","Let it out through your mouth, slowly, for about twice as long.","Repeat five times. That's it."],
+ why:"A longer out-breath than in-breath is the one thing that shifts your nervous system down within a minute or two. It works even when you're too tired to want it to."},
+
+{id:"doorway",lvl:1,dur:"3 minutes",name:"The doorway reset",
+ types:["quiet","physical"],drivers:["transition","guilt"],blocks:["guilt"],
+ what:"A hard line between the working day and the rest of it.",
+ steps:["Change out of what you worked in — all of it, even if it's just the top.","Wash your hands and face with warm water.","Say one sentence, out loud or in your head: “That part of the day is finished.”"],
+ why:"Your brain switches state on physical cues far better than on time. Three minutes of ritual does what an hour of intending to relax won't."},
+
+{id:"ground",lvl:1,dur:"3 minutes",name:"Five things, four things, three",
+ types:["quiet"],drivers:["overload"],blocks:["mind","nospace"],
+ what:"A way out of the loop when your head is somewhere else.",
+ steps:["Name five things you can see. Actually look at them.","Four things you can feel — floor, fabric, temperature, your own hands.","Three you can hear, two you can smell, one you can taste."],
+ why:"Worry lives in the future and replay lives in the past. Your senses only work in the present, so using them deliberately pulls you back into it."},
+
+{id:"horizontal",lvl:1,dur:"4 minutes",name:"Four minutes horizontal",
+ types:["quiet","fun"],drivers:["depletion"],blocks:["tired","blank"],
+ what:"Lying down on purpose, before you collapse by accident.",
+ steps:["Floor, sofa or bed — whichever is nearest.","Put one song on, or nothing at all.","Stay there until it ends. Nothing else is required of you."],
+ why:"When the tank is empty, the useful move isn't a technique — it's stopping earlier than you normally would, while it's still your choice."},
+
+{id:"dump",lvl:1,dur:"4 minutes",name:"Get it out of your head",
+ types:["creative","quiet"],drivers:["overload","sleep"],blocks:["mind"],
+ what:"Everything you're holding, written down badly and fast.",
+ steps:["Open the notepad on this page, or any scrap of paper.","Write every loose thing — tasks, worries, the thing you keep forgetting. No order, no sentences.","Stop. Don't sort it, don't plan it. It's out; that was the point."],
+ why:"An unwritten list has to be actively held. Written down, your mind stops rehearsing it — which is usually what's keeping you awake."},
+
+{id:"water",lvl:1,dur:"5 minutes",name:"Warm water, no thinking",
+ types:["quiet","physical"],drivers:["transition","depletion"],blocks:["nospace","needed"],
+ what:"The oldest reset there is, and the one door in the house that closes.",
+ steps:["Hot water over your hands and wrists for a full minute, or a quick shower if you can.","Warm on your face and the back of your neck.","Notice the temperature and nothing else."],
+ why:"Warmth on the skin lowers physical tension quickly, and the bathroom is often the only room where nobody follows you."},
+
+{id:"unclench",lvl:1,dur:"3 minutes",name:"Unclench",
+ types:["physical","quiet"],drivers:["depletion","overload"],blocks:["mind","nospace"],
+ what:"A very short version of progressive muscle relaxation, for the three places you're holding it.",
+ steps:["Jaw: clench for five seconds, then let it fall open. Twice.","Shoulders: pull them up to your ears, hold, drop them heavily. Twice.","Hands: fists, hold, then spread your fingers wide and let them go loose."],
+ why:"Tension you've stopped noticing still costs energy. Tightening a muscle first makes the release obvious to a body that's forgotten what loose feels like."},
+
+{id:"onesong",lvl:1,dur:"4 minutes",name:"The one-song rule",
+ types:["fun","quiet"],drivers:["ownership","digital"],blocks:["blank","tired"],
+ what:"One song, chosen by you, doing nothing else.",
+ steps:["Pick a song you loved before this stage of life.","Phone face down, headphones on if that's what it takes.","No tidying while it plays. That's the whole rule."],
+ why:"It's short enough to be un-refusable and it's yours — which is the ingredient missing from the rest of the day."},
+
+/* ---- LEVEL 2 : 10-20 minutes ---- */
+{id:"pmr",lvl:2,dur:"12 minutes",name:"Progressive muscle relaxation",
+ types:["quiet","physical"],drivers:["sleep","overload","depletion"],blocks:["mind"],
+ what:"Working through the body, tensing and letting go.",
+ steps:["Lie down. Start at your feet: tense for five seconds, release for ten.","Move up — calves, thighs, stomach, hands, arms, shoulders, face.","Finish by lying still for a minute, noticing the difference."],
+ why:"One of the best-evidenced routines for winding down before sleep. It gives a busy mind a physical job, which is easier than asking it to stop."},
+
+{id:"walk",lvl:2,dur:"15 minutes",name:"A walk with no destination",
+ types:["physical"],drivers:["transition","overload","depletion"],blocks:["nospace","needed"],
+ what:"Out of the door, around the block, back. No errand attached.",
+ steps:["Go out without deciding a route.","Leave the podcast off for the first half — music is fine if silence feels loud.","Come back when you feel like it, not when a target says so."],
+ why:"Walking does two things at once: it changes your surroundings, which breaks the loop, and it's the cleanest boundary between one part of the day and the next."},
+
+{id:"shower",lvl:2,dur:"15 minutes",name:"Washing the day off",
+ types:["quiet","physical"],drivers:["transition","sleep"],blocks:["nospace","needed"],
+ what:"A shower or bath treated as a ritual rather than a chore.",
+ steps:["Phone stays outside the room. Non-negotiable, this once.","Warm rather than hot, and slower than usual.","As you finish, picture the day going down the drain with the water. It's a corny image and it works."],
+ why:"Warmth, water and a closed door are a strong combination — and giving it a meaning turns a routine wash into an actual marker that the day is over."},
+
+{id:"notnight",lvl:2,dur:"15 minutes",name:"Brain dump, then the “not tonight” line",
+ types:["creative","quiet"],drivers:["overload","guilt"],blocks:["mind","guilt"],
+ what:"Everything out on paper, then most of it crossed off until tomorrow.",
+ steps:["Write down every open thing. All of it, however small.","Circle the one or two that genuinely can't wait until tomorrow.","Draw a line under the rest and write “not tonight”. Then close the notebook."],
+ why:"You're not pretending the list is done — you're deciding when it's due. That difference is what makes sitting down bearable."},
+
+{id:"pacer",lvl:2,dur:"10 minutes",name:"Paced breathing",
+ types:["quiet"],drivers:["overload","sleep"],blocks:["mind","blank"],
+ what:"Slow, even breathing at about six breaths a minute, with something to follow.",
+ steps:["Use the breathing circle further down this page.","In for four, out for six. Follow the circle rather than counting.","Ten minutes if you have it, three if you don't."],
+ why:"Around six breaths a minute is the rate that settles heart rhythm most reliably. Following a shape is easier than counting when you're tired."},
+
+{id:"album",lvl:2,dur:"20 minutes",name:"Music, and only music",
+ types:["fun","quiet"],drivers:["ownership","digital"],blocks:["phone","blank"],
+ what:"Listening as the activity, not as a soundtrack to chores.",
+ steps:["Pick an album, not a shuffle — the choosing is part of the rest.","Lights low, phone in another room, sitting or lying down.","If you catch yourself tidying, sit back down. That's the exercise."],
+ why:"Music you've chosen shifts mood faster than almost anything else this short — but only when it isn't competing with a task."},
+
+{id:"stretch",lvl:2,dur:"12 minutes",name:"Floor stretches before bed",
+ types:["physical"],drivers:["sleep","depletion"],blocks:["nospace"],
+ what:"Five slow positions, held long enough to matter.",
+ steps:["Knees to chest, then a gentle twist each way — a minute each.","Legs up against a wall for three minutes.","Neck and shoulder rolls, then child's pose to finish."],
+ why:"Standing all evening leaves tension in the hips, back and shoulders. Releasing it before bed is one of the small things that changes how you sleep."},
+
+{id:"noprod",lvl:2,dur:"20 minutes",name:"The no-productivity window",
+ types:["quiet","fun"],drivers:["guilt","ownership"],blocks:["guilt","blank"],
+ what:"A timer whose only job is to tell you to stop working.",
+ steps:["Set twenty minutes. Announce it if there are other people in the house.","In that window nothing may be optimised, tidied, planned or caught up on.","When it ends you may go back to it — you probably won't want to."],
+ why:"A boundary you can see is easier to keep than one you intend. And a fixed end makes the start feel affordable when you feel you haven't earned it."},
+
+{id:"voice",lvl:2,dur:"15 minutes",name:"One proper conversation",
+ types:["social"],drivers:["ownership","depletion"],blocks:["blank","needed"],
+ what:"A friend, on the phone, about nothing in particular.",
+ steps:["Pick the person you never have to perform for.","Call or send a long voice note — no plans, no arranging.","Fifteen minutes is plenty. It doesn't have to become an evening."],
+ why:"Talking to someone who isn't asking anything of you is restorative in a way that solitary rest isn't, particularly when most of your talking is logistics."},
+
+{id:"make",lvl:2,dur:"20 minutes",name:"Twenty minutes of making something badly",
+ types:["creative"],drivers:["ownership","digital"],blocks:["blank","guilt"],
+ what:"Anything with your hands, with no outcome attached.",
+ steps:["Pick the thing you'd do if nobody would ever see it.","Set it up somewhere you can leave it out.","Deliberately don't finish. Leaving it mid-way is what makes it easy to return to."],
+ why:"Absorption is what recovers attention — and the moment a hobby has to produce something good, it stops absorbing and starts assessing."},
+
+/* ---- LEVEL 3 : 30-60 minutes ---- */
+{id:"pleasant",lvl:3,dur:"45 minutes",name:"Something you used to love",
+ types:["quiet","creative","fun","physical","social"],drivers:["ownership","depletion","guilt"],blocks:["blank"],
+ what:"Not a new hobby — an old one, put back in the week on purpose.",
+ steps:["Think back before this stage of life. What did you lose without deciding to?","Pick the smallest version of it that still counts.","Put it in the week at a specific time. Something unscheduled stays hypothetical."],
+ why:"Scheduling pleasant activity is one of the most reliably effective mood interventions there is — and it works in the order you'd least expect: doing it first, feeling like it afterwards."},
+
+{id:"bath",lvl:3,dur:"40 minutes",name:"The long bath and a book",
+ types:["quiet"],drivers:["sleep","ownership","depletion"],blocks:["needed","nospace"],
+ what:"A locked door, warm water and something to read that isn't a screen.",
+ steps:["Tell the household you're unavailable for forty minutes. Out loud.","Book, radio or silence. No phone in the room.","Come out and go straight into the evening's slow end — don't restart the chores."],
+ why:"The drop in body temperature after a warm bath is a genuine sleep trigger, and forty protected minutes is the clearest possible signal that you are off duty."},
+
+{id:"hobby",lvl:3,dur:"1 hour",name:"A real hour of the thing you like",
+ types:["creative","fun"],drivers:["ownership","digital"],blocks:["phone","blank"],
+ what:"Long enough to actually get lost in it.",
+ steps:["Phone in another room — not face down, another room.","Leave the materials out so starting takes no setup next time.","Stop while you still want to keep going."],
+ why:"Absorption needs a runway; twenty minutes gets you to the edge of it, an hour gets you in. This is the part of the week that's actually yours."},
+
+{id:"outing",lvl:3,dur:"1 hour",name:"Somewhere that isn't the house",
+ types:["physical","social"],drivers:["ownership","transition","depletion"],blocks:["nospace","needed"],
+ what:"A walk, a market, a park, a coffee — out of the four walls that hold the list.",
+ steps:["Pick somewhere with a bit of green or a bit of life, and go.","Take someone or go alone — whichever sounds better today, not whichever is politer.","No errands attached. The moment it has a purpose it becomes an errand."],
+ why:"Home is where the unfinished tasks live. Leaving it is often the only way to stop seeing them, and green space measurably speeds up recovery from mental fatigue."},
+
+{id:"watch",lvl:3,dur:"1 hour",name:"Watching something on purpose",
+ types:["fun","social"],drivers:["depletion","digital"],blocks:["tired","blank"],
+ what:"The thing you chose, watched properly, instead of the thing that autoplayed.",
+ steps:["Choose in advance — the scroll for something to watch is its own kind of tiring.","Phone away, lights low, actually comfortable.","One episode or one film. Stop at the end rather than drifting into the next."],
+ why:"Passive isn't the problem — unchosen is. Something you picked and gave attention to leaves you rested; background scrolling doesn't."},
+
+{id:"weekend",lvl:3,dur:"90 minutes, weekly",name:"The protected weekend window",
+ types:["quiet","creative","fun","physical","social"],drivers:["ownership","guilt","load"],blocks:["guilt","needed"],
+ what:"One block a week that nothing is allowed to claim.",
+ steps:["Pick the slot now — Saturday morning, Sunday afternoon, whenever is realistically quietest.","Tell the household it's yours, so it isn't a negotiation each week.","Guard it the way you'd guard someone else's appointment."],
+ why:"Recovery doesn't accumulate in leftover minutes. One protected block does more for the following week than a weekend of good intentions that keep getting eaten."}
+];
+
+/* ============================================================
+   4. STRUCTURAL CHANGES (not exercises — the things that make evenings easier)
+   ============================================================ */
+var CHANGES = [
+ {id:"c_trans",d:"transition",name:"Build a five-minute border",
+  body:"Between the last work thing and the first house thing, put five fixed minutes that belong to neither: change clothes, step outside, one song. Same five minutes every day, so it stops needing a decision."},
+ {id:"c_slice",d:"load",name:"Slice the house work, and set a stop time",
+  body:"House work expands to fill whatever it's given. Pick a nightly stop time — say 9pm — and do it in twenty-minute slices before then. What's left at the stop time is tomorrow's, by definition, not by failure."},
+ {id:"c_share",d:"load",name:"Hand over whole jobs, not tasks",
+  body:"Being asked to help still leaves you managing the house. Give away a complete area — all of the laundry, all of the bins, all of the school admin — including the remembering of it. That's the part that costs you."},
+ {id:"c_bound",d:"overload",name:"A closing time for work",
+  body:"Pick the hour work ends and make it visible: notifications off, laptop shut and physically put away, one line to yourself that the day is finished. A boundary nobody can see gets tested every evening."},
+ {id:"c_phone",d:"digital",name:"Give the phone a parking spot",
+  body:"Choose a place it lives after a certain hour — a shelf, a drawer, the kitchen counter. Not face down beside you. The distance is what does the work, and it protects the hour you meant to rest in."},
+ {id:"c_sleep",d:"sleep",name:"A thirty-minute runway",
+  body:"Half an hour before bed, dim the lights, no more screens, and do the same two or three small things in the same order every night. The sequence matters more than what's in it — your body learns to read it as an instruction."},
+ {id:"c_guilt",d:"guilt",name:"Rest isn't the reward for finishing",
+  body:"House work is built never to be finished, so rest-when-it's-done never comes. Put rest on the clock instead of on merit — the same twenty minutes whether the day went well or badly. That's the whole reframe."},
+ {id:"c_own",d:"ownership",name:"One slot a week with your name on it",
+  body:"Not leftover time — a named slot, in the calendar, that the household knows about. Leftover time is always the first thing to get taken."}
+];
+
+/* ============================================================
+   5. TINY EXPERIMENTS — optional, one at a time
+   ============================================================ */
+var EXPERIMENTS = [
+ {d:"transition",t:"Tomorrow, change out of your work clothes before you do a single house thing. Notice whether the evening feels different."},
+ {d:"digital",t:"For one evening, leave the phone in another room from 9pm. See where the hour actually goes."},
+ {d:"guilt",t:"Tonight, leave one visible thing undone on purpose — and go to bed anyway. It's an experiment in what actually happens. (Usually: nothing.)"},
+ {d:"load",t:"Write down every household job you currently hold in your head. Just the list. Don't do anything with it yet."},
+ {d:"overload",t:"Keep a notepad by the bed for three nights. When something surfaces, write it down instead of holding it."},
+ {d:"ownership",t:"Book twenty minutes with your own name on it this week, at a specific time, and tell someone it exists."},
+ {d:"sleep",t:"For three nights, dim the lights half an hour before bed. Change nothing else and see if it makes any difference."},
+ {d:"depletion",t:"Pick one evening this week to stop half an hour earlier than feels acceptable. Just once, as a test."}
+];
+
+/* ============================================================
+   6. STATE — everything stays on this device
+   ============================================================ */
+var KEY="winddown.v1";
+var S={answers:{},done:false,liked:[],disliked:[],history:[],dump:"",expIdx:0,last:null};
+function load(){
+  try{
+    var raw=localStorage.getItem(KEY);
+    if(raw){var p=JSON.parse(raw);for(var k in p){if(p.hasOwnProperty(k))S[k]=p[k];}}
+  }catch(e){/* private window, blocked storage — the page still works, it just won't remember */}
+}
+function save(){
+  try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}
+}
+load();
+
+var $=function(s){return document.querySelector(s);};
+var vIntro=$("#view-intro"),vQuiz=$("#view-quiz"),vPlan=$("#view-plan");
+function show(v){
+  [vIntro,vQuiz,vPlan].forEach(function(x){x.classList.add("hide");});
+  v.classList.remove("hide");
+  window.scrollTo({top:0,behavior:"instant"});
+}
+
+/* ============================================================
+   7. THE QUESTIONS, ONE AT A TIME
+   ============================================================ */
+var qi=0, draft={};
+function lamps(){
+  var h="";
+  for(var i=0;i<QUESTIONS.length;i++){
+    h+='<span class="lamp'+(i<qi?" on":(i===qi?" now":""))+'"></span>';
+  }
+  $("#lamps").innerHTML=h;
+  $("#qcount").textContent="Question "+(qi+1)+" of "+QUESTIONS.length;
+}
+function answered(q){
+  var v=draft[q.id];
+  if(q.kind==="multi")return Array.isArray(v)&&v.length>0;
+  return v!==undefined&&v!==null;
+}
+function renderQ(){
+  var q=QUESTIONS[qi],h="";
+  h+='<div class="card qcard stack g12">';
+  h+='<div class="stack g4"><h2>'+q.ask+'</h2><p class="soft" style="font-size:.95rem">'+q.sub+'</p></div>';
+  if(q.kind==="scale"){
+    h+='<div class="stack g6"><div class="scale" id="opts">';
+    for(var n=1;n<=10;n++){
+      h+='<button type="button" data-v="'+n+'" aria-pressed="'+(draft[q.id]===n)+'">'+n+'</button>';
+    }
+    h+='</div><div class="scale-ends"><span>'+q.lo+'</span><span>'+q.hi+'</span></div></div>';
+  }else{
+    h+='<div class="stack g6" id="opts">';
+    q.opts.forEach(function(o){
+      var on=q.kind==="multi"?(draft[q.id]||[]).indexOf(o.v)>-1:draft[q.id]===o.v;
+      h+='<button type="button" class="opt" data-v="'+o.v+'" aria-pressed="'+on+'">';
+      h+='<span class="tick" aria-hidden="true"></span><span>'+o.t+(o.n?'<em>'+o.n+'</em>':'')+'</span></button>';
+    });
+    h+='</div>';
+    if(q.kind==="multi")h+='<p class="label">Up to '+q.max+'</p>';
+  }
+  h+='</div>';
+  $("#qhost").innerHTML=h;
+  lamps();
+  $("#qnext").disabled=!answered(q);
+  $("#qnext").textContent=(qi===QUESTIONS.length-1)?"See what this says":"Next";
+  $("#qback").style.visibility=qi===0?"hidden":"visible";
+
+  Array.prototype.forEach.call($("#opts").children,function(b){
+    b.addEventListener("click",function(){
+      var v=q.kind==="scale"?parseInt(b.dataset.v,10):b.dataset.v;
+      if(q.kind==="multi"){
+        var cur=draft[q.id]||[],ix=cur.indexOf(v);
+        if(ix>-1)cur.splice(ix,1);
+        else{if(cur.length>=q.max)cur.shift();cur.push(v);}
+        draft[q.id]=cur;
+      }else{
+        draft[q.id]=v;
+      }
+      renderQ();
+      if(q.kind!=="multi"){setTimeout(next,240);}
+    });
+  });
+}
+function next(){
+  if(!answered(QUESTIONS[qi]))return;
+  if(qi<QUESTIONS.length-1){qi++;renderQ();}
+  else{S.answers=draft;S.done=true;save();renderPlan();show(vPlan);}
+}
+$("#qnext").addEventListener("click",next);
+$("#qback").addEventListener("click",function(){if(qi>0){qi--;renderQ();}});
+$("#start").addEventListener("click",function(){qi=0;draft=S.done?JSON.parse(JSON.stringify(S.answers)):{};show(vQuiz);renderQ();});
+
+/* ============================================================
+   8. MATCHING
+   ============================================================ */
+function rank(level){
+  var a=S.answers,ds=scoreDrivers(a),types=a.type||[],blocks=a.block||[];
+  return TECHNIQUES.filter(function(t){return t.lvl===level;})
+   .map(function(t){
+     var sc=0;
+     t.drivers.forEach(function(d){sc+=(ds[d]||0);});
+     t.types.forEach(function(ty){if(types.indexOf(ty)>-1)sc+=4;});
+     t.blocks.forEach(function(b){if(blocks.indexOf(b)>-1)sc+=3;});
+     if(S.liked.indexOf(t.id)>-1)sc+=6;
+     if(S.disliked.indexOf(t.id)>-1)sc-=100;
+     return {t:t,sc:sc};
+   })
+   .sort(function(x,y){return y.sc-x.sc;})
+   .filter(function(o){return o.sc>-50;})
+   .map(function(o){return o.t;});
+}
+var PICKED={
+ overload:"Picked for the mind that won\u2019t close down.",
+ transition:"Picked for the missing gap between the roles.",
+ ownership:"Picked because none of the day is currently yours.",
+ sleep:"Picked for how the nights have been going.",
+ load:"Picked for the weight of holding the house.",
+ depletion:"Picked for the evenings with nothing left in the tank.",
+ guilt:"Picked for the guilt that follows you to the sofa.",
+ digital:"Picked for the hour the phone keeps eating."
+};
+function whyLine(t){
+  var top=topDrivers(S.answers,3);
+  for(var i=0;i<top.length;i++){
+    if(t.drivers.indexOf(top[i])>-1)return PICKED[top[i]];
+  }
+  var types=S.answers.type||[];
+  for(var j=0;j<types.length;j++){
+    if(t.types.indexOf(types[j])>-1)return "Picked because it\u2019s the kind of thing you said you\u2019d enjoy.";
+  }
+  return "";
+}
+
+/* ============================================================
+   9. THE EMERGENCY PLAN
+   ============================================================ */
+function anchor(){
+  var t=S.answers.type||[];
+  if(t.indexOf("physical")>-1)return "Step outside for three minutes, even just to the doorway. Cold air on your face.";
+  if(t.indexOf("social")>-1)return "Send one message to the person you never have to explain yourself to. No essay — “today was a lot” is enough.";
+  if(t.indexOf("creative")>-1||t.indexOf("fun")>-1)return "One song, or ten minutes of the thing that absorbs you. Nothing that has to be finished.";
+  return "Hot shower, door closed, phone outside the room.";
+}
+function emergencyHTML(){
+  return '<div class="emergency stack g8">'
+   +'<p class="label">For the days that have already gone</p>'
+   +'<h2>The bad-day plan</h2>'
+   +'<p class="soft" style="font-size:.97rem">You don\'t have to read the rest of this page. Do these, in this order, and let tonight be a write-off. Write-offs are allowed.</p>'
+   +'<ol>'
+   +'<li><strong>Stop the day where it is.</strong> Whatever is left on the list is not happening tonight. That\'s a decision, not a failure.</li>'
+   +'<li><strong>Find the one thing that genuinely must happen.</strong> Usually it\'s: everyone is fed, everyone is safe. Do that one. Nothing else counts tonight.</li>'
+   +'<li><strong>Ninety seconds of breathing.</strong> In through the nose, out slowly through the mouth for twice as long. Five times.</li>'
+   +'<li><strong>One thing that comforts, not one that achieves.</strong> '+anchor()+'</li>'
+   +'<li><strong>Bed, earlier than you think you\'re allowed.</strong> Lying down counts even if sleep doesn\'t come. Nothing more is required of you today.</li>'
+   +'</ol>'
+   +'<p class="aside" style="margin-top:.6rem">If most days are becoming bad days, that\'s worth telling someone — a doctor or a therapist, not a workbook. That isn\'t a sign you\'ve failed at coping; it\'s the same as seeing someone about a cough that won\'t clear.</p>'
+   +'</div>';
+}
+$("#skip-to-emergency").addEventListener("click",function(){
+  vPlan.innerHTML='<div class="stack g16">'+emergencyHTML()
+    +'<div class="row"><button class="btn ghost" id="back-home">Back</button></div></div>';
+  show(vPlan);
+  $("#back-home").addEventListener("click",function(){
+    if(S.done){renderPlan();show(vPlan);}else{show(vIntro);}
+  });
+});
+
+/* ============================================================
+   10. THE PLAN
+   ============================================================ */
+var LEVELS=[
+ {n:1,label:"I have almost nothing left",dur:"2–5 minutes",lit:1,
+  note:"For the evenings where deciding is itself too much. These are already decided."},
+ {n:2,label:"I have a bit of energy",dur:"10–20 minutes",lit:2,
+  note:"Enough for something that actually shifts how the evening feels."},
+ {n:3,label:"I actually feel okay",dur:"30–60 minutes",lit:3,
+  note:"Not for catching up. For the part of life that isn't work or the house."}
+];
+
+function techHTML(t,showWhy,seen){
+  var h='<div class="tech">';
+  h+='<div class="row" style="justify-content:space-between;align-items:baseline">';
+  h+='<h4>'+t.name+'</h4><span class="dur">'+t.dur+'</span></div>';
+  h+='<p class="soft" style="font-size:.95rem">'+t.what+'</p>';
+  h+='<ol>'+t.steps.map(function(s){return "<li>"+s+"</li>";}).join("")+'</ol>';
+  h+='<p class="why">'+t.why+'</p>';
+  if(showWhy){
+    var w=whyLine(t);
+    if(w&&seen){if(seen[w])w="";else seen[w]=1;}
+    if(w)h+='<p class="picked">'+w+'</p>';
+  }
+  h+='</div>';
+  return h;
+}
+
+function supportHTML(){
+  var w=S.answers.weeks,tank=S.answers.tank;
+  var heavy = (w==="nearly") || (w==="most" && tank<=3);
+  if(!heavy) return "";
+  return '<div class="note stack g6">'
+   +'<p class="label">Worth saying plainly</p>'
+   +'<p>You said this has been most days, for a while now. That\'s more than a tiring week, and a wind-down page isn\'t the right tool for it on its own — not because you\'re doing badly, but because it isn\'t built for that.</p>'
+   +'<p>It\'s worth talking to your doctor or a therapist about how the last few weeks have felt. Everything on this page still helps; it just shouldn\'t be the only thing helping. Nobody has to be in crisis to be allowed that conversation.</p>'
+   +'</div>';
+}
+
+function changesHTML(){
+  var top=topDrivers(S.answers,4);
+  var picked=[],seen={};
+  top.forEach(function(d){
+    CHANGES.forEach(function(c){
+      if(c.d===d&&!seen[c.id]&&picked.length<3){seen[c.id]=1;picked.push(c);}
+    });
+  });
+  if(!picked.length)picked=[CHANGES[0],CHANGES[6]];
+  return picked.map(function(c){
+    return '<div class="stack g4"><h3>'+c.name+'</h3><p class="soft" style="font-size:.97rem">'+c.body+'</p></div>';
+  }).join('<hr class="rule">');
+}
+
+function shareHTML(){
+  var d=S.answers.drain||[];
+  if(d.indexOf("house")<0&&d.indexOf("caring")<0)return "";
+  return '<div class="section stack g8">'
+   +'<p class="label">The part no technique fixes</p>'
+   +'<h2>Sharing the load</h2>'
+   +'<p class="soft">Breathing exercises don\'t change an unfair split, and it isn\'t your job to become better at absorbing it. If the house is mostly yours, that\'s the thing to change — and the conversation goes better when it\'s specific rather than at the end of a bad evening.</p>'
+   +'<div class="card stack g8"><p class="label">Something like this</p>'
+   +'<p style="font-style:italic">“I\'m not asking for help with the house — I\'m asking to not be the one holding all of it. Can you take these three things completely: the ones where you also do the remembering, not just the doing? Then it\'s off my list rather than delegated from it.”</p>'
+   +'<p class="soft" style="font-size:.92rem">Pick three whole areas — laundry, bins, anything with admin attached — and hand them over entirely. Not tasks; areas. The mental part is the heavy half.</p></div>'
+   +'<p class="aside">Why it matters: research on household load consistently finds the exhausting part isn\'t the chores, it\'s being the person who keeps track. That part is invisible, so it has to be named to be shared.</p>'
+   +'</div>';
+}
+
+function keptHTML(){
+  if(!S.liked.length)return "";
+  var rows=S.liked.map(function(id){
+    var t=TECHNIQUES.filter(function(x){return x.id===id;})[0];
+    return t?'<div class="kept"><span>'+t.name+'</span><span class="dur" style="margin-left:auto">'+t.dur+'</span></div>':"";
+  }).join("");
+  return '<div class="section stack g8"><p class="label">Built from what actually worked</p>'
+   +'<h2>Your routine so far</h2>'
+   +'<p class="soft">These are the ones you said left you feeling lighter. They\'ll come up first from now on.</p>'
+   +'<div class="card">'+rows+'</div></div>';
+}
+
+function renderPlan(){
+  var a=S.answers,top=topDrivers(a,3);
+  var h="";
+
+  h+=supportHTML();
+
+  /* --- read-back --- */
+  h+='<div class="section stack g12">';
+  h+='<p class="label">What your answers point to</p>';
+  h+='<h1>It isn\'t that you\'re bad at resting.</h1>';
+  h+='<p class="soft">Three things stood out. None of them are a diagnosis — they\'re just where your energy is going.</p>';
+  h+='<div class="card stack g12">';
+  h+=top.map(function(d){
+    return '<div class="driver"><span class="dot"></span><div class="stack g4">'
+      +'<h3>'+DRIVERS[d].name+'</h3>'
+      +'<p class="soft" style="font-size:.96rem">'+DRIVERS[d].read+'</p>'
+      +'<p style="font-size:.93rem;color:var(--ink-faint)">'+DRIVERS[d].why+'</p></div></div>';
+  }).join('<hr class="rule">');
+  h+='</div>';
+  h+='<p class="aside">Why this matters: most wind-down advice fails because it treats every kind of tired the same. Yours has a shape, and the suggestions below are picked to fit it rather than to fill an evening.</p>';
+  h+='</div>';
+
+  /* --- tonight --- */
+  h+='<div class="section stack g8" id="tonight-wrap">';
+  h+='<p class="label">Start here — one thing only</p>';
+  h+='<h2>Tonight</h2>';
+  h+='<div id="tonight"></div>';
+  h+='</div>';
+
+  /* --- three levels --- */
+  h+='<div class="section stack g12">';
+  h+='<p class="label">Matched to your answers</p>';
+  h+='<h2>Three sizes, depending on the day</h2>';
+  h+='<p class="soft">You don\'t work through these. You open the one that matches how tonight actually is — and the smallest one counts just as much as the biggest.</p>';
+  LEVELS.forEach(function(L){
+    var list=rank(L.n),off=0;
+    h+='<div class="level" data-level="'+L.n+'"><header>';
+    h+='<span class="bulbs">';
+    for(var i=1;i<=3;i++)h+='<span class="bulb'+(i<=L.lit?" lit":"")+'"></span>';
+    h+='</span><div class="stack g4"><h3>Level '+L.n+' &middot; '+L.label+'</h3>'
+      +'<span class="dur">'+L.dur+'</span></div></header>';
+    var seen={};
+    h+='<div class="tech-slot">'+list.slice(0,2).map(function(t){return techHTML(t,true,seen);}).join("")+'</div>';
+    h+='<div class="tech" style="padding-top:.85rem"><div class="row" style="justify-content:space-between">'
+      +'<span class="soft" style="font-size:.9rem">'+L.note+'</span>'
+      +'<button class="linkish swap" data-level="'+L.n+'" data-off="'+off+'">Show another</button></div></div>';
+    h+='</div>';
+  });
+  h+='<p class="aside">Why three levels: a routine that only works on good days is a routine that mostly doesn\'t work. Level 1 exists so that the answer on a flat evening is never “nothing”.</p>';
+  h+='</div>';
+
+  /* --- structural changes --- */
+  h+='<div class="section stack g8"><p class="label">Beyond tonight</p>';
+  h+='<h2>What would make the evenings easier</h2>';
+  h+='<p class="soft">Two or three changes to the shape of the week — worth more than any single exercise, and slower to put in place. No rush.</p>';
+  h+='<div class="card stack g12">'+changesHTML()+'</div></div>';
+
+  h+=shareHTML();
+
+  /* --- experiment --- */
+  var exs=EXPERIMENTS.filter(function(e){return top.indexOf(e.d)>-1;});
+  if(!exs.length)exs=EXPERIMENTS;
+  var ex=exs[S.expIdx%exs.length];
+  h+='<div class="section stack g8"><p class="label">Optional, and genuinely optional</p>';
+  h+='<h2>A tiny experiment</h2>';
+  h+='<div class="card stack g8"><p>'+ex.t+'</p>';
+  h+='<div class="row"><button class="btn small" id="ex-did">I tried it</button>'
+    +'<button class="btn small ghost" id="ex-next">Give me a different one</button></div></div>';
+  h+='<p class="aside">It\'s framed as an experiment on purpose. An experiment can come out either way — there\'s nothing to fail at.</p></div>';
+
+  /* --- pacer --- */
+  h+='<div class="section stack g8"><p class="label">Here whenever you want it</p>';
+  h+='<h2>Breathe with the circle</h2>';
+  h+='<p class="soft">In for four, out for six. Follow the shape rather than counting — it works out at about six breaths a minute, which is the pace that settles things fastest.</p>';
+  h+='<div class="card"><div class="pacer"><div class="orb out" id="orb"><span id="orb-txt">Ready</span></div>'
+    +'<div class="row"><button class="btn small" id="breathe">Start</button>'
+    +'<span class="label" id="breath-count"></span></div></div></div></div>';
+
+  /* --- brain dump --- */
+  h+='<div class="section stack g8"><p class="label">Nothing here is saved anywhere but this device</p>';
+  h+='<h2>Put it down for the night</h2>';
+  h+='<p class="soft">Everything you\'re holding — jobs, worries, the thing you keep almost forgetting. Badly written and out of order is the correct way to do this.</p>';
+  h+='<textarea id="dump" placeholder="Anything at all. It doesn\'t have to make sense."></textarea>';
+  h+='<div class="row"><button class="btn small ghost" id="shred">Shred it</button>'
+    +'<span class="label" id="dump-msg"></span></div>';
+  h+='<p class="aside">Why it works: an unwritten list has to be actively held in mind. Written down, your brain stops rehearsing it — which is usually the thing keeping you awake.</p></div>';
+
+  h+=keptHTML();
+
+  /* --- emergency --- */
+  h+='<div class="section">'+emergencyHTML()+'</div>';
+
+  /* --- when it's more than tired --- */
+  h+='<div class="section stack g8"><p class="label">Worth knowing where the line is</p>';
+  h+='<h2>Ordinary tired, and something more</h2>';
+  h+='<div class="card stack g12">';
+  h+='<div class="stack g4"><h3>The kind this page is for</h3><p class="soft" style="font-size:.96rem">You feel better after a good evening or a proper weekend. You still enjoy things when you get to them. The tiredness tracks the week — heavy on the hard days, lighter on the easy ones.</p></div>';
+  h+='<hr class="rule">';
+  h+='<div class="stack g4"><h3>The kind worth taking to a professional</h3><p class="soft" style="font-size:.96rem">Rest stops making a difference. Things you used to enjoy have gone flat. Sleep, appetite or concentration have changed for a couple of weeks or more. You\'re struggling to manage work or home in a way that isn\'t like you. It\'s most days rather than some days.</p></div>';
+  h+='</div>';
+  h+='<div class="note stack g6"><p class="label">If it goes further than that</p>';
+  h+='<p>If you\'re having thoughts of harming yourself, or feel unable to keep yourself safe, please contact your local emergency number or a crisis line now rather than working through anything here. <a href="https://findahelpline.com" target="_blank" rel="noopener">findahelpline.com</a> lists free, confidential lines by country. Reaching out early isn\'t an overreaction.</p></div>';
+  h+='<p class="aside">Needing a professional isn\'t the failure state of a workbook. It\'s just a different tool for a different job — and asking early makes it a smaller job.</p></div>';
+
+  h+='<div class="row" style="justify-content:space-between;padding-top:.5rem">';
+  h+='<button class="linkish" id="redo">Answer the questions again</button>';
+  h+='<button class="linkish" id="wipe">Erase everything from this device</button></div>';
+
+  vPlan.innerHTML=h;
+  wirePlan();
+  renderTonight();
+}
+
+/* ============================================================
+   11. TONIGHT — the loop that builds the routine
+   ============================================================ */
+var tnLevel=null,tnTech=null,tnPhase="pick";
+var CHECKIN=[
+ {lvl:1,t:"Running on empty",n:"Two to five minutes, already decided for you"},
+ {lvl:2,t:"There's a bit left",n:"Ten to twenty minutes"},
+ {lvl:3,t:"Actually alright tonight",n:"Half an hour or more, for the good stuff"}
+];
+function pickTech(lvl){
+  var list=rank(lvl);
+  if(!list.length)return null;
+  var fresh=list.filter(function(t){return t.id!==S.last;});
+  return (fresh.length?fresh:list)[0];
+}
+function renderTonight(){
+  var host=document.getElementById("tonight");
+  if(!host)return;
+  var h="";
+  if(tnPhase==="pick"){
+    h+='<div class="card stack g8"><p style="font-size:.98rem">How is tonight, honestly?</p><div class="stack g6">';
+    CHECKIN.forEach(function(c){
+      h+='<button type="button" class="opt checkin" data-lvl="'+c.lvl+'" aria-pressed="false">'
+       +'<span class="tick" aria-hidden="true"></span><span>'+c.t+'<em>'+c.n+'</em></span></button>';
+    });
+    h+='</div><p class="label">No wrong answer, and it can be different tomorrow</p></div>';
+  }else if(tnPhase==="offer"&&tnTech){
+    h+='<div class="card stack g8" style="border-color:var(--amber)">';
+    h+='<p class="label">One thing, chosen for tonight</p>';
+    h+=techHTML(tnTech,true).replace('class="tech"','class="tech" style="padding:0"');
+    h+='<div class="row"><button class="btn small" id="tn-did">I\'ll try this</button>'
+      +'<button class="btn small ghost" id="tn-other">Something else</button>'
+      +'<button class="linkish" id="tn-not">Not tonight</button></div></div>';
+  }else if(tnPhase==="feedback"){
+    h+='<div class="card stack g8"><p style="font-size:.98rem">How did that land?</p><div class="stack g6">'
+     +'<button type="button" class="opt fb" data-fb="good" aria-pressed="false"><span class="tick" aria-hidden="true"></span><span>A bit lighter<em>Keep this one</em></span></button>'
+     +'<button type="button" class="opt fb" data-fb="ok" aria-pressed="false"><span class="tick" aria-hidden="true"></span><span>Fine, nothing dramatic<em>That still counts</em></span></button>'
+     +'<button type="button" class="opt fb" data-fb="no" aria-pressed="false"><span class="tick" aria-hidden="true"></span><span>Not for me<em>I won\'t suggest it again</em></span></button>'
+     +'</div></div>';
+  }else{
+    var msg=S.lastFb==="good"
+      ?"Good. That one’s yours now — it’ll come up first from here on."
+      :S.lastFb==="no"
+      ?"Noted, and dropped. There are plenty of others; the point is finding the ones that fit you."
+      :"That’s a perfectly good outcome. Most evenings are quietly fine rather than transformed.";
+    h+='<div class="card stack g8"><p>'+msg+'</p>'
+     +'<p class="soft" style="font-size:.95rem">That\'s enough for tonight. Come back tomorrow if you feel like it — and if you don\'t, nothing is lost.</p>'
+     +'<div class="row"><button class="btn small ghost" id="tn-reset">Something else anyway</button></div></div>';
+  }
+  host.innerHTML=h;
+
+  Array.prototype.forEach.call(host.querySelectorAll(".checkin"),function(b){
+    b.addEventListener("click",function(){
+      tnLevel=parseInt(b.dataset.lvl,10);
+      tnTech=pickTech(tnLevel);
+      tnPhase="offer";renderTonight();
+    });
+  });
+  Array.prototype.forEach.call(host.querySelectorAll(".fb"),function(b){
+    b.addEventListener("click",function(){
+      var fb=b.dataset.fb;
+      S.lastFb=fb;
+      if(tnTech){
+        if(fb==="good"&&S.liked.indexOf(tnTech.id)<0)S.liked.push(tnTech.id);
+        if(fb==="no"&&S.disliked.indexOf(tnTech.id)<0)S.disliked.push(tnTech.id);
+        S.history.push({id:tnTech.id,fb:fb,at:Date.now()});
+      }
+      save();
+      tnPhase="done";
+      renderPlan();
+    });
+  });
+  var did=document.getElementById("tn-did");
+  if(did)did.addEventListener("click",function(){
+    if(tnTech){S.last=tnTech.id;save();}
+    tnPhase="feedback";renderTonight();
+  });
+  var other=document.getElementById("tn-other");
+  if(other)other.addEventListener("click",function(){
+    var list=rank(tnLevel),i=list.indexOf(tnTech);
+    tnTech=list[(i+1)%list.length];
+    renderTonight();
+  });
+  var not=document.getElementById("tn-not");
+  if(not)not.addEventListener("click",function(){
+    tnPhase="done";S.lastFb="skip";
+    document.getElementById("tonight").innerHTML=
+      '<div class="card stack g6"><p>Then not tonight. Skipping is part of how this is meant to work — there’s no streak to break.</p>'
+      +'<p class="soft" style="font-size:.95rem">The bad-day plan is at the bottom of this page if the evening needs it.</p></div>';
+  });
+  var rst=document.getElementById("tn-reset");
+  if(rst)rst.addEventListener("click",function(){tnPhase="pick";tnTech=null;renderTonight();});
+}
+
+/* ============================================================
+   12. WIRING THE REST OF THE PLAN
+   ============================================================ */
+var breathTimer=null;
+function wirePlan(){
+  /* swap a level's suggestions */
+  Array.prototype.forEach.call(vPlan.querySelectorAll(".swap"),function(b){
+    b.addEventListener("click",function(){
+      var lvl=parseInt(b.dataset.level,10),off=parseInt(b.dataset.off,10)+2;
+      var list=rank(lvl);
+      if(off>=list.length)off=0;
+      b.dataset.off=off;
+      var slot=vPlan.querySelector('.level[data-level="'+lvl+'"] .tech-slot');
+      var picks=list.slice(off,off+2);
+      if(picks.length<2)picks=picks.concat(list.slice(0,2-picks.length));
+      var seen={};
+      slot.innerHTML=picks.map(function(t){return techHTML(t,true,seen);}).join("");
+    });
+  });
+
+  /* tiny experiment */
+  var exd=document.getElementById("ex-did"),exn=document.getElementById("ex-next");
+  if(exn)exn.addEventListener("click",function(){S.expIdx++;save();renderPlan();});
+  if(exd)exd.addEventListener("click",function(){
+    S.expIdx++;save();
+    exd.parentNode.parentNode.innerHTML='<p>Good. What did you notice? Nothing is the most common answer, and it’s a real one.</p><p class="soft" style="font-size:.95rem">A different one will be here next time you open this.</p>';
+  });
+
+  /* breathing pacer */
+  var orb=document.getElementById("orb"),txt=document.getElementById("orb-txt"),
+      btn=document.getElementById("breathe"),cnt=document.getElementById("breath-count");
+  if(btn)btn.addEventListener("click",function(){
+    if(breathTimer){
+      clearTimeout(breathTimer);breathTimer=null;
+      btn.textContent="Start";txt.textContent="Ready";cnt.textContent="";
+      orb.className="orb out";return;
+    }
+    btn.textContent="Stop";
+    var n=0,inhale=true;
+    (function cycle(){
+      if(inhale){orb.className="orb in";txt.textContent="In";}
+      else{orb.className="orb out";txt.textContent="Out";n++;cnt.textContent=n+" breath"+(n===1?"":"s");}
+      var wait=inhale?4000:6000;
+      inhale=!inhale;
+      breathTimer=setTimeout(cycle,wait);
+    })();
+  });
+
+  /* brain dump */
+  var ta=document.getElementById("dump"),msg=document.getElementById("dump-msg"),
+      shred=document.getElementById("shred");
+  if(ta){
+    ta.value=S.dump||"";
+    var t=null;
+    ta.addEventListener("input",function(){
+      clearTimeout(t);
+      t=setTimeout(function(){S.dump=ta.value;save();msg.textContent="Saved on this device";},400);
+    });
+    shred.addEventListener("click",function(){
+      ta.value="";S.dump="";save();msg.textContent="Gone.";
+    });
+  }
+
+  /* start over / erase */
+  var redo=document.getElementById("redo"),wipe=document.getElementById("wipe");
+  if(redo)redo.addEventListener("click",function(){
+    qi=0;draft=JSON.parse(JSON.stringify(S.answers||{}));show(vQuiz);renderQ();
+  });
+  if(wipe)wipe.addEventListener("click",function(){
+    try{localStorage.removeItem(KEY);}catch(e){}
+    S={answers:{},done:false,liked:[],disliked:[],history:[],dump:"",expIdx:0,last:null};
+    tnPhase="pick";tnTech=null;tnLevel=null;
+    show(vIntro);
+    document.getElementById("resume").hidden=true;
+  });
+}
+
+/* ============================================================
+   13. BOOT
+   ============================================================ */
+if(S.done){
+  var r=document.getElementById("resume");
+  r.hidden=false;
+  r.textContent="Open my plan";
+  r.addEventListener("click",function(){renderPlan();show(vPlan);});
+  document.getElementById("start").textContent="Answer the questions again";
+}
+})();
+</script>
