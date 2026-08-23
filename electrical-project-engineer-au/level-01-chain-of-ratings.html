@@ -1,0 +1,1359 @@
+<title>Chain of Ratings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --paper:#F0F3F2; --surface:#FFFFFF; --surface2:#E6EBEA; --sunk:#DCE3E2;
+  --ink:#121A1C; --ink2:#3D4A4D; --ink3:#6B7A7D; --rule:#C6D0CF; --rule2:#DDE4E3;
+  --copper:#A85B26; --earth:#5A7A1B; --neut:#1F5E85; --danger:#AB3620;
+  --copper-bg:#F7EAE0; --earth-bg:#EBF0DC; --neut-bg:#E1EDF4; --danger-bg:#F8E4DF;
+  --shadow:0 1px 2px rgba(18,26,28,.06),0 8px 24px rgba(18,26,28,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C1113; --surface:#141B1D; --surface2:#1B2427; --sunk:#0F1618;
+    --ink:#E5EBE9; --ink2:#AFBCBA; --ink3:#7A8A89; --rule:#2A3639; --rule2:#212C2F;
+    --copper:#DE8E51; --earth:#A6C858; --neut:#63AAD4; --danger:#E67B63;
+    --copper-bg:#2A1C12; --earth-bg:#1E2612; --neut-bg:#122430; --danger-bg:#2C1712;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C1113; --surface:#141B1D; --surface2:#1B2427; --sunk:#0F1618;
+  --ink:#E5EBE9; --ink2:#AFBCBA; --ink3:#7A8A89; --rule:#2A3639; --rule2:#212C2F;
+  --copper:#DE8E51; --earth:#A6C858; --neut:#63AAD4; --danger:#E67B63;
+  --copper-bg:#2A1C12; --earth-bg:#1E2612; --neut-bg:#122430; --danger-bg:#2C1712;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.3);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Barlow",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:17px; line-height:1.62; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px 80px}
+h1,h2,h3,h4{font-family:"Barlow Condensed","Barlow Semi Condensed",Impact,sans-serif;
+  font-weight:700;line-height:1.06;text-wrap:balance;margin:0}
+p{margin:0}
+.mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-variant-numeric:tabular-nums}
+a{color:var(--copper)}
+
+/* ---------- masthead ---------- */
+.mast{padding:56px 0 28px;border-bottom:2px solid var(--ink)}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink3);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.eyebrow b{color:var(--copper);font-weight:600}
+.mast h1{font-size:clamp(52px,10.5vw,104px);letter-spacing:-.015em;margin:14px 0 0;
+  text-transform:uppercase}
+.mast .sub{font-size:20px;color:var(--ink2);max-width:60ch;margin-top:14px}
+.mast .sub em{font-style:normal;color:var(--ink);font-weight:600;
+  box-shadow:inset 0 -8px 0 var(--copper-bg)}
+
+/* ---------- how to use ---------- */
+.howto{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:0;
+  border:1px solid var(--rule);border-radius:3px;margin:26px 0 0;overflow:hidden;background:var(--surface)}
+.howto div{padding:16px 18px;border-right:1px solid var(--rule2)}
+.howto div:last-child{border-right:0}
+.howto strong{display:block;font-family:"Barlow Condensed",sans-serif;font-size:19px;
+  text-transform:uppercase;letter-spacing:.02em;margin-bottom:2px}
+.howto span{font-size:14.5px;color:var(--ink2);line-height:1.45;display:block}
+
+/* ---------- pathway ---------- */
+.path{margin:34px 0 0;overflow-x:auto;padding-bottom:6px}
+.path-inner{display:flex;gap:6px;min-width:760px}
+.step{flex:1;padding:9px 10px;border:1px solid var(--rule);border-radius:2px;
+  background:var(--surface);font-size:12px;line-height:1.25;color:var(--ink3)}
+.step b{display:block;font-family:"IBM Plex Mono",monospace;font-size:10.5px;
+  letter-spacing:.1em;color:var(--ink3);margin-bottom:3px}
+.step.now{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.step.now b{color:var(--copper)}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:0;z-index:40;background:var(--paper);
+  border-bottom:1px solid var(--rule);margin-top:34px}
+.nav-scroll{display:flex;gap:4px;overflow-x:auto;padding:10px 0;scrollbar-width:thin}
+.nav a{flex:0 0 auto;font-family:"IBM Plex Mono",monospace;font-size:11.5px;
+  letter-spacing:.05em;text-decoration:none;color:var(--ink2);padding:6px 11px;
+  border:1px solid var(--rule);border-radius:2px;background:var(--surface);white-space:nowrap}
+.nav a:hover{border-color:var(--copper);color:var(--copper)}
+.nav a:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+.bar{height:3px;background:var(--sunk)}
+.bar i{display:block;height:100%;width:0;background:var(--copper);transition:width .15s linear}
+
+/* ---------- sections ---------- */
+section{padding-top:52px}
+.sechead{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+  border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:24px}
+.secno{font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600;
+  color:var(--copper);letter-spacing:.06em}
+.sechead h2{font-size:clamp(30px,5vw,46px);text-transform:uppercase;letter-spacing:-.01em;flex:1}
+.mins{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink3);
+  letter-spacing:.08em;text-transform:uppercase}
+
+/* ---------- cards ---------- */
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:3px;
+  padding:22px 24px;margin-bottom:16px;box-shadow:var(--shadow);position:relative}
+.card > * + *{margin-top:14px}
+.tag{position:absolute;top:-1px;right:-1px;font-family:"IBM Plex Mono",monospace;
+  font-size:10px;letter-spacing:.12em;color:var(--ink3);background:var(--surface2);
+  padding:4px 9px;border-left:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  border-radius:0 3px 0 3px;text-transform:uppercase}
+.card h3{font-size:27px;text-transform:uppercase;letter-spacing:.005em;padding-right:110px}
+.card h4{font-size:19px;text-transform:uppercase;color:var(--ink2);letter-spacing:.03em}
+.card p{max-width:66ch}
+.lede{font-size:18.5px;color:var(--ink2)}
+
+/* ---------- strips ---------- */
+.strip{border-left:4px solid;padding:13px 16px;border-radius:0 3px 3px 0;font-size:16px;line-height:1.5}
+.strip b{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;display:block;margin-bottom:5px}
+.rule-s{border-color:var(--earth);background:var(--earth-bg)}
+.rule-s b{color:var(--earth)}
+.flag{border-color:var(--danger);background:var(--danger-bg)}
+.flag b{color:var(--danger)}
+.ask{border-color:var(--neut);background:var(--neut-bg)}
+.ask b{color:var(--neut)}
+.desk{border-color:var(--copper);background:var(--copper-bg)}
+.desk b{color:var(--copper)}
+.strip p + p{margin-top:8px}
+
+/* ---------- tldr ---------- */
+.tldr{background:var(--ink);color:var(--paper);border-radius:3px;padding:18px 22px;margin-bottom:18px}
+.tldr b{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;
+  color:var(--copper);text-transform:uppercase;display:block;margin-bottom:7px}
+.tldr p{font-size:19px;line-height:1.45;max-width:64ch;font-weight:500}
+
+/* ---------- numbers ---------- */
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.num{border:1px solid var(--rule);border-radius:3px;padding:14px 16px;background:var(--surface2)}
+.num .v{font-family:"IBM Plex Mono",monospace;font-size:30px;font-weight:600;
+  line-height:1;color:var(--copper);letter-spacing:-.02em}
+.num .k{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink3);margin-top:7px}
+.num .d{font-size:14px;color:var(--ink2);line-height:1.4;margin-top:5px}
+
+/* ---------- formula ---------- */
+.eq{background:var(--sunk);border:1px solid var(--rule);border-radius:3px;padding:16px 18px;
+  font-family:"IBM Plex Mono",monospace;font-size:15px;line-height:1.85;overflow-x:auto;
+  white-space:pre;color:var(--ink)}
+.eq .hl{color:var(--copper);font-weight:600}
+.eq .dim{color:var(--ink3)}
+
+/* ---------- table ---------- */
+.tw{overflow-x:auto;border:1px solid var(--rule);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:15.5px}
+th{font-family:"Barlow Condensed",sans-serif;font-size:15px;text-transform:uppercase;
+  letter-spacing:.06em;text-align:left;padding:10px 14px;background:var(--surface2);
+  border-bottom:1px solid var(--rule);color:var(--ink2);white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--rule2);vertical-align:top;line-height:1.45}
+tr:last-child td{border-bottom:0}
+td.m{font-family:"IBM Plex Mono",monospace;font-size:14px;white-space:nowrap}
+
+/* ---------- figures ---------- */
+figure{margin:0;background:var(--surface2);border:1px solid var(--rule);border-radius:3px;
+  padding:18px 18px 14px;overflow-x:auto}
+figure svg{display:block;width:100%;height:auto;max-width:100%;color:var(--ink)}
+figcaption{font-size:14px;color:var(--ink2);margin-top:12px;line-height:1.45;
+  border-top:1px solid var(--rule);padding-top:10px;max-width:70ch}
+figcaption b{color:var(--ink)}
+.d-s{stroke:currentColor;fill:none;stroke-width:1.5}
+.d-s2{stroke:currentColor;fill:none;stroke-width:2.6}
+.d-thin{stroke:currentColor;fill:none;stroke-width:1;opacity:.4}
+.d-dash{stroke:currentColor;fill:none;stroke-width:1.3;stroke-dasharray:4 4;opacity:.65}
+.d-box{fill:var(--surface);stroke:currentColor;stroke-width:1.5}
+.d-t{fill:currentColor;font-family:"IBM Plex Mono",monospace;font-size:12px}
+.d-t9{fill:currentColor;font-family:"IBM Plex Mono",monospace;font-size:10px;opacity:.7}
+.d-h{fill:currentColor;font-family:"Barlow Condensed",sans-serif;font-size:15px;
+  font-weight:700;letter-spacing:.05em}
+.cu{color:var(--copper)} .ea{color:var(--earth)} .ne{color:var(--neut)} .da{color:var(--danger)}
+.d-fill{fill:currentColor}
+.d-mut{opacity:.45}
+
+/* ---------- quiz ---------- */
+details{border:1px solid var(--rule);border-radius:3px;background:var(--surface);
+  margin-bottom:12px;box-shadow:var(--shadow)}
+details[open]{border-color:var(--copper)}
+summary{cursor:pointer;padding:16px 20px;list-style:none;display:flex;gap:14px;align-items:flex-start}
+summary::-webkit-details-marker{display:none}
+summary:focus-visible{outline:2px solid var(--copper);outline-offset:-2px}
+.qn{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;color:var(--copper);
+  flex:0 0 auto;padding-top:3px}
+.qt{flex:1;font-size:17px;font-weight:500;line-height:1.45}
+.qt .opts{display:block;font-family:"IBM Plex Mono",monospace;font-size:14px;
+  color:var(--ink2);margin-top:7px;font-weight:400}
+.reveal{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink3);flex:0 0 auto;padding-top:4px;border:1px solid var(--rule);
+  padding:3px 8px;border-radius:2px}
+details[open] .reveal{color:var(--copper);border-color:var(--copper)}
+.ans{padding:0 20px 20px;border-top:1px dashed var(--rule);margin-top:0}
+.ans > * + *{margin-top:12px}
+.ans .verdict{font-family:"Barlow Condensed",sans-serif;font-size:24px;text-transform:uppercase;
+  color:var(--earth);padding-top:16px;letter-spacing:.02em}
+.ans p{font-size:16px;max-width:66ch}
+
+/* ---------- footer ---------- */
+footer{margin-top:64px;border-top:2px solid var(--ink);padding-top:26px}
+footer h3{font-size:30px;text-transform:uppercase}
+.disc{font-size:13.5px;color:var(--ink3);max-width:72ch;margin-top:18px;line-height:1.5}
+
+@media (max-width:640px){
+  body{font-size:16.5px}
+  .card{padding:18px 16px}
+  .card h3{padding-right:0;font-size:24px}
+  .tag{position:static;display:inline-block;border:1px solid var(--rule);border-radius:2px;margin-bottom:8px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="eyebrow">
+    <span>Australian Electrical Project Engineer</span><span>·</span>
+    <b>Level 1 of 9</b><span>·</span><span>Fundamentals for delivery</span>
+  </div>
+  <h1>Chain of<br>Ratings</h1>
+  <p class="sub">Everything on an electrical drawing is a number that came from somewhere
+  and must agree with the number next to it. This module teaches you <em>how to find the
+  break</em> — with no maths you can't do in your head.</p>
+
+  <div class="howto">
+    <div><strong>Nothing to memorise</strong><span>Every answer is taught here. No cold quizzes — the quiz at the end explains itself.</span></div>
+    <div><strong>One card, one idea</strong><span>Read a card, look at its picture, move on. Stop anywhere and come back.</span></div>
+    <div><strong>Colour is meaning</strong><span><span style="color:var(--earth);font-weight:600">Green</span> = the rule. <span style="color:var(--danger);font-weight:600">Red</span> = red flag. <span style="color:var(--neut);font-weight:600">Blue</span> = ask this on your project.</span></div>
+  </div>
+
+  <div class="path"><div class="path-inner">
+    <div class="step now"><b>L1</b>Fundamentals</div>
+    <div class="step"><b>L2</b>Reading SLDs</div>
+    <div class="step"><b>L3</b>Schematics &amp; control</div>
+    <div class="step"><b>L4</b>Cable &amp; termination</div>
+    <div class="step"><b>L5</b>Switchboards</div>
+    <div class="step"><b>L6</b>Test &amp; commission</div>
+    <div class="step"><b>L7</b>Project delivery</div>
+    <div class="step"><b>L8</b>PE scenarios</div>
+    <div class="step"><b>L9</b>Troubleshooting</div>
+  </div></div>
+</header>
+
+<nav class="nav" aria-label="Module sections">
+  <div class="nav-scroll">
+    <a href="#s1">01 · VOLTAGE</a>
+    <a href="#s2">02 · THE MATHS</a>
+    <a href="#s3">03 · THREE CURRENTS</a>
+    <a href="#s4">04 · FAULT LEVEL</a>
+    <a href="#s5">05 · CHAIN OF RATINGS</a>
+    <a href="#s6">06 · PROTECTION</a>
+    <a href="#s7">07 · EARTHING / MEN</a>
+    <a href="#s8">08 · VOLT DROP &amp; DEMAND</a>
+    <a href="#s9">09 · DOCUMENT MAP</a>
+    <a href="#s10">10 · WORKED EXAMPLE</a>
+    <a href="#s11">11 · QUIZ, ANSWERED</a>
+  </div>
+  <div class="bar"><i id="prog"></i></div>
+</nav>
+
+<!-- ============ 01 ============ -->
+<section id="s1">
+  <div class="sechead"><span class="secno">01</span><h2>Voltage</h2><span class="mins">4 min</span></div>
+
+  <div class="tldr"><b>60-second version</b>
+    <p>Voltage doesn't just tell you about electricity. It tells you <b>who is legally allowed
+    to touch it</b>, what permits you need, and how many months of lead time that adds to
+    your programme.</p></div>
+
+  <div class="card"><span class="tag">1.1 / Levels</span>
+    <h3>The four voltage worlds</h3>
+    <p class="lede">You will meet all four. The line at 1000 V is the one that changes your job.</p>
+
+    <figure>
+      <svg viewBox="0 0 680 320" role="img" aria-label="Four voltage bands stacked from extra-low to transmission, with a heavy boundary line at 1000 volts separating low voltage from high voltage">
+        <rect x="1" y="1" width="678" height="56" rx="2" class="d-box d-mut"/>
+        <text x="16" y="26" class="d-h d-mut">TRANSMISSION / SUB-TRANSMISSION</text>
+        <text x="16" y="44" class="d-t9">Zone substations · generation and renewable connections</text>
+        <text x="664" y="34" class="d-t" text-anchor="end">66 – 500 kV</text>
+
+        <rect x="1" y="65" width="678" height="56" rx="2" class="d-box"/>
+        <text x="16" y="90" class="d-h">HIGH VOLTAGE &#8212; HV</text>
+        <text x="16" y="108" class="d-t9">Site distribution · big motors · the DNSP network at your boundary</text>
+        <text x="664" y="98" class="d-t" text-anchor="end">6.6 · 11 · 22 · 33 kV</text>
+
+        <g class="da">
+          <line x1="0" y1="140" x2="680" y2="140" class="d-s2"/>
+          <polygon points="0,140 12,134 12,146" class="d-fill"/>
+          <polygon points="680,140 668,134 668,146" class="d-fill"/>
+          <rect x="176" y="128" width="328" height="24" rx="2" style="fill:var(--danger-bg);stroke:currentColor;stroke-width:1.5"/>
+          <text x="340" y="145" class="d-h" text-anchor="middle">1000 V &#8212; THE LINE THAT CHANGES YOUR JOB</text>
+        </g>
+
+        <rect x="1" y="160" width="678" height="70" rx="2" class="d-box" style="stroke:var(--copper);stroke-width:2"/>
+        <text x="16" y="186" class="d-h cu">LOW VOLTAGE &#8212; LV</text>
+        <text x="16" y="204" class="d-t9">Where you will spend 90% of your career: MSBs, MCCs, DBs, motors, final circuits</text>
+        <text x="16" y="221" class="d-t9">Nominal is 230 / 400 V. Old drawings say 240 / 415 V. Same system.</text>
+        <text x="664" y="196" class="d-t cu" text-anchor="end">230 V 1&#966; · 400 V 3&#966;</text>
+
+        <rect x="1" y="239" width="678" height="56" rx="2" class="d-box"/>
+        <text x="16" y="264" class="d-h">EXTRA-LOW VOLTAGE &#8212; ELV</text>
+        <text x="16" y="282" class="d-t9">Control circuits, PLC inputs and outputs, instrument loops</text>
+        <text x="664" y="272" class="d-t" text-anchor="end">24 V DC</text>
+
+        <text x="16" y="313" class="d-t9">Higher voltage &#8593;&#8195;&#8195;more permits, more licensing, longer lead time</text>
+      </svg>
+      <figcaption><b>What to take from this:</b> nothing above 1000 V is a purely technical
+      problem. It is an access, licensing and programme problem first.</figcaption>
+    </figure>
+
+    <div class="strip rule-s"><b>The rule</b>
+      <p>Nominal LV in Australia is <b>230 V single-phase / 400 V three-phase</b> (harmonised
+      with IEC via AS 60038). Everyone still <em>says</em> 240/415 V, including on drawings and
+      nameplates. It means the same system.</p></div>
+
+    <div class="strip flag"><b>Red flag</b>
+      <p>Don't raise an RFI because a drawing says 415 V. <b>Do</b> raise one if a
+      <em>calculation</em> mixes the two — a volt drop or fault study that uses 415 V in one
+      line and 400 V in the next has been assembled from two sources and needs checking.</p></div>
+
+    <div class="strip ask"><b>Ask this in week one</b>
+      <p>"Is there anything above 1000 V on this project?" If yes: who holds HV authorisation,
+      what switching and permit procedures apply, and is there a DNSP or asset-owner interface?
+      Those approvals run in <b>months</b>, and they sit on your critical path.</p></div>
+  </div>
+</section>
+
+<!-- ============ 02 ============ -->
+<section id="s2">
+  <div class="sechead"><span class="secno">02</span><h2>The Maths</h2><span class="mins">6 min</span></div>
+
+  <div class="tldr"><b>60-second version</b>
+    <p>You need three rules of thumb, not a textbook. They let you glance at a drawing and
+    say "that doesn't look right" <b>before</b> you open a spreadsheet. That instinct is most
+    of the job.</p></div>
+
+  <div class="card"><span class="tag">2.1 / Rules of thumb</span>
+    <h3>Three numbers to memorise</h3>
+    <p class="lede">For <em>estimating only</em> — never for design. Design belongs to the
+    designer. Sanity-checking belongs to you.</p>
+
+    <div class="nums">
+      <div class="num"><div class="v">1.44 &times; kVA</div><div class="k">Current at 400 V, 3&#966;</div>
+        <div class="d">A 500 kVA load draws about 720 A. Because 1000 &divide; (&#8730;3 &times; 400) = 1.44.</div></div>
+      <div class="num"><div class="v">2 A per kW</div><div class="k">400 V motor full load</div>
+        <div class="d">An 11 kW motor &#8776; 21 A. A 75 kW motor &#8776; 140 A. Close enough to catch an error.</div></div>
+      <div class="num"><div class="v">1440 A</div><div class="k">1000 kVA Tx at 400 V</div>
+        <div class="d">The single most useful number in LV distribution. Scale it: 500 kVA &#8776; 720 A, 1500 kVA &#8776; 2165 A.</div></div>
+    </div>
+
+    <div class="eq"><span class="dim">// the two formulas behind all three</span>
+
+I (A) = <span class="hl">kVA &times; 1000</span> &divide; (&#8730;3 &times; V)          <span class="dim">three-phase, apparent power</span>
+I (A) = <span class="hl">kW &times; 1000</span>  &divide; (&#8730;3 &times; V &times; PF)     <span class="dim">three-phase, real power</span>
+
+<span class="dim">worked:  250 kW at 400 V, PF 0.85</span>
+         250 000 &divide; (1.732 &times; 400 &times; 0.85)
+         250 000 &divide; 588.9  =  <span class="hl">425 A</span></div>
+
+    <div class="strip desk"><b>At your desk</b>
+      <p>A supplier quotes an MCC fed by a <b>630 A</b> breaker, supplying <b>520 kW</b> of
+      motors. Two seconds of thinking: 520 kW &times; 2 = ~1040 A of connected motor current.
+      That's well above 630 A — so the design must be leaning on diversity (not all motors run
+      at once). <b>Your question isn't "it's wrong".</b> It's "what diversity has been assumed,
+      and does the process actually work that way?"</p></div>
+  </div>
+
+  <div class="card"><span class="tag">2.2 / kW vs kVA</span>
+    <h3>Why equipment is rated in kVA</h3>
+
+    <figure>
+      <svg viewBox="0 0 660 250" role="img" aria-label="Power triangle showing real power kW along the base, reactive power kVAr vertical, and apparent power kVA as the hypotenuse, with power factor as the cosine of the angle">
+        <line x1="70" y1="200" x2="380" y2="200" class="d-s2 cu"/>
+        <line x1="380" y1="200" x2="380" y2="80" class="d-s2 ne"/>
+        <line x1="70" y1="200" x2="380" y2="80" class="d-s2"/>
+        <path d="M 120 200 A 50 50 0 0 0 116 181" class="d-s"/>
+        <text x="128" y="190" class="d-t">&#966;</text>
+
+        <text x="225" y="222" class="d-h cu" text-anchor="middle">kW &#8212; REAL POWER</text>
+        <text x="225" y="238" class="d-t9" text-anchor="middle">the work the process actually gets</text>
+
+        <text x="396" y="136" class="d-h ne">kVAr</text>
+        <text x="396" y="152" class="d-t9">reactive &#8212; magnetises motors</text>
+        <text x="396" y="166" class="d-t9">and transformers, does no work,</text>
+        <text x="396" y="180" class="d-t9">but still fills up your cable</text>
+
+        <text x="196" y="126" class="d-h" transform="rotate(-21 196 126)">kVA &#8212; WHAT THE GEAR SEES</text>
+
+        <rect x="70" y="20" width="310" height="40" rx="2" class="d-box"/>
+        <text x="225" y="38" class="d-t" text-anchor="middle">PF  =  kW &#247; kVA</text>
+        <text x="225" y="53" class="d-t9" text-anchor="middle">uncorrected industrial site 0.75&#8211;0.85  ·  corrected 0.95&#8211;0.99</text>
+      </svg>
+      <figcaption><b>The mechanism:</b> a cable, transformer, generator or UPS is limited by
+      the <b>current</b> flowing through it — and current follows the hypotenuse, not the base.
+      That is why everything is rated in kVA.</figcaption>
+    </figure>
+
+    <div class="strip rule-s"><b>The rule</b>
+      <p>A client who says <b>"we need 800 kW"</b> at power factor 0.8 actually needs a
+      <b>1000 kVA</b> transformer. Get this wrong at concept stage and you order the wrong
+      transformer — a six-month lead item.</p></div>
+
+    <div class="strip ask"><b>Ask this on any VSD-heavy project</b>
+      <p>Bad power factor costs money (network tariffs penalise it) — that's why capacitor
+      banks appear on drawings. But modern loads (VSDs, LED drivers, UPS, IT) shift the problem
+      from power factor to <b>harmonics</b>, which capacitors alone can make <em>worse</em>.
+      Ask early: "has a harmonics assessment been done, and does the capacitor bank need to be
+      detuned?" This is a classic late-stage surprise.</p></div>
+  </div>
+</section>
+
+<!-- ============ 03 ============ -->
+<section id="s3">
+  <div class="sechead"><span class="secno">03</span><h2>Three Currents</h2><span class="mins">5 min</span></div>
+
+  <div class="tldr"><b>60-second version</b>
+    <p>Every electrical design decision answers one of three questions. Load current is about
+    <b>normal life</b>. Short-circuit current is about <b>the worst half-second of the
+    equipment's life</b>. Earth fault current is about <b>whether someone dies</b>.</p></div>
+
+  <div class="card"><span class="tag">3.1 / The framing</span>
+    <h3>One circuit, three different currents</h3>
+
+    <figure>
+      <svg viewBox="0 0 700 330" role="img" aria-label="A single feeder from transformer through breaker and cable to a motor, showing three current paths: normal load current to the motor, a short circuit returning at a fault in the cable, and an earth fault flowing from the motor frame to earth">
+        <rect x="20" y="60" width="90" height="56" rx="2" class="d-box"/>
+        <text x="65" y="84" class="d-h" text-anchor="middle">SOURCE</text>
+        <text x="65" y="102" class="d-t9" text-anchor="middle">transformer</text>
+
+        <rect x="180" y="60" width="90" height="56" rx="2" class="d-box"/>
+        <text x="225" y="84" class="d-h" text-anchor="middle">DEVICE</text>
+        <text x="225" y="102" class="d-t9" text-anchor="middle">MCCB</text>
+
+        <rect x="340" y="60" width="130" height="56" rx="2" class="d-box"/>
+        <text x="405" y="84" class="d-h" text-anchor="middle">CABLE</text>
+        <text x="405" y="102" class="d-t9" text-anchor="middle">95 mm&#178; Cu XLPE</text>
+
+        <rect x="540" y="60" width="90" height="56" rx="2" class="d-box"/>
+        <circle cx="585" cy="88" r="17" class="d-s"/>
+        <text x="585" y="93" class="d-h" text-anchor="middle">M</text>
+
+        <line x1="110" y1="88" x2="180" y2="88" class="d-s"/>
+        <line x1="270" y1="88" x2="340" y2="88" class="d-s"/>
+        <line x1="470" y1="88" x2="540" y2="88" class="d-s"/>
+
+        <g class="cu">
+          <path d="M 65 130 L 65 150 L 585 150 L 585 132" class="d-s2"/>
+          <polygon points="585,124 579,138 591,138" class="d-fill"/>
+          <text x="325" y="169" class="d-h" text-anchor="middle">1 &#8212; LOAD CURRENT &#183; every single day</text>
+          <text x="325" y="185" class="d-t9" text-anchor="middle">sets cable size, breaker rating, busbar size, volt drop &#183; comes from the load schedule</text>
+        </g>
+
+        <g class="da">
+          <line x1="405" y1="46" x2="405" y2="60" class="d-s2"/>
+          <path d="M 398 34 L 412 46 L 400 46 L 414 58" class="d-s2"/>
+          <path d="M 65 44 L 65 24 L 396 24" class="d-s2"/>
+          <polygon points="404,24 390,18 390,30" class="d-fill"/>
+          <line x1="65" y1="44" x2="65" y2="60" class="d-s2"/>
+          <text x="230" y="16" class="d-h" text-anchor="middle">2 &#8212; SHORT CIRCUIT &#183; 0.05 seconds, up to 30 000 A</text>
+        </g>
+
+        <g class="ea">
+          <line x1="585" y1="116" x2="585" y2="212" class="d-s2"/>
+          <polygon points="585,220 579,206 591,206" class="d-fill"/>
+          <line x1="560" y1="222" x2="610" y2="222" class="d-s2"/>
+          <line x1="568" y1="230" x2="602" y2="230" class="d-s2"/>
+          <line x1="577" y1="238" x2="593" y2="238" class="d-s2"/>
+          <path d="M 585 250 L 585 268 L 65 268 L 65 122" class="d-dash" style="stroke-width:2"/>
+          <polygon points="65,114 59,128 71,128" class="d-fill"/>
+          <text x="325" y="288" class="d-h" text-anchor="middle">3 &#8212; EARTH FAULT &#183; the one that kills people</text>
+          <text x="325" y="304" class="d-t9" text-anchor="middle">must return to the source fast enough to trip protection &#183; sets earth conductor size</text>
+        </g>
+      </svg>
+      <figcaption><b>The mechanism:</b> the same physical circuit carries three completely
+      different currents depending on what has gone wrong. Sizing correctly for one of them
+      says nothing about the other two.</figcaption>
+    </figure>
+
+    <div class="tw"><table>
+      <thead><tr><th>Current</th><th>What it decides</th><th>Where the number comes from</th></tr></thead>
+      <tbody>
+        <tr><td class="m" style="color:var(--copper)">Load<br>I<sub>b</sub></td>
+            <td>Cable size, breaker rating, busbar rating, volt drop</td>
+            <td>Load schedule &rarr; maximum demand &rarr; diversity</td></tr>
+        <tr><td class="m" style="color:var(--danger)">Short circuit<br>I<sub>k</sub></td>
+            <td>Breaker breaking capacity, cable withstand, busbar bracing</td>
+            <td>Source impedance: transformer %Z + network + cable impedance</td></tr>
+        <tr><td class="m" style="color:var(--earth)">Earth fault<br>I<sub>ef</sub></td>
+            <td>Earth conductor size, disconnection time, touch voltage</td>
+            <td>Earthing arrangement + fault loop impedance</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="strip flag"><b>The mistake that causes real defects</b>
+      <p>A cable can be <b>perfectly sized for load current and still be wrong</b>, because it
+      cannot survive the fault current for as long as the upstream breaker takes to clear it.
+      Load current says nothing about fault withstand. This is exactly the trap in the classic
+      "250 A breaker, undersized-looking cable" scenario — and we take it apart properly in
+      Level 4.</p></div>
+  </div>
+</section>
+
+<!-- ============ 04 ============ -->
+<section id="s4">
+  <div class="sechead"><span class="secno">04</span><h2>Fault Level</h2><span class="mins">6 min</span></div>
+
+  <div class="tldr"><b>60-second version</b>
+    <p>Fault level is <b>not one number for a site</b>. It is a different number at every
+    board, and it always falls as you move downstream. When someone tells you "the fault level
+    is 31 kA", the correct response is: <b>"at which board?"</b></p></div>
+
+  <div class="card"><span class="tag">4.1 / The estimate</span>
+    <h3>Fault level in your head, in ten seconds</h3>
+    <p class="lede">Fault current is limited by the impedance between the source and the fault.
+    Less impedance means more fault current. A transformer's impedance is printed right on its
+    nameplate as <span class="mono">%Z</span> — so you can estimate its fault contribution
+    without any software.</p>
+
+    <div class="eq"><span class="dim">// the only fault formula you need at PE level</span>
+
+Fault current  &#8776;  <span class="hl">Full-load current  &times;  100 &divide; %Z</span>
+
+<span class="dim">// worked: 1000 kVA transformer, 11 kV / 400 V, %Z = 5.0</span>
+
+FLC     = 1000 &times; 1000 &divide; (&#8730;3 &times; 400)   =  <span class="hl">1443 A</span>
+I fault &#8776; 1443 &times; 100 &divide; 5.0            &#8776;  <span class="hl">28 900 A  =  28.9 kA</span>
+
+<span class="dim">// so the switchboard bolted to that transformer needs to survive ~29 kA,
+// plus the network's own contribution &#8594; you buy a 50 kA board.</span></div>
+
+    <div class="strip rule-s"><b>Read it backwards too</b>
+      <p><b>Lower %Z means a bigger fault.</b> A "better" transformer with 4% impedance
+      instead of 6% delivers roughly 50% more fault current — which can push your switchboard
+      from a 36 kA rating to a 50 kA rating and cost real money. If a supplier offers an
+      alternative transformer, <b>%Z is the first thing you check</b>, not the price.</p></div>
+  </div>
+
+  <div class="card"><span class="tag">4.2 / Decay</span>
+    <h3>Why the ratings get smaller as you go downstream</h3>
+
+    <figure>
+      <svg viewBox="0 0 700 330" role="img" aria-label="Fault level falling from 28.9 kA at the main switchboard to about 14 kA at the motor control centre and about 6 kA at a distribution board, because each cable run adds impedance, with device ratings falling to match">
+        <rect x="20" y="24" width="150" height="58" rx="2" class="d-box" style="stroke:var(--copper);stroke-width:2"/>
+        <text x="95" y="48" class="d-h cu" text-anchor="middle">MSB</text>
+        <text x="95" y="66" class="d-t9" text-anchor="middle">at the transformer</text>
+
+        <rect x="275" y="24" width="150" height="58" rx="2" class="d-box"/>
+        <text x="350" y="48" class="d-h" text-anchor="middle">MCC</text>
+        <text x="350" y="66" class="d-t9" text-anchor="middle">60 m away</text>
+
+        <rect x="530" y="24" width="150" height="58" rx="2" class="d-box"/>
+        <text x="605" y="48" class="d-h" text-anchor="middle">DB</text>
+        <text x="605" y="66" class="d-t9" text-anchor="middle">+ 120 m more</text>
+
+        <line x1="170" y1="53" x2="268" y2="53" class="d-s2"/>
+        <polygon points="275,53 264,48 264,58" class="d-fill"/>
+        <text x="220" y="44" class="d-t9" text-anchor="middle">+ cable Z</text>
+        <line x1="425" y1="53" x2="523" y2="53" class="d-s2"/>
+        <polygon points="530,53 519,48 519,58" class="d-fill"/>
+        <text x="475" y="44" class="d-t9" text-anchor="middle">+ more cable Z</text>
+
+        <line x1="20" y1="272" x2="680" y2="272" class="d-thin"/>
+
+        <rect x="55" y="122" width="80" height="150" class="d-fill" style="fill:var(--danger)"/>
+        <text x="95" y="112" class="d-h da" text-anchor="middle">28.9 kA</text>
+        <rect x="310" y="199" width="80" height="73" class="d-fill" style="fill:var(--copper)"/>
+        <text x="350" y="189" class="d-h cu" text-anchor="middle">~14 kA</text>
+        <rect x="565" y="241" width="80" height="31" class="d-fill" style="fill:var(--earth)"/>
+        <text x="605" y="231" class="d-h ea" text-anchor="middle">~6 kA</text>
+
+        <text x="95" y="292" class="d-t" text-anchor="middle">ACB 50 kA</text>
+        <text x="95" y="308" class="d-t9" text-anchor="middle">air circuit breaker</text>
+        <text x="350" y="292" class="d-t" text-anchor="middle">MCCB 36 kA</text>
+        <text x="350" y="308" class="d-t9" text-anchor="middle">moulded case</text>
+        <text x="605" y="292" class="d-t" text-anchor="middle">MCB 6 kA</text>
+        <text x="605" y="308" class="d-t9" text-anchor="middle">miniature</text>
+
+        <text x="20" y="140" class="d-t9">prospective</text>
+        <text x="20" y="153" class="d-t9">fault current</text>
+      </svg>
+      <figcaption><b>The mechanism:</b> every metre of cable adds impedance, and impedance
+      throttles fault current. That is the entire reason a $12 MCB is allowed in the same
+      installation as a $9,000 ACB.</figcaption>
+    </figure>
+
+    <div class="strip flag"><b>Red flag — cascading</b>
+      <p>Sometimes a designer uses a downstream device with a rating <em>lower</em> than the
+      prospective fault, on the basis that the upstream device helps clear it. This is called
+      <b>cascading</b> or back-up protection, and it is only valid for
+      <b>manufacturer-tested combinations</b> — specific breaker A in front of specific
+      breaker B. If a supplier proposes it, ask for the tested-combination tables. Never accept
+      "it'll be fine", and never accept it across two different manufacturers.</p></div>
+  </div>
+</section>
+
+<!-- ============ 05 ============ -->
+<section id="s5">
+  <div class="sechead"><span class="secno">05</span><h2>Chain of Ratings</h2><span class="mins">8 min</span></div>
+
+  <div class="tldr"><b>60-second version</b>
+    <p>This is the module. Read every part of an installation as a <b>chain</b>: source &rarr;
+    protective device &rarr; cable &rarr; load. Five checks link them. When something is wrong
+    on a real project, <b>nine times out of ten it is one of these five that nobody closed
+    out.</b></p></div>
+
+  <div class="card"><span class="tag">5.1 / The master model</span>
+    <h3>Four links, five checks</h3>
+
+    <figure>
+      <svg viewBox="0 0 760 380" role="img" aria-label="The chain of ratings: source, protective device, cable and load in a row with their ratings, and five checks drawn as spans showing which two links each check compares">
+        <rect x="16" y="30" width="150" height="80" rx="2" class="d-box"/>
+        <text x="91" y="58" class="d-h" text-anchor="middle">SOURCE</text>
+        <text x="91" y="78" class="d-t9" text-anchor="middle">transformer</text>
+        <text x="91" y="92" class="d-t9" text-anchor="middle">or generator</text>
+        <text x="91" y="132" class="d-t9" text-anchor="middle">fault level</text>
+        <text x="91" y="146" class="d-t9" text-anchor="middle">supply voltage</text>
+
+        <rect x="212" y="30" width="150" height="80" rx="2" class="d-box" style="stroke:var(--copper);stroke-width:2"/>
+        <text x="287" y="58" class="d-h cu" text-anchor="middle">DEVICE</text>
+        <text x="287" y="78" class="d-t9" text-anchor="middle">ACB / MCCB / MCB</text>
+        <text x="287" y="92" class="d-t9" text-anchor="middle">+ its settings</text>
+        <text x="287" y="132" class="d-t9" text-anchor="middle">In &#183; rating</text>
+        <text x="287" y="146" class="d-t9" text-anchor="middle">Icu &#183; breaking capacity</text>
+        <text x="287" y="160" class="d-t9" text-anchor="middle">trip curve</text>
+
+        <rect x="408" y="30" width="150" height="80" rx="2" class="d-box"/>
+        <text x="483" y="58" class="d-h" text-anchor="middle">CABLE</text>
+        <text x="483" y="78" class="d-t9" text-anchor="middle">conductor, insulation,</text>
+        <text x="483" y="92" class="d-t9" text-anchor="middle">route, grouping</text>
+        <text x="483" y="132" class="d-t9" text-anchor="middle">Iz &#183; derated capacity</text>
+        <text x="483" y="146" class="d-t9" text-anchor="middle">k&#178;S&#178; &#183; fault withstand</text>
+        <text x="483" y="160" class="d-t9" text-anchor="middle">length &#183; volt drop</text>
+
+        <rect x="604" y="30" width="140" height="80" rx="2" class="d-box"/>
+        <text x="674" y="58" class="d-h" text-anchor="middle">LOAD</text>
+        <text x="674" y="78" class="d-t9" text-anchor="middle">motor, DB,</text>
+        <text x="674" y="92" class="d-t9" text-anchor="middle">packaged plant</text>
+        <text x="674" y="132" class="d-t9" text-anchor="middle">full load current</text>
+        <text x="674" y="146" class="d-t9" text-anchor="middle">starting current</text>
+        <text x="674" y="160" class="d-t9" text-anchor="middle">duty cycle</text>
+
+        <line x1="166" y1="70" x2="205" y2="70" class="d-s2"/><polygon points="212,70 201,65 201,75" class="d-fill"/>
+        <line x1="362" y1="70" x2="401" y2="70" class="d-s2"/><polygon points="408,70 397,65 397,75" class="d-fill"/>
+        <line x1="558" y1="70" x2="597" y2="70" class="d-s2"/><polygon points="604,70 593,65 593,75" class="d-fill"/>
+
+        <line x1="16" y1="182" x2="744" y2="182" class="d-thin"/>
+        <text x="16" y="176" class="d-t9">THE FIVE CHECKS &#8212; each one compares two links</text>
+
+        <g class="cu">
+          <text x="226" y="207" class="d-h">1 &#183; LOAD &#8212; Ib &#8804; In &#8804; Iz</text>
+          <line x1="212" y1="216" x2="744" y2="216" class="d-s2"/>
+          <line x1="212" y1="211" x2="212" y2="221" class="d-s2"/>
+          <line x1="744" y1="211" x2="744" y2="221" class="d-s2"/>
+        </g>
+        <g class="da">
+          <text x="30" y="241" class="d-h">2 &#183; FAULT BREAKING &#8212; Icu &#8805; prospective fault</text>
+          <line x1="16" y1="250" x2="362" y2="250" class="d-s2"/>
+          <line x1="16" y1="245" x2="16" y2="255" class="d-s2"/>
+          <line x1="362" y1="245" x2="362" y2="255" class="d-s2"/>
+        </g>
+        <g class="da">
+          <text x="226" y="275" class="d-h">3 &#183; CABLE WITHSTAND &#8212; survives until the device clears</text>
+          <line x1="212" y1="284" x2="558" y2="284" class="d-s2"/>
+          <line x1="212" y1="279" x2="212" y2="289" class="d-s2"/>
+          <line x1="558" y1="279" x2="558" y2="289" class="d-s2"/>
+        </g>
+        <g class="ne">
+          <text x="30" y="309" class="d-h">4 &#183; VOLT DROP &#8212; at full load AND at motor start</text>
+          <line x1="16" y1="318" x2="744" y2="318" class="d-s2"/>
+          <line x1="16" y1="313" x2="16" y2="323" class="d-s2"/>
+          <line x1="744" y1="313" x2="744" y2="323" class="d-s2"/>
+        </g>
+        <g class="ea">
+          <text x="30" y="343" class="d-h">5 &#183; DISCONNECTION &#8212; earth fault cleared fast enough</text>
+          <line x1="16" y1="352" x2="744" y2="352" class="d-s2"/>
+          <line x1="16" y1="347" x2="16" y2="357" class="d-s2"/>
+          <line x1="744" y1="347" x2="744" y2="357" class="d-s2"/>
+        </g>
+      </svg>
+      <figcaption><b>How to use it:</b> the span of each bar tells you <b>which two documents
+      must agree</b>. Check 2 compares the fault study against the switchboard schedule. Check
+      1 compares the load schedule against the cable schedule. Check 4 spans the whole run.
+      Print this. It is your review routine.</figcaption>
+    </figure>
+  </div>
+
+  <div class="card"><span class="tag">5.2 / Check 1 in detail</span>
+    <h3>The derating trap</h3>
+    <p class="lede">Check 1 says <span class="mono">Ib &#8804; In &#8804; Iz</span> — design
+    current, then device rating, then cable capacity, in that order. The part that catches
+    everyone is <b>Iz</b>.</p>
+
+    <div class="strip flag"><b>Where people get caught</b>
+      <p>A 95 mm&#178; cable's tabulated current capacity assumes <em>specific</em> installation
+      conditions. Bunch six of them together on a ladder in a 45&nbsp;&deg;C plant room and the
+      real capacity can drop <b>30&#8211;40%</b>. The tabulated number on the manufacturer's
+      website is not the number that applies to your project.</p>
+      <p>Derating factors depend on ambient temperature, grouping, installation method,
+      direct burial, soil thermal resistivity and depth. They live in
+      <b>AS/NZS 3008.1.1</b>; the installation rules live in <b>AS/NZS 3000</b>. Verify values
+      against the <em>current edition</em> — never from memory, and never from an old project.</p></div>
+
+    <div class="strip ask"><b>Ask this on any cable schedule you review</b>
+      <p>"What derating factors were applied, and do they match how the cable is
+      <em>actually</em> being installed on site?" Cables are routinely designed loose-on-ladder
+      and installed bunched in a tray with fifteen others. That is a real, common, and
+      completely invisible defect.</p></div>
+  </div>
+</section>
+
+<!-- ============ 06 ============ -->
+<section id="s6">
+  <div class="sechead"><span class="secno">06</span><h2>Protection</h2><span class="mins">6 min</span></div>
+
+  <div class="tldr"><b>60-second version</b>
+    <p>One circuit breaker does <b>three different jobs</b>, and confusing them is the classic
+    beginner error. Then there's a fourth thing — <b>discrimination</b> — which is the
+    deliverable everyone forgets until commissioning, when it is far too late.</p></div>
+
+  <div class="card"><span class="tag">6.1 / Three jobs</span>
+    <h3>One device, three jobs</h3>
+
+    <div class="tw"><table>
+      <thead><tr><th>Job</th><th>Protects against</th><th>How big</th><th>How fast</th></tr></thead>
+      <tbody>
+        <tr><td><b>Overload</b></td><td>Sustained current above rating — a jammed conveyor, too many loads added over the years</td><td class="m">1.05 &ndash; 8 &times; In</td><td>Seconds to minutes<br><span class="mono" style="font-size:13px;opacity:.7">thermal, inverse-time</span></td></tr>
+        <tr><td><b>Short circuit</b></td><td>Phase-to-phase or phase-to-neutral fault — a crushed cable, a dropped spanner</td><td class="m">8 &ndash; 20 &times; In, up to kA</td><td>Milliseconds<br><span class="mono" style="font-size:13px;opacity:.7">magnetic, instantaneous</span></td></tr>
+        <tr><td><b>Earth fault</b></td><td>Current returning through earth instead of the neutral — a person, or wet metalwork</td><td class="m">can be small</td><td>Fast, for safety<br><span class="mono" style="font-size:13px;opacity:.7">earth fault element or RCD</span></td></tr>
+      </tbody>
+    </table></div>
+
+    <figure>
+      <svg viewBox="0 0 660 340" role="img" aria-label="A time-current curve showing the sloping thermal overload region at low currents and long times, dropping to a near-vertical magnetic region at high currents and milliseconds, with a second downstream device curve sitting to the left showing discrimination">
+        <line x1="80" y1="40" x2="80" y2="280" class="d-s"/>
+        <line x1="80" y1="280" x2="620" y2="280" class="d-s"/>
+        <text x="80" y="28" class="d-t9">TIME</text>
+        <text x="620" y="300" class="d-t9" text-anchor="end">CURRENT (multiples of In)</text>
+        <text x="60" y="60" class="d-t9" text-anchor="end">min</text>
+        <text x="60" y="170" class="d-t9" text-anchor="end">sec</text>
+        <text x="60" y="265" class="d-t9" text-anchor="end">ms</text>
+
+        <line x1="160" y1="280" x2="160" y2="285" class="d-s"/><text x="160" y="300" class="d-t9" text-anchor="middle">1&times;</text>
+        <line x1="280" y1="280" x2="280" y2="285" class="d-s"/><text x="280" y="300" class="d-t9" text-anchor="middle">2&times;</text>
+        <line x1="400" y1="280" x2="400" y2="285" class="d-s"/><text x="400" y="300" class="d-t9" text-anchor="middle">5&times;</text>
+        <line x1="500" y1="280" x2="500" y2="285" class="d-s"/><text x="500" y="300" class="d-t9" text-anchor="middle">10&times;</text>
+        <line x1="590" y1="280" x2="590" y2="285" class="d-s"/><text x="590" y="300" class="d-t9" text-anchor="middle">20&times;</text>
+
+        <polyline points="380,50 400,80 430,120 470,165 505,205 522,230 528,245 530,272" class="d-dash"/>
+        <text x="392" y="42" class="d-t9" text-anchor="middle">upstream device</text>
+
+        <g class="cu">
+          <polyline points="180,55 205,90 235,130 275,175 310,215 328,240 334,255 336,272" class="d-s2"/>
+        </g>
+        <text x="196" y="47" class="d-t9 cu" text-anchor="middle">this device</text>
+
+        <text x="176" y="112" class="d-h" style="opacity:.85">OVERLOAD REGION</text>
+        <text x="176" y="128" class="d-t9">small excess, slow trip &#8212; the</text>
+        <text x="176" y="142" class="d-t9">cable has time to shed heat</text>
+
+        <text x="356" y="235" class="d-h" style="opacity:.85">SHORT-CIRCUIT REGION</text>
+        <text x="356" y="251" class="d-t9">huge current, instant trip &#8212; nothing</text>
+        <text x="356" y="265" class="d-t9">downstream survives a slow one</text>
+
+        <g class="ea">
+          <line x1="340" y1="60" x2="376" y2="60" class="d-s2"/>
+          <polygon points="336,60 348,55 348,65" class="d-fill"/>
+          <polygon points="380,60 368,55 368,65" class="d-fill"/>
+          <text x="358" y="52" class="d-h" text-anchor="middle">GAP = DISCRIMINATION</text>
+        </g>
+      </svg>
+      <figcaption><b>Read it like this:</b> big current &rarr; trips fast. Small overcurrent
+      &rarr; trips slowly. <b>Discrimination</b> is the gap between the two curves: because the
+      downstream curve sits entirely to the left of the upstream one, the downstream device
+      always operates first, and only the faulty circuit goes dark.</figcaption>
+    </figure>
+
+    <div class="strip rule-s"><b>What discrimination actually means</b>
+      <p>For a fault <em>anywhere</em>, only the <b>nearest upstream device</b> operates. If a
+      fault on one small final circuit trips the main incomer and blacks out the building, you
+      have a discrimination failure — and on a hospital, data centre or process plant, that is
+      a very serious one.</p></div>
+
+    <div class="strip ask"><b>Ask this in week one, not at commissioning</b>
+      <p>"Has a protection discrimination study been done, <b>who owns it</b>, and when is it
+      issued?" On many projects this deliverable falls between the consultant, the switchboard
+      builder and the contractor — so nobody does it. It surfaces at commissioning, when
+      changing breaker settings or trip units means re-testing, re-witnessing and a
+      variation.</p></div>
+  </div>
+</section>
+
+<!-- ============ 07 ============ -->
+<section id="s7">
+  <div class="sechead"><span class="secno">07</span><h2>Earthing &amp; MEN</h2><span class="mins">6 min</span></div>
+
+  <div class="tldr"><b>60-second version</b>
+    <p>Australia uses <b>MEN — Multiple Earthed Neutral</b>. Neutral and earth are joined at
+    <b>exactly one point</b>: the MEN link in the main switchboard. Downstream of it, neutral
+    and earth stay separate. <b>Forever.</b> Most of the confusing faults you will ever chase
+    on site come from someone breaking that rule.</p></div>
+
+  <div class="card"><span class="tag">7.1 / The arrangement</span>
+    <h3>One link, and only one</h3>
+
+    <figure>
+      <svg viewBox="0 0 720 400" role="img" aria-label="Transformer secondary feeding a main switchboard where the neutral bar and earth bar are joined by a single MEN link, with the main earth electrode below, and a downstream distribution board where neutral and earth remain separate">
+        <rect x="14" y="54" width="86" height="96" rx="2" class="d-box"/>
+        <text x="57" y="88" class="d-h" text-anchor="middle">Tx</text>
+        <text x="57" y="106" class="d-t9" text-anchor="middle">secondary</text>
+        <text x="57" y="120" class="d-t9" text-anchor="middle">400 V</text>
+        <line x1="57" y1="150" x2="57" y2="182" class="d-s ea"/>
+        <line x1="40" y1="182" x2="74" y2="182" class="d-s2 ea"/>
+        <line x1="46" y1="189" x2="68" y2="189" class="d-s ea"/>
+        <line x1="52" y1="196" x2="62" y2="196" class="d-s ea"/>
+
+        <line x1="100" y1="70" x2="300" y2="70" class="d-s"/>
+        <line x1="100" y1="84" x2="300" y2="84" class="d-s"/>
+        <line x1="100" y1="98" x2="300" y2="98" class="d-s"/>
+        <text x="108" y="64" class="d-t9">A · B · C</text>
+        <line x1="100" y1="130" x2="320" y2="130" class="d-s2 ne"/>
+        <text x="108" y="124" class="d-t9 ne">N</text>
+
+        <rect x="300" y="30" width="250" height="215" rx="2" class="d-box" style="stroke:var(--copper);stroke-width:2"/>
+        <text x="425" y="52" class="d-h cu" text-anchor="middle">MAIN SWITCHBOARD</text>
+
+        <rect x="320" y="126" width="200" height="9" class="d-fill ne"/>
+        <text x="320" y="118" class="d-t ne">NEUTRAL BAR</text>
+        <rect x="320" y="186" width="200" height="9" class="d-fill ea"/>
+        <text x="320" y="212" class="d-t ea">EARTH BAR</text>
+
+        <line x1="486" y1="135" x2="486" y2="186" class="d-s2 da" style="stroke-width:5"/>
+        <text x="540" y="152" class="d-h da">MEN</text>
+        <text x="540" y="167" class="d-h da">LINK</text>
+        <text x="540" y="183" class="d-t9 da">the ONE</text>
+        <text x="540" y="195" class="d-t9 da">connection</text>
+
+        <line x1="350" y1="195" x2="350" y2="272" class="d-s2 ea"/>
+        <line x1="330" y1="272" x2="370" y2="272" class="d-s2 ea"/>
+        <line x1="337" y1="280" x2="363" y2="280" class="d-s ea"/>
+        <line x1="344" y1="288" x2="356" y2="288" class="d-s ea"/>
+        <text x="350" y="308" class="d-t9 ea" text-anchor="middle">main earth electrode</text>
+        <text x="350" y="321" class="d-t9 ea" text-anchor="middle">+ bonding to water,</text>
+        <text x="350" y="334" class="d-t9 ea" text-anchor="middle">structure, pipework</text>
+
+        <line x1="550" y1="130" x2="612" y2="130" class="d-s2 ne"/>
+        <line x1="550" y1="190" x2="612" y2="190" class="d-s2 ea"/>
+        <rect x="612" y="94" width="94" height="140" rx="2" class="d-box"/>
+        <text x="659" y="116" class="d-h" text-anchor="middle">DB</text>
+        <rect x="624" y="126" width="70" height="8" class="d-fill ne"/>
+        <text x="659" y="150" class="d-t9 ne" text-anchor="middle">N bar</text>
+        <rect x="624" y="186" width="70" height="8" class="d-fill ea"/>
+        <text x="659" y="176" class="d-t9 ea" text-anchor="middle">E bar</text>
+        <g class="da">
+          <line x1="647" y1="152" x2="671" y2="176" class="d-s2"/>
+          <line x1="671" y1="152" x2="647" y2="176" class="d-s2"/>
+        </g>
+        <text x="659" y="252" class="d-h da" text-anchor="middle">NO LINK</text>
+        <text x="659" y="268" class="d-t9 da" text-anchor="middle">N and E stay</text>
+        <text x="659" y="281" class="d-t9 da" text-anchor="middle">separate here</text>
+        <text x="659" y="294" class="d-t9 da" text-anchor="middle">and everywhere</text>
+        <text x="659" y="307" class="d-t9 da" text-anchor="middle">downstream</text>
+
+        <text x="14" y="368" class="d-t9">WHY: an earth fault needs a low-impedance path back to the source, so it draws enough current to trip protection</text>
+        <text x="14" y="384" class="d-t9">quickly &#8212; and so exposed metalwork never sits at a dangerous voltage while it waits.</text>
+      </svg>
+      <figcaption><b>The mechanism:</b> the MEN link gives earth faults a deliberate, low-impedance
+      route home. A <em>second</em> link anywhere downstream creates a parallel path, so neutral
+      current starts flowing through earth conductors and structural steel.</figcaption>
+    </figure>
+
+    <div class="strip flag"><b>The four site problems you will personally meet</b>
+      <p><b>1. A second N&ndash;E bond</b> accidentally created in a distribution board or inside
+      a piece of packaged plant (a chiller, a lift controller, a skid). Symptom: circulating
+      currents, nuisance RCD tripping, and days of very confusing fault-finding.</p>
+      <p><b>2. Borrowed neutrals</b> — a circuit using another circuit's neutral. A genuine
+      safety defect, because isolating one circuit leaves the other's neutral live.</p>
+      <p><b>3. Missing equipotential bonding</b> to structural steel, pipework and cable ladder.</p>
+      <p><b>4. Earth continuity quietly broken</b> by a painted flange, a missing star washer,
+      or an earth left unterminated in a gland plate. It tests fine until it doesn't.</p></div>
+
+    <div class="strip ask"><b>Three things you should be able to point to on the drawings</b>
+      <p>The <b>MEN link position</b>. The <b>earthing arrangement of any alternative supply</b>
+      — whether the generator or UPS neutral is earthed, and what happens to earthing at
+      changeover. And the <b>bonding schedule</b>. If any of the three isn't shown, that's an
+      RFI, and it's a good one to send early.</p></div>
+  </div>
+</section>
+
+<!-- ============ 08 ============ -->
+<section id="s8">
+  <div class="sechead"><span class="secno">08</span><h2>Volt Drop &amp; Demand</h2><span class="mins">5 min</span></div>
+
+  <div class="tldr"><b>60-second version</b>
+    <p>Two numbers that look technical but are actually <b>commercial</b>. Volt drop decides
+    how much copper you buy. Maximum demand decides the size of your transformer, your supply
+    and your main switchboard — your three longest-lead, most expensive items.</p></div>
+
+  <div class="card"><span class="tag">8.1 / Volt drop</span>
+    <h3>Two cases, and beginners check only one</h3>
+    <p class="lede">Current flowing through cable impedance loses voltage. The motor at the end
+    of a long run sees less than 400 V — and <b>motor torque falls with the square of
+    voltage</b>, so a 10% voltage dip costs about 19% of starting torque.</p>
+
+    <div class="nums">
+      <div class="num"><div class="v">Case 1</div><div class="k">Steady state</div>
+        <div class="d">Full load current, running continuously. This is the one everybody checks.</div></div>
+      <div class="num"><div class="v">Case 2</div><div class="k">Motor starting</div>
+        <div class="d">A direct-on-line motor pulls <b>6&ndash;8 &times; full load current</b> for several seconds. This is the one people forget.</div></div>
+    </div>
+
+    <div class="strip flag"><b>What a missed Case 2 looks like on site</b>
+      <p>The motor stalls or takes too long to run up. Or worse, it starts fine but the
+      transient dip disturbs <em>everything else</em> — lights visibly dip, contactors drop out
+      and reset plant, the UPS transfers to battery every time the big pump starts. That's a
+      commissioning-week emergency with no cheap fix.</p></div>
+
+    <div class="strip rule-s"><b>The limit</b>
+      <p>The commonly applied limit in Australian installations is <b>5% from the point of
+      supply to the point of use</b> (AS/NZS 3000). Confirm the current wording — and check
+      your <b>project specification</b>, which very often imposes tighter sub-limits such as
+      2% on submains and 3% on final subcircuits. The spec wins when it is more onerous.</p></div>
+
+    <div class="strip desk"><b>At your desk</b>
+      <p>A cable schedule shows a <b>240 mm&#178;</b> cable feeding a modest pump 400 m away.
+      Your instinct says "that's oversized". <b>It probably isn't.</b> On long runs — pump
+      stations, water and wastewater sites, mine sites, carparks, distributed campuses — volt
+      drop, not thermal capacity, is what sets the cable size. Understand <em>why</em> before
+      you challenge it, or you'll burn credibility with the designer.</p></div>
+  </div>
+
+  <div class="card"><span class="tag">8.2 / Maximum demand</span>
+    <h3>Nothing runs at once</h3>
+
+    <div class="eq">CONNECTED LOAD   <span class="dim">add up every nameplate &#8212; always the biggest number</span>
+      &#8595;
+&times; DIVERSITY        <span class="dim">the allowance that not everything coincides</span>
+      &#8595;
+<span class="hl">MAXIMUM DEMAND</span>   <span class="dim">what you actually buy: supply, transformer, MSB, submains</span></div>
+
+    <p>AS/NZS 3000 provides assessment methods and tables commonly used for commercial and
+    residential work. Industrial and process sites are more often assessed from the
+    <b>load list and process knowledge</b>, because it's the process — not a table — that
+    decides which motors run together.</p>
+
+    <div class="strip flag"><b>Three ways PEs get burned by maximum demand</b>
+      <p><b>1.</b> MD was calculated at concept stage against an assumed tenancy or process.
+      The process then changed six times and nobody revisited it.</p>
+      <p><b>2.</b> The client brief required spare capacity (often 20&ndash;25%) and it was
+      quietly consumed during design. The client asks about it at handover, when the
+      transformer is already energised.</p>
+      <p><b>3.</b> EV charging, gas-to-electric conversions, batteries and data loads have all
+      moved the goalposts. An MD done from a five-year-old template is now routinely wrong.</p></div>
+
+    <div class="strip ask"><b>Two questions worth asking in your first fortnight</b>
+      <p>"<b>When was the maximum demand last updated, and against which revision of the load
+      schedule?</b>" — if the answer is a shrug, you have found a genuine project risk.</p>
+      <p>"<b>Does the MD include EV charging provision, and what spare capacity does the client
+      brief require?</b>"</p></div>
+  </div>
+</section>
+
+<!-- ============ 09 ============ -->
+<section id="s9">
+  <div class="sechead"><span class="secno">09</span><h2>Document Map</h2><span class="mins">3 min</span></div>
+
+  <div class="tldr"><b>60-second version</b>
+    <p>The SLD is the <b>spine</b>. Every other document hangs off it. If the SLD changes,
+    something in every document below it probably has to change too — and <b>half of all
+    project defects come from that not happening.</b></p></div>
+
+  <div class="card"><span class="tag">9.1 / How it all hangs together</span>
+    <h3>Where every document sits</h3>
+
+    <figure>
+      <svg viewBox="0 0 720 430" role="img" aria-label="Document flow: client brief to load schedule to maximum demand feeding the single line diagram, which branches into equipment schedule, cable schedule, schematics, switchboard general arrangement and layout drawings, all converging on termination drawings, then installation, test sheets, commissioning and as-builts">
+        <rect x="20" y="14" width="150" height="44" rx="2" class="d-box"/>
+        <text x="95" y="34" class="d-h" text-anchor="middle">CLIENT BRIEF</text>
+        <text x="95" y="49" class="d-t9" text-anchor="middle">what they asked for</text>
+        <line x1="170" y1="36" x2="200" y2="36" class="d-s"/><polygon points="207,36 196,31 196,41" class="d-fill"/>
+        <rect x="207" y="14" width="150" height="44" rx="2" class="d-box"/>
+        <text x="282" y="34" class="d-h" text-anchor="middle">LOAD SCHEDULE</text>
+        <text x="282" y="49" class="d-t9" text-anchor="middle">every load, listed</text>
+        <line x1="357" y1="36" x2="387" y2="36" class="d-s"/><polygon points="394,36 383,31 383,41" class="d-fill"/>
+        <rect x="394" y="14" width="150" height="44" rx="2" class="d-box"/>
+        <text x="469" y="34" class="d-h" text-anchor="middle">MAX DEMAND</text>
+        <text x="469" y="49" class="d-t9" text-anchor="middle">what you buy</text>
+
+        <path d="M 469 58 L 469 78 L 360 78 L 360 96" class="d-s"/>
+        <polygon points="360,103 355,92 365,92" class="d-fill"/>
+
+        <rect x="170" y="103" width="380" height="52" rx="2" class="d-box" style="stroke:var(--copper);stroke-width:2.5"/>
+        <text x="360" y="128" class="d-h cu" text-anchor="middle" style="font-size:20px">SINGLE LINE DIAGRAM &#8212; THE SPINE</text>
+        <text x="360" y="146" class="d-t9" text-anchor="middle">change anything here and everything below it moves</text>
+
+        <path d="M 360 155 L 360 176" class="d-s cu"/>
+        <path d="M 76 176 L 644 176" class="d-s cu"/>
+        <g class="cu">
+          <line x1="76" y1="176" x2="76" y2="196" class="d-s"/><polygon points="76,203 71,192 81,192" class="d-fill"/>
+          <line x1="218" y1="176" x2="218" y2="196" class="d-s"/><polygon points="218,203 213,192 223,192" class="d-fill"/>
+          <line x1="360" y1="176" x2="360" y2="196" class="d-s"/><polygon points="360,203 355,192 365,192" class="d-fill"/>
+          <line x1="502" y1="176" x2="502" y2="196" class="d-s"/><polygon points="502,203 497,192 507,192" class="d-fill"/>
+          <line x1="644" y1="176" x2="644" y2="196" class="d-s"/><polygon points="644,203 639,192 649,192" class="d-fill"/>
+        </g>
+
+        <rect x="12" y="203" width="128" height="56" rx="2" class="d-box"/>
+        <text x="76" y="223" class="d-h" text-anchor="middle" style="font-size:13px">EQUIPMENT SCH.</text>
+        <text x="76" y="240" class="d-t9" text-anchor="middle">what it is</text>
+        <rect x="154" y="203" width="128" height="56" rx="2" class="d-box"/>
+        <text x="218" y="223" class="d-h" text-anchor="middle" style="font-size:13px">CABLE SCHEDULE</text>
+        <text x="218" y="240" class="d-t9" text-anchor="middle">what connects it</text>
+        <rect x="296" y="203" width="128" height="56" rx="2" class="d-box"/>
+        <text x="360" y="223" class="d-h" text-anchor="middle" style="font-size:13px">SCHEMATICS</text>
+        <text x="360" y="240" class="d-t9" text-anchor="middle">how it behaves</text>
+        <rect x="438" y="203" width="128" height="56" rx="2" class="d-box"/>
+        <text x="502" y="223" class="d-h" text-anchor="middle" style="font-size:13px">SWITCHBOARD GA</text>
+        <text x="502" y="240" class="d-t9" text-anchor="middle">how it's built</text>
+        <rect x="580" y="203" width="128" height="56" rx="2" class="d-box"/>
+        <text x="644" y="223" class="d-h" text-anchor="middle" style="font-size:13px">LAYOUT DWGS</text>
+        <text x="644" y="240" class="d-t9" text-anchor="middle">where it goes</text>
+
+        <path d="M 76 259 L 76 278 L 644 278 L 644 259" class="d-thin"/>
+        <path d="M 218 259 L 218 278 M 360 259 L 360 278 M 502 259 L 502 278" class="d-thin"/>
+        <line x1="360" y1="278" x2="360" y2="294" class="d-s"/><polygon points="360,301 355,290 365,290" class="d-fill"/>
+
+        <rect x="196" y="301" width="328" height="46" rx="2" class="d-box" style="stroke-width:2"/>
+        <text x="360" y="322" class="d-h" text-anchor="middle">TERMINATION / INTERCONNECTION</text>
+        <text x="360" y="339" class="d-t9" text-anchor="middle">which wire lands on which screw</text>
+
+        <line x1="360" y1="347" x2="360" y2="366" class="d-s"/><polygon points="360,373 355,362 365,362" class="d-fill"/>
+        <rect x="20" y="373" width="150" height="40" rx="2" class="d-box"/>
+        <text x="95" y="398" class="d-h" text-anchor="middle" style="font-size:13px">INSTALLATION</text>
+        <rect x="207" y="373" width="150" height="40" rx="2" class="d-box"/>
+        <text x="282" y="398" class="d-h" text-anchor="middle" style="font-size:13px">TEST SHEETS</text>
+        <rect x="394" y="373" width="150" height="40" rx="2" class="d-box"/>
+        <text x="469" y="398" class="d-h" text-anchor="middle" style="font-size:13px">COMMISSIONING</text>
+        <rect x="558" y="373" width="150" height="40" rx="2" class="d-box"/>
+        <text x="633" y="398" class="d-h" text-anchor="middle" style="font-size:13px">AS-BUILTS</text>
+        <line x1="170" y1="393" x2="200" y2="393" class="d-s"/><polygon points="207,393 196,388 196,398" class="d-fill"/>
+        <line x1="357" y1="393" x2="387" y2="393" class="d-s"/><polygon points="394,393 383,388 383,398" class="d-fill"/>
+        <line x1="544" y1="393" x2="551" y2="393" class="d-s"/><polygon points="558,393 547,388 547,398" class="d-fill"/>
+      </svg>
+      <figcaption><b>Your job lives on the vertical arrows.</b> Nobody is paid to keep these
+      documents consistent with each other except you. Every level from here on teaches one
+      row of this map.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ 10 ============ -->
+<section id="s10">
+  <div class="sechead"><span class="secno">10</span><h2>Worked Example</h2><span class="mins">7 min</span></div>
+
+  <div class="tldr"><b>60-second version</b>
+    <p>Here is a real industrial main switchboard. With three rules of thumb and no software,
+    you are about to form a credible technical opinion about it. <b>That is the Level 1
+    skill.</b></p></div>
+
+  <div class="card"><span class="tag">10.1 / Read it like a PE</span>
+    <h3>1000 kVA substation feeding an MSB</h3>
+
+    <figure>
+      <svg viewBox="0 0 680 490" role="img" aria-label="Single line diagram from an 11 kV network through a ring main unit and 1000 kVA transformer to a 2000 amp air circuit breaker, a 2000 amp main switchboard busbar, and three outgoing moulded case circuit breakers feeding an MCC and two distribution boards">
+        <text x="200" y="18" class="d-h" text-anchor="middle">11 kV DNSP NETWORK</text>
+        <line x1="200" y1="26" x2="200" y2="52" class="d-s2"/>
+
+        <rect x="180" y="52" width="40" height="34" rx="2" class="d-box"/>
+        <line x1="188" y1="80" x2="212" y2="58" class="d-s2"/>
+        <text x="236" y="66" class="d-t">HV RMU / fuse</text>
+        <text x="236" y="80" class="d-t9">DNSP interface &#8212; permits, switching, lead time</text>
+        <line x1="200" y1="86" x2="200" y2="108" class="d-s2"/>
+
+        <circle cx="200" cy="130" r="23" class="d-s2"/>
+        <circle cx="200" cy="158" r="23" class="d-s2"/>
+        <text x="236" y="126" class="d-t">TX-01 &#183; 1000 kVA</text>
+        <text x="236" y="142" class="d-t9">11 kV / 400 V &#183; Dyn11</text>
+        <text x="236" y="157" class="d-t9">Z = 5.0 %</text>
+        <circle cx="530" cy="130" r="12" class="d-fill cu"/>
+        <text x="530" y="135" text-anchor="middle" style="fill:var(--surface);font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600">1</text>
+        <circle cx="530" cy="164" r="12" class="d-fill cu"/>
+        <text x="530" y="169" text-anchor="middle" style="fill:var(--surface);font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600">2</text>
+
+        <line x1="200" y1="181" x2="200" y2="214" class="d-s2"/>
+        <text x="236" y="200" class="d-t9">LV cables &#183; 4 runs per phase</text>
+
+        <rect x="178" y="214" width="44" height="36" rx="2" class="d-box" style="stroke:var(--copper);stroke-width:2"/>
+        <line x1="186" y1="244" x2="214" y2="220" class="d-s2 cu"/>
+        <text x="236" y="230" class="d-t cu">ACB-01 &#183; 2000 A</text>
+        <text x="236" y="245" class="d-t9">Icu 50 kA &#183; withdrawable</text>
+        <circle cx="530" cy="232" r="12" class="d-fill cu"/>
+        <text x="530" y="237" text-anchor="middle" style="fill:var(--surface);font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600">3</text>
+
+        <line x1="200" y1="250" x2="200" y2="284" class="d-s2"/>
+        <rect x="60" y="284" width="560" height="10" class="d-fill cu"/>
+        <text x="60" y="276" class="d-h cu">MSB BUSBAR &#183; 2000 A &#183; 50 kA 1 s</text>
+        <circle cx="646" cy="289" r="12" class="d-fill cu"/>
+        <text x="646" y="294" text-anchor="middle" style="fill:var(--surface);font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600">4</text>
+
+        <line x1="140" y1="294" x2="140" y2="330" class="d-s2"/>
+        <rect x="122" y="330" width="36" height="30" rx="2" class="d-box"/>
+        <line x1="129" y1="355" x2="151" y2="335" class="d-s"/>
+        <text x="140" y="382" class="d-t" text-anchor="middle">400 A</text>
+        <line x1="140" y1="390" x2="140" y2="408" class="d-s2"/>
+        <rect x="80" y="408" width="120" height="42" rx="2" class="d-box"/>
+        <text x="140" y="428" class="d-h" text-anchor="middle">MCC-01</text>
+        <text x="140" y="444" class="d-t9" text-anchor="middle">motors, VSDs</text>
+        <circle cx="46" cy="429" r="12" class="d-fill cu"/>
+        <text x="46" y="434" text-anchor="middle" style="fill:var(--surface);font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600">5</text>
+
+        <line x1="340" y1="294" x2="340" y2="330" class="d-s2"/>
+        <rect x="322" y="330" width="36" height="30" rx="2" class="d-box"/>
+        <line x1="329" y1="355" x2="351" y2="335" class="d-s"/>
+        <text x="340" y="382" class="d-t" text-anchor="middle">250 A</text>
+        <line x1="340" y1="390" x2="340" y2="408" class="d-s2"/>
+        <rect x="280" y="408" width="120" height="42" rx="2" class="d-box"/>
+        <text x="340" y="428" class="d-h" text-anchor="middle">DB-01</text>
+        <text x="340" y="444" class="d-t9" text-anchor="middle">light &amp; power</text>
+
+        <line x1="540" y1="294" x2="540" y2="330" class="d-s2"/>
+        <rect x="522" y="330" width="36" height="30" rx="2" class="d-box"/>
+        <line x1="529" y1="355" x2="551" y2="335" class="d-s"/>
+        <text x="540" y="382" class="d-t" text-anchor="middle">160 A</text>
+        <line x1="540" y1="390" x2="540" y2="408" class="d-s2"/>
+        <rect x="480" y="408" width="120" height="42" rx="2" class="d-box"/>
+        <text x="540" y="428" class="d-h" text-anchor="middle">DB-02</text>
+        <text x="540" y="444" class="d-t9" text-anchor="middle">amenities</text>
+
+        <text x="20" y="480" class="d-t9">The numbered markers are the five things a Project Engineer checks, in order, in about ninety seconds. They are explained below.</text>
+      </svg>
+      <figcaption><b>This is a completely ordinary Australian industrial MSB.</b> Nothing exotic.
+      Learn to interrogate this one and you can interrogate most of them.</figcaption>
+    </figure>
+  </div>
+
+  <div class="card"><span class="tag">10.2 / The 90-second interrogation</span>
+    <h3>What the five markers mean</h3>
+
+    <div class="strip rule-s"><b>1 &#183; Does the incomer match the transformer?</b>
+      <p>1000 kVA at 400 V &rarr; full load current <b>1443 A</b>. A <b>2000 A</b> incomer sits
+      comfortably above that with headroom. <span style="color:var(--danger);font-weight:600">A
+      1250 A incomer would be an immediate query</span> — you could never load the transformer
+      to its rating.</p></div>
+
+    <div class="strip rule-s"><b>2 &#183; Is the fault rating credible?</b>
+      <p>1443 A &times; 100/5.0 &#8776; <b>28.9 kA</b> from the transformer, plus the network's
+      contribution. So a <b>50 kA</b> board is the right call.
+      <span style="color:var(--danger);font-weight:600">A 25 kA board here would be a serious
+      red flag</span> — the board could be destroyed by a fault it is supposed to contain.</p></div>
+
+    <div class="strip rule-s"><b>3 &#183; Is the breaker the right <em>type</em>?</b>
+      <p>An ACB (air circuit breaker) at 2000 A with an adjustable electronic trip unit is
+      normal for a main incomer, because you need adjustable settings to achieve discrimination
+      with everything downstream. Withdrawable construction matters for maintenance access —
+      and that's a question for the client's operations team, not just the designer.</p></div>
+
+    <div class="strip rule-s"><b>4 &#183; Does the busbar match the incomer?</b>
+      <p>2000 A busbar behind a 2000 A incomer: consistent.
+      <span style="color:var(--danger);font-weight:600">A 1600 A busbar behind a 2000 A incomer
+      is a genuine defect</span> — the board could be loaded beyond what the bars can carry,
+      and nothing would trip to stop it. Also check the <b>1 second</b> withstand duration
+      against the project spec; some clients require 3 seconds.</p></div>
+
+    <div class="strip rule-s"><b>5 &#183; Do the outgoings need to add up? (No.)</b>
+      <p>400 + 250 + 160 = 810 A of <em>device rating</em>. That is <b>not</b> meant to equal
+      the incomer — outgoing ratings never add up, because of diversity. So don't raise that as
+      a query. <b>Do</b> ask the real question: "what is the calculated maximum demand, and does
+      it fit under 1443 A <em>including</em> the spare capacity the client's brief requires?"</p></div>
+
+    <div class="strip ask"><b>And the one thing the drawing doesn't tell you</b>
+      <p>Fault level at MCC-01 will be materially lower than 28.9 kA once the feeder cable
+      impedance is included — which is why the MCC's devices may legitimately be rated 36 kA.
+      <b>The SLD rarely shows fault level at each board.</b> Ask for the fault study, and ask
+      which revision of the SLD it was run against.</p></div>
+  </div>
+</section>
+
+<!-- ============ 11 ============ -->
+<section id="s11">
+  <div class="sechead"><span class="secno">11</span><h2>Quiz, Answered</h2><span class="mins">10 min</span></div>
+
+  <div class="tldr"><b>How to use this</b>
+    <p>Read the question, have a guess in your head, then open it. <b>The answer is always
+    there</b> — with the reasoning, not just the letter. Getting one wrong costs you nothing.
+    This is the last thing you do in Level 1.</p></div>
+
+  <details><summary><span class="qn">Q1</span><span class="qt">A 250 kW three-phase load at 400 V, power factor 0.85. Roughly what current?
+    <span class="opts">(a) 360 A&#8195;(b) 425 A&#8195;(c) 510 A&#8195;(d) 620 A</span></span><span class="reveal">Show</span></summary>
+    <div class="ans"><div class="verdict">(b) 425 A</div>
+      <div class="eq">250 000 &divide; (&#8730;3 &times; 400 &times; 0.85)
+250 000 &divide; 588.9  =  <span class="hl">425 A</span></div>
+      <p>The trap is answer (a). If you forget the power factor and divide by
+      <span class="mono">&#8730;3 &times; 400</span> only, you get 361 A — and you'd undersize
+      the cable by a full size or two. <b>Power factor makes the current bigger, not smaller</b>,
+      because the cable has to carry the kVA, not the kW.</p>
+      <p><b>Sanity check with the rule of thumb:</b> 250 kW at PF 0.85 is 294 kVA;
+      294 &times; 1.44 = 423 A. Same answer, no calculator.</p></div></details>
+
+  <details><summary><span class="qn">Q2</span><span class="qt">Which quantity sizes a transformer, and why?
+    <span class="opts">(a) kW&#8195;(b) kVA&#8195;(c) kVAr&#8195;(d) power factor</span></span><span class="reveal">Show</span></summary>
+    <div class="ans"><div class="verdict">(b) kVA</div>
+      <p>Equipment is limited by the <b>current</b> flowing through it — and current follows
+      the hypotenuse of the power triangle, not the base. Windings and conductors heat up
+      according to total current, and they neither know nor care how much of it is doing
+      useful work.</p>
+      <p><b>Why this matters commercially:</b> a client who says "we need 800 kW" at PF 0.8
+      actually needs a <b>1000 kVA</b> transformer. Get that wrong at concept and you have
+      ordered the wrong long-lead item, on a six-month delivery, against a fixed programme.</p></div></details>
+
+  <details><summary><span class="qn">Q3</span><span class="qt">A switchboard label reads <span class="mono">400 V &#183; 3200 A &#183; 50 kA 1 s</span>. What does "50 kA 1 s" describe?</span><span class="reveal">Show</span></summary>
+    <div class="ans"><div class="verdict">Short-circuit withstand</div>
+      <p>It means the board's busbars, supports and structure can <b>survive 50 000 A of fault
+      current flowing for one second</b> without failing — the bars won't be ripped off their
+      supports by the magnetic forces, and the board won't come apart.</p>
+      <p>Note carefully what it is <b>not</b>: it is not the breaker's breaking capacity (that's
+      <span class="mono">Icu</span>, a separate rating on the device), and it is not a current
+      the board is meant to carry in service. <b>3200 A</b> is the service rating;
+      <b>50 kA for 1 s</b> is the survival rating.</p>
+      <div class="strip ask"><b>The PE question hiding in here</b>
+        <p>Check the <b>duration</b> against your project specification. 1 second is common,
+        but some clients and network operators require <b>3 seconds</b> — and a 3 s board is a
+        different, more expensive product. Finding this out after the board is built is a
+        variation and a programme hit.</p></div></div></details>
+
+  <details><summary><span class="qn">Q4</span><span class="qt">Prospective fault level at a distribution board 120 m downstream of the MSB will be:
+    <span class="opts">(a) higher&#8195;(b) the same&#8195;(c) lower&#8195;(d) depends only on the DB size</span></span><span class="reveal">Show</span></summary>
+    <div class="ans"><div class="verdict">(c) Lower</div>
+      <p>Every metre of cable adds impedance, and impedance throttles fault current. 120 m of
+      cable can drop the prospective fault from tens of kA at the MSB to single-digit kA at the
+      DB.</p>
+      <p>That is the entire reason a <b>$12 MCB</b> is allowed to exist in the same installation
+      as a <b>$9,000 ACB</b>. It is also why you must always ask <b>"at which board?"</b> when
+      someone quotes you a fault level.</p>
+      <p>(d) is the tempting wrong answer — the DB's own size is irrelevant. Fault level is set
+      by what's <b>upstream</b> of a point, never by what's at it.</p></div></details>
+
+  <details><summary><span class="qn">Q5</span><span class="qt">Where is the neutral connected to earth in a standard Australian LV installation?</span><span class="reveal">Show</span></summary>
+    <div class="ans"><div class="verdict">At the MEN link, in the main switchboard</div>
+      <p>One connection. In one place. The <b>MEN link</b> bonds the neutral bar to the earth
+      bar at the main switchboard, and downstream of that point neutral and earth conductors
+      stay completely separate — through every submain, every DB and every final circuit.</p>
+      <p><b>Why:</b> it gives an earth fault a deliberate low-impedance path back to the source,
+      so the fault draws enough current to trip protection quickly, and exposed metalwork never
+      sits at a dangerous voltage while it waits.</p>
+      <div class="strip flag"><b>What breaks it in the real world</b>
+        <p>A second N&ndash;E bond created accidentally inside a DB or a piece of packaged plant
+        — a chiller, a lift controller, a skid-mounted package that arrived with its own
+        internal bond. Now neutral current has two paths home, and some of it flows through
+        earth conductors and structural steel. Symptoms: circulating currents, nuisance RCD
+        tripping, and days of genuinely baffling fault-finding.</p></div></div></details>
+
+  <details><summary><span class="qn">Q6</span><span class="qt">A long cable run to a remote pump station is far bigger than its load current suggests. Which of the five checks is usually the real reason?</span><span class="reveal">Show</span></summary>
+    <div class="ans"><div class="verdict">Check 4 — volt drop</div>
+      <p>On long runs, volt drop — not thermal capacity — is what sets the cable size. The load
+      might only need 95 mm&#178; to carry its current safely, but 400 m of it would drop too
+      much voltage, so the designer goes to 240 mm&#178; to reduce the impedance of the run.</p>
+      <p><b>The PE behaviour this should produce:</b> when a cable looks oversized on a long
+      run, your first thought is "that's volt drop", not "that's a mistake". Check the volt drop
+      calculation before you query it. Challenging a designer on something they got right is an
+      expensive way to spend credibility you'll need later.</p>
+      <p>And remember there are <b>two</b> volt drop cases — steady state <em>and</em> motor
+      starting. On a pump station, the starting case usually governs.</p></div></details>
+
+  <details><summary><span class="qn">Q7</span><span class="qt"><b>Judgement.</b> An SLD shows a 1000 kVA transformer feeding an MSB with a 1600 A incoming ACB and a 1600 A busbar. Is this wrong?</span><span class="reveal">Show</span></summary>
+    <div class="ans"><div class="verdict">Not wrong — but it's a query</div>
+      <p>Run the numbers first: 1000 kVA at 400 V = <b>1443 A</b> full load. A 1600 A incomer is
+      only about <b>11% above</b> the transformer's full load current, and the busbar matches
+      the incomer, so the board is internally consistent. Nothing here is a defect.</p>
+      <p>What it <em>is</em> is <b>a design with no headroom</b>, and that's a question, not an
+      accusation. Three things you'd ask:</p>
+      <div class="strip ask"><b>Your three questions</b>
+        <p><b>1.</b> "What is the calculated maximum demand, and against which revision of the
+        load schedule?" If MD is 1350 A, this board is effectively full on day one.</p>
+        <p><b>2.</b> "What spare capacity does the client brief require?" If the brief says 20%
+        spare and MD is already 1350 A, the design does not meet the brief — and that is a
+        finding worth raising formally.</p>
+        <p><b>3.</b> "Is 1600 A a deliberate limit?" Sometimes it is: the client may be capping
+        board size for space, cost, or an existing switchroom. If it's deliberate and
+        documented, you note it and move on.</p></div>
+      <p><b>This is the real skill being tested.</b> A weak PE says "it's wrong" and is
+      embarrassed. A weaker one says nothing. A good PE identifies that the design is tight,
+      works out which document would prove it, and asks a precise question.</p></div></details>
+
+  <details><summary><span class="qn">Q8</span><span class="qt"><b>At your desk.</b> The consultant emails: <em>"Please confirm the switchboard fault rating is adequate. The fault level is 31 kA."</em> What do you send back before answering?</span><span class="reveal">Show</span></summary>
+    <div class="ans"><div class="verdict">Two questions — and do not confirm anything yet</div>
+      <div class="strip ask"><b>Question 1 &#8212; at which board?</b>
+        <p>Fault level is a different number at every point in the installation. "31 kA" is
+        meaningless until you know whether it's at the MSB terminals, at the MCC, or at some
+        other point. This is the single most common piece of sloppy communication in electrical
+        projects.</p></div>
+      <div class="strip ask"><b>Question 2 &#8212; where does 31 kA come from?</b>
+        <p>Which fault study, which revision, and which revision of the SLD was it run against?
+        Does it include the network's contribution as well as the transformer's? Does it include
+        <b>motor contribution</b> (large running motors feed current into a fault for the first
+        few cycles)? And what <b>duration</b> is required — 1 second or 3?</p></div>
+      <p><b>Why you don't just answer.</b> The consultant is asking you to confirm something. The
+      moment you write "confirmed", you have taken ownership of a number you didn't calculate,
+      from a study you haven't seen, for a board you may not have specified. If it turns out to
+      be wrong, the email trail says you confirmed it.</p>
+      <div class="strip desk"><b>How to reply without being obstructive</b>
+        <p>"Happy to confirm once I can tie it back to the study — can you confirm which board
+        the 31 kA applies to, and point me to the fault study revision and the SLD revision it
+        was run against? On our current information the MSB is rated 50 kA for 1 s; I'll confirm
+        adequacy at each board once I have that." <b>Cooperative, fast, and you have taken on no
+        risk you can't see.</b></p></div></div></details>
+</section>
+
+<footer>
+  <h3>Where you are now</h3>
+  <p style="max-width:66ch;margin-top:12px;color:var(--ink2)">You can now estimate a fault
+  level in your head, sanity-check any current on a drawing, explain the MEN system, and run
+  the five-check routine on any part of an installation. That is genuinely the foundation the
+  next eight levels are built on.</p>
+
+  <div class="howto" style="margin-top:26px">
+    <div><strong>Next &#8212; Level 2</strong><span>Reading SLDs. Every symbol, built up from utility to motor, plus the interrogation routine you run on any SLD that lands on your desk.</span></div>
+    <div><strong>Then &#8212; Level 3</strong><span>Schematics and control circuits: 24 V DC loops, DOL and VSD starters, E-stops, interlocks, interposing relays, DI/DO/AI/AO.</span></div>
+    <div><strong>Then &#8212; Level 4</strong><span>Cabling and termination — where the "250 A breaker, undersized cable" problem finally gets solved properly.</span></div>
+  </div>
+
+  <p class="disc"><b>On standards.</b> This module names standards and explains when they
+  become relevant. It deliberately does not reproduce clause text or quote clause numbers.
+  Any specific limit, table value or requirement must be verified against the <b>current
+  edition</b> of the standard and against your <b>project specification</b>, which is often
+  more onerous. Keep the five buckets separate: legal requirements (state electrical safety
+  legislation, WHS regulations, licensing) &#183; Australian Standards (AS/NZS 3000,
+  AS/NZS 3008, AS/NZS 61439 and others) &#183; client specification &#183; project
+  specification &#183; manufacturer requirements. Where they conflict, the most onerous
+  applies unless the client agrees otherwise <b>in writing</b>. A verbal agreement on a
+  call is not a project record.</p>
+</footer>
+
+</div>
+
+<style>
+  section{scroll-margin-top:64px}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+
+<script>
+(function(){
+  var bar = document.getElementById('prog');
+  function update(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    bar.style.width = pct.toFixed(2) + '%';
+  }
+  update();
+  window.addEventListener('scroll', update, {passive:true});
+  window.addEventListener('resize', update, {passive:true});
+
+  document.querySelectorAll('details').forEach(function(d){
+    d.addEventListener('toggle', function(){
+      var r = d.querySelector('.reveal');
+      if (r) r.textContent = d.open ? 'Hide' : 'Show';
+      update();
+    });
+  });
+})();
+</script>

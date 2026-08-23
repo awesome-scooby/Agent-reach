@@ -96,5 +96,8 @@ coordination, QA/QC, commissioning, commercial awareness and risk identification
 
 ## Module index
 
-- `level-01-fundamentals.md` — Level 1 (current module)
+- `level-01-chain-of-ratings.html` — **Level 1, visual edition** (published artifact). ADHD-friendly:
+  chunked cards, nine hand-drawn SVG diagrams, colour-coded rule / red-flag / ask-this
+  strips, and a quiz where every answer is taught rather than asked.
+- `level-01-fundamentals.md` — Level 1 as plain text reference
 
