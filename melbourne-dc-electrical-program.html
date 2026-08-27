@@ -1,0 +1,1684 @@
+<title>Switchroom to Critical Power</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;450;600&display=swap">
+
+<style>
+:root{
+  --paper:#EDF1F3; --sheet:#FFFFFF; --sheet-2:#F6F9FA; --sheet-3:#E7ECEF;
+  --ink:#0F1A21; --ink-2:#41525E; --ink-3:#71838F;
+  --rule:#C7D2D9; --rule-2:#9CABB5;
+  --copper:#AC5A2A; --copper-soft:#F3E4DA;
+  --phase:#1D6389; --phase-soft:#DFEAF1;
+  --ok:#2A7553; --ok-soft:#DCEDE4;
+  --warn:#8F6410; --warn-soft:#F5EAD3;
+  --fault:#9F3639; --fault-soft:#F6E0E0;
+  --shadow:0 1px 2px rgba(15,26,33,.06);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C1317; --sheet:#121C22; --sheet-2:#17232A; --sheet-3:#1D2C34;
+    --ink:#E4ECF0; --ink-2:#A6B8C2; --ink-3:#788A95;
+    --rule:#28383F; --rule-2:#3D515C;
+    --copper:#E28B52; --copper-soft:#33221A;
+    --phase:#6EB2DB; --phase-soft:#152833;
+    --ok:#5CB88B; --ok-soft:#13291F;
+    --warn:#D6A340; --warn-soft:#2B2313;
+    --fault:#DE6F6D; --fault-soft:#2E1717;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C1317; --sheet:#121C22; --sheet-2:#17232A; --sheet-3:#1D2C34;
+  --ink:#E4ECF0; --ink-2:#A6B8C2; --ink-3:#788A95;
+  --rule:#28383F; --rule-2:#3D515C;
+  --copper:#E28B52; --copper-soft:#33221A;
+  --phase:#6EB2DB; --phase-soft:#152833;
+  --ok:#5CB88B; --ok-soft:#13291F;
+  --warn:#D6A340; --warn-soft:#2B2313;
+  --fault:#DE6F6D; --fault-soft:#2E1717;
+  --shadow:0 1px 2px rgba(0,0,0,.4);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,sans-serif;
+  font-size:15.5px; line-height:1.62; -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:"IBM Plex Sans Condensed","IBM Plex Sans",system-ui,sans-serif; text-wrap:balance; margin:0}
+p{margin:0}
+a{color:var(--phase); text-decoration:none; border-bottom:1px solid color-mix(in srgb,var(--phase) 35%,transparent)}
+a:hover{border-bottom-color:var(--phase)}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--copper); outline-offset:2px; border-radius:2px}
+code,.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+
+/* ---------- sheet frame ---------- */
+.sheet{max-width:1120px; margin:0 auto; padding:0 20px 96px}
+
+/* ---------- title block ---------- */
+.titleblock{
+  border:1px solid var(--rule-2); background:var(--sheet); margin-top:28px;
+  box-shadow:var(--shadow);
+}
+.tb-top{padding:26px 26px 22px; border-bottom:1px solid var(--rule)}
+.tb-eyebrow{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--copper); margin-bottom:12px;
+}
+.titleblock h1{font-size:clamp(30px,5vw,46px); font-weight:700; line-height:1.06; letter-spacing:-.015em; max-width:19ch}
+.tb-sub{margin-top:14px; color:var(--ink-2); max-width:62ch; font-size:16px}
+.tb-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.tb-cell{padding:13px 26px; border-right:1px solid var(--rule)}
+.tb-cell:last-child{border-right:none}
+.tb-k{font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3)}
+.tb-v{font-family:"IBM Plex Sans Condensed",sans-serif; font-weight:600; font-size:17px; margin-top:3px; font-variant-numeric:tabular-nums}
+
+/* ---------- index ---------- */
+.index{
+  margin-top:14px; border:1px solid var(--rule); background:var(--sheet-2);
+  padding:16px 20px; display:flex; flex-wrap:wrap; gap:4px 0;
+}
+.index a{
+  font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--ink-2);
+  border:none; padding:3px 12px 3px 0; margin-right:12px; white-space:nowrap;
+}
+.index a:hover{color:var(--copper)}
+.index a b{color:var(--ink-3); font-weight:500; margin-right:6px}
+
+/* ---------- sections ---------- */
+section{margin-top:56px; scroll-margin-top:16px}
+.shead{display:flex; align-items:baseline; gap:14px; border-bottom:2px solid var(--ink); padding-bottom:9px; margin-bottom:8px}
+.snum{font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; color:var(--copper); letter-spacing:.08em}
+.shead h2{font-size:clamp(21px,2.6vw,27px); font-weight:700; letter-spacing:-.01em}
+.sdek{color:var(--ink-3); font-size:14px; margin-bottom:24px; max-width:70ch}
+
+.prose{max-width:68ch}
+.prose p+p{margin-top:13px}
+.stack{display:flex; flex-direction:column; gap:16px}
+.grid-2{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px}
+.grid-3{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:16px}
+
+.card{background:var(--sheet); border:1px solid var(--rule); padding:20px 22px; box-shadow:var(--shadow)}
+.card h3{font-size:17px; font-weight:600; margin-bottom:9px}
+.card h4{font-size:13px; font-weight:600; margin-bottom:6px; color:var(--ink-2)}
+.card p{color:var(--ink-2); font-size:14.5px}
+
+.callout{border-left:3px solid var(--copper); background:var(--copper-soft); padding:16px 20px}
+.callout .lbl{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--copper); display:block; margin-bottom:7px}
+.callout p{color:var(--ink); font-size:14.5px}
+.callout.blue{border-left-color:var(--phase); background:var(--phase-soft)}
+.callout.blue .lbl{color:var(--phase)}
+.callout.warnbox{border-left-color:var(--warn); background:var(--warn-soft)}
+.callout.warnbox .lbl{color:var(--warn)}
+
+ul.tick{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:7px}
+ul.tick li{position:relative; padding-left:20px; font-size:14.5px; color:var(--ink-2)}
+ul.tick li::before{content:"—"; position:absolute; left:0; color:var(--copper); font-family:"IBM Plex Mono",monospace}
+ul.tick li b{color:var(--ink); font-weight:600}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto; border:1px solid var(--rule); background:var(--sheet); box-shadow:var(--shadow)}
+table{border-collapse:collapse; width:100%; min-width:600px; font-size:14px}
+th{
+  text-align:left; font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--ink-3); font-weight:500;
+  padding:11px 14px; border-bottom:1px solid var(--rule-2); background:var(--sheet-2); white-space:nowrap;
+}
+td{padding:11px 14px; border-bottom:1px solid var(--rule); vertical-align:top; color:var(--ink-2)}
+tr:last-child td{border-bottom:none}
+td b,td strong{color:var(--ink); font-weight:600}
+td.num{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; white-space:nowrap}
+
+.pill{
+  display:inline-block; font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.09em;
+  text-transform:uppercase; padding:2.5px 8px; border:1px solid currentColor; white-space:nowrap;
+}
+.p-crit{color:var(--fault); background:var(--fault-soft)}
+.p-high{color:var(--warn); background:var(--warn-soft)}
+.p-med{color:var(--phase); background:var(--phase-soft)}
+.p-keep{color:var(--ok); background:var(--ok-soft)}
+
+/* ---------- level meter ---------- */
+.meter{display:flex; gap:3px; align-items:center}
+.dot{width:11px; height:11px; border:1px solid var(--rule-2); background:transparent}
+.dot.on{background:var(--copper); border-color:var(--copper)}
+.dot.tgt{border-color:var(--ok); border-style:dashed}
+
+/* ---------- diagram ---------- */
+figure{margin:0}
+.dwg{border:1px solid var(--rule); background:var(--sheet); box-shadow:var(--shadow)}
+.dwg-scroll{overflow-x:auto}
+.dwg svg{display:block; width:100%; min-width:660px; height:auto}
+figcaption{
+  border-top:1px solid var(--rule); padding:10px 16px; font-family:"IBM Plex Mono",monospace;
+  font-size:11px; color:var(--ink-3); letter-spacing:.03em; background:var(--sheet-2);
+}
+.sv-block{fill:var(--sheet-2); stroke:var(--ink); stroke-width:1.2}
+.sv-txt{fill:var(--ink); font-family:"IBM Plex Mono",monospace; font-size:10.5px}
+.sv-txt-s{fill:var(--ink-3); font-family:"IBM Plex Mono",monospace; font-size:9.5px}
+.sv-line{stroke:var(--ink); stroke-width:1.4; fill:none}
+.sv-a{stroke:var(--copper); stroke-width:2; fill:none}
+.sv-b{stroke:var(--phase); stroke-width:2; fill:none}
+.sv-cb{fill:var(--sheet); stroke:var(--ink); stroke-width:1.4}
+.sv-badge{fill:var(--copper)}
+.sv-badge-t{fill:var(--sheet); font-family:"IBM Plex Mono",monospace; font-size:10px; font-weight:600}
+
+/* ---------- lesson steps ---------- */
+.steps{counter-reset:st; display:flex; flex-direction:column; gap:0}
+.step{display:grid; grid-template-columns:44px 1fr; border-bottom:1px solid var(--rule)}
+.step:last-child{border-bottom:none}
+.step-n{
+  counter-increment:st; font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600;
+  color:var(--copper); padding:14px 0 14px 2px; border-right:1px solid var(--rule);
+}
+.step-n::before{content:counter(st,decimal-leading-zero)}
+.step-b{padding:14px 0 14px 16px}
+.step-b b{display:block; font-family:"IBM Plex Sans Condensed",sans-serif; font-size:15px; margin-bottom:2px}
+.step-b span{font-size:14px; color:var(--ink-2)}
+
+/* ---------- prompt blocks ---------- */
+.prompt{border:1px solid var(--rule); background:var(--sheet)}
+.prompt-h{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:9px 14px; border-bottom:1px solid var(--rule); background:var(--sheet-2);
+}
+.prompt-h span{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-2)}
+.copy{
+  font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
+  background:transparent; border:1px solid var(--rule-2); color:var(--ink-2); padding:3px 10px; cursor:pointer;
+}
+.copy:hover{border-color:var(--copper); color:var(--copper)}
+.copy[data-done="1"]{border-color:var(--ok); color:var(--ok)}
+.prompt pre{
+  margin:0; padding:14px; font-family:"IBM Plex Mono",monospace; font-size:12.5px; line-height:1.6;
+  white-space:pre-wrap; color:var(--ink-2); max-height:270px; overflow:auto;
+}
+
+/* ---------- checklist ---------- */
+.chk{display:flex; flex-direction:column; gap:0}
+.chk label{
+  display:flex; gap:11px; align-items:flex-start; padding:9px 0; border-bottom:1px solid var(--rule);
+  font-size:14.5px; color:var(--ink-2); cursor:pointer;
+}
+.chk label:last-child{border-bottom:none}
+.chk input{margin-top:4px; accent-color:var(--copper); flex-shrink:0; width:15px; height:15px}
+.chk input:checked+span{color:var(--ink-3); text-decoration:line-through}
+
+details{border:1px solid var(--rule); background:var(--sheet)}
+details+details{margin-top:10px}
+summary{
+  padding:13px 18px; cursor:pointer; font-family:"IBM Plex Sans Condensed",sans-serif;
+  font-weight:600; font-size:15.5px; list-style:none; display:flex; justify-content:space-between; gap:12px;
+}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+"; font-family:"IBM Plex Mono",monospace; color:var(--copper); font-size:17px; line-height:1}
+details[open] summary::after{content:"–"}
+details[open] summary{border-bottom:1px solid var(--rule)}
+.det-b{padding:16px 18px}
+.det-b p{color:var(--ink-2); font-size:14.5px}
+.det-b p+p{margin-top:11px}
+
+.footnote{margin-top:64px; border-top:1px solid var(--rule); padding-top:18px; color:var(--ink-3); font-size:13px; max-width:74ch}
+
+@media (max-width:640px){
+  .tb-cell{border-right:none; border-bottom:1px solid var(--rule)}
+  body{font-size:15px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+</style>
+
+<div class="sheet">
+
+<!-- ================= TITLE BLOCK ================= -->
+<div class="titleblock">
+  <div class="tb-top">
+    <div class="tb-eyebrow">Melbourne · Critical Power · Rev A</div>
+    <h1>Switchroom to Critical Power</h1>
+    <p class="tb-sub">A 24-week program taking you from switchboard-side project engineer to a Melbourne data-centre electrical project engineer on $150k+, built for 6–8 hours a week in 25-minute blocks.</p>
+  </div>
+  <div class="tb-grid">
+    <div class="tb-cell"><div class="tb-k">Current</div><div class="tb-v">$110–135k</div></div>
+    <div class="tb-cell"><div class="tb-k">Stage 1 target</div><div class="tb-v">$150–165k</div></div>
+    <div class="tb-cell"><div class="tb-k">Study budget</div><div class="tb-v">6–8 hrs/wk</div></div>
+    <div class="tb-cell"><div class="tb-k">Block length</div><div class="tb-v">25 min</div></div>
+    <div class="tb-cell"><div class="tb-k">Issued</div><div class="tb-v">27 Aug 26</div></div>
+  </div>
+</div>
+
+<nav class="index">
+  <a href="#s00"><b>00</b>Your position</a>
+  <a href="#s01"><b>01</b>Market map</a>
+  <a href="#s02"><b>02</b>Salary ladder</a>
+  <a href="#s03"><b>03</b>Dashboard</a>
+  <a href="#s04"><b>04</b>Roadmap</a>
+  <a href="#s05"><b>05</b>Weekly system</a>
+  <a href="#s06"><b>06</b>Lesson 01</a>
+  <a href="#s07"><b>07</b>Reading an SLD</a>
+  <a href="#s08"><b>08</b>Redundancy</a>
+  <a href="#s09"><b>09</b>Commissioning</a>
+  <a href="#s10"><b>10</b>Standards</a>
+  <a href="#s11"><b>11</b>Software</a>
+  <a href="#s12"><b>12</b>AI toolkit</a>
+  <a href="#s13"><b>13</b>Projects</a>
+  <a href="#s14"><b>14</b>Interviews</a>
+  <a href="#s15"><b>15</b>Getting hired</a>
+</nav>
+
+<!-- ================= 00 ================= -->
+<section id="s00">
+  <div class="shead"><span class="snum">00</span><h2>Your position — read this first</h2></div>
+  <p class="sdek">Before any curriculum: you are not starting from zero, and the plan changes completely because of where you actually sit.</p>
+
+  <div class="stack">
+    <div class="callout">
+      <span class="lbl">The thing you're undervaluing</span>
+      <p>You are a project engineer at a <b>switchroom and switchboard manufacturer</b>. On every Melbourne data-centre build happening right now, the switchboards and the transformers are <b>the critical path</b>. Lead times are the single most common cause of a program blowing out. You already sit inside the part of the supply chain that contractors and clients are most afraid of and least able to interrogate.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>What you already own</h3>
+        <ul class="tick">
+          <li><b>AS/NZS 61439</b> — form segregation, type testing, temperature rise, Icw/Ipk withstand, busbar bracing, IP ratings. Data-centre clients are the most demanding 61439 customers in the country.</li>
+          <li><b>FAT</b> — factory acceptance testing is literally Level 2 commissioning. Most graduate engineers applying for these roles have never witnessed one.</li>
+          <li><b>Drawing fluency</b> — GA drawings, schematics, wiring diagrams, termination and cable schedules for boards.</li>
+          <li><b>Delivery mechanics</b> — submittals, technical queries, material approvals, long-lead procurement, schedule pressure, angry customers.</li>
+          <li><b>Switchgear selection reality</b> — ACB vs MCCB, frame sizes, trip units, cascading, what's actually available versus what the spec asked for.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>What's missing — the whole gap, honestly</h3>
+        <ul class="tick">
+          <li><b>Everything upstream of your board</b> — utility supply, HV/MV switchgear, transformers, protection grading.</li>
+          <li><b>Everything downstream</b> — UPS, batteries, STS, PDU, RPP, busway, rack power, dual-corded loads.</li>
+          <li><b>System-level thinking</b> — N+1 vs 2N, concurrent maintainability, fault tolerance, single points of failure.</li>
+          <li><b>Site-side design</b> — AS/NZS 3000 and 3008 as applied to installations, not factory-built assemblies.</li>
+          <li><b>L3–L5 commissioning</b> — SAT, integrated systems testing, load banks, black-building, failure simulation.</li>
+          <li><b>Design calculations</b> — maximum demand, cable sizing, volt drop, fault level, generator and UPS sizing.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <span class="lbl">Strategy in one line</span>
+      <p>Do not present yourself as a graduate engineer who wants to learn data centres. Present yourself as <b>the switchgear specialist who understands why your board is late and what it will do under fault</b> — and who is now building the system-level picture around it. That story is worth $150k+. "Keen to get into data centres" is worth $110k.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 01 ================= -->
+<section id="s01">
+  <div class="shead"><span class="snum">01</span><h2>The Melbourne market, August 2026</h2></div>
+  <p class="sdek">Victoria currently has roughly 37 data-centre projects in the pipeline against 38 already operating — one of the strongest construction pipelines in the country. This is an unusually good window to move.</p>
+
+  <div class="stack">
+    <div class="grid-3">
+      <div class="card">
+        <h4>Live capacity signals</h4>
+        <p><b>NEXTDC M4</b>, Port Melbourne — approximately $2bn, 80 MW across 26,400 sqm of technical space, fast-tracked by the Victorian Government.</p>
+        <p style="margin-top:10px"><b>AirTrunk MEL1</b> — remaining three of six phases, 100 MW+ of new IT load, AU$1bn+ over 18 months.</p>
+        <p style="margin-top:10px"><b>Melbourne's west</b> — CDC (four sites), STACK and AirTrunk (two campuses each), plus NEXTDC.</p>
+      </div>
+      <div class="card">
+        <h4>What that means for you</h4>
+        <p>Every one of those campuses needs LV switchboards, HV switchrooms, generator paralleling boards and PDUs — and every one has a manufacturer behind it who is late.</p>
+        <p style="margin-top:10px">Contractors are hiring project engineers who can hold a switchgear manufacturer to account. That is your opening.</p>
+      </div>
+      <div class="card">
+        <h4>Verify continuously</h4>
+        <p>Set standing job alerts and read the ads as market intelligence, not just vacancies. The requirement lists tell you exactly what to learn next.</p>
+        <p style="margin-top:10px"><a href="https://au.seek.com/data-centre-electrical-jobs/in-All-Melbourne-VIC">SEEK — data centre electrical, Melbourne</a></p>
+        <p style="margin-top:6px"><a href="https://renewmap.com.au/resources/projects/vic/datacentre/">RenewMap — Victorian DC project pipeline</a></p>
+      </div>
+    </div>
+
+    <h3 style="font-size:16px; margin-top:8px">Who to target, by segment</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Segment</th><th>Names to research</th><th>Fit for you</th><th>Typical entry title</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>Electrical contractors</b><br><span class="mono" style="font-size:11px; color:var(--ink-3)">Best first move</span></td>
+            <td>Fredon, Nilsen, Stowe Australia, Star Group, Heyday Group</td>
+            <td><span class="pill p-keep">Strongest</span> They buy switchboards. You know switchboards. Direct translation.</td>
+            <td>Electrical Project Engineer</td>
+          </tr>
+          <tr>
+            <td><b>Head contractors / builders</b></td>
+            <td>FDC, Kapitol Group, Icon, Built, Multiplex, Lendlease</td>
+            <td><span class="pill p-high">Strong</span> Wants package management and program control more than design depth.</td>
+            <td>Services / Electrical Project Engineer</td>
+          </tr>
+          <tr>
+            <td><b>Operators (client side)</b></td>
+            <td>NEXTDC, AirTrunk, CDC, STACK, Equinix, DCI, Microsoft, AWS</td>
+            <td><span class="pill p-med">Later</span> Best pay and stability, hardest to enter without site delivery history.</td>
+            <td>Project Engineer / Delivery Engineer</td>
+          </tr>
+          <tr>
+            <td><b>Consultants</b></td>
+            <td><a href="https://www.aurecongroup.com/">Aurecon</a>, <a href="https://ndy.com/service/electrical">NDY</a>, Arup, WSP, Jacobs, AECOM, Cundall</td>
+            <td><span class="pill p-med">Possible</span> Wants design calcs and modelling you don't have yet. Slower salary curve.</td>
+            <td>Electrical Design Engineer</td>
+          </tr>
+          <tr>
+            <td><b>Commissioning</b></td>
+            <td>Independent Cx providers plus Cx arms of the consultancies above</td>
+            <td><span class="pill p-high">Sleeper pick</span> Your FAT experience is genuinely relevant, and rates are high.</td>
+            <td>Commissioning Engineer</td>
+          </tr>
+          <tr>
+            <td><b>Recruiters</b></td>
+            <td>Specialist critical-infrastructure desks at the major engineering agencies</td>
+            <td>Pick 3–4 who actually place DC roles. Ignore generalists.</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout warnbox">
+      <span class="lbl">Do your own verification</span>
+      <p>Company names above are research starting points, not a verified live-vacancy list. Confirm each on SEEK and LinkedIn before you invest time — desks, joint ventures and project allocations move fast in this market.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 02 ================= -->
+<section id="s02">
+  <div class="shead"><span class="snum">02</span><h2>The salary ladder</h2></div>
+  <p class="sdek">Melbourne data-centre engineer roles run well above the general electrical engineer market — roughly $97k average for electrical engineers in Melbourne versus around $160k average for data-centre engineer roles. Building-services electrical engineer ads in Melbourne currently advertise $120–155k plus super; senior site electricians on national DC projects reach $200k+ with overtime and allowances.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Stage</th><th>Total comp</th><th>Title</th><th>What actually unlocks it</th><th>Timing</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="num"><b>Now</b></td>
+          <td class="num">$110–135k</td>
+          <td>Project Engineer (switchboards)</td>
+          <td>Where you are. Factory-side delivery, 61439, FAT.</td>
+          <td class="num">—</td>
+        </tr>
+        <tr>
+          <td class="num"><b>Stage 1</b></td>
+          <td class="num"><b>$150–165k</b></td>
+          <td>Electrical Project Engineer — DC</td>
+          <td>Read and interrogate an SLD. Explain 2N and concurrent maintainability. Understand UPS/gen/ATS as a system. Manage an electrical package on site. <b>Switchgear expertise is the wedge.</b></td>
+          <td class="num">6–9 mths</td>
+        </tr>
+        <tr>
+          <td class="num"><b>Stage 2</b></td>
+          <td class="num"><b>$175–195k</b></td>
+          <td>Senior Project Engineer / Cx Engineer</td>
+          <td>Own a full electrical package end-to-end. Drive L3–L4 commissioning. Run design reviews, close RFIs, defend variations, manage subcontractors. One complete DC project delivered.</td>
+          <td class="num">18–30 mths</td>
+        </tr>
+        <tr>
+          <td class="num"><b>Stage 3</b></td>
+          <td class="num"><b>$200–240k+</b></td>
+          <td>Electrical PM / Lead Cx / Client-side Delivery</td>
+          <td>Commercial ownership — budget, program, claims, client relationship. Or deep specialisation: integrated systems testing lead, HV authorised person, critical-power design authority.</td>
+          <td class="num">3–5 yrs</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout" style="margin-top:16px">
+    <span class="lbl">The single highest-leverage move</span>
+    <p>The jump from $110–135k to $150k+ is <b>a company change, not a promotion</b>. Internal raises in manufacturing rarely clear $150k for a project engineer. Budget for one deliberate move at roughly the 6–9 month mark, once you can hold a technical conversation about the systems either side of your switchboard.</p>
+  </div>
+</section>
+
+<!-- ================= 03 ================= -->
+<section id="s03">
+  <div class="shead"><span class="snum">03</span><h2>Skills dashboard</h2></div>
+  <p class="sdek">Filled in from your intake. Solid dots are current level, dashed outline is target. I update this as you progress — ask me to re-issue the sheet any time.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Skill</th><th style="width:130px">Level → target</th><th>Priority</th><th>First move</th></tr></thead>
+      <tbody>
+        <tr><td><b>Switchboards / AS/NZS 61439</b></td><td><span class="meter" data-cur="3" data-tgt="5"></span></td><td><span class="pill p-keep">Leverage</span></td><td>Sharpen into interview stories, don't rebuild</td></tr>
+        <tr><td><b>Electrical fundamentals</b></td><td><span class="meter" data-cur="3" data-tgt="4"></span></td><td><span class="pill p-med">Medium</span></td><td>Refresh kW/kVA/pf and fault current only</td></tr>
+        <tr><td><b>SLD reading</b></td><td><span class="meter" data-cur="1" data-tgt="4"></span></td><td><span class="pill p-crit">Critical</span></td><td>Section 07 eye-path, then 20 real SLDs</td></tr>
+        <tr><td><b>Critical power (UPS/gen/ATS)</b></td><td><span class="meter" data-cur="1" data-tgt="4"></span></td><td><span class="pill p-crit">Critical</span></td><td>Lesson 01, then vendor whitepapers</td></tr>
+        <tr><td><b>Redundancy &amp; topology</b></td><td><span class="meter" data-cur="1" data-tgt="4"></span></td><td><span class="pill p-crit">Critical</span></td><td>Section 08 — highest interview yield</td></tr>
+        <tr><td><b>Design calculations</b></td><td><span class="meter" data-cur="1" data-tgt="4"></span></td><td><span class="pill p-crit">Critical</span></td><td>Maximum demand → cable sizing → fault level</td></tr>
+        <tr><td><b>Commissioning L1–L5</b></td><td><span class="meter" data-cur="1" data-tgt="4"></span></td><td><span class="pill p-crit">Critical</span></td><td>Map your FAT experience onto Level 2</td></tr>
+        <tr><td><b>Protection &amp; selectivity</b></td><td><span class="meter" data-cur="1" data-tgt="3"></span></td><td><span class="pill p-high">High</span></td><td>Discrimination curves, cascading</td></tr>
+        <tr><td><b>HV / MV distribution</b></td><td><span class="meter" data-cur="0" data-tgt="3"></span></td><td><span class="pill p-high">High</span></td><td>RMU, ring vs radial, 22kV basics</td></tr>
+        <tr><td><b>Construction delivery</b></td><td><span class="meter" data-cur="2" data-tgt="4"></span></td><td><span class="pill p-high">High</span></td><td>Translate factory delivery to site delivery</td></tr>
+        <tr><td><b>Project management</b></td><td><span class="meter" data-cur="2" data-tgt="4"></span></td><td><span class="pill p-high">High</span></td><td>Program logic, float, critical path</td></tr>
+        <tr><td><b>Australian standards</b></td><td><span class="meter" data-cur="2" data-tgt="4"></span></td><td><span class="pill p-high">High</span></td><td>Section 10 — know what to look up</td></tr>
+        <tr><td><b>Earthing</b></td><td><span class="meter" data-cur="1" data-tgt="3"></span></td><td><span class="pill p-med">Medium</span></td><td>MEN, equipotential bonding, DC earthing</td></tr>
+        <tr><td><b>Software</b></td><td><span class="meter" data-cur="2" data-tgt="3"></span></td><td><span class="pill p-med">Medium</span></td><td>You're already fine. See section 11.</td></tr>
+        <tr><td><b>Interview skills</b></td><td><span class="meter" data-cur="1" data-tgt="5"></span></td><td><span class="pill p-crit">Critical</span></td><td>Weekly reps from week 4 onward</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================= 04 ================= -->
+<section id="s04">
+  <div class="shead"><span class="snum">04</span><h2>The 24-week roadmap</h2></div>
+  <p class="sdek">Three phases. Applications start in phase two, not at the end — you learn faster with live interviews running.</p>
+
+  <div class="grid-3">
+    <div class="card">
+      <h4 style="color:var(--copper)">PHASE 1 · WEEKS 1–8</h4>
+      <h3>Build the system picture</h3>
+      <ul class="tick">
+        <li>The full power path, utility to rack</li>
+        <li>SLD reading to fluency</li>
+        <li>Redundancy: N, N+1, 2N, 2N+1</li>
+        <li>UPS, batteries, generators, ATS/STS</li>
+        <li>Maximum demand and cable sizing</li>
+        <li>Projects 1–2</li>
+      </ul>
+      <p style="margin-top:12px; font-size:13px"><b>Exit test:</b> you can sketch a 2N data-centre SLD from memory and explain every block.</p>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--copper)">PHASE 2 · WEEKS 9–16</h4>
+      <h3>Depth and market entry</h3>
+      <ul class="tick">
+        <li>Fault level and protection grading</li>
+        <li>Generator and UPS sizing</li>
+        <li>Commissioning L1–L5 in detail</li>
+        <li>AS/NZS 3000, 3008, 2067 working knowledge</li>
+        <li><b>CV rewritten, applications live</b></li>
+        <li>Projects 3–4</li>
+      </ul>
+      <p style="margin-top:12px; font-size:13px"><b>Exit test:</b> you pass a first-round technical screen without bluffing.</p>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--copper)">PHASE 3 · WEEKS 17–24</h4>
+      <h3>Interview and close</h3>
+      <ul class="tick">
+        <li>Design review and issue-spotting</li>
+        <li>Integrated systems testing, black building</li>
+        <li>Contractor and client scenarios</li>
+        <li>Full interview simulation loops</li>
+        <li>Negotiation</li>
+        <li>Projects 5–6</li>
+      </ul>
+      <p style="margin-top:12px; font-size:13px"><b>Exit test:</b> offer in hand at Stage 1 money or above.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 05 ================= -->
+<section id="s05">
+  <div class="shead"><span class="snum">05</span><h2>The weekly system</h2></div>
+  <p class="sdek">Six to eight hours, never in one sitting. Fourteen blocks of 25 minutes across the week. Every block has one output — no passive reading.</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>The standard week</h3>
+      <div class="tw" style="border:none; box-shadow:none">
+        <table style="min-width:0">
+          <tbody>
+            <tr><td class="num"><b>Mon</b></td><td>2 blocks — <b>New concept</b> + diagram redrawn by hand</td></tr>
+            <tr><td class="num"><b>Tue</b></td><td>2 blocks — <b>Worked calculation</b>, same concept</td></tr>
+            <tr><td class="num"><b>Wed</b></td><td>2 blocks — <b>SLD practice</b>, trace a real drawing</td></tr>
+            <tr><td class="num"><b>Thu</b></td><td>2 blocks — <b>Quiz + flashcard review</b> (spaced repetition)</td></tr>
+            <tr><td class="num"><b>Fri</b></td><td>2 blocks — <b>Interview reps</b>, spoken out loud</td></tr>
+            <tr><td class="num"><b>Sat</b></td><td>3–4 blocks — <b>Project work</b>, the current build</td></tr>
+            <tr><td class="num"><b>Sun</b></td><td>1 block — <b>Weekly review</b> (below). Non-negotiable.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <h3>ADHD guardrails</h3>
+      <ul class="tick">
+        <li><b>One output per block.</b> A drawn diagram, a solved number, a recorded answer. If there's no artefact, the block didn't happen.</li>
+        <li><b>Draw before you read.</b> Sketch the thing badly from memory first, then check. The error is what makes it stick.</li>
+        <li><b>Miss a day, skip it.</b> Never double up. Doubling up is how these plans die.</li>
+        <li><b>Say answers out loud.</b> Interview performance is a speaking skill, not a knowing skill.</li>
+        <li><b>Hard stop at 25 minutes</b> even mid-flow. Finishing mid-thought makes restarting easier.</li>
+        <li><b>Two blocks minimum counts as a win.</b> A 3-hour week that continues beats an 8-hour week that stops.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>Sunday review — the five questions</h3>
+    <p style="margin-bottom:12px">Answer these to me every Sunday. I score them, update the dashboard, and set the next week.</p>
+    <div class="steps">
+      <div class="step"><div class="step-n"></div><div class="step-b"><b>What did I learn?</b><span>Say it without notes. If you can't, you didn't learn it.</span></div></div>
+      <div class="step"><div class="step-n"></div><div class="step-b"><b>What still doesn't make sense?</b><span>Name it precisely. "UPS" is not an answer; "why a static bypass needs a synchronised source" is.</span></div></div>
+      <div class="step"><div class="step-n"></div><div class="step-b"><b>What needs revision?</b><span>Anything from 2–3 weeks ago that's gone fuzzy. This is the spaced repetition trigger.</span></div></div>
+      <div class="step"><div class="step-n"></div><div class="step-b"><b>What do I practise next?</b><span>Calculation or drawing. Always hands-on.</span></div></div>
+      <div class="step"><div class="step-n"></div><div class="step-b"><b>What's next week's one concept?</b><span>One. Not three.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 06 ================= -->
+<section id="s06">
+  <div class="shead"><span class="snum">06</span><h2>Lesson 01 — the whole power path</h2></div>
+  <p class="sdek">Start here. Everything else in data-centre electrical hangs off this one diagram. Read the analogy, study the drawing, then answer the questions in chat and I'll mark them.</p>
+
+  <div class="stack">
+    <div class="callout blue">
+      <span class="lbl">Analogy first</span>
+      <p>A data centre is a building where <b>the power is never allowed to stop, not even for a quarter of a second</b>. Everything in the diagram below exists to answer one question: <i>if this part dies right now, what carries the load?</i> Utility dies → generator. Generator takes 10–15 seconds to start → battery covers the gap. Whole path dies → there's a second identical path. That's it. That's the entire industry.</p>
+    </div>
+
+    <figure class="dwg">
+      <div class="dwg-scroll">
+        <svg viewBox="0 0 940 620" role="img" aria-label="Single line diagram of a 2N data centre electrical distribution system showing two independent A and B power paths from utility supply through HV switchboard, transformer, low voltage main switchboard with generator backup, UPS, PDU and busway to a dual-corded rack">
+
+          <!-- ===== A SIDE (copper) ===== -->
+          <text x="225" y="18" class="sv-txt" text-anchor="middle" fill="var(--copper)" font-weight="600">PATH A</text>
+          <text x="655" y="18" class="sv-txt" text-anchor="middle" fill="var(--phase)" font-weight="600">PATH B</text>
+
+          <!-- utility -->
+          <rect x="150" y="28" width="150" height="30" class="sv-block"/>
+          <text x="225" y="47" class="sv-txt" text-anchor="middle">UTILITY 22 kV</text>
+          <rect x="580" y="28" width="150" height="30" class="sv-block"/>
+          <text x="655" y="47" class="sv-txt" text-anchor="middle">UTILITY 22 kV</text>
+
+          <path d="M225 58 L225 92" class="sv-a"/>
+          <path d="M655 58 L655 92" class="sv-b"/>
+
+          <!-- HV -->
+          <rect x="150" y="92" width="150" height="30" class="sv-block"/>
+          <text x="225" y="111" class="sv-txt" text-anchor="middle">HV RMU / SWBD</text>
+          <rect x="580" y="92" width="150" height="30" class="sv-block"/>
+          <text x="655" y="111" class="sv-txt" text-anchor="middle">HV RMU / SWBD</text>
+
+          <path d="M225 122 L225 146" class="sv-a"/>
+          <path d="M655 122 L655 146" class="sv-b"/>
+
+          <!-- transformer: two overlapping circles -->
+          <circle cx="225" cy="160" r="15" fill="none" stroke="var(--copper)" stroke-width="2"/>
+          <circle cx="225" cy="176" r="15" fill="none" stroke="var(--copper)" stroke-width="2"/>
+          <text x="252" y="164" class="sv-txt-s">2.5 MVA</text>
+          <text x="252" y="177" class="sv-txt-s">22kV/415V Dyn11</text>
+          <circle cx="655" cy="160" r="15" fill="none" stroke="var(--phase)" stroke-width="2"/>
+          <circle cx="655" cy="176" r="15" fill="none" stroke="var(--phase)" stroke-width="2"/>
+          <text x="682" y="164" class="sv-txt-s">2.5 MVA</text>
+          <text x="682" y="177" class="sv-txt-s">22kV/415V Dyn11</text>
+
+          <path d="M225 191 L225 216" class="sv-a"/>
+          <path d="M655 191 L655 216" class="sv-b"/>
+
+          <!-- generator A, left -->
+          <circle cx="58" cy="231" r="19" fill="none" stroke="var(--copper)" stroke-width="2"/>
+          <text x="58" y="236" class="sv-txt" text-anchor="middle" fill="var(--copper)" font-weight="600">G</text>
+          <text x="58" y="266" class="sv-txt-s" text-anchor="middle">GEN A</text>
+          <text x="58" y="278" class="sv-txt-s" text-anchor="middle">2000 kVA</text>
+          <path d="M77 231 L150 231" class="sv-a"/>
+          <rect x="104" y="225" width="12" height="12" class="sv-cb"/>
+
+          <!-- generator B, right -->
+          <circle cx="882" cy="231" r="19" fill="none" stroke="var(--phase)" stroke-width="2"/>
+          <text x="882" y="236" class="sv-txt" text-anchor="middle" fill="var(--phase)" font-weight="600">G</text>
+          <text x="882" y="266" class="sv-txt-s" text-anchor="middle">GEN B</text>
+          <text x="882" y="278" class="sv-txt-s" text-anchor="middle">2000 kVA</text>
+          <path d="M863 231 L730 231" class="sv-b"/>
+          <rect x="794" y="225" width="12" height="12" class="sv-cb"/>
+
+          <!-- MSB -->
+          <rect x="150" y="216" width="150" height="30" class="sv-block"/>
+          <text x="225" y="235" class="sv-txt" text-anchor="middle">LV MSB A · 415 V</text>
+          <rect x="580" y="216" width="150" height="30" class="sv-block"/>
+          <text x="655" y="235" class="sv-txt" text-anchor="middle">LV MSB B · 415 V</text>
+
+          <path d="M225 246 L225 292" class="sv-a"/>
+          <path d="M655 246 L655 292" class="sv-b"/>
+          <rect x="219" y="262" width="12" height="12" class="sv-cb"/>
+          <rect x="649" y="262" width="12" height="12" class="sv-cb"/>
+
+          <!-- UPS -->
+          <rect x="150" y="292" width="150" height="34" class="sv-block"/>
+          <text x="225" y="307" class="sv-txt" text-anchor="middle">UPS A</text>
+          <text x="225" y="319" class="sv-txt-s" text-anchor="middle">500 kVA · N+1</text>
+          <rect x="580" y="292" width="150" height="34" class="sv-block"/>
+          <text x="655" y="307" class="sv-txt" text-anchor="middle">UPS B</text>
+          <text x="655" y="319" class="sv-txt-s" text-anchor="middle">500 kVA · N+1</text>
+
+          <!-- battery -->
+          <path d="M150 309 L96 309" class="sv-a"/>
+          <path d="M96 300 L96 318" stroke="var(--copper)" stroke-width="2.5"/>
+          <path d="M88 304 L88 314" stroke="var(--copper)" stroke-width="1.4"/>
+          <text x="70" y="334" class="sv-txt-s" text-anchor="middle">BATT A</text>
+          <text x="70" y="346" class="sv-txt-s" text-anchor="middle">10 min</text>
+          <path d="M730 309 L784 309" class="sv-b"/>
+          <path d="M784 300 L784 318" stroke="var(--phase)" stroke-width="2.5"/>
+          <path d="M792 304 L792 314" stroke="var(--phase)" stroke-width="1.4"/>
+          <text x="812" y="334" class="sv-txt-s" text-anchor="middle">BATT B</text>
+          <text x="812" y="346" class="sv-txt-s" text-anchor="middle">10 min</text>
+
+          <path d="M225 326 L225 368" class="sv-a"/>
+          <path d="M655 326 L655 368" class="sv-b"/>
+
+          <!-- PDU -->
+          <rect x="150" y="368" width="150" height="30" class="sv-block"/>
+          <text x="225" y="387" class="sv-txt" text-anchor="middle">PDU A</text>
+          <rect x="580" y="368" width="150" height="30" class="sv-block"/>
+          <text x="655" y="387" class="sv-txt" text-anchor="middle">PDU B</text>
+
+          <path d="M225 398 L225 438" class="sv-a"/>
+          <path d="M655 398 L655 438" class="sv-b"/>
+
+          <!-- busway -->
+          <rect x="150" y="438" width="150" height="30" class="sv-block"/>
+          <text x="225" y="457" class="sv-txt" text-anchor="middle">BUSWAY / RPP A</text>
+          <rect x="580" y="438" width="150" height="30" class="sv-block"/>
+          <text x="655" y="457" class="sv-txt" text-anchor="middle">BUSWAY / RPP B</text>
+
+          <!-- down to rack -->
+          <path d="M225 468 L225 512 L392 512" class="sv-a"/>
+          <path d="M655 468 L655 512 L548 512" class="sv-b"/>
+
+          <!-- rack -->
+          <rect x="392" y="494" width="156" height="52" class="sv-block"/>
+          <text x="470" y="514" class="sv-txt" text-anchor="middle">IT RACK</text>
+          <text x="470" y="529" class="sv-txt-s" text-anchor="middle">DUAL-CORDED · PSU A + B</text>
+          <text x="470" y="541" class="sv-txt-s" text-anchor="middle">~15 kW</text>
+
+          <!-- numbered badges -->
+          <g>
+            <circle cx="118" cy="43" r="11" class="sv-badge"/><text x="118" y="47" class="sv-badge-t" text-anchor="middle">1</text>
+            <circle cx="118" cy="107" r="11" class="sv-badge"/><text x="118" y="111" class="sv-badge-t" text-anchor="middle">2</text>
+            <circle cx="180" cy="168" r="11" class="sv-badge"/><text x="180" y="172" class="sv-badge-t" text-anchor="middle">3</text>
+            <circle cx="325" cy="231" r="11" class="sv-badge"/><text x="325" y="235" class="sv-badge-t" text-anchor="middle">4</text>
+            <circle cx="325" cy="309" r="11" class="sv-badge"/><text x="325" y="313" class="sv-badge-t" text-anchor="middle">5</text>
+            <circle cx="325" cy="383" r="11" class="sv-badge"/><text x="325" y="387" class="sv-badge-t" text-anchor="middle">6</text>
+            <circle cx="325" cy="453" r="11" class="sv-badge"/><text x="325" y="457" class="sv-badge-t" text-anchor="middle">7</text>
+            <circle cx="470" cy="576" r="11" class="sv-badge"/><text x="470" y="580" class="sv-badge-t" text-anchor="middle">8</text>
+          </g>
+
+          <!-- separation note -->
+          <path d="M440 40 L440 470" stroke="var(--rule-2)" stroke-width="1" stroke-dasharray="5 5"/>
+          <text x="440" y="598" class="sv-txt-s" text-anchor="middle">Two fully independent paths — no common point of failure above the rack</text>
+        </svg>
+      </div>
+      <figcaption>FIG 06.1 — 2N critical power distribution, utility to rack. Copper = Path A, blue = Path B.</figcaption>
+    </figure>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>The eight stages, in plain language</h3>
+        <div class="steps">
+          <div class="step"><div class="step-n"></div><div class="step-b"><b>Utility supply</b><span>22 kV from the network. Two separate feeds, ideally from different zone substations.</span></div></div>
+          <div class="step"><div class="step-n"></div><div class="step-b"><b>HV switchboard / RMU</b><span>Switches and protects the HV. Where the site boundary usually sits.</span></div></div>
+          <div class="step"><div class="step-n"></div><div class="step-b"><b>Transformer</b><span>22 kV down to 415 V. Dyn11 — delta primary, star secondary, 30° shift. Star point gives you the neutral and the earth reference.</span></div></div>
+          <div class="step"><div class="step-n"></div><div class="step-b"><b>LV main switchboard</b><span><b>Your world.</b> ACBs, busbar, metering, protection. The generator connects here.</span></div></div>
+          <div class="step"><div class="step-n"></div><div class="step-b"><b>UPS + battery</b><span>Covers the 10–15 seconds between utility loss and generator on load. Nothing else can.</span></div></div>
+          <div class="step"><div class="step-n"></div><div class="step-b"><b>PDU</b><span>Steps down / distributes to the floor. Often has its own transformer and sub-metering.</span></div></div>
+          <div class="step"><div class="step-n"></div><div class="step-b"><b>Busway / RPP</b><span>Overhead busway or a remote power panel feeding rows of racks.</span></div></div>
+          <div class="step"><div class="step-n"></div><div class="step-b"><b>Rack</b><span>Dual-corded server. Two PSUs, one on A, one on B. Each path carries the full load alone.</span></div></div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="card">
+          <h3>The thing everyone gets wrong</h3>
+          <p>In a true 2N design, <b>each path can only ever be loaded to 50%</b>. If path A is at 70% and B fails, A trips and you've lost the room. Every capacity conversation in a data centre is really a conversation about this number.</p>
+          <p style="margin-top:11px">Your switchboard knowledge connects directly: the ACB frame size and the busbar rating on MSB A must carry the <i>whole</i> facility load, not half of it — even though it normally sees half.</p>
+        </div>
+        <div class="callout warnbox">
+          <span class="lbl">Memory trick</span>
+          <p><b>"Under Terrible Times, Get Us Power Before Reboot"</b> — Utility, Transformer, Tie/MSB, Gen, UPS, PDU, Busway, Rack. Clunky, which is exactly why it sticks.</p>
+        </div>
+        <div class="card">
+          <h4>Interview question this lesson answers</h4>
+          <p style="color:var(--ink); font-style:italic">"Walk me through the power path in a data centre from the street to the server, and tell me what happens at each stage when the utility fails."</p>
+          <p style="margin-top:9px; font-size:13.5px">This is asked in almost every first-round DC electrical interview. Being able to answer it fluently, unprompted, in 90 seconds, is worth more than any certificate.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Your turn — answer these in chat</h3>
+      <p style="margin-bottom:14px">Don't look anything up. Wrong answers are more useful to me than right ones — they tell me where to aim.</p>
+      <ul class="tick">
+        <li><b>Q1.</b> The utility fails at 09:00:00. Describe, second by second, what happens between 09:00:00 and 09:00:20 in the diagram above.</li>
+        <li><b>Q2.</b> Why can't the generator alone protect the IT load? Be specific about the mechanism.</li>
+        <li><b>Q3.</b> A facility has a 1,000 kW IT load in a 2N design. What's the minimum continuous rating of MSB A's incoming ACB, and why?</li>
+        <li><b>Q4.</b> Name one component in the diagram that, if it failed, would take down the whole facility. If you think there isn't one, say so and justify it.</li>
+        <li><b>Q5.</b> From your day job: which item in that diagram have you personally built or tested? How would you describe it in an interview?</li>
+      </ul>
+      <div class="callout blue" style="margin-top:16px">
+        <span class="lbl">Practical problem</span>
+        <p>A 1.2 MW IT load, 2N, power factor 0.95, UPS efficiency 96%. Size the UPS on each path and state the minimum transformer rating you'd specify for path A. Show your working — I'll mark the method, not just the number.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 07 ================= -->
+<section id="s07">
+  <div class="shead"><span class="snum">07</span><h2>How to read an SLD</h2></div>
+  <p class="sdek">Experienced engineers don't read a single line diagram left-to-right. They run a fixed sequence, every time, on every drawing. Learn the sequence and you'll look experienced within a fortnight.</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>The eye path — in this order, always</h3>
+      <div class="steps">
+        <div class="step"><div class="step-n"></div><div class="step-b"><b>Find the sources</b><span>Top of the sheet. How many incomers? Utility, generator, UPS. Count them before anything else.</span></div></div>
+        <div class="step"><div class="step-n"></div><div class="step-b"><b>Find the voltage transitions</b><span>Every transformer. Note the ratio and the vector group. Voltage tells you which standards apply.</span></div></div>
+        <div class="step"><div class="step-n"></div><div class="step-b"><b>Find the bus sections and ties</b><span>Where can the board be split? A bus tie is the single most information-dense symbol on the drawing — it tells you the operating philosophy.</span></div></div>
+        <div class="step"><div class="step-n"></div><div class="step-b"><b>Trace one path to one load</b><span>Pick the most critical load. Follow it back to source, naming every device you cross.</span></div></div>
+        <div class="step"><div class="step-n"></div><div class="step-b"><b>Now trace its alternate path</b><span>If you can't find a second path, it isn't redundant. Say so.</span></div></div>
+        <div class="step"><div class="step-n"></div><div class="step-b"><b>Look for the common point</b><span>Where do A and B touch? That point is the design's real weakness. Often it's a single earth bar, a shared control supply or one bus tie.</span></div></div>
+        <div class="step"><div class="step-n"></div><div class="step-b"><b>Read the protection last</b><span>CT ratios, relay functions, settings. Only meaningful once you know the topology.</span></div></div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="card">
+        <h3>Apply it to FIG 06.1</h3>
+        <p>Run the sequence on the diagram above right now, out loud:</p>
+        <p style="margin-top:10px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-2); line-height:1.75">
+        1 → four sources (2 utility, 2 gen)<br>
+        2 → two transformers, 22kV/415V Dyn11<br>
+        3 → no bus tie shown — <i>fully separated</i><br>
+        4 → rack ← busway A ← PDU A ← UPS A ← MSB A ← TX A ← HV A<br>
+        5 → same again on B<br>
+        6 → common point = <b>the rack itself</b><br>
+        7 → protection not shown on this sheet
+        </p>
+      </div>
+      <div class="callout">
+        <span class="lbl">The question that makes you sound senior</span>
+        <p>Whenever you're handed an SLD in an interview or a design review, ask: <b>"What's the single common point between A and B, and is it acceptable?"</b> It reframes you instantly from someone reading a drawing to someone reviewing a design.</p>
+      </div>
+      <div class="card">
+        <h4>Drawing types you'll be trained on, in order</h4>
+        <ul class="tick">
+          <li>Single line diagram — <b>weeks 1–4</b></li>
+          <li>Load schedule + cable schedule — weeks 3–5</li>
+          <li>Switchboard GA and panel layout — <i>you already read these</i></li>
+          <li>Schematic and wiring diagrams — weeks 5–7</li>
+          <li>Protection and relay diagrams — weeks 9–11</li>
+          <li>Control diagrams and cause &amp; effect matrix — weeks 12–14</li>
+          <li>Earthing layouts and site electrical layouts — weeks 15–17</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 08 ================= -->
+<section id="s08">
+  <div class="shead"><span class="snum">08</span><h2>Redundancy topologies</h2></div>
+  <p class="sdek">The highest-yield interview topic in the entire field. Candidates who confuse N+1 with 2N do not get offers.</p>
+
+  <figure class="dwg">
+    <div class="dwg-scroll">
+      <svg viewBox="0 0 940 300" role="img" aria-label="Comparison diagram of N, N plus 1, and 2N redundancy configurations showing module counts and failure behaviour">
+        <!-- N -->
+        <text x="130" y="26" class="sv-txt" text-anchor="middle" font-weight="600" fill="var(--fault)">N</text>
+        <text x="130" y="42" class="sv-txt-s" text-anchor="middle">no redundancy</text>
+        <rect x="72" y="58" width="36" height="52" class="sv-block"/><text x="90" y="88" class="sv-txt" text-anchor="middle">1</text>
+        <rect x="116" y="58" width="36" height="52" class="sv-block"/><text x="134" y="88" class="sv-txt" text-anchor="middle">2</text>
+        <rect x="160" y="58" width="36" height="52" class="sv-block" stroke="var(--fault)"/><text x="178" y="88" class="sv-txt" text-anchor="middle" fill="var(--fault)">✕</text>
+        <path d="M72 126 L196 126" class="sv-line"/>
+        <path d="M134 126 L134 148" class="sv-line"/>
+        <rect x="98" y="148" width="72" height="26" class="sv-block"/><text x="134" y="165" class="sv-txt" text-anchor="middle">LOAD</text>
+        <text x="134" y="204" class="sv-txt-s" text-anchor="middle" fill="var(--fault)">One module fails</text>
+        <text x="134" y="218" class="sv-txt-s" text-anchor="middle" fill="var(--fault)">→ load is lost</text>
+        <text x="134" y="244" class="sv-txt-s" text-anchor="middle">3 modules for 3 units of load</text>
+        <text x="134" y="258" class="sv-txt-s" text-anchor="middle">100% utilisation</text>
+
+        <!-- N+1 -->
+        <text x="470" y="26" class="sv-txt" text-anchor="middle" font-weight="600" fill="var(--warn)">N + 1</text>
+        <text x="470" y="42" class="sv-txt-s" text-anchor="middle">one spare module</text>
+        <rect x="390" y="58" width="36" height="52" class="sv-block"/><text x="408" y="88" class="sv-txt" text-anchor="middle">1</text>
+        <rect x="434" y="58" width="36" height="52" class="sv-block"/><text x="452" y="88" class="sv-txt" text-anchor="middle">2</text>
+        <rect x="478" y="58" width="36" height="52" class="sv-block" stroke="var(--fault)"/><text x="496" y="88" class="sv-txt" text-anchor="middle" fill="var(--fault)">✕</text>
+        <rect x="522" y="58" width="36" height="52" class="sv-block" stroke="var(--ok)" stroke-dasharray="4 3"/><text x="540" y="88" class="sv-txt" text-anchor="middle" fill="var(--ok)">+1</text>
+        <path d="M390 126 L558 126" class="sv-line"/>
+        <path d="M470 126 L470 148" class="sv-line"/>
+        <rect x="434" y="148" width="72" height="26" class="sv-block"/><text x="470" y="165" class="sv-txt" text-anchor="middle">LOAD</text>
+        <text x="470" y="204" class="sv-txt-s" text-anchor="middle" fill="var(--ok)">One module fails</text>
+        <text x="470" y="218" class="sv-txt-s" text-anchor="middle" fill="var(--ok)">→ spare picks it up</text>
+        <text x="470" y="244" class="sv-txt-s" text-anchor="middle">Still ONE common bus —</text>
+        <text x="470" y="258" class="sv-txt-s" text-anchor="middle" fill="var(--warn)">bus fault kills everything</text>
+
+        <!-- 2N -->
+        <text x="810" y="26" class="sv-txt" text-anchor="middle" font-weight="600" fill="var(--ok)">2N</text>
+        <text x="810" y="42" class="sv-txt-s" text-anchor="middle">two entire systems</text>
+        <rect x="722" y="58" width="36" height="52" class="sv-block" stroke="var(--copper)"/><text x="740" y="88" class="sv-txt" text-anchor="middle" fill="var(--copper)">A1</text>
+        <rect x="766" y="58" width="36" height="52" class="sv-block" stroke="var(--copper)"/><text x="784" y="88" class="sv-txt" text-anchor="middle" fill="var(--copper)">A2</text>
+        <rect x="818" y="58" width="36" height="52" class="sv-block" stroke="var(--phase)"/><text x="836" y="88" class="sv-txt" text-anchor="middle" fill="var(--phase)">B1</text>
+        <rect x="862" y="58" width="36" height="52" class="sv-block" stroke="var(--phase)"/><text x="880" y="88" class="sv-txt" text-anchor="middle" fill="var(--phase)">B2</text>
+        <path d="M722 126 L802 126" class="sv-a"/>
+        <path d="M818 126 L898 126" class="sv-b"/>
+        <path d="M762 126 L762 148 L790 148" class="sv-a"/>
+        <path d="M858 126 L858 148 L830 148" class="sv-b"/>
+        <rect x="774" y="148" width="72" height="26" class="sv-block"/><text x="810" y="165" class="sv-txt" text-anchor="middle">LOAD</text>
+        <text x="810" y="204" class="sv-txt-s" text-anchor="middle" fill="var(--ok)">Whole A system fails</text>
+        <text x="810" y="218" class="sv-txt-s" text-anchor="middle" fill="var(--ok)">→ B carries everything</text>
+        <text x="810" y="244" class="sv-txt-s" text-anchor="middle">No shared bus.</text>
+        <text x="810" y="258" class="sv-txt-s" text-anchor="middle">Each side max 50% loaded.</text>
+
+        <path d="M300 50 L300 270" stroke="var(--rule)" stroke-width="1"/>
+        <path d="M640 50 L640 270" stroke="var(--rule)" stroke-width="1"/>
+      </svg>
+    </div>
+    <figcaption>FIG 08.1 — N vs N+1 vs 2N. The difference is not module count, it is whether a common bus exists.</figcaption>
+  </figure>
+
+  <div class="tw" style="margin-top:16px">
+    <table>
+      <thead><tr><th>Term</th><th>Means</th><th>Survives</th><th>Does not survive</th><th>Typical use</th></tr></thead>
+      <tbody>
+        <tr><td><b>N</b></td><td>Exactly enough capacity</td><td>Nothing</td><td>Any single failure</td><td>Non-critical / office</td></tr>
+        <tr><td><b>N+1</b></td><td>One spare module on a common bus</td><td>One module failure; module maintenance</td><td>Bus fault, switchboard fault, upstream fault</td><td>UPS modules, generators, CRAC units</td></tr>
+        <tr><td><b>2N</b></td><td>Two complete independent systems</td><td>Any single failure anywhere in one path</td><td>Two simultaneous failures across both paths</td><td>Hyperscale critical power</td></tr>
+        <tr><td><b>2N+1</b></td><td>Two systems, each internally N+1</td><td>A whole path plus a module on the other</td><td>Very little — highest cost tier</td><td>Highest-tier financial / defence</td></tr>
+        <tr><td><b>Concurrently<br>maintainable</b></td><td>Any component can be taken out for planned work with no load impact</td><td>Planned maintenance on any single item</td><td>Not the same as fault tolerance — an <i>unplanned</i> failure during maintenance may still bite</td><td>Uptime Tier III</td></tr>
+        <tr><td><b>Fault<br>tolerant</b></td><td>Any single unplanned failure is survived, including during maintenance</td><td>Unplanned failure at any time</td><td>Multiple simultaneous independent faults</td><td>Uptime Tier IV</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout" style="margin-top:16px">
+    <span class="lbl">The distinction that separates candidates</span>
+    <p><b>Concurrent maintainability is about planned work. Fault tolerance is about unplanned failure.</b> A Tier III facility lets you service any component without dropping load — but if something fails while that component is out, you may lose the room. Tier IV survives both. If you say only this in an interview, you're already ahead of most applicants.</p>
+  </div>
+</section>
+
+<!-- ================= 09 ================= -->
+<section id="s09">
+  <div class="shead"><span class="snum">09</span><h2>Commissioning — where your FAT experience pays</h2></div>
+  <p class="sdek">Data-centre commissioning runs in five levels. You have already done Level 2 professionally. Most candidates for these roles have not.</p>
+
+  <figure class="dwg">
+    <div class="dwg-scroll">
+      <svg viewBox="0 0 940 250" role="img" aria-label="Flowchart of data centre commissioning levels 1 through 5 from factory testing through to integrated systems testing">
+        <defs>
+          <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L7,3 z" fill="var(--ink-2)"/>
+          </marker>
+        </defs>
+
+        <rect x="14" y="66" width="150" height="66" class="sv-block"/>
+        <text x="89" y="88" class="sv-txt" text-anchor="middle" font-weight="600">L1 · FACTORY</text>
+        <text x="89" y="104" class="sv-txt-s" text-anchor="middle">Component + FAT</text>
+        <text x="89" y="118" class="sv-txt-s" text-anchor="middle">at the manufacturer</text>
+
+        <rect x="196" y="66" width="150" height="66" class="sv-block" stroke="var(--copper)" stroke-width="2"/>
+        <text x="271" y="88" class="sv-txt" text-anchor="middle" font-weight="600" fill="var(--copper)">L2 · DELIVERY</text>
+        <text x="271" y="104" class="sv-txt-s" text-anchor="middle">Site receipt, static</text>
+        <text x="271" y="118" class="sv-txt-s" text-anchor="middle">checks, pre-energisation</text>
+
+        <rect x="378" y="66" width="150" height="66" class="sv-block"/>
+        <text x="453" y="88" class="sv-txt" text-anchor="middle" font-weight="600">L3 · COMPONENT</text>
+        <text x="453" y="104" class="sv-txt-s" text-anchor="middle">SAT — each item</text>
+        <text x="453" y="118" class="sv-txt-s" text-anchor="middle">energised and proven</text>
+
+        <rect x="560" y="66" width="150" height="66" class="sv-block"/>
+        <text x="635" y="88" class="sv-txt" text-anchor="middle" font-weight="600">L4 · SYSTEM</text>
+        <text x="635" y="104" class="sv-txt-s" text-anchor="middle">Functional testing</text>
+        <text x="635" y="118" class="sv-txt-s" text-anchor="middle">system by system</text>
+
+        <rect x="742" y="66" width="184" height="66" class="sv-block" stroke="var(--ok)" stroke-width="2"/>
+        <text x="834" y="88" class="sv-txt" text-anchor="middle" font-weight="600" fill="var(--ok)">L5 · INTEGRATED</text>
+        <text x="834" y="104" class="sv-txt-s" text-anchor="middle">IST — load banks, black</text>
+        <text x="834" y="118" class="sv-txt-s" text-anchor="middle">building, failure sim</text>
+
+        <path d="M164 99 L192 99" class="sv-line" marker-end="url(#ar)" stroke="var(--ink-2)"/>
+        <path d="M346 99 L374 99" class="sv-line" marker-end="url(#ar)" stroke="var(--ink-2)"/>
+        <path d="M528 99 L556 99" class="sv-line" marker-end="url(#ar)" stroke="var(--ink-2)"/>
+        <path d="M710 99 L738 99" class="sv-line" marker-end="url(#ar)" stroke="var(--ink-2)"/>
+
+        <text x="89" y="34" class="sv-txt-s" text-anchor="middle">IR, continuity, primary</text>
+        <text x="89" y="48" class="sv-txt-s" text-anchor="middle">injection, dielectric</text>
+        <text x="453" y="34" class="sv-txt-s" text-anchor="middle">Relay injection, CT/VT,</text>
+        <text x="453" y="48" class="sv-txt-s" text-anchor="middle">gen run, UPS transfer</text>
+        <text x="834" y="34" class="sv-txt-s" text-anchor="middle">The real test — whole</text>
+        <text x="834" y="48" class="sv-txt-s" text-anchor="middle">facility under load</text>
+
+        <rect x="14" y="164" width="332" height="48" fill="var(--copper-soft)" stroke="var(--copper)" stroke-width="1"/>
+        <text x="180" y="184" class="sv-txt" text-anchor="middle" fill="var(--copper)" font-weight="600">YOU ALREADY WORK HERE</text>
+        <text x="180" y="200" class="sv-txt-s" text-anchor="middle">Your FAT experience is L1–L2. Say this in interviews.</text>
+
+        <rect x="378" y="164" width="548" height="48" fill="none" stroke="var(--rule-2)" stroke-width="1" stroke-dasharray="5 4"/>
+        <text x="652" y="184" class="sv-txt" text-anchor="middle" fill="var(--ink-2)" font-weight="600">THE GAP TO CLOSE</text>
+        <text x="652" y="200" class="sv-txt-s" text-anchor="middle">Weeks 11–20 of this program target L3–L5 directly</text>
+      </svg>
+    </div>
+    <figcaption>FIG 09.1 — Commissioning levels L1 to L5, with your existing coverage marked.</figcaption>
+  </figure>
+
+  <div class="grid-2" style="margin-top:16px">
+    <div class="card">
+      <h3>Tests you must be able to discuss</h3>
+      <ul class="tick">
+        <li><b>Insulation resistance</b> — 500 V / 1000 V megger, what a failing result actually means</li>
+        <li><b>Continuity and earth</b> — earth fault loop impedance, why it governs disconnection time</li>
+        <li><b>Cable testing</b> — VLF, tan delta on HV cable</li>
+        <li><b>Transformer</b> — ratio, winding resistance, vector group, oil</li>
+        <li><b>Protection relay</b> — secondary injection, pickup and timing verification</li>
+        <li><b>CT/VT</b> — ratio, polarity, burden, saturation</li>
+        <li><b>Generator</b> — load acceptance, step load, paralleling, fuel run</li>
+        <li><b>UPS</b> — transfer, static bypass, battery discharge to autonomy</li>
+        <li><b>ATS/STS</b> — transfer time, in-phase transfer, failure to transfer</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>The scenarios that define IST</h3>
+      <ul class="tick">
+        <li><b>Black building</b> — kill all utility, prove the site rides through on battery then generator, then returns on utility restoration</li>
+        <li><b>Failure simulation</b> — drop one UPS, one generator, one path, and confirm no load impact</li>
+        <li><b>Load bank testing</b> — steady state, step load, and thermal soak at design capacity</li>
+        <li><b>Redundancy proving</b> — remove any single component, load stays up</li>
+        <li><b>Fuel endurance</b> — full-load generator run to prove tank sizing</li>
+      </ul>
+      <div class="callout blue" style="margin-top:14px">
+        <span class="lbl">Why this matters commercially</span>
+        <p>IST is the last gate before handover and the most expensive week of the whole project. Engineers who can run it are scarce, and paid accordingly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 10 ================= -->
+<section id="s10">
+  <div class="shead"><span class="snum">10</span><h2>Australian standards</h2></div>
+  <p class="sdek">Nobody memorises these. The skill is knowing which one governs the question in front of you and where to look. That's what's assessed in interview.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:140px">Standard</th><th>What it is</th><th>What you actually need to know</th><th>Priority</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><b>AS/NZS 3000</b><br><span class="mono" style="font-size:10.5px; color:var(--ink-3)">Wiring Rules</span></td>
+          <td>The master installation standard for LV electrical work in Australia.</td>
+          <td>Structure of the document. Maximum demand methods (Part 2 tables). Protection against electric shock. Disconnection times. Earthing and MEN. That deemed-to-comply vs designed solutions both exist.</td>
+          <td><span class="pill p-crit">Essential</span></td>
+        </tr>
+        <tr>
+          <td><b>AS/NZS 3008</b><br><span class="mono" style="font-size:10.5px; color:var(--ink-3)">Cable selection</span></td>
+          <td>Cable sizing — current rating, derating, volt drop, short-circuit performance.</td>
+          <td>The four checks every cable must pass: current-carrying capacity, derating for installation, volt drop, and short-circuit withstand. Know that the <i>largest</i> of the four governs.</td>
+          <td><span class="pill p-crit">Essential</span></td>
+        </tr>
+        <tr>
+          <td><b>AS/NZS 61439</b><br><span class="mono" style="font-size:10.5px; color:var(--ink-3)">LV assemblies</span></td>
+          <td>Low-voltage switchgear and controlgear assemblies.</td>
+          <td><b>Your home ground.</b> Forms of separation 1–4b, design verification vs type test, Icw and Ipk, temperature rise, IP/IK ratings. Be able to explain Form 4b Type 7 to a non-specialist.</td>
+          <td><span class="pill p-keep">You have this</span></td>
+        </tr>
+        <tr>
+          <td><b>AS/NZS 3010</b></td>
+          <td>Electrical installations — generating sets.</td>
+          <td>Generator connection, changeover arrangements, earthing of generator neutrals, protection. Directly relevant to every DC gen yard.</td>
+          <td><span class="pill p-high">High</span></td>
+        </tr>
+        <tr>
+          <td><b>AS 2067</b></td>
+          <td>Substations and HV installations above 1 kV.</td>
+          <td>Clearances, HV switchroom requirements, earthing of HV installations, safety. Needed the moment you're near the 22 kV side.</td>
+          <td><span class="pill p-high">High</span></td>
+        </tr>
+        <tr>
+          <td><b>AS/NZS 3760 &amp; 3017</b></td>
+          <td>In-service testing; verification of installations.</td>
+          <td>Testing and verification methodology — feeds directly into commissioning documentation.</td>
+          <td><span class="pill p-med">Medium</span></td>
+        </tr>
+        <tr>
+          <td><b>NCC</b><br><span class="mono" style="font-size:10.5px; color:var(--ink-3)">Building Code</span></td>
+          <td>National Construction Code — fire, egress, essential services.</td>
+          <td>Emergency and exit lighting, fire-rated cabling, essential-service supply requirements, penetrations. Where electrical meets building compliance.</td>
+          <td><span class="pill p-med">Medium</span></td>
+        </tr>
+        <tr>
+          <td><b>Uptime Tier<br>&amp; ANSI/TIA-942</b></td>
+          <td>International DC classification frameworks.</td>
+          <td>Tier I–IV definitions, and that Tier III = concurrently maintainable, Tier IV = fault tolerant. Clients specify these by name.</td>
+          <td><span class="pill p-high">High</span></td>
+        </tr>
+        <tr>
+          <td><b>Vic ESV / OHS</b></td>
+          <td>Victorian electrical safety regulation and duties.</td>
+          <td>Electrical Safety Victoria requirements, isolation and access, switching and permit-to-work discipline, arc flash awareness.</td>
+          <td><span class="pill p-high">High</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout warnbox" style="margin-top:16px">
+    <span class="lbl">Access</span>
+    <p>Standards are paid documents in Australia — purchase through the <a href="https://store.standards.org.au">Standards Australia Store</a>, or check whether your employer, Engineers Australia membership, or a state library subscription gives you access. <b>Do not rely on AI-quoted clause numbers or table values.</b> Use AI to understand the concept, then verify every number against the actual standard.</p>
+  </div>
+</section>
+
+<!-- ================= 11 ================= -->
+<section id="s11">
+  <div class="shead"><span class="snum">11</span><h2>Software — what to learn, what to skip</h2></div>
+  <p class="sdek">You already have AutoCAD, Excel and Bluebeam. That's genuinely most of what a project engineer needs. Resist the urge to collect software.</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h4 style="color:var(--ok)">MUST — do these</h4>
+      <ul class="tick">
+        <li><b>Excel, to calculation-sheet level</b> — build your own maximum demand, cable sizing and load schedule sheets. This <i>is</i> the learning, not a tool for it.</li>
+        <li><b>Bluebeam Revu</b> — you have it. Push into revision comparison, takeoffs and markup workflows. Every design review runs on this.</li>
+        <li><b>MS Project or P6, reading level</b> — you must be able to read a program, find the critical path, and understand float. Reading is enough at Stage 1.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--phase)">USEFUL — when a role calls for it</h4>
+      <ul class="tick">
+        <li><b>ELEK Cable Pro Web</b> — AS/NZS 3008 cable sizing, maximum demand, fault loop, protection coordination, with standards references shown. Australian-specific, browser-based, free tier.</li>
+        <li><b>Navisworks</b> — clash detection and model review. Learn only if you land somewhere BIM-heavy.</li>
+        <li><b>Power BI</b> — only if you end up in reporting-heavy client-side delivery.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--warn)">OPTIONAL — later, or never</h4>
+      <ul class="tick">
+        <li><b>ETAP / DIgSILENT PowerFactory</b> — serious power system modelling. Consultancy design tools. Only worth it if you deliberately pivot to design; not needed for project engineering.</li>
+        <li><b>Revit</b> — useful in consultancies, largely irrelevant to a contractor-side project engineer.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--fault)">DON'T — no return for you</h4>
+      <ul class="tick">
+        <li><b>Learning Revit and ETAP "to be safe."</b> Hundreds of hours, no salary impact on your target path.</li>
+        <li><b>Any certification course before you can read an SLD.</b> Sequence matters — competence first, credentials later.</li>
+        <li><b>Programming or scripting.</b> Not what these roles pay for.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 12 ================= -->
+<section id="s12">
+  <div class="shead"><span class="snum">12</span><h2>The AI toolkit</h2></div>
+  <p class="sdek">Ranked for your specific use case, not by popularity. Then fifteen copy-paste prompts built for data-centre electrical work.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Tool</th><th>Best for</th><th>Ease</th><th>Cost</th><th>Accuracy on engineering</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><b><a href="https://claude.ai">Claude</a></b></td>
+          <td>Long technical documents, specifications, drawing PDFs, design review reasoning, structured deliverables (ITPs, RFIs)</td>
+          <td>High</td>
+          <td>Free tier; paid ~US$20/mo</td>
+          <td>Strong on reasoning and document analysis. <b>Never trust a quoted clause number without checking.</b></td>
+          <td><span class="pill p-keep">Primary</span></td>
+        </tr>
+        <tr>
+          <td><b><a href="https://notebooklm.google.com">NotebookLM</a></b></td>
+          <td>Turning a 300-page specification or standard into a grounded, citable study resource. Generates audio overviews for commuting.</td>
+          <td>High</td>
+          <td>Free</td>
+          <td>Answers only from documents you upload — so it hallucinates far less. Excellent for standards.</td>
+          <td><span class="pill p-keep">Primary</span></td>
+        </tr>
+        <tr>
+          <td><b><a href="https://elek.com/electrical-software/elek-cable-pro-web">ELEK Cable Pro Web</a></b></td>
+          <td>Actual AS/NZS 3008 compliant cable sizing, volt drop, fault loop, max demand — with the standard's table and column references shown</td>
+          <td>Medium</td>
+          <td>Free tier, paid plans</td>
+          <td><b>Highest</b> — a real calculation engine, not a language model. Also has a <a href="https://elek.com.au/resources/free-electrical-calculators/cable-size-as3008/">free calculator</a>.</td>
+          <td><span class="pill p-keep">Use for numbers</span></td>
+        </tr>
+        <tr>
+          <td><b><a href="https://chatgpt.com">ChatGPT</a></b></td>
+          <td>Quick calculation checks, code interpreter for building calculation sheets, image analysis of hand-sketched diagrams</td>
+          <td>High</td>
+          <td>Free tier; paid ~US$20/mo</td>
+          <td>Good. Its code-execution mode is genuinely useful for verifying arithmetic.</td>
+          <td><span class="pill p-high">Secondary</span></td>
+        </tr>
+        <tr>
+          <td><b><a href="https://www.perplexity.ai">Perplexity</a></b></td>
+          <td>Live market research — who's building what in Melbourne, salary benchmarks, company intel before an interview</td>
+          <td>High</td>
+          <td>Free tier</td>
+          <td>Cites sources, so verifiable. Weak on engineering calculation.</td>
+          <td><span class="pill p-high">Research only</span></td>
+        </tr>
+        <tr>
+          <td><b><a href="https://gemini.google.com">Gemini</a></b></td>
+          <td>Very large document sets, Google Workspace integration</td>
+          <td>High</td>
+          <td>Free tier</td>
+          <td>Comparable to the above. Useful if you already live in Google Docs.</td>
+          <td><span class="pill p-med">Optional</span></td>
+        </tr>
+        <tr>
+          <td><b><a href="https://apps.ankiweb.net">Anki</a></b></td>
+          <td>Spaced repetition — the single highest-return study tool for ADHD retention</td>
+          <td>Medium</td>
+          <td>Free (desktop/Android); paid iOS</td>
+          <td>N/A — but generate the cards with Claude, review in Anki.</td>
+          <td><span class="pill p-keep">Essential</span></td>
+        </tr>
+        <tr>
+          <td><b><a href="https://excalidraw.com">Excalidraw</a></b></td>
+          <td>Sketching SLDs quickly by hand. Redrawing diagrams from memory is the core practice of this program.</td>
+          <td>High</td>
+          <td>Free</td>
+          <td>N/A</td>
+          <td><span class="pill p-keep">Essential</span></td>
+        </tr>
+        <tr>
+          <td><b><a href="https://app.diagrams.net">draw.io</a></b></td>
+          <td>Cleaner, more formal diagrams with electrical shape libraries</td>
+          <td>High</td>
+          <td>Free</td>
+          <td>N/A</td>
+          <td><span class="pill p-med">Optional</span></td>
+        </tr>
+        <tr>
+          <td><b><a href="https://obsidian.md">Obsidian</a></b></td>
+          <td>Your personal engineering knowledge base — every concept, every diagram, linked</td>
+          <td>Medium</td>
+          <td>Free</td>
+          <td>N/A</td>
+          <td><span class="pill p-high">Recommended</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout warnbox" style="margin-top:16px">
+    <span class="lbl">The rule that keeps you employable</span>
+    <p>Use AI to <b>understand faster</b> and to <b>draft</b>. Never use it as the source of truth for a compliance number, a clause reference, or a calculation that goes on a drawing. An engineer who submits an AI-hallucinated cable size loses their credibility permanently — and in this industry, permanently is accurate. Verify every number against the standard or a real calculation engine.</p>
+  </div>
+
+  <h3 style="font-size:17px; margin:28px 0 6px">Your prompt library</h3>
+  <p class="sdek">Copy, paste, attach the document. Each one is written for data-centre electrical work specifically.</p>
+
+  <div class="stack">
+
+    <div class="prompt">
+      <div class="prompt-h"><span>01 — Analyse this SLD</span><button class="copy" type="button">Copy</button></div>
+      <pre>You are a senior data centre electrical engineer reviewing a single line diagram with me.
+
+I am a project engineer from a switchboard manufacturing background, building system-level knowledge. Explain visually and in small chunks — I have ADHD and I learn from diagrams, not paragraphs.
+
+Analyse the attached SLD and give me:
+
+1. POWER PATH — trace from source to the most critical load, naming every device crossed. Use an indented list, not prose.
+2. SOURCES — how many, what type, what rating.
+3. VOLTAGE TRANSITIONS — every transformer, ratio and vector group.
+4. TOPOLOGY — is this N, N+1, 2N or 2N+1? Justify from the drawing, not assumption.
+5. COMMON POINTS — where do the A and B paths touch? Is it acceptable?
+6. SINGLE POINTS OF FAILURE — list every one you can find.
+7. WHAT'S MISSING — what would you expect on this drawing that isn't there?
+8. THREE QUESTIONS I should ask the designer.
+
+Flag anything you are inferring rather than reading directly off the drawing.</pre>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-h"><span>02 — Check my cable sizing calculation</span><button class="copy" type="button">Copy</button></div>
+      <pre>Check this cable sizing calculation against AS/NZS 3008 methodology.
+
+MY INPUTS:
+- Load: [kW / kVA, power factor]
+- Voltage: [415 V three phase / 230 V single phase]
+- Length: [m]
+- Installation method: [e.g. ladder, enclosed in conduit, buried direct]
+- Ambient temperature: [°C]
+- Grouping: [number of circuits]
+- Insulation: [XLPE / V-90 PVC]
+- Protective device: [type, rating, breaking capacity]
+- My selected cable: [size, cores, material]
+
+Check ALL FOUR governing criteria separately and tell me which one governs:
+A. Current carrying capacity after derating
+B. Derating factors applied (ambient, grouping, installation)
+C. Voltage drop against the permissible limit
+D. Short circuit withstand (adiabatic check) against the protective device let-through
+
+Present as a table: criterion | my value | required | pass/fail.
+
+State the METHOD clearly at each step so I can verify against the actual standard myself. Do NOT quote specific table numbers or tabulated current values as fact — tell me which table to look in and I will confirm. If my inputs are incomplete, tell me what's missing before calculating.</pre>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-h"><span>03 — Find issues in this design</span><button class="copy" type="button">Copy</button></div>
+      <pre>Act as an independent design reviewer on a Melbourne data centre project. Review the attached [drawing / specification / calculation package] adversarially.
+
+Give me findings in this format:
+
+SEVERITY | ITEM | WHAT'S WRONG | WHY IT MATTERS | WHAT I'D ASK
+
+Severity levels: CRITICAL (safety or availability), MAJOR (compliance or capacity), MINOR (documentation or clarity).
+
+Focus on:
+- Redundancy claims that the drawing doesn't actually deliver
+- Single points of failure, especially shared control supplies, shared earthing, shared cable routes
+- Capacity: is each path actually rated for 100% of load, not 50%?
+- Selectivity and protection coordination gaps
+- Anything that will cause a problem at integrated systems testing
+- Anything that will cause a problem for the switchboard manufacturer
+
+Rank by severity. Be blunt. I would rather find it now than at IST.</pre>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-h"><span>04 — Explain this like I'm a junior engineer</span><button class="copy" type="button">Copy</button></div>
+      <pre>Explain [CONCEPT] to me.
+
+Constraints — I have ADHD and I'm a visual learner:
+- Start with a real-world ANALOGY before any technical terminology
+- Then a DIAGRAM described in a way I can sketch by hand in 60 seconds
+- Then the technical explanation in under 150 words
+- Then a REAL data centre example with actual numbers
+- Then ONE worked calculation if relevant
+- Then THREE questions for me to answer
+- Then the most COMMON MISTAKE engineers make with this
+- Then a MEMORY TRICK
+- Then the INTERVIEW QUESTION this concept is usually tested with
+
+No walls of text. Use headings, short lines and tables. Stop and let me answer the questions before you continue.</pre>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-h"><span>05 — Quiz me</span><button class="copy" type="button">Copy</button></div>
+      <pre>Quiz me on [TOPIC] for a Melbourne data centre electrical project engineer interview.
+
+Rules:
+- ONE question at a time. Wait for my answer. Never show the next question early.
+- Start at intermediate difficulty and adapt based on how I do.
+- After each answer: score it out of 10, name exactly what was weak, give the improved answer as I should have said it out loud, then ask a HARDER follow-up on the same topic.
+- Mix: 60% technical, 25% scenario/judgement, 15% behavioural.
+- Use Australian terminology and standards.
+- After 10 questions, give me a summary: strongest area, weakest area, and the three things to revise this week.
+
+Begin.</pre>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-h"><span>06 — Turn a specification into a visual lesson</span><button class="copy" type="button">Copy</button></div>
+      <pre>Convert the attached electrical specification into an ADHD-friendly visual study resource.
+
+Produce:
+1. A ONE-PAGE summary — max 200 words, what this spec is actually asking for
+2. A TABLE of every technical requirement: item | requirement | standard referenced | who it affects (designer/manufacturer/installer/commissioning)
+3. A FLOWCHART (described so I can draw it) of the approval/submittal process this spec demands
+4. THE TEN THINGS most likely to cause an RFI or a non-conformance on this spec
+5. TWENTY FLASHCARDS as a two-column table (front | back), ready to paste into Anki
+6. FIVE questions to test whether I actually understood it
+
+Skip boilerplate clauses. Focus on what would bite a project engineer.</pre>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-h"><span>07 — Compare drawing revisions</span><button class="copy" type="button">Copy</button></div>
+      <pre>Compare these two revisions of the same electrical drawing. [Attach both.]
+
+Give me:
+1. CHANGE LOG — every difference you can identify, as a table: location on drawing | Rev A | Rev B | change type
+2. TECHNICAL IMPACT — what each change means electrically
+3. COMMERCIAL IMPACT — which changes are potential VARIATIONS. Flag these hard.
+4. PROGRAM IMPACT — which changes affect long-lead items, especially switchboards, transformers and generators
+5. UNDOCUMENTED CHANGES — anything changed that is NOT reflected in the revision cloud or revision notes
+6. RFIs I should raise
+
+Be explicit about what you cannot determine from the drawings alone.</pre>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-h"><span>08 — Create an ITP</span><button class="copy" type="button">Copy</button></div>
+      <pre>Draft an Inspection and Test Plan for [SCOPE — e.g. LV main switchboard installation and energisation] on an Australian data centre project.
+
+Format as a table with columns:
+ITEM NO | ACTIVITY | REFERENCE (standard/spec/drawing) | ACCEPTANCE CRITERIA | INSPECTION TYPE (H=Hold, W=Witness, S=Surveillance, R=Review) | RESPONSIBLE PARTY | RECORD/FORM | SIGN-OFF
+
+Cover the full sequence: material receipt, pre-installation, installation, pre-energisation static testing, energisation, functional testing, and handover documentation.
+
+Reference AS/NZS 3000, AS/NZS 3008, AS/NZS 61439 and AS/NZS 3017 where they genuinely apply — and say which clause area, not a specific clause number unless you are certain.
+
+Mark clearly which items are typically CLIENT hold points versus contractor hold points.
+
+Then tell me the three items on this ITP most likely to be disputed on site, and why.</pre>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-h"><span>09 — Draft an RFI</span><button class="copy" type="button">Copy</button></div>
+      <pre>Draft a Request for Information for this issue on a data centre electrical package.
+
+THE ISSUE: [describe]
+DRAWINGS/SPEC AFFECTED: [reference]
+WHY IT MATTERS: [describe]
+
+Write it as a professional Australian construction RFI:
+- Subject line
+- Background — factual, one short paragraph, no blame
+- The specific question — singular and unambiguous
+- Reference documents
+- Our proposed solution (always offer one — it speeds up the response)
+- Cost impact: yes/no/TBC
+- Program impact: state the required-by date and the consequence of a late response
+- Requested response date
+
+Tone: factual, collaborative, but protective of our position. Make the program consequence explicit without being aggressive. Keep it under one page.</pre>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-h"><span>10 — Review a technical submittal</span><button class="copy" type="button">Copy</button></div>
+      <pre>Review this technical submittal against the project specification. [Attach both.]
+
+Produce a compliance matrix:
+SPEC CLAUSE/REQUIREMENT | SUBMITTED | COMPLIES? (Yes/No/Partial/Not addressed) | COMMENT | ACTION
+
+Then:
+1. NON-COMPLIANCES — list every one, ranked by importance
+2. NOT ADDRESSED — requirements the submittal is silent on (these are the dangerous ones)
+3. TECHNICAL CONCERNS — things that comply on paper but will cause problems in practice
+4. RECOMMENDED STATUS — Approved / Approved with comments / Revise and resubmit
+5. The COMMENTS I should return to the supplier, written ready to send
+
+I come from switchboard manufacturing, so be especially rigorous on switchgear, busbar ratings, forms of separation, and type-test evidence.</pre>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-h"><span>11 — Explain protection coordination</span><button class="copy" type="button">Copy</button></div>
+      <pre>Explain the protection coordination in this system. [Attach SLD / protection schedule / curves.]
+
+Walk me through it visually:
+1. THE HIERARCHY — draw the protection tree from upstream to downstream as an indented list
+2. EACH DEVICE — type, rating, settings, what it's protecting against
+3. DISCRIMINATION — for each upstream/downstream pair, does it discriminate? On current, time, or energy? Show the margin.
+4. THE FAILURE — where does discrimination break down, and what would trip unnecessarily?
+5. DATA CENTRE IMPLICATIONS — a nuisance trip upstream in a critical power system is an outage. Where's the risk here?
+6. A sketch description of what the time-current curves should look like
+
+Explain the concept before the terminology. I'm learning this from scratch.</pre>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-h"><span>12 — Prepare me for a technical meeting</span><button class="copy" type="button">Copy</button></div>
+      <pre>Prepare me for a technical meeting.
+
+MEETING: [subject]
+ATTENDEES: [roles]
+MY POSITION: Electrical project engineer
+DOCUMENTS: [attached]
+MY OBJECTIVE: [what I need out of it]
+
+Give me:
+1. A ONE-PAGE brief — the technical situation in plain terms
+2. THE FIVE questions I am most likely to be asked, with strong answers
+3. THE THREE questions I should ask — the ones that make me look like I've done the work
+4. TECHNICAL LANDMINES — what could I get caught out on, and how do I handle it honestly
+5. MY KEY MESSAGES — three points I must land
+6. IF I DON'T KNOW SOMETHING — the exact phrasing to use that keeps credibility
+
+Assume the other engineers have 15 years more experience than me. I need to be useful and honest, not to bluff.</pre>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-h"><span>13 — Explain this commissioning procedure</span><button class="copy" type="button">Copy</button></div>
+      <pre>Explain this commissioning procedure to me. [Attach.]
+
+Break it down as:
+1. WHAT IS BEING PROVEN — in one sentence, what does a pass actually demonstrate?
+2. THE SEQUENCE — numbered steps, in order, as a flowchart I can sketch
+3. PREREQUISITES — what must be complete before this can start
+4. SAFETY — isolation, permits, who must be present, what could kill someone
+5. ACCEPTANCE CRITERIA — the actual pass/fail numbers
+6. WHAT GOES WRONG — the five most common failures during this test and what causes them
+7. MY ROLE — what a project engineer is responsible for during this test
+8. THE DOCUMENTATION — what records must exist afterwards
+
+Then quiz me with three questions about it.</pre>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-h"><span>14 — Review a load schedule</span><button class="copy" type="button">Copy</button></div>
+      <pre>Review this load schedule for a data centre. [Attach.]
+
+Check and report on:
+1. ARITHMETIC — do the connected loads, diversity factors and maximum demand actually add up? Show any discrepancy.
+2. DIVERSITY — are the applied diversity factors appropriate? In a data centre, IT load diversity is near 1.0 — flag anything that assumes otherwise.
+3. POWER FACTOR — is it stated and consistent? kW vs kVA errors are the most common fault in these.
+4. SPARE CAPACITY — how much headroom, and is it enough for the stated growth plan?
+5. REDUNDANCY CHECK — if this is 2N, is each path rated for the FULL load rather than half?
+6. MISSING LOADS — what would you expect in a data centre schedule that isn't listed? (Mechanical, lighting, small power, BMS, fire, security, external.)
+7. UPSTREAM IMPACT — what transformer, generator and UPS ratings does this schedule imply?
+
+Present as a table of findings with severity.</pre>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-h"><span>15 — Weekly review and coaching</span><button class="copy" type="button">Copy</button></div>
+      <pre>This is my weekly review for the Melbourne data centre electrical program.
+
+WHAT I STUDIED: [list]
+WHAT I BUILT/DREW/CALCULATED: [list]
+WHAT I GOT WRONG: [list]
+WHAT STILL CONFUSES ME: [be specific]
+HOURS ACTUALLY DONE: [honest number]
+JOB SEARCH ACTIVITY: [applications, calls, interviews]
+
+Give me:
+1. An honest assessment — am I on track, and if not, what specifically is slipping?
+2. Updated skill levels for the dashboard (current level out of 5 for each affected skill)
+3. The ONE concept to revise this week, with a fresh explanation from a different angle than last time
+4. Next week's plan: one new concept, one calculation type, one drawing exercise, one interview topic
+5. Five spaced-repetition questions drawn from THREE weeks ago, not this week
+6. One thing I should stop doing
+
+Be direct. If I'm kidding myself about progress, say so.</pre>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= 13 ================= -->
+<section id="s13">
+  <div class="shead"><span class="snum">13</span><h2>The six projects</h2></div>
+  <p class="sdek">You attempt each one first. I review it, mark it, and only then show you the model answer. Attempting badly and being corrected beats reading a worked solution — every time.</p>
+
+  <details>
+    <summary>Project 1 · Small LV distribution system <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-3); font-weight:400">WEEKS 3–4</span></summary>
+    <div class="det-b">
+      <p><b>Scenario.</b> A small commercial workshop. 415 V three-phase supply from a 100 A main switch. Loads: 3 × 7.5 kW three-phase motors, 12 kW of single-phase small power, 6 kW lighting, one 15 kW welding outlet.</p>
+      <p><b>Deliverables.</b> Load schedule with diversity applied; maximum demand calculation using an AS/NZS 3000 method; a hand-drawn SLD showing the main switch, MCCB/MCB selection and every submain; cable sizing for each submain with all four AS/NZS 3008 checks shown; volt drop verification.</p>
+      <p><b>Questions to answer.</b> Which of the four cable checks governed each circuit, and why? What diversity did you apply to the motors and can you justify it? What happens to your maximum demand if the welder is used continuously?</p>
+      <p><b>Review criteria.</b> Method correctness over answer correctness. I mark whether you knew <i>which</i> check governs, not whether you got 25 mm² or 35 mm².</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Project 2 · Commercial building electrical system <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-3); font-weight:400">WEEKS 6–7</span></summary>
+    <div class="det-b">
+      <p><b>Scenario.</b> Six-storey office, 1,200 m² per floor. Main switchboard in a basement substation fed by a 1,000 kVA transformer. Distribution boards per floor, riser busduct, mechanical services switchboard, essential services.</p>
+      <p><b>Deliverables.</b> Full SLD from transformer to floor DBs; busduct sizing; MSB schedule with ACB and MCCB selection including breaking capacities; earthing arrangement (MEN) sketched; essential services separation per NCC; fault level estimate at the MSB.</p>
+      <p><b>New skills.</b> Your first fault level calculation. Your first transformer impedance calculation. Your first real ACB selection with an Icu/Ics justification — which you'll find easier than most, given your background.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Project 3 · Generator and ATS system <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-3); font-weight:400">WEEKS 10–11</span></summary>
+    <div class="det-b">
+      <p><b>Scenario.</b> Add standby generation to Project 2's building. Essential load 420 kW. Client wants generator support for essential services plus one lift and the server room.</p>
+      <p><b>Deliverables.</b> Generator sizing including step load acceptance and starting kVA for the largest motor; fuel storage sizing for 24 hours at full load; ATS selection and location on the SLD; generator neutral earthing arrangement per AS/NZS 3010; changeover sequence described as a cause &amp; effect matrix; generator switchboard concept.</p>
+      <p><b>The trap.</b> Most people size the generator on running kW alone and get caught by motor starting and by non-linear load. If your answer is "420 kW plus 10%", I will fail it and explain why.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Project 4 · UPS and battery system <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-3); font-weight:400">WEEKS 13–14</span></summary>
+    <div class="det-b">
+      <p><b>Scenario.</b> 300 kW of critical IT load requiring 10 minutes autonomy, N+1 UPS configuration.</p>
+      <p><b>Deliverables.</b> UPS sizing in kVA and kW accounting for power factor and efficiency; module count for N+1; battery sizing calculation including end-of-life and temperature derating; input and output cable and breaker sizing; static bypass arrangement explained; a battery room ventilation and safety note; how the UPS interacts with the generator during a transfer.</p>
+      <p><b>Questions.</b> Why must the generator be sized larger than the UPS output rating? What does the UPS do to the fault level seen downstream? Why does a static bypass need a synchronised source?</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Project 5 · Data centre A/B distribution <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-3); font-weight:400">WEEKS 17–18</span></summary>
+    <div class="det-b">
+      <p><b>Scenario.</b> One data hall, 40 racks averaging 12 kW, dual-corded, 2N distribution from UPS output to rack.</p>
+      <p><b>Deliverables.</b> A/B SLD from UPS output down to rack PDU; busway vs RPP selection with justification; busway sizing and tap-off arrangement; PDU sizing and count; rack-level power budget; capacity management plan showing per-path loading; a written statement of what fails and what survives for six named failure scenarios.</p>
+      <p><b>Review focus.</b> The 50% loading rule. If any path in your design exceeds 50% under normal operation, the design fails — and I'll ask you to explain the consequence before you fix it.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Project 6 · Full data centre electrical architecture <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-3); font-weight:400">WEEKS 21–23</span></summary>
+    <div class="det-b">
+      <p><b>Scenario.</b> Greenfield 5 MW IT load facility in Melbourne's west. 22 kV dual utility supply. Tier III equivalent — concurrently maintainable. You are the electrical project engineer producing the concept design and the delivery approach.</p>
+      <p><b>Deliverables.</b> Complete SLD, utility to rack. Full load schedule and maximum demand. Transformer, generator and UPS sizing with calculations. Fault level study at each bus. Protection philosophy and discrimination strategy. Earthing concept. Equipment schedule with long-lead items identified. A commissioning plan L1–L5 with an IST scenario list. A procurement and program strategy naming the critical path. A one-page design basis statement.</p>
+      <p><b>This is your portfolio piece.</b> Done properly, it is the thing you bring to interviews. It demonstrates every capability the Stage 1 role requires, and no other candidate at your level will have one.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ================= 14 ================= -->
+<section id="s14">
+  <div class="shead"><span class="snum">14</span><h2>Interview bank</h2></div>
+  <p class="sdek">Ask me to run any of these as a live drill — one question at a time, I score, correct, and escalate. Practise out loud, not in your head.</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h4>Technical — expect these</h4>
+      <ul class="tick">
+        <li>Walk me through the power path from the street to a server.</li>
+        <li>What's the difference between N+1 and 2N? Which would you specify and why?</li>
+        <li>Explain concurrent maintainability versus fault tolerance.</li>
+        <li>Why does a data centre need both a UPS and a generator?</li>
+        <li>What's the maximum you'd load each path of a 2N system, and why?</li>
+        <li>How do you size a generator for a data centre? What catches people out?</li>
+        <li>What are the four checks a cable must pass under AS/NZS 3008?</li>
+        <li>What is a Dyn11 transformer and why is the vector group relevant?</li>
+        <li>How does fault level change downstream of a UPS?</li>
+        <li>Explain discrimination. What happens in a critical facility when it fails?</li>
+        <li>What's a Form 4b switchboard and when would you specify one? <i>(Your question — own it.)</i></li>
+        <li>What does Icw mean and why does it matter for a DC switchboard?</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Project &amp; scenario — the ones that decide it</h4>
+      <ul class="tick">
+        <li>The switchboard manufacturer says delivery has slipped six weeks and it will delay commissioning. What do you do? <i>(You have a genuine advantage here — use it.)</i></li>
+        <li>During IST, dropping UPS A causes a partial load loss. What's your process?</li>
+        <li>The client wants a design change late in construction. Walk me through how you handle it.</li>
+        <li>An installed cable doesn't match the cable schedule. What now?</li>
+        <li>How do you manage an electrical subcontractor who is behind program?</li>
+        <li>Tell me about a technical problem you solved under time pressure.</li>
+        <li>How do you handle being asked a technical question you don't know the answer to?</li>
+        <li>Why are you moving from manufacturing to site delivery?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout blue" style="margin-top:16px">
+    <span class="lbl">Your answer to "why the move?"</span>
+    <p>Have this rehearsed word-perfect. Something close to: <i>"I've spent my career on the equipment that's on the critical path of every data centre build. I know why boards are late, what the type-test evidence actually proves, and what happens at FAT. I want to be on the delivery side, where I can use that to de-risk the whole electrical package rather than one piece of it."</i> That reframes a lateral move as a strategic one.</p>
+  </div>
+</section>
+
+<!-- ================= 15 ================= -->
+<section id="s15">
+  <div class="shead"><span class="snum">15</span><h2>Getting hired</h2></div>
+  <p class="sdek">Competence gets you through the interview. Positioning gets you the interview.</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>CV — the rewrite</h3>
+      <ul class="tick">
+        <li><b>Retitle yourself.</b> "Electrical Project Engineer — Critical Power Switchgear" beats "Project Engineer".</li>
+        <li><b>Lead with data centre relevance.</b> If your boards went into data centres, that belongs in the first three lines. If they didn't, lead with critical infrastructure, hospitals, industrial.</li>
+        <li><b>Quantify everything.</b> Board ratings in amps, project values, number of boards, fault ratings, forms of separation, delivery timeframes.</li>
+        <li><b>Name the standards.</b> AS/NZS 61439 on your CV is a keyword that recruiters and hiring managers filter on.</li>
+        <li><b>Put FAT in bold.</b> Then say how many you've witnessed or run.</li>
+        <li><b>Add the portfolio project</b> once Project 6 is done. "Concept design for a 5 MW Tier III facility" is a legitimate line.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>LinkedIn, recruiters, network</h3>
+      <ul class="tick">
+        <li><b>Headline:</b> "Electrical Project Engineer | Critical Power &amp; LV Switchgear | Data Centre Infrastructure". Recruiters search these exact terms.</li>
+        <li><b>Post once a fortnight</b> about something you learned in this program — a diagram you drew, a concept explained simply. Low effort, compounding visibility.</li>
+        <li><b>Pick 3–4 recruiters</b> who actually place DC roles in Melbourne. Tell each one your target title and salary band explicitly. Vague candidates get vague roles.</li>
+        <li><b>Talk to the contractors you already supply.</b> You have existing relationships with the exact companies you want to work for. This is the single most underused asset you have.</li>
+        <li><b>Never name your current salary first.</b> Say: "I'm targeting $150–165k plus super for a project engineering role — is that in range?"</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>Week one — start here</h3>
+    <p style="margin-bottom:14px">Tick these off. The page remembers your progress on this device.</p>
+    <div class="chk">
+      <label><input type="checkbox" data-k="w1a"><span>Answer the five Lesson 01 questions in chat — no looking anything up</span></label>
+      <label><input type="checkbox" data-k="w1b"><span>Redraw FIG 06.1 by hand from memory. Badly is fine. Photograph it and show me.</span></label>
+      <label><input type="checkbox" data-k="w1c"><span>Attempt the 1.2 MW UPS and transformer sizing problem, showing working</span></label>
+      <label><input type="checkbox" data-k="w1d"><span>Set standing SEEK alerts: "data centre electrical", "electrical project engineer", Melbourne</span></label>
+      <label><input type="checkbox" data-k="w1e"><span>Install Anki and Excalidraw</span></label>
+      <label><input type="checkbox" data-k="w1f"><span>List every data centre project your boards have gone into — this is your CV ammunition</span></label>
+      <label><input type="checkbox" data-k="w1g"><span>Sunday: send me the five review answers from section 05</span></label>
+    </div>
+  </div>
+</section>
+
+<p class="footnote">
+Market figures reflect research current to August 2026 and vary by source — treat salary bands as negotiating ranges, not quotes. Company lists are research starting points requiring your own verification on SEEK and LinkedIn. Standards summaries describe scope and intent only; every clause reference, table value and compliance number must be confirmed against the current published standard before use on a real project. Sources: <a href="https://au.seek.com/data-centre-electrical-jobs/in-All-Melbourne-VIC">SEEK</a>, <a href="https://au.seek.com/career-advice/role/electrical-engineer/salary">SEEK Career Advice</a>, <a href="https://www.datacenterdynamics.com/en/news/nextdc-plans-80mw-data-center-in-melbourne-australia/">DatacenterDynamics</a>, <a href="https://renewmap.com.au/resources/projects/vic/datacentre/">RenewMap</a>, <a href="https://www.glassdoor.com.au/Salaries/data-centre-engineer-salary-SRCH_KO0,20.htm">Glassdoor</a>.
+</p>
+
+</div>
+
+<script>
+(function(){
+  // level meters
+  document.querySelectorAll('.meter').forEach(function(m){
+    var cur = parseInt(m.dataset.cur,10), tgt = parseInt(m.dataset.tgt,10);
+    for(var i=1;i<=5;i++){
+      var d = document.createElement('span');
+      d.className = 'dot' + (i<=cur ? ' on' : (i<=tgt ? ' tgt' : ''));
+      m.appendChild(d);
+    }
+    m.setAttribute('aria-label','Current level '+cur+' of 5, target '+tgt+' of 5');
+  });
+
+  // copy buttons
+  document.querySelectorAll('.prompt').forEach(function(p){
+    var btn = p.querySelector('.copy'), pre = p.querySelector('pre');
+    if(!btn || !pre) return;
+    btn.addEventListener('click', function(){
+      var txt = pre.textContent;
+      var done = function(){
+        btn.textContent = 'Copied';
+        btn.dataset.done = '1';
+        setTimeout(function(){ btn.textContent='Copy'; btn.dataset.done=''; }, 1800);
+      };
+      try{
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(txt).then(done, function(){ selectFallback(pre, btn); });
+        } else { selectFallback(pre, btn); }
+      }catch(e){ selectFallback(pre, btn); }
+    });
+  });
+  function selectFallback(pre, btn){
+    try{
+      var r = document.createRange(); r.selectNodeContents(pre);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent = 'Selected — press Ctrl/Cmd+C';
+      setTimeout(function(){ btn.textContent='Copy'; }, 2600);
+    }catch(e){ btn.textContent = 'Select manually'; }
+  }
+
+  // checklist persistence
+  var KEY = 'mdc-prog-v1';
+  var state = {};
+  try{ state = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; }catch(e){ state = {}; }
+  document.querySelectorAll('.chk input[data-k]').forEach(function(cb){
+    if(state[cb.dataset.k]) cb.checked = true;
+    cb.addEventListener('change', function(){
+      state[cb.dataset.k] = cb.checked;
+      try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+    });
+  });
+})();
+</script>
