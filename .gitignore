@@ -1,0 +1,14 @@
+# local preview output (scripts/preview.py)
+.preview/
+
+# python
+__pycache__/
+*.py[cod]
+
+# claude code local overrides
+.claude/settings.local.json
+
+# editor / os cruft
+.DS_Store
+.idea/
+.vscode/
