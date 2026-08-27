@@ -4235,3 +4235,1470 @@ Energy = 521 × 0.167 = 87 kWh</span></div></div>
     <div class="ansref">→ Answers: Part 10, section W5</div>
   </div>
 </div>
+
+<!-- ==================== PART 6 ==================== -->
+<div class="part" id="p6">
+  <div class="part-n">Part Six</div>
+  <h2>Design calculations, end to end</h2>
+  <p class="pdek">Everything here is arithmetic you already know from Part 1, applied in a fixed order. The skill isn't the maths — it's knowing which check governs and never skipping one. Work these with a pen. Reading them will teach you nothing.</p>
+  <div class="part-toc">
+    <div><b>6.1</b> Maximum demand and diversity</div>
+    <div><b>6.2</b> Cable sizing — the four checks</div>
+    <div><b>6.3</b> Fault level through a system</div>
+    <div><b>6.4</b> Sizing the big equipment</div>
+    <div><b>6.5</b> Busway sizing</div>
+    <div><b>6.6</b> Harmonics</div>
+    <div><b>6.7</b> The full worked system</div>
+    <div><b>W6</b> Workbook Six</div>
+  </div>
+</div>
+
+<!-- ---------- 6.1 ---------- -->
+<section class="ch" id="c61">
+  <h3><span class="cn">6.1</span> Maximum demand and diversity</h3>
+
+  <div class="box b-plain">
+    <span class="bl">In plain words</span>
+    <p>If you add up every single thing plugged into a building, you get a huge number. But in a normal building, everything is <b>never on at once</b>. Not every light, kettle, computer and air conditioner runs flat out simultaneously.</p>
+    <p><b>Maximum demand</b> is your honest estimate of the biggest load that will realistically happen at one moment. It's always less than the total connected load, and the reduction is called <b>diversity</b>.</p>
+    <p>A diversity factor of 0.6 means "I expect about 60% of this to be on at once". You size the cable, the breaker and the transformer for the maximum demand, not the connected total — otherwise everything would be enormous and enormously expensive.</p>
+    <p><b>Here is the data centre twist, and it's important.</b> Servers run flat out, 24 hours a day, all of them, forever. There <i>is</i> no diversity on IT load. It's 1.0. Applying building-services diversity to a data hall is a serious and expensive mistake.</p>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Load type</th><th>Typical diversity</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td><b>IT / server load</b></td><td class="n"><b>1.0</b></td><td>Always on, always working. No diversity whatsoever.</td></tr>
+        <tr><td><b>Mechanical cooling</b></td><td class="n">0.8 – 1.0</td><td>Tracks the IT load closely. Some diversity between redundant units.</td></tr>
+        <tr><td><b>Office lighting</b></td><td class="n">0.9</td><td>Nearly all on during the day.</td></tr>
+        <tr><td><b>General power outlets</b></td><td class="n">0.3 – 0.6</td><td>Most sockets are empty or idle most of the time.</td></tr>
+        <tr><td><b>Motors</b></td><td class="n">0.7 – 1.0</td><td>Depends on the process and whether duty/standby.</td></tr>
+        <tr><td><b>Lifts</b></td><td class="n">0.5 – 0.7</td><td>Intermittent, and rarely all moving at once.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="worked">
+    <div class="worked-h">Worked example 6.1 — maximum demand for a mixed building</div>
+    <div class="worked-b">
+      <div class="given">Data hall IT 900 kW · Mechanical 380 kW · Office lighting 40 kW · General power 120 kW · Lifts 60 kW · House services 30 kW. Overall pf 0.93.</div>
+      <div class="wstep"><div class="wn">1</div><div class="wb">Apply diversity to each category separately — never one blanket figure.
+        <span class="calc">IT         900 × 1.00 = 900.0 kW
+Mechanical 380 × 0.90 = 342.0 kW
+Lighting    40 × 0.90 =  36.0 kW
+Gen power  120 × 0.50 =  60.0 kW
+Lifts       60 × 0.60 =  36.0 kW
+House       30 × 0.80 =  24.0 kW
+                        --------
+Maximum demand        = 1,398 kW</span></div></div>
+      <div class="wstep"><div class="wn">2</div><div class="wb">Compare with the connected total to see how much diversity bought you.
+        <span class="calc">Connected total = 1,530 kW
+Maximum demand  = 1,398 kW  (91%)</span></div></div>
+      <div class="wstep"><div class="wn">3</div><div class="wb">Convert to kVA for equipment sizing.
+        <span class="calc">kVA = 1,398 ÷ 0.93 = 1,503 kVA</span></div></div>
+      <div class="wstep"><div class="wn">4</div><div class="wb">Add design margin for future growth — typically 20% on a data centre, because IT load only ever goes up.
+        <span class="calc">1,503 × 1.20 = 1,804 kVA</span></div></div>
+      <div class="wans"><b>Answer</b>Maximum demand 1,398 kW / 1,503 kVA; design for ~1,800 kVA. <b>Note the diversity only saved 9%</b> — because IT dominates and IT has none. In an office building the same exercise might save 40%. That difference is the whole reason data centre electrical design is its own discipline.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- 6.2 ---------- -->
+<section class="ch" id="c62">
+  <h3><span class="cn">6.2</span> Cable sizing — the four checks</h3>
+
+  <div class="box b-plain">
+    <span class="bl">In plain words</span>
+    <p>A cable has to pass <b>four</b> separate tests. Not one. Four. And the answer is whichever of the four demands the biggest cable — you take the <b>largest</b>, not the average, and not the first one you happen to calculate.</p>
+    <p>People fail this by doing one check, getting an answer, and stopping. That's how you get a cable that carries the current fine but drops so much voltage the equipment won't run, or that survives normal load but vaporises during a fault.</p>
+  </div>
+
+  <figure>
+    <div class="dwg"><div class="dwg-scroll">
+      <svg viewBox="0 0 900 400" role="img" aria-label="Flowchart of the four cable sizing checks: current carrying capacity after derating, voltage drop, short circuit withstand and protective device coordination, all feeding into a decision to select the largest resulting size">
+        <defs><marker id="fl" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="var(--ink-2)"/></marker></defs>
+
+        <rect x="330" y="30" width="240" height="42" class="sv-block" stroke-width="2"/>
+        <text x="450" y="48" class="sv-tb" text-anchor="middle">START — know the load</text>
+        <text x="450" y="64" class="sv-s" text-anchor="middle">current, length, route, method, ambient, grouping</text>
+
+        <path d="M450 72 L450 96" class="sv-l" marker-end="url(#fl)" stroke="var(--ink-2)"/>
+        <path d="M120 100 L780 100" class="sv-l2"/>
+        <path d="M120 100 L120 124 M330 100 L330 124 M570 100 L570 124 M780 100 L780 124" class="sv-l" marker-end="url(#fl)" stroke="var(--ink-2)"/>
+
+        <rect x="40" y="124" width="160" height="120" class="sv-block"/>
+        <text x="120" y="146" class="sv-tb" text-anchor="middle" fill="var(--copper)">CHECK 1</text>
+        <text x="120" y="164" class="sv-t" text-anchor="middle">CURRENT</text>
+        <text x="120" y="182" class="sv-s" text-anchor="middle">Table rating, then</text>
+        <text x="120" y="194" class="sv-s" text-anchor="middle">apply ALL derating</text>
+        <text x="120" y="206" class="sv-s" text-anchor="middle">factors.</text>
+        <text x="120" y="226" class="sv-s" text-anchor="middle">Must exceed the</text>
+        <text x="120" y="238" class="sv-s" text-anchor="middle">design current.</text>
+
+        <rect x="250" y="124" width="160" height="120" class="sv-block"/>
+        <text x="330" y="146" class="sv-tb" text-anchor="middle" fill="var(--copper)">CHECK 2</text>
+        <text x="330" y="164" class="sv-t" text-anchor="middle">VOLT DROP</text>
+        <text x="330" y="182" class="sv-s" text-anchor="middle">√3 × I × L × mV/A/m</text>
+        <text x="330" y="194" class="sv-s" text-anchor="middle">÷ 1000</text>
+        <text x="330" y="214" class="sv-s" text-anchor="middle">Must be within the</text>
+        <text x="330" y="226" class="sv-s" text-anchor="middle">allowed share of 5%.</text>
+        <text x="330" y="238" class="sv-s" text-anchor="middle">Long runs fail here.</text>
+
+        <rect x="490" y="124" width="160" height="120" class="sv-block"/>
+        <text x="570" y="146" class="sv-tb" text-anchor="middle" fill="var(--copper)">CHECK 3</text>
+        <text x="570" y="164" class="sv-t" text-anchor="middle">SHORT CIRCUIT</text>
+        <text x="570" y="182" class="sv-s" text-anchor="middle">Can the copper survive</text>
+        <text x="570" y="194" class="sv-s" text-anchor="middle">the fault energy the</text>
+        <text x="570" y="206" class="sv-s" text-anchor="middle">breaker lets through</text>
+        <text x="570" y="218" class="sv-s" text-anchor="middle">before it clears?</text>
+        <text x="570" y="238" class="sv-s" text-anchor="middle">Adiabatic check.</text>
+
+        <rect x="700" y="124" width="160" height="120" class="sv-block"/>
+        <text x="780" y="146" class="sv-tb" text-anchor="middle" fill="var(--copper)">CHECK 4</text>
+        <text x="780" y="164" class="sv-t" text-anchor="middle">PROTECTION</text>
+        <text x="780" y="182" class="sv-s" text-anchor="middle">Does the device</text>
+        <text x="780" y="194" class="sv-s" text-anchor="middle">actually protect this</text>
+        <text x="780" y="206" class="sv-s" text-anchor="middle">cable?</text>
+        <text x="780" y="226" class="sv-s" text-anchor="middle">Ib ≤ In ≤ Iz</text>
+        <text x="780" y="240" class="sv-s" text-anchor="middle">and earth loop OK</text>
+
+        <path d="M120 244 L120 274 M330 244 L330 274 M570 244 L570 274 M780 244 L780 274" class="sv-l"/>
+        <path d="M120 274 L780 274" class="sv-l2"/>
+        <path d="M450 274 L450 300" class="sv-l" marker-end="url(#fl)" stroke="var(--ink-2)"/>
+
+        <rect x="290" y="300" width="320" height="52" class="sv-block" stroke="var(--copper)" stroke-width="2.4"/>
+        <text x="450" y="322" class="sv-tb" text-anchor="middle" fill="var(--copper)">TAKE THE LARGEST SIZE</text>
+        <text x="450" y="340" class="sv-s" text-anchor="middle">whichever check demanded the biggest cable — that one governs</text>
+
+        <text x="450" y="378" class="sv-t" text-anchor="middle">Then record WHICH check governed. That single note saves hours of argument later.</text>
+      </svg>
+    </div><figcaption><b>FIG 6.2</b> — The four cable checks. All four must be done; the largest result wins. On short runs Check 1 usually governs; on long runs Check 2 does; close to a transformer Check 3 can.</figcaption></div>
+  </figure>
+
+  <div class="fml stack">
+    <div class="eq">Check 4 in symbols:  I<sub>b</sub> ≤ I<sub>n</sub> ≤ I<sub>z</sub></div>
+    <div class="wh">I<sub>b</sub> = design current of the load · I<sub>n</sub> = rating of the protective device · I<sub>z</sub> = derated current capacity of the cable<br>Plain English: the load must be smaller than the breaker, and the breaker must be smaller than the cable can take.</div>
+  </div>
+
+  <div class="worked">
+    <div class="worked-h">Worked example 6.2 — full four-check cable sizing</div>
+    <div class="worked-b">
+      <div class="given">Feed a 250 kW mechanical services board. 415 V, pf 0.85, route length 95 m.<br>Copper XLPE on ladder, 4 circuits grouped (0.75), ambient 45 °C (0.91).<br>Fault level at origin 35 kA. Protective device: 500 A MCCB, clearing time 0.1 s.<br>Volt drop allowance for this submain: 2%.</div>
+
+      <div class="wstep"><div class="wn">1</div><div class="wb"><b>Design current (I<sub>b</sub>).</b>
+        <span class="calc">Ib = P ÷ (√3 × V × pf)
+Ib = 250,000 ÷ (1.732 × 415 × 0.85)
+Ib = 250,000 ÷ 610.9 = 409 A</span></div></div>
+
+      <div class="wstep"><div class="wn">2</div><div class="wb"><b>Check 1 — current capacity.</b> Work out what table rating you need <i>before</i> derating, by dividing.
+        <span class="calc">Combined derating = 0.75 × 0.91 = 0.6825
+Required table rating = 409 ÷ 0.6825 = 599 A</span>
+        A 300 mm² copper XLPE cable rates roughly 600 A on ladder. So <b>1 × 300 mm² would just scrape in</b> — uncomfortably tight. Two smaller cables in parallel (2 × 185 mm²) is the more practical answer and easier to install. Say <b>2 × 185 mm²</b>, giving about 2 × 430 A × 0.6825 = 587 A. <b>Pass.</b></div></div>
+
+      <div class="wstep"><div class="wn">3</div><div class="wb"><b>Check 2 — voltage drop.</b> For 2 × 185 mm², the effective mV/A/m roughly halves to about 0.11.
+        <span class="calc">Allowed = 2% × 415 = 8.3 V
+Vdrop = 1.732 × 409 × 95 × 0.11 ÷ 1000
+Vdrop = 1.732 × 409 = 708.4
+708.4 × 95 = 67,298
+67,298 × 0.11 = 7,403
+7,403 ÷ 1000 = 7.4 V   (1.78%)</span>
+        <b>Pass</b> — with a little room. Had we used a single 300 mm², volt drop would have been around 11 V and this check would have <b>governed</b>.</div></div>
+
+      <div class="wstep"><div class="wn">4</div><div class="wb"><b>Check 3 — short circuit withstand (adiabatic).</b>
+        <span class="calc">S ≥ √(I² × t) ÷ k
+I = 35,000 A · t = 0.1 s · k = 143 (Cu/XLPE)
+
+I² × t = 35,000² × 0.1 = 1.225 × 10⁸
+√(1.225 × 10⁸) = 11,068
+S ≥ 11,068 ÷ 143 = 77.4 mm²</span>
+        We have 2 × 185 = 370 mm². <b>Comfortable pass.</b></div></div>
+
+      <div class="wstep"><div class="wn">5</div><div class="wb"><b>Check 4 — protection coordination.</b>
+        <span class="calc">Ib = 409 A  ≤  In = 500 A  ≤  Iz = 587 A  ✓</span>
+        Also confirm earth fault loop impedance allows disconnection within the required time — a measured check at commissioning, but calculated at design.</div></div>
+
+      <div class="wans"><b>Answer</b><b>2 × 185 mm² Cu XLPE.</b> Check 1 governed. Record that. If someone later reduces the grouping (fewer circuits on the ladder), you'll immediately know there's spare capacity — and if someone lengthens the route, you'll know volt drop is the check to redo.</div>
+    </div>
+  </div>
+
+  <div class="box b-mistake">
+    <span class="bl">Common mistake</span>
+    <p>Doing Check 1, getting a size, and stopping. Or doing all four but taking the <i>average</i>. The rule is simple and absolute: <b>do all four, take the largest.</b> And write down which one governed — future-you, and every engineer who reviews your calculation, will need to know.</p>
+  </div>
+</section>
+
+<!-- ---------- 6.3 ---------- -->
+<section class="ch" id="c63">
+  <h3><span class="cn">6.3</span> Fault level through a system</h3>
+
+  <div class="box b-plain">
+    <span class="bl">In plain words</span>
+    <p>Fault level is biggest right at the transformer and gets smaller the further away you go, because every metre of cable adds a little resistance that limits the fault.</p>
+    <p>So you calculate it at the main switchboard first, then work down. Each board needs switchgear rated for the fault level <i>at that board</i>. Over-rating everything is safe but wastes a lot of money; under-rating anything is dangerous.</p>
+  </div>
+
+  <div class="worked">
+    <div class="worked-h">Worked example 6.3 — fault level at three points</div>
+    <div class="worked-b">
+      <div class="given">2,000 kVA transformer, 415 V, 6% impedance. MSB, then 60 m of 240 mm² cable to a distribution board.</div>
+      <div class="wstep"><div class="wn">1</div><div class="wb"><b>At the transformer terminals / MSB.</b>
+        <span class="calc">FLC = 2,000,000 ÷ (1.732 × 415) = 2,783 A
+Ifault = 2,783 ÷ 0.06 = 46,383 A = 46.4 kA</span></div></div>
+      <div class="wstep"><div class="wn">2</div><div class="wb"><b>Add the utility contribution.</b> The network behind the transformer also feeds the fault. In practice this is obtained from the distributor; a common working assumption adds a few percent. Design the MSB at <b>50 kA</b>.</div></div>
+      <div class="wstep"><div class="wn">3</div><div class="wb"><b>At the distribution board.</b> The cable impedance adds to the transformer's. A 60 m run of 240 mm² has meaningful impedance, and in a real study you'd combine impedances properly. As a rule of thumb, this length of cable typically drops the fault level to roughly 40–60% of the source value.
+        <span class="calc">Estimated at DB ≈ 20 – 28 kA
+Specify the DB at 25 kA, confirmed by study</span></div></div>
+      <div class="wans"><b>Answer</b>MSB 50 kA, DB ~25 kA. <b>The point to take away:</b> fault level falls with distance, and the switchgear rating should follow it down. Specifying 50 kA throughout a building is a very expensive way to avoid doing the calculation.</div>
+    </div>
+  </div>
+
+  <div class="box b-key">
+    <span class="bl">Key fact</span>
+    <p>Real fault studies are done with software (ETAP, PowerFactory, or ELEK Cable Pro Web for LV), because you have to combine source impedance, transformer impedance, cable impedance and motor contribution properly. But you must be able to do the transformer estimate in your head, because it's the sanity check that tells you whether the software output is plausible.</p>
+  </div>
+</section>
+
+<!-- ---------- 6.4 ---------- -->
+<section class="ch" id="c64">
+  <h3><span class="cn">6.4</span> Sizing the big equipment — the summary sheet</h3>
+
+  <div class="box b-plain">
+    <span class="bl">In plain words</span>
+    <p>Every piece of major equipment gets sized the same way: start with the load, apply every uplift that applies, convert to the unit the equipment is rated in, then pick the next standard size up. The only difference between them is <i>which</i> uplifts apply.</p>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Equipment</th><th>Rated in</th><th>Start with</th><th>Uplifts to apply</th><th>Then</th></tr></thead>
+      <tbody>
+        <tr><td><b>Transformer</b></td><td class="n">kVA</td><td>Maximum demand kW</td><td>÷ power factor · future growth 20% · consider N+1 or 2N loading limits</td><td>Next standard size; aim for ≤80% loaded</td></tr>
+        <tr><td><b>Generator</b></td><td class="n">kVA</td><td>Essential load kW</td><td>+ UPS recharge (20% of UPS kW) · ÷ pf · ÷ 0.85 non-linear derating · check step load &amp; motor start</td><td>Next standard size; verify with vendor sizing software</td></tr>
+        <tr><td><b>UPS</b></td><td class="n">kVA or kW</td><td>IT load kW</td><td>÷ output pf (check whether unity-rated) · growth margin · N+1 module count · <b>50% max if 2N</b></td><td>Module count and frame size</td></tr>
+        <tr><td><b>Battery</b></td><td class="n">kWh / Ah</td><td>UPS kW × autonomy</td><td>÷ inverter efficiency · ÷ 0.80 end of life · temperature correction · rate correction · design margin</td><td>String count from vendor discharge curves</td></tr>
+        <tr><td><b>Busway</b></td><td class="n">A</td><td>Load kW</td><td>÷ (√3 × V × pf) · growth · <b>50% max if 2N</b> · ambient derating</td><td>Next standard rating: 400/630/800/1000/1250 A</td></tr>
+        <tr><td><b>Switchboard</b></td><td class="n">A and kA</td><td>Maximum demand + fault level</td><td>Busbar for full load · Icw for fault duration · Form of separation · temperature rise verification</td><td>Standard frame; confirm 61439 verification route</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box b-mem">
+    <span class="bl">Memory trick — the sizing sequence</span>
+    <p><b>"Load, Lift, Convert, Round up."</b> Start with load. Apply every lift. Convert to the right unit. Round up to a standard size. Four steps, every time, for every piece of equipment in the building.</p>
+  </div>
+</section>
+
+<!-- ---------- 6.5 / 6.6 ---------- -->
+<section class="ch" id="c66">
+  <h3><span class="cn">6.5</span> Harmonics — the data centre problem</h3>
+
+  <div class="box b-plain">
+    <span class="bl">In plain words</span>
+    <p>A nice clean AC supply is a smooth sine wave. But some equipment doesn't draw current smoothly — it grabs it in sharp gulps near the peak of the wave. Every computer power supply, every LED driver, every variable speed drive does this.</p>
+    <p>Those gulps distort the current waveform. Mathematically, a distorted wave is the same as a clean 50 Hz wave plus a set of extra waves at multiples of 50 Hz — 150 Hz, 250 Hz, 350 Hz and so on. Those extras are called <b>harmonics</b>.</p>
+    <p>They're a problem because they carry real current that does no useful work. They heat cables, overheat transformers, and — the big one — <b>the third harmonic and its multiples all add up in the neutral instead of cancelling out</b>. So the neutral can end up carrying more current than any phase, which is the opposite of what everyone's intuition says.</p>
+    <p>A data centre is the worst-case environment for this, because it's a building full of nothing but switch-mode power supplies.</p>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Effect</th><th>What actually happens</th><th>What you do about it</th></tr></thead>
+      <tbody>
+        <tr><td><b>Neutral overload</b></td><td>Triplen harmonics (3rd, 9th, 15th) sum in the neutral rather than cancelling. Neutral current can exceed phase current.</td><td><b>Oversize the neutral</b> — commonly 200% of phase. Specify it explicitly.</td></tr>
+        <tr><td><b>Transformer overheating</b></td><td>Extra eddy current losses at higher frequencies.</td><td>Specify a <b>K-rated</b> or harmonic-rated transformer, or derate a standard one.</td></tr>
+        <tr><td><b>Cable heating</b></td><td>Skin effect — higher frequencies travel on the outside of the conductor, raising effective resistance.</td><td>Derate the cable, or use more parallel cables.</td></tr>
+        <tr><td><b>Generator instability</b></td><td>Distorted current makes it harder for the AVR to regulate.</td><td>Derate the alternator; specify a machine rated for non-linear load.</td></tr>
+        <tr><td><b>Nuisance tripping</b></td><td>Devices measuring average rather than true RMS under-read distorted current.</td><td>Specify true-RMS metering and protection throughout.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box b-key">
+    <span class="bl">Key fact — the good news</span>
+    <p>Modern IT power supplies have <b>active power factor correction</b> built in, which greatly reduces the harmonics they produce. Total harmonic distortion from a modern server is often under 5%, compared with 80%+ from older equipment. So the problem is much smaller than the textbooks suggest — but it hasn't gone away, and the neutral sizing convention persists for good reason. Knowing both halves of this — that it's a real effect and that modern equipment has largely tamed it — is exactly the nuanced answer that impresses an interviewer.</p>
+  </div>
+</section>
+
+<!-- ---------- WORKBOOK 6 ---------- -->
+<div class="wbk">
+  <div class="wbk-h"><b>Workbook 6 — Calculations</b><span>Answers in Part 10 · W6</span></div>
+  <div class="wbk-b">
+
+    <div class="q"><p><span class="qn">W6.1</span> Explain why IT load has a diversity factor of 1.0 while general power outlets are around 0.5.</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div></div></div>
+
+    <div class="q"><p><span class="qn">W6.2</span> Calculate maximum demand: IT 600 kW (div 1.0), mechanical 250 kW (0.9), lighting 30 kW (0.9), general power 90 kW (0.5), house 25 kW (0.8). Then convert to kVA at pf 0.92 and add 20% growth.</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div>
+
+    <div class="q"><p><span class="qn">W6.3</span> Name the four cable sizing checks in order and state which one governs on (a) a short run near a transformer, (b) a very long run.</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div>
+
+    <div class="q"><p><span class="qn">W6.4</span> A 180 kW load at 415 V, pf 0.88, route 120 m. Derating 0.82 combined. Calculate the design current and the required table rating before derating.</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div>
+
+    <div class="q"><p><span class="qn">W6.5</span> Write out Ib ≤ In ≤ Iz and explain each term in plain English.</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div>
+
+    <div class="q"><p><span class="qn">W6.6</span> A 1,000 kVA transformer at 415 V has 5% impedance. Calculate the fault level at the switchboard. What standard rating would you specify?</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div>
+
+    <div class="q"><p><span class="qn">W6.7</span> Using the adiabatic formula S ≥ √(I²t) ÷ k, find the minimum copper size for 25 kA cleared in 0.2 s, k = 143.</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div>
+
+    <div class="q"><p><span class="qn">W6.8</span> Explain to a non-engineer why the neutral in a data centre is often oversized.</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div>
+
+    <div class="q"><p><span class="qn">W6.9</span> A 2N data hall will grow to 1,600 kW IT load at 415 V, pf 0.95. Size the busway on each path, remembering the 50% rule. Choose from 400/630/800/1000/1250 A.</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div>
+
+    <div class="q"><p><span class="qn">W6.10</span> Write out the four-step sizing sequence mnemonic and apply it to sizing a transformer for a 900 kW maximum demand at pf 0.9 with 20% growth.</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div>
+
+    <div class="ansref">→ Answers: Part 10, section W6</div>
+  </div>
+</div>
+
+<!-- ==================== PART 7 ==================== -->
+<div class="part" id="p7">
+  <div class="part-n">Part Seven</div>
+  <h2>Testing and commissioning</h2>
+  <p class="pdek">Commissioning is where a data centre is proved to work — and where you already have real, relevant experience, because factory acceptance testing is Level 2. This Part gives you the whole ladder so you can place what you already do inside the bigger picture, and speak confidently about the parts you haven't done yet.</p>
+  <div class="part-toc">
+    <div><b>7.1</b> The five levels</div>
+    <div><b>7.2</b> The tests, one by one</div>
+    <div><b>7.3</b> Integrated systems testing</div>
+    <div><b>7.4</b> Black building</div>
+    <div><b>W7</b> Workbook Seven</div>
+  </div>
+</div>
+
+<!-- ---------- 7.1 ---------- -->
+<section class="ch" id="c71">
+  <h3><span class="cn">7.1</span> The five levels</h3>
+
+  <div class="box b-plain">
+    <span class="bl">In plain words</span>
+    <p>You don't test a data centre by switching it on and hoping. You build up in five stages, each one proving more than the last, and you don't move up a level until the level below is signed off.</p>
+    <p><b>Level 1</b> — is the equipment built right? Tested at the factory, before it ships.<br>
+    <b>Level 2</b> — did it arrive undamaged and get installed right? Checks with the power off.<br>
+    <b>Level 3</b> — does each individual item work when energised? One machine at a time.<br>
+    <b>Level 4</b> — does each system work? A whole UPS system, a whole generator system.<br>
+    <b>Level 5</b> — does the <i>entire facility</i> work together under real load, including when you deliberately break things?</p>
+    <p>The reason for the ladder is simple: finding a fault at Level 1 costs a phone call. Finding the same fault at Level 5 costs a fortune and a delayed handover.</p>
+  </div>
+
+  <figure>
+    <div class="dwg"><div class="dwg-scroll">
+      <svg viewBox="0 0 900 400" role="img" aria-label="Commissioning ladder from level 1 factory testing through level 2 delivery and static checks, level 3 component energisation, level 4 system functional testing, to level 5 integrated systems testing, showing which levels the reader already has experience in and the cost of finding a fault at each level">
+        <defs><marker id="up" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="var(--ink-2)"/></marker></defs>
+
+        <rect x="60" y="300" width="300" height="56" class="sv-block" stroke="var(--copper)" stroke-width="2.4"/>
+        <text x="80" y="322" class="sv-tb" fill="var(--copper)">L1 · FACTORY</text>
+        <text x="80" y="340" class="sv-s">Component checks + FAT at the manufacturer</text>
+        <text x="80" y="352" class="sv-s">Routine tests, type test evidence, witness testing</text>
+
+        <rect x="110" y="236" width="300" height="56" class="sv-block" stroke="var(--copper)" stroke-width="2.4"/>
+        <text x="130" y="258" class="sv-tb" fill="var(--copper)">L2 · DELIVERY &amp; STATIC</text>
+        <text x="130" y="276" class="sv-s">Site receipt, damage inspection, installation check</text>
+        <text x="130" y="288" class="sv-s">IR, continuity, torque, phasing — all with power OFF</text>
+
+        <rect x="160" y="172" width="300" height="56" class="sv-block"/>
+        <text x="180" y="194" class="sv-tb">L3 · COMPONENT</text>
+        <text x="180" y="212" class="sv-s">SAT — each item energised and proven alone</text>
+        <text x="180" y="224" class="sv-s">Relay injection, gen run, UPS on load, ATS transfer</text>
+
+        <rect x="210" y="108" width="300" height="56" class="sv-block"/>
+        <text x="230" y="130" class="sv-tb">L4 · SYSTEM</text>
+        <text x="230" y="148" class="sv-s">Whole systems working together</text>
+        <text x="230" y="160" class="sv-s">Full gen system, full UPS system, cause &amp; effect</text>
+
+        <rect x="260" y="44" width="300" height="56" class="sv-block" stroke="var(--ok)" stroke-width="2.4"/>
+        <text x="280" y="66" class="sv-tb" fill="var(--ok)">L5 · INTEGRATED (IST)</text>
+        <text x="280" y="84" class="sv-s">The whole facility, under load banks, with failures</text>
+        <text x="280" y="96" class="sv-s">deliberately injected. The final gate before handover.</text>
+
+        <path d="M210 300 L210 296" class="sv-l" marker-end="url(#up)" stroke="var(--ink-2)"/>
+        <path d="M260 236 L260 232" class="sv-l" marker-end="url(#up)" stroke="var(--ink-2)"/>
+        <path d="M310 172 L310 168" class="sv-l" marker-end="url(#up)" stroke="var(--ink-2)"/>
+        <path d="M360 108 L360 104" class="sv-l" marker-end="url(#up)" stroke="var(--ink-2)"/>
+
+        <path d="M600 44 L600 356" class="sv-l2"/>
+        <path d="M596 44 L604 44 M596 356 L604 356" class="sv-l2"/>
+        <text x="616" y="60" class="sv-tb" fill="var(--fault)">COST OF FINDING</text>
+        <text x="616" y="76" class="sv-tb" fill="var(--fault)">A FAULT HERE</text>
+        <text x="616" y="100" class="sv-s" fill="var(--fault)">enormous — everything</text>
+        <text x="616" y="112" class="sv-s" fill="var(--fault)">is installed, client is</text>
+        <text x="616" y="124" class="sv-s" fill="var(--fault)">watching, handover slips</text>
+        <text x="616" y="330" class="sv-s" fill="var(--ok)">trivial — a phone call</text>
+        <text x="616" y="342" class="sv-s" fill="var(--ok)">to the factory</text>
+
+        <rect x="616" y="180" width="220" height="80" fill="var(--copper-soft)" stroke="var(--copper)" stroke-width="1.6"/>
+        <text x="726" y="204" class="sv-tb" text-anchor="middle" fill="var(--copper)">YOU ALREADY WORK</text>
+        <text x="726" y="220" class="sv-tb" text-anchor="middle" fill="var(--copper)">AT L1 AND L2</text>
+        <text x="726" y="240" class="sv-s" text-anchor="middle">Most candidates for these</text>
+        <text x="726" y="252" class="sv-s" text-anchor="middle">roles have never witnessed a FAT.</text>
+
+        <text x="450" y="386" class="sv-t" text-anchor="middle">You never move up a level until the level below is complete and signed off. That discipline is the whole point.</text>
+      </svg>
+    </div><figcaption><b>FIG 7.1</b> — The commissioning ladder. Your existing FAT experience sits at L1–L2, which is genuinely relevant and worth naming explicitly in interviews.</figcaption></div>
+  </figure>
+</section>
+
+<!-- ---------- 7.2 ---------- -->
+<section class="ch" id="c72">
+  <h3><span class="cn">7.2</span> The tests, one by one</h3>
+
+  <div class="box b-plain">
+    <span class="bl">In plain words</span>
+    <p>Every test answers one question. Here they are with the question each one answers, in plain language, and what a failure actually means.</p>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Test</th><th>The question it answers</th><th>Typical pass</th><th>A failure means</th></tr></thead>
+      <tbody>
+        <tr><td><b>Insulation resistance</b><br><span class="mono" style="font-size:10.5px">"megger"</span></td><td>Is the insulation intact — can current leak where it shouldn't?</td><td class="n">&gt; 1 MΩ<br>often &gt; 100 MΩ</td><td>Damaged cable, moisture ingress, a nail through it, or a terminal touching the enclosure. <b>Do not energise.</b></td></tr>
+        <tr><td><b>Continuity</b></td><td>Is the conductor actually connected end to end?</td><td class="n">very low Ω</td><td>Broken conductor or a loose termination.</td></tr>
+        <tr><td><b>Earth fault loop impedance</b></td><td>If there's a fault, will enough current flow to trip the breaker in time?</td><td class="n">Low enough for the device's disconnection time</td><td>The protection won't operate fast enough. A safety failure — this is the test that proves people are protected.</td></tr>
+        <tr><td><b>Earth electrode resistance</b></td><td>Is the connection to the ground itself good?</td><td class="n">typically &lt; 5 Ω</td><td>Poor soil contact, corroded electrode.</td></tr>
+        <tr><td><b>Polarity &amp; phase rotation</b></td><td>Is active where active should be, and are the phases in the right order?</td><td class="n">correct sequence</td><td>Motors run backwards. Switches break neutral instead of active — potentially lethal.</td></tr>
+        <tr><td><b>Cable VLF / tan delta</b><br><span class="mono" style="font-size:10.5px">HV cable</span></td><td>Will this HV cable survive years in service, not just today?</td><td class="n">no breakdown; low loss</td><td>Insulation degradation. Better found now than in year two.</td></tr>
+        <tr><td><b>Transformer ratio &amp; vector group</b></td><td>Does it transform by the right amount, with the right phase relationship?</td><td class="n">within 0.5%</td><td>Wrong tap, wrong winding, or a manufacturing error. Critical before paralleling anything.</td></tr>
+        <tr><td><b>Transformer winding resistance</b></td><td>Are the windings and connections sound?</td><td class="n">balanced across phases</td><td>Loose internal connection or a damaged winding.</td></tr>
+        <tr><td><b>Primary / secondary injection</b></td><td>Does the protection relay actually trip, at the current and time it's set to?</td><td class="n">within tolerance of setting</td><td>The protection is not doing what the study assumed. Discrimination is invalid.</td></tr>
+        <tr><td><b>CT ratio &amp; polarity</b></td><td>Is the relay seeing the right current, the right way round?</td><td class="n">as marked</td><td>Reversed CT: differential protection maloperates, metering reads backwards.</td></tr>
+        <tr><td><b>Switchboard functional</b></td><td>Do the interlocks, indications, alarms and controls do what the drawings say?</td><td class="n">matches cause &amp; effect</td><td>Wiring error, or a drawing that was never right.</td></tr>
+        <tr><td><b>Generator load test</b></td><td>Can it take the load, hold voltage and frequency, and run for hours without overheating?</td><td class="n">within specified deviation and recovery time</td><td>Undersized set, governor or AVR tuning, cooling or fuel problem.</td></tr>
+        <tr><td><b>Generator step load</b></td><td>Can it take load in one lump without frequency dipping too far?</td><td class="n">frequency dip and recovery within spec</td><td>The UPS may reject the generator and stay on battery — which defeats the design.</td></tr>
+        <tr><td><b>UPS transfer test</b></td><td>Does it move to battery, and to bypass, without disturbing the load?</td><td class="n">no interruption</td><td>Control fault or synchronisation problem.</td></tr>
+        <tr><td><b>Battery discharge</b></td><td>Does the battery actually deliver its rated autonomy at full load?</td><td class="n">meets stated minutes</td><td>Weak or failed cells. <b>This is the only test that truly proves autonomy</b> — everything else is inference.</td></tr>
+        <tr><td><b>ATS transfer</b></td><td>Does it change over, in the specified time, in both directions?</td><td class="n">within spec, both ways</td><td>Control, timing or interlock fault.</td></tr>
+        <tr><td><b>Thermographic scan</b></td><td>Is anything running hotter than it should — loose joints, overloaded connections?</td><td class="n">no hot spots</td><td>Loose termination. Remember I²R and thermal runaway from 1.2.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box b-key">
+    <span class="bl">Key fact — the test that proves the promise</span>
+    <p>If a client asks "what single test proves we actually have 10 minutes of autonomy?", the answer is <b>a full-load battery discharge test</b>. Not a calculation, not a vendor datasheet, not a float voltage reading. An actual discharge, at full load, timed. It's disruptive and it ages the battery slightly, which is exactly why some people try to avoid doing it — and exactly why you shouldn't let them.</p>
+  </div>
+</section>
+
+<!-- ---------- 7.3 / 7.4 ---------- -->
+<section class="ch" id="c73">
+  <h3><span class="cn">7.3</span> Integrated systems testing and black building</h3>
+
+  <div class="box b-plain">
+    <span class="bl">In plain words</span>
+    <p><b>Integrated systems testing</b> (IST, sometimes Level 5) is the final exam. Everything is installed, load banks are wheeled in to imitate real servers, and then the commissioning team deliberately breaks things — one at a time — to prove the facility survives.</p>
+    <p>A <b>load bank</b> is a big box of heating elements on wheels. It draws real power and turns it into heat, so you can test the whole facility at full design load without any actual customers being at risk.</p>
+    <p><b>Black building</b> is the biggest test of the lot: turn off every incoming supply and prove the site survives entirely on its own, then prove it returns to normal cleanly when the power comes back.</p>
+    <p>It usually runs for a week or more, often overnight, and it is the most stressful and most valuable week of the whole project.</p>
+  </div>
+
+  <figure>
+    <div class="dwg"><div class="dwg-scroll">
+      <svg viewBox="0 0 900 340" role="img" aria-label="Black building test sequence showing utility opened, UPS on battery, generators starting and taking load, sustained running, then utility restored and controlled return to normal with generators cooling down">
+        <path d="M60 210 L850 210" class="sv-l"/>
+
+        <path d="M80 200 L80 220 M200 200 L200 220 M330 200 L330 220 M500 200 L500 220 M650 200 L650 220 M790 200 L790 220" class="sv-l"/>
+        <text x="80" y="238" class="sv-s" text-anchor="middle">T0</text>
+        <text x="200" y="238" class="sv-s" text-anchor="middle">+13 s</text>
+        <text x="330" y="238" class="sv-s" text-anchor="middle">+5 min</text>
+        <text x="500" y="238" class="sv-s" text-anchor="middle">+4 hrs</text>
+        <text x="650" y="238" class="sv-s" text-anchor="middle">restore</text>
+        <text x="790" y="238" class="sv-s" text-anchor="middle">+30 min</text>
+
+        <rect x="80" y="60" width="120" height="26" fill="var(--fault-soft)" stroke="var(--fault)" stroke-width="1.6"/>
+        <text x="140" y="78" class="sv-s" text-anchor="middle" fill="var(--fault)">ALL UTILITY OPEN</text>
+
+        <rect x="80" y="96" width="120" height="26" fill="var(--copper-soft)" stroke="var(--copper)" stroke-width="1.6"/>
+        <text x="140" y="114" class="sv-s" text-anchor="middle" fill="var(--copper)">UPS ON BATTERY</text>
+
+        <rect x="90" y="132" width="110" height="26" fill="var(--phase-soft)" stroke="var(--phase)" stroke-width="1.6"/>
+        <text x="145" y="150" class="sv-s" text-anchor="middle" fill="var(--phase)">GENS STARTING</text>
+
+        <rect x="200" y="96" width="450" height="26" fill="var(--ok-soft)" stroke="var(--ok)" stroke-width="1.6"/>
+        <text x="425" y="114" class="sv-s" text-anchor="middle" fill="var(--ok)">ON GENERATOR · full design load on load banks · UPS recharging</text>
+
+        <rect x="330" y="132" width="320" height="26" fill="var(--warn-soft)" stroke="var(--warn)" stroke-width="1.6"/>
+        <text x="490" y="150" class="sv-s" text-anchor="middle" fill="var(--warn)">FAILURES INJECTED — drop a gen, drop a UPS, drop a path</text>
+
+        <rect x="650" y="60" width="200" height="26" fill="var(--ok-soft)" stroke="var(--ok)" stroke-width="1.6"/>
+        <text x="750" y="78" class="sv-s" text-anchor="middle" fill="var(--ok)">UTILITY RESTORED</text>
+
+        <rect x="650" y="96" width="200" height="26" fill="var(--phase-soft)" stroke="var(--phase)" stroke-width="1.6"/>
+        <text x="750" y="114" class="sv-s" text-anchor="middle" fill="var(--phase)">RETRANSFER · gens cool down · stop</text>
+
+        <path d="M60 176 L850 176" stroke="var(--ok)" stroke-width="3.4"/>
+        <text x="455" y="170" class="sv-tb" text-anchor="middle" fill="var(--ok)">CRITICAL LOAD — MUST NEVER BE INTERRUPTED, START TO FINISH</text>
+
+        <text x="60" y="278" class="sv-tb">WHAT'S ACTUALLY BEING PROVED</text>
+        <text x="60" y="298" class="sv-t">That the design on paper, the equipment installed, the settings programmed and the control logic written</text>
+        <text x="60" y="316" class="sv-t">all agree with each other — under real load, in real time, with real failures. Nothing else proves that.</text>
+      </svg>
+    </div><figcaption><b>FIG 7.3</b> — A black building test. The flat green line is the whole point: whatever else happens above it, the critical load never sees an interruption.</figcaption></div>
+  </figure>
+
+  <h4>The IST scenario list</h4>
+  <ul>
+    <li><b>Full load, steady state</b> — the site at 100% design load on load banks for a sustained thermal soak. Proves cooling and electrical capacity together.</li>
+    <li><b>Step load</b> — apply load in blocks (25%, 50%, 75%, 100%) and measure voltage and frequency deviation and recovery.</li>
+    <li><b>Utility failure</b> — the black building test above.</li>
+    <li><b>Single generator failure</b> — drop one set while on generator supply. Do the others pick up? Does load shedding work if it needs to?</li>
+    <li><b>Single UPS failure</b> — drop one UPS module, then one whole UPS system. Load must not blink.</li>
+    <li><b>Single path failure</b> — de-energise the whole A path. Everything must ride on B. <b>This is the test that finds every single-corded load you missed.</b></li>
+    <li><b>Failure to start</b> — inhibit a generator start and confirm the alarms, the battery countdown and the shutdown procedure all behave as designed.</li>
+    <li><b>Fuel endurance</b> — sustained run to prove tank sizing and fuel transfer.</li>
+    <li><b>Return to normal</b> — utility restored. Does everything retransfer cleanly, in the right order, without a surprise?</li>
+  </ul>
+
+  <div class="box b-key">
+    <span class="bl">Why the single-path test matters most</span>
+    <p>Every data centre has single-corded equipment somebody forgot about — a network switch, a security controller, a lighting relay panel, a fire panel. On paper the facility is 2N. In reality there's a handful of devices quietly connected to only one path. <b>Dropping a whole path is the only way to find them</b>, and it always finds some. Being the engineer who insists this test is done properly is being the engineer who prevents an outage two years later.</p>
+  </div>
+
+  <div class="box b-iq">
+    <span class="bl">Interview question</span>
+    <p>"Talk me through what happens during integrated systems testing, and what you'd be personally responsible for as a project engineer."</p>
+  </div>
+  <p style="margin-top:10px; font-size:14.5px"><b>Good answer structure:</b> Explain the levels briefly, then the IST scenarios, then your role — making sure L1 to L4 are genuinely complete and signed off before IST starts (because IST is not the place to find installation defects), that the test scripts match the cause and effect matrix, that vendors and witnesses are on site at the right times, that safety and isolation procedures are in place, that every result is recorded and every deviation raised as an NCR, and that defects are tracked and closed. Then add: <i>"And from my switchboard background, I'd be paying particular attention to whether the protection settings tested at site actually match what was verified at FAT."</i> That last sentence is the one they'll remember.</p>
+</section>
+
+<!-- ---------- WORKBOOK 7 ---------- -->
+<div class="wbk">
+  <div class="wbk-h"><b>Workbook 7 — Commissioning</b><span>Answers in Part 10 · W7</span></div>
+  <div class="wbk-b">
+    <div class="q"><p><span class="qn">W7.1</span> Name the five commissioning levels and give one activity from each.</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div>
+    <div class="q"><p><span class="qn">W7.2</span> Which levels does your current FAT experience cover? Write two sentences you could say in an interview about it.</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div>
+    <div class="q"><p><span class="qn">W7.3</span> What question does an insulation resistance test answer, and what does a failure mean?</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div></div></div>
+    <div class="q"><p><span class="qn">W7.4</span> Why is earth fault loop impedance a safety test rather than a performance test?</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div></div></div>
+    <div class="q"><p><span class="qn">W7.5</span> A client asks what single test proves the site really has 10 minutes of autonomy. Answer, and explain why nothing else will do.</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div>
+    <div class="q"><p><span class="qn">W7.6</span> Draw the black building test timeline from memory, marking the critical load line.</p>
+      <div class="sketch" style="height:170px"><span>sketch here</span></div></div>
+    <div class="q"><p><span class="qn">W7.7</span> List six failure scenarios you would include in an IST script, and say what each one proves.</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div>
+    <div class="q"><p><span class="qn">W7.8</span> Why does dropping a whole path always find problems, and what kind of problems?</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div>
+    <div class="ansref">→ Answers: Part 10, section W7</div>
+  </div>
+</div>
+
+<!-- ==================== PART 8 ==================== -->
+<div class="part" id="p8">
+  <div class="part-n">Part Eight</div>
+  <h2>Delivering the job</h2>
+  <p class="pdek">The paperwork of construction. You already do a version of most of this from the factory side — this Part gives you the site-side vocabulary and the reasoning behind each document, so you can talk about it the way a contractor's project engineer does.</p>
+  <div class="part-toc">
+    <div><b>8.1</b> Who's who on the project</div>
+    <div><b>8.2</b> The documents that run a job</div>
+    <div><b>8.3</b> How it all flows</div>
+    <div><b>8.4</b> Scenarios — answer before you read on</div>
+    <div><b>W8</b> Workbook Eight</div>
+  </div>
+</div>
+
+<!-- ---------- 8.1 ---------- -->
+<section class="ch" id="c81">
+  <h3><span class="cn">8.1</span> Who's who on the project</h3>
+
+  <div class="box b-plain">
+    <span class="bl">In plain words</span>
+    <p>A data centre project has a lot of organisations on it, and they all have different bosses and different interests. Knowing who wants what saves you a great deal of confusion — especially when two people give you contradictory instructions.</p>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Who</th><th>What they want</th><th>What they'll push on you</th></tr></thead>
+      <tbody>
+        <tr><td><b>Client / operator</b><br><span class="mono" style="font-size:10.5px">NEXTDC, AirTrunk, CDC…</span></td><td>A facility that works, on the promised date, that they can sell capacity in.</td><td>Certainty. They hate surprises far more than they hate bad news delivered early.</td></tr>
+        <tr><td><b>Client's engineer / PMC</b></td><td>Compliance with the specification, and a defensible record.</td><td>Documentation, evidence, witness points. They will ask for proof, not assurances.</td></tr>
+        <tr><td><b>Design consultant</b></td><td>Their design built as drawn, and no liability.</td><td>They answer RFIs. They're often slow, and they'll resist changes that imply the design was incomplete.</td></tr>
+        <tr><td><b>Head contractor / builder</b></td><td>Programme and margin.</td><td>Programme, programme, programme. Everything is measured against the critical path.</td></tr>
+        <tr><td><b>Electrical contractor</b><br><span class="mono" style="font-size:10.5px">where you'd likely sit</span></td><td>Deliver the electrical package on time, on budget, and get paid.</td><td>Coordination, procurement, subbies, RFIs, claims.</td></tr>
+        <tr><td><b>Switchboard manufacturer</b><br><span class="mono" style="font-size:10.5px">where you sit now</span></td><td>A frozen design and a realistic delivery date.</td><td>Approved drawings so they can start building. <b>Every week of approval delay is a week of delivery delay.</b></td></tr>
+        <tr><td><b>Commissioning agent (CxA)</b></td><td>To prove the facility works, independently.</td><td>Completed and signed-off lower levels before they'll start. They will refuse to begin IST on an incomplete site — correctly.</td></tr>
+        <tr><td><b>Certifier / inspector</b></td><td>Compliance with AS/NZS 3000 and the NCC.</td><td>Test records, compliance certificates.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box b-key">
+    <span class="bl">Key insight for your move</span>
+    <p>When you move to the contractor side, you become the switchboard manufacturer's customer. <b>You will know exactly what they need from you and exactly when they're spinning you a line about delivery.</b> No other project engineer on that job has that. Say this in your interview — in almost exactly those words.</p>
+  </div>
+</section>
+
+<!-- ---------- 8.2 ---------- -->
+<section class="ch" id="c82">
+  <h3><span class="cn">8.2</span> The documents that run a job</h3>
+
+  <div class="box b-plain">
+    <span class="bl">In plain words</span>
+    <p>Six documents do almost all the work on a construction project. Each one exists because of a specific problem that kept happening, and each one protects somebody.</p>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <h5>RFI — Request for Information</h5>
+      <p><b>What:</b> A formal written question to the designer when the documents don't tell you what to do.</p>
+      <p style="margin-top:8px"><b>Why it exists:</b> So the answer is written down, dated and attributable. A verbal answer on site protects nobody.</p>
+      <p style="margin-top:8px"><b>Golden rule:</b> Always propose your own solution in the RFI. It doubles your response speed and puts you in control of the answer.</p>
+    </div>
+    <div class="card">
+      <h5>Submittal / technical submission</h5>
+      <p><b>What:</b> "Here's the equipment I intend to supply — please confirm it meets the spec."</p>
+      <p style="margin-top:8px"><b>Why it exists:</b> To catch a mismatch before anything is manufactured, not after.</p>
+      <p style="margin-top:8px"><b>Watch for:</b> The requirements the submittal is <i>silent</i> on. Those are more dangerous than the ones it openly doesn't meet.</p>
+    </div>
+    <div class="card">
+      <h5>ITP — Inspection &amp; Test Plan</h5>
+      <p><b>What:</b> The agreed list of every check, in order, with who does it, what "pass" means, and who signs.</p>
+      <p style="margin-top:8px"><b>Hold point (H):</b> Work <b>stops</b> until it's inspected and released. <b>Witness point (W):</b> Notify, and if they don't come, you may proceed.</p>
+      <p style="margin-top:8px"><b>Watch for:</b> Too many client hold points will strangle your programme. Negotiate these at the start, not when you're stuck.</p>
+    </div>
+    <div class="card">
+      <h5>NCR — Non-Conformance Report</h5>
+      <p><b>What:</b> Formal record that something doesn't meet the requirement, and what will be done about it.</p>
+      <p style="margin-top:8px"><b>Resolutions:</b> rework, repair, use-as-is (needs a concession), or reject.</p>
+      <p style="margin-top:8px"><b>Watch for:</b> An NCR against your package is not an accusation. Fighting it wastes time; close it properly and move on.</p>
+    </div>
+    <div class="card">
+      <h5>Variation</h5>
+      <p><b>What:</b> A change to the scope, with a price and a time impact.</p>
+      <p style="margin-top:8px"><b>Why it exists:</b> Because scope always changes, and someone has to pay.</p>
+      <p style="margin-top:8px"><b>Golden rule:</b> Notify <b>before</b> you do the work. Doing it first and claiming later is how contractors lose money and goodwill at the same time.</p>
+    </div>
+    <div class="card">
+      <h5>Progress claim</h5>
+      <p><b>What:</b> The monthly invoice, based on work genuinely completed.</p>
+      <p style="margin-top:8px"><b>Why it matters:</b> Cash flow keeps the business alive. Under-claiming is as damaging as over-claiming is dishonest.</p>
+      <p style="margin-top:8px"><b>Watch for:</b> Claiming for materials not yet on site — usually needs specific contractual provisions and evidence.</p>
+    </div>
+  </div>
+
+  <figure>
+    <div class="dwg"><div class="dwg-scroll">
+      <svg viewBox="0 0 900 320" role="img" aria-label="Flow of project documents from design through submittal approval, manufacture, factory acceptance test, delivery, installation with inspection and test plan hold points, site testing, integrated systems testing and handover, with RFI and variation loops branching off">
+        <defs><marker id="fx" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="var(--ink-2)"/></marker></defs>
+
+        <rect x="30" y="70" width="106" height="44" class="sv-block"/><text x="83" y="90" class="sv-s" text-anchor="middle">DESIGN</text><text x="83" y="104" class="sv-s" text-anchor="middle">issued</text>
+        <path d="M136 92 L166 92" class="sv-l" marker-end="url(#fx)" stroke="var(--ink-2)"/>
+
+        <rect x="166" y="70" width="106" height="44" class="sv-block"/><text x="219" y="90" class="sv-s" text-anchor="middle">SUBMITTAL</text><text x="219" y="104" class="sv-s" text-anchor="middle">→ approval</text>
+        <path d="M272 92 L302 92" class="sv-l" marker-end="url(#fx)" stroke="var(--ink-2)"/>
+
+        <rect x="302" y="70" width="106" height="44" class="sv-block" stroke="var(--copper)" stroke-width="2"/><text x="355" y="90" class="sv-s" text-anchor="middle" fill="var(--copper)">MANUFACTURE</text><text x="355" y="104" class="sv-s" text-anchor="middle" fill="var(--copper)">your world</text>
+        <path d="M408 92 L438 92" class="sv-l" marker-end="url(#fx)" stroke="var(--ink-2)"/>
+
+        <rect x="438" y="70" width="106" height="44" class="sv-block" stroke="var(--copper)" stroke-width="2"/><text x="491" y="90" class="sv-s" text-anchor="middle" fill="var(--copper)">FAT</text><text x="491" y="104" class="sv-s" text-anchor="middle" fill="var(--copper)">L1</text>
+        <path d="M544 92 L574 92" class="sv-l" marker-end="url(#fx)" stroke="var(--ink-2)"/>
+
+        <rect x="574" y="70" width="106" height="44" class="sv-block"/><text x="627" y="90" class="sv-s" text-anchor="middle">DELIVER</text><text x="627" y="104" class="sv-s" text-anchor="middle">L2</text>
+        <path d="M680 92 L710 92" class="sv-l" marker-end="url(#fx)" stroke="var(--ink-2)"/>
+
+        <rect x="710" y="70" width="106" height="44" class="sv-block"/><text x="763" y="90" class="sv-s" text-anchor="middle">INSTALL</text><text x="763" y="104" class="sv-s" text-anchor="middle">ITP holds</text>
+
+        <path d="M763 114 L763 150 L83 150 L83 178" class="sv-l" marker-end="url(#fx)" stroke="var(--ink-2)"/>
+
+        <rect x="30" y="178" width="106" height="44" class="sv-block"/><text x="83" y="198" class="sv-s" text-anchor="middle">SAT · L3</text><text x="83" y="212" class="sv-s" text-anchor="middle">energise</text>
+        <path d="M136 200 L166 200" class="sv-l" marker-end="url(#fx)" stroke="var(--ink-2)"/>
+        <rect x="166" y="178" width="106" height="44" class="sv-block"/><text x="219" y="198" class="sv-s" text-anchor="middle">SYSTEM · L4</text>
+        <path d="M272 200 L302 200" class="sv-l" marker-end="url(#fx)" stroke="var(--ink-2)"/>
+        <rect x="302" y="178" width="106" height="44" class="sv-block" stroke="var(--ok)" stroke-width="2"/><text x="355" y="198" class="sv-s" text-anchor="middle" fill="var(--ok)">IST · L5</text>
+        <path d="M408 200 L438 200" class="sv-l" marker-end="url(#fx)" stroke="var(--ink-2)"/>
+        <rect x="438" y="178" width="106" height="44" class="sv-block"/><text x="491" y="198" class="sv-s" text-anchor="middle">DEFECTS</text><text x="491" y="212" class="sv-s" text-anchor="middle">closed out</text>
+        <path d="M544 200 L574 200" class="sv-l" marker-end="url(#fx)" stroke="var(--ink-2)"/>
+        <rect x="574" y="178" width="106" height="44" class="sv-block" stroke="var(--ok)" stroke-width="2.4"/><text x="627" y="204" class="sv-tb" text-anchor="middle" fill="var(--ok)">HANDOVER</text>
+
+        <path d="M83 70 L83 42 L219 42" class="sv-dash"/>
+        <path d="M219 42 L219 66" class="sv-dash" marker-end="url(#fx)" stroke="var(--ink-2)"/>
+        <text x="151" y="34" class="sv-s" text-anchor="middle" fill="var(--fault)">RFI loop — question &amp; answer</text>
+
+        <path d="M491 222 L491 258 L763 258 L763 118" class="sv-dash"/>
+        <text x="627" y="274" class="sv-s" text-anchor="middle" fill="var(--fault)">NCR / rework loop</text>
+
+        <text x="450" y="308" class="sv-t" text-anchor="middle">Every arrow is a handover between organisations. Every handover is where a project engineer earns their money.</text>
+      </svg>
+    </div><figcaption><b>FIG 8.2</b> — The document flow. Note where you sit today (manufacture and FAT) and where you'd sit on the contractor side (everything).</figcaption></div>
+  </figure>
+</section>
+
+<!-- ---------- 8.4 ---------- -->
+<section class="ch" id="c84">
+  <h3><span class="cn">8.4</span> Scenarios — write your answer first</h3>
+
+  <div class="box b-plain">
+    <span class="bl">In plain words</span>
+    <p>These are the questions that decide interviews. There is no single right answer, but there are clear patterns to a good one. <b>Write your answer in the space before reading the guidance underneath.</b> If you read first, you learn nothing.</p>
+  </div>
+
+  <div class="wbk" style="margin-top:20px">
+    <div class="wbk-h"><b>Scenario 1 — the late switchboard</b><span>your answer first</span></div>
+    <div class="wbk-b">
+      <p style="font-size:14.8px; color:var(--ink)">The switchboard manufacturer tells you the main switchboard will be six weeks late. Commissioning is scheduled to start in four weeks. The client does not yet know. What do you do?</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div>
+    </div>
+  </div>
+
+  <div class="box b-key">
+    <span class="bl">What a strong answer contains</span>
+    <p><b>1. Verify before escalating.</b> Get the specific reason — is it a component shortage, an approval delay, a testing bottleneck, or capacity? The reason determines every option that follows. <i>You have an unfair advantage here: you know what actually causes switchboard delays and what a manufacturer says when they're covering.</i></p>
+    <p><b>2. Look for partial delivery.</b> Can the incomer section ship first so installation and cabling can start? Can they split the board? Very often yes, and nobody asks.</p>
+    <p><b>3. Re-sequence, don't just report.</b> What else can be commissioned in those weeks? Generators, UPS, distribution downstream? Move non-dependent work forward.</p>
+    <p><b>4. Quantify the real impact on the critical path.</b> Six weeks late does not automatically mean six weeks of delay — there may be float. Talk to the planner before you talk to anyone else.</p>
+    <p><b>5. Tell the client early, with options.</b> Never present a problem without at least two options and a recommendation. Early bad news with a plan is professional; late bad news is a failure.</p>
+    <p><b>6. Record it.</b> Notice under the contract, an entry in the delay register, and follow the process for any extension of time.</p>
+    <p style="margin-top:12px"><b>The trap:</b> answering only "I'd tell the client". That's a messenger, not an engineer. The trap in the other direction is "I'd fix it myself and not mention it" — concealment is worse than the delay.</p>
+  </div>
+
+  <div class="wbk" style="margin-top:24px">
+    <div class="wbk-h"><b>Scenario 2 — the failed transfer</b><span>your answer first</span></div>
+    <div class="wbk-b">
+      <p style="font-size:14.8px; color:var(--ink)">During integrated systems testing, you drop UPS A. Instead of riding through, part of the load drops. The client's representative is standing next to you. What do you do, in what order?</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div>
+    </div>
+  </div>
+
+  <div class="box b-key">
+    <span class="bl">What a strong answer contains</span>
+    <p><b>1. Stop the test.</b> Do not continue and do not attempt another scenario. Make the site safe and stable first.</p>
+    <p><b>2. Record everything before anything is touched.</b> Time, exactly which load dropped, alarm logs, breaker states, meter readings, photographs. Evidence disappears the moment someone starts resetting things.</p>
+    <p><b>3. Say something honest and brief to the client.</b> "That's not the expected result. We're stopping, capturing the data, and we'll come back to you with the cause." Do not speculate out loud, and do not blame anyone in the room.</p>
+    <p><b>4. Diagnose systematically.</b> Which loads dropped, and what do they have in common? The overwhelmingly likely cause is <b>single-corded equipment</b> on path A that nobody knew about. Next most likely: a wrongly configured STS, or a distribution board fed from A on both sides.</p>
+    <p><b>5. Raise an NCR</b> and record the root cause, not just the symptom.</p>
+    <p><b>6. Retest the full scenario</b> after the fix. A partial retest proves nothing.</p>
+    <p style="margin-top:12px"><b>The insight that impresses:</b> saying that this is <i>exactly what IST is for</i>. Finding it now, on load banks, is a success. Finding it in year two with live customers is a catastrophe. A candidate who frames a failed test as a good outcome demonstrates genuine understanding of why commissioning exists.</p>
+  </div>
+
+  <div class="wbk" style="margin-top:24px">
+    <div class="wbk-h"><b>Scenario 3 — the cable that doesn't match</b><span>your answer first</span></div>
+    <div class="wbk-b">
+      <p style="font-size:14.8px; color:var(--ink)">During an inspection you find an installed submain is 120 mm² where the cable schedule says 185 mm². The cable is already run, terminated and part of a completed section. What now?</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div>
+    </div>
+  </div>
+
+  <div class="box b-key">
+    <span class="bl">What a strong answer contains</span>
+    <p><b>1. Don't assume it's wrong.</b> Check the revision of the schedule you're holding, and check whether an RFI or variation changed it. Roughly a third of these turn out to be a documentation lag, not an installation error.</p>
+    <p><b>2. If it is wrong, do the engineering.</b> Run the four checks on 120 mm² for the actual load, route length and installation conditions. It may genuinely be adequate — in which case the path is a concession, formally recorded, not a quiet shrug.</p>
+    <p><b>3. If it's inadequate, it comes out.</b> Say so plainly, quantify the cost and time, and don't soften it. A cable that fails volt drop or short-circuit withstand is not negotiable.</p>
+    <p><b>4. Raise the NCR either way.</b> Even a "use as is" outcome needs the record, because the as-built documentation must be correct for whoever maintains this building in fifteen years.</p>
+    <p><b>5. Find out why it happened.</b> Wrong revision on site? Material substitution by the wholesaler? Verbal instruction? Fix the process, or it will happen again on the next four circuits.</p>
+  </div>
+</section>
+
+<!-- ---------- WORKBOOK 8 ---------- -->
+<div class="wbk">
+  <div class="wbk-h"><b>Workbook 8 — Delivery</b><span>Answers in Part 10 · W8</span></div>
+  <div class="wbk-b">
+    <div class="q"><p><span class="qn">W8.1</span> Explain the difference between a hold point and a witness point, and why you'd negotiate the number of client hold points early.</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div>
+    <div class="q"><p><span class="qn">W8.2</span> Write a complete RFI for this issue: the SLD shows a 400 A MCCB feeding the mechanical board, but the load schedule totals 380 A with no diversity stated, and the cable schedule shows a cable rated 355 A after derating.</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div>
+    <div class="q"><p><span class="qn">W8.3</span> Why must a variation be notified before the work is done?</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div></div></div>
+    <div class="q"><p><span class="qn">W8.4</span> List the four possible resolutions of an NCR.</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div></div></div>
+    <div class="q"><p><span class="qn">W8.5</span> You're reviewing a switchboard submittal. Name five things you would check that most engineers would miss — drawing on your manufacturing experience.</p>
+      <div class="lines"><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div></div>
+    <div class="ansref">→ Answers: Part 10, section W8</div>
+  </div>
+</div>
+
+<!-- ==================== PART 9 ==================== -->
+<div class="part" id="p9">
+  <div class="part-n">Part Nine</div>
+  <h2>Interview preparation</h2>
+  <p class="pdek">Everything in this manual, converted into things you can say out loud. Read every question, answer it aloud before reading the model answer, and mark the ones you fluffed. Come back to those.</p>
+  <div class="part-toc">
+    <div><b>9.1</b> How the interview runs</div>
+    <div><b>9.2</b> Technical questions</div>
+    <div><b>9.3</b> Project questions</div>
+    <div><b>9.4</b> Your story</div>
+  </div>
+</div>
+
+<section class="ch" id="c91">
+  <h3><span class="cn">9.1</span> How the interview runs</h3>
+
+  <div class="box b-plain">
+    <span class="bl">In plain words</span>
+    <p>A Melbourne data centre electrical interview usually has three rounds. A recruiter screen (are you real, are you available, what's your number), a technical interview (do you actually know this), and a manager or panel interview (can you work with people and deliver).</p>
+    <p>The technical round is the one that filters. It is almost always a conversation rather than a test, and it usually starts with the same question: <i>"walk me through the power path in a data centre."</i></p>
+  </div>
+
+  <div class="box b-key">
+    <span class="bl">The three rules</span>
+    <p><b>1. Never bluff.</b> These are small industries. Saying "I don't know, but here's how I'd find out" is a good answer. Being caught making something up ends the interview, quietly, in their heads.</p>
+    <p><b>2. Answer with structure.</b> "There are three things here…" then name them. It sounds organised even when you're thinking.</p>
+    <p><b>3. Bring it back to what you've done.</b> Every technical answer should, where honest, end with a sentence connecting it to switchgear, FAT, 61439 or delivery. That's your differentiator and nobody else in the queue has it.</p>
+  </div>
+</section>
+
+<section class="ch" id="c92">
+  <h3><span class="cn">9.2</span> Technical questions and model answers</h3>
+
+  <p class="lead">Cover the answers. Say yours out loud. Then compare.</p>
+
+  <details><summary>1. Walk me through the power path from the street to a server.</summary><div class="det-b">
+    <p>Utility at 22 kV into an HV switchboard or RMU. Step down through a Dyn11 transformer to 415 V into the LV main switchboard, where the generator also connects. From the MSB to the UPS, which has a battery on its DC link. From the UPS to a PDU, which distributes and meters. From the PDU to busway or an RPP, then to a rack PDU, then to the server's power supply. And all of that exists twice, as an A path and a B path, meeting only at the dual-corded server.</p>
+  </div></details>
+
+  <details><summary>2. What's the difference between N+1 and 2N?</summary><div class="det-b">
+    <p>N+1 is one spare module on a shared bus — it protects against a module failing. 2N is two complete independent systems with nothing shared — it protects against anything in a whole path failing. The key difference isn't the equipment count, it's the shared bus: N+1 still has one, 2N doesn't. That's why an N+1 UPS system can still be taken out by a fault on its output board.</p>
+  </div></details>
+
+  <details><summary>3. Concurrent maintainability versus fault tolerance?</summary><div class="det-b">
+    <p>Concurrent maintainability means any single component can be removed for planned work with no impact on load — that's Tier III. Fault tolerance means any single unplanned failure is survived, including one that happens while that maintenance is in progress — that's Tier IV. Planned versus unplanned is the distinction.</p>
+  </div></details>
+
+  <details><summary>4. Why do you need both a UPS and a generator?</summary><div class="det-b">
+    <p>They solve different problems. The generator takes 10 to 15 seconds to start and stabilise, and IT equipment drops out in about 20 milliseconds — so the generator alone leaves a fatal gap. The UPS battery bridges that gap but only holds for 5 to 15 minutes. The UPS solves continuity, the generator solves duration. Neither works without the other.</p>
+  </div></details>
+
+  <details><summary>5. How much load can a 2N site with 2 × 1 MW UPS carry?</summary><div class="det-b">
+    <p>1 MW. Each path must independently carry the entire load, so each runs at a maximum of 50%. If you loaded it to 1.5 MW, losing a path would overload the survivor and you'd lose the room. In practice you'd design below 50% to leave margin for load steps and measurement tolerance.</p>
+  </div></details>
+
+  <details><summary>6. What are the four checks for cable sizing?</summary><div class="det-b">
+    <p>Current carrying capacity after all derating factors; voltage drop against the allowed percentage; short circuit withstand using the adiabatic check against the device's let-through energy; and coordination with the protective device — Ib ≤ In ≤ Iz, plus earth fault loop impedance for disconnection time. You do all four and take the largest resulting size.</p>
+  </div></details>
+
+  <details><summary>7. What's a Dyn11 transformer and why does the vector group matter?</summary><div class="det-b">
+    <p>Delta on the HV side, star on the LV side with the neutral brought out, and the LV lagging the HV by 330 degrees — eleven o'clock on a clock face. The vector group matters because you cannot parallel two transformers, or transfer between two sources without a break, unless their vector groups match. Different groups means a 30 degree offset, which means a large circulating current if you connect them.</p>
+  </div></details>
+
+  <details><summary>8. Explain Icu, Ics and Icw.</summary><div class="det-b">
+    <p>Icu is the maximum fault a breaker can interrupt once, safely, though it may be damaged afterwards. Ics is the maximum it can interrupt and remain fit for service. Icw is different in kind — it's the current an assembly can <i>hold</i> for a stated time without tripping, so a downstream device can clear first. Icu and Ics are breaker ratings; Icw is a switchboard and busbar rating, and it's what enables time-based discrimination.</p>
+  </div></details>
+
+  <details><summary>9. Why does a generator produce less fault current than the grid, and why does that matter?</summary><div class="det-b">
+    <p>A generator supplies roughly 3 to 5 times its full load current into a fault, against 15 to 20 times from a utility transformer. It matters because protection settings that discriminate correctly on utility supply may be too high to operate at all on generator supply — so the fault sits there. Every data centre protection study has to be run for both source conditions.</p>
+  </div></details>
+
+  <details><summary>10. Why does a double-conversion UPS synchronise to the mains?</summary><div class="det-b">
+    <p>For the static bypass. If the inverter fails or is overloaded, the load has to transfer to raw mains with no break, and that's only possible if the two are already in phase and at the same frequency. It also means that if mains frequency wanders — say on a struggling generator — the UPS will report bypass unavailable, which is worth alarming on.</p>
+  </div></details>
+
+  <details><summary>11. What is Form 4b Type 7 and why would a data centre specify it?</summary><div class="det-b">
+    <p>Maximum internal segregation under AS/NZS 61439 — busbar separated from functional units, each functional unit separated from the others, and outgoing terminals in their own compartment with their unit. A data centre specifies it because maintenance has to be possible on any single circuit while the rest of the board stays live. <i>And here's where you add:</i> I build these. It means more copper, more sheet metal, a physically longer board and a longer manufacturing programme — so it has real consequences for switchroom layout and lead time, which is worth knowing at design stage rather than at procurement.</p>
+  </div></details>
+
+  <details><summary>12. Why is a bus tie normally open?</summary><div class="det-b">
+    <p>To halve the fault level. With the tie closed, both transformers feed a fault together, so every device on the board needs a higher breaking capacity. Running with the tie open keeps the fault level down and keeps the two halves independent. You close it only when you've lost a source, and you should confirm the protection settings remain valid for that configuration.</p>
+  </div></details>
+
+  <details><summary>13. Why is the neutral oversized in a data centre?</summary><div class="det-b">
+    <p>Triplen harmonics — the third, ninth, fifteenth — don't cancel in the neutral the way the fundamental does; they add. In a building full of switch-mode power supplies the neutral can carry more current than any phase. So neutrals are commonly sized at 200%. Modern IT power supplies with active power factor correction have reduced this a lot, but the convention persists and it's cheap insurance.</p>
+  </div></details>
+
+  <details><summary>14. What single test proves battery autonomy?</summary><div class="det-b">
+    <p>A full-load discharge test, timed. Nothing else proves it — not a calculation, not a datasheet, not a float voltage reading. It's disruptive and slightly ages the battery, which is why people try to avoid it, and exactly why it needs to be on the ITP.</p>
+  </div></details>
+
+  <details><summary>15. What would you look for first on an unfamiliar SLD?</summary><div class="det-b">
+    <p>I run a fixed sequence. Sources first — how many ways in. Then voltage transitions. Then bus sections and ties, and whether they're normally open. Then I trace one critical load back to source naming every device, then trace its alternate path. Then I look for common points between the two paths, because that's where the real weakness is. Protection last, because it only makes sense once you know the topology.</p>
+  </div></details>
+
+  <details><summary>16. What's the biggest single point of failure in a "2N" data centre?</summary><div class="det-b">
+    <p>Usually the things that can't be duplicated: the earthing system, the building itself, the control and BMS network, and single-corded equipment nobody catalogued. In practice the last one is the most common real-world failure — which is why dropping a whole path during IST is such an important test.</p>
+  </div></details>
+</section>
+
+<section class="ch" id="c94">
+  <h3><span class="cn">9.3</span> Your story</h3>
+
+  <div class="box b-key">
+    <span class="bl">"Why are you moving from manufacturing to site delivery?" — rehearse this word for word</span>
+    <p><i>"I've spent my career on the equipment that sits on the critical path of every data centre build. I know why switchboards run late, what type-test evidence actually proves, what happens at FAT, and what Form 4b Type 7 really costs in time and space. I want to be on the delivery side where I can use that to de-risk the whole electrical package rather than one part of it — and I've been deliberately building the system-level knowledge around it, because I know that's the gap."</i></p>
+    <p style="margin-top:10px">That answer does three things: it reframes a lateral move as strategic, it states a genuine and unusual strength, and it shows self-awareness about the gap rather than hiding it. Interviewers respond very well to a candidate who names their own gap before they have to.</p>
+  </div>
+
+  <div class="box b-iq">
+    <span class="bl">The question to ask them</span>
+    <p>"What's currently the longest lead item on this project, and how are you managing it?"</p>
+  </div>
+  <p style="margin-top:10px; font-size:14.5px">It's a genuinely useful question, it demonstrates you think in terms of programme and procurement, and roughly half the time the answer will be <b>switchgear or transformers</b> — at which point the conversation moves onto your home ground and you can be specific and useful. That's the best possible way for an interview to end.</p>
+</section>
+
+<!-- ==================== PART 10 ==================== -->
+<div class="part" id="p10">
+  <div class="part-n">Part Ten</div>
+  <h2>Answers</h2>
+  <p class="pdek">Every workbook and exercise answer. Use these only after you've attempted the question — the whole value of the workbook evaporates if you read ahead. Where a calculation is involved, the method matters more than the final digit; if your method is right and your arithmetic slipped, that's a pass.</p>
+</div>
+
+<section class="ch" id="a-w1">
+  <h3><span class="cn">W1</span> Electricity from nothing</h3>
+
+  <div class="ans"><h5>W1.1</h5><p><b>Voltage</b> is how hard the electricity is being pushed — like water pressure. <b>Current</b> is how much is actually flowing — like litres per second. <b>Resistance</b> is how much the thing fights the flow — like a kink in the hose.</p></div>
+
+  <div class="ans"><h5>W1.2</h5><p>Cover I on the triangle, leaving V over R.</p><span class="calc">I = V ÷ R = 230 ÷ 46 = 5 A</span></div>
+
+  <div class="ans"><h5>W1.3</h5>
+    <span class="calc">At 100 A:  P = I²R = 100² × 0.01 = 100 W
+At 200 A:  P = 200² × 0.01 = 400 W</span>
+    <p>Doubling the current gives <b>four times</b> the heat, because current is squared. That's why a joint that is fine at low load can cook itself when the load increases, and why temperature rise is tested rather than assumed.</p></div>
+
+  <div class="ans"><h5>W1.4</h5><p>Because AC can have its voltage changed easily by a transformer, and DC can't. You want very high voltage to travel long distances (high voltage means low current, and heat loss is I²R, so low current means almost no loss), and low voltage where people use it, for safety. AC lets you have both by stepping up and down. A transformer has no moving parts, lasts decades and is about 99% efficient — nothing in the DC world came close at the time.</p></div>
+
+  <div class="ans"><h5>W1.5</h5><p>Three identical sine waves, each shifted a third of a cycle (120°) from the next. When L1 is at its positive peak, L2 and L3 are both at minus half their peak value, heading in opposite directions. Their sum at that instant is zero — which is exactly why the three currents cancel in the neutral of a balanced system.</p></div>
+
+  <div class="ans"><h5>W1.6</h5><p>Star: three coils joined at one common point (the neutral), other three ends out as L1, L2, L3. Delta: three coils in a closed loop, one wire from each corner. Delta cannot supply a 230 V single-phase load because it has <b>no neutral point</b> — 230 V is measured phase to neutral, and there's no neutral to measure to. Everything in delta is 415 V line to line.</p></div>
+
+  <div class="ans"><h5>W1.7</h5>
+    <span class="calc">P = √3 × V × I × pf
+P = 1.732 × 415 × 180 × 0.88
+1.732 × 415 = 718.8
+718.8 × 180 = 129,384
+129,384 × 0.88 = 113,858 W
+P = 113.9 kW</span></div>
+
+  <div class="ans"><h5>W1.8</h5>
+    <span class="calc">I = P ÷ (√3 × V × pf)
+Bottom = 1.732 × 415 × 0.96 = 690.0
+I = 750,000 ÷ 690.0 = 1,087 A</span>
+    <p>Select <b>1250 A</b> busway — the next standard size up. 1000 A would be overloaded.</p></div>
+
+  <div class="ans"><h5>W1.9</h5><p>kW is the beer — the useful power that does work. kVAr is the froth — reactive power that's borrowed by coils and given straight back, doing nothing useful but taking up room. kVA is the whole glass — what your cables and equipment actually have to carry. A transformer is rated in <b>kVA</b> because it's limited by the current it carries, and current corresponds to kVA regardless of how much of it is doing useful work.</p></div>
+
+  <div class="ans"><h5>W1.10</h5>
+    <span class="calc">kW = kVA × pf = 800 × 0.9 = 720 kW</span>
+    <p>You'd say: the kVA rating tells you the current it can deliver, not the useful power. At 0.9 output power factor this unit supports 720 kW, not 800. If we plan for 800 kW we'll be 80 kW short — about 10% — and we'd find out at commissioning. Modern unity-rated units are different, so we should confirm which this one is from the datasheet.</p></div>
+
+  <div class="ans"><h5>W1.11</h5>
+    <span class="calc">(a) kVA = 1200 ÷ 0.82 = 1,463 kVA  →  select 1,500 kVA
+(b) kVA = 1200 ÷ 0.98 = 1,224 kVA  →  select 1,250 kVA</span>
+    <p>(c) Correcting the power factor saves an entire transformer size, plus smaller incoming cables, a smaller main breaker and lower losses for the life of the building. It also avoids the power factor penalty that distributors apply to large customers. Power factor correction equipment is comparatively cheap; a transformer size is not.</p></div>
+
+  <div class="ans"><h5>W1.12</h5><p><b>P = √3 × V × I × pf.</b> √3 = <b>1.732</b>. At 415 V, roughly <b>1 amp ≈ 0.7 kW</b>, and <b>1 kW ≈ 1.4 A</b>.</p></div>
+</section>
+
+<section class="ch" id="a-w2">
+  <h3><span class="cn">W2</span> Circuits, faults and protection</h3>
+
+  <div class="ans"><h5>W2.1</h5><p>A cable makes heat when current flows through it, and it has to get rid of that heat into the air around it. In open air it can shed heat easily. In a hot ceiling the surrounding air is already warm, so heat escapes more slowly. Bundled with other cables, they're all making heat and warming each other. So the cable reaches its temperature limit at a lower current — it can carry less before the insulation starts to cook.</p></div>
+
+  <div class="ans"><h5>W2.2</h5>
+    <span class="calc">Vdrop = √3 × I × L × (mV/A/m) ÷ 1000
+     = 1.732 × 200 × 60 × 0.42 ÷ 1000
+1.732 × 200 = 346.4
+346.4 × 60 = 20,784
+20,784 × 0.42 = 8,729
+8,729 ÷ 1000 = 8.73 V
+
+As a percentage: 8.73 ÷ 415 = 2.10%</span>
+    <p><b>Passes</b> the 5% limit comfortably, and leaves about 2.9% for the final circuits downstream.</p></div>
+
+  <div class="ans"><h5>W2.3</h5>
+    <span class="calc">Combined factor = 0.91 × 0.68 × 0.90 = 0.5569
+Actual rating = 315 × 0.5569 = 175.4 A</span>
+    <p><b>Not adequate.</b> The load is 220 A and the derated cable can only carry 175 A. The cable would run over temperature and the protective device wouldn't protect it. You'd need a larger cable, fewer circuits grouped, or a cooler route.</p></div>
+
+  <div class="ans"><h5>W2.4</h5><p>A small sine wave, then at the moment of fault a very large waveform that is offset — the first peak reaches much higher than subsequent ones, and the offset decays away over a few cycles until the waveform is symmetrical about zero. <b>Ipk</b> is that first peak; the settled RMS value is <b>Icu/Icw</b>. Ipk is roughly 2.2 times bigger because of the decaying DC offset, which is caused by the fault occurring at a random point in the voltage cycle.</p></div>
+
+  <div class="ans"><h5>W2.5</h5><p><b>Icu</b> — the biggest fault the breaker can interrupt once without failing dangerously; it may be scrap afterwards. <b>Ics</b> — the biggest fault it can interrupt and still be fit for continued service. <b>Icw</b> — the fault current an assembly can <i>hold</i> for a stated time without tripping, allowing a downstream device to clear first. <b>Icw is the switchboard/busbar rating</b>; Icu and Ics are breaker-tripping ratings.</p></div>
+
+  <div class="ans"><h5>W2.6</h5><p>A generator's fault contribution is limited by its own internal reactance, giving roughly 3–5 × full load current, whereas a utility transformer gives 15–20 ×. The problem: protection settings chosen to discriminate under utility supply may sit above the current a generator can actually deliver — so on generator, the protection never picks up and the fault isn't cleared. Every data centre protection study must therefore be run for both source conditions.</p></div>
+
+  <div class="ans"><h5>W2.7</h5><p><b>Thermal</b> — a bimetallic strip that bends as it heats. Slow. Handles <b>overload</b>. <b>Magnetic</b> — an electromagnet that pulls the contacts open. Near-instant. Handles <b>short circuit</b>.</p></div>
+
+  <div class="ans"><h5>W2.8</h5><p>The curve types have been swapped. A Type D trips magnetically at 10–20 × rating, which on a lighting circuit is far more current than a fault will ever produce there, so it may never operate magnetically. A Type B trips at 3–5 ×, which a motor's starting inrush (6–8 ×) exceeds every morning. Fit a <b>Type C or D on the motor</b> and a <b>Type B on the lighting</b> — and don't simply increase the breaker rating on the motor, because that would leave the cable under-protected.</p></div>
+
+  <div class="ans"><h5>W2.9</h5><p>Good: upstream curve entirely above and to the right of the downstream curve, with a visible gap (the margin) at every current value. Bad: the two curves cross — above that current the upstream device is faster and would trip first, taking out the whole board for a downstream fault.</p></div>
+
+  <div class="ans"><h5>W2.10</h5><p>Transformer star point earthed at the substation; three phases and a neutral to the main switchboard; inside the board a neutral bar and an earth bar joined by the single MEN link; an earth electrode from the earth bar to ground; active, neutral and earth out to the equipment. Fault path: active touches the case → down the earth conductor → earth bar → MEN link → neutral bar → neutral conductor → back to the transformer star point. Very low impedance, so very high current, so the breaker trips fast.</p></div>
+
+  <div class="ans"><h5>W2.11</h5><p>A second neutral-earth connection creates a parallel path, so normal load current starts flowing through the earthing system as well as the neutral. That makes earth conductors carry current they were never meant to, causes RCDs to trip or fail to protect correctly, creates dangerous touch voltages, and produces intermittent faults that are extremely hard to trace. There must be exactly one MEN link per installation.</p></div>
+
+  <div class="ans"><h5>W2.12</h5><p>Every switch-mode power supply leaks a small current to earth by design — around 1 mA each. Forty servers on one circuit gives roughly 40 mA of entirely normal leakage, which exceeds a 30 mA RCD's threshold, so it trips on healthy equipment. Instead, data centres use <b>RCD monitoring rather than tripping</b> on IT circuits, or higher thresholds combined with splitting the load across more circuits.</p></div>
+</section>
+
+<section class="ch" id="a-w3">
+  <h3><span class="cn">W3</span> Equipment</h3>
+
+  <div class="ans"><h5>W3.1</h5><p><b>1,000 V AC.</b> Anything above is HV. It matters because HV work requires HV switching authorisation, permits to work, different clearances, and compliance with AS 2067 rather than AS/NZS 3000. People who call 22 kV "medium voltage" sometimes assume LV rules apply — which is a safety problem, not a vocabulary one.</p></div>
+
+  <div class="ans"><h5>W3.2</h5><p>Iron core with two windings. For step-down, the <b>primary (high voltage side) has more turns</b>. Relationship: <b>V₁ / V₂ = N₁ / N₂</b>.</p></div>
+
+  <div class="ans"><h5>W3.3</h5><p><b>D</b> — HV winding connected in delta. <b>y</b> — LV winding connected in star. <b>n</b> — the LV star point is brought out as an accessible neutral. <b>11</b> — the LV voltage lags the HV by 11 × 30° = 330°, read like an 11 o'clock position on a clock face.</p></div>
+
+  <div class="ans"><h5>W3.4</h5>
+    <span class="calc">(a) FLC = 1,500,000 ÷ (1.732 × 415)
+        = 1,500,000 ÷ 718.8 = 2,087 A
+
+(b) Ifault = 2,087 ÷ 0.055 = 37,945 A ≈ 38 kA
+
+(c) Specify 50 kA</span>
+    <p>38 kA is the transformer contribution alone; the utility network behind it adds more, so you specify the next standard rating up with margin. 50 kA.</p></div>
+
+  <div class="ans"><h5>W3.5</h5><p>(1) Lower impedance means <b>higher fault current</b>, which forces higher-rated and more expensive switchgear throughout the installation — potentially hundreds of thousands of dollars. (2) Higher fault levels make <b>discrimination harder</b> to achieve, because devices have less time-current room to separate. Impedance is a design trade-off between voltage regulation and fault level, not a measure of quality.</p></div>
+
+  <div class="ans"><h5>W3.6</h5><p>With the tie closed, both transformers feed any fault on the board simultaneously, so the fault level roughly doubles and every device needs a higher breaking capacity. Running with the tie normally open keeps the fault level to one transformer's contribution, keeps the two halves independent, and limits the consequence of a fault on one side. You close it only after losing a source — and should confirm the protection settings remain valid in that configuration.</p></div>
+
+  <div class="ans"><h5>W3.7</h5><p><b>Form 1</b> — no internal barriers; the whole board must be dead to work on anything. <b>Form 2</b> — busbar separated from the functional units; you're protected from the busbar but not from adjacent breakers. <b>Form 3</b> — each functional unit in its own compartment; you can work on one breaker with others live, but terminals still share space. <b>Form 4</b> — terminals separated too; you can work on one outgoing circuit completely while the rest of the board stays energised.</p></div>
+
+  <div class="ans"><h5>W3.8</h5><p>"It's the highest level of internal segregation in the standard. Every breaker sits in its own sealed compartment, and each one's outgoing cable terminals sit in <i>another</i> separate compartment. That means an electrician can work on any single circuit safely while the rest of the board stays live — which is the only way we can maintain this facility without shutting the data hall down. The cost is more copper, more sheet metal, more compartments and a physically longer board, so it takes longer to build and needs more switchroom length. Both of those are worth knowing at layout stage, not at procurement stage."</p></div>
+
+  <div class="ans"><h5>W3.9</h5><p><b>Three reasons:</b> (1) tap-off boxes can be moved without re-cabling, which matters because racks move constantly; (2) it's far more compact than the equivalent cables at high currents; (3) lower voltage drop, because a solid bar beats stranded cable. <b>Programme risk:</b> busway is made to order with long lead times, and it needs accurate setting out — so it's frequently on the critical path, and a late design change to the data hall layout can be very expensive.</p></div>
+
+  <div class="ans"><h5>W3.10</h5>
+    <span class="calc">Ratio = 1200 ÷ 5 = 240
+Primary = 3.5 × 240 = 840 A</span></div>
+
+  <div class="ans"><h5>W3.11</h5><p>Because the primary current keeps driving the core, and with no secondary current to oppose it the core saturates hard and induces an extremely high voltage across the open secondary terminals — thousands of volts. It will destroy the CT and can kill the person standing there. Always short the secondary before disconnecting anything.</p></div>
+
+  <div class="ans"><h5>W3.12</h5><p>Instantaneous overcurrent <b>50</b>; timed overcurrent <b>51</b>; earth fault <b>50N / 51N</b>; differential <b>87</b>; synchro-check <b>25</b>; lockout <b>86</b>.</p></div>
+
+  <div class="ans"><h5>W3.13</h5><p>Utility and generator into an ATS with a mechanical interlock, single output to the load. Timeline: utility fails at 0; failure confirmed ~0.5 s; start signal ~1 s; generator at speed ~10 s; voltage and frequency within limits ~12 s; transfer ~13 s. <b>The load is dead for roughly 13 seconds.</b> That gap is covered by the <b>UPS battery</b> — nothing else is fast enough.</p></div>
+</section>
+
+<section class="ch" id="a-w4">
+  <h3><span class="cn">W4</span> Critical power</h3>
+
+  <div class="ans"><h5>W4.1</h5><p><b>Generator</b> — solves duration; it can run for days once started. <b>UPS</b> — solves continuity; it covers the gap while the generator starts, and conditions the supply continuously. <b>N+1</b> — solves a single module failing. <b>Concurrent maintainability</b> — solves planned work; it lets you take any component out of service without dropping load.</p></div>
+
+  <div class="ans"><h5>W4.2</h5><p><b>+0.1 s</b> — the UPS is already carrying the load from its battery; the servers noticed nothing, because nothing switched. <b>+1 s</b> — loss confirmed (not a momentary blip), generator start signal sent, alarms raised to the BMS. <b>+10 s</b> — generator is up to speed, AVR and governor stabilising voltage and frequency. <b>+13 s</b> — parameters within limits, ATS transfers, site now on generator; UPS begins recharging its batteries.</p></div>
+
+  <div class="ans"><h5>W4.3</h5>
+    <span class="calc">Steady load:  800 + 300 + 40      = 1,140 kW
+UPS recharge: 800 × 0.20         =   160 kW
+Subtotal                          = 1,300 kW
+Convert to kVA: 1,300 ÷ 0.9       = 1,444 kVA
+Non-linear derating: 1,444 ÷ 0.85 = 1,699 kVA
+Select next standard size         ≈ 1,800–2,000 kVA</span>
+    <p>Uplifts and why: <b>UPS recharge</b> because every rectifier starts charging at once when the generator picks up; <b>÷ pf</b> because generators are rated in kVA; <b>non-linear derating</b> because IT load distorts the current waveform and the alternator must cope. You would then separately verify <b>step load acceptance</b> and <b>motor starting</b> against the vendor's sizing software before committing.</p></div>
+
+  <div class="ans"><h5>W4.4</h5><p>Mains → rectifier (AC to DC) → DC link with the battery connected to it → inverter (DC to AC) → static switch → output. A static bypass path runs from the input around the conversion stages to the static switch. An external maintenance bypass runs around the entire unit with a manual interlocked switch.</p></div>
+
+  <div class="ans"><h5>W4.5</h5><p>Because of the static bypass. If the inverter fails or is overloaded, the load must transfer instantly to raw mains with no break — and that's only possible without a damaging voltage step if the inverter output is already in phase and at the same frequency as the mains. So the UPS continuously tracks mains phase and frequency. A secondary benefit: if the mains frequency drifts too far, the UPS reports that bypass is unavailable, which is a condition worth alarming on.</p></div>
+
+  <div class="ans"><h5>W4.6</h5>
+    <span class="calc">DC power = 600 ÷ 0.95        = 631.6 kW
+8 min in hours = 8 ÷ 60      = 0.1333 h
+Energy = 631.6 × 0.1333      = 84.2 kWh
+End of life: 84.2 ÷ 0.80     = 105.3 kWh
+Design margin: × 1.10        = 115.8 kWh</span>
+    <p>≈ <b>116 kWh usable.</b> Then apply temperature correction and, critically, the vendor's <b>rate-specific</b> discharge data — an 8-minute discharge extracts far less than the 20-hour amp-hour rating implies.</p></div>
+
+  <div class="ans"><h5>W4.7</h5><p><b>Ventilation</b> — VRLA cells release hydrogen on charge, which is explosive above 4%, so mechanical ventilation sized to the gassing rate is mandatory. <b>Temperature control at 20–25 °C</b> — every 10 °C above 20 roughly halves battery life, so this is about lifespan and warranty, not day-one performance. <b>Floor loading</b> — a large VRLA installation can exceed 1,000 kg/m², which is a structural input that must be given to the structural engineer very early. (Also acceptable: spill containment, per-cell monitoring, safe DC isolation.)</p></div>
+
+  <div class="ans"><h5>W4.8</h5><p>An STS lets a <b>single-corded</b> load benefit from A/B redundancy: it takes both paths as inputs, selects one, and switches to the other in <b>4–8 ms</b> if the selected source fails — fast enough that a server power supply, which can ride through about 20 ms, never notices. A dual-corded load is still preferable because the STS itself becomes a single point of failure for everything behind it. Fewer STS units means fewer things that can fail.</p></div>
+
+  <div class="ans"><h5>W4.9</h5><p>"N+1 means you have one spare machine, but they all plug into the same bar of copper — so if that bar has a problem, everything stops. 2N means two completely separate systems that never touch, so one can fail entirely and the other just carries on."</p></div>
+
+  <div class="ans"><h5>W4.10</h5><p>"Concurrent maintainability means I can take any single component out for planned work without dropping load. Fault tolerance means I can survive any single unplanned failure, including one that happens while I'm doing that maintenance." Concurrent maintainability = <b>Tier III</b>. Fault tolerance = <b>Tier IV</b>.</p></div>
+
+  <div class="ans"><h5>W4.11</h5><p>The correct figure is <b>1,500 kW</b>, not 2,400 or 3,000.</p><p>Explanation to give: "In a 2N design the promise we sell is that losing an entire power path causes zero impact. That only holds if the surviving path can carry the whole load on its own. So each 1,500 kW UPS has to be able to take everything, which caps the sellable IT load at 1,500 kW and means each side normally runs at about 50%. If we sold 2,400 kW, then the day we lose path A, path B would be asked for 160% of its rating. It would trip, and we'd lose every customer in the building simultaneously — including the ones we didn't oversell to. The 'spare' capacity isn't spare; it's the redundancy we're contractually selling."</p></div>
+
+  <div class="ans"><h5>W4.12</h5><p>Check your drawing against FIG 4.11. You should have: two utility feeds from different zone substations; two HV switchboards with a normally open HV tie; two Dyn11 transformers; two LV main switchboards with a normally open LV tie; a generator on each MSB; a UPS with battery and maintenance bypass on each path; a PDU each; a busway each; and a single dual-corded rack where they meet. If you missed the ties or the maintenance bypasses, redraw it now — those are the two most commonly forgotten items and both matter.</p></div>
+
+  <div class="ans"><h5>W4.13</h5><p>Honest answers: <b>the rack itself</b> (both paths terminate there, though the server's dual PSUs mitigate it); <b>the earthing system</b>, which is shared for safety reasons and cannot be duplicated; <b>the building</b> — fire, flood, structural; and <b>the control/BMS network</b>, if it isn't itself redundant. Everything in the power distribution should be separated. If you can find a fifth in your own drawing, you've drawn something that isn't 2N.</p></div>
+</section>
+
+<section class="ch" id="a-w5">
+  <h3><span class="cn">W5</span> Drawings</h3>
+
+  <div class="ans"><h5>W5.1</h5><p>Check against FIG 5.1. The ones most often drawn wrong: the <b>ACB</b> (needs the withdrawable side marks that distinguish it from an MCCB), the <b>CT</b> (a ring <i>around</i> a conductor, not in series with it), and the <b>battery</b> (alternating long and short lines, long = positive).</p></div>
+
+  <div class="ans"><h5>W5.2</h5><p><b>What is it</b> — the title, so you know you're on the right drawing. <b>What revision</b> — because working from a superseded issue is one of the most expensive errors on site. <b>What changed</b> — the revision clouds and revision history, so you know what to re-check. <b>What the notes say</b> — general notes override assumptions you'd otherwise make about standards, fault levels, installation methods and cross-references.</p></div>
+
+  <div class="ans"><h5>W5.3</h5><p>1 Sources · 2 Voltage transitions · 3 Bus sections and ties · 4 Trace one path to one load · 5 Trace the alternate path · 6 Common points · 7 Protection. Mnemonic: <b>"Some Very Big Trucks Take Corners Precisely."</b></p></div>
+
+  <div class="ans"><h5>W5.4</h5><p>Because protection settings only make sense once you know the topology — what feeds what, and where fault current comes from. Read protection first and you're memorising numbers with no framework. Read the topology first and the protection explains itself immediately.</p></div>
+
+  <div class="ans"><h5>W5.5</h5><p><b>"Normally"</b> means at rest, de-energised, with nothing operating — not "usually". A normally closed contact is closed when nothing is happening and opens when the device operates.</p><p>A <b>STOP</b> button is normally closed so that if its wire breaks or a terminal comes loose, the circuit opens and the machine <b>stops</b> — it fails safe. A normally open stop button with a broken wire would leave you unable to stop the machine. A <b>START</b> button is normally open so the machine doesn't run until someone deliberately makes the circuit.</p></div>
+
+  <div class="ans"><h5>W5.6</h5><p>From the active rail: STOP (N/C) → START (N/O) → overload contact (N/C) → contactor coil → neutral rail. The hold-in auxiliary contact of the contactor is wired in parallel with the START button, so once the coil pulls in, the circuit stays made after you release START. Pressing STOP, or the overload opening, breaks the whole thing and it drops out.</p></div>
+
+  <div class="ans"><h5>W5.7</h5><p>Cause: "UPS A battery has failed its capacity test." Effects: <b>alarm to BMS</b> (yes — and it should be a high-priority alarm, because autonomy is now unproven); <b>inhibit planned maintenance on path B</b> (an operational rather than automatic effect, but it belongs in the matrix); <b>no automatic transfer or generator start</b> (nothing has actually failed electrically); and arguably <b>flag the facility as no longer meeting its availability commitment</b> until rectified. The valuable insight is that a row can have very few automatic effects but major operational ones.</p></div>
+
+  <div class="ans"><h5>W5.8</h5><p>Without schedules you cannot answer: (1) what size and type each cable is, and its route length; (2) what the breaking capacity and trip settings of each device are; (3) what the actual load on each circuit is, and what diversity was assumed; (4) what the lead times are on major equipment — which as a project engineer is often the most important question of all. You also can't verify volt drop, discrimination, or whether what was installed matches what was designed.</p></div>
+</section>
+
+<section class="ch" id="a-w6">
+  <h3><span class="cn">W6</span> Calculations</h3>
+
+  <div class="ans"><h5>W6.1</h5><p>Servers run at essentially constant load, all of them, 24 hours a day — there is no time when a meaningful fraction of them is switched off, so diversity is 1.0. General power outlets are mostly empty or feeding idle equipment, and the few in use are rarely all drawing full current at the same moment, so around half the connected total is a realistic maximum.</p></div>
+
+  <div class="ans"><h5>W6.2</h5>
+    <span class="calc">IT        600 × 1.00 = 600.0 kW
+Mech      250 × 0.90 = 225.0 kW
+Lighting   30 × 0.90 =  27.0 kW
+Gen power  90 × 0.50 =  45.0 kW
+House      25 × 0.80 =  20.0 kW
+                      ---------
+Maximum demand       = 917.0 kW
+
+kVA = 917 ÷ 0.92 = 996.7 kVA
++20% growth: 996.7 × 1.20 = 1,196 kVA
+Select 1,250 kVA</span></div>
+
+  <div class="ans"><h5>W6.3</h5><p>1 Current carrying capacity after derating · 2 Voltage drop · 3 Short circuit withstand (adiabatic) · 4 Protection coordination (Ib ≤ In ≤ Iz and earth loop). <b>(a)</b> On a short run near a transformer, Check 1 usually governs, and Check 3 can govern because the fault level is high. <b>(b)</b> On a very long run, Check 2 (voltage drop) almost always governs.</p></div>
+
+  <div class="ans"><h5>W6.4</h5>
+    <span class="calc">Ib = P ÷ (√3 × V × pf)
+Bottom = 1.732 × 415 × 0.88 = 632.5
+Ib = 180,000 ÷ 632.5 = 284.6 A
+
+Required table rating = 284.6 ÷ 0.82 = 347 A</span>
+    <p>So you need a cable whose <i>tabulated</i> rating is at least 347 A, which after derating gives you the 285 A you actually need. Note the 120 m route length means voltage drop must also be checked, and on a run that long it may well govern.</p></div>
+
+  <div class="ans"><h5>W6.5</h5><p><b>I<sub>b</sub></b> — the design current, i.e. what the load actually draws. <b>I<sub>n</sub></b> — the rating of the protective device. <b>I<sub>z</sub></b> — the current the cable can carry after all derating. In plain English: the load must be smaller than the breaker, and the breaker must be smaller than what the cable can safely take. If the breaker were bigger than the cable's capacity, the cable could overheat without the breaker ever tripping.</p></div>
+
+  <div class="ans"><h5>W6.6</h5>
+    <span class="calc">FLC = 1,000,000 ÷ (1.732 × 415)
+    = 1,000,000 ÷ 718.8 = 1,391 A
+Ifault = 1,391 ÷ 0.05 = 27,824 A ≈ 27.8 kA</span>
+    <p>Specify <b>35 kA</b> — the next standard rating, leaving margin for the utility network contribution.</p></div>
+
+  <div class="ans"><h5>W6.7</h5>
+    <span class="calc">S ≥ √(I² × t) ÷ k
+I² × t = 25,000² × 0.2 = 1.25 × 10⁸
+√(1.25 × 10⁸) = 11,180
+S ≥ 11,180 ÷ 143 = 78.2 mm²</span>
+    <p>Minimum <b>78.2 mm²</b>, so select the next standard size — <b>95 mm²</b>. Note that a faster-clearing device would reduce this considerably, which is one reason clearing time matters commercially as well as technically.</p></div>
+
+  <div class="ans"><h5>W6.8</h5><p>"Normally the three phases share the work and their currents cancel out in the neutral, so the neutral carries very little. But computer power supplies draw current in sharp pulses rather than smoothly, and that creates extra currents at three times the normal frequency. Those particular extras don't cancel — they add up. So in a building full of computers the neutral can end up carrying more than any of the phases, which is the opposite of what you'd expect. We make it twice the size as insurance."</p></div>
+
+  <div class="ans"><h5>W6.9</h5>
+    <span class="calc">In 2N, each path must carry the FULL load:
+I = 1,600,000 ÷ (1.732 × 415 × 0.95)
+Bottom = 718.8 × 0.95 = 682.8
+I = 1,600,000 ÷ 682.8 = 2,343 A per path</span>
+    <p><b>2,343 A exceeds the largest option (1,250 A).</b> So a single busway run cannot do it — you'd need at least <b>two 1,250 A busways per path</b>, and in practice a data hall of this size is served by several busway runs, typically one or two per rack row. This is the right answer, and spotting that the question has no single-busway solution is the point of it.</p></div>
+
+  <div class="ans"><h5>W6.10</h5><p><b>"Load, Lift, Convert, Round up."</b></p>
+    <span class="calc">Load:      900 kW maximum demand
+Lift:      × 1.20 growth = 1,080 kW
+Convert:   1,080 ÷ 0.9 = 1,200 kVA
+Round up:  select 1,250 kVA</span>
+    <p>At 1,250 kVA the transformer sits at 96% — too tight. In practice you'd go to <b>1,500 kVA</b> to keep loading near 80% and leave real headroom.</p></div>
+</section>
+
+<section class="ch" id="a-w7">
+  <h3><span class="cn">W7</span> Commissioning</h3>
+
+  <div class="ans"><h5>W7.1</h5><p><b>L1 Factory</b> — FAT, routine tests, type test evidence. <b>L2 Delivery &amp; static</b> — site receipt inspection, insulation resistance, continuity, torque checks, all de-energised. <b>L3 Component</b> — SAT, each item energised alone: relay injection, generator run, UPS on load. <b>L4 System</b> — whole systems proven: full generator system, full UPS system, cause and effect verification. <b>L5 Integrated</b> — IST with load banks, deliberate failure injection, black building.</p></div>
+
+  <div class="ans"><h5>W7.2</h5><p>Levels <b>1 and 2</b>. Something like: <i>"I've run and witnessed factory acceptance testing on switchboards — routine tests, functional checks, protection settings, interlock verification, and the type-test and design-verification evidence behind the assembly. That's Level 1 and part of Level 2 commissioning. I know what a genuinely complete FAT looks like versus one that's been rushed to hit a delivery date, and I know which of those two arrives on site."</i></p></div>
+
+  <div class="ans"><h5>W7.3</h5><p>It answers: <b>is the insulation intact — can current leak where it shouldn't?</b> A failure means damaged insulation, moisture ingress, a fixing driven through the cable, or a conductor touching the enclosure. The circuit must not be energised until it's found and fixed.</p></div>
+
+  <div class="ans"><h5>W7.4</h5><p>Because it proves that if a live conductor touches an earthed metal part, enough fault current will flow to operate the protective device <b>within the required disconnection time</b> — before someone touching that metal part can be seriously hurt. It isn't about whether the equipment works; it's about whether a person survives a fault. That's why it's measured and recorded on every circuit rather than calculated and assumed.</p></div>
+
+  <div class="ans"><h5>W7.5</h5><p>A <b>full-load battery discharge test</b>, timed. Nothing else proves it: a calculation proves only that the design intended it; a vendor datasheet proves only what a new battery should do under laboratory conditions; a float voltage reading proves only that the charger is working. Only actually discharging the installed battery, at full load, and timing it, demonstrates the autonomy the facility is contractually promising.</p></div>
+
+  <div class="ans"><h5>W7.6</h5><p>Compare with FIG 7.3. The essential feature is the <b>flat critical load line running unbroken across the entire timeline</b> — utility opened, UPS on battery, generators starting, generators taking load, failures injected, utility restored, retransfer, generators cooling down and stopping. If your drawing shows any interruption in that line, the test has failed.</p></div>
+
+  <div class="ans"><h5>W7.7</h5><p><b>Full load steady state</b> — proves electrical and cooling capacity together under sustained thermal load. <b>Step load</b> — proves voltage and frequency deviation and recovery within spec. <b>Utility failure / black building</b> — proves the whole UPS-to-generator handover. <b>Single generator failure</b> — proves the remaining sets pick up, and load shedding works if required. <b>Single UPS failure</b> — proves N+1 and that the load doesn't blink. <b>Single path failure</b> — proves genuine 2N and finds single-corded equipment. (Also valid: failure-to-start, fuel endurance, return to normal.)</p></div>
+
+  <div class="ans"><h5>W7.8</h5><p>Because every data centre has equipment somebody connected to only one path and never recorded — a network switch, a security controller, a lighting relay panel, a fire panel, a CCTV recorder. On the drawings the facility is 2N; in reality there's a handful of exceptions. Dropping a whole path is the only test that reveals them, and it essentially always finds some. The problems it finds are single-corded loads without an STS, distribution boards fed from the same path on both sides, and control circuits with a common supply.</p></div>
+</section>
+
+<section class="ch" id="a-w8">
+  <h3><span class="cn">W8</span> Delivery</h3>
+
+  <div class="ans"><h5>W8.1</h5><p>A <b>hold point</b> stops work: you may not proceed past it until the nominated party has inspected and released it in writing. A <b>witness point</b> requires you to give notice; if they choose not to attend, you may proceed and record that they were notified. You negotiate the number of client hold points early because every one is a potential delay entirely outside your control — if the client's engineer is on leave, your programme stops. Witness points give the client visibility without giving them a veto over your schedule.</p></div>
+
+  <div class="ans"><h5>W8.2</h5><p>A good RFI here would say, in substance:</p>
+    <p><b>Subject:</b> MSB-01 — mechanical services feeder: apparent mismatch between protective device, load schedule and cable rating.</p>
+    <p><b>Background:</b> Drawing ME-EL-SLD-001 Rev C shows a 400 A MCCB feeding the mechanical services board. The load schedule totals 380 A with no diversity factor stated. The cable schedule specifies a cable with a derated capacity of 355 A.</p>
+    <p><b>Question:</b> The cable's derated capacity (355 A) is below the protective device rating (400 A), so the requirement Ib ≤ In ≤ Iz is not satisfied. Please confirm the intended cable size and protective device rating for this feeder.</p>
+    <p><b>Our proposed solution:</b> Increase the cable to the next size, giving a derated capacity above 400 A, retaining the 400 A MCCB. Alternatively, if the 380 A load is confirmed as connected rather than maximum demand and a diversity factor applies, confirm the design current so the device can be reduced accordingly.</p>
+    <p><b>Cost impact:</b> TBC pending response. <b>Programme impact:</b> Cable is due to be ordered [date]; a response is required by [date] to avoid delay to the submain installation.</p>
+    <p>The two things that make this a strong RFI: it identifies the specific technical rule being breached, and it offers a solution.</p></div>
+
+  <div class="ans"><h5>W8.3</h5><p>Because once the work is done, your negotiating position is gone — the client already has the benefit and has no incentive to agree a price. Most contracts also require notice within a set period, and doing the work first can forfeit your entitlement entirely. Notifying first also gives the client the chance to say "actually, don't" — which may be the cheaper outcome for everyone.</p></div>
+
+  <div class="ans"><h5>W8.4</h5><p><b>Rework</b> (do it again correctly), <b>repair</b> (fix in place to an approved method), <b>use as is</b> (accept the deviation via a formal concession, with engineering justification), or <b>reject</b> (remove and replace).</p></div>
+
+  <div class="ans"><h5>W8.5</h5><p>Things your manufacturing background lets you check that most reviewers won't: (1) <b>the design verification route</b> for each characteristic — was temperature rise tested, compared to a reference design, or calculated? (2) <b>Icw and Ipk evidence</b> — is there actual type-test documentation for the busbar and bracing arrangement being supplied, or is it a claim by association with a different configuration? (3) <b>Form of separation as actually built</b> — does the GA drawing genuinely deliver Form 4b Type 7, or does one compartment shortcut it? (4) <b>Busbar sizing and support spacing</b> against the declared fault rating. (5) <b>Realistic lead time</b> — and whether the quoted date assumes drawing approval by a date that has already passed. You would also check terminal space for the actual cable sizes in the cable schedule, which is a classic and expensive omission.</p></div>
+</section>
+
+<section class="ch" id="a-e1">
+  <h3><span class="cn">E1</span> Exercise 1 — simple main switchboard</h3>
+
+  <div class="ans"><h5>E1.1</h5><p><b>One source.</b> A single utility supply through a single transformer. There is <b>no redundancy of any kind</b> — no second supply, no generator, no UPS, no bus tie. Every load in the building depends on one transformer.</p></div>
+
+  <div class="ans"><h5>E1.2</h5><p>Fire pump motor ← contactor ← 125 A MCCB ← MSB-01 busbar ← ACB-01 (1600 A) ← CT (2000/5, metering only, not in the power path) ← transformer TX-01 secondary ← transformer primary ← HV fuse switch ← utility 22 kV.</p></div>
+
+  <div class="ans"><h5>E1.3</h5>
+    <span class="calc">FLC = 1,000,000 ÷ (1.732 × 415) = 1,391 A
+Ifault = 1,391 ÷ 0.055 = 25,291 A ≈ 25.3 kA</span>
+    <p>The board is rated <b>35 kA</b>, which is <b>adequate</b> — it exceeds the transformer contribution with reasonable margin for the utility network behind it. Note 3 correctly says the fault level is to be confirmed by calculation, and this is that calculation.</p></div>
+
+  <div class="ans"><h5>E1.4</h5><p>Transformer full load current is 1,391 A. A 1600 A ACB is the next standard frame above that, so it is <b>correctly sized</b> — the incomer must be able to carry everything the transformer can deliver. Loading is 1,391 ÷ 1,600 = <b>87%</b>, which is normal for a main incomer. A 1250 A device would have been undersized and would trip before the transformer was fully loaded.</p></div>
+
+  <div class="ans"><h5>E1.5</h5><p>Several would, because there's no redundancy: the transformer, the ACB, the busbar, or the HV fuse switch. <b>The transformer is the usual answer</b> — it's the item with the longest replacement lead time, often many months, so its failure is the one with the worst consequence.</p></div>
+
+  <div class="ans"><h5>E1.6</h5><p>The fire pump is a <b>life-safety load</b> and it is fed from the ordinary main switchboard with no alternative supply and no fire-rated separation shown. If the utility fails, or the ACB or transformer fails, the fire pump has no power — which is precisely when you might need it. Under NCC requirements, essential and life-safety services generally require a supply arrangement that survives failure of the normal supply, plus fire-rated wiring or separation. This should be raised as an RFI.</p></div>
+
+  <div class="ans"><h5>E1.7</h5><p>It tells you the cable sizes shown are only valid <b>if</b> those conditions hold. Three circuits grouped at 40 °C gives a combined derating of roughly 0.7–0.8, so a cable's tabulated rating must be about 25–40% higher than the load current. You would check: does each cable's <i>derated</i> capacity still exceed its load and its protective device rating? And critically — <b>is that grouping assumption still true as installed?</b> If the contractor ends up running six circuits on that ladder rather than three, every cable on it is now under-rated and the calculation must be redone.</p></div>
+</section>
+
+<section class="ch" id="a-e2">
+  <h3><span class="cn">E2</span> Exercise 2 — generator and ATS</h3>
+
+  <div class="ans"><h5>E2.1</h5><p><b>Non-essential board</b> — dead immediately, and stays dead until the utility returns. It is upstream of the ATS, so it gets nothing from the generator. <b>Mechanical services</b> — dead for about 13 seconds, then restored when the ATS transfers to the generator. <b>Emergency lighting</b> — dead for the same 13 seconds unless the fittings have integral batteries (which they normally do, and should). <b>Server room</b> — <b>never loses power</b>, because it's behind the UPS, which carries it on battery through the whole transfer.</p></div>
+
+  <div class="ans"><h5>E2.2</h5>
+    <span class="calc">Mechanical services       300 kW
+UPS (80 kVA at ~0.9)     ≈ 72 kW
+Emergency lighting        ~20 kW
+                          -------
+Running total            ≈ 392 kW
+Generator rating          600 kW</span>
+    <p>On running load alone it looks comfortable. <b>What has not been accounted for:</b> chiller motor starting inrush (6–8 × full load current for several seconds); UPS battery recharge load when the generator picks up; step load acceptance limits — the generator may not take the whole load in one lump without excessive frequency dip; and non-linear load derating for the UPS rectifier. With those applied, 600 kW may be marginal, and the sizing should be verified with the manufacturer's software.</p></div>
+
+  <div class="ans"><h5>E2.3</h5><p>Open transition means break-before-make: the generator supply is connected only <i>after</i> the utility supply has been disconnected. So the mechanical services see a genuine dead period of a second or more. Motors will stop and restart, which means a second inrush when they do — and if several restart simultaneously, that combined inrush is itself a step load on a generator that has only just stabilised. This is why staged restart or a delayed transition is often specified for large motor loads.</p></div>
+
+  <div class="ans"><h5>E2.4</h5><p>Any three of: the single transformer; the single main ACB; the single ATS (everything essential passes through it); the single generator; the single UPS (no bypass shown); the MSB busbar; the HV supply.</p></div>
+
+  <div class="ans"><h5>E2.5</h5><p>(1) <b>No redundancy anywhere</b> — single transformer, single generator, single ATS, single UPS. It's an N design; a data centre needs at least concurrent maintainability. (2) <b>No A/B distribution</b> — there's one path to the server room, so dual-corded equipment gains nothing. (3) <b>No maintenance bypass on the UPS</b> — servicing it means shutting down the load, so the facility is not concurrently maintainable. (4) <b>Fuel storage of only 8 hours</b> — data centres typically require 24 to 72 hours. (Also valid: the ATS is a single point of failure for all essential load; there's no second utility supply; the mechanical services aren't on UPS, so cooling stops during the transfer.)</p></div>
+
+  <div class="ans"><h5>E2.6</h5>
+    <span class="calc">Generator FLC = 750,000 ÷ (1.732 × 415) = 1,043 A
+Generator fault ≈ 4 × 1,043 = 4,173 A ≈ 4.2 kA
+
+Utility: TX FLC = 1,500,000 ÷ 718.8 = 2,087 A
+Utility fault = 2,087 ÷ 0.06 = 34,783 A ≈ 34.8 kA</span>
+    <p>The generator delivers roughly <b>one eighth</b> of the utility fault current. The problem: protective device settings chosen to discriminate correctly at 34.8 kA may sit above the 4.2 kA a generator can actually deliver — so on generator supply, a downstream fault may not trip anything at all, or may trip the wrong device. The protection study must be run for <b>both</b> source conditions, and some installations need a second settings group that is selected automatically when running on generator.</p></div>
+</section>
+
+<section class="ch" id="a-e3">
+  <h3><span class="cn">E3</span> Exercise 3 — find the design faults</h3>
+
+  <div class="ans"><h5>E3.1 — the faults</h5>
+    <p><b>1. Both utility feeds come from the same zone substation</b> (grid 3, top). Two cables from one substation is not two supplies. A fault or planned outage at Altona West takes both. This is the single biggest flaw on the drawing.</p>
+    <p><b>2. The LV tie is NORMALLY CLOSED</b> (grid 3, centre). This directly connects path A to path B, so it isn't 2N — a fault on either side propagates to both. It also roughly doubles the fault level on both boards, which may exceed the switchgear rating.</p>
+    <p><b>3. There is only one generator, shared between both paths</b> (grid 3). A single generator is a single point of failure for all backup power. In 2N there should be at least one per path.</p>
+    <p><b>4. Fuel storage is only 4 hours.</b> Data centres typically require 24 to 72 hours, because that's how long it can realistically take to restore a utility supply or arrange emergency fuel deliveries.</p>
+    <p><b>5. UPS A feeds PDU B-2</b> (the cross-feed from grid 2 to grid 4). This destroys path independence — PDU B-2 is labelled B but is electrically on path A. Anything fed from it loses supply when path A fails, including the core network.</p>
+    <p><b>6. The busway is grossly undersized</b> — see E3.3 below.</p>
+    <p><b>7. The core network is single-corded, 100 kW, with no STS</b> (grid 4, bottom), and it is fed from PDU B-2, which is itself on path A. So a critical shared network load has no redundancy at all and sits on the wrong path.</p>
+    <p><b>8. Busway A and B run together in Riser 1</b> (grid 3). A common physical route means one fire, flood, or piece of mechanical damage takes out both paths regardless of how well separated they are electrically.</p>
+    <p><b>9. No maintenance bypass is shown on either UPS.</b> Without one, servicing a UPS requires dropping its path — so the facility is not concurrently maintainable.</p></div>
+
+  <div class="ans"><h5>E3.2</h5><p><b>No.</b> A single sentence: it cannot be 2N because the tie is normally closed, one generator serves both paths, one UPS feeds a PDU on the other path, and both busways share a common riser — so there are at least four ways a single event takes out both paths.</p></div>
+
+  <div class="ans"><h5>E3.3</h5>
+    <span class="calc">Total IT load = 1,100 (racks) + 100 (network) = 1,200 kW
+In 2N each path must carry the FULL load.
+Assuming pf 0.95:
+I = 1,200,000 ÷ (1.732 × 415 × 0.95)
+  = 1,200,000 ÷ 682.8 = 1,757 A per path
+
+Busway shown: 800 A</span>
+    <p>The busway is rated at <b>less than half</b> what a single path must carry. Even in normal 50/50 operation each busway would see about 880 A, which already exceeds its 800 A rating. This design fails under normal operation, let alone under a path failure.</p></div>
+
+  <div class="ans"><h5>E3.4 — three RFIs</h5>
+    <p><b>RFI 1 — Utility supply independence.</b> Both incoming HV feeds are noted as originating from Zone Substation "Altona West". Please confirm whether genuinely independent supplies from separate zone substations are available, as a common origin means a single network event will de-energise both nominated paths and the facility cannot meet its stated 2N availability. Proposed solution: confirm a second supply from an alternative zone substation, or amend the design basis and Tier claim accordingly.</p>
+    <p><b>RFI 2 — LV tie operating philosophy.</b> The LV tie between MSB A and MSB B is annotated "normally closed". Please confirm this is intended. A normally closed tie couples the two distribution paths, defeating path independence, and increases the prospective fault level at both boards which may exceed the specified switchgear rating. Proposed solution: change to normally open with an interlocked manual close, and confirm switchgear ratings for the closed-tie condition.</p>
+    <p><b>RFI 3 — Busway rating versus design load.</b> Busway A and B are shown as 800 A. Based on the stated 1,200 kW total IT load at 0.95 power factor, each path is required to carry approximately 1,757 A under N-1 conditions, and approximately 880 A under normal shared operation. Please confirm the intended busway rating and configuration. Proposed solution: multiple busway runs per path sized for full N-1 load, or confirm a revised load distribution.</p></div>
+</section>
+
+<!-- ==================== APPENDIX ==================== -->
+<div class="part" id="pa">
+  <div class="part-n">Appendix</div>
+  <h2>Formula sheet, glossary, flashcards</h2>
+  <p class="pdek">The reference section. Tear the formula sheet out and keep it with you. The glossary defines every technical word used anywhere in this manual, so you never need to look anything up.</p>
+</div>
+
+<section class="ch" id="ap-f">
+  <h3><span class="cn">A1</span> The formula sheet</h3>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:250px">Formula</th><th>Gives you</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="n"><b>V = I × R</b></td><td>Ohm's law</td><td>V volts, I amps, R ohms</td></tr>
+        <tr><td class="n"><b>P = V × I</b></td><td>Single-phase power (W)</td><td>230 V circuits</td></tr>
+        <tr><td class="n"><b>P = √3 × V × I × pf</b></td><td>Three-phase power (W)</td><td>V is line-to-line (415 V)</td></tr>
+        <tr><td class="n"><b>I = P ÷ (√3 × V × pf)</b></td><td>Three-phase current (A)</td><td>The one you'll use most</td></tr>
+        <tr><td class="n"><b>P = I² × R</b></td><td>Heat produced (W)</td><td>Current is squared — double it, quadruple the heat</td></tr>
+        <tr><td class="n"><b>kVA = kW ÷ pf</b></td><td>Apparent power</td><td>Sizing transformers, gens, UPS</td></tr>
+        <tr><td class="n"><b>kW = kVA × pf</b></td><td>Real power</td><td>What a rated machine delivers</td></tr>
+        <tr><td class="n"><b>kVA² = kW² + kVAr²</b></td><td>Power triangle</td><td>Pythagoras</td></tr>
+        <tr><td class="n"><b>pf = kW ÷ kVA = cos φ</b></td><td>Power factor</td><td>Between 0 and 1</td></tr>
+        <tr><td class="n"><b>V<sub>RMS</sub> = V<sub>peak</sub> ÷ 1.414</b></td><td>RMS from peak</td><td>1.414 = √2</td></tr>
+        <tr><td class="n"><b>V<sub>drop</sub> = √3 × I × L × mV/A/m ÷ 1000</b></td><td>Three-phase volt drop (V)</td><td>L is one-way route length</td></tr>
+        <tr><td class="n"><b>I<sub>z</sub> = I<sub>table</sub> × k<sub>1</sub> × k<sub>2</sub> × k<sub>3</sub></b></td><td>Derated cable capacity</td><td>All k values are ≤ 1</td></tr>
+        <tr><td class="n"><b>I<sub>b</sub> ≤ I<sub>n</sub> ≤ I<sub>z</sub></b></td><td>Protection coordination</td><td>Load ≤ device ≤ cable</td></tr>
+        <tr><td class="n"><b>S ≥ √(I² × t) ÷ k</b></td><td>Min. conductor size for fault (mm²)</td><td>k = 143 copper/XLPE, 115 copper/PVC</td></tr>
+        <tr><td class="n"><b>FLC = kVA × 1000 ÷ (√3 × V)</b></td><td>Transformer full load current</td><td>The starting point for fault level</td></tr>
+        <tr><td class="n"><b>I<sub>fault</sub> ≈ FLC ÷ (Z% ÷ 100)</b></td><td>Fault current at transformer</td><td>6% impedance → ≈ 16.7 × FLC</td></tr>
+        <tr><td class="n"><b>Battery kWh = kW ÷ η × hours</b></td><td>Battery energy</td><td>Then ÷ 0.8 end of life, × margin</td></tr>
+        <tr><td class="n"><b>Gen kVA = (load + recharge) ÷ pf ÷ 0.85</b></td><td>Generator sizing</td><td>Then check step load and motor start</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box b-key">
+    <span class="bl">Numbers worth memorising</span>
+    <p><b>√3 = 1.732</b> · <b>√2 = 1.414</b> · Australian LV = <b>415 V / 230 V</b>, 50 Hz · At 415 V, <b>1 A ≈ 0.7 kW</b> and <b>1 kW ≈ 1.4 A</b> · Volt drop limit <b>5%</b> · Standard transformer impedance <b>5–6%</b> · Generator fault ≈ <b>4 × FLC</b>; utility fault ≈ <b>16 × FLC</b> · Ipk ≈ <b>2.2 × Icw</b> · UPS transfer <b>0 ms</b>, STS <b>4–8 ms</b>, ATS <b>~13 s</b> · Server ride-through <b>≈ 20 ms</b> · 2N loading limit <b>50%</b> · Battery end-of-life <b>80%</b>.</p>
+  </div>
+</section>
+
+<section class="ch" id="ap-g">
+  <h3><span class="cn">A2</span> Glossary</h3>
+  <p class="lead">Every technical term used in this manual, in plain English.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:190px">Term</th><th>Plain meaning</th></tr></thead>
+      <tbody>
+        <tr><td><b>ACB</b></td><td>Air Circuit Breaker. Large breaker (630–6300 A) used on main switchboard incomers, usually withdrawable on a carriage, with an adjustable electronic trip unit.</td></tr>
+        <tr><td><b>Active</b></td><td>The live conductor carrying power. Also called line or phase. Australian colours: brown/black/grey (or older red/white/blue).</td></tr>
+        <tr><td><b>Adiabatic</b></td><td>The short-circuit check that assumes all fault heat stays in the conductor (none escapes) — the worst case, used to check the cable survives a fault.</td></tr>
+        <tr><td><b>ANSI number</b></td><td>Standard number identifying a protection function, e.g. 50 = instantaneous overcurrent, 87 = differential.</td></tr>
+        <tr><td><b>Apparent power</b></td><td>Total power a circuit carries, useful plus reactive. Measured in kVA. The "whole glass".</td></tr>
+        <tr><td><b>ATS</b></td><td>Automatic Transfer Switch. Automatically changes the load between two supplies, typically utility and generator. Takes seconds.</td></tr>
+        <tr><td><b>Autonomy</b></td><td>How long a UPS battery can carry the load. Typically 5–15 minutes in a data centre.</td></tr>
+        <tr><td><b>AVR</b></td><td>Automatic Voltage Regulator. Controls a generator's output voltage by adjusting its magnetic field.</td></tr>
+        <tr><td><b>Black building</b></td><td>A commissioning test where all incoming supplies are deliberately removed to prove the site survives entirely on its own.</td></tr>
+        <tr><td><b>BMS</b></td><td>Building Management System. The control and monitoring system that watches alarms, plant status and environmental conditions.</td></tr>
+        <tr><td><b>Bonding</b></td><td>Connecting all metal parts together so nothing can sit at a different voltage from anything else.</td></tr>
+        <tr><td><b>Busbar</b></td><td>A solid copper (or aluminium) bar that distributes power inside a switchboard.</td></tr>
+        <tr><td><b>Bus tie</b></td><td>A breaker connecting two halves of a switchboard. Usually normally open, to keep fault levels down and the halves independent.</td></tr>
+        <tr><td><b>Busway / busduct</b></td><td>Copper bars in a long metal enclosure, with plug-in tap-off points along its length. Used overhead in data halls.</td></tr>
+        <tr><td><b>Concurrent maintainability</b></td><td>Any single component can be taken out for planned work without dropping load. Uptime Tier III.</td></tr>
+        <tr><td><b>Contactor</b></td><td>An electrically operated switch, used for motors. Held closed by a coil; drops out when the coil loses power.</td></tr>
+        <tr><td><b>CT</b></td><td>Current Transformer. A ring around a conductor producing a small proportional current (usually 5 A or 1 A) for meters and relays. <b>Never open-circuit its secondary while energised.</b></td></tr>
+        <tr><td><b>Cx / CxA</b></td><td>Commissioning / Commissioning Agent. The independent party who proves the facility works.</td></tr>
+        <tr><td><b>Delta (Δ)</b></td><td>Three windings connected in a closed triangle. No neutral. Used on transformer HV sides and large motors.</td></tr>
+        <tr><td><b>Derating</b></td><td>Reducing a cable's allowed current because of unhelpful installation conditions — heat, grouping, enclosure.</td></tr>
+        <tr><td><b>Discrimination</b></td><td>Ensuring only the nearest breaker to a fault trips, not the ones upstream. Also called selectivity.</td></tr>
+        <tr><td><b>Diversity</b></td><td>The realistic fraction of connected load that runs at once. IT load has none (1.0); socket outlets have a lot (0.5).</td></tr>
+        <tr><td><b>Double conversion</b></td><td>UPS topology: AC→DC→AC continuously, so the load never touches raw mains and there is no transfer time.</td></tr>
+        <tr><td><b>Dual-corded</b></td><td>Equipment with two power supplies, one on each path. The basis of A/B redundancy.</td></tr>
+        <tr><td><b>Dyn11</b></td><td>Transformer vector group: Delta HV, star (wye) LV, neutral brought out, LV lagging HV by 330°.</td></tr>
+        <tr><td><b>Earth fault loop impedance</b></td><td>Total resistance of the path a fault current takes back to source. Must be low enough for the breaker to trip in time. Measured and recorded.</td></tr>
+        <tr><td><b>Eco mode</b></td><td>A UPS running in bypass to save energy, dropping into conversion only on a disturbance. Contentious; many clients forbid it.</td></tr>
+        <tr><td><b>FAT</b></td><td>Factory Acceptance Test. Testing equipment at the manufacturer before it ships. Level 1 commissioning.</td></tr>
+        <tr><td><b>Fault current</b></td><td>The very large current that flows during a short circuit, limited only by the supply system's own impedance.</td></tr>
+        <tr><td><b>Fault tolerant</b></td><td>Survives any single unplanned failure, including during maintenance. Uptime Tier IV.</td></tr>
+        <tr><td><b>Form of separation</b></td><td>How many internal barriers a switchboard has between busbar, breakers and terminals. Form 1 (none) to Form 4b (full segregation).</td></tr>
+        <tr><td><b>Governor</b></td><td>Controls a generator's engine speed, and therefore its output frequency.</td></tr>
+        <tr><td><b>Harmonics</b></td><td>Extra currents at multiples of 50 Hz caused by equipment drawing current in pulses. The 3rd and its multiples add up in the neutral.</td></tr>
+        <tr><td><b>Hold point</b></td><td>An ITP item where work must stop until inspected and released.</td></tr>
+        <tr><td><b>HV</b></td><td>High Voltage. In Australia, above 1,000 V AC. Requires authorised switching and AS 2067 compliance.</td></tr>
+        <tr><td><b>Icu</b></td><td>Ultimate breaking capacity. The biggest fault a breaker can interrupt once, safely, though it may be damaged.</td></tr>
+        <tr><td><b>Ics</b></td><td>Service breaking capacity. The biggest fault it can interrupt and remain fit for service.</td></tr>
+        <tr><td><b>Icw</b></td><td>Short-time withstand. The fault current an assembly can <i>hold</i> for a stated time (usually 1 s) without tripping. A switchboard rating.</td></tr>
+        <tr><td><b>Impedance (transformer)</b></td><td>A percentage describing how much the transformer resists fault current. Lower % = higher fault level.</td></tr>
+        <tr><td><b>Inverter</b></td><td>Turns DC into AC.</td></tr>
+        <tr><td><b>Ipk</b></td><td>Peak withstand. The mechanical rating — can the busbars survive the magnetic force of the first fault peak? Roughly 2.2 × the RMS value.</td></tr>
+        <tr><td><b>IST</b></td><td>Integrated Systems Testing. Level 5 commissioning: the whole facility under load with failures deliberately injected.</td></tr>
+        <tr><td><b>ITP</b></td><td>Inspection and Test Plan. The agreed list of checks, acceptance criteria, and who signs what.</td></tr>
+        <tr><td><b>kVA</b></td><td>Kilovolt-amps. Apparent power — what cables and equipment must carry. Equipment is rated in this.</td></tr>
+        <tr><td><b>kVAr</b></td><td>Reactive power. The "borrowed and returned" current needed by coils. The froth on the beer.</td></tr>
+        <tr><td><b>kW</b></td><td>Kilowatts. Real power — the bit that does useful work.</td></tr>
+        <tr><td><b>kWh</b></td><td>Kilowatt-hours. Energy — power multiplied by time. What you're billed for.</td></tr>
+        <tr><td><b>Load bank</b></td><td>A large box of heating elements used to imitate real load during commissioning.</td></tr>
+        <tr><td><b>LV</b></td><td>Low Voltage. Up to 1,000 V AC. In Australia, 415 V three-phase / 230 V single-phase.</td></tr>
+        <tr><td><b>Maintenance bypass</b></td><td>A manual, external path around a UPS allowing it to be removed entirely while the load keeps running.</td></tr>
+        <tr><td><b>Maximum demand</b></td><td>The realistic largest load at one moment, after diversity. What you size equipment for.</td></tr>
+        <tr><td><b>MCB</b></td><td>Miniature Circuit Breaker. Small, 6–125 A, for final circuits. Fixed settings, curve types B/C/D.</td></tr>
+        <tr><td><b>MCCB</b></td><td>Moulded Case Circuit Breaker. Mid-size, 16–1600 A, for submains. Often adjustable.</td></tr>
+        <tr><td><b>MEN</b></td><td>Multiple Earthed Neutral. The Australian earthing system. Neutral and earth joined at exactly one point per installation.</td></tr>
+        <tr><td><b>N, N+1, 2N</b></td><td>Redundancy levels. N = exactly enough. N+1 = one spare on a shared bus. 2N = two complete independent systems.</td></tr>
+        <tr><td><b>NCC</b></td><td>National Construction Code. Australian building code covering fire, egress and essential services.</td></tr>
+        <tr><td><b>NCR</b></td><td>Non-Conformance Report. Formal record that something doesn't meet the requirement.</td></tr>
+        <tr><td><b>Neutral</b></td><td>The return conductor, at approximately earth potential. <b>Treat it as live</b> — a broken neutral can sit at full voltage.</td></tr>
+        <tr><td><b>Non-linear load</b></td><td>Equipment that draws current in pulses rather than smoothly — computers, drives, LED drivers. Causes harmonics.</td></tr>
+        <tr><td><b>Normally open / closed</b></td><td>The state of a contact <b>at rest, de-energised</b> — not "usually".</td></tr>
+        <tr><td><b>Open / closed transition</b></td><td>Open = break before make (brief outage). Closed = make before break (no outage, sources briefly paralleled).</td></tr>
+        <tr><td><b>PDU</b></td><td>Power Distribution Unit. Floor-standing: a data hall distribution board, often with transformer and per-circuit metering. Rack PDU: the power strip inside a rack.</td></tr>
+        <tr><td><b>PFC</b></td><td>Power Factor Correction. Capacitor banks that supply reactive power locally, improving power factor.</td></tr>
+        <tr><td><b>Power factor</b></td><td>The fraction of carried power that does useful work. kW ÷ kVA.</td></tr>
+        <tr><td><b>Rectifier</b></td><td>Turns AC into DC.</td></tr>
+        <tr><td><b>RCD</b></td><td>Residual Current Device. Detects a small imbalance between active and neutral (typically 30 mA) and trips. Protects people, not cables.</td></tr>
+        <tr><td><b>RFI</b></td><td>Request For Information. A formal written question to the designer.</td></tr>
+        <tr><td><b>RMS</b></td><td>Root Mean Square. The equivalent steady DC value of a changing AC waveform. Every AC rating you see is RMS unless it says peak.</td></tr>
+        <tr><td><b>RMU</b></td><td>Ring Main Unit. HV switchgear allowing a distribution ring to pass through a site and be tapped.</td></tr>
+        <tr><td><b>RPP</b></td><td>Remote Power Panel. A smaller distribution panel out on the data hall floor.</td></tr>
+        <tr><td><b>SAT</b></td><td>Site Acceptance Test. Proving equipment works after installation. Level 3 commissioning.</td></tr>
+        <tr><td><b>Selectivity</b></td><td>Same as discrimination.</td></tr>
+        <tr><td><b>Single-corded</b></td><td>Equipment with only one power inlet. Needs an STS to gain A/B redundancy — or it's a single point of failure.</td></tr>
+        <tr><td><b>Star / wye (Y)</b></td><td>Three windings joined at a common point (the neutral). Used on transformer LV sides. Gives both 415 V and 230 V.</td></tr>
+        <tr><td><b>Static bypass</b></td><td>Automatic solid-state path around a UPS's conversion stages, used if the inverter fails or is overloaded.</td></tr>
+        <tr><td><b>STS</b></td><td>Static Transfer Switch. Solid-state switch between A and B paths for single-corded loads. Transfers in 4–8 ms.</td></tr>
+        <tr><td><b>Submittal</b></td><td>The proposed equipment offered for approval against the specification, before manufacture.</td></tr>
+        <tr><td><b>Thermal runaway</b></td><td>A loose joint heats, which degrades it further, which makes it hotter. The main cause of switchboard fires.</td></tr>
+        <tr><td><b>Tier I–IV</b></td><td>Uptime Institute classification. III = concurrently maintainable, IV = fault tolerant.</td></tr>
+        <tr><td><b>Triplen harmonics</b></td><td>The 3rd, 9th, 15th harmonics — the ones that add in the neutral instead of cancelling.</td></tr>
+        <tr><td><b>UPS</b></td><td>Uninterruptible Power Supply. Rectifier, battery on a DC link, and inverter. Covers the gap until the generator starts.</td></tr>
+        <tr><td><b>Variation</b></td><td>A formally agreed change to scope, with cost and time impact. Notify <b>before</b> doing the work.</td></tr>
+        <tr><td><b>Vector group</b></td><td>Notation like Dyn11 describing a transformer's winding connections and phase shift. Must match to parallel two transformers.</td></tr>
+        <tr><td><b>VRLA</b></td><td>Valve Regulated Lead Acid. Sealed battery type. Needs ventilation (hydrogen) and tight temperature control.</td></tr>
+        <tr><td><b>VT</b></td><td>Voltage Transformer. Steps high voltage down to a safe level (e.g. 110 V) for meters and relays.</td></tr>
+        <tr><td><b>Witness point</b></td><td>An ITP item where you notify the client; if they don't attend, you may proceed.</td></tr>
+        <tr><td><b>XLPE</b></td><td>Cross-linked polyethylene cable insulation. 90 °C rated, so it carries more current than 75 °C PVC for the same size.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="ch" id="ap-fc">
+  <h3><span class="cn">A3</span> Flashcards</h3>
+  <p class="lead">Cut along the dashed lines. Question on the front line, answer below it. Test yourself in gaps — waiting for a kettle, sitting in a car park. Five minutes a day beats an hour on Sunday.</p>
+
+  <div class="flash">
+    <div class="fc"><b>What is √3 and where is it used?</b><span>1.732. In every three-phase calculation. P = √3 × V × I × pf.</span></div>
+    <div class="fc"><b>kW vs kVA vs kVAr?</b><span>kW = beer (useful work). kVAr = froth (borrowed, returned). kVA = the whole glass (what cables carry). Equipment is rated in kVA.</span></div>
+    <div class="fc"><b>Quick check: 415 V, amps to kW?</b><span>1 A ≈ 0.7 kW. 1 kW ≈ 1.4 A.</span></div>
+    <div class="fc"><b>Why does a loose joint start fires?</b><span>Resistance where there should be none → I²R heating → degrades the joint → more resistance → more heat. Thermal runaway.</span></div>
+    <div class="fc"><b>Four cable sizing checks?</b><span>Current after derating · Volt drop · Short circuit (adiabatic) · Protection coordination. Take the LARGEST.</span></div>
+    <div class="fc"><b>Ib ≤ In ≤ Iz means?</b><span>Load ≤ breaker ≤ cable capacity.</span></div>
+    <div class="fc"><b>Volt drop limit in Australia?</b><span>5% total from supply to point of use. Data centres often designed to 2–3%.</span></div>
+    <div class="fc"><b>Icu vs Ics vs Icw?</b><span>Icu = interrupt once. Ics = interrupt and stay in service. Icw = HOLD a fault without tripping (assembly rating).</span></div>
+    <div class="fc"><b>Ipk vs Icw — which is peak?</b><span>Ipk is the peak (mechanical force). Icw is RMS (heating). Ipk ≈ 2.2 × Icw.</span></div>
+    <div class="fc"><b>What is discrimination?</b><span>Only the nearest breaker to the fault trips; nothing upstream does. Achieved by current, time, or zone.</span></div>
+    <div class="fc"><b>What does MEN stand for?</b><span>Multiple Earthed Neutral. Neutral and earth joined at exactly ONE point — the MEN link in the main switchboard.</span></div>
+    <div class="fc"><b>Where does fault current actually return to?</b><span>The transformer — not "the ground". Earthing gives it an easy path home so the breaker trips.</span></div>
+    <div class="fc"><b>What does an RCD protect?</b><span>People. Detects ~30 mA imbalance between active and neutral. An MCB protects the cable.</span></div>
+    <div class="fc"><b>Decode Dyn11.</b><span>Delta HV · star LV · neutral brought out · LV lags HV by 330° (11 o'clock).</span></div>
+    <div class="fc"><b>Why must vector groups match?</b><span>To parallel two transformers or transfer without a break. A 30° offset creates huge circulating current.</span></div>
+    <div class="fc"><b>Transformer fault current estimate?</b><span>FLC ÷ (Z% ÷ 100). A 6% transformer gives ≈ 16.7 × full load current.</span></div>
+    <div class="fc"><b>Why is a bus tie normally open?</b><span>Closed, both transformers feed a fault, roughly doubling fault level. Open keeps it down and keeps the halves independent.</span></div>
+    <div class="fc"><b>Form 1 to Form 4 — what changes?</b><span>The number of internal barriers. Form 1 = none. Form 4b = busbar, each unit AND terminals all separated.</span></div>
+    <div class="fc"><b>Why does a data centre specify Form 4b?</b><span>So one circuit can be worked on while the rest of the board stays live — concurrent maintainability.</span></div>
+    <div class="fc"><b>CT safety rule?</b><span>NEVER open-circuit the secondary while the primary is live. Voltage rises to thousands of volts. Short it first.</span></div>
+    <div class="fc"><b>ANSI 50 vs 51?</b><span>50 = instantaneous overcurrent (fast). 51 = timed overcurrent (patient). Add N for earth fault.</span></div>
+    <div class="fc"><b>ANSI 87 — what and why fast?</b><span>Differential. In doesn't match out, so the fault is INSIDE. Can trip instantly — no risk of tripping for someone else's fault.</span></div>
+    <div class="fc"><b>Generator vs UPS — which problem does each solve?</b><span>Generator = duration. UPS = continuity. Neither works alone.</span></div>
+    <div class="fc"><b>How long is the load dead on an ATS transfer?</b><span>About 13 seconds. Covered only by the UPS battery.</span></div>
+    <div class="fc"><b>Why size a generator above running load?</b><span>Motor starting inrush, step load acceptance, UPS battery recharge (~20%), non-linear derating (~15%).</span></div>
+    <div class="fc"><b>Why does a UPS sync to the mains?</b><span>So the static bypass can transfer instantly without a phase jump if the inverter fails.</span></div>
+    <div class="fc"><b>Static bypass vs maintenance bypass?</b><span>Static = automatic, protects against inverter failure. Maintenance = manual, lets you physically remove the UPS.</span></div>
+    <div class="fc"><b>Battery sizing margins?</b><span>÷ inverter efficiency, ÷ 0.80 end of life, temperature correction, rate correction, + design margin. Roughly +40%.</span></div>
+    <div class="fc"><b>What proves battery autonomy?</b><span>A full-load discharge test, timed. Nothing else.</span></div>
+    <div class="fc"><b>STS — what and how fast?</b><span>Static Transfer Switch. Gives a single-corded load A/B redundancy. 4–8 ms. But it's a new single point of failure.</span></div>
+    <div class="fc"><b>N+1 vs 2N in nine words?</b><span>N+1 protects the machine. 2N protects the path.</span></div>
+    <div class="fc"><b>The 50% rule?</b><span>In 2N, each path must carry 100% alone — so neither may exceed 50% in normal operation.</span></div>
+    <div class="fc"><b>Concurrent maintainability vs fault tolerance?</b><span>Planned work (Tier III) vs unplanned failure, including during maintenance (Tier IV).</span></div>
+    <div class="fc"><b>Seven-step eye path?</b><span>Sources · Voltage transitions · Bus ties · Trace one path · Trace the alternate · Common points · Protection. "Some Very Big Trucks Take Corners Precisely."</span></div>
+    <div class="fc"><b>The senior-sounding SLD question?</b><span>"What's the single common point between A and B, and is it acceptable?"</span></div>
+    <div class="fc"><b>Diversity of IT load?</b><span>1.0. Servers run flat out, always. Applying building diversity to a data hall is a serious error.</span></div>
+    <div class="fc"><b>Why oversize the neutral in a data centre?</b><span>Triplen harmonics (3rd, 9th, 15th) add in the neutral instead of cancelling. Commonly sized at 200%.</span></div>
+    <div class="fc"><b>Five commissioning levels?</b><span>L1 factory/FAT · L2 delivery &amp; static · L3 component/SAT · L4 system · L5 integrated (IST).</span></div>
+    <div class="fc"><b>What does dropping a whole path always find?</b><span>Single-corded equipment nobody catalogued. It always finds some.</span></div>
+    <div class="fc"><b>Hold point vs witness point?</b><span>Hold = work stops until released. Witness = notify; proceed if they don't attend.</span></div>
+    <div class="fc"><b>Golden rule of an RFI?</b><span>Always propose your own solution. It halves the response time and puts you in control of the answer.</span></div>
+    <div class="fc"><b>Golden rule of a variation?</b><span>Notify BEFORE doing the work. Afterwards you have no negotiating position and may have forfeited entitlement.</span></div>
+  </div>
+</section>
+
+<p class="footnote">
+This manual teaches principles and methods. It is a study aid, not a design authority. Every clause reference, tabulated value and compliance figure must be confirmed against the current published edition of the relevant standard before use on a real project — cable ratings, derating factors, disconnection times and maximum demand methods in particular. Fault levels must be confirmed by a proper study using the actual network data, not by the rule-of-thumb estimates used here for teaching. Sizing rules of thumb are typical industry practice and are not a substitute for manufacturer sizing software or a chartered engineer's review. Where this manual and a standard disagree, the standard is right.
+</p>
+
+</div>
