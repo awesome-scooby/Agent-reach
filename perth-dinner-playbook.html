@@ -1,0 +1,1152 @@
+<title>Perth Dinner Playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#EDEBE4; --surface:#F8F7F2; --surface2:#E2E0D6;
+  --ink:#1B211F; --ink2:#525C57; --ink3:#7A847E;
+  --line:#CFCCC0; --line2:#B9B5A7;
+  --accent:#0F6E60; --accent-ink:#0A4C42; --accent-soft:#D8E8E3;
+  --go:#367245; --go-soft:#DCEBDD;
+  --stop:#A43728; --stop-soft:#F3DED9;
+  --watch:#946313; --watch-soft:#F2E6CC;
+  --info:#2F5C89; --info-soft:#DCE6F1;
+  --shadow:0 1px 2px rgba(27,33,31,.06),0 8px 24px -14px rgba(27,33,31,.22);
+  --r:10px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1517; --surface:#182124; --surface2:#212C2F;
+    --ink:#E7EBE8; --ink2:#A0ADA8; --ink3:#7C8985;
+    --line:#2B3639; --line2:#3A4649;
+    --accent:#4EC5AD; --accent-ink:#8FE0CF; --accent-soft:#12332E;
+    --go:#77C486; --go-soft:#173324;
+    --stop:#E88676; --stop-soft:#3A1F1A;
+    --watch:#DCAE4A; --watch-soft:#33280F;
+    --info:#7FADE0; --info-soft:#152634;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -16px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1517; --surface:#182124; --surface2:#212C2F;
+  --ink:#E7EBE8; --ink2:#A0ADA8; --ink3:#7C8985;
+  --line:#2B3639; --line2:#3A4649;
+  --accent:#4EC5AD; --accent-ink:#8FE0CF; --accent-soft:#12332E;
+  --go:#77C486; --go-soft:#173324;
+  --stop:#E88676; --stop-soft:#3A1F1A;
+  --watch:#DCAE4A; --watch-soft:#33280F;
+  --info:#7FADE0; --info-soft:#152634;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -16px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16px; line-height:1.6; margin:0;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:980px;margin:0 auto;padding:0 20px 100px}
+h1,h2,h3,h4{font-family:"Fraunces","Iowan Old Style",Georgia,serif;text-wrap:balance;margin:0}
+p{margin:0}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+/* ---------- masthead ---------- */
+.mast{padding:56px 0 30px;border-bottom:1px solid var(--line)}
+.eyebrow{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink3);display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+}
+.eyebrow b{color:var(--accent);font-weight:500}
+h1{font-size:clamp(38px,7vw,60px);line-height:1.02;font-weight:600;letter-spacing:-.02em;margin:16px 0 0}
+h1 em{font-style:italic;color:var(--accent)}
+.dek{margin-top:14px;font-size:17px;color:var(--ink2);max-width:60ch}
+
+.modebar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:26px}
+.switch{
+  display:inline-flex;align-items:stretch;border:1px solid var(--line2);border-radius:999px;
+  overflow:hidden;background:var(--surface);
+}
+.switch button{
+  font:600 12px/1 "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;
+  padding:11px 16px;border:0;background:transparent;color:var(--ink2);cursor:pointer;
+}
+.switch button[aria-pressed="true"]{background:var(--accent);color:var(--paper)}
+:root[data-theme="dark"] .switch button[aria-pressed="true"],
+.switch button[aria-pressed="true"]{color:#F8F7F2}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .switch button[aria-pressed="true"]{color:#0F1517}}
+:root[data-theme="dark"] .switch button[aria-pressed="true"]{color:#0F1517}
+.hint{font-size:13px;color:var(--ink3)}
+
+.assume{
+  margin-top:24px;background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--watch);border-radius:var(--r);padding:14px 16px;
+}
+.assume h4{font-size:14px;font-family:"Archivo",sans-serif;font-weight:700;letter-spacing:.02em}
+.assume ul{margin:8px 0 0;padding-left:18px;font-size:14px;color:var(--ink2)}
+.assume li{margin:3px 0}
+
+/* ---------- nav ---------- */
+nav.chips{
+  position:sticky;top:0;z-index:40;background:var(--paper);
+  background:color-mix(in srgb,var(--paper) 92%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);margin:0 -20px;padding:10px 20px;
+}
+.chiprow{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;max-width:980px;margin:0 auto}
+.chiprow::-webkit-scrollbar{display:none}
+.chiprow a{
+  flex:0 0 auto;font:500 12px/1 "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink2);text-decoration:none;padding:8px 11px;border:1px solid var(--line);
+  border-radius:999px;background:var(--surface);white-space:nowrap;
+}
+.chiprow a:hover{border-color:var(--accent);color:var(--accent)}
+.chiprow a b{color:var(--ink3);font-weight:500;margin-right:5px}
+
+/* ---------- sections ---------- */
+section{padding:52px 0 8px;scroll-margin-top:70px}
+.sechead{display:flex;gap:16px;align-items:baseline;border-top:2px solid var(--ink);padding-top:14px;margin-bottom:8px}
+.num{font:600 12px/1 "IBM Plex Mono",monospace;color:var(--accent);letter-spacing:.1em;padding-top:6px}
+h2{font-size:clamp(26px,4.4vw,36px);font-weight:600;letter-spacing:-.015em;line-height:1.1}
+.sub{color:var(--ink2);font-size:16px;margin-top:10px;max-width:62ch}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:14px;margin-top:20px}
+@media(min-width:720px){.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}}
+
+.tag{
+  display:inline-block;font:600 10px/1 "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;
+  padding:5px 8px;border-radius:5px;background:var(--surface2);color:var(--ink2);
+}
+.tag.go{background:var(--go-soft);color:var(--go)}
+.tag.stop{background:var(--stop-soft);color:var(--stop)}
+.tag.watch{background:var(--watch-soft);color:var(--watch)}
+.tag.info{background:var(--info-soft);color:var(--info)}
+.tag.acc{background:var(--accent-soft);color:var(--accent-ink)}
+
+/* objectives */
+.obj{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
+.obj:last-child{border-bottom:0}
+.obj .rank{
+  flex:0 0 34px;height:34px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent);
+  display:grid;place-items:center;font:600 14px/1 "IBM Plex Mono",monospace;
+}
+.obj h3{font-size:19px;font-weight:600}
+.obj p{font-size:15px;color:var(--ink2);margin-top:5px}
+.marker{margin-top:8px;font-size:13.5px;color:var(--ink);background:var(--accent-soft);
+  border-radius:6px;padding:7px 10px;display:inline-block}
+.marker b{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--accent-ink);display:block;margin-bottom:2px}
+
+/* guest cards */
+.guests{display:grid;gap:14px;margin-top:18px}
+@media(min-width:760px){.guests{grid-template-columns:1fr 1fr}}
+.gcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.gcard header{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface2);border-bottom:1px solid var(--line)}
+.gcard header span{font:600 11px/1 "IBM Plex Mono",monospace;letter-spacing:.1em;color:var(--ink3)}
+.gcard input,.gcard textarea,.gcard select{
+  width:100%;font:400 14px/1.5 "Archivo",sans-serif;color:var(--ink);background:transparent;
+  border:0;border-bottom:1px dashed var(--line2);padding:7px 0;resize:vertical;
+}
+.gcard input::placeholder,.gcard textarea::placeholder{color:var(--ink3)}
+.gcard .body{padding:6px 14px 14px}
+.gcard label{display:block;margin-top:10px}
+.gcard .lab{font:600 10px/1 "IBM Plex Mono",monospace;letter-spacing:.11em;text-transform:uppercase;color:var(--accent-ink)}
+.gcard .name{font-family:"Fraunces",serif;font-size:19px;font-weight:600;border-bottom:1px solid var(--line2)}
+.gcard select{border:1px solid var(--line);border-radius:6px;padding:5px 8px;width:auto;
+  font:600 11px/1 "IBM Plex Mono",monospace;background:var(--surface)}
+
+/* timeline */
+.tl{margin-top:24px;position:relative;padding-left:0}
+.stage{display:grid;grid-template-columns:70px 1fr;gap:0}
+@media(max-width:620px){.stage{grid-template-columns:52px 1fr}}
+.rail{position:relative}
+.rail::before{content:"";position:absolute;left:11px;top:0;bottom:0;width:2px;background:var(--line)}
+.stage:first-child .rail::before{top:22px}
+.stage:last-child .rail::before{bottom:calc(100% - 22px)}
+.dot{position:absolute;left:4px;top:15px;width:16px;height:16px;border-radius:50%;
+  background:var(--paper);border:2px solid var(--accent);z-index:2}
+.stage.on .dot{background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.time{font:600 11px/1 "IBM Plex Mono",monospace;color:var(--ink3);position:absolute;left:28px;top:18px;white-space:nowrap}
+@media(max-width:620px){.time{position:static;display:block;padding:14px 0 0 26px}}
+.stagebody{padding:0 0 26px 12px}
+.stagebody h3{font-size:20px;font-weight:600;margin-top:8px}
+.dur{font:600 10px/1 "IBM Plex Mono",monospace;letter-spacing:.1em;color:var(--ink3);text-transform:uppercase}
+.lines{margin-top:12px;display:grid;gap:8px}
+.line{display:grid;grid-template-columns:76px 1fr;gap:10px;font-size:14.5px;align-items:start}
+@media(max-width:620px){.line{grid-template-columns:1fr;gap:3px}}
+.line .k{font:600 10px/1.6 "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;padding-top:3px}
+.line.say .k{color:var(--go)} .line.ask .k{color:var(--info)}
+.line.avoid .k{color:var(--stop)} .line.move .k{color:var(--accent)}
+.line .v{color:var(--ink2)}
+.line .v q{color:var(--ink);font-style:italic;quotes:"“" "”"}
+.line .v q::before{content:open-quote} .line .v q::after{content:close-quote}
+
+/* question lists */
+.qgroup{margin-top:16px}
+.qgroup h3{font-size:19px;font-weight:600;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.qgroup h3 .letter{font:600 12px/1 "IBM Plex Mono",monospace;color:var(--accent);border:1px solid var(--accent);
+  border-radius:4px;padding:4px 6px}
+.qnote{font-size:14px;color:var(--ink2);margin-top:6px}
+ul.q{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:7px}
+ul.q li{
+  background:var(--surface);border:1px solid var(--line);border-left:2px solid var(--accent);
+  border-radius:0 8px 8px 0;padding:10px 13px;font-size:15px;
+}
+ul.q li .why{display:block;margin-top:5px;font-size:13px;color:var(--ink3)}
+ul.q li.star{border-left-color:var(--watch);background:var(--watch-soft)}
+ul.q li.star::after{content:"★ top question";display:block;margin-top:6px;
+  font:600 9.5px/1 "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--watch)}
+
+/* dice */
+.dice{margin-top:18px;background:var(--accent-soft);border:1px solid var(--accent);border-radius:var(--r);padding:16px}
+.dice button{
+  font:600 12px/1 "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--accent);color:var(--paper);border:0;border-radius:7px;padding:11px 15px;cursor:pointer;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .dice button{color:#0F1517}}
+:root[data-theme="dark"] .dice button{color:#0F1517}
+.dice .out{margin-top:12px;font-family:"Fraunces",serif;font-size:20px;line-height:1.35;color:var(--ink);min-height:1.4em}
+
+/* checklists */
+ul.check{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:2px}
+ul.check li{display:flex;gap:11px;align-items:flex-start;padding:9px 11px;border-radius:8px}
+ul.check li:hover{background:var(--surface)}
+ul.check input{margin-top:4px;width:17px;height:17px;accent-color:var(--accent);flex:0 0 auto;cursor:pointer}
+ul.check label{font-size:15px;cursor:pointer}
+ul.check .why{display:block;font-size:13.5px;color:var(--ink3);margin-top:3px}
+ul.check input:checked + label{color:var(--ink3);text-decoration:line-through;text-decoration-color:var(--line2)}
+ul.check input:checked + label .why{text-decoration:none}
+
+/* radar table */
+.tablewrap{overflow-x:auto;margin-top:18px;border:1px solid var(--line);border-radius:var(--r)}
+table{border-collapse:collapse;width:100%;min-width:620px;background:var(--surface);font-size:14px}
+th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 10px/1.4 "IBM Plex Mono",monospace;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink3);background:var(--surface2);position:sticky;top:0}
+tr:last-child td{border-bottom:0}
+td.sig{font-weight:600;color:var(--ink)}
+td q{font-style:italic;color:var(--ink2)}
+td q::before{content:"“"} td q::after{content:"”"}
+
+/* scripts */
+.script{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;margin-top:12px}
+.script h3{font-size:17px;font-weight:600;font-family:"Archivo",sans-serif;letter-spacing:-.01em}
+.said{
+  font-family:"Fraunces",serif;font-size:17px;line-height:1.5;color:var(--ink);
+  border-left:2px solid var(--accent);padding:2px 0 2px 14px;margin-top:11px;
+}
+.said + .said{margin-top:9px}
+.script .note{margin-top:11px;font-size:13.5px;color:var(--ink3)}
+.script .note b{color:var(--ink2)}
+
+/* story bank */
+.story{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:15px 17px}
+.story h3{font-size:17px;font-weight:600}
+.story .row{display:grid;grid-template-columns:64px 1fr;gap:10px;font-size:14px;margin-top:9px}
+@media(max-width:620px){.story .row{grid-template-columns:1fr;gap:2px}}
+.story .row .k{font:600 9.5px/1.7 "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink)}
+.story .row .v{color:var(--ink2)}
+.story textarea{width:100%;margin-top:10px;background:var(--paper);border:1px dashed var(--line2);
+  border-radius:7px;padding:9px 11px;font:400 14px/1.5 "Archivo",sans-serif;color:var(--ink);resize:vertical}
+.story textarea::placeholder{color:var(--ink3)}
+
+/* cheat sheet */
+#cheat .sheet{background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:22px;margin-top:20px}
+.sheet h3{font-size:15px;font-family:"IBM Plex Mono",monospace;font-weight:600;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--line);padding-bottom:7px;margin-top:26px}
+.sheet h3:first-child{margin-top:0}
+.sheet ol,.sheet ul{margin:12px 0 0;padding-left:20px;font-size:16px;display:grid;gap:7px}
+.sheet .big{font-family:"Fraunces",serif;font-size:19px;line-height:1.4}
+.formula{display:grid;gap:8px;margin-top:12px}
+.formula div{display:flex;gap:11px;align-items:baseline;font-size:16px}
+.formula span{font:600 11px/1 "IBM Plex Mono",monospace;color:var(--paper);background:var(--accent);
+  border-radius:4px;padding:5px 7px;flex:0 0 auto}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .formula span{color:#0F1517}}
+:root[data-theme="dark"] .formula span{color:#0F1517}
+
+.footnote{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-size:13.5px;color:var(--ink3)}
+
+/* modes */
+body[data-mode="tonight"] .prep-only{display:none}
+body[data-mode="tonight"] .wrap{max-width:640px}
+body[data-mode="tonight"] .sheet{font-size:17px}
+.tonight-only{display:none}
+body[data-mode="tonight"] .tonight-only{display:block}
+
+@media (prefers-reduced-motion:no-preference){
+  section{animation:rise .5s ease both;animation-timeline:view();animation-range:entry 0% entry 30%}
+}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="eyebrow"><span>Perth, WA</span>·<span>six guests</span>·<span>one evening</span>·<b>host: quiet, warms up slow</b></div>
+  <h1>The <em>quiet host's</em> playbook</h1>
+  <p class="dek">You don't need to be the loudest person in your own kitchen. You need to be the one who listened properly, remembered the details, and made everyone feel welcome. That's a real advantage — this plan is built around it.</p>
+
+  <div class="modebar">
+    <div class="switch" role="group" aria-label="View mode">
+      <button id="mPrep" aria-pressed="true">Prep mode</button>
+      <button id="mTon" aria-pressed="false">Tonight mode</button>
+    </div>
+    <span class="hint">Tonight mode strips this down to the one-page cheat sheet. Use it on your phone.</span>
+  </div>
+
+  <div class="assume prep-only">
+    <h4>What I assumed — correct anything that's wrong</h4>
+    <ul>
+      <li>6 guests, likely 3 couples, met through your wife. Adults only or kids playing separately.</li>
+      <li>~4 hours, evening, at your home. Food and drinks; maybe a game or the backyard later.</li>
+      <li>You've met few or none of them properly before.</li>
+      <li>You're an Electrical / Project Engineer; you want to <b>learn from people</b> — plus career leads, side-hustle ideas, property/investing thinking, and local Perth know-how.</li>
+      <li>You and your wife will likely see these people again — this is <b>episode one of a series</b>, not a one-off. That changes everything below: you are playing a long game, so nothing has to happen tonight.</li>
+    </ul>
+  </div>
+</header>
+
+<nav class="chips" aria-label="Sections">
+  <div class="chiprow">
+    <a href="#goals"><b>01</b>Goals</a>
+    <a href="#guests"><b>02</b>Guest map</a>
+    <a href="#flow"><b>03</b>The evening</a>
+    <a href="#questions"><b>04</b>Questions</a>
+    <a href="#strategy"><b>05</b>Strategy</a>
+    <a href="#stories"><b>06</b>Story bank</a>
+    <a href="#radar"><b>07</b>Radar</a>
+    <a href="#dont"><b>08</b>Never do</a>
+    <a href="#scripts"><b>09</b>Scripts</a>
+    <a href="#cheat"><b>10</b>Cheat sheet</a>
+  </div>
+</nav>
+
+<!-- ========== 01 GOALS ========== -->
+<section id="goals" class="prep-only">
+  <div class="sechead"><span class="num">01</span><h2>Your objectives tonight</h2></div>
+  <p class="sub">Five goals, ranked. Numbers 1–3 are the evening. Numbers 4–5 are bonuses that only happen <em>because</em> 1–3 worked. Notice what is <strong>not</strong> on this list: job leads, business deals, investment tips. Those are the harvest, and you don't harvest on planting day.</p>
+
+  <div class="card" style="margin-top:20px">
+    <div class="obj">
+      <div class="rank">1</div>
+      <div>
+        <h3>Learn one real thing from every single guest</h3>
+        <p>Not small talk — one specific thing about their world you could not have found on Google. How a mine shutdown actually gets scheduled. What a nurse sees at 3am. Why their business nearly folded in 2020. This is your stated goal, and it's a good one: it makes you a great listener, which makes people like you, which produces everything else.</p>
+        <div class="marker"><b>Success looks like</b>Tomorrow morning you can name six things you didn't know yesterday.</div>
+      </div>
+    </div>
+    <div class="obj">
+      <div class="rank">2</div>
+      <div>
+        <h3>Make each person feel genuinely liked</h3>
+        <p>Trust is the engine. Nothing on this page works without it — not the friendships, not the career leads, not the second invitation. People decide whether they like you in the first two minutes and confirm it in the last two. Warm door, warm goodbye, full glasses, remembered names.</p>
+        <div class="marker"><b>Success looks like</b>At least three people say "we should do this again" without you raising it first.</div>
+      </div>
+    </div>
+    <div class="obj">
+      <div class="rank">3</div>
+      <div>
+        <h3>Get one proper one-to-one with every guest</h3>
+        <p>Ten minutes each, away from the group. This is where a quiet person wins — you're average in a loud group of seven and excellent one-on-one, so engineer the one-on-ones. Hosting gives you free reasons to do it: drinks, the barbecue, showing someone the backyard, walking someone to their car.</p>
+        <div class="marker"><b>Success looks like</b>You know all six people's jobs, how they got there, and one thing each is currently dealing with.</div>
+      </div>
+    </div>
+    <div class="obj">
+      <div class="rank">4</div>
+      <div>
+        <h3>Leave exactly two doors open</h3>
+        <p>Not favours. Doors — a small, specific, easy next thing with two people. "I'll send you that podcast." "Come look at the shed when you're next around." "We should do the Margaret River thing." A door costs the other person nothing, which is why they walk through it.</p>
+        <div class="marker"><b>Success looks like</b>Two follow-up messages you can send within 48 hours that don't feel like networking.</div>
+      </div>
+    </div>
+    <div class="obj">
+      <div class="rank">5</div>
+      <div>
+        <h3>Practise the ratio: listen 60, talk 40</h3>
+        <p>You're quiet, so the risk isn't talking too much — it's the opposite. Pure listening feels like an interview and quietly makes people uneasy. The 40% is a target to <em>hit</em>, not a limit. Every three questions you ask, offer one thing about yourself unasked.</p>
+        <div class="marker"><b>Success looks like</b>You told at least four short stories about yourself, unprompted, and none lasted over a minute.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 02 GUESTS ========== -->
+<section id="guests" class="prep-only">
+  <div class="sechead"><span class="num">02</span><h2>Guest intelligence map</h2></div>
+  <p class="sub">Fill these in before they arrive — even guesses. Your wife can fill most of it in five minutes; ask her tonight. What you write here saves ("saved on this device"), so you can update it after the evening while it's fresh.</p>
+
+  <div class="guests" id="guestGrid"></div>
+
+  <div class="grid g2" style="margin-top:22px">
+    <div class="card">
+      <span class="tag acc">Who to invest your time in</span>
+      <ul style="margin:12px 0 0;padding-left:19px;font-size:15px;display:grid;gap:9px">
+        <li><b>Anyone in mining, resources, construction, utilities or government.</b> Closest to your world as an Electrical/Project Engineer — the intel is directly usable and you'll have real things to say back, which makes you interesting rather than interviewing.</li>
+        <li><b>Anyone who runs their own business,</b> even a small one. Highest density of everything you asked for — money, opportunity, industry knowledge, how Perth actually works — and business owners genuinely enjoy being asked about it. This is your best single conversation of the night.</li>
+        <li><b>The quietest guest in the room.</b> Lowest competition, highest friendship return, and the person most like you. Almost nobody will talk to them properly. You will, and they'll remember it.</li>
+        <li><b>The women, not just the men.</b> The invitation came through your wife, and the <em>next</em> invitation will too. If the wives enjoy the night, this becomes a regular thing — which is worth more than any single conversation. Don't retreat into a men-only huddle.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag stop">Where quiet hosts lose the night</span>
+      <ul style="margin:12px 0 0;padding-left:19px;font-size:15px;display:grid;gap:9px">
+        <li><b>Over-investing in the loudest guest.</b> They're easy to talk to because they need nothing from you. They're also the person you'll learn the least from, and they'll be fine without you.</li>
+        <li><b>Hiding in the kitchen.</b> The classic quiet-host move — real jobs that look like hosting but are actually avoidance. Prep everything before they arrive so the kitchen isn't available as a bolt-hole.</li>
+        <li><b>Sitting in the same seat for three hours.</b> If you don't move, you'll talk to two people all night. Change position every time food or drinks change.</li>
+        <li><b>Talking mostly to the one person whose job is nearest yours.</b> Comfortable, and a waste — you already know that world.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <span class="tag watch">If you don't know anything about them yet</span>
+    <p style="margin-top:11px;font-size:15px;color:var(--ink2)">Perth household archetypes you're statistically likely to be hosting — use these to pre-load a few questions, then throw them away the moment you meet the actual person. <b>The archetype is a starting guess, never a conclusion.</b></p>
+    <div class="tablewrap" style="margin-top:14px">
+      <table>
+        <thead><tr><th>Likely archetype</th><th>What they'll know that you don't</th><th>Your best opening angle</th></tr></thead>
+        <tbody>
+          <tr><td class="sig">Mining / FIFO</td><td>Rosters, shutdown planning, which contractors are hiring, day rates, who's flat out</td><td><q>What's your roster? How do you find the swing?</q> — then how his family handles it</td></tr>
+          <tr><td class="sig">Trade with his own ABN</td><td>Real small-business economics, quoting, chasing money, what customers actually pay for</td><td><q>Did you always want to go out on your own, or did it just happen?</q></td></tr>
+          <tr><td class="sig">Corporate / finance / IT</td><td>Property and investing thinking, how big organisations really decide, AI landing in white-collar work</td><td><q>What does your week actually look like? I never know what those job titles mean.</q></td></tr>
+          <tr><td class="sig">Health / education</td><td>Perth systems from the inside, human stories, shift-work life, the best and worst of the city</td><td><q>What's the part of the job people don't see?</q></td></tr>
+          <tr><td class="sig">Recently migrated</td><td>The settling-in map — schools, suburbs, banks, visas, communities, what surprised them</td><td><q>How long have you been here? What took the longest to get used to?</q></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 03 FLOW ========== -->
+<section id="flow" class="prep-only">
+  <div class="sechead"><span class="num">03</span><h2>The evening, hour by hour</h2></div>
+  <p class="sub">Built for roughly 6:30pm to 10:30pm — slide the times to fit. The single most important line in this whole section is at 9:00pm: <strong>the wind-down is when people get honest.</strong> Most hosts are tidying up by then. Don't be.</p>
+
+  <div class="tl">
+
+    <div class="stage">
+      <div class="rail"><span class="dot"></span><span class="time">T−45</span></div>
+      <div class="stagebody">
+        <span class="dur">45 min · before anyone arrives</span>
+        <h3>Set the room so you don't have to work it</h3>
+        <div class="lines">
+          <div class="line move"><span class="k">Do</span><span class="v">Finish <em>all</em> food prep. Anything still cooking at 7pm is a hiding place. Drinks visible and self-serve — an esky or an open fridge shelf means guests help themselves and each other, which starts conversations without you.</span></div>
+          <div class="line move"><span class="k">Do</span><span class="v">Kill the overhead lights, use lamps. Music on, at the level where people lean in slightly — quiet enough that nobody has to raise their voice. Mozzie coils out if the back door's open.</span></div>
+          <div class="line move"><span class="k">Do</span><span class="v">Create <b>two seating zones</b>, not one — a table and a couch/patio cluster. Two zones is what makes one-on-one conversation possible later. One big circle forces group-only talk all night, which is your worst format.</span></div>
+          <div class="line ask"><span class="k">Ask wife</span><span class="v">Five minutes, out loud: names, who's married to who, jobs, kids' names, anything sensitive to avoid (a redundancy, an illness, a family thing). Write it in your phone. This is the highest-value five minutes of your whole night.</span></div>
+          <div class="line say"><span class="k">Self</span><span class="v">One line to yourself: <q>My job tonight is to be interested, not interesting.</q> That's the whole strategy. It takes the pressure off completely.</span></div>
+          <div class="line avoid"><span class="k">Avoid</span><span class="v">Rehearsing clever things to say. It never survives contact and it makes you stiff for the first hour.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage on">
+      <div class="rail"><span class="dot"></span><span class="time">6:30</span></div>
+      <div class="stagebody">
+        <span class="dur">2 min per group · at the door</span>
+        <h3>Arrival &amp; welcome</h3>
+        <div class="lines">
+          <div class="line say"><span class="k">Say</span><span class="v"><q>Hey — come in, come in. I'm [name]. So good to finally meet you, [wife] talks about you both.</q> Then immediately: <q>What can I get you — beer, wine, something soft?</q></span></div>
+          <div class="line move"><span class="k">Key move</span><span class="v">Say their name back within five seconds of hearing it. <q>Dave — good to meet you, Dave.</q> Then use it once more before you leave them. This one habit will make you seem far more confident than you feel.</span></div>
+          <div class="line move"><span class="k">Key move</span><span class="v">Take something off them — the wine, the dish, their jacket. Hands-free guests relax faster. Then physically walk them to another guest and <b>introduce with a hook</b> (see the scripts).</span></div>
+          <div class="line ask"><span class="k">Ask</span><span class="v">Only easy things at the door: <q>Did you find us alright?</q> · <q>Where'd you come from — is that far?</q></span></div>
+          <div class="line avoid"><span class="k">Avoid</span><span class="v">Starting a real conversation at the door. You'll get interrupted by the next knock and it'll feel like a brush-off. Park it: <q>I want to hear about that properly — grab me in a bit.</q></span></div>
+          <div class="line move"><span class="k">Transition</span><span class="v"><q>Come through, I'll grab you a drink.</q> Movement is always the easiest transition. Nobody notices you leaving if you're both walking.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="rail"><span class="dot"></span><span class="time">6:45</span></div>
+      <div class="stagebody">
+        <span class="dur">30–40 min</span>
+        <h3>Drinks &amp; mingle — the shallow end</h3>
+        <div class="lines">
+          <div class="line move"><span class="k">Your job</span><span class="v">Not depth. <b>Circulation.</b> Two to four minutes with everyone, so that by 7:15 you've exchanged real words with all six people and nobody is standing alone. Depth comes at 8:30 — trying for it now is the classic mistake.</span></div>
+          <div class="line ask"><span class="k">Ask</span><span class="v">Warm-ups only: how they know your wife · what suburb they're in and why · kids and ages · been anywhere good lately · how long they've been in Perth.</span></div>
+          <div class="line say"><span class="k">Say</span><span class="v">Give something back every time. <q>We're in [suburb] — we picked it for the schools and now I do the freeway every morning and question everything.</q> Small self-deprecation is the fastest trust-builder there is.</span></div>
+          <div class="line move"><span class="k">Key move</span><span class="v">The <b>30-second rule</b>: nobody stands alone for more than 30 seconds. Sweep the room every few minutes. Rescuing someone from standing alone earns you more goodwill than any clever thing you could say.</span></div>
+          <div class="line avoid"><span class="k">Avoid</span><span class="v">Leading with <q>so what do you do?</q> in the first minute. Get to it, just not first — it makes the evening feel like a conference. Let it come up naturally, or ask it third.</span></div>
+          <div class="line move"><span class="k">Transition</span><span class="v"><q>Let me top you up</q> · <q>I'd better check the barbecue</q> · <q>Come and meet Sam, you two will get on.</q> All three are unarguable.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="rail"><span class="dot"></span><span class="time">7:20</span></div>
+      <div class="stagebody">
+        <span class="dur">60–75 min · at the table</span>
+        <h3>Food &amp; group conversation</h3>
+        <div class="lines">
+          <div class="line move"><span class="k">Your job</span><span class="v">Traffic control, not performance. A host isn't the best talker — they're the one who makes sure everyone gets a turn. Watch for the person who's been quiet for ten minutes and hand them the floor.</span></div>
+          <div class="line say"><span class="k">Say</span><span class="v">The single most useful sentence a host owns: <q>Priya, you'd know about this — didn't you say you'd done exactly that?</q> Passing the ball costs you nothing and makes you the reason the night flows.</span></div>
+          <div class="line say"><span class="k">Say</span><span class="v">Ask the table one story question so the night has a spine: <q>Okay — worst job anyone's ever had. I'll go first, and mine's bad.</q> Going first makes it safe for everyone else. Group storytelling is where quiet people get liked without having to hold the floor.</span></div>
+          <div class="line ask"><span class="k">Ask</span><span class="v">Careers surface here naturally. Use the <b>day-to-day</b> question rather than the job title: <q>What does that actually look like day to day? I never know what those job titles really mean.</q></span></div>
+          <div class="line avoid"><span class="k">Avoid</span><span class="v">Money, politics, religion, property-prices-as-a-moral-issue, and correcting anyone's technical facts in front of the group. Being right in public costs more than it pays — always.</span></div>
+          <div class="line move"><span class="k">Transition</span><span class="v">Clearing plates is your legitimate excuse to break the table up. <q>Leave those — grab a seat outside, it's nice out there.</q> Breaking one big group into two small ones is the move that unlocks the next hour.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage on">
+      <div class="rail"><span class="dot"></span><span class="time">8:30</span></div>
+      <div class="stagebody">
+        <span class="dur">40–50 min · the important hour</span>
+        <h3>The one-to-one window</h3>
+        <div class="lines">
+          <div class="line move"><span class="k">Your job</span><span class="v">This is <b>the whole evening for you.</b> Everything before it was setup. Aim for three or four proper one-on-ones of about ten minutes. This is where a quiet person is genuinely better than a loud one — you don't have to compete for airtime, and you can actually go deep.</span></div>
+          <div class="line move"><span class="k">How to get one</span><span class="v">Use a task as cover. <q>Come give me a hand with the drinks</q> · <q>Come see the backyard, I want to show you something</q> · <q>I'm going out for some air, come with</q>. Nobody refuses, and nobody notices it was deliberate.</span></div>
+          <div class="line ask"><span class="k">Ask</span><span class="v">Now you go two levels deeper. <q>How did you end up in that? Was it the plan?</q> → <q>Would you do it again?</q> → <q>What's the part people don't realise?</q> This trio, in this order, gets you a person's whole working life in about eight minutes.</span></div>
+          <div class="line ask"><span class="k">Ask (once)</span><span class="v">Your opportunity question, dropped in casually, never twice: <q>What's the thing everyone in your industry complains about and just puts up with?</q> That's where businesses come from — and it's a polite question, because you're asking about their world, not your idea.</span></div>
+          <div class="line say"><span class="k">Say</span><span class="v">Trade, don't extract. After two of their answers, give one of yours — short. If you only take, they'll feel it by minute six even if they can't name why.</span></div>
+          <div class="line avoid"><span class="k">Avoid</span><span class="v">Pitching yourself, hinting that you're looking for work, asking for an introduction, or offering to solve the problem they just described. All of it can wait, and all of it works better in two weeks.</span></div>
+          <div class="line move"><span class="k">Transition</span><span class="v">End on a hook, not a fade: <q>I want to hear the rest of that — I'm going to go check on everyone, but don't let me forget.</q> Leaving with a promise is what makes them seek <em>you</em> out later.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="rail"><span class="dot"></span><span class="time">9:15</span></div>
+      <div class="stagebody">
+        <span class="dur">30–45 min</span>
+        <h3>The fun bit — game, backyard, music</h3>
+        <div class="lines">
+          <div class="line move"><span class="k">Your job</span><span class="v">Let go of the plan. Everything strategic is finished. This hour is where people decide whether they actually <em>like</em> you, and that's decided by whether you can enjoy yourself, not by anything you say.</span></div>
+          <div class="line move"><span class="k">Key move</span><span class="v">Pick a game that makes people talk, not compete. Cards, a quiz, or a simple "two truths" round works far better than anything with teams and winners. Competitive games can sour a room of near-strangers fast.</span></div>
+          <div class="line say"><span class="k">Say</span><span class="v">Be the first to look silly at whatever it is. A host who's willing to lose badly and laugh gives everyone else permission to relax.</span></div>
+          <div class="line avoid"><span class="k">Avoid</span><span class="v">Forcing an activity nobody's asked for. If the conversation is flowing, the conversation <em>is</em> the activity. Never interrupt a good room with a scheduled game.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage on">
+      <div class="rail"><span class="dot"></span><span class="time">10:00</span></div>
+      <div class="stagebody">
+        <span class="dur">20–30 min · the honest hour</span>
+        <h3>The wind-down — most hosts waste this</h3>
+        <div class="lines">
+          <div class="line move"><span class="k">Your job</span><span class="v"><b>Do not start cleaning.</b> This is when the good conversations happen — the group has thinned, the guard is down, and people say the true version of what they said at 7pm. The best thing you'll learn all night gets said between 10 and 10:30.</span></div>
+          <div class="line ask"><span class="k">Ask</span><span class="v">Late-night questions only work now: <q>What's something you know now that you wish someone had told you at 25?</q> · <q>What was the hardest year?</q> · <q>Would you do it all again?</q></span></div>
+          <div class="line say"><span class="k">Say</span><span class="v">Plant the door: <q>We should do this again — do you two play cards?</q> · <q>Next one's at yours, I'm not doing all this washing up twice.</q> Light, joking, and it makes a second evening feel already agreed.</span></div>
+          <div class="line avoid"><span class="k">Avoid</span><span class="v">Yawning, checking the time, stacking the dishwasher. Guests read all three instantly and you'll lose the best half-hour of the night.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="rail"><span class="dot"></span><span class="time">10:30</span></div>
+      <div class="stagebody">
+        <span class="dur">2 min each · at the door</span>
+        <h3>The goodbye — the bit they'll actually remember</h3>
+        <div class="lines">
+          <div class="line move"><span class="k">Why it matters</span><span class="v">People remember beginnings and endings, and endings more. Two well-spent minutes here outweigh an hour in the middle. Walk them out. Every time.</span></div>
+          <div class="line say"><span class="k">Say</span><span class="v">Use the name and one specific detail from the night: <q>Dave — really good to meet you. And seriously, send me that thing about the Pilbara job, I want to read it.</q> Specific beats warm. Specific <em>is</em> warm.</span></div>
+          <div class="line move"><span class="k">Numbers</span><span class="v">Attach the swap to a reason, never to a relationship: <q>What's your number — I'll send you that link.</q> Nobody has ever refused that. Text them the thing before you go to bed, so your name is already in their phone.</span></div>
+          <div class="line avoid"><span class="k">Avoid</span><span class="v">Vague goodbyes (<q>yeah we should catch up sometime</q>). Everyone says it, nobody means it, and it makes the real version harder to say later.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="rail"><span class="dot"></span><span class="time">11:00</span></div>
+      <div class="stagebody">
+        <span class="dur">10 min · before bed, non-negotiable</span>
+        <h3>The download</h3>
+        <div class="lines">
+          <div class="line move"><span class="k">Do it now</span><span class="v">Open your phone and write three lines per person: <b>name + job + one detail you'd never Google.</b> Ten minutes tonight is worth more than an hour of trying to remember on Wednesday — and this single habit is what will make you seem remarkable to these people over the next two years.</span></div>
+          <div class="line move"><span class="k">48 hours</span><span class="v">One message each, to the two or three you connected with. No ask. Just the thing you promised, or one line: <q>Great to meet you the other night — that story about the shutdown is still making me laugh.</q></span></div>
+          <div class="line move"><span class="k">Two weeks</span><span class="v">Now, and only now, is it reasonable to say <q>can I pick your brain about that thing you mentioned?</q> By then you're a friend asking a friend, not a stranger who was collecting.</span></div>
+          <div class="line say"><span class="k">Also</span><span class="v">Text your wife's friend group thanks through her, not around her. The relationship runs through your wives — respect that channel and it'll keep delivering invitations.</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ========== 04 QUESTIONS ========== -->
+<section id="questions" class="prep-only">
+  <div class="sechead"><span class="num">04</span><h2>The question bank</h2></div>
+  <p class="sub">Don't memorise these. Read them once now, and know that the button below exists if your head goes blank at 8:40pm. The starred ones are the highest-return questions on the page.</p>
+
+  <div class="dice">
+    <button id="roll">Give me a question →</button>
+    <p class="out" id="rollOut">Tap when you're stuck. It pulls at random from every question below.</p>
+  </div>
+
+  <div class="qgroup">
+    <h3><span class="letter">A</span> Warm-ups that don't feel like an interview</h3>
+    <p class="qnote">First 40 minutes only. The goal is comfort, not information.</p>
+    <ul class="q">
+      <li class="star">How do you two know [wife's name]?<span class="why">Perfect opener. Safe, flattering to your wife, and it tells you the whole social map of the room in one answer.</span></li>
+      <li>Did you find us alright? Where'd you come from — is that a hike?<span class="why">Pure warm-up. Never fails, expects nothing.</span></li>
+      <li>How long have you been in Perth? What brought you over?<span class="why">In Perth this is a genuinely rich question — half the room has a story attached to it.</span></li>
+      <li>What suburb are you in? What made you pick there?<span class="why">The "why" turns a boring fact into a story about their life stage, budget, family, commute.</span></li>
+      <li>Have you been anywhere good lately? We're trying to work out where to go next.<span class="why">Travel is the most reliable warm topic in Australia. Asking for a recommendation makes them the expert, which people love.</span></li>
+      <li>Have you got kids? What ages?<span class="why">Standard and safe at a couples' dinner. Follow with "what are they into?" rather than school questions, which can be loaded.</span></li>
+      <li>Are you a summer person or a winter person? Perth punishes you either way.<span class="why">Light, opinionated, zero stakes. Good for reviving a conversation that's flatlining.</span></li>
+      <li>What have you got on this weekend?<span class="why">Better than "how was your week" — it points forward, and it surfaces hobbies without asking about hobbies.</span></li>
+    </ul>
+  </div>
+
+  <div class="qgroup">
+    <h3><span class="letter">B</span> Career &amp; occupation</h3>
+    <p class="qnote">The trick is never the first question — it's the second one. "What do you do?" gets a job title. The questions below get a person.</p>
+    <ul class="q">
+      <li class="star">What does that actually look like day to day? I never really know what those job titles mean.<span class="why">The single best career question in existence. It's humble, it's honest, and it gets you a real answer instead of a LinkedIn headline.</span></li>
+      <li class="star">How did you end up in that? Was it the plan, or did it just happen?<span class="why">Almost nobody planned their career. This question gives them permission to tell the true, messier, far more interesting version.</span></li>
+      <li>What's the part of the job people don't realise?<span class="why">Everyone has an answer ready for this and almost nobody gets asked. Expect the best 90 seconds of the conversation.</span></li>
+      <li class="star">Is it busy at the moment, or has it gone quiet?<span class="why">The most useful question you'll ask all night. It reads industry health, hiring appetite and workload in one polite sentence — and it sounds like small talk.</span></li>
+      <li>Who's the best person you've worked with, and what did they do differently?<span class="why">Tells you what "good" means in their field. Also the most flattering possible way to ask what skills actually matter.</span></li>
+      <li>If you were starting again today, would you go the same route?<span class="why">Opens regrets, alternatives, and where they think the field is heading — without asking any of those directly.</span></li>
+      <li>What's changed most in the last five years?<span class="why">Their industry's real trend line, from someone inside it. Far better than any article.</span></li>
+      <li>Is AI actually showing up in your work yet, or is it still mostly noise?<span class="why">The "or is it still noise" half is what makes it good — it gives them room to be sceptical instead of forcing enthusiasm.</span></li>
+      <li>Where do people in your field usually end up — do they move up, move out, or go out on their own?<span class="why">Career progression and earning ceiling, asked structurally. Nobody feels probed.</span></li>
+      <li>Is it well paid for what it asks of you?<span class="why">How to raise money without asking a number. Most people answer generously and specifically, because you asked about fairness rather than salary.</span></li>
+    </ul>
+  </div>
+
+  <div class="qgroup">
+    <h3><span class="letter">C</span> Money, business &amp; opportunity</h3>
+    <p class="qnote"><b>Rules:</b> one-on-one only, after 8:30pm, once per person, never twice in a night. Ask about <em>their</em> world, never about your idea. The moment this feels like research, you've lost them.</p>
+    <ul class="q">
+      <li class="star">What's the thing everyone in your industry complains about and just puts up with?<span class="why">The best business question there is, and it doesn't sound like one. Every real business lives inside an answer to this. You're asking them to vent, which people enjoy.</span></li>
+      <li>Have you ever thought about doing your own thing?<span class="why">Works on employees and owners alike. Employees tell you their dream; owners tell you the war story. Both are gold.</span></li>
+      <li>Is yours the kind of industry where people start their own outfit, or is it too capital-heavy?<span class="why">Sounds like curiosity about them. Actually maps barriers to entry.</span></li>
+      <li>Do you know anyone who's made a side thing actually work? I'm curious what's realistic versus internet nonsense.<span class="why">Asking about a third party removes all pressure — and the scepticism in "internet nonsense" signals you're not about to pitch them.</span></li>
+      <li>Did you buy or rent when you first got here? Everyone tells me something different about Perth.<span class="why">The natural, non-nosy doorway into property. "Everyone tells me something different" invites an opinion instead of a disclosure.</span></li>
+      <li>What do you reckon about the Perth market at the moment?<span class="why">Opinion, not personal finances. Safe, and everyone in WA has a take.</span></li>
+      <li>How did you get into that?<span class="why">Your universal response to any mention of an investment, a business or a side venture. Never "how much" — always "how did you start".</span></li>
+      <li>If someone gave you six months and no salary, what would you build?<span class="why">A late-night question that's fun rather than financial. Reveals more about a person than an hour of career talk.</span></li>
+      <li>What's the best money you've ever spent?<span class="why">Money question that isn't about wealth. Usually gets a story about a trip, a tool, a course, or a decision.</span></li>
+    </ul>
+  </div>
+
+  <div class="qgroup">
+    <h3><span class="letter">D</span> Life lessons</h3>
+    <p class="qnote">After 9:30pm, one-on-one, and only with someone you've already laughed with. Ask these too early and they land as intense.</p>
+    <ul class="q">
+      <li class="star">What's something you know now that you wish someone had told you at 25?<span class="why">The single best late-night question. It works on absolutely everyone and the answer is always worth hearing.</span></li>
+      <li>What was the hardest year, and what got you through it?<span class="why">Deep, but safe — it's framed around recovery rather than the wound. Only for the wind-down, and only if they've opened up first.</span></li>
+      <li>What made you move to Perth? Would you ever go back?<span class="why">For anyone who migrated. Almost always the richest story they have, and it's rarely asked with real interest.</span></li>
+      <li>What's the best decision you've made in the last five years?<span class="why">Positive, easy to answer, and it surfaces what they actually value.</span></li>
+      <li>What did your parents do? Did that push you towards it or away from it?<span class="why">Two generations of story in one question, and it explains a person's whole approach to work.</span></li>
+      <li>What's something you were completely sure about at 20 and have totally changed your mind on?<span class="why">Invites honesty and humility, and gives you an easy story to trade back.</span></li>
+      <li>What's the thing you're most glad you said no to?<span class="why">An unusual angle nobody expects. Often gets the most thoughtful answer of the night.</span></li>
+    </ul>
+  </div>
+
+  <div class="qgroup">
+    <h3><span class="letter">E</span> Perth &amp; Australian opportunities</h3>
+    <p class="qnote">Ask these as a newer local wanting to understand the place, not as someone scouting. The framing does all the work.</p>
+    <ul class="q">
+      <li class="star">Where's the work actually at in Perth right now, honestly?<span class="why">"Honestly" gives them permission to tell you the real version instead of the news version.</span></li>
+      <li>Is it still all mining, or is that shifting? I keep hearing both.<span class="why">Invites a real opinion on WA's economy from someone living in it. Great for anyone in resources, construction or government.</span></li>
+      <li>What's growing here that nobody's really talking about yet?<span class="why">Flatters their judgement and gets you genuinely non-obvious information.</span></li>
+      <li>If you were new here, who would you make sure you knew?<span class="why">Asks about networks without asking for an introduction. Note the names. Do not ask to meet them tonight.</span></li>
+      <li>Are you part of any clubs or groups? We're trying to meet more people outside work.<span class="why">Honest, slightly vulnerable, and often produces an actual invitation on the spot. Say "we" — it's a couple's question, not a networking one.</span></li>
+      <li class="star">What's something you still can't find anyone decent to do, here?<span class="why">Unmet demand, stated out loud by a customer. This is where a service business hides, and it lands as a normal Perth gripe.</span></li>
+      <li>Best thing you've discovered since living here?<span class="why">Ends any Perth conversation on a warm note, and you'll get somewhere good to take your wife.</span></li>
+      <li>What's the thing you wish someone had told you when you first got to WA?<span class="why">Practical local intelligence — schools, trades, banks, suburbs — from someone who learned it the hard way.</span></li>
+    </ul>
+  </div>
+
+  <div class="qgroup">
+    <h3><span class="letter">F</span> Questions that pull out stories</h3>
+    <p class="qnote">These are your communication practice. Stories are what make an evening feel good, and prompting one is easier than telling one.</p>
+    <ul class="q">
+      <li class="star">What's the strangest thing that's ever happened to you at work?<span class="why">Every trade, every industry, every shift-worker has one. Instantly makes a group conversation good.</span></li>
+      <li>What's the worst job you've ever had?<span class="why">The best table question in the world. Everyone can play, everyone's is funny, and nobody has to be impressive.</span></li>
+      <li>How did you two meet? I want the real version, not the short one.<span class="why">Couples love this and both of them talk — which doubles your return and makes them feel like the centre of the night.</span></li>
+      <li>What's the closest you've come to a proper disaster on the job?<span class="why">Perfect for tradies, medics, miners and engineers. You'll have one to trade back, which makes it an exchange rather than an interview.</span></li>
+      <li>What's a hill you'd die on? Something completely trivial.<span class="why">"Completely trivial" is the safety catch — it keeps it fun and steers well clear of politics.</span></li>
+      <li>Have you got a hidden talent nobody would guess?<span class="why">Reliably surprising, and it gives quiet guests something easy and flattering to contribute.</span></li>
+      <li>What's the most Perth thing that's ever happened to you?<span class="why">A local in-joke that includes everyone. Works on lifers and newcomers alike.</span></li>
+    </ul>
+    <div class="card" style="margin-top:14px">
+      <span class="tag acc">The four phrases that keep a story going</span>
+      <p style="margin-top:11px;font-size:15px;color:var(--ink2)">You need far fewer questions than you think. When someone gives you a short answer, don't reach for a new question — reach for one of these. They do 80% of the work of being a good conversationalist:</p>
+      <p style="margin-top:11px;font-family:'Fraunces',serif;font-size:19px;line-height:1.9">“How so?” &nbsp;·&nbsp; “Then what happened?” &nbsp;·&nbsp; “What did you do?” &nbsp;·&nbsp; “That must have been ___.”</p>
+      <p style="margin-top:8px;font-size:14px;color:var(--ink3)">The last one is the strongest. Naming the feeling — <em>"that must have been terrifying"</em> — is what turns a factual answer into a real conversation, and it's the thing people remember you for.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 05 STRATEGY ========== -->
+<section id="strategy" class="prep-only">
+  <div class="sechead"><span class="num">05</span><h2>Your strategy: be the one who remembered</h2></div>
+  <p class="sub">You will not out-talk the loud guest, and you shouldn't try. Being remembered has almost nothing to do with volume — it comes from specificity. The person who says <em>"how did the Karijini trip go?"</em> three weeks later beats the person who told the best joke, every time.</p>
+
+  <div class="grid g2">
+    <div class="card">
+      <span class="tag acc">Talk vs listen</span>
+      <h3 style="font-size:18px;margin-top:11px">Aim for 40% you, 60% them</h3>
+      <p style="font-size:15px;color:var(--ink2);margin-top:8px">Most advice tells quiet people to listen more. That's wrong for you — you already do. Your actual risk is <b>under-sharing</b>, which reads as guarded and slowly makes people uncomfortable without them knowing why.</p>
+      <p style="font-size:15px;color:var(--ink2);margin-top:9px"><b>The rule: three questions, one offer.</b> After every third question, volunteer something about yourself that nobody asked for. Keep it to three sentences. That single habit converts "polite interviewer" into "someone I got on with".</p>
+    </div>
+    <div class="card">
+      <span class="tag acc">Curiosity without interrogation</span>
+      <h3 style="font-size:18px;margin-top:11px">Go two deep, then hand back</h3>
+      <p style="font-size:15px;color:var(--ink2);margin-top:8px">Interrogation isn't caused by hard questions — it's caused by <b>unreciprocated</b> ones. Three in a row with nothing from you and it becomes an interview no matter how warm you are.</p>
+      <p style="font-size:15px;color:var(--ink2);margin-top:9px">The pattern: <b>question → follow-up → follow-up → your own bit → pause.</b> The pause matters. Let a silence sit for two seconds; people fill it with the most interesting thing they've said yet.</p>
+    </div>
+    <div class="card">
+      <span class="tag acc">Remembering names</span>
+      <h3 style="font-size:18px;margin-top:11px">Four steps, and it's a solved problem</h3>
+      <ol style="margin:10px 0 0;padding-left:19px;font-size:15px;color:var(--ink2);display:grid;gap:6px">
+        <li><b>Say it back in five seconds.</b> "Dave — good to meet you, Dave."</li>
+        <li><b>Attach a picture.</b> Dave–drives the ute. Priya–pharmacy. Absurd is better; it sticks harder.</li>
+        <li><b>Use it once more</b> before you leave that conversation.</li>
+        <li><b>Write all six names in your phone</b> at the first bathroom break. This is legal, invisible, and it works.</li>
+      </ol>
+      <p style="font-size:14px;color:var(--ink3);margin-top:10px">And if you lose one: "I'm so sorry — remind me of your name? I'm hopeless with them." Nobody has ever minded. Pretending, and getting caught at 10pm, is much worse.</p>
+    </div>
+    <div class="card">
+      <span class="tag acc">Finding common ground</span>
+      <h3 style="font-size:18px;margin-top:11px">Hunt adjacent, not identical</h3>
+      <p style="font-size:15px;color:var(--ink2);margin-top:8px">You won't share a job with these people. You don't need to. Work down the ladder until something clicks: <b>place → family stage → work rhythm → hobby → gripe.</b></p>
+      <p style="font-size:15px;color:var(--ink2);margin-top:9px">"Work rhythm" is the underrated one for you: early starts, being on call, sites, deadlines, being away from family. A nurse on nights and an engineer on shutdowns have far more in common than either expects.</p>
+      <p style="font-size:15px;color:var(--ink2);margin-top:9px">And <b>shared complaints bond faster than shared loves.</b> Freeway traffic, the cost of everything, tradies who don't call back — instant, harmless allies.</p>
+    </div>
+    <div class="card">
+      <span class="tag acc">Talking about yourself</span>
+      <h3 style="font-size:18px;margin-top:11px">The three-sentence rule</h3>
+      <p style="font-size:15px;color:var(--ink2);margin-top:8px"><b>1.</b> The plain answer. <b>2.</b> One bit of colour or a joke at your own expense. <b>3.</b> Hand it straight back.</p>
+      <p class="said" style="border-left-color:var(--accent);margin-top:11px;font-size:16px">"I'm an electrical engineer — mostly project side, so I spend a lot of time making sure things get built the way they were drawn. Which mainly means I'm the person on site saying 'that's not what the drawing says.' What about you — are you hands-on or is it all emails now?"</p>
+      <p style="font-size:14px;color:var(--ink3);margin-top:10px">Twelve seconds. Says what you do, makes you human, and returns serve. That's the whole formula, and it works for every question about yourself all night.</p>
+    </div>
+    <div class="card">
+      <span class="tag acc">Making people comfortable</span>
+      <h3 style="font-size:18px;margin-top:11px">Comfort is physical before it's verbal</h3>
+      <ul style="margin:10px 0 0;padding-left:19px;font-size:15px;color:var(--ink2);display:grid;gap:6px">
+        <li><b>Never let a glass sit empty.</b> The most powerful hosting move, and it requires no conversational skill at all.</li>
+        <li><b>Give people jobs.</b> "Can you grab the salad?" A guest with a task is a guest who has stopped feeling like a guest.</li>
+        <li><b>Introduce with a hook,</b> never just names. It hands two strangers their first topic.</li>
+        <li><b>Go first.</b> First to admit the bad job, the mistake, the thing you don't know. It sets the depth for the whole room, and it costs you nothing.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag acc">Joining a group</span>
+      <h3 style="font-size:18px;margin-top:11px">Arrive with a reason, react before you speak</h3>
+      <p style="font-size:15px;color:var(--ink2);margin-top:8px">Approach the open side of the circle. Stand there for twenty seconds without saying anything — laugh where they laugh, nod. Then react to what's being said rather than starting something new.</p>
+      <p style="font-size:15px;color:var(--ink2);margin-top:9px">Never open with <q>what are you guys talking about?</q> — it stops the conversation and makes them re-explain. As the host you also have the world's best entry ticket: arrive carrying something. A bottle, a plate, a question about food. Instant, welcome, unquestioned.</p>
+    </div>
+    <div class="card">
+      <span class="tag acc">Leaving a conversation</span>
+      <h3 style="font-size:18px;margin-top:11px">Warm reason plus a gift</h3>
+      <p style="font-size:15px;color:var(--ink2);margin-top:8px">Never drift off. Close it properly, and leave something behind so they want the next round:</p>
+      <p class="said" style="margin-top:11px;font-size:16px">"I'm going to go rescue the barbecue before I ruin dinner — but grab me later, I want to hear how that ended."</p>
+      <p style="font-size:14px;color:var(--ink3);margin-top:10px">Reason + compliment + open loop. As the host you can leave any conversation at any moment, guilt-free. Use that privilege — it's the biggest advantage you have tonight.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <span class="tag watch">When you run out of things to say</span>
+    <p style="margin-top:11px;font-size:15px;color:var(--ink2)">It will happen, probably around 7:40pm. It is not an emergency and nobody else notices it as much as you do. Three moves, in order:</p>
+    <div class="grid g3" style="margin-top:14px">
+      <div style="background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:13px">
+        <b style="font-size:15px">1 · Go back</b>
+        <p style="font-size:14.5px;color:var(--ink2);margin-top:6px">Reach for something they said earlier. <q>You said before that you'd nearly moved to Melbourne — what stopped you?</q> This is the best of the three, because it proves you were listening.</p>
+      </div>
+      <div style="background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:13px">
+        <b style="font-size:15px">2 · Go wide</b>
+        <p style="font-size:14.5px;color:var(--ink2);margin-top:6px">Use the room. The food, the music, the weather, the drive over, someone else's story. <q>Have you tried the — actually hang on, have you eaten? Come here.</q></p>
+      </div>
+      <div style="background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:13px">
+        <b style="font-size:15px">3 · Go host</b>
+        <p style="font-size:14.5px;color:var(--ink2);margin-top:6px">Top up a drink, fetch a plate, introduce them to someone. A task resets the conversation with no awkwardness whatsoever. This is your escape hatch, and it's always available.</p>
+      </div>
+    </div>
+    <p style="margin-top:14px;font-size:15px;color:var(--ink2)"><b>And the thing to actually believe:</b> a silence between two people who have eaten together is not awkward. It only feels that way from the inside. Let a few of them happen tonight — you'll notice nobody else flinches.</p>
+  </div>
+</section>
+
+<!-- ========== 06 STORIES ========== -->
+<section id="stories" class="prep-only">
+  <div class="sechead"><span class="num">06</span><h2>Your story bank</h2></div>
+  <p class="sub">I don't know your life, so I can't write your stories — but I know the ten shapes that work, and every one of them is sitting somewhere in your history. Spend fifteen minutes filling these in before Saturday. Type into the boxes; they save on this device.</p>
+
+  <div class="card" style="margin-top:20px">
+    <span class="tag acc">The rules, before you write anything</span>
+    <ul style="margin:12px 0 0;padding-left:19px;font-size:15px;color:var(--ink2);display:grid;gap:8px">
+      <li><b>Under 60 seconds.</b> Time one out loud. Almost everyone's natural version is three minutes, and three minutes is where a room goes quiet in the wrong way.</li>
+      <li><b>Structure: setup → problem → the moment → hand back.</b> One sentence of setup. The "moment" is the whole point — get there fast.</li>
+      <li><b>Never be the hero.</b> Be the idiot, the witness, or the one who got lucky. It's the only form of talking about yourself that makes people like you more, not less.</li>
+      <li><b>End on a question,</b> always. "Have you ever had one of those?" turns your story into their turn, and stops you feeling like you hogged the floor.</li>
+      <li><b>Don't upgrade the details.</b> These people may hear the story twice over the next two years. The unexaggerated version is the one that survives.</li>
+    </ul>
+  </div>
+
+  <div class="grid g2" style="margin-top:16px" id="storyGrid">
+    <div class="story">
+      <h3>1 · The job that went sideways</h3>
+      <div class="row"><span class="k">Shape</span><span class="v">A site, a switchboard, a shutdown or a commissioning that went wrong. The moment you realised, and what you did in the next ten minutes.</span></div>
+      <div class="row"><span class="k">Hook</span><span class="v">The exact second it clicked — and the very calm, very stupid thing you said out loud.</span></div>
+      <div class="row"><span class="k">Cue</span><span class="v"><q>What's the closest you've come to a disaster at work?</q></span></div>
+      <textarea rows="2" data-story="s1" placeholder="Yours in one line…"></textarea>
+    </div>
+    <div class="story">
+      <h3>2 · How you ended up in Perth</h3>
+      <div class="row"><span class="k">Shape</span><span class="v">The decision, and the one small, almost silly detail that tipped it — a photo, a job ad, a phone call, someone's offhand comment.</span></div>
+      <div class="row"><span class="k">Hook</span><span class="v">How thin the margin was. Big life changes turning on tiny hinges is universally interesting.</span></div>
+      <div class="row"><span class="k">Cue</span><span class="v"><q>How long have you been here? What brought you over?</q></span></div>
+      <textarea rows="2" data-story="s2" placeholder="Yours in one line…"></textarea>
+    </div>
+    <div class="story">
+      <h3>3 · The worst job you ever had</h3>
+      <div class="row"><span class="k">Shape</span><span class="v">Before engineering. The pay, the boss, the smell, the hours. Lean into the grim detail.</span></div>
+      <div class="row"><span class="k">Hook</span><span class="v">One specific horrible detail. Specific is funny; general is boring.</span></div>
+      <div class="row"><span class="k">Cue</span><span class="v">You'll open this one at the table yourself — go first, and the whole room plays.</span></div>
+      <textarea rows="2" data-story="s3" placeholder="Yours in one line…"></textarea>
+    </div>
+    <div class="story">
+      <h3>4 · The thing that shocked you about Australia</h3>
+      <div class="row"><span class="k">Shape</span><span class="v">A misunderstanding, a word you got wrong, a custom nobody warned you about, a bird or an insect that ambushed you.</span></div>
+      <div class="row"><span class="k">Hook</span><span class="v">Your confident wrong assumption, held far too long.</span></div>
+      <div class="row"><span class="k">Cue</span><span class="v"><q>What took you longest to get used to here?</q> — and it works in reverse on anyone who's migrated.</span></div>
+      <textarea rows="2" data-story="s4" placeholder="Yours in one line…"></textarea>
+    </div>
+    <div class="story">
+      <h3>5 · How you and your wife met</h3>
+      <div class="row"><span class="k">Shape</span><span class="v">The unlikely bit. Keep her the impressive one — this is the highest-return story of the night and it costs you nothing.</span></div>
+      <div class="row"><span class="k">Hook</span><span class="v">What nearly stopped it happening.</span></div>
+      <div class="row"><span class="k">Cue</span><span class="v">Ask a couple theirs first, then trade. Never lead with your own.</span></div>
+      <textarea rows="2" data-story="s5" placeholder="Yours in one line…"></textarea>
+    </div>
+    <div class="story">
+      <h3>6 · What your job is actually like</h3>
+      <div class="row"><span class="k">Shape</span><span class="v">The scale or the danger of real electrical work, told completely flat. The size of the current, the size of the site, the thing that would kill you if you got it wrong.</span></div>
+      <div class="row"><span class="k">Hook</span><span class="v">Understatement. Say something genuinely alarming in a bored voice and the table will do the reacting for you.</span></div>
+      <div class="row"><span class="k">Cue</span><span class="v"><q>So what does an electrical engineer actually do?</q> — you'll get asked this at least twice.</span></div>
+      <textarea rows="2" data-story="s6" placeholder="Yours in one line…"></textarea>
+    </div>
+    <div class="story">
+      <h3>7 · Completely out of your depth</h3>
+      <div class="row"><span class="k">Shape</span><span class="v">A meeting, a client, a first day, a moment you were asked something you had no idea about.</span></div>
+      <div class="row"><span class="k">Hook</span><span class="v">What you said to buy time — and whether it worked.</span></div>
+      <div class="row"><span class="k">Cue</span><span class="v"><q>Was it the plan, or did you fall into it?</q></span></div>
+      <textarea rows="2" data-story="s7" placeholder="Yours in one line…"></textarea>
+    </div>
+    <div class="story">
+      <h3>8 · The home job you shouldn't have attempted</h3>
+      <div class="row"><span class="k">Shape</span><span class="v">Something you fixed, built or wired at home that went badly — despite, or because of, being an engineer.</span></div>
+      <div class="row"><span class="k">Hook</span><span class="v">Your wife's face. This story is a gift at a couples' dinner and both sides of the room enjoy it.</span></div>
+      <div class="row"><span class="k">Cue</span><span class="v">Any renovation, tradie or house talk — which at a Perth dinner is guaranteed.</span></div>
+      <textarea rows="2" data-story="s8" placeholder="Yours in one line…"></textarea>
+    </div>
+    <div class="story">
+      <h3>9 · A place in WA that surprised you</h3>
+      <div class="row"><span class="k">Shape</span><span class="v">A trip up north, down south, or a site in the middle of nowhere. One vivid image, not an itinerary.</span></div>
+      <div class="row"><span class="k">Hook</span><span class="v">The moment you looked up and thought, where am I.</span></div>
+      <div class="row"><span class="k">Cue</span><span class="v"><q>Been anywhere good lately?</q> — and it doubles as asking for their recommendation.</span></div>
+      <textarea rows="2" data-story="s9" placeholder="Yours in one line…"></textarea>
+    </div>
+    <div class="story">
+      <h3>10 · The thing you were completely wrong about</h3>
+      <div class="row"><span class="k">Shape</span><span class="v">A belief you held for years — about money, about career, about Australia, about how the world works — and what broke it.</span></div>
+      <div class="row"><span class="k">Hook</span><span class="v">How long you held it, said with a straight face.</span></div>
+      <div class="row"><span class="k">Cue</span><span class="v"><q>What's something you were sure about at 20 and have changed your mind on?</q> — ask it, then answer it yourself.</span></div>
+      <textarea rows="2" data-story="s10" placeholder="Yours in one line…"></textarea>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 07 RADAR ========== -->
+<section id="radar" class="prep-only">
+  <div class="sechead"><span class="num">07</span><h2>Opportunity radar</h2></div>
+  <p class="sub">Eight signals worth catching. For every one of them, the correct move tonight is identical: <b>ask one more question, then move on.</b> Nothing else. The value of this evening is not extracted tonight — tonight's only job is to earn a second conversation.</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th style="width:20%">Signal</th><th style="width:28%">What it sounds like</th><th style="width:28%">Do this now</th><th style="width:24%">Do this later</th></tr></thead>
+      <tbody>
+        <tr><td class="sig">A problem you could solve</td><td><q>We can never get anyone to…</q> <q>It's a nightmare every time we…</q></td><td>Ask <q>How do you deal with it at the moment?</q> Show interest in the problem, not in your solution.</td><td>In two weeks: <q>I was thinking about that thing you mentioned — can I show you something?</q></td></tr>
+        <tr><td class="sig">A person you should meet</td><td><q>My mate does exactly that</q> <q>You should talk to my brother-in-law</q></td><td>Say <q>He sounds interesting</q> and remember the name. Do <b>not</b> ask for the introduction tonight.</td><td>Let them offer it. If they don't, raise it on the third contact, never the first.</td></tr>
+        <tr><td class="sig">Hiring / work pipeline</td><td><q>We're absolutely flat out</q> <q>We lost two guys and can't replace them</q></td><td>Ask <q>Is it hard to find people in that space?</q> — a neutral industry question, not a hint.</td><td>Later: <q>Are you still short? I might know someone.</q> Offering first is what makes a later ask reasonable.</td></tr>
+        <tr><td class="sig">A business idea</td><td><q>Someone should really just…</q> <q>I keep saying I'll do it one day</q></td><td>Ask <q>Why do you reckon nobody has?</q> The answer tells you whether it's a real gap or a graveyard.</td><td>Write it down tonight. Sit on it. If it still looks good in a month, ask them properly.</td></tr>
+        <tr><td class="sig">A skill or industry worth knowing</td><td>Anything you don't understand and they clearly do</td><td>Ask <q>Where would someone even start with that?</q> Free curriculum, and deeply flattering.</td><td>Actually read the thing. Then message them about it — the single best follow-up there is.</td></tr>
+        <tr><td class="sig">A money or investing insight</td><td><q>We got into that a few years back</q> <q>Everyone told us not to</q></td><td>Ask <q>How did you get into it?</q> Never how much, never what it's worth, never what they earn.</td><td>Verify independently. Never act on dinner-party financial advice, however confident it sounded.</td></tr>
+        <tr><td class="sig">A possible collaboration</td><td><q>I'm doing it on my own at the moment</q> <q>I've been meaning to find someone for the technical side</q></td><td>Ask <q>Is that by choice, or just how it worked out?</q> Then say nothing about yourself.</td><td>Third conversation, minimum. Anything earlier and it looks like the reason you invited them.</td></tr>
+        <tr><td class="sig">A friendship opening</td><td>They mention the same hobby twice, or invite you to anything</td><td><b>Act on this one immediately.</b> <q>Seriously? I'd love to come. When?</q> This is the most valuable signal on the page.</td><td>Message within 48 hours and make it concrete — a date, not a sentiment.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid g3" style="margin-top:18px">
+    <div class="card"><span class="tag go">In the moment</span><p style="font-size:15px;color:var(--ink2);margin-top:10px">One extra question. Then change the subject <em>yourself</em>. Being the one who moves on is what proves you weren't fishing — and it's what makes them bring it up again later.</p></div>
+    <div class="card"><span class="tag watch">Same night</span><p style="font-size:15px;color:var(--ink2);margin-top:10px">Three lines per person in your phone before bed. Name, job, one detail. Ten minutes. This is the entire system — everything else is just conversation.</p></div>
+    <div class="card"><span class="tag info">48 hours &amp; beyond</span><p style="font-size:15px;color:var(--ink2);margin-top:10px">One warm message with no ask. Then leave it alone. The ask, if there ever is one, belongs to the third or fourth contact — or to never.</p></div>
+  </div>
+
+  <div class="card" style="margin-top:14px;border-left:3px solid var(--accent)">
+    <p style="font-size:16px"><b>Why the patience isn't just politeness.</b> These are your wife's friends' husbands. Anything you extract tonight costs your wife something socially, and it gets back to her. Play the two-year game instead: be the interesting, warm, useful bloke they see four times a year, and in eighteen months you'll have had more opportunities handed to you than you could have asked for on Saturday. That's not a consolation prize — it's genuinely the faster route.</p>
+  </div>
+</section>
+
+<!-- ========== 08 DON'TS ========== -->
+<section id="dont" class="prep-only">
+  <div class="sechead"><span class="num">08</span><h2>Things to not do</h2></div>
+  <p class="sub">Read once. Tick the ones you know you're prone to — those are the two or three to actually hold in your head on the night. Everything else will take care of itself.</p>
+
+  <ul class="check" id="dontList">
+    <li><input type="checkbox" id="d1"><label for="d1"><b>Don't ask what anyone earns, or what their house cost.</b><span class="why">The fastest way to make an Australian go cold. If you need to understand the money, ask "is it well paid for what it asks of you?" instead.</span></label></li>
+    <li><input type="checkbox" id="d2"><label for="d2"><b>Don't ask three questions in a row without offering something back.</b><span class="why">This is the one that turns a good evening into an interview — and it's the specific risk for a quiet person. Three questions, one offer.</span></label></li>
+    <li><input type="checkbox" id="d3"><label for="d3"><b>Don't CV-drop or hint that you're looking.</b><span class="why">No "well, in my role we…", no "always keeping an eye out". Everyone can hear it, and it converts you from host into salesman in one sentence.</span></label></li>
+    <li><input type="checkbox" id="d4"><label for="d4"><b>Don't give advice nobody asked for.</b><span class="why">Especially about their job, their house, or their car. Engineers do this reflexively. Ask "have you tried…?" as a question, or say nothing.</span></label></li>
+    <li><input type="checkbox" id="d5"><label for="d5"><b>Don't correct anyone in front of the group — even when you're certain.</b><span class="why">Especially about anything technical, where you'll be right. Being right in public costs more than it ever pays. Let it go, every time.</span></label></li>
+    <li><input type="checkbox" id="d6"><label for="d6"><b>Don't debate.</b><span class="why">Politics, religion, immigration, vaccines, house prices as a moral question. Opinions are fine; sides are not. If it starts: "you might be right — I honestly don't know enough about it," then move.</span></label></li>
+    <li><input type="checkbox" id="d7"><label for="d7"><b>Don't touch your phone.</b><span class="why">Not for a fact, not for a photo, not to settle an argument. One glance is read as boredom by everyone at the table. Notes go in at the bathroom break.</span></label></li>
+    <li><input type="checkbox" id="d8"><label for="d8"><b>Don't ask for a favour, a job, or an introduction. Not once, not lightly.</b><span class="why">Tonight is a zero-ask evening. The whole return on this page depends on that being true.</span></label></li>
+    <li><input type="checkbox" id="d9"><label for="d9"><b>Don't drink faster than you'd like.</b><span class="why">Quiet people reach for alcohol as a shortcut to confidence. It costs you names, details and the ability to actually listen — which are the three things you're good at.</span></label></li>
+    <li><input type="checkbox" id="d10"><label for="d10"><b>Don't hide in the kitchen.</b><span class="why">Real tasks that are really avoidance. If you've been at the sink for more than five minutes, you're hiding. Go back in.</span></label></li>
+    <li><input type="checkbox" id="d11"><label for="d11"><b>Don't form a men-only huddle.</b><span class="why">The invitations run through your wives. If the women have a flat evening, there is no second dinner — and the second dinner is worth more than anything you'll learn at the first.</span></label></li>
+    <li><input type="checkbox" id="d12"><label for="d12"><b>Don't leave anyone standing alone.</b><span class="why">Thirty seconds is the limit. Rescuing someone earns more genuine goodwill than any story you could tell.</span></label></li>
+    <li><input type="checkbox" id="d13"><label for="d13"><b>Don't complain about your job or your boss.</b><span class="why">It reads as small, and it's the thing people remember about a person they've only met once.</span></label></li>
+    <li><input type="checkbox" id="d14"><label for="d14"><b>Don't over-host.</b><span class="why">Offering food every four minutes interrupts exactly the conversations you're trying to have. Set it out, gesture at it once, then sit down and be a person.</span></label></li>
+    <li><input type="checkbox" id="d15"><label for="d15"><b>Don't repeat your opportunity questions to a second person.</b><span class="why">Asked once, it's curiosity. Heard twice across a room, it's a survey — and people compare notes in the car on the way home.</span></label></li>
+  </ul>
+</section>
+
+<!-- ========== 09 SCRIPTS ========== -->
+<section id="scripts" class="prep-only">
+  <div class="sechead"><span class="num">09</span><h2>Exact scripts</h2></div>
+  <p class="sub">Say these near enough word for word — they're built to sound like you, not like a script. Read them out loud once before Saturday; the ones you've said aloud are the ones that come out naturally under pressure.</p>
+
+  <div class="grid g2">
+    <div class="script">
+      <h3>Welcoming someone at the door</h3>
+      <p class="said">"Hey — come in, come in! I'm [name]. Really good to finally meet you both, [wife] talks about you all the time. Here, give me that. What can I get you — beer, wine, something soft?"</p>
+      <p class="note"><b>Why it works:</b> name, warmth, hands free, drink in hand, in under fifteen seconds. Then walk them straight to another guest — never leave a new arrival standing.</p>
+    </div>
+
+    <div class="script">
+      <h3>Introducing two guests (your best move all night)</h3>
+      <p class="said">"Dave, this is Sam — Sam, Dave's the one who did that drive up to Karijini I was telling you about. Sam just got back from Japan with the kids, which sounds like a whole thing."</p>
+      <p class="note"><b>Why it works:</b> never introduce with names alone. Hand them a topic and they'll run with it for twenty minutes — and you're free to move. Do this for every pairing you can.</p>
+    </div>
+
+    <div class="script">
+      <h3>Starting a conversation from nothing</h3>
+      <p class="said">"So how do you two know [wife's name]? I get told the stories but I never get the full picture."</p>
+      <p class="said">"Whereabouts are you living? … Oh nice — what made you pick there?"</p>
+      <p class="note"><b>Why it works:</b> both are about them, both are easy, and neither requires you to be interesting yet. "What made you pick there" is the small upgrade that turns a fact into a story.</p>
+    </div>
+
+    <div class="script">
+      <h3>Finding out what someone does</h3>
+      <p class="said">"What is it you do? … Right — and what does that actually look like day to day? I never really know what job titles mean."</p>
+      <p class="said">"How'd you end up in that? Was it the plan, or did you fall into it?"</p>
+      <p class="note"><b>Why it works:</b> the honest admission that you don't know what the title means is disarming, and it gets you a real description instead of a rehearsed one.</p>
+    </div>
+
+    <div class="script">
+      <h3>Going one level deeper on their career</h3>
+      <p class="said">"Is it busy at the moment, or has it gone quiet? … And what's the part of it people don't realise?"</p>
+      <p class="said">"If you were starting again today, would you go the same way?"</p>
+      <p class="note"><b>Why it works:</b> three questions that read as interest but deliver industry health, insider knowledge and honest reflection. Only ask them once you've already laughed together.</p>
+    </div>
+
+    <div class="script">
+      <h3>Discovering an opportunity naturally</h3>
+      <p class="said">"What's the thing everyone in your world complains about and just puts up with? Every industry's got one."</p>
+      <p class="said">"Huh. And how do you deal with it now?" — then: "Fair enough. Anyway — how's the [food/game/kids]?"</p>
+      <p class="note"><b>Why it works:</b> the exit line is the important half. Being the one who changes the subject is what proves you were curious rather than collecting. If it matters, it will come back to you later.</p>
+    </div>
+
+    <div class="script">
+      <h3>Talking to someone much more successful than you</h3>
+      <p class="said">"I'll be honest, I don't know much about your world at all. What's the thing people always get wrong about it?"</p>
+      <p class="said">"What would you be doing if you were at my stage now?"</p>
+      <p class="note"><b>Why it works:</b> successful people are surrounded by others performing for them. Straightforward curiosity, with nothing being asked for, is rare — and it's the thing they remember. Never compete, never impress, never apologise for yourself either.</p>
+    </div>
+
+    <div class="script">
+      <h3>Talking to someone in a field you know nothing about</h3>
+      <p class="said">"Right, explain it to me like I'm five — because I genuinely have no idea what that involves."</p>
+      <p class="said">"What's the hardest part? … And what's the bit you actually enjoy?"</p>
+      <p class="note"><b>Why it works:</b> people love explaining their work to someone who's honestly interested and not pretending to follow. "Hardest part / best part" works on literally any job on earth.</p>
+    </div>
+
+    <div class="script">
+      <h3>Joining a group already talking</h3>
+      <p class="said">[Arrive with a bottle or a plate. Stand at the open side. Listen for twenty seconds. Laugh where they laugh.] "Sorry — top up? … No, keep going, this sounds better than what I was doing."</p>
+      <p class="note"><b>Why it works:</b> you enter as a host doing a host thing, then explicitly hand the floor back. Never ask them to summarise what you missed.</p>
+    </div>
+
+    <div class="script">
+      <h3>Escaping a conversation politely</h3>
+      <p class="said">"I'm going to go check on the barbecue before I ruin dinner — but grab me later, I want to hear how that ended."</p>
+      <p class="said">"Let me top you up. Actually, come with me — you should meet Priya, she did the same thing."</p>
+      <p class="note"><b>Why it works:</b> reason, compliment, open loop. The second version is better still — you leave <em>and</em> you've done them a favour. Neither one can be taken badly.</p>
+    </div>
+
+    <div class="script">
+      <h3>Swapping numbers without it being a thing</h3>
+      <p class="said">"What's your number — I'll send you that link about the [thing]."</p>
+      <p class="said">"Are you on WhatsApp? I'll flick you the details for that place we were talking about."</p>
+      <p class="note"><b>Why it works:</b> attach the swap to a small promise, never to the relationship. Then <b>actually send it that night</b> — your name lands in their phone attached to something useful.</p>
+    </div>
+
+    <div class="script">
+      <h3>Ending the evening well</h3>
+      <p class="said">"Dave — really glad you came. And send me that thing about the Pilbara job, I want to read it properly."</p>
+      <p class="said">"We should do this again. Seriously — next one's at yours, I'm not doing this washing up twice."</p>
+      <p class="note"><b>Why it works:</b> name, one specific detail, one concrete forward step, delivered lightly. Walk every single guest to their car. Two minutes at the door will outweigh an hour in the middle of the night.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 10 CHEAT SHEET ========== -->
+<section id="cheat">
+  <div class="sechead"><span class="num">10</span><h2>The cheat sheet</h2></div>
+  <p class="sub prep-only">One page. Switch to <b>Tonight mode</b> at the top and this is the only thing left on screen — check it in the bathroom at 8pm and nowhere else.</p>
+  <p class="sub tonight-only" style="display:none">This is all you need. Everything else is hidden.</p>
+
+  <div class="sheet">
+    <h3>My three goals</h3>
+    <ol class="big">
+      <li>Learn <b>one real thing</b> from every person here.</li>
+      <li>Make every person feel <b>genuinely liked</b>.</li>
+      <li>Get <b>ten minutes one-to-one</b> with each of them.</li>
+    </ol>
+
+    <h3>The ten questions</h3>
+    <ol>
+      <li>How do you two know [wife]?</li>
+      <li>What made you pick that suburb?</li>
+      <li>What does that actually look like day to day?</li>
+      <li>How'd you end up in that — was it the plan?</li>
+      <li>Is it busy at the moment, or gone quiet?</li>
+      <li>What's the part people don't realise?</li>
+      <li>What's the worst job you've ever had?</li>
+      <li>What's everyone in your industry complain about and just put up with?</li>
+      <li>Where's the work actually at in Perth right now?</li>
+      <li>What do you wish someone had told you at 25?</li>
+    </ol>
+
+    <h3>Five things to listen for</h3>
+    <ul>
+      <li>A problem they can't solve</li>
+      <li>A name they say twice</li>
+      <li>"We're flat out" / "we can't find anyone"</li>
+      <li>Something they're proud of</li>
+      <li>An invitation — <b>say yes on the spot</b></li>
+    </ul>
+
+    <h3>My conversation formula</h3>
+    <div class="formula">
+      <div><span>ASK</span><span>An easy question about them</span></div>
+      <div><span>DEEPER</span><span>"How so?" · "Then what happened?"</span></div>
+      <div><span>DEEPER</span><span>"What did you do?" · "That must have been ___."</span></div>
+      <div><span>GIVE</span><span>Three sentences about me. Then hand it back.</span></div>
+      <div><span>PAUSE</span><span>Let two seconds of silence sit. They'll fill it.</span></div>
+    </div>
+
+    <h3>Three lines when my head goes blank</h3>
+    <ol class="big">
+      <li>“You said earlier that… tell me about that.”</li>
+      <li>“Sorry, I have to ask — how do you actually know each other?”</li>
+      <li>“Let me top you up. Come with me, you should meet [name].”</li>
+    </ol>
+
+    <h3>Three things I must not do</h3>
+    <ol class="big">
+      <li>No asking about money, salary or house prices.</li>
+      <li>No hints, no CV-dropping, <b>no asks of any kind tonight</b>.</li>
+      <li>No phone, no hiding in the kitchen, no correcting anyone in front of the group.</li>
+    </ol>
+
+    <h3>Closing &amp; follow-up</h3>
+    <ol>
+      <li><b>At the door:</b> their name + one specific detail + "we should do this again."</li>
+      <li><b>Numbers:</b> "What's your number, I'll send you that link." Then actually send it tonight.</li>
+      <li><b>Before bed:</b> three lines per person in my phone — name, job, one detail.</li>
+      <li><b>Within 48 hours:</b> one warm message each. <b>No ask.</b></li>
+      <li><b>In two weeks:</b> now it's fine to ask about the thing they mentioned.</li>
+    </ol>
+
+    <p style="margin-top:26px;padding-top:16px;border-top:1px solid var(--line);font-family:'Fraunces',serif;font-size:19px;line-height:1.4">
+      Tonight my job is to be <em>interested</em>, not interesting.<br>
+      Nothing has to happen tonight. There will be another dinner.
+    </p>
+  </div>
+
+  <p class="footnote prep-only">Everything you type into this page — guest cards, story lines, ticked boxes — is saved in this browser only. It is never sent anywhere.</p>
+</section>
+
+</div>
+
+<script>
+(function(){
+  var LS = {
+    get:function(k,d){ try{ var v=localStorage.getItem(k); return v===null?d:v; }catch(e){ return d; } },
+    set:function(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  };
+
+  /* ---- mode switch ---- */
+  var body=document.body, bp=document.getElementById('mPrep'), bt=document.getElementById('mTon');
+  function setMode(m){
+    body.setAttribute('data-mode',m);
+    bp.setAttribute('aria-pressed', m==='prep');
+    bt.setAttribute('aria-pressed', m==='tonight');
+    LS.set('pdp.mode',m);
+    if(m==='tonight'){ window.scrollTo({top:0,behavior:'instant' in window?'auto':'auto'}); }
+  }
+  bp.addEventListener('click',function(){setMode('prep');});
+  bt.addEventListener('click',function(){setMode('tonight');});
+  setMode(LS.get('pdp.mode','prep'));
+
+  /* ---- guest cards ---- */
+  var fields = [
+    ['know','What I already know','Job, kids, where they live, how my wife knows them…'],
+    ['learn','What I want to learn','Their industry? How they got there? Perth advice?'],
+    ['angle','Best conversation angle','The one question I will open with'],
+    ['opp','Possible connection','Career, business, local knowledge, friendship…'],
+    ['follow','Follow-up','What I could send or say within 48 hours']
+  ];
+  var grid=document.getElementById('guestGrid');
+  for(var i=1;i<=6;i++){
+    var el=document.createElement('div'); el.className='gcard';
+    var h='<header><span>Guest 0'+i+'</span>'+
+      '<select data-k="pdp.g'+i+'.pri" aria-label="Priority for guest '+i+'">'+
+      '<option value="">priority…</option><option>High — most to learn</option>'+
+      '<option>Medium</option><option>Just enjoy their company</option></select></header><div class="body">'+
+      '<input class="name" data-k="pdp.g'+i+'.name" placeholder="Name" aria-label="Guest '+i+' name">';
+    for(var f=0;f<fields.length;f++){
+      h+='<label><span class="lab">'+fields[f][1]+'</span>'+
+         '<textarea rows="2" data-k="pdp.g'+i+'.'+fields[f][0]+'" placeholder="'+fields[f][2]+'"></textarea></label>';
+    }
+    el.innerHTML=h+'</div>'; grid.appendChild(el);
+  }
+
+  /* ---- persist all typed fields ---- */
+  function bind(node,key){
+    node.value = LS.get(key,'') || node.value;
+    node.addEventListener('input',function(){ LS.set(key,node.value); });
+    node.addEventListener('change',function(){ LS.set(key,node.value); });
+  }
+  document.querySelectorAll('[data-k]').forEach(function(n){ bind(n,n.getAttribute('data-k')); });
+  document.querySelectorAll('[data-story]').forEach(function(n){ bind(n,'pdp.story.'+n.getAttribute('data-story')); });
+
+  /* ---- checkboxes ---- */
+  document.querySelectorAll('#dontList input[type=checkbox]').forEach(function(cb){
+    var k='pdp.dont.'+cb.id;
+    if(LS.get(k)==='1') cb.checked=true;
+    cb.addEventListener('change',function(){ LS.set(k, cb.checked?'1':'0'); });
+  });
+
+  /* ---- random question ---- */
+  var pool=[];
+  document.querySelectorAll('ul.q > li').forEach(function(li){
+    var c=li.cloneNode(true); var w=c.querySelector('.why'); if(w) w.remove();
+    var t=c.textContent.replace(/★ top question/,'').trim();
+    if(t) pool.push(t);
+  });
+  var out=document.getElementById('rollOut'), last=-1;
+  document.getElementById('roll').addEventListener('click',function(){
+    if(!pool.length) return;
+    var n; do{ n=Math.floor(Math.random()*pool.length); }while(pool.length>1 && n===last);
+    last=n; out.textContent='“'+pool[n]+'”';
+  });
+})();
+</script>
