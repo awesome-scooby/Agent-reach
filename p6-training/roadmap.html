@@ -110,8 +110,8 @@ section{margin-top:52px}
 
 /* ---------- gantt ---------- */
 .gantt-scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:3px;background:var(--card);box-shadow:var(--shadow)}
-.gantt{position:relative;min-width:800px;padding:0 0 6px}
-.grow{display:grid;grid-template-columns:var(--labw) repeat(13,minmax(38px,1fr));align-items:center;min-height:34px}
+.gantt{position:relative;min-width:900px;padding:0 0 6px}
+.grow{display:grid;grid-template-columns:var(--labw) repeat(16,minmax(34px,1fr));align-items:center;min-height:34px}
 .grow:nth-child(odd of .grow){background:transparent}
 .ghead{border-bottom:1px solid var(--rule);position:sticky;top:0;background:var(--card);z-index:3}
 .ghead .lab{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;color:var(--ink3);text-transform:uppercase}
@@ -195,6 +195,10 @@ ul.checks input:checked::after{
   content:"";position:absolute;left:5px;top:1.5px;width:4px;height:9px;
   border:solid #fff;border-width:0 2px 2px 0;transform:rotate(42deg);
 }
+em.mins{
+  font-family:"IBM Plex Mono",monospace;font-style:normal;font-size:10px;letter-spacing:.08em;
+  color:var(--ink3);border:1px solid var(--rule2);border-radius:2px;padding:1px 5px;white-space:nowrap;margin-left:4px;
+}
 ul.checks input:checked + span{color:var(--ink3);text-decoration:line-through;text-decoration-thickness:1px}
 .sublab{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin:18px 0 0}
 
@@ -216,6 +220,24 @@ th{
 tbody tr:last-child td{border-bottom:none}
 td.n{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ink2)}
 
+.ritual{display:grid;gap:10px;grid-template-columns:1fr}
+@media(min-width:700px){.ritual{grid-template-columns:repeat(4,1fr)}}
+.rstep{background:var(--card);border:1px solid var(--rule);border-top:3px solid var(--copper);border-radius:3px;padding:14px 15px 12px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:4px}
+.rt{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.13em;color:var(--copper)}
+.rstep h4{font-family:"Barlow Condensed",sans-serif;font-size:21px;text-transform:uppercase;margin:0;letter-spacing:.03em}
+.rstep p{margin:0;font-size:13px;color:var(--ink2);line-height:1.45}
+.rm{margin-top:auto;padding-top:8px;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;color:var(--ink3)}
+.tools{display:grid;gap:12px;grid-template-columns:1fr}
+@media(min-width:720px){.tools{grid-template-columns:1fr 1fr}}
+.tool{display:block;background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--earth);border-radius:3px;padding:16px 18px 15px;box-shadow:var(--shadow);text-decoration:none;color:inherit}
+a.tool:hover{border-left-color:var(--copper)}
+a.tool:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+.tool.sealed{border-left-color:var(--ink3);opacity:.85}
+.tk{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+.tool h4{font-family:"Barlow Condensed",sans-serif;font-size:23px;text-transform:uppercase;margin:3px 0 6px;letter-spacing:.02em}
+.tool p{margin:0;font-size:13.5px;color:var(--ink2);line-height:1.5}
+.go{display:inline-block;margin-top:10px;font-size:12px;font-weight:600;color:var(--copper)}
+.go.mono{font-family:"IBM Plex Mono",monospace;font-weight:400;font-size:11px;letter-spacing:.06em;color:var(--ink3)}
 .note{font-size:13px;color:var(--ink3);margin-top:14px;max-width:70ch}
 footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--rule);font-size:12.5px;color:var(--ink3);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
 
@@ -230,12 +252,12 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--rule);font-si
       <div>
         <div class="eyebrow">Primavera P6 · Personal Training Programme</div>
         <h1>P6 for<br>Switchboards</h1>
-        <p class="lede">Thirteen weeks, seventy-eight hours, zero to job-ready. Every concept is taught against one running capstone: a switchboard build that leaves the factory, lands on a data centre site, and gets energised — planned the way a real project controls team would plan it.</p>
+        <p class="lede">Sixteen weeks, ninety-two hours, zero to job-ready. Every concept is taught against one running capstone: a switchboard build that leaves the factory, lands on a data centre site, and gets energised — planned the way a real project controls team would plan it.</p>
         <div class="chips">
-          <span class="chip"><b>13</b> weeks</span>
-          <span class="chip"><b>78</b> study hours</span>
+          <span class="chip"><b>16</b> weeks</span>
+          <span class="chip"><b>92</b> study hours</span>
           <span class="chip"><b>5–7</b> hrs/week</span>
-          <span class="chip"><b>11</b> phases</span>
+          <span class="chip"><b>13</b> phases</span>
           <span class="chip"><b>1</b> capstone schedule</span>
         </div>
       </div>
@@ -243,7 +265,7 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--rule);font-si
         <div class="k">Course % complete</div>
         <div class="v"><span id="pct">0</span><small>%</small></div>
         <div class="track"><div class="fill" id="fill"></div></div>
-        <div class="sub"><span id="donecount">0</span> of <span id="totcount">0</span> lessons signed off</div>
+        <div class="sub"><span id="donecount">0</span> of <span id="totcount">0</span> lessons signed off<br><span id="qzcount">0</span> of 13 quizzes passed</div>
       </div>
     </div>
   </header>
@@ -267,7 +289,50 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--rule);font-si
 
   <section>
     <div class="sechead">
-      <span class="num">02</span><h2>Phases &amp; Lesson Register</h2>
+      <span class="num">02</span><h2>The 45-Minute Session</h2>
+      <p>Same ritual every time. Never improvise the structure.</p>
+    </div>
+    <div class="ritual">
+      <div class="rstep"><span class="rt">00:00</span><h4>Recall</h4><p>I ask two questions from last session. No notes. Five minutes.</p><span class="rm">5 min</span></div>
+      <div class="rstep"><span class="rt">00:05</span><h4>Lesson</h4><p>One concept. One only. Hard cap \u2014 I stop even if there is more to say.</p><span class="rm">20 min</span></div>
+      <div class="rstep"><span class="rt">00:25</span><h4>Task</h4><p>You do it in P6 or on paper. Send me the result.</p><span class="rm">15 min</span></div>
+      <div class="rstep"><span class="rt">00:40</span><h4>Quiz</h4><p>Three to five questions. I mark them before we move on.</p><span class="rm">5 min</span></div>
+    </div>
+    <p class="note">Nine sessions a fortnight at 5\u20137 hours a week finishes the programme in sixteen weeks. Miss one and nothing breaks \u2014 the roadmap does not scold you, it just waits.</p>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <span class="num">03</span><h2>Your Toolkit</h2>
+      <p>Four companion resources. Bookmark the first two.</p>
+    </div>
+    <div class="tools">
+      <a class="tool" href="https://claude.ai/code/artifact/b1e6deea-c92a-4725-9716-120a16efbb87" target="_blank" rel="noopener">
+        <span class="tk">Reference</span><h4>Switchboard Planner\u2019s Deskpad</h4>
+        <p>Ten printable sheets: relationship decision tree, float, constraints, F9 options, DCMA-14, the update cycle, earned value formulas, calendars, shortcuts, and who gets which report.</p>
+        <span class="go">Open and print &#8599;</span>
+      </a>
+      <a class="tool" href="https://claude.ai/code/artifact/2d120c48-9cea-4f1c-b054-5897ee026433" target="_blank" rel="noopener">
+        <span class="tk">Daily drill</span><h4>P6 Terminology Drill</h4>
+        <p>98 terms with Leitner spaced repetition and switchboard examples. Five minutes a day so the vocabulary is automatic before an interview, not something you reach for.</p>
+        <span class="go">Start a session &#8599;</span>
+      </a>
+      <span class="tool">
+        <span class="tk">Phase 3 \u00b7 file</span><h4>SWB-CAP-01 Activity Pack</h4>
+        <p>118 activities, 10 milestones, 155 relationships, 3 calendars, 22 resources with rates \u2014 as XLSX and CSV. Import the activities, then build the logic by hand. That is the part that makes you employable.</p>
+        <span class="go mono">p6-training/capstone/</span>
+      </span>
+      <span class="tool sealed">
+        <span class="tk">Phase 10 \u00b7 sealed</span><h4>BRK-AUDIT-01 Schedule Audit</h4>
+        <p>A deliberately defective 47-activity switchroom programme with fourteen planted faults. Find them, score it, write the review email. The answer key sits beside it \u2014 do not open it early.</p>
+        <span class="go mono">sealed until week 16</span>
+      </span>
+    </div>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <span class="num">04</span><h2>Phases &amp; Lesson Register</h2>
       <p>One concept at a time. Task + quiz after every lesson.</p>
     </div>
     <div class="phases" id="phases"></div>
@@ -275,7 +340,7 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--rule);font-si
 
   <section>
     <div class="sechead">
-      <span class="num">03</span><h2>Capstone Deliverables</h2>
+      <span class="num">05</span><h2>Capstone Deliverables</h2>
       <p>What you will physically own at the end.</p>
     </div>
     <div class="tblwrap">
@@ -289,7 +354,7 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--rule);font-si
 
   <section>
     <div class="sechead">
-      <span class="num">04</span><h2>Final Assessment Rubric</h2>
+      <span class="num">06</span><h2>Final Assessment Rubric</h2>
       <p>How I will score you in Week 13.</p>
     </div>
     <div class="tblwrap">
@@ -317,7 +382,7 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--rule);font-si
 (function(){
   var PRISTINE = "<!doctype html>\n" + document.documentElement.outerHTML;
 
-  var WEEKS = 13;
+  var WEEKS = 16;
 
   var PHASES = [
     { n:"00", name:"Set Up Your Toolbox", tag:"Get P6 running legally on your machine",
@@ -376,7 +441,7 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--rule);font-si
 
     { n:"03", name:"Build The Capstone",
       tag:"100+ activities: award → FAT → site → energisation",
-      hrs:12, start:3, span:3,
+      hrs:12, start:3, span:3, mins:30,
       lessons:[
         "Build the WBS: Engineering / Procurement / Manufacture / Test / Logistics / Site / Commissioning",
         "Enter the engineering activities: kick-off, design review, SLD development, shop drawings, client approval cycles",
@@ -449,7 +514,7 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--rule);font-si
       deliv:"An updated, baselined schedule with a documented delay and recovery plan." },
 
     { n:"07", name:"Resources &amp; Costs", tag:"Load labour, plant, materials and money",
-      hrs:8, start:9, span:2,
+      hrs:8, start:9, span:2, mins:25,
       lessons:[
         "Labour, non-labour and material resource types — and when to use each",
         "Building your resource pool: design engineer, draftsperson, assembler, wireman, test engineer, PM",
@@ -511,7 +576,48 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--rule);font-si
         "30 common P6 interview questions with model answers"
       ],
       task:"I will hand you a deliberately broken switchroom schedule. Audit it, score it, and write the review email you would send to its author.",
-      deliv:"A final schedule health score out of 100 and a job-readiness assessment." }
+      deliv:"A final schedule health score out of 100 and a job-readiness assessment." },
+
+    { n:"11", name:"Project Controls Deep Dive", tag:"Cost control, risk, delay claims, governance",
+      hrs:10, start:14, span:2, mins:25,
+      lessons:[
+        "The five pillars of project controls \u2014 and which one pays the most",
+        "Cost Breakdown Structure and control accounts: wiring P6 into the finance system",
+        "Budget \u2192 commitment \u2192 actual \u2192 forecast: the four numbers a controller lives in",
+        "Contingency and risk drawdown: who owns the money and when it is released",
+        "Rules of credit: designing earning rules for cubicle assembly and site terminations",
+        "Quantity and man-hour tracking: production norms for switchgear manufacture",
+        "Schedule risk analysis: three-point estimates and a live risk register",
+        "Monte Carlo simulation: the P50 date you plan to, the P80 date you promise",
+        "Criticality index: which activities are genuinely risky, not merely critical",
+        "Time Impact Analysis in practice: building the fragnet for your ACB delay",
+        "Windows analysis and as-planned vs as-built \u2014 the other two delay methods",
+        "Concurrent delay and float ownership: the arguments that decide who pays",
+        "Change and variation control: keeping scope, cost and time in step",
+        "Reviewing a contractor\u2019s schedule: the 10-point acceptance checklist",
+        "Multi-project EPS: master programmes, cross-project logic, interface milestones",
+        "The monthly report pack and surviving a project review board",
+        "The real tooling stack: P6, Excel/Power Query, Power BI, Acumen Fuse, ERP"
+      ],
+      task:"Take the ACB delay from Phase 6. Build the fragnet, run a Time Impact Analysis, and issue a one-page EOT position with both a P50 and a P80 completion date.",
+      deliv:"A defensible delay claim and a risk-adjusted completion forecast." },
+
+    { n:"12", name:"Career Growth &amp; Certification", tag:"Get the role, then get the next one",
+      hrs:4, start:16, span:1, mins:25,
+      lessons:[
+        "The ladder: Project Engineer \u2192 Planner \u2192 Senior Planner \u2192 Lead Planner \u2192 Controls Manager",
+        "What each rung is judged on, and roughly what each pays in Australia",
+        "Which certifications actually matter: AACE PSP and EVP, PMI-SP, Oracle P6",
+        "Choosing your first move: contractor, client side, or consultancy",
+        "Rewriting your CV so a recruiter reads \u2018project controls\u2019, not \u2018electrical\u2019",
+        "Your portfolio: what to show from the capstone, what to redact, how to present it",
+        "LinkedIn and the hidden planning job market",
+        "Thirty interview questions with model answers",
+        "The mock interview \u2014 I play the hiring manager and score you",
+        "Your first 90 days in a planning role without stepping on anyone"
+      ],
+      task:"Rewrite your CV and send me the schedule-relevant sections. Then book the mock interview.",
+      deliv:"A project-controls CV, a portfolio piece, and a scored mock interview." }
   ];
 
   var MILESTONES = [
@@ -520,7 +626,8 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--rule);font-si
     { wk:7,  label:"Baselined" },
     { wk:9,  label:"Delay + recovery" },
     { wk:11, label:"Cost loaded" },
-    { wk:13, label:"Audit + score" }
+    { wk:13, label:"Audit + score" },
+    { wk:16, label:"Job ready" }
   ];
 
   var DELIVERABLES = [
@@ -537,7 +644,11 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--rule);font-si
     ["11","Earned value summary (CPI / SPI / EAC)","Phase 8","You forecast instead of report history"],
     ["12","Two-week lookahead for the factory floor","Phase 9","Your schedule is usable by the people doing the work"],
     ["13","Executive report pack","Phase 9","You communicate upward without drowning people"],
-    ["14","Audit of a broken schedule + review email","Phase 10","You are ready to be trusted with someone else's programme"]
+    ["14","Audit of a broken schedule + review email","Phase 10","You are ready to be trusted with someone else's programme"],
+    ["15","Cost report: budget / commitment / actual / forecast","Phase 11","You control money, not just dates"],
+    ["16","Risk register + Monte Carlo P50 and P80 dates","Phase 11","You promise dates you can actually defend"],
+    ["17","Time Impact Analysis and EOT position paper","Phase 11","You can protect the business commercially"],
+    ["18","Project-controls CV and portfolio piece","Phase 12","You can get the interview, then pass it"]
   ];
 
   /* ---------- state ---------- */
@@ -622,9 +733,14 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--rule);font-si
       html += '<p class="sublab">Lessons</p><ul class="checks">';
       p.lessons.forEach(function(l,li){
         var id = idFor(pi,li);
-        html += '<li><label><input type="checkbox" data-id="' + id + '"' + (doneSet[id] ? ' checked' : '') + '><span>' + l + '</span></label></li>';
+        html += '<li><label><input type="checkbox" data-id="' + id + '"' + (doneSet[id] ? ' checked' : '') + '><span>' + l + ' <em class="mins">' + (p.mins || 20) + ' min</em></span></label></li>';
       });
-      html += '</ul></div><div>';
+      html += '</ul>';
+      var qid = 'qz-' + p.n;
+      html += '<p class="sublab">Checkpoint</p><ul class="checks"><li><label>';
+      html += '<input type="checkbox" data-id="' + qid + '"' + (doneSet[qid] ? ' checked' : '') + '>';
+      html += '<span>Quiz ' + p.n + ' passed \u2014 I marked it and you scored 4/5 or better</span></label></li></ul>';
+      html += '</div><div>';
       html += '<div class="task"><div class="t">Practical task</div><p>' + p.task + '</p></div>';
       html += '<div class="deliv"><div class="t">You will own</div><p>' + p.deliv + '</p></div>';
       html += '</div></div></div></details>';
@@ -659,6 +775,9 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--rule);font-si
     document.getElementById("donecount").textContent = dn;
     document.getElementById("totcount").textContent = tot;
     document.getElementById("fill").style.width = pct + "%";
+    var qz = 0;
+    PHASES.forEach(function(p){ if (doneSet["qz-" + p.n]) qz++; });
+    document.getElementById("qzcount").textContent = qz;
 
     PHASES.forEach(function(p,pi){
       var c = phaseDone(pi), n = p.lessons.length;

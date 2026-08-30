@@ -1,0 +1,119 @@
+﻿Activity ID,Activity Name,WBS Code,WBS Name,Activity Type,Original Duration (d),Calendar,Predecessors,Primary Resource,Planner Note
+MS1000,Contract Award,SWB-CAP-01.1,Contract Milestones,Start Milestone,0,FACTORY-5D,,,Start milestone. No predecessor - this is your project start.
+MS1010,Design Freeze - SLD Approved,SWB-CAP-01.1,Contract Milestones,Finish Milestone,0,FACTORY-5D,EN1050,,Gate: nothing may be ordered on unapproved design.
+MS1020,All Long-Lead Orders Placed,SWB-CAP-01.1,Contract Milestones,Finish Milestone,0,FACTORY-5D,"PR1030,PR1050,PR1070,PR1090,PR1110,PR1130",,Classic path-convergence milestone. Watch float here.
+MS1030,Enclosures Delivered to Factory,SWB-CAP-01.1,Contract Milestones,Finish Milestone,0,FACTORY-5D,PR1140,,Interface milestone between procurement and manufacture.
+MS1040,Switchboard Assembly Complete,SWB-CAP-01.1,Contract Milestones,Finish Milestone,0,FACTORY-5D,"MF1180,MF1190,MF1200",,Gate into the test phase.
+MS1050,FAT Pass - Released to Site,SWB-CAP-01.1,Contract Milestones,Finish Milestone,0,FACTORY-5D,TR1120,,Contractual milestone. Usually a payment trigger.
+MS1060,Delivery to Site Complete,SWB-CAP-01.1,Contract Milestones,Finish Milestone,0,SITE-6D,LG1070,,Risk transfer point in most contracts.
+MS1070,Cable Terminations Complete,SWB-CAP-01.1,Contract Milestones,Finish Milestone,0,SITE-6D,"SI1100,SI1110",,Gate into commissioning.
+MS1080,Energisation,SWB-CAP-01.1,Contract Milestones,Finish Milestone,0,SITE-6D,CX1070,,The date the client actually cares about.
+MS1090,Practical Completion,SWB-CAP-01.1,Contract Milestones,Finish Milestone,0,SITE-6D,CX1110,,Project finish milestone. Must have no successor.
+PM1000,Project Kick-off Meeting,SWB-CAP-01.2,Project Management,Task Dependent,1,FACTORY-5D,MS1000,Project Manager,Sets the tone. Schedule is issued here.
+PM1010,Develop Project Execution Plan,SWB-CAP-01.2,Project Management,Task Dependent,5,FACTORY-5D,PM1000,Project Manager,
+PM1020,Develop and Issue Baseline Programme,SWB-CAP-01.2,Project Management,Task Dependent,5,FACTORY-5D,PM1010SS+2,Planner,You are this resource.
+PM1030,Project Management and Reporting,SWB-CAP-01.2,Project Management,Level of Effort,180,FACTORY-5D,PM1000,Project Manager,"Level of Effort - spans the job, must never drive the critical path."
+PM1040,Project Close-out and Handover Documentation,SWB-CAP-01.2,Project Management,Task Dependent,10,FACTORY-5D,CX1110,Project Manager,
+EN1000,Review Contract Technical Specification,SWB-CAP-01.3,Engineering & Design,Task Dependent,5,FACTORY-5D,PM1000,Design Engineer,
+EN1010,Site Survey - Confirm Switchroom Dimensions,SWB-CAP-01.3,Engineering & Design,Task Dependent,2,FACTORY-5D,PM1000,Design Engineer,Access constraint: coordinate with builder.
+EN1020,Develop Single Line Diagram (SLD),SWB-CAP-01.3,Engineering & Design,Task Dependent,10,FACTORY-5D,EN1000,Design Engineer,The parent document of the whole job.
+EN1030,Internal Design Review - SLD,SWB-CAP-01.3,Engineering & Design,Task Dependent,2,FACTORY-5D,EN1020,Design Engineer,
+EN1040,Issue SLD for Client Approval,SWB-CAP-01.3,Engineering & Design,Task Dependent,1,FACTORY-5D,EN1030,Design Engineer,
+EN1050,Client Approval - SLD,SWB-CAP-01.3,Engineering & Design,Task Dependent,10,FACTORY-5D,EN1040,Client,Client-controlled duration. Track it: this is where EOT claims are born.
+EN1060,Protection and Metering Schedule,SWB-CAP-01.3,Engineering & Design,Task Dependent,8,FACTORY-5D,EN1050,Design Engineer,
+EN1070,Develop General Arrangement (GA) Drawings,SWB-CAP-01.3,Engineering & Design,Task Dependent,12,FACTORY-5D,"EN1050,EN1010",Draftsperson,
+EN1080,Develop Schematic and Wiring Diagrams,SWB-CAP-01.3,Engineering & Design,Task Dependent,15,FACTORY-5D,EN1060SS+3,Draftsperson,
+EN1090,Busbar Sizing and Short Circuit Calculations,SWB-CAP-01.3,Engineering & Design,Task Dependent,6,FACTORY-5D,EN1020,Design Engineer,AS/NZS 3439 / AS 61439 verification.
+EN1100,Form 4b Segregation Design,SWB-CAP-01.3,Engineering & Design,Task Dependent,5,FACTORY-5D,EN1070SS+5,Design Engineer,
+EN1110,Arc Flash and Internal Arc Containment Design,SWB-CAP-01.3,Engineering & Design,Task Dependent,5,FACTORY-5D,EN1090,Design Engineer,
+EN1120,Cable Schedule and Gland Plate Design,SWB-CAP-01.3,Engineering & Design,Task Dependent,6,FACTORY-5D,EN1070,Draftsperson,
+EN1130,Issue Shop Drawings for Client Approval,SWB-CAP-01.3,Engineering & Design,Task Dependent,2,FACTORY-5D,"EN1070,EN1080,EN1100,EN1110,EN1120",Draftsperson,Path convergence - five predecessors.
+EN1140,Client Approval - Shop Drawings,SWB-CAP-01.3,Engineering & Design,Task Dependent,15,FACTORY-5D,EN1130,Client,Contracted 10 days. Budget 15. Ask me why in Phase 5.
+EN1150,Incorporate Client Comments,SWB-CAP-01.3,Engineering & Design,Task Dependent,5,FACTORY-5D,EN1140,Draftsperson,
+EN1160,Re-issue Shop Drawings - Approved for Construction,SWB-CAP-01.3,Engineering & Design,Task Dependent,2,FACTORY-5D,EN1150,Draftsperson,
+EN1170,Develop Bill of Materials (BOM),SWB-CAP-01.3,Engineering & Design,Task Dependent,5,FACTORY-5D,EN1070SS+5,Design Engineer,
+EN1180,Develop Test Procedures and ITP,SWB-CAP-01.3,Engineering & Design,Task Dependent,8,FACTORY-5D,EN1080,Test Engineer,
+PR1000,Compile Long-Lead Item Register,SWB-CAP-01.4,Procurement,Task Dependent,3,FACTORY-5D,EN1020,Procurement Officer,
+PR1010,Request Quotations - 4000A ACBs,SWB-CAP-01.4,Procurement,Task Dependent,5,FACTORY-5D,PR1000,Procurement Officer,
+PR1020,Technical Evaluation - ACBs,SWB-CAP-01.4,Procurement,Task Dependent,3,FACTORY-5D,PR1010,Design Engineer,
+PR1030,Place Order - 4000A ACBs,SWB-CAP-01.4,Procurement,Task Dependent,1,FACTORY-5D,"PR1020,EN1050",Procurement Officer,Do not order before design freeze.
+PR1040,Manufacture and Delivery - 4000A ACBs,SWB-CAP-01.4,Procurement,Task Dependent,90,CAL-7D,PR1030,,90 CALENDAR days - note the 7-day calendar. This is your longest lead item.
+PR1050,Place Order - MCCBs and Distribution Devices,SWB-CAP-01.4,Procurement,Task Dependent,1,FACTORY-5D,EN1170,Procurement Officer,
+PR1060,Manufacture and Delivery - MCCBs,SWB-CAP-01.4,Procurement,Task Dependent,45,CAL-7D,PR1050,,
+PR1070,"Place Order - CTs, VTs and Metering",SWB-CAP-01.4,Procurement,Task Dependent,1,FACTORY-5D,EN1060,Procurement Officer,
+PR1080,"Delivery - CTs, VTs and Metering",SWB-CAP-01.4,Procurement,Task Dependent,40,CAL-7D,PR1070,,
+PR1090,Place Order - Protection Relays and PLC,SWB-CAP-01.4,Procurement,Task Dependent,1,FACTORY-5D,EN1060,Procurement Officer,
+PR1100,Delivery - Protection Relays and PLC,SWB-CAP-01.4,Procurement,Task Dependent,60,CAL-7D,PR1090,,
+PR1110,Place Order - Copper Busbar,SWB-CAP-01.4,Procurement,Task Dependent,1,FACTORY-5D,EN1090,Procurement Officer,
+PR1120,Delivery - Copper Busbar,SWB-CAP-01.4,Procurement,Task Dependent,35,CAL-7D,PR1110,,
+PR1130,Place Order - Enclosures and Cubicles,SWB-CAP-01.4,Procurement,Task Dependent,1,FACTORY-5D,EN1160,Procurement Officer,"Needs AFC drawings, not approved-with-comments."
+PR1140,Fabrication and Delivery - Enclosures,SWB-CAP-01.4,Procurement,Task Dependent,50,CAL-7D,PR1130,,
+PR1150,"Procure Wiring, Terminals and Consumables",SWB-CAP-01.4,Procurement,Task Dependent,20,CAL-7D,EN1170,Procurement Officer,
+PR1160,Expedite and Track Long-Lead Deliveries,SWB-CAP-01.4,Procurement,Level of Effort,120,FACTORY-5D,PR1030,Procurement Officer,Level of Effort.
+MF1000,Factory Bay Allocation and Setup,SWB-CAP-01.5,Manufacture,Task Dependent,2,FACTORY-5D,PR1140FF,Production Supervisor,FF relationship - bay must be ready when steel lands.
+MF1010,Goods Inward Inspection - Enclosures,SWB-CAP-01.5,Manufacture,Task Dependent,2,FACTORY-5D,"MS1030,MF1000",QA Inspector,
+MF1020,Enclosure Modification and Cut-outs,SWB-CAP-01.5,Manufacture,Task Dependent,5,FACTORY-5D,MF1010,Assembler,
+MF1030,Powder Coat Touch-up and Cure,SWB-CAP-01.5,Manufacture,Task Dependent,3,FACTORY-5D,MF1020,Assembler,Cure time is a lag candidate - discuss in Phase 4.
+MF1040,Erect and Join Cubicles 1-4,SWB-CAP-01.5,Manufacture,Task Dependent,4,FACTORY-5D,MF1030,Assembler,
+MF1050,Erect and Join Cubicles 5-8,SWB-CAP-01.5,Manufacture,Task Dependent,4,FACTORY-5D,MF1040SS+2,Assembler,Crew moves through - classic SS+lag.
+MF1060,Install Earth Bar and Earthing System,SWB-CAP-01.5,Manufacture,Task Dependent,3,FACTORY-5D,MF1040,Assembler,
+MF1070,Machine Main Horizontal Busbar,SWB-CAP-01.5,Manufacture,Task Dependent,6,FACTORY-5D,"PR1120,EN1160",Busbar Fabricator,
+MF1080,Install Main Horizontal Busbar,SWB-CAP-01.5,Manufacture,Task Dependent,5,FACTORY-5D,"MF1070,MF1050,MF1060",Busbar Fabricator,
+MF1090,Machine and Install Vertical Droppers,SWB-CAP-01.5,Manufacture,Task Dependent,6,FACTORY-5D,MF1080SS+2,Busbar Fabricator,
+MF1100,Apply Busbar Insulation and Phase Barriers,SWB-CAP-01.5,Manufacture,Task Dependent,4,FACTORY-5D,MF1090,Assembler,
+MF1110,Busbar Torque and Inspection,SWB-CAP-01.5,Manufacture,Task Dependent,2,FACTORY-5D,MF1100,QA Inspector,Hold point. Torque records required.
+MF1120,Install 4000A ACB Cassettes,SWB-CAP-01.5,Manufacture,Task Dependent,4,FACTORY-5D,"PR1040,MF1110",Assembler,Watch this one - PR1040 is your long lead.
+MF1130,Install MCCB Chassis and Devices,SWB-CAP-01.5,Manufacture,Task Dependent,6,FACTORY-5D,"PR1060,MF1090",Assembler,
+MF1140,"Install CTs, VTs and Metering",SWB-CAP-01.5,Manufacture,Task Dependent,4,FACTORY-5D,"PR1080,MF1090",Assembler,
+MF1150,Install Protection Relays and PLC Panel,SWB-CAP-01.5,Manufacture,Task Dependent,5,FACTORY-5D,"PR1100,MF1050",Assembler,
+MF1160,Install Form 4b Segregation Barriers,SWB-CAP-01.5,Manufacture,Task Dependent,5,FACTORY-5D,"MF1130,MF1120",Assembler,
+MF1170,Internal Wiring - Power Circuits,SWB-CAP-01.5,Manufacture,Task Dependent,10,FACTORY-5D,"MF1120,MF1130,PR1150",Wireman,
+MF1180,Internal Wiring - Control and Protection,SWB-CAP-01.5,Manufacture,Task Dependent,12,FACTORY-5D,"MF1150,MF1140,MF1170SS+3",Wireman,
+MF1190,"Labelling, Schedules and Warning Signage",SWB-CAP-01.5,Manufacture,Task Dependent,4,FACTORY-5D,MF1180SS+5,Assembler,
+MF1200,Install Gland Plates and Cable Zone Fit-out,SWB-CAP-01.5,Manufacture,Task Dependent,3,FACTORY-5D,MF1160,Assembler,
+TR1000,QA Inspection - Mechanical,SWB-CAP-01.6,Test & Release,Task Dependent,2,FACTORY-5D,MS1040,QA Inspector,
+TR1010,QA Inspection - Electrical and Wiring Check,SWB-CAP-01.6,Test & Release,Task Dependent,3,FACTORY-5D,TR1000,QA Inspector,
+TR1020,Continuity and Insulation Resistance Testing,SWB-CAP-01.6,Test & Release,Task Dependent,2,FACTORY-5D,TR1010,Test Engineer,
+TR1030,Primary Injection Testing - Busbar and CTs,SWB-CAP-01.6,Test & Release,Task Dependent,3,FACTORY-5D,TR1020,Test Engineer,
+TR1040,Secondary Injection - Protection Relays,SWB-CAP-01.6,Test & Release,Task Dependent,4,FACTORY-5D,TR1030,Test Engineer,
+TR1050,Functional and Sequence Testing,SWB-CAP-01.6,Test & Release,Task Dependent,4,FACTORY-5D,TR1040,Test Engineer,
+TR1060,Pre-FAT Snag and Rectification,SWB-CAP-01.6,Test & Release,Task Dependent,3,FACTORY-5D,TR1050,Assembler,
+TR1070,Compile FAT Documentation Pack,SWB-CAP-01.6,Test & Release,Task Dependent,3,FACTORY-5D,"TR1050SS+2,EN1180",Test Engineer,
+TR1080,Issue FAT Notification to Client,SWB-CAP-01.6,Test & Release,Task Dependent,1,FACTORY-5D,TR1050,Project Manager,Contract usually requires notice - hence the lag below.
+TR1090,Factory Acceptance Test (FAT),SWB-CAP-01.6,Test & Release,Task Dependent,3,FACTORY-5D,"TR1060,TR1070,TR1080FS+5",Test Engineer,FS+5 = contractual 5-day notice period.
+TR1100,Client Defect and Punch List Issued,SWB-CAP-01.6,Test & Release,Task Dependent,1,FACTORY-5D,TR1090,Client,
+TR1110,Rectify FAT Defects,SWB-CAP-01.6,Test & Release,Task Dependent,5,FACTORY-5D,TR1100,Assembler,"Duration is an estimate - a risk item, not a fact."
+TR1120,FAT Re-test and Sign-off,SWB-CAP-01.6,Test & Release,Task Dependent,2,FACTORY-5D,TR1110,Test Engineer,
+LG1000,Prepare Packing and Transport Plan,SWB-CAP-01.7,Logistics,Task Dependent,3,FACTORY-5D,TR1070SS,Logistics Coordinator,
+LG1010,Disassemble for Transport (Shipping Splits),SWB-CAP-01.7,Logistics,Task Dependent,2,FACTORY-5D,MS1050,Assembler,
+LG1020,Protective Wrapping and Crating,SWB-CAP-01.7,Logistics,Task Dependent,3,FACTORY-5D,LG1010,Assembler,
+LG1030,Arrange Transport Permits and Escorts,SWB-CAP-01.7,Logistics,Task Dependent,5,FACTORY-5D,LG1000,Logistics Coordinator,Oversize load - permits have their own lead time.
+LG1040,Load to Transport,SWB-CAP-01.7,Logistics,Task Dependent,1,FACTORY-5D,"LG1020,LG1030,SI1000",Logistics Coordinator,Do not load until site confirms readiness.
+LG1050,Transport to Site,SWB-CAP-01.7,Logistics,Task Dependent,2,CAL-7D,LG1040,Transport Contractor,
+LG1060,Site Offload and Positioning,SWB-CAP-01.7,Logistics,Task Dependent,2,SITE-6D,LG1050,Crane / Rigger,
+LG1070,Goods Inward Inspection at Site,SWB-CAP-01.7,Logistics,Task Dependent,1,SITE-6D,LG1060,QA Inspector,Damage in transit is found here or never.
+SI1000,Confirm Switchroom Ready (Site Readiness),SWB-CAP-01.8,Site Installation,Task Dependent,1,SITE-6D,LG1030,Site Supervisor,"Slab, doors, HVAC, roof watertight."
+SI1010,Set Out and Install Plinth / Base Frame,SWB-CAP-01.8,Site Installation,Task Dependent,3,SITE-6D,SI1000,Electrician,
+SI1020,Set Switchboard to Position,SWB-CAP-01.8,Site Installation,Task Dependent,3,SITE-6D,"MS1060,SI1010",Crane / Rigger,
+SI1030,Re-join Shipping Splits,SWB-CAP-01.8,Site Installation,Task Dependent,3,SITE-6D,SI1020,Electrician,
+SI1040,Re-make Busbar Joints and Torque,SWB-CAP-01.8,Site Installation,Task Dependent,3,SITE-6D,SI1030,Electrician,Torque records again - QA hold point.
+SI1050,Install Site Earthing Connections,SWB-CAP-01.8,Site Installation,Task Dependent,2,SITE-6D,SI1040,Electrician,
+SI1060,Mechanical Fixing and Levelling,SWB-CAP-01.8,Site Installation,Task Dependent,2,SITE-6D,SI1030SS+2,Electrician,
+SI1070,Pull LV Power Cables,SWB-CAP-01.8,Site Installation,Task Dependent,10,SITE-6D,SI1020,Electrician,Often done by others - interface risk.
+SI1080,Pull Control and Comms Cables,SWB-CAP-01.8,Site Installation,Task Dependent,6,SITE-6D,SI1070SS+3,Electrician,
+SI1090,Glanding and Terminations - Power,SWB-CAP-01.8,Site Installation,Task Dependent,8,SITE-6D,"SI1070,SI1050",Electrician,
+SI1100,Glanding and Terminations - Control,SWB-CAP-01.8,Site Installation,Task Dependent,6,SITE-6D,"SI1080,SI1090SS+3",Electrician,
+SI1110,Cable Schedule Verification and Labelling,SWB-CAP-01.8,Site Installation,Task Dependent,3,SITE-6D,SI1100FF+2,Electrician,
+SI1120,Site QA Inspection and Snag,SWB-CAP-01.8,Site Installation,Task Dependent,3,SITE-6D,SI1110,QA Inspector,
+CX1000,Pre-Energisation Inspection,SWB-CAP-01.9,Testing & Commissioning,Task Dependent,2,SITE-6D,SI1120,Test Engineer,
+CX1010,Insulation Resistance and Continuity - Site,SWB-CAP-01.9,Testing & Commissioning,Task Dependent,3,SITE-6D,CX1000,Test Engineer,
+CX1020,Apply Protection Settings,SWB-CAP-01.9,Testing & Commissioning,Task Dependent,2,SITE-6D,CX1010,Test Engineer,
+CX1030,Secondary Injection Verification - Site,SWB-CAP-01.9,Testing & Commissioning,Task Dependent,3,SITE-6D,CX1020,Test Engineer,
+CX1040,Functional Testing with Upstream Supply,SWB-CAP-01.9,Testing & Commissioning,Task Dependent,3,SITE-6D,CX1030,Test Engineer,
+CX1050,SCADA / BMS Point-to-Point Verification,SWB-CAP-01.9,Testing & Commissioning,Task Dependent,4,SITE-6D,CX1030SS+2,Controls Engineer,
+CX1060,Pre-Energisation Safety Review and Permits,SWB-CAP-01.9,Testing & Commissioning,Task Dependent,2,SITE-6D,"CX1040,CX1050",Site Supervisor,Permit to work. No shortcuts here.
+CX1070,Energisation,SWB-CAP-01.9,Testing & Commissioning,Task Dependent,1,SITE-6D,CX1060,Test Engineer,
+CX1080,Load Bank / Load Transfer Testing,SWB-CAP-01.9,Testing & Commissioning,Task Dependent,4,SITE-6D,CX1070,Test Engineer,
+CX1090,Compile and Issue O&M Manuals and As-Builts,SWB-CAP-01.9,Testing & Commissioning,Task Dependent,10,FACTORY-5D,SI1110,Draftsperson,
+CX1100,Client Training,SWB-CAP-01.9,Testing & Commissioning,Task Dependent,2,SITE-6D,CX1080,Test Engineer,
+CX1110,Practical Completion Handover,SWB-CAP-01.9,Testing & Commissioning,Task Dependent,1,SITE-6D,"CX1080,CX1090,CX1100",Project Manager,

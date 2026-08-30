@@ -1,0 +1,389 @@
+<title>Switchboard Planner's Deskpad</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#E7EAE6;--surface:#F7F8F6;--card:#FDFDFC;--ink:#14181A;--ink2:#59615F;--ink3:#8B928F;
+  --rule:#CBD0CA;--rule2:#DDE1DB;--copper:#A9541B;--copper-soft:#F1E2D6;--live:#B87D05;
+  --earth:#3E7442;--earth-soft:#DDE9DB;--danger:#A32B22;--danger-soft:#F4DEDB;
+  --shadow:0 1px 2px rgba(20,24,26,.06),0 8px 24px -16px rgba(20,24,26,.3);color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#121618;--surface:#191E21;--card:#1E2427;--ink:#E6EAE6;--ink2:#9AA3A1;--ink3:#6D7674;
+  --rule:#2C3438;--rule2:#232A2D;--copper:#D9884A;--copper-soft:#3A2A1E;--live:#E0A62A;
+  --earth:#6FAE6E;--earth-soft:#1F2E20;--danger:#E0796C;--danger-soft:#341D1A;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -18px rgba(0,0,0,.8);color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --ground:#121618;--surface:#191E21;--card:#1E2427;--ink:#E6EAE6;--ink2:#9AA3A1;--ink3:#6D7674;
+  --rule:#2C3438;--rule2:#232A2D;--copper:#D9884A;--copper-soft:#3A2A1E;--live:#E0A62A;
+  --earth:#6FAE6E;--earth-soft:#1F2E20;--danger:#E0796C;--danger-soft:#341D1A;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -18px rgba(0,0,0,.8);color-scheme:dark;}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:14.5px;line-height:1.5}
+.wrap{max-width:900px;margin:0 auto;padding:34px 20px 80px}
+h1,h2,h3{font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-weight:700;text-wrap:balance;margin:0}
+h1{font-size:clamp(36px,6.5vw,58px);line-height:.95;text-transform:uppercase}
+h2{font-size:27px;text-transform:uppercase;letter-spacing:.04em}
+h3{font-size:18px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2)}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--copper)}
+.mono{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+.lede{color:var(--ink2);max-width:64ch;margin:12px 0 0}
+header{border-bottom:2px solid var(--ink);padding-bottom:24px;margin-bottom:8px}
+.toc{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}
+.toc a{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  text-decoration:none;color:var(--ink2);border:1px solid var(--rule);background:var(--surface);
+  padding:5px 9px;border-radius:2px;
+}
+.toc a:hover{border-color:var(--copper);color:var(--copper)}
+.toc a:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+.sheet{
+  background:var(--card);border:1px solid var(--rule);border-radius:3px;box-shadow:var(--shadow);
+  padding:26px 28px 30px;margin-top:26px;position:relative;
+}
+.sheet .no{
+  position:absolute;top:0;right:0;font-family:"IBM Plex Mono",monospace;font-size:10.5px;
+  letter-spacing:.14em;color:var(--card);background:var(--ink);padding:5px 10px;border-radius:0 2px 0 3px;
+}
+.sheet > h2{border-bottom:1px solid var(--rule);padding-bottom:10px;margin-bottom:4px;padding-right:70px}
+.sheet .sub{color:var(--ink3);font-size:12.5px;margin:0 0 18px;font-family:"IBM Plex Mono",monospace;letter-spacing:.04em}
+table{border-collapse:collapse;width:100%;font-size:13.5px;margin-top:6px}
+.tw{overflow-x:auto}
+th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--rule2);vertical-align:top}
+th{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--rule);white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+code{font-family:"IBM Plex Mono",monospace;font-size:12.5px;background:var(--surface);border:1px solid var(--rule2);padding:1px 5px;border-radius:2px;white-space:nowrap}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:2px;white-space:nowrap;display:inline-block}
+.ok{background:var(--earth-soft);color:var(--earth);border:1px solid var(--earth)}
+.warn{background:var(--copper-soft);color:var(--copper);border:1px solid var(--copper)}
+.bad{background:var(--danger-soft);color:var(--danger);border:1px solid var(--danger)}
+.tree{font-family:"IBM Plex Mono",monospace;font-size:13px;line-height:1.85;background:var(--surface);border:1px solid var(--rule2);border-radius:3px;padding:16px 18px;overflow-x:auto;white-space:pre}
+.callout{border-left:3px solid var(--copper);background:var(--copper-soft);padding:12px 15px;border-radius:0 3px 3px 0;margin-top:18px;font-size:13.5px}
+.callout b{color:var(--copper)}
+.danger{border-left-color:var(--danger);background:var(--danger-soft)}
+.danger b{color:var(--danger)}
+.cols{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:720px){.cols{grid-template-columns:1fr 1fr}}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:10px 0 0}
+ol.steps li{counter-increment:s;position:relative;padding:8px 0 8px 40px;border-bottom:1px solid var(--rule2);font-size:13.8px}
+ol.steps li:last-child{border-bottom:none}
+ol.steps li::before{
+  content:counter(s,decimal-leading-zero);position:absolute;left:0;top:9px;
+  font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--copper);border:1px solid var(--copper);
+  border-radius:2px;padding:1px 5px;
+}
+.fx{font-family:"IBM Plex Mono",monospace;font-size:13.5px;background:var(--surface);border:1px solid var(--rule2);border-radius:3px;padding:12px 14px;margin-top:8px;overflow-x:auto}
+.fx b{color:var(--copper)}
+footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--rule);font-size:12px;color:var(--ink3);display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between}
+.print{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--ink);color:var(--card);border:0;padding:9px 15px;border-radius:2px;cursor:pointer;margin-top:18px;
+}
+.print:hover{background:var(--copper)}
+.print:focus-visible{outline:2px solid var(--copper);outline-offset:3px}
+@media print{
+  body{background:#fff;color:#000;font-size:10.5pt}
+  .wrap{max-width:none;padding:0}
+  .toc,.print,footer{display:none}
+  .sheet{page-break-inside:avoid;break-inside:avoid;page-break-after:always;box-shadow:none;border:1px solid #999;margin-top:0;padding:18px 20px}
+  .sheet .no{background:#000;color:#fff}
+  header{page-break-after:always}
+  a{color:#000;text-decoration:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Primavera P6 · Print &amp; Pin</div>
+  <h1>Switchboard<br>Planner's Deskpad</h1>
+  <p class="lede">Ten reference sheets. Everything a planner on a switchgear or data centre package reaches for and can never remember. Print it, pin it above the desk, stop looking things up.</p>
+  <button class="print" onclick="window.print()">Print all ten sheets</button>
+  <nav class="toc">
+    <a href="#s1">01 Relationships</a><a href="#s2">02 Float &amp; CPM</a><a href="#s3">03 Constraints</a>
+    <a href="#s4">04 F9 Options</a><a href="#s5">05 DCMA-14</a><a href="#s6">06 Update Cycle</a>
+    <a href="#s7">07 Earned Value</a><a href="#s8">08 Calendars</a><a href="#s9">09 Shortcuts</a>
+    <a href="#s10">10 Who Gets What</a>
+  </nav>
+</header>
+
+<!-- 01 -->
+<section class="sheet" id="s1">
+  <span class="no">SHEET 01</span>
+  <h2>Relationship Decision Tree</h2>
+  <p class="sub">Ask the questions in order. Stop at the first yes.</p>
+  <div class="tree">Can B start only after A is completely finished?
+   └─ YES ──▶ <b>FS</b>   Finish-to-Start        ← ~90% of your logic
+   └─ NO  ──▶ next question
+
+Does B start partway through A, then run alongside it?
+   └─ YES ──▶ <b>SS + lag</b>  Start-to-Start
+              "Control wiring starts 3 days after power wiring starts"
+
+Can B start early, but not FINISH until A finishes?
+   └─ YES ──▶ <b>FF + lag</b>  Finish-to-Finish
+              "Cable labelling finishes 2 days after terminations finish"
+
+Must A finish before B can finish, where B is already running?
+   └─ YES ──▶ <b>SF</b>   Start-to-Finish        ← almost never. Justify in writing.</div>
+  <div class="tw"><table>
+    <thead><tr><th>Type</th><th>Switchboard example</th><th>Health target</th></tr></thead>
+    <tbody>
+      <tr><td><code>FS</code></td><td>Busbar torque &amp; inspect → Install ACB cassettes</td><td><span class="tag ok">≥ 90% of links</span></td></tr>
+      <tr><td><code>SS+2</code></td><td>Erect cubicles 1–4 → Erect cubicles 5–8 (crew moves through)</td><td><span class="tag warn">use with care</span></td></tr>
+      <tr><td><code>FF+2</code></td><td>Terminations complete → Cable schedule verification complete</td><td><span class="tag warn">use with care</span></td></tr>
+      <tr><td><code>SF</code></td><td>Shift handover; temporary supply removed as permanent supply energises</td><td><span class="tag bad">&lt; 1%, justify each</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="cols" style="margin-top:20px">
+    <div>
+      <h3>Lags — when legitimate</h3>
+      <table><tbody>
+        <tr><td>Powder coat cure</td><td class="mono">FS+2</td></tr>
+        <tr><td>Concrete plinth cure</td><td class="mono">FS+7</td></tr>
+        <tr><td>Contractual FAT notice</td><td class="mono">FS+5</td></tr>
+        <tr><td>Sea freight transit</td><td class="mono">FS+35</td></tr>
+      </tbody></table>
+    </div>
+    <div>
+      <h3>Lags — when a defect</h3>
+      <table><tbody>
+        <tr><td>"Client will take a while"</td><td><span class="tag bad">make it an activity</span></td></tr>
+        <tr><td>Lag &gt; the activity duration</td><td><span class="tag bad">hidden work</span></td></tr>
+        <tr><td>Any negative lag (lead)</td><td><span class="tag bad">use SS instead</span></td></tr>
+        <tr><td>Lag used to force a date</td><td><span class="tag bad">that's a constraint</span></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+  <div class="callout"><b>The rule:</b> a lag is time nobody owns, nobody resources, and nobody can progress. If real work happens in that gap, it must be an activity. If real waiting happens, a lag is fine — but write down why.</div>
+</section>
+
+<!-- 02 -->
+<section class="sheet" id="s2">
+  <span class="no">SHEET 02</span>
+  <h2>Float, Critical Path &amp; the Passes</h2>
+  <p class="sub">The engine, in one page.</p>
+  <div class="cols">
+    <div>
+      <h3>Forward pass — earliest dates</h3>
+      <div class="fx">ES = latest EF of all predecessors<br>EF = ES + Duration − 1</div>
+      <p style="font-size:13px;color:var(--ink2);margin-top:8px">Run left to right. Answers: <i>how soon can this happen?</i></p>
+      <h3 style="margin-top:20px">Backward pass — latest dates</h3>
+      <div class="fx">LF = earliest LS of all successors<br>LS = LF − Duration + 1</div>
+      <p style="font-size:13px;color:var(--ink2);margin-top:8px">Run right to left. Answers: <i>how late can this happen without moving the end date?</i></p>
+    </div>
+    <div>
+      <h3>Float</h3>
+      <div class="fx"><b>Total Float</b> = LS − ES  (or LF − EF)<br>&nbsp;&nbsp;How long this activity can slip before<br>&nbsp;&nbsp;the PROJECT finish moves.<br><br><b>Free Float</b> = earliest ES of successors − EF − 1<br>&nbsp;&nbsp;How long it can slip before the NEXT<br>&nbsp;&nbsp;activity moves.</div>
+      <div class="callout" style="margin-top:16px"><b>Free float ≤ Total float.</b> Always. If free float is 0 but total float is 12, you can't move without shoving your successor — but the end date still holds.</div>
+    </div>
+  </div>
+  <div class="tw"><table style="margin-top:18px">
+    <thead><tr><th>Term</th><th>Meaning</th><th>What to do about it</th></tr></thead>
+    <tbody>
+      <tr><td><b>Critical path</b></td><td>The chain with the least total float (usually 0). Controls the finish date.</td><td>Protect it. Resource it first. Report it weekly.</td></tr>
+      <tr><td><b>Longest path</b></td><td>The chain that actually drives the finish, traced backwards through driving relationships. Ignores float value.</td><td>On multi-calendar jobs like yours, <b>trust longest path over TF=0</b>. Calendars distort float.</td></tr>
+      <tr><td><b>Negative float</b></td><td>Latest dates are earlier than earliest dates. You are already late — or a constraint is lying.</td><td>Find the cause first. Constraint-generated negative float is noise, not delay.</td></tr>
+      <tr><td><b>Driving relationship</b></td><td>The one predecessor actually setting this activity's start.</td><td>Trace it backwards to find the true delay source in 30 seconds.</td></tr>
+      <tr><td><b>High float (&gt;44d)</b></td><td>Usually a missing successor, not genuine slack.</td><td>Check for open ends before you celebrate.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 03 -->
+<section class="sheet" id="s3">
+  <span class="no">SHEET 03</span>
+  <h2>Constraints — Safe, Risky, Never</h2>
+  <p class="sub">Every constraint is a confession that logic is missing.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Constraint</th><th>Effect</th><th>Verdict</th><th>When it's acceptable</th></tr></thead>
+    <tbody>
+      <tr><td><code>Start On or After</code></td><td>Cannot start before a date. Can still push later.</td><td><span class="tag ok">Safe</span></td><td>Site access date, contract commencement, client-imposed no-earlier-than.</td></tr>
+      <tr><td><code>Finish On or Before</code></td><td>Generates negative float if breached — a visible alarm.</td><td><span class="tag ok">Safe</span></td><td>Contractual completion dates. Use it to <i>surface</i> pressure, not to hide it.</td></tr>
+      <tr><td><code>Start On or Before</code></td><td>Pulls activity earlier; can create negative float.</td><td><span class="tag warn">Risky</span></td><td>Rare. Usually better modelled as logic.</td></tr>
+      <tr><td><code>Finish On or After</code></td><td>Holds an activity out.</td><td><span class="tag warn">Risky</span></td><td>Seasonal or shutdown windows.</td></tr>
+      <tr><td><code>Start On</code> / <code>Finish On</code></td><td>Pins to an exact date, both directions.</td><td><span class="tag warn">Risky</span></td><td>A genuinely fixed event: a scheduled outage, a witnessed test date.</td></tr>
+      <tr><td><code>As Late As Possible</code></td><td>Consumes all free float on the activity.</td><td><span class="tag warn">Risky</span></td><td>Deliberately delaying delivery to avoid site storage. Legitimate — but document it.</td></tr>
+      <tr><td><code>Mandatory Start</code></td><td><b>Overrides logic.</b> Predecessors slip; this does not move.</td><td><span class="tag bad">Never</span></td><td>Effectively never. It breaks CPM.</td></tr>
+      <tr><td><code>Mandatory Finish</code></td><td><b>Overrides logic.</b> Hides delay completely.</td><td><span class="tag bad">Never</span></td><td>Effectively never. The most destructive field in P6.</td></tr>
+      <tr><td><code>Expected Finish</code></td><td>Recalculates remaining duration to hit a date.</td><td><span class="tag warn">Risky</span></td><td>Updating from a supplier's promised date. Understand what it does to RD first.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout danger"><b>Before you add any constraint, ask:</b> "What real-world dependency am I failing to model?" Nine times out of ten there is a missing predecessor. Add the logic instead. If you must constrain, record the reason in the activity Notebook — your future self, and the delay expert, will need it.</div>
+</section>
+
+<!-- 04 -->
+<section class="sheet" id="s4">
+  <span class="no">SHEET 04</span>
+  <h2>F9 — Scheduling Options</h2>
+  <p class="sub">The dialog everyone clicks through without reading.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Option</th><th>Set it to</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Data date</td><td>The cut-off of your progress period</td><td>Everything left of it is history, everything right is forecast. Set it before you schedule, not after.</td></tr>
+      <tr><td>When scheduling progressed activities use</td><td><b>Retained Logic</b></td><td>Keeps the network intact when work happens out of sequence. <i>Progress Override</i> ignores remaining logic and flatters your dates. Use Retained Logic unless you have a specific reason.</td></tr>
+      <tr><td>Define critical activities as</td><td><b>Longest Path</b></td><td>You run a factory 5-day calendar and a site 6-day calendar. Float-based criticality goes strange across calendars; longest path does not.</td></tr>
+      <tr><td>Calculate float based on</td><td>Finish date of each project</td><td>Correct for a single package. Change only in a multi-project master programme.</td></tr>
+      <tr><td>Compute total float as</td><td>Finish float (LF − EF)</td><td>The default and the convention everyone reports against.</td></tr>
+      <tr><td>Calendar for scheduling relationship lag</td><td>Predecessor activity calendar</td><td>Otherwise a 5-day lag on a 7-day supply chain silently becomes 7 calendar days.</td></tr>
+      <tr><td>Ignore relationships to and from other projects</td><td>Unticked (usually)</td><td>Tick it only when deliberately isolating your package for analysis.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout"><b>Every single time you press F9:</b> read the log. P6 tells you how many activities have no predecessor, no successor, are out of sequence, and how many constraints exist. That log is a free schedule health check and almost nobody reads it.</div>
+</section>
+
+<!-- 05 -->
+<section class="sheet" id="s5">
+  <span class="no">SHEET 05</span>
+  <h2>DCMA 14-Point Health Check</h2>
+  <p class="sub">The industry-standard audit. Run it before anyone else does.</p>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>Metric</th><th>Threshold</th><th>What failing it means</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">01</td><td>Logic — missing predecessor or successor</td><td class="mono">≤ 5%</td><td>Open ends. Activities floating free of the network.</td></tr>
+      <tr><td class="mono">02</td><td>Leads (negative lags)</td><td class="mono">0</td><td>Hidden overlap that distorts float.</td></tr>
+      <tr><td class="mono">03</td><td>Lags</td><td class="mono">≤ 5%</td><td>Untracked, unresourced time.</td></tr>
+      <tr><td class="mono">04</td><td>Relationship types — FS</td><td class="mono">≥ 90%</td><td>Over-use of SS/FF usually means compressed logic hiding risk.</td></tr>
+      <tr><td class="mono">05</td><td>Hard constraints</td><td class="mono">≤ 5%</td><td>Dates typed in place of logic.</td></tr>
+      <tr><td class="mono">06</td><td>High float (TF &gt; 44 days)</td><td class="mono">≤ 5%</td><td>Usually a missing successor, not real slack.</td></tr>
+      <tr><td class="mono">07</td><td>Negative float</td><td class="mono">0</td><td>Late, or constrained. Either way, explain it.</td></tr>
+      <tr><td class="mono">08</td><td>High duration (&gt; 44 days remaining)</td><td class="mono">≤ 5%</td><td>Too coarse to manage or progress honestly.</td></tr>
+      <tr><td class="mono">09</td><td>Invalid dates</td><td class="mono">0</td><td>Actuals in the future or forecasts in the past. Data date discipline failure.</td></tr>
+      <tr><td class="mono">10</td><td>Resources assigned</td><td class="mono">100%</td><td>Only applies to a resource-loaded schedule.</td></tr>
+      <tr><td class="mono">11</td><td>Missed tasks vs baseline</td><td class="mono">≤ 5%</td><td>Execution slipping against the promise.</td></tr>
+      <tr><td class="mono">12</td><td>Critical path test</td><td class="mono">Pass</td><td>Add a 600d lag to a critical activity. The finish must move ~600d. If it doesn't, your network is broken.</td></tr>
+      <tr><td class="mono">13</td><td>CPLI — Critical Path Length Index</td><td class="mono">≥ 0.95</td><td>Below 0.95 you cannot finish on time without recovery.</td></tr>
+      <tr><td class="mono">14</td><td>BEI — Baseline Execution Index</td><td class="mono">≥ 0.95</td><td>You are completing fewer activities than you promised.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="fx" style="margin-top:16px"><b>CPLI</b> = (Critical path length + Total float) ÷ Critical path length<br><b>BEI</b>&nbsp;&nbsp;= Activities actually completed ÷ Activities baselined to complete by the data date</div>
+</section>
+
+<!-- 06 -->
+<section class="sheet" id="s6">
+  <span class="no">SHEET 06</span>
+  <h2>The Weekly Update Cycle</h2>
+  <p class="sub">Same eleven steps, every week, forever. Do them in order.</p>
+  <ol class="steps">
+    <li><b>Back up first.</b> Export the XER before you touch anything. P6 has no meaningful undo.</li>
+    <li><b>Collect progress</b> from the factory floor and site — actual starts, actual finishes, and remaining duration. Not percentages. Ask "how many more days?"</li>
+    <li><b>Set the new data date</b> — same day of the week, every week. Friday close of business is standard.</li>
+    <li><b>Enter actual starts</b> for activities that began. Never a date after the data date.</li>
+    <li><b>Enter actual finishes</b> for activities that completed.</li>
+    <li><b>Re-estimate remaining duration</b> on activities in progress. This is the number that matters. Do not accept P6's arithmetic guess.</li>
+    <li><b>Check for out-of-sequence progress</b> — work that started before its predecessor finished. Decide deliberately: fix the logic, or accept it under Retained Logic.</li>
+    <li><b>Press F9.</b> Read the scheduling log.</li>
+    <li><b>Compare to baseline</b> — variance columns, baseline bars, milestone slip.</li>
+    <li><b>Identify the driving delay.</b> Trace the longest path back from the finish milestone. Name the activity and the owner.</li>
+    <li><b>Issue</b> the updated programme, the two-week lookahead, and the narrative. Same day, every week.</li>
+  </ol>
+  <div class="callout danger"><b>The three cardinal sins of updating:</b> typing a % complete instead of a remaining duration; leaving activities with actual dates in the future; and moving the data date before entering the actuals. Any one of them makes the update worthless.</div>
+</section>
+
+<!-- 07 -->
+<section class="sheet" id="s7">
+  <span class="no">SHEET 07</span>
+  <h2>Earned Value — Every Formula</h2>
+  <p class="sub">Three numbers in, everything else out.</p>
+  <div class="cols">
+    <div>
+      <h3>The three inputs</h3>
+      <div class="fx"><b>BAC</b>  Budget At Completion — total budget<br><b>PV</b>&nbsp;&nbsp; Planned Value — budgeted cost of work<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SCHEDULED by now<br><b>EV</b>&nbsp;&nbsp; Earned Value — budgeted cost of work<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACTUALLY DONE by now<br><b>AC</b>&nbsp;&nbsp; Actual Cost — what you have really spent</div>
+      <h3 style="margin-top:18px">Variances</h3>
+      <div class="fx"><b>CV</b> = EV − AC&nbsp;&nbsp;&nbsp;negative = over budget<br><b>SV</b> = EV − PV&nbsp;&nbsp;&nbsp;negative = behind schedule</div>
+      <h3 style="margin-top:18px">Indices</h3>
+      <div class="fx"><b>CPI</b> = EV ÷ AC&nbsp;&nbsp;&nbsp;&lt;1 = losing money<br><b>SPI</b> = EV ÷ PV&nbsp;&nbsp;&nbsp;&lt;1 = behind plan</div>
+    </div>
+    <div>
+      <h3>Forecasts</h3>
+      <div class="fx"><b>EAC</b> = BAC ÷ CPI<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>current performance continues</i> ← default<br><br><b>EAC</b> = AC + (BAC − EV)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>the overrun was a one-off</i><br><br><b>EAC</b> = AC + [(BAC − EV) ÷ (CPI × SPI)]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>schedule pressure costs money too</i><br><br><b>ETC</b> = EAC − AC&nbsp;&nbsp;&nbsp;cost still to come<br><b>VAC</b> = BAC − EAC&nbsp;&nbsp;&nbsp;forecast over/under<br><b>TCPI</b> = (BAC − EV) ÷ (BAC − AC)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>efficiency needed from here</i></div>
+      <div class="callout" style="margin-top:16px"><b>Worked example.</b> BAC $2.4M. At Update 3: PV $800k, EV $700k, AC $780k.<br>CPI = 0.90 · SPI = 0.88 · EAC = $2.67M · VAC = −$267k.<br><b>Translation:</b> you are 12% behind and every dollar buys 90c. Expect to finish $267k over.</div>
+    </div>
+  </div>
+  <div class="callout danger"><b>The trap:</b> SPI always drifts back to 1.00 as a project finishes, even on a job that lands six months late — because eventually EV catches up to PV. Never report schedule performance from SPI alone. Report the milestone dates.</div>
+</section>
+
+<!-- 08 -->
+<section class="sheet" id="s8">
+  <span class="no">SHEET 08</span>
+  <h2>Calendars &amp; Durations</h2>
+  <p class="sub">Where switchgear schedules quietly go wrong.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Calendar</th><th>Pattern</th><th>Applies to</th><th>Getting it wrong costs you</th></tr></thead>
+    <tbody>
+      <tr><td><code>FACTORY-5D</code></td><td>Mon–Fri, 8h</td><td>Engineering, drafting, assembly, wiring, works testing, FAT</td><td>Overstating factory output if you leave site work on it</td></tr>
+      <tr><td><code>SITE-6D</code></td><td>Mon–Sat, 10h</td><td>Offload, setting, terminations, commissioning</td><td>~20% understated site productivity — you look slower than you are</td></tr>
+      <tr><td><code>CAL-7D</code></td><td>7 days, 24h</td><td>Supplier lead times, vendor manufacture, sea and road freight</td><td><b>The big one.</b> A 90-day ACB lead time on a 5-day calendar adds ≈36 calendar days of fiction</td></tr>
+    </tbody>
+  </table></div>
+  <h3 style="margin-top:22px">Duration types — pick before you assign resources</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Type</th><th>What stays fixed</th><th>Use for</th></tr></thead>
+    <tbody>
+      <tr><td>Fixed Duration &amp; Units/Time</td><td>Duration and crew rate; total units flex</td><td>Most factory work. Your default.</td></tr>
+      <tr><td>Fixed Duration &amp; Units</td><td>Duration and total hours; rate flexes</td><td>Fixed-window activities like a 3-day FAT.</td></tr>
+      <tr><td>Fixed Units</td><td>Total hours; duration flexes with crew</td><td>Cable pulling — add labour, finish sooner.</td></tr>
+      <tr><td>Fixed Units/Time</td><td>Crew rate; duration flexes with scope</td><td>Fixed crew, variable scope.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout"><b>Duration sanity test.</b> Every duration must trace to something real: a production rate (2 cubicles/day), a supplier's written lead time, a crew size × quantity, or a contract clause. "Two weeks feels about right" is not an estimate — it is a guess wearing a suit.</div>
+</section>
+
+<!-- 09 -->
+<section class="sheet" id="s9">
+  <span class="no">SHEET 09</span>
+  <h2>Shortcuts &amp; Speed</h2>
+  <p class="sub">P6 Professional. Verify on your build — some vary by release.</p>
+  <div class="cols">
+    <div>
+      <table>
+        <thead><tr><th>Key</th><th>Does</th></tr></thead>
+        <tbody>
+          <tr><td><code>F9</code></td><td>Schedule the project — your most-used key</td></tr>
+          <tr><td><code>Shift + F9</code></td><td>Level resources</td></tr>
+          <tr><td><code>F5</code></td><td>Refresh data from the database</td></tr>
+          <tr><td><code>Ctrl + F</code></td><td>Find</td></tr>
+          <tr><td><code>Insert</code></td><td>New activity below the selected row</td></tr>
+          <tr><td><code>Delete</code></td><td>Delete selected activity</td></tr>
+          <tr><td><code>Ctrl + C / V</code></td><td>Copy / paste activities (brings logic — check it)</td></tr>
+          <tr><td><code>Ctrl + ↓ / ↑</code></td><td>Move through the activity table fast</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3>Speed habits that matter more than shortcuts</h3>
+      <table><tbody>
+        <tr><td><b>Fill Down</b></td><td>Select a column across many rows, set the top value, fill down. Fastest way to assign calendars or codes in bulk.</td></tr>
+        <tr><td><b>Save three layouts</b></td><td>Logic Review · Weekly Update · 2-Week Lookahead. Switch instead of rebuilding.</td></tr>
+        <tr><td><b>Group by WBS, sort by Start</b></td><td>Turns 118 activities into 9 readable blocks.</td></tr>
+        <tr><td><b>Filter: Longest Path = Yes</b></td><td>Your critical path in one click.</td></tr>
+        <tr><td><b>Activity codes</b></td><td>Code by cubicle, discipline and area. Then any view you need is a filter, not a rebuild.</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+  <div class="callout danger"><b>P6 has no general Undo.</b> Delete an activity and its logic is gone. Before any bulk edit, any import, and any update: <b>export the XER first</b>. Name it <code>SWB-CAP-01_YYYY-MM-DD_pre-update.xer</code>. This habit will save your job at least once.</div>
+</section>
+
+<!-- 10 -->
+<section class="sheet" id="s10">
+  <span class="no">SHEET 10</span>
+  <h2>Who Gets What</h2>
+  <p class="sub">Same schedule, five audiences, five completely different outputs.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Audience</th><th>Give them</th><th>Never give them</th><th>They ask</th></tr></thead>
+    <tbody>
+      <tr><td><b>Executive / Board</b></td><td>One page. Milestone status, forecast completion, top 3 risks, RAG status, EAC.</td><td>The Gantt chart. Activity detail. Float values.</td><td>"Are we going to make it, and what will it cost?"</td></tr>
+      <tr><td><b>Client / Main contractor</b></td><td>Baseline vs current milestone dates, critical path summary, delay narrative with cause and owner.</td><td>Your internal float. Your contingency. Your resource costs.</td><td>"Whose fault is it and when will it be ready?"</td></tr>
+      <tr><td><b>Factory floor / Site</b></td><td>Two-week lookahead, filtered to their area, sorted by start, no float column, printed A3.</td><td>The whole programme. Anything beyond 4 weeks.</td><td>"What am I doing Monday?"</td></tr>
+      <tr><td><b>Procurement</b></td><td>Order-by dates with float, long-lead register, delivery-required dates driven by the schedule.</td><td>Site sequencing detail.</td><td>"When must I place the order — and how much room do I have?"</td></tr>
+      <tr><td><b>Engineering / Drafting</b></td><td>Drawing issue dates, approval turnaround assumptions, downstream impact of each late deliverable.</td><td>Commissioning detail.</td><td>"Which drawing is holding up the order?"</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout"><b>The line that makes you sound senior:</b> not "we're 3 weeks late", but — <i>"Energisation has moved 9 working days. The driver is shop-drawing approval, which took 19 days against a contracted 10. It consumed all 6 days of float on the procurement path and is now driving the longest path through ACB delivery. Recovery options are on page 4."</i></div>
+</section>
+
+<footer>
+  <span>Deskpad · companion to the 16-week P6 programme</span>
+  <span class="mono">PRINT AT A4 · 10 SHEETS</span>
+</footer>
+</div>

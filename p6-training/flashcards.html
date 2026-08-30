@@ -1,0 +1,331 @@
+<title>P6 Terminology Drill</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap">
+<style>
+:root{
+  --ground:#E7EAE6;--surface:#F7F8F6;--card:#FDFDFC;--ink:#14181A;--ink2:#59615F;--ink3:#8B928F;
+  --rule:#CBD0CA;--rule2:#DDE1DB;--copper:#A9541B;--copper-soft:#F1E2D6;
+  --earth:#3E7442;--earth-soft:#DDE9DB;--danger:#A32B22;--danger-soft:#F4DEDB;
+  --shadow:0 1px 2px rgba(20,24,26,.06),0 14px 34px -20px rgba(20,24,26,.45);color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#121618;--surface:#191E21;--card:#1E2427;--ink:#E6EAE6;--ink2:#9AA3A1;--ink3:#6D7674;
+  --rule:#2C3438;--rule2:#232A2D;--copper:#D9884A;--copper-soft:#3A2A1E;
+  --earth:#6FAE6E;--earth-soft:#1F2E20;--danger:#E0796C;--danger-soft:#341D1A;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 16px 40px -22px rgba(0,0,0,.9);color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --ground:#121618;--surface:#191E21;--card:#1E2427;--ink:#E6EAE6;--ink2:#9AA3A1;--ink3:#6D7674;
+  --rule:#2C3438;--rule2:#232A2D;--copper:#D9884A;--copper-soft:#3A2A1E;
+  --earth:#6FAE6E;--earth-soft:#1F2E20;--danger:#E0796C;--danger-soft:#341D1A;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 16px 40px -22px rgba(0,0,0,.9);color-scheme:dark;}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:15px;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:30px 20px 70px}
+h1{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:clamp(32px,6vw,48px);line-height:.95;text-transform:uppercase;margin:.1em 0 0}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--copper)}
+.mono{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+header{border-bottom:2px solid var(--ink);padding-bottom:20px}
+.sub{color:var(--ink2);font-size:14.5px;margin:10px 0 0;max-width:60ch}
+
+.rail{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+.box{
+  flex:1;min-width:88px;border:1px solid var(--rule);background:var(--card);border-radius:3px;padding:9px 11px;
+}
+.box .k{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3)}
+.box .v{font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums}
+.box.m .v{color:var(--earth)}
+.box.d .v{color:var(--copper)}
+
+.cats{display:flex;gap:6px;flex-wrap:wrap;margin-top:20px}
+.cat{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid var(--rule);background:var(--surface);color:var(--ink2);padding:5px 9px;border-radius:2px;cursor:pointer;
+}
+.cat[aria-pressed="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.cat:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+
+.stage{margin-top:24px}
+.card{
+  background:var(--card);border:1px solid var(--rule);border-top:3px solid var(--copper);border-radius:4px;
+  box-shadow:var(--shadow);padding:30px 30px 26px;min-height:270px;display:flex;flex-direction:column;
+}
+.card .meta{display:flex;justify-content:space-between;align-items:center;gap:10px;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3)}
+.term{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:clamp(30px,5.6vw,44px);line-height:1.02;text-transform:uppercase;margin:20px 0 0;text-wrap:balance}
+.hint{font-size:13px;color:var(--ink3);margin-top:auto;padding-top:22px;font-family:"IBM Plex Mono",monospace;letter-spacing:.04em}
+.def{margin-top:16px;font-size:16px;line-height:1.6;color:var(--ink)}
+.def em{color:var(--copper);font-style:normal;font-weight:600}
+.eg{margin-top:14px;padding:11px 13px;background:var(--copper-soft);border-left:3px solid var(--copper);border-radius:0 3px 3px 0;font-size:14px}
+.eg b{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper);display:block;margin-bottom:3px}
+
+.acts{display:flex;gap:10px;margin-top:16px}
+button.b{
+  flex:1;font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:19px;text-transform:uppercase;letter-spacing:.05em;
+  border:1px solid var(--rule);background:var(--card);color:var(--ink);padding:13px;border-radius:3px;cursor:pointer;
+}
+button.b:hover{border-color:var(--ink)}
+button.b:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+button.b.reveal{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+button.b.got{background:var(--earth-soft);border-color:var(--earth);color:var(--earth)}
+button.b.miss{background:var(--danger-soft);border-color:var(--danger);color:var(--danger)}
+button.b small{display:block;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.1em;opacity:.75;font-weight:400}
+
+.done{text-align:center;padding:48px 24px;border:1px dashed var(--rule);border-radius:4px;background:var(--card)}
+.done h2{font-family:"Barlow Condensed",sans-serif;font-size:32px;text-transform:uppercase;margin:0 0 8px}
+.done p{color:var(--ink2);margin:0 auto;max-width:44ch}
+.boxes{display:flex;gap:5px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+.bx{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;border:1px solid var(--rule);background:var(--surface);padding:6px 10px;border-radius:2px;color:var(--ink2)}
+.bx b{color:var(--ink)}
+.reset{margin-top:26px;background:none;border:0;color:var(--ink3);font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;text-decoration:underline}
+.reset:hover{color:var(--danger)}
+footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--rule);font-size:12px;color:var(--ink3);display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Primavera P6 · Five Minutes a Day</div>
+  <h1>P6 Terminology Drill</h1>
+  <p class="sub">98 terms, Leitner spaced repetition. Get one right and it comes back later; get it wrong and it comes back tomorrow. The goal is not to recognise these words — it is to say them out loud in an interview without pausing.</p>
+  <div class="rail">
+    <div class="box d"><div class="k">Due now</div><div class="v" id="s-due">0</div></div>
+    <div class="box m"><div class="k">Mastered</div><div class="v" id="s-mast">0</div></div>
+    <div class="box"><div class="k">Learning</div><div class="v" id="s-learn">0</div></div>
+    <div class="box"><div class="k">Untouched</div><div class="v" id="s-new">0</div></div>
+  </div>
+  <div class="cats" id="cats"></div>
+</header>
+
+<div class="stage" id="stage"></div>
+
+<footer>
+  <span>Companion to the 16-week P6 programme</span>
+  <span class="mono">SPACE = REVEAL · 1 = MISSED · 2 = GOT IT</span>
+</footer>
+</div>
+
+<script>
+(function(){
+var C = {FUND:"Fundamentals",LOGIC:"Logic",FLOAT:"Float & CPM",UPD:"Updating",RES:"Resources & Cost",EV:"Earned Value",REP:"Reporting",ROLE:"Role & Career"};
+
+// [term, definition, example|"", category]
+var CARDS = [
+["EPS","Enterprise Project Structure — the company-wide hierarchy that every project in the database sits inside.","Your switchroom package sits under Client > Data Centres > Stage 2 > Electrical.","FUND"],
+["OBS","Organizational Breakdown Structure — who is responsible for what, and what P6 uses to control who can see and edit which projects.","","FUND"],
+["WBS","Work Breakdown Structure — decomposition of the project into deliverable-based chunks. Answers <em>what</em> is being produced, not who does it.","Engineering / Procurement / Manufacture / Test / Logistics / Site / Commissioning.","FUND"],
+["Activity","A discrete piece of work with a duration, a place in the logic, and an owner.","","FUND"],
+["Milestone","A zero-duration marker for an event or gate. Start Milestone or Finish Milestone.","FAT Pass. Energisation. Practical Completion.","FUND"],
+["Activity Type","How an activity behaves when scheduled: Task Dependent, Resource Dependent, Level of Effort, Start/Finish Milestone, or WBS Summary.","","FUND"],
+["Task Dependent","The default. The activity runs on its own <em>activity</em> calendar, regardless of who is assigned.","","FUND"],
+["Resource Dependent","The activity runs on the assigned <em>resource's</em> calendar, not the activity calendar.","A commissioning engineer who only works Tue–Thu.","FUND"],
+["Level of Effort (LOE)","An activity whose duration is derived from its predecessors and successors — it spans other work rather than driving it.","Project management and reporting. Expediting. Site supervision.","FUND"],
+["WBS Summary","An activity that summarises everything beneath a WBS node. Its dates are calculated, never entered.","","FUND"],
+["Calendar","The working pattern — days, hours and exceptions — that converts a duration into dates.","FACTORY-5D, SITE-6D, CAL-7D.","FUND"],
+["Original Duration","The duration planned at the start, before any progress. Frozen in the baseline.","","FUND"],
+["Remaining Duration","How much working time is still needed to finish. <em>The single most important number in any schedule update.</em>","","FUND"],
+["At Completion Duration","Actual duration to date plus remaining duration. What the activity will have taken in total.","","FUND"],
+["Data Date","The cut-off between history and forecast. Everything left of it has happened; everything right of it is a prediction.","","FUND"],
+["XER","Primavera's proprietary exchange file. How schedules move between companies.","Always export one before any bulk edit — P6 has no general undo.","FUND"],
+["Layout","A saved arrangement of columns, filters, grouping, sorting and bar styles. Your working view.","","FUND"],
+["Filter","A rule that limits which activities are displayed, without deleting anything.","Longest Path = Yes, and Start within the next 14 days.","FUND"],
+["Activity Code","A user-defined tag for slicing the schedule any way you like — independent of the WBS.","Code by cubicle, discipline, area, contractor, phase.","FUND"],
+["Notebook","A free-text note attached to an activity. Where you record why a constraint or an odd duration exists.","","FUND"],
+["Gantt Chart","The bar-chart view of a schedule. A picture <em>of</em> a schedule — not the schedule itself.","","FUND"],
+["CPM","Critical Path Method — calculating the earliest and latest each activity can happen, from durations and logic, to find what controls the finish date.","","FUND"],
+["Forward Pass","Left-to-right calculation of earliest start and earliest finish. Answers <em>how soon can this happen?</em>","ES = latest EF of predecessors; EF = ES + Duration − 1.","FLOAT"],
+["Backward Pass","Right-to-left calculation of latest start and latest finish. Answers <em>how late can this happen without moving the end date?</em>","LF = earliest LS of successors; LS = LF − Duration + 1.","FLOAT"],
+["Finish-to-Start (FS)","B cannot start until A finishes. The default and the safest relationship — should be about 90% of your links.","Busbar torque and inspect → Install ACB cassettes.","LOGIC"],
+["Start-to-Start (SS)","B can start once A has started, usually after a lag. Models overlapping work.","Power wiring starts → control wiring starts 3 days later. SS+3.","LOGIC"],
+["Finish-to-Finish (FF)","B cannot finish until A finishes. Models work that trails another activity to its end.","Terminations finish → cable schedule verification finishes 2 days later. FF+2.","LOGIC"],
+["Start-to-Finish (SF)","B cannot finish until A starts. Genuinely rare — under 1% of links, and each needs written justification.","Permanent supply energises → temporary supply is removed.","LOGIC"],
+["Lag","A delay applied to a relationship. Invisible, unresourced, unprogressable time.","FS+5 for a contractual FAT notice period.","LOGIC"],
+["Lead","A negative lag. Says the successor starts before the predecessor finishes. Auditors treat every lead as a defect — use SS+lag instead.","","LOGIC"],
+["Driving Relationship","The one predecessor actually setting an activity's start date. Trace it backwards to find the true source of a delay.","","LOGIC"],
+["Open End","An activity with no predecessor or no successor. It floats free of the network and its float reads as nonsense.","","LOGIC"],
+["Dangling Activity","An activity linked only at one end — for example an SS predecessor but nothing driving its finish. Its finish date is uncontrolled.","","LOGIC"],
+["Redundant Logic","A relationship that adds nothing because a longer path already enforces it. Clutters the network and hides the driving path.","A→C when A→B→C already exists.","LOGIC"],
+["Circular Logic","A loop where an activity is ultimately its own predecessor. P6 refuses to schedule and reports the loop.","","LOGIC"],
+["Out-of-Sequence Progress","Work that started before its predecessor finished — reality disagreeing with your logic.","","LOGIC"],
+["Retained Logic","Scheduling option that keeps the remaining logic intact after out-of-sequence progress. The safer default.","","LOGIC"],
+["Progress Override","Scheduling option that ignores remaining logic once an activity has started. Produces flattering, unreliable dates.","","LOGIC"],
+["Total Float","How long an activity can slip before the <em>project finish</em> moves. TF = LS − ES.","","FLOAT"],
+["Free Float","How long an activity can slip before its <em>successor</em> moves. Always less than or equal to total float.","","FLOAT"],
+["Negative Float","Latest dates fall earlier than earliest dates — you are late, or a constraint is lying to you. Find the cause before reporting it.","","FLOAT"],
+["Critical Path","The chain of activities with the least total float, which controls the project finish date.","","FLOAT"],
+["Longest Path","The chain that actually drives the finish, traced back through driving relationships. Preferred over float-based criticality when multiple calendars are in play.","Your job runs a 5-day factory and a 6-day site — use longest path.","FLOAT"],
+["Float Path","P6's ranking of parallel paths: Float Path 1 is the driving path, Float Path 2 the next most critical, and so on.","","FLOAT"],
+["CPLI","Critical Path Length Index = (critical path length + total float) ÷ critical path length. Below 0.95 means you cannot finish on time without recovery.","","FLOAT"],
+["High Float","Total float above 44 days. Usually a missing successor rather than genuine slack.","","FLOAT"],
+["Constraint","A date imposed on an activity that overrides or supplements logic. Every constraint is a confession that logic is missing.","","UPD"],
+["Mandatory Finish","A hard constraint that <em>overrides logic entirely</em> — predecessors slip and the date does not move. The most destructive field in P6.","","UPD"],
+["Start On or After","A soft constraint: cannot start before this date, but can be pushed later. The safest constraint there is.","Site access not available until 3 March.","UPD"],
+["As Late As Possible","Consumes all of an activity's free float, pushing it as late as the logic allows.","Deliberately delaying delivery to avoid paying site storage.","UPD"],
+["Expected Finish","A constraint that recalculates remaining duration so the activity lands on a given date.","A supplier commits in writing to a revised delivery date.","UPD"],
+["Actual Start","The real date work began. Must never be later than the data date.","","UPD"],
+["Actual Finish","The real date work completed. Must never be later than the data date.","","UPD"],
+["Duration % Complete","Progress measured purely by elapsed time. Easy, and usually wrong.","","UPD"],
+["Units % Complete","Progress measured by resource hours expended against budget.","","UPD"],
+["Physical % Complete","Progress entered manually against a defined rule. The only honest option for complex work.","6 of 8 cubicles wired = 75%.","UPD"],
+["Rules of Credit","Pre-agreed earning rules that convert partial work into a defensible percentage.","Cubicle wired: 30% chassis, 40% power wiring, 20% control wiring, 10% labelling.","UPD"],
+["Baseline","A frozen copy of the approved schedule. What you are measured against for the rest of the job.","","UPD"],
+["Re-baseline","Replacing the approved baseline with a new one. Legitimate only after an approved scope or time change — never to hide slippage.","","UPD"],
+["Variance","The difference between current and baseline dates or cost. Negative usually means late or over.","","UPD"],
+["Time Impact Analysis","A prospective delay analysis: insert a fragnet for the delay event into the schedule as it stood, re-run, and measure the movement of the completion date.","","UPD"],
+["Fragnet","A small sub-network of activities representing a delay event or change, inserted into an existing schedule for analysis.","","UPD"],
+["Recovery Schedule","A revised plan to claw back lost time without changing the contract completion date.","","UPD"],
+["Crashing","Adding resources to shorten a critical activity. Costs money, and returns diminish fast.","Second wiring shift in the factory.","UPD"],
+["Fast-Tracking","Overlapping activities that were planned in sequence. Costs no money but adds rework risk.","Start busbar machining before shop drawings are fully approved.","UPD"],
+["Labour Resource","A person or trade, measured in hours, with a rate and a calendar.","Switchboard assembler at $92/h.","RES"],
+["Non-Labour Resource","Plant, equipment or facilities, measured in hours or days.","Overhead crane, HV test set, factory assembly bay.","RES"],
+["Material Resource","Consumed items measured in physical units with a unit cost.","Copper busbar in kg, ACBs each.","RES"],
+["Budgeted Units","The planned quantity of a resource on an activity — the basis of earned value.","","RES"],
+["Units/Time","The rate at which a resource is applied.","8h/day = one full-time assembler.","RES"],
+["Resource Loading","Assigning resources with quantities to every activity, so the schedule can forecast labour and cost.","","RES"],
+["Resource Levelling","Automatically delaying activities to stay within resource limits. Powerful and dangerous — it will move your dates.","","RES"],
+["Resource Histogram","A bar chart of resource demand over time. Where you spot over-allocation.","14 wiremen needed in week 9; you have 5.","RES"],
+["S-Curve","Cumulative planned cost or progress over time. Flat, then steep, then flat.","","RES"],
+["Cost Account / CBS","The cost breakdown structure that links schedule activities to the finance system's codes.","","RES"],
+["Cash Flow","Forecast money in and out over time, derived from the cost-loaded schedule.","","RES"],
+["BAC","Budget At Completion — the total approved budget for the work.","$2.4M for the switchroom package.","EV"],
+["PV","Planned Value — the budgeted cost of the work <em>scheduled</em> to be done by now.","","EV"],
+["EV","Earned Value — the budgeted cost of the work <em>actually</em> done by now.","","EV"],
+["AC","Actual Cost — what you have genuinely spent to date.","","EV"],
+["CV","Cost Variance = EV − AC. Negative means over budget.","","EV"],
+["SV","Schedule Variance = EV − PV. Negative means behind plan.","","EV"],
+["CPI","Cost Performance Index = EV ÷ AC. Below 1.0 means every dollar buys less than a dollar of work.","CPI 0.90 — you get 90c of value per dollar spent.","EV"],
+["SPI","Schedule Performance Index = EV ÷ PV. Below 1.0 means behind. <em>Always drifts back to 1.0 at the end, even on a late job.</em>","","EV"],
+["EAC","Estimate At Completion — forecast total cost. Default formula BAC ÷ CPI.","","EV"],
+["ETC","Estimate To Complete = EAC − AC. The money still to spend.","","EV"],
+["VAC","Variance At Completion = BAC − EAC. Your forecast overrun or underrun.","","EV"],
+["TCPI","To Complete Performance Index = (BAC − EV) ÷ (BAC − AC). The efficiency you now need to still hit budget.","","EV"],
+["BEI","Baseline Execution Index — activities actually completed ÷ activities baselined to be complete by now. Below 0.95 is a red flag.","","EV"],
+["Lookahead","A short-window filtered extract of the schedule, issued to the people doing the work.","Two-week lookahead for the factory floor, sorted by start date.","REP"],
+["Delay Narrative","The written explanation accompanying an updated programme: what moved, what drove it, who owns it, and what the recovery is.","","REP"],
+["RAG Status","Red / Amber / Green summary reporting for executives who will not read a Gantt chart.","","REP"],
+["DCMA 14-Point","The standard 14-metric schedule quality assessment used across defence, energy and major construction.","","ROLE"],
+["Project Controls","The discipline that integrates schedule, cost, change and risk to forecast outcomes — distinct from managing the work itself.","","ROLE"],
+["Planner vs Scheduler","A planner builds the strategy and sequence; a scheduler maintains and updates the model. In practice most roles are both.","","ROLE"],
+["EOT","Extension of Time — a contractual claim for additional time due to an excusable delay, usually proven with a time impact analysis.","","ROLE"],
+["Float Ownership","Who is entitled to consume the schedule's spare time. Often contested — many contracts state the project owns float, not either party.","","ROLE"],
+["Concurrent Delay","Two or more delay events overlapping, at least one owned by each party. Determines whether an EOT carries cost as well as time.","","ROLE"]
+];
+
+var KEY = "p6-drill-v1";
+var st = {box:{}, seen:0};
+try{ var s = localStorage.getItem(KEY); if(s){ var p = JSON.parse(s); if(p&&p.box){ st = p; } } }catch(e){}
+
+var filter = null, queue = [], cur = null, shown = false;
+
+function bx(i){ return st.box[i] || 0; }           // 0 = untouched, 1..4 learning, 5 = mastered
+function due(i){ return bx(i) < 5; }
+function inFilter(i){ return !filter || CARDS[i][3] === filter; }
+
+function stats(){
+  var m=0,l=0,n=0,d=0;
+  CARDS.forEach(function(c,i){
+    if(!inFilter(i)) return;
+    var b = bx(i);
+    if(b===0){n++;d++;} else if(b>=5){m++;} else {l++;d++;}
+  });
+  document.getElementById("s-due").textContent = d;
+  document.getElementById("s-mast").textContent = m;
+  document.getElementById("s-learn").textContent = l;
+  document.getElementById("s-new").textContent = n;
+}
+
+function buildQueue(){
+  var idx = [];
+  CARDS.forEach(function(c,i){ if(inFilter(i) && due(i)) idx.push(i); });
+  idx.sort(function(a,b){ return bx(a) - bx(b) || Math.random() - .5; });
+  queue = idx.slice(0, 20);
+}
+
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){} }
+
+function cats(){
+  var el = document.getElementById("cats"), h = "";
+  h += '<button class="cat" data-c="" aria-pressed="'+(filter===null)+'">All 98</button>';
+  Object.keys(C).forEach(function(k){
+    var n = CARDS.filter(function(c){return c[3]===k}).length;
+    h += '<button class="cat" data-c="'+k+'" aria-pressed="'+(filter===k)+'">'+C[k]+' · '+n+'</button>';
+  });
+  el.innerHTML = h;
+  el.onclick = function(e){
+    var b = e.target.closest(".cat"); if(!b) return;
+    filter = b.getAttribute("data-c") || null;
+    cats(); stats(); buildQueue(); next();
+  };
+}
+
+function next(){
+  shown = false;
+  if(!queue.length){ finished(); return; }
+  cur = queue[0];
+  draw();
+}
+
+function draw(){
+  var c = CARDS[cur], b = bx(cur);
+  var lvl = b === 0 ? "New card" : "Box " + b + " of 5";
+  var h = '<div class="card">';
+  h += '<div class="meta"><span>'+C[c[3]]+'</span><span>'+lvl+' · '+queue.length+' left</span></div>';
+  h += '<div class="term">'+c[0]+'</div>';
+  if(shown){
+    h += '<div class="def">'+c[1]+'</div>';
+    if(c[2]) h += '<div class="eg"><b>In your world</b>'+c[2]+'</div>';
+    h += '<div class="hint">Did you get it right before you looked?</div></div>';
+    h += '<div class="acts">';
+    h += '<button class="b miss" id="miss">Missed it<small>KEY 1 · back to box 1</small></button>';
+    h += '<button class="b got" id="got">Got it<small>KEY 2 · promote</small></button></div>';
+  } else {
+    h += '<div class="hint">Say the definition out loud, then reveal.</div></div>';
+    h += '<div class="acts"><button class="b reveal" id="rev">Reveal<small>SPACE</small></button></div>';
+  }
+  document.getElementById("stage").innerHTML = h;
+  var r = document.getElementById("rev");
+  if(r) r.onclick = function(){ shown = true; draw(); };
+  var g = document.getElementById("got");
+  if(g) g.onclick = function(){ grade(true); };
+  var m = document.getElementById("miss");
+  if(m) m.onclick = function(){ grade(false); };
+}
+
+function grade(ok){
+  st.box[cur] = ok ? Math.min(5, bx(cur) + 1) : 1;
+  queue.shift();
+  if(!ok) queue.push(cur);
+  save(); stats(); next();
+}
+
+function finished(){
+  var counts = [0,0,0,0,0,0];
+  CARDS.forEach(function(c,i){ if(inFilter(i)) counts[bx(i)]++; });
+  var h = '<div class="done"><h2>Session complete</h2>';
+  h += '<p>Twenty cards done. Come back tomorrow — the cards you missed will be waiting, the ones you nailed will not.</p>';
+  h += '<div class="boxes">';
+  h += '<span class="bx">Untouched <b>'+counts[0]+'</b></span>';
+  for(var i=1;i<5;i++) h += '<span class="bx">Box '+i+' <b>'+counts[i]+'</b></span>';
+  h += '<span class="bx" style="border-color:var(--earth);color:var(--earth)">Mastered <b>'+counts[5]+'</b></span>';
+  h += '</div>';
+  var anyDue = CARDS.some(function(c,i){ return inFilter(i) && due(i); });
+  if(anyDue) h += '<div class="acts" style="max-width:280px;margin:22px auto 0"><button class="b reveal" id="again">Another 20</button></div>';
+  else h += '<p style="margin-top:18px;color:var(--earth);font-weight:600">Every card in this deck is mastered. That is interview-ready.</p>';
+  h += '<button class="reset" id="reset">Reset all progress</button></div>';
+  document.getElementById("stage").innerHTML = h;
+  var a = document.getElementById("again");
+  if(a) a.onclick = function(){ buildQueue(); next(); };
+  document.getElementById("reset").onclick = function(){
+    if(!confirm("Erase all flashcard progress? This cannot be undone.")) return;
+    st = {box:{}, seen:0}; save(); stats(); buildQueue(); next();
+  };
+}
+
+document.addEventListener("keydown", function(e){
+  if(e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+  if(e.code === "Space"){ e.preventDefault(); if(!shown && cur !== null && queue.length){ shown = true; draw(); } }
+  else if(shown && e.key === "1"){ grade(false); }
+  else if(shown && e.key === "2"){ grade(true); }
+});
+
+cats(); stats(); buildQueue(); next();
+})();
+</script>
