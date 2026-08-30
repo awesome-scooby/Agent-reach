@@ -14,6 +14,7 @@
   --bad:#A33328; --bad-wash:#F5DFDC;
   --shadow:0 1px 2px rgba(15,26,29,.05), 0 8px 24px -12px rgba(15,26,29,.18);
   --plate:#12242A; --plate-ink:#EAF2F1;
+  --c1:#00909B; --c2:#BC5416; --c3:#6A5AC7;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
@@ -27,6 +28,7 @@
     --bad:#E2796C; --bad-wash:#361B18;
     --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -14px rgba(0,0,0,.7);
     --plate:#04191D; --plate-ink:#CFE6E4;
+    --c1:#00A8B2; --c2:#D9713A; --c3:#9080E4;
   }
 }
 :root[data-theme="dark"]{
@@ -40,6 +42,7 @@
   --bad:#E2796C; --bad-wash:#361B18;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -14px rgba(0,0,0,.7);
   --plate:#04191D; --plate-ink:#CFE6E4;
+  --c1:#00A8B2; --c2:#D9713A; --c3:#9080E4;
 }
 *{box-sizing:border-box}
 body{
@@ -219,6 +222,30 @@ ul.tight li{margin-bottom:6px}
 .kill b{font-family:"Archivo",sans-serif; display:block; margin-bottom:3px; font-size:14.5px}
 hr.rule{border:0; border-top:1px solid var(--line); margin:38px 0}
 .footnote{font-size:13.5px; color:var(--muted); max-width:72ch}
+
+/* ---------- charts ---------- */
+.chartwrap{display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:18px; margin:22px 0}
+.chartcard{background:var(--surface); border:1px solid var(--line); padding:16px 18px 12px; box-shadow:var(--shadow)}
+.chart-title{font-size:14.5px; font-weight:700; margin:0 0 3px; letter-spacing:-.005em}
+.chart-sub{font-size:12.5px; color:var(--muted); margin:0 0 12px; line-height:1.45}
+.chart{position:relative}
+.chart svg{display:block; width:100%; height:auto; overflow:visible}
+.chart .gridline{stroke:var(--line); stroke-width:1}
+.chart .axis{stroke:var(--line-2); stroke-width:1}
+.chart .axlbl{font-family:"IBM Plex Mono",monospace; font-size:8.5px; fill:var(--faint)}
+.chart .dlbl{font-family:"IBM Plex Mono",monospace; font-size:9.5px; font-weight:600; fill:var(--ink-2)}
+.chart .hit{fill:transparent; cursor:pointer}
+.chart .mk{transition:r .12s ease}
+.chart .hit:hover + .mk, .chart .hit:focus-visible + .mk{r:6.5}
+.tip{
+  position:absolute; pointer-events:none; opacity:0; transform:translate(-50%,-118%);
+  background:var(--plate); color:var(--plate-ink); padding:6px 9px; border-radius:3px;
+  font-family:"IBM Plex Mono",monospace; font-size:11px; white-space:nowrap; z-index:5;
+  box-shadow:0 4px 14px -4px rgba(0,0,0,.45); transition:opacity .12s ease;
+}
+.tip.on{opacity:1}
+.tip b{color:var(--signal)}
+
 @media (max-width:640px){
   body{font-size:16px}
   .plate-grid{grid-template-columns:1fr}
@@ -251,6 +278,7 @@ hr.rule{border:0; border-top:1px solid var(--line); margin:38px 0}
   <div class="tabs-in">
     <button role="tab" aria-selected="true"  aria-controls="p-summary" id="t-summary">Executive Summary</button>
     <button role="tab" aria-selected="false" aria-controls="p-board"   id="t-board">Leaderboard (70)</button>
+    <button role="tab" aria-selected="false" aria-controls="p-tiers"   id="t-tiers">Capital A$10k–60k</button>
     <button role="tab" aria-selected="false" aria-controls="p-a"       id="t-a">A · Proven Imports</button>
     <button role="tab" aria-selected="false" aria-controls="p-b"       id="t-b">B · Emerging</button>
     <button role="tab" aria-selected="false" aria-controls="p-c"       id="t-c">C · Machine-Based</button>
@@ -419,6 +447,216 @@ hr.rule{border:0; border-top:1px solid var(--line); margin:38px 0}
     </table>
   </div>
   <p class="footnote" id="lbCount"></p>
+</section>
+
+<!-- ============================ CAPITAL TIERS ============================ -->
+<section role="tabpanel" id="p-tiers" aria-labelledby="t-tiers" hidden>
+  <div class="sec-head">
+    <p class="eyebrow">Capital tiers · A$10k → A$60k</p>
+    <h2 class="sec">What more money actually buys you</h2>
+  </div>
+
+  <div class="warnbox">
+    <h4>Before anything else — a contradiction in your brief</h4>
+    <p style="margin:0 0 8px">You told me your maximum acceptable loss is <b>A$3,000–10,000</b>, and that this
+    capital is <b>available up front as your own cash</b>. Those two facts cannot both survive a A$25k+
+    lump-sum deployment.</p>
+    <p style="margin:0 0 8px">Deploy A$30,000 in one go and a realistic failure — machines resold at ~50%,
+    inventory liquidated at ~40%, marketing and certification spend gone entirely — loses you
+    <b>about A$15,000</b>. At A$45,000 it's roughly <b>A$26,000</b>. That is two-and-a-half times the
+    ceiling you set.</p>
+    <p style="margin:0"><b>The resolution isn't a smaller number — it's staging.</b> A$30,000 deployed as six
+    A$5,000 tranches, each released only on hitting a stated evidence gate, captures most of the A$30,000
+    profit at close to the A$5,000 risk. That single structural choice matters more than which product you
+    pick, and it's what the whole tab below is built around.</p>
+  </div>
+
+  <h3 class="sub">The real driver of risk isn't the amount — it's recoverability</h3>
+  <p class="prose">Two people each spend A$20,000. One buys a laser, a CNC and stock; the other buys
+  advertising, certification and injection-mould tooling. They have spent the same money and taken
+  <em>completely different</em> risks, because only one of them can get anything back.</p>
+  <div class="grid2">
+    <div class="card">
+      <h4>Recovers ~50–60% — machines &amp; equipment</h4>
+      <p>Lasers, printers, CNC, embroidery heads, crimpers, ovens. There's a live second-hand market and
+      the asset doesn't expire. This is the safest form of capital deployment available to you.</p>
+    </div>
+    <div class="card">
+      <h4>Recovers ~30–50% — inventory</h4>
+      <p>Liquidation, clearance, wholesale dumping. Recovery depends entirely on whether it's a commodity
+      (sells fast, cheap) or a niche (holds value, sells slowly). Perishable or fashion-linked: near zero.</p>
+    </div>
+    <div class="card">
+      <h4>Recovers ~0% — the money that actually kills people</h4>
+      <p>Advertising, certification and testing fees, injection-mould tooling for a product nobody wants,
+      trademark filings, exclusivity deposits, brand and photography. Necessary sometimes; unrecoverable always.
+      <b>Track this number separately from your total spend.</b></p>
+    </div>
+    <div class="card">
+      <h4>Recovers ~55–60%+ — an acquired business</h4>
+      <p>Counter-intuitively the <em>safest</em> use of large capital, because you buy existing customers and
+      proven cashflow rather than hoping to create them. This is why the curve below re-rates upward at
+      A$50k rather than continuing to decay.</p>
+    </div>
+  </div>
+
+  <h3 class="sub">The capital efficiency curve</h3>
+  <p class="prose">Three different measures, three separate panels — because plotting dollars and percentages
+  on one pair of axes is how charts lie. Hover any point for the detail.</p>
+
+  <div class="chartwrap">
+    <div class="chartcard">
+      <h4 class="chart-title">Monthly net profit at month 12–18</h4>
+      <p class="chart-sub">Absolute dollars. Rises with capital, all the way up.</p>
+      <div id="ch1" class="chart"></div>
+    </div>
+    <div class="chartcard">
+      <h4 class="chart-title">Return on capital deployed</h4>
+      <p class="chart-sub">Annual net profit ÷ capital. Falls hard, then recovers at acquisition.</p>
+      <div id="ch2" class="chart"></div>
+    </div>
+    <div class="chartcard">
+      <h4 class="chart-title">Risk-adjusted return index</h4>
+      <p class="chart-sub">Return × survival probability. Every dollar past A$10k works less hard.</p>
+      <div id="ch3" class="chart"></div>
+    </div>
+  </div>
+
+  <div class="tldr">
+    <h4>What the three curves say when you read them together</h4>
+    <ul>
+      <li><b>Absolute profit keeps rising.</b> More capital does make more money — A$60k plausibly reaches
+      A$15,500/month against A$2,200 at A$5k. That part is real.</li>
+      <li><b>Return per dollar collapses between A$10k and A$45k</b>, from 408% down to 248%. The reason is
+      not the products — it's you. Your 10–20 hours is the bottleneck, and capital cannot buy customers as
+      efficiently as it buys capacity.</li>
+      <li><b>Risk-adjusted return never again beats the small tiers.</b> A$5k scores 465 on the index;
+      nothing above it comes close. If your objective is <em>efficiency</em>, the answer is genuinely
+      "stay small".</li>
+      <li><b>But the curve turns back up at A$50k</b> — because at that point the sensible move stops being
+      "build another thing" and becomes "buy something already working".</li>
+      <li><b>Therefore: max profit and least risk are not at the same tier</b>, and any answer claiming
+      otherwise is selling something. The best compromise — most absolute profit while risk stays inside a
+      band you can survive — sits at <b>A$25,000–30,000, staged</b>.</li>
+    </ul>
+  </div>
+
+  <h3 class="sub">Tier by tier — what unlocks, and what it costs you</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr>
+      <th class="n">Capital</th><th>What this tier unlocks that the one below can't</th>
+      <th class="n">Net / mo</th><th class="n">Return</th><th class="n">Worst-case loss</th>
+      <th class="n">Survival</th><th>Verdict</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="n"><b>A$5k</b></td><td>One machine, or one small import. Nothing else. <span class="chip">baseline</span></td><td class="n">A$2,200</td><td class="n">528%</td><td class="n">A$2,250</td><td class="n">88%</td><td><span class="verdict v-hi">Best efficiency</span></td></tr>
+      <tr><td class="n"><b>A$10k</b></td><td><b>Two machines instead of one.</b> CO₂ + fibre together covers traffolyte, stainless tags and instrument branding from day one. Or one machine plus a genuine first import. First tier where a single failure doesn't end the venture.</td><td class="n">A$3,400</td><td class="n">408%</td><td class="n">A$4,500</td><td class="n">86%</td><td><span class="verdict v-hi">Strong</span></td></tr>
+      <tr><td class="n"><b>A$15k</b></td><td><b>Decoration capacity.</b> Multi-head embroidery enters range — the category where Australian owner-operators visibly clear A$290k net on A$1m revenue. Also: powder coating at garage scale, and your first product certification.</td><td class="n">A$4,300</td><td class="n">344%</td><td class="n">A$7,200</td><td class="n">83%</td><td><span class="verdict v-hi">Strong</span></td></tr>
+      <tr><td class="n"><b>A$20k</b></td><td><b>Container economics and proprietary tooling.</b> A 20ft FCL runs US$1,350–2,300 port-to-port, cutting per-unit freight 30–40% versus LCL. Separately, injection-mould tooling from China at US$1,000–3,000 single-cavity buys you a product nobody else can list.</td><td class="n">A$5,200</td><td class="n">312%</td><td class="n">A$10,000</td><td class="n">80%</td><td><span class="verdict v-hi">Sweet spot begins</span></td></tr>
+      <tr><td class="n"><b>A$25k</b></td><td><b>Multi-SKU brand and exclusivity.</b> The verified threshold for scaling an Amazon private label across several SKUs is ~US$25k. Exclusive Australian distribution rights also become negotiable — they require a minimum annual order commitment you can now actually meet.</td><td class="n">A$6,300</td><td class="n">302%</td><td class="n">A$13,000</td><td class="n">77%</td><td><span class="verdict v-hi">Sweet spot</span></td></tr>
+      <tr><td class="n"><b>A$30k</b></td><td><b>Your first employee.</b> Two machines plus a part-timer at ~A$32/hr converts capital into capacity that isn't your evenings. This is the tier where the business stops being a hobby with invoices.</td><td class="n">A$7,600</td><td class="n">304%</td><td class="n">A$15,000</td><td class="n">75%</td><td><span class="verdict v-hi">Best compromise</span></td></tr>
+      <tr><td class="n"><b>A$35k</b></td><td><b>Metal fabrication.</b> An entry 1500W fibre laser cutter (~US$15,800 average) opens sheet-metal job work — brackets, enclosures, plates — for the same industrial customers already buying your labels.</td><td class="n">A$8,200</td><td class="n">281%</td><td class="n">A$18,550</td><td class="n">72%</td><td><span class="verdict v-md">Diminishing</span></td></tr>
+      <tr><td class="n"><b>A$40k</b></td><td><b>Vertical integration.</b> Powder coating (A$10–30k garage-scale) bolted onto fabrication means you cut, finish and brand in-house. Real moat. Also two part-timers.</td><td class="n">A$8,800</td><td class="n">264%</td><td class="n">A$22,000</td><td class="n">69%</td><td><span class="verdict v-md">Diminishing</span></td></tr>
+      <tr><td class="n"><b>A$45k</b></td><td><b>Honestly? Not much that A$40k didn't.</b> This is the weakest tier on the entire curve — lowest risk-adjusted return, second-highest worst-case loss. Skip it: either stop at A$40k or go to A$50k and change strategy.</td><td class="n">A$9,300</td><td class="n">248%</td><td class="n">A$26,100</td><td class="n">66%</td><td><span class="verdict v-lo">Worst tier</span></td></tr>
+      <tr><td class="n"><b>A$50k</b></td><td><b>Acquisition.</b> Buy an existing engraving, signage or embroidery business with customers already paying. You stop guessing whether demand exists and start with revenue on day one. The strategy changes, and so does the risk profile.</td><td class="n">A$12,000</td><td class="n">288%</td><td class="n">A$22,500</td><td class="n">78%</td><td><span class="verdict v-hi">Re-rates up</span></td></tr>
+      <tr><td class="n"><b>A$55k</b></td><td><b>Acquisition plus working capital.</b> The mistake most first-time buyers make is spending everything on the purchase and having nothing to grow it with. This tier fixes that.</td><td class="n">A$13,500</td><td class="n">295%</td><td class="n">A$24,750</td><td class="n">79%</td><td><span class="verdict v-hi">Strong</span></td></tr>
+      <tr><td class="n"><b>A$60k</b></td><td><b>A business with a manager, or a real production shop.</b> Enough to buy established cashflow and keep your own hands off the machines — the only configuration on this page that genuinely trends toward semi-passive.</td><td class="n">A$15,500</td><td class="n">310%</td><td class="n">A$25,200</td><td class="n">80%</td><td><span class="verdict v-hi">Best absolute profit</span></td></tr>
+    </tbody>
+    <caption>Net/mo is modelled at month 12–18, before your own labour and before income tax. Worst-case loss
+    assumes total failure with assets resold at realistic second-hand rates. Survival is my judgement of the
+    probability the venture is still trading at 24 months — it declines as capital rises because a bigger bet
+    is harder to unwind, then recovers at the acquisition tiers because you're buying proven revenue.
+    All figures are estimates; the machine prices, certification fees and FBA thresholds behind them are sourced.</caption>
+  </table>
+  </div>
+
+  <h3 class="sub">New opportunities that only exist above A$5,000</h3>
+  <p class="lede">Thirty-four opportunities excluded from the main leaderboard purely on capital.
+  Filter by the tier you're considering. Note how the character changes as you climb — from machines,
+  to inventory depth, to certification and tooling, and finally to buying someone else's finished business.</p>
+
+  <div class="filters" id="tierFilters">
+    <label>Budget</label>
+    <button data-f="cap" data-v="0" aria-pressed="true">All</button>
+    <button data-f="cap" data-v="10000" aria-pressed="false">A$10k</button>
+    <button data-f="cap" data-v="20000" aria-pressed="false">A$20k</button>
+    <button data-f="cap" data-v="30000" aria-pressed="false">A$30k</button>
+    <button data-f="cap" data-v="45000" aria-pressed="false">A$45k</button>
+    <button data-f="cap" data-v="60000" aria-pressed="false">A$60k</button>
+    <label style="margin-left:12px">Model</label>
+    <button data-f="m" data-v="all" aria-pressed="true">All</button>
+    <button data-f="m" data-v="Machine" aria-pressed="false">Machine</button>
+    <button data-f="m" data-v="Import" aria-pressed="false">Import</button>
+    <button data-f="m" data-v="Hybrid" aria-pressed="false">Import + value-add</button>
+    <button data-f="m" data-v="Acquire" aria-pressed="false">Acquire</button>
+  </div>
+
+  <div class="tablewrap">
+    <table id="tl">
+      <thead><tr>
+        <th class="n">#</th>
+        <th class="sortable" data-k="n">Opportunity</th>
+        <th class="sortable" data-k="t">Unlocks at</th>
+        <th class="sortable" data-k="m">Model</th>
+        <th class="sortable n" data-k="p">Net / mo potential</th>
+        <th class="sortable n" data-k="rc">Recoverable</th>
+        <th class="sortable n" data-k="su">Success /10</th>
+        <th class="sortable n" data-k="co">Low comp. /10</th>
+        <th class="sortable n" data-k="ov">Score</th>
+      </tr></thead>
+      <tbody></tbody>
+      <caption>“Recoverable” is the share of your capital you'd expect back if you shut down in year one —
+      the single most useful risk number on this page, and the one nobody publishes.</caption>
+    </table>
+  </div>
+  <p class="footnote" id="tlCount"></p>
+
+  <h3 class="sub">Concentrate or diversify? The actual maths</h3>
+  <p class="prose">You asked me to work this out rather than assume it. Here's the model: a <em>new,
+  unvalidated</em> venture has roughly a <b>35%</b> chance of reaching your target. Adding capital to a venture
+  that has <em>already proven</em> it can sell runs closer to <b>75%</b>. And an acquired business with existing
+  customers sits near <b>85%</b>. Splitting capital also reduces the odds of each individual bet, because
+  thin stock, thin marketing and worse supplier terms all hurt.</p>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th class="n">Capital</th><th>Options</th><th class="n">P(at least one works)</th><th class="n">Expected net / mo</th><th>Mathematically better</th></tr></thead>
+    <tbody>
+      <tr><td class="n">A$10k</td><td>1 bet @ A$10k vs 2 bets @ A$5k</td><td class="n">35% vs 48%</td><td class="n">A$3,400 vs A$2,900</td><td><b>Concentrate.</b> Splitting raises your odds of <em>some</em> success but drops both bets near the viability floor. One properly funded venture beats two starved ones</td></tr>
+      <tr><td class="n">A$15k</td><td>1 @ A$15k vs 2 @ A$7.5k</td><td class="n">35% vs 51%</td><td class="n">A$4,300 vs A$3,600</td><td><b>Concentrate</b> — same reasoning, still below the threshold where a hedge pays for itself</td></tr>
+      <tr><td class="n">A$20k</td><td>A$14k core + A$6k test</td><td class="n">62%</td><td class="n">A$5,200</td><td><b>Split 70/30.</b> First tier where the core stays fully funded <em>and</em> a cheap second test fits. This is where diversification starts earning its keep</td></tr>
+      <tr><td class="n">A$25–30k</td><td>Validated core + one new test</td><td class="n">79%</td><td class="n">A$6,300–7,600</td><td><b>Split 70/30, core already validated.</b> Highest joint probability on the whole table — the core is now a 75% bet, not a 35% one</td></tr>
+      <tr><td class="n">A$35–45k</td><td>Double down vs add a 3rd venture</td><td class="n">75% vs 35%</td><td class="n">A$8,200–9,300</td><td><b>Concentrate — decisively.</b> More capital into something proven is a 75% bet; a third new venture is a 35% bet. It isn't close, and this is where most people get it wrong</td></tr>
+      <tr><td class="n">A$50–60k</td><td>Build bigger vs buy existing</td><td class="n">75% vs 85%</td><td class="n">A$9,300 vs A$12,000–15,500</td><td><b>Acquire.</b> Higher probability <em>and</em> higher profit. The only tier where you get both, because you're buying customers instead of hoping for them</td></tr>
+    </tbody>
+    <caption>Probabilities are structured judgement, not measured frequencies — treat the ordering as robust and
+    the absolute numbers as indicative. The ordering is what drives the decision, and it doesn't change under
+    reasonable alternative assumptions.</caption>
+  </table>
+  </div>
+
+  <h3 class="sub">🎯 The direct answer to "where is max profit and least risk"</h3>
+  <div class="tldr">
+    <h4>They are at different tiers, so here's how I'd actually resolve it</h4>
+    <ul>
+      <li><b>Least risk per dollar: A$5–10k.</b> Nothing beats it on efficiency. If capital preservation is the
+      priority, stop here — and the main leaderboard already tells you what to do with it.</li>
+      <li><b>Maximum absolute profit: A$60k, via acquisition.</b> ~A$15,500/month, and the only route on this
+      page that trends genuinely semi-passive, because you buy a business that already runs without you.</li>
+      <li><b>Best combination — my actual recommendation: A$25,000–30,000, staged in A$5,000 tranches.</b>
+      It captures ~A$7,600/month, keeps a real cash cushion, funds a part-timer so growth isn't capped by your
+      hours, and — because it's staged — the realistic worst case is roughly A$8,000–12,000 rather than
+      A$15,000. That lands just outside your stated tolerance instead of triple it.</li>
+      <li><b>Skip A$45k entirely.</b> It's the worst tier on the curve: lowest risk-adjusted return, second-worst
+      worst-case loss, and it buys nothing A$40k doesn't. Either stop at A$40k or jump to A$50k and switch to
+      acquisition.</li>
+    </ul>
+  </div>
+  <p class="prose">The thing I'd most want you to take from this tab is the one that isn't about money at all:
+  <b>above roughly A$30,000, capital stops being your constraint and your calendar becomes it.</b> You have
+  10–20 hours a week. A A$40,000 fabrication shop needs a manager, and at that point you haven't bought a
+  side business — you've bought a second job with a mortgage attached. That's why the curve bends, and why
+  the honest recommendation is a staged A$25–30k rather than the biggest number you can afford.</p>
 </section>
 
 <!-- ============================ GROUP A ============================ -->
@@ -1927,5 +2165,188 @@ hr.rule{border:0; border-top:1px solid var(--line); margin:38px 0}
   });
 
   render();
+
+  /* ---------- capital tier opportunities ---------- */
+  var T = [
+   ["Two-machine engraving shop (CO2 + fibre)",10000,"Machine",3800,55,8,6,84],
+   ["Sialkot multi-SKU instrument range",10000,"Import",3200,40,8,7,79],
+   ["Mobile hydraulic hose service (van + crimper)",10000,"Hybrid",4500,50,7,6,76],
+   ["Leather goods range with laser branding",10000,"Hybrid",2800,42,7,7,73],
+   ["Amazon FBA single SKU, properly funded",10000,"Import",2500,40,6,4,62],
+   ["Full industrial ID range: traffolyte + stainless",15000,"Hybrid",5000,52,8,6,81],
+   ["Multi-head embroidery + workwear decoration",15000,"Machine",5200,55,8,5,80],
+   ["Vet + farrier full range, wholesale to rural",15000,"Import",4200,42,7,7,76],
+   ["Certified EN388 glove line, own brand",15000,"Import",4000,40,7,6,74],
+   ["UV flatbed + promotional products supply",15000,"Machine",4200,52,7,5,73],
+   ["Powder coating, garage scale",15000,"Machine",4500,48,7,7,72],
+   ["Foam tool control + CNC, full service",20000,"Machine",5800,50,7,8,77],
+   ["Proprietary injection-moulded product",20000,"Hybrid",6000,30,6,9,75],
+   ["First 20ft FCL of a B2B consumable",20000,"Import",5500,45,7,5,72],
+   ["Commercial water filtration distribution",20000,"Import",5000,45,7,6,70],
+   ["Mining & quarry wear consumables",20000,"Import",6500,45,6,5,68],
+   ["Caravan & trailer components import",20000,"Import",5500,45,7,4,66],
+   ["Exclusive Australian distributorship",25000,"Import",7000,38,7,8,76],
+   ["Certified electrical accessory line (SAA/RCM)",25000,"Import",6500,35,6,8,70],
+   ["Commercial kitchen smallwares distribution",25000,"Import",6000,42,6,4,63],
+   ["Multi-SKU Amazon private label brand",25000,"Import",6000,40,6,3,60],
+   ["Two machines + first part-time employee",30000,"Machine",7600,50,8,6,82],
+   ["Proprietary product: tooling + cert + container",30000,"Hybrid",8000,32,6,9,74],
+   ["Fire & safety equipment distribution",30000,"Import",6800,42,6,6,66],
+   ["Fibre laser cutter — sheet metal job shop",35000,"Machine",8500,50,7,6,73],
+   ["CNC plasma + bracket fabrication",35000,"Machine",8000,48,6,6,69],
+   ["Fabrication + powder coating, integrated",40000,"Machine",9500,47,7,8,74],
+   ["Multi-machine shop, two part-timers",40000,"Machine",8800,48,7,5,70],
+   ["Full vertical: import, fabricate, finish, brand",45000,"Hybrid",9300,44,6,8,68],
+   ["National distribution with 3PL",45000,"Import",9000,40,6,4,60],
+   ["Acquire engraving / signage business",50000,"Acquire",12000,55,8,6,85],
+   ["Acquire embroidery / workwear business",50000,"Acquire",11500,55,8,5,82],
+   ["Acquisition plus working capital to grow",55000,"Acquire",13500,55,8,6,86],
+   ["Acquire business with manager in place",60000,"Acquire",15500,58,8,6,88]
+  ].map(function(r,i){ return {n:r[0],t:r[1],m:r[2],p:r[3],rc:r[4],su:r[5],co:r[6],ov:r[7],r:i+1}; });
+
+  var MC = {Machine:'<span class="chip au">Machine</span>', Import:'<span class="chip cn">Import</span>',
+            Hybrid:'<span class="chip">Import + value-add</span>', Acquire:'<span class="chip pk">Acquire</span>'};
+  var tstate = {cap:0, m:'all', sort:'ov', dir:-1};
+  var tbody2 = document.querySelector('#tl tbody');
+
+  function renderT(){
+    var rows = T.filter(function(d){
+      if(tstate.cap && d.t > tstate.cap) return false;
+      if(tstate.m !== 'all' && d.m !== tstate.m) return false;
+      return true;
+    });
+    rows.sort(function(a,b){
+      var k=tstate.sort, x=a[k], y=b[k];
+      if(typeof x === 'string') return tstate.dir * x.localeCompare(y);
+      return tstate.dir * (x-y);
+    });
+    tbody2.innerHTML = rows.map(function(d){
+      return '<tr>'
+        + '<td class="rank">'+d.r+'</td>'
+        + '<td class="name">'+d.n+'</td>'
+        + '<td class="n">A$'+(d.t/1000)+'k</td>'
+        + '<td>'+MC[d.m]+'</td>'
+        + '<td class="n">A$'+d.p.toLocaleString()+'</td>'
+        + '<td class="n">'+d.rc+'%</td>'
+        + '<td class="n">'+bar(d.su)+'</td>'
+        + '<td class="n">'+bar(d.co)+'</td>'
+        + '<td class="n"><b>'+d.ov+'</b></td>'
+        + '</tr>';
+    }).join('');
+    document.getElementById('tlCount').textContent =
+      'Showing ' + rows.length + ' of ' + T.length + ' higher-capital opportunities'
+      + (tstate.cap ? ' viable at A$' + (tstate.cap/1000) + 'k or below.' : '.');
+  }
+
+  document.getElementById('tierFilters').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    var f = b.dataset.f;
+    tstate[f] = (f === 'cap') ? parseInt(b.dataset.v,10) : b.dataset.v;
+    Array.prototype.forEach.call(this.querySelectorAll('button[data-f="'+f+'"]'), function(o){
+      o.setAttribute('aria-pressed', o === b ? 'true' : 'false');
+    });
+    renderT();
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('#tl th.sortable'), function(th){
+    th.addEventListener('click', function(){
+      var k = th.dataset.k;
+      if(tstate.sort === k){ tstate.dir *= -1; }
+      else { tstate.sort = k; tstate.dir = (k === 'n' || k === 'm') ? 1 : -1; }
+      renderT();
+    });
+  });
+  renderT();
+
+  /* ---------- capital efficiency small multiples ---------- */
+  var CAPS = [5,10,15,20,25,30,35,40,45,50,55,60];
+  var SERIES = [
+    {el:'ch1', c:'var(--c1)', kind:'bar',
+     v:[2200,3400,4300,5200,6300,7600,8200,8800,9300,12000,13500,15500],
+     fmt:function(x){return 'A$'+x.toLocaleString()+'/mo';}, lab:[0,5,11], unit:'A$'},
+    {el:'ch2', c:'var(--c2)', kind:'line',
+     v:[528,408,344,312,302,304,281,264,248,288,295,310],
+     fmt:function(x){return x+'% return';}, lab:[0,8,11], unit:'%'},
+    {el:'ch3', c:'var(--c3)', kind:'line',
+     v:[465,351,286,250,233,228,202,182,164,225,233,248],
+     fmt:function(x){return 'index '+x;}, lab:[0,8,11], unit:''}
+  ];
+  var W=300, H=150, PL=30, PR=10, PT=14, PB=22;
+
+  SERIES.forEach(function(S){
+    var host = document.getElementById(S.el); if(!host) return;
+    var max = Math.max.apply(null, S.v) * 1.12;
+    var iw = W-PL-PR, ih = H-PT-PB;
+    var x = function(i){ return PL + (iw/(CAPS.length-1))*i; };
+    var y = function(v){ return PT + ih - (v/max)*ih; };
+    var svg = ['<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+
+               host.previousElementSibling.previousElementSibling.textContent+
+               ' across capital tiers from A$5,000 to A$60,000">'];
+
+    /* gridlines + y labels */
+    for(var g=0; g<=3; g++){
+      var gv = max*g/3, gy = y(gv);
+      svg.push('<line class="gridline" x1="'+PL+'" y1="'+gy.toFixed(1)+'" x2="'+(W-PR)+'" y2="'+gy.toFixed(1)+'"/>');
+      var lbl = gv >= 1000 ? Math.round(gv/1000)+'k' : Math.round(gv);
+      svg.push('<text class="axlbl" x="'+(PL-5)+'" y="'+(gy+3).toFixed(1)+'" text-anchor="end">'+lbl+'</text>');
+    }
+    /* x labels: every other tier */
+    CAPS.forEach(function(c,i){
+      if(i%2) return;
+      svg.push('<text class="axlbl" x="'+x(i).toFixed(1)+'" y="'+(H-PB+12)+'" text-anchor="middle">'+c+'k</text>');
+    });
+    svg.push('<line class="axis" x1="'+PL+'" y1="'+(PT+ih)+'" x2="'+(W-PR)+'" y2="'+(PT+ih)+'"/>');
+
+    if(S.kind === 'bar'){
+      var bw = Math.min(11, iw/CAPS.length - 2);   /* 2px surface gap between bars */
+      S.v.forEach(function(v,i){
+        var by = y(v), bh = (PT+ih) - by;
+        svg.push('<rect x="'+(x(i)-bw/2).toFixed(1)+'" y="'+by.toFixed(1)+'" width="'+bw.toFixed(1)+
+                 '" height="'+bh.toFixed(1)+'" rx="3" fill="'+S.c+'"/>');
+      });
+    } else {
+      var d = S.v.map(function(v,i){ return (i?'L':'M')+x(i).toFixed(1)+' '+y(v).toFixed(1); }).join(' ');
+      svg.push('<path d="'+d+'" fill="none" stroke="'+S.c+'" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>');
+      S.v.forEach(function(v,i){
+        svg.push('<circle class="mk" cx="'+x(i).toFixed(1)+'" cy="'+y(v).toFixed(1)+
+                 '" r="4" fill="'+S.c+'" stroke="var(--surface)" stroke-width="2"/>');
+      });
+    }
+    /* selective direct labels only */
+    S.lab.forEach(function(i){
+      var v = S.v[i];
+      var txt = v >= 1000 ? (v/1000).toFixed(1).replace('.0','')+'k' : v+S.unit;
+      /* first and last labels sit inboard so they clear the y-axis labels and the right edge */
+      var anchor = i === 0 ? 'start' : (i === CAPS.length-1 ? 'end' : 'middle');
+      var dx = i === 0 ? 5 : (i === CAPS.length-1 ? -1 : 0);
+      svg.push('<text class="dlbl" x="'+(x(i)+dx).toFixed(1)+'" y="'+(y(v)-9).toFixed(1)+
+               '" text-anchor="'+anchor+'">'+txt+'</text>');
+    });
+    /* hit targets last so they sit on top */
+    S.v.forEach(function(v,i){
+      svg.push('<rect class="hit" x="'+(x(i)-iw/(CAPS.length-1)/2).toFixed(1)+'" y="'+PT+
+               '" width="'+(iw/(CAPS.length-1)).toFixed(1)+'" height="'+ih+'" tabindex="0" role="button" '+
+               'aria-label="A$'+CAPS[i]+',000: '+S.fmt(v)+'" data-i="'+i+'"/>');
+    });
+    svg.push('</svg>');
+    host.innerHTML = svg.join('') + '<div class="tip" role="status"></div>';
+
+    var tip = host.querySelector('.tip');
+    function showTip(i){
+      var v = S.v[i];
+      tip.innerHTML = '<b>A$'+CAPS[i]+'k</b> · '+S.fmt(v);
+      tip.style.left = (x(i)/W*100)+'%';
+      tip.style.top  = (y(v)/H*100)+'%';
+      tip.classList.add('on');
+    }
+    host.addEventListener('mouseover', function(e){
+      var h = e.target.closest('.hit'); if(h) showTip(+h.dataset.i);
+    });
+    host.addEventListener('focusin', function(e){
+      var h = e.target.closest('.hit'); if(h) showTip(+h.dataset.i);
+    });
+    host.addEventListener('mouseleave', function(){ tip.classList.remove('on'); });
+    host.addEventListener('focusout', function(){ tip.classList.remove('on'); });
+  });
+
 })();
 </script>
