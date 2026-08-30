@@ -1,0 +1,1931 @@
+<title>Sialkot, Steel &amp; Switchboards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#EDF0EF; --surface:#FFFFFF; --surface-2:#F5F7F6; --sunk:#E2E7E5;
+  --ink:#0F1A1D; --ink-2:#33454A; --muted:#66787C; --faint:#93A3A6;
+  --line:#D3DBD9; --line-2:#BFCAC7;
+  --accent:#0B5D63; --accent-2:#08464B; --accent-wash:#DDEBEA;
+  --signal:#B4531F; --signal-wash:#F6E6DA;
+  --good:#2C6E49; --good-wash:#DCEBE1;
+  --warn:#9A6B12; --warn-wash:#F3E9D2;
+  --bad:#A33328; --bad-wash:#F5DFDC;
+  --shadow:0 1px 2px rgba(15,26,29,.05), 0 8px 24px -12px rgba(15,26,29,.18);
+  --plate:#12242A; --plate-ink:#EAF2F1;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0B1214; --surface:#131D20; --surface-2:#182427; --sunk:#0E1719;
+    --ink:#E7EFEE; --ink-2:#C3D2D2; --muted:#8FA2A4; --faint:#6C7F82;
+    --line:#25373B; --line-2:#324A4F;
+    --accent:#54C3C9; --accent-2:#7FD6DA; --accent-wash:#13343A;
+    --signal:#E08B52; --signal-wash:#3A2418;
+    --good:#63BC8C; --good-wash:#16301F;
+    --warn:#D6A83F; --warn-wash:#332714;
+    --bad:#E2796C; --bad-wash:#361B18;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -14px rgba(0,0,0,.7);
+    --plate:#04191D; --plate-ink:#CFE6E4;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0B1214; --surface:#131D20; --surface-2:#182427; --sunk:#0E1719;
+  --ink:#E7EFEE; --ink-2:#C3D2D2; --muted:#8FA2A4; --faint:#6C7F82;
+  --line:#25373B; --line-2:#324A4F;
+  --accent:#54C3C9; --accent-2:#7FD6DA; --accent-wash:#13343A;
+  --signal:#E08B52; --signal-wash:#3A2418;
+  --good:#63BC8C; --good-wash:#16301F;
+  --warn:#D6A83F; --warn-wash:#332714;
+  --bad:#E2796C; --bad-wash:#361B18;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -14px rgba(0,0,0,.7);
+  --plate:#04191D; --plate-ink:#CFE6E4;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  font-size:16.5px; line-height:1.62; margin:0;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4,.ui{font-family:"Archivo","Helvetica Neue",Arial,sans-serif}
+h1,h2,h3,h4{text-wrap:balance; line-height:1.14; margin:0}
+.mono,.num{font-family:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace; font-variant-numeric:tabular-nums}
+a{color:var(--accent); text-decoration-thickness:1px; text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--signal); outline-offset:2px; border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+
+/* ---------- shell ---------- */
+.wrap{max-width:1240px; margin:0 auto; padding:0 20px 96px}
+.masthead{
+  background:var(--plate); color:var(--plate-ink);
+  padding:52px 20px 44px; margin-bottom:0;
+  border-bottom:3px solid var(--signal);
+}
+.masthead-in{max-width:1200px; margin:0 auto; display:flex; flex-direction:column; gap:20px}
+.stamp{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--signal); display:flex; flex-wrap:wrap; gap:10px 18px;
+}
+.stamp span{opacity:.92}
+.masthead h1{font-size:clamp(34px,6.2vw,60px); font-weight:800; letter-spacing:-.022em; max-width:16ch}
+.masthead p{font-size:clamp(16px,2.1vw,19px); max-width:62ch; color:#A9C4C2; margin:0}
+.brief{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(148px,1fr)); gap:1px;
+  background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.13); margin-top:8px;
+}
+.brief div{background:var(--plate); padding:12px 14px}
+.brief dt{font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.13em; text-transform:uppercase; color:#7FA3A2; margin:0 0 4px}
+.brief dd{margin:0; font-family:"Archivo",sans-serif; font-weight:600; font-size:15px; color:#EAF2F1}
+
+/* ---------- nav ---------- */
+nav.tabs{
+  position:sticky; top:0; z-index:50; background:var(--surface);
+  border-bottom:1px solid var(--line); box-shadow:0 1px 0 var(--line);
+}
+.tabs-in{max-width:1240px; margin:0 auto; display:flex; gap:2px; overflow-x:auto; padding:0 12px; scrollbar-width:thin}
+.tabs button{
+  font-family:"Archivo",sans-serif; font-size:12.5px; font-weight:600; letter-spacing:.03em;
+  background:none; border:0; border-bottom:3px solid transparent; color:var(--muted);
+  padding:14px 13px; cursor:pointer; white-space:nowrap;
+}
+.tabs button:hover{color:var(--ink)}
+.tabs button[aria-selected="true"]{color:var(--accent); border-bottom-color:var(--accent)}
+section[role="tabpanel"]{padding-top:36px}
+section[role="tabpanel"][hidden]{display:none}
+
+/* ---------- typography blocks ---------- */
+.lede{font-size:19px; color:var(--ink-2); max-width:66ch}
+.prose{max-width:70ch}
+.prose p{margin:0 0 15px}
+h2.sec{font-size:clamp(24px,3.4vw,34px); font-weight:700; letter-spacing:-.016em; margin:0 0 6px}
+h3.sub{font-size:19px; font-weight:700; margin:38px 0 12px; letter-spacing:-.008em}
+h4.mini{font-size:14px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); margin:26px 0 10px}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:var(--signal); margin:0 0 10px}
+.sec-head{border-bottom:2px solid var(--ink); padding-bottom:14px; margin-bottom:24px}
+
+/* ---------- callouts ---------- */
+.tldr{
+  background:var(--accent-wash); border:1px solid var(--accent); border-left-width:5px;
+  padding:18px 20px; margin:0 0 30px;
+}
+.tldr h4{font-family:"Archivo",sans-serif; font-size:12px; letter-spacing:.13em; text-transform:uppercase; color:var(--accent-2); margin:0 0 8px}
+.tldr ul{margin:0; padding-left:20px}
+.tldr li{margin-bottom:6px}
+.tldr li:last-child{margin-bottom:0}
+.warnbox{background:var(--bad-wash); border:1px solid var(--bad); border-left-width:5px; padding:16px 20px; margin:24px 0}
+.warnbox h4{font-family:"Archivo",sans-serif; font-size:12px; letter-spacing:.13em; text-transform:uppercase; color:var(--bad); margin:0 0 8px}
+.notebox{background:var(--surface-2); border:1px solid var(--line); padding:16px 20px; margin:22px 0; font-size:15.5px}
+
+/* ---------- chips ---------- */
+.chip{
+  display:inline-flex; align-items:center; gap:5px; font-family:"IBM Plex Mono",monospace;
+  font-size:10.5px; font-weight:500; letter-spacing:.06em; text-transform:uppercase;
+  padding:3px 8px; border:1px solid var(--line-2); border-radius:2px; color:var(--muted); white-space:nowrap;
+}
+.chip.v{background:var(--good-wash); border-color:var(--good); color:var(--good)}
+.chip.e{background:var(--warn-wash); border-color:var(--warn); color:var(--warn)}
+.chip.a{background:var(--bad-wash); border-color:var(--bad); color:var(--bad)}
+.chip.pk{background:var(--good-wash); border-color:var(--good); color:var(--good)}
+.chip.cn{background:var(--signal-wash); border-color:var(--signal); color:var(--signal)}
+.chip.au{background:var(--accent-wash); border-color:var(--accent); color:var(--accent-2)}
+.verdict{display:inline-block; font-family:"Archivo",sans-serif; font-weight:700; font-size:11px; letter-spacing:.09em; text-transform:uppercase; padding:4px 9px; border-radius:2px}
+.v-hi{background:var(--good-wash); color:var(--good); border:1px solid var(--good)}
+.v-md{background:var(--warn-wash); color:var(--warn); border:1px solid var(--warn)}
+.v-lo{background:var(--bad-wash); color:var(--bad); border:1px solid var(--bad)}
+
+/* ---------- tables ---------- */
+.tablewrap{overflow-x:auto; border:1px solid var(--line); background:var(--surface); margin:20px 0}
+table{border-collapse:collapse; width:100%; min-width:720px; font-size:14px}
+thead th{
+  background:var(--sunk); font-family:"Archivo",sans-serif; font-weight:700; font-size:11px;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--ink-2); text-align:left;
+  padding:11px 12px; border-bottom:2px solid var(--line-2); position:sticky; top:0; white-space:nowrap;
+}
+thead th.sortable{cursor:pointer; user-select:none}
+thead th.sortable:hover{color:var(--accent)}
+tbody td{padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+tbody tr:nth-child(even){background:var(--surface-2)}
+tbody tr:hover{background:var(--accent-wash)}
+td.n,th.n{text-align:right; font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; white-space:nowrap}
+td.rank{font-family:"IBM Plex Mono",monospace; font-weight:600; color:var(--signal); text-align:right; width:38px}
+td.name{font-family:"Archivo",sans-serif; font-weight:600; min-width:230px}
+caption{caption-side:bottom; text-align:left; padding:10px 12px; font-size:13px; color:var(--muted)}
+
+/* score bar */
+.bar{display:flex; align-items:center; gap:7px}
+.bar i{display:block; height:6px; background:var(--line-2); width:52px; position:relative; border-radius:1px; flex:none}
+.bar i b{position:absolute; inset:0 auto 0 0; background:var(--accent); border-radius:1px}
+.bar i.hi b{background:var(--good)} .bar i.md b{background:var(--warn)} .bar i.lo b{background:var(--bad)}
+.bar span{font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600}
+
+/* ---------- scorecard "data plate" ---------- */
+.plates{display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:20px; margin:22px 0}
+.plate{background:var(--surface); border:1px solid var(--line-2); box-shadow:var(--shadow); display:flex; flex-direction:column}
+.plate-hd{background:var(--plate); color:var(--plate-ink); padding:13px 16px; display:flex; justify-content:space-between; align-items:flex-start; gap:12px}
+.plate-hd h4{font-size:16px; font-weight:700; letter-spacing:-.01em; margin:0; color:#fff}
+.plate-hd .rk{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--signal); letter-spacing:.1em; white-space:nowrap}
+.plate-tags{display:flex; flex-wrap:wrap; gap:5px; padding:11px 16px 0}
+.plate-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); margin:12px 0 0}
+.plate-grid div{background:var(--surface); padding:8px 12px}
+.plate-grid dt{font-family:"IBM Plex Mono",monospace; font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); margin:0 0 2px}
+.plate-grid dd{margin:0; font-family:"Archivo",sans-serif; font-weight:600; font-size:13.5px; font-variant-numeric:tabular-nums}
+.plate-body{padding:14px 16px; font-size:14.5px; display:flex; flex-direction:column; gap:10px; flex:1}
+.plate-body p{margin:0}
+.plate-body .win{border-left:3px solid var(--good); padding-left:10px}
+.plate-body .fail{border-left:3px solid var(--bad); padding-left:10px}
+.plate-body b.lbl{font-family:"Archivo",sans-serif; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; display:block; color:var(--muted); margin-bottom:2px}
+.plate-ft{border-top:1px solid var(--line); padding:11px 16px; display:flex; justify-content:space-between; align-items:center; gap:10px; background:var(--surface-2)}
+.plate-ft .total{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:20px}
+.plate-ft .total small{font-size:12px; color:var(--muted); font-weight:400}
+
+/* ---------- cards / grids ---------- */
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:18px; margin:22px 0}
+.card{background:var(--surface); border:1px solid var(--line); padding:18px 20px; box-shadow:var(--shadow)}
+.card h4{font-size:16px; font-weight:700; margin:0 0 8px}
+.card p{margin:0 0 10px; font-size:14.5px}
+.card p:last-child{margin-bottom:0}
+.award{border-top:4px solid var(--signal)}
+.award .ttl{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--signal); margin:0 0 6px}
+
+/* ---------- filter bar ---------- */
+.filters{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:18px 0 4px; padding:12px 14px; background:var(--surface-2); border:1px solid var(--line)}
+.filters label{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-right:2px}
+.filters button{
+  font-family:"Archivo",sans-serif; font-size:12px; font-weight:600; padding:6px 11px; cursor:pointer;
+  background:var(--surface); border:1px solid var(--line-2); color:var(--ink-2); border-radius:2px;
+}
+.filters button:hover{border-color:var(--accent); color:var(--accent)}
+.filters button[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:#fff}
+:root[data-theme="dark"] .filters button[aria-pressed="true"],
+:root:not([data-theme="light"]) .filters button[aria-pressed="true"]{color:#08282B}
+
+/* ---------- timeline ---------- */
+.timeline{display:flex; flex-direction:column; gap:0; margin:24px 0; border-left:2px solid var(--line-2); padding-left:0}
+.phase{position:relative; padding:0 0 26px 26px; border-left:0}
+.phase::before{content:""; position:absolute; left:-7px; top:6px; width:12px; height:12px; background:var(--accent); border:2px solid var(--surface); border-radius:50%}
+.phase .days{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.11em; text-transform:uppercase; color:var(--signal)}
+.phase h4{font-size:17px; font-weight:700; margin:3px 0 8px}
+.phase ul{margin:0; padding-left:18px; font-size:14.5px}
+.phase li{margin-bottom:5px}
+.gate{margin-top:10px; background:var(--surface-2); border:1px solid var(--line); padding:11px 14px; font-size:14px}
+.gate b{font-family:"Archivo",sans-serif; font-size:11px; letter-spacing:.09em; text-transform:uppercase}
+
+/* ---------- misc ---------- */
+ul.tight{margin:0 0 16px; padding-left:20px}
+ul.tight li{margin-bottom:6px}
+.kill{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px; margin:20px 0}
+.kill div{background:var(--bad-wash); border:1px solid var(--bad); padding:12px 14px; font-size:14px}
+.kill b{font-family:"Archivo",sans-serif; display:block; margin-bottom:3px; font-size:14.5px}
+hr.rule{border:0; border-top:1px solid var(--line); margin:38px 0}
+.footnote{font-size:13.5px; color:var(--muted); max-width:72ch}
+@media (max-width:640px){
+  body{font-size:16px}
+  .plate-grid{grid-template-columns:1fr}
+  .masthead{padding:36px 18px 32px}
+}
+</style>
+
+<header class="masthead">
+  <div class="masthead-in">
+    <div class="stamp">
+      <span>Product Hunt Dossier</span><span>·</span><span>Australia · FY2026</span><span>·</span>
+      <span>Compiled 30 Aug 2026</span><span>·</span><span>Brief: A$5k / 10–20 hrs / low–moderate risk</span>
+    </div>
+    <h1>Sialkot, Steel &amp; Switchboards</h1>
+    <p>Seventy product and manufacturing opportunities screened against Australian demand evidence,
+       real landed costs and your actual capital. Most of them fail. This document is mostly about why —
+       and about the four that don't.</p>
+    <dl class="brief">
+      <div><dt>Start capital</dt><dd>A$5,000</dd></div>
+      <div><dt>Max loss</dt><dd>A$3–10k</dd></div>
+      <div><dt>Target net</dt><dd>A$1–3k / mo</dd></div>
+      <div><dt>Time</dt><dd>10–20 hrs / wk</dd></div>
+      <div><dt>Sourcing edge</dt><dd>Sialkot + Lahore</dd></div>
+      <div><dt>Storage</dt><dd>Garage / spare room</dd></div>
+    </dl>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Sections">
+  <div class="tabs-in">
+    <button role="tab" aria-selected="true"  aria-controls="p-summary" id="t-summary">Executive Summary</button>
+    <button role="tab" aria-selected="false" aria-controls="p-board"   id="t-board">Leaderboard (70)</button>
+    <button role="tab" aria-selected="false" aria-controls="p-a"       id="t-a">A · Proven Imports</button>
+    <button role="tab" aria-selected="false" aria-controls="p-b"       id="t-b">B · Emerging</button>
+    <button role="tab" aria-selected="false" aria-controls="p-c"       id="t-c">C · Machine-Based</button>
+    <button role="tab" aria-selected="false" aria-controls="p-cards"   id="t-cards">Full Scorecards</button>
+    <button role="tab" aria-selected="false" aria-controls="p-money"   id="t-money">Profit Models</button>
+    <button role="tab" aria-selected="false" aria-controls="p-risk"    id="t-risk">Risks &amp; Avoid List</button>
+    <button role="tab" aria-selected="false" aria-controls="p-top3"    id="t-top3">Top 3 + 90-Day Plan</button>
+    <button role="tab" aria-selected="false" aria-controls="p-method"  id="t-method">Method &amp; Sources</button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- ============================ EXECUTIVE SUMMARY ============================ -->
+<section role="tabpanel" id="p-summary" aria-labelledby="t-summary">
+
+  <div class="sec-head">
+    <p class="eyebrow">Read this first</p>
+    <h2 class="sec">The 30-second version</h2>
+  </div>
+
+  <div class="tldr">
+    <h4>What the evidence actually says</h4>
+    <ul>
+      <li><b>Your budget kills most of this list.</b> At A$5,000 you cannot buy a defensible inventory position in any commodity category. Capital alone rules out 25 of the 70 opportunities below, and once competition and differentiation are applied only four clear every gate — not because the rest are bad businesses, but because they aren't <em>your</em> business this year.</li>
+      <li><b>The machine beats the import — at your capital level.</b> A A$4–5k laser converts cash to revenue in days with no MOQ, no customs, no inventory risk and no regulatory exposure. An import at A$5k buys ~150–500 units of something a Temu seller can list next week.</li>
+      <li><b>Sialkot is a real moat, but not where you'd expect.</b> Human surgical instruments are a trap (TGA Class IIa, ~US$7–18k and 3 years). The money is in the <em>unregulated</em> cousins: pet grooming shears, veterinary and farrier tools, leather work gloves. Same factories, same steel, no ARTG.</li>
+      <li><b>Your electrical background is worth more than your capital.</b> 48,800 electrical services businesses in Australia all need engraved switchboard labels, and the incumbent suppliers quote manually. That is a software problem sitting on top of a A$4k machine.</li>
+      <li><b>Nothing here is passive in year one.</b> Anyone who tells you otherwise is selling a course. The realistic path to semi-passive runs through automating quoting and artwork, then paying someone A$30/hr to tend the machine — not through finding a magic product.</li>
+    </ul>
+  </div>
+
+  <h3 class="sub">The four that survived</h3>
+  <p class="prose">Seventy opportunities went in. Each was screened on demand evidence, competitive intensity,
+  full landed cost, regulatory load, differentiation, and — decisively — whether it is reachable on A$5,000
+  with 10–20 hours a week. Four cleared every gate.</p>
+
+  <div class="grid2">
+    <div class="card award">
+      <p class="ttl">🥇 Best overall</p>
+      <h4>Engraved industrial identification</h4>
+      <p>Traffolyte switchboard labels, stainless valve and asset tags, sold B2B to electrical contractors,
+      switchboard builders and facilities teams. A$4,200 CO₂ laser. ~85% gross margin, no inventory,
+      payback in 8–14 weeks at base case.</p>
+      <p><span class="verdict v-hi">High potential</span> <span class="chip au">Made in AU</span> <span class="chip v">Demand verified</span></p>
+    </div>
+    <div class="card award">
+      <p class="ttl">🇵🇰 Best Pakistan product</p>
+      <h4>Professional pet grooming shears</h4>
+      <p>Private-label 440C/VG10 curved, chunker and straight sets for Australia's 4,000+ dog groomers.
+      Sialkot MOQs from 50 pairs. Zero TGA exposure, tiny freight volume, 65–75% gross margin,
+      and a genuine repeat cycle through sharpening and blade wear.</p>
+      <p><span class="verdict v-hi">High potential</span> <span class="chip pk">Sialkot</span> <span class="chip v">Demand verified</span></p>
+    </div>
+    <div class="card award">
+      <p class="ttl">🏭 Best import + value-add</p>
+      <h4>Blade sharpening + branded shear supply</h4>
+      <p>Hollow-grind sharpening service for the same 39,543 salons and 4,000 groomers you sell shears to.
+      A$2–4k of equipment. The service creates the customer list; the shears monetise it.
+      Recurring by physics — steel dulls.</p>
+      <p><span class="verdict v-hi">High potential</span> <span class="chip au">Local service</span> <span class="chip e">Economics modelled</span></p>
+    </div>
+    <div class="card award">
+      <p class="ttl">🏢 Best B2B / best repeat</p>
+      <h4>Leather welding &amp; rigger gloves</h4>
+      <p>Sialkot EN388-certified tanneries already ship to Australia. True consumable — a boilermaker
+      destroys a pair a fortnight. Weakest of the four on margin and strongest on repeat.
+      Best as product #2, funded by cashflow, not as the opening move.</p>
+      <p><span class="verdict v-md">Medium potential</span> <span class="chip pk">Sialkot</span> <span class="chip v">Market verified</span></p>
+    </div>
+  </div>
+
+  <h3 class="sub">The honest answer to your last question</h3>
+  <p class="prose">You asked which single thing I'd start with if the goal is a side business that becomes
+  semi-passive and scalable. It is <b>engraved industrial identification</b> — and the reason is not the
+  labels. It is that this is the only opportunity on the list where the bottleneck is
+  <em>automatable by you specifically</em>. Every incumbent quotes switchboard schedules by hand.
+  You can read a panel schedule, and you can build the pipeline that turns an uploaded PDF into a quote
+  and an engraving file. That converts a job shop into a product. The full argument is in
+  <b>Top 3 + 90-Day Plan</b>.</p>
+
+  <div class="notebox">
+    <b>One assumption I'm flagging, not hiding.</b> Your workspace tooling (panel-schedule BOM extraction,
+    electrical component substitution, MCC/switchboard training material) points hard at a career in
+    electrical or industrial control. I've treated that as a hypothesis and tested whether it creates an
+    edge — it does, and it materially changes the #1 recommendation. If that guess is wrong, tell me:
+    recommendation #1 drops to third and the Sialkot shear play takes the top slot.
+  </div>
+
+  <h3 class="sub">Award table</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Category</th><th>Winner</th><th>Why it won</th><th class="n">Start</th></tr></thead>
+    <tbody>
+      <tr><td class="name">🥇 Best overall</td><td>Engraved industrial ID (CO₂ laser)</td><td>Only opportunity scoring ≥7 on demand, margin, capital fit <em>and</em> defensibility simultaneously</td><td class="n">A$4,900</td></tr>
+      <tr><td class="name">💰 Best profit opportunity</td><td>Workwear embroidery / decoration</td><td>Verified Australian businesses at A$1M+ revenue, A$290k net; but needs A$15k+ and 25 hrs/wk</td><td class="n">A$18,000</td></tr>
+      <tr><td class="name">🏠 Best made locally with a machine</td><td>Stainless asset &amp; valve tags (fibre laser)</td><td>Mining/water/facilities buyers, near-zero material cost, permanent-marking spec locks out print</td><td class="n">A$4,300</td></tr>
+      <tr><td class="name">🏭 Best import + customisation</td><td>Sialkot shears + AU laser branding &amp; sharpening</td><td>One machine serves both businesses; branding converts a commodity into your SKU</td><td class="n">A$6,500</td></tr>
+      <tr><td class="name">🏢 Best B2B</td><td>Traffolyte labels to switchboard builders</td><td>48,800 electrical businesses, mandated by AS/NZS 3000 practice, repeat on every job</td><td class="n">A$4,900</td></tr>
+      <tr><td class="name">🇵🇰 Best Pakistan product</td><td>Pet grooming shears (private label)</td><td>Sialkot world-class, MOQ 50, no TGA, freight ~nil, family QC on the ground</td><td class="n">A$3,800</td></tr>
+      <tr><td class="name">🇨🇳 Best China product</td><td>Cable markers, ferrules &amp; heatshrink ID</td><td>ChAFTA 0% duty, tiny cube, pure consumable, sells to the same list as the labels</td><td class="n">A$2,500</td></tr>
+      <tr><td class="name">🚀 Best new / emerging</td><td>Pickleball paddles &amp; club equipment</td><td>155,000 participants, ~70% growth in 10 months, 220 clubs, no dominant AU brand yet</td><td class="n">A$4,500</td></tr>
+      <tr><td class="name">💵 Best low-capital test</td><td>Blade sharpening service</td><td>A$2,000 all-in, revenue in week 2, builds the exact customer list product #2 needs</td><td class="n">A$2,000</td></tr>
+      <tr><td class="name">🤖 Best automation potential</td><td>Automated switchboard-schedule quoting</td><td>The only line item here where software removes the labour rather than adding to it</td><td class="n">A$0 (your time)</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="sub">What I'd tell you not to do</h3>
+  <div class="kill">
+    <div><b>Don't buy a container of anything.</b> Not at A$5k, not at A$25k. Your first order should be small enough that losing 100% of it is annoying, not structural.</div>
+    <div><b>Don't import human surgical instruments.</b> Sialkot's flagship export is, for you, the single worst-value category on this list. TGA Class IIa. Skip it.</div>
+    <div><b>Don't import anything with a plug on it.</b> EESS registration, RCM marking and responsible-supplier liability turn a A$5k test into a compliance project.</div>
+    <div><b>Don't start with towels, rice or bedding.</b> Pakistan's actual export strength to Australia, and precisely why margins there are already competed to nothing.</div>
+  </div>
+
+</section>
+
+<!-- ============================ LEADERBOARD ============================ -->
+<section role="tabpanel" id="p-board" aria-labelledby="t-board" hidden>
+  <div class="sec-head">
+    <p class="eyebrow">Master ranking · 70 opportunities</p>
+    <h2 class="sec">The leaderboard</h2>
+  </div>
+  <p class="lede">Ranked by Probability-Adjusted Opportunity Score — a weighted composite, not a prediction.
+  It deliberately punishes opportunities that are excellent businesses but unreachable on A$5,000.
+  Sort any column. The bottom twenty are here on purpose: knowing what to reject is most of the work.</p>
+
+  <div class="filters" id="lbFilters">
+    <label>Group</label>
+    <button data-f="g" data-v="all" aria-pressed="true">All</button>
+    <button data-f="g" data-v="A" aria-pressed="false">A · Proven import</button>
+    <button data-f="g" data-v="B" aria-pressed="false">B · Emerging</button>
+    <button data-f="g" data-v="C" aria-pressed="false">C · Machine</button>
+    <label style="margin-left:12px">Source</label>
+    <button data-f="s" data-v="all" aria-pressed="true">All</button>
+    <button data-f="s" data-v="PK" aria-pressed="false">🇵🇰 Pakistan</button>
+    <button data-f="s" data-v="CN" aria-pressed="false">🇨🇳 China</button>
+    <button data-f="s" data-v="AU" aria-pressed="false">🇦🇺 Made here</button>
+    <label style="margin-left:12px">Filter</label>
+    <button data-f="b2b" data-v="1" aria-pressed="false">B2B only</button>
+    <button data-f="cap" data-v="5000" aria-pressed="false">Fits A$5k</button>
+  </div>
+
+  <div class="tablewrap">
+    <table id="lb">
+      <thead><tr>
+        <th class="n">#</th>
+        <th class="sortable" data-k="n">Product</th>
+        <th class="sortable" data-k="g">Model</th>
+        <th class="sortable" data-k="s">Source</th>
+        <th class="sortable n" data-k="cap">Start capital</th>
+        <th class="sortable n" data-k="nm">Net margin</th>
+        <th class="sortable n" data-k="su">Success /10</th>
+        <th class="sortable n" data-k="co">Low comp. /10</th>
+        <th class="sortable n" data-k="am">Automation /10</th>
+        <th class="sortable n" data-k="ov">Overall</th>
+      </tr></thead>
+      <tbody></tbody>
+      <caption>“Low comp.” scores 10 for an uncrowded field and 1 for a bloodbath. Net margin is after
+      landed cost, fees, freight, packaging and advertising — before your own labour and income tax.
+      All figures are modelled estimates unless the scorecard for that product cites a verified source.
+      Group totals here (A 27 / B 27 / C 16) differ slightly from the section tables because two machines have
+      dual uses counted once, and foam tool-control inserts are listed as emerging in Group B but ranked as
+      machine-based here.</caption>
+    </table>
+  </div>
+  <p class="footnote" id="lbCount"></p>
+</section>
+
+<!-- ============================ GROUP A ============================ -->
+<section role="tabpanel" id="p-a" aria-labelledby="t-a" hidden>
+  <div class="sec-head">
+    <p class="eyebrow">Group A · 25 products</p>
+    <h2 class="sec">Already imported. Already selling.</h2>
+  </div>
+
+  <div class="tldr">
+    <h4>What qualifies for this list</h4>
+    <ul>
+      <li>An identifiable Australian business is <em>currently</em> importing and reselling it — named below, not implied.</li>
+      <li>The specific product is nameable at SKU level. “Pet products” is not a product; a 7.5-inch curved 440C chunker for doodle coats is.</li>
+      <li>A supplier will sell you a first order you can actually afford.</li>
+      <li>It survives a full landed-cost pass, including the fees people forget: marketplace commission, payment processing, returns, storage, and your own time.</li>
+    </ul>
+  </div>
+
+  <h3 class="sub">The Sialkot cluster — and the trap inside it</h3>
+  <p class="prose">Sialkot produces roughly <b>70% of the world's hand-made surgical instruments</b> and
+  <b>70% of the world's hand-stitched footballs</b>, exporting over US$2bn a year. Your family being there is
+  the single most valuable asset in this brief: it gives you factory access outside Alibaba, pre-shipment QC,
+  payment trust, and the ability to walk a floor. Almost nobody importing into Australia has that.</p>
+  <p class="prose">The trap is that the cluster's most famous product is the one you must not touch.
+  Surgical instruments for human use are <b>TGA Class IIa medical devices</b>. You need an Australian sponsor,
+  ARTG inclusion, and a realistic three-year budget around <b>US$7,000–18,000</b> before conformity assessment
+  or clinical evidence. That is your entire capital, spent on paperwork, before a single sale.</p>
+  <p class="prose">The opportunity is the <b>unregulated adjacency</b>. The same factories, the same 440C and
+  J2 Japanese steel, the same hand-finishing — pointed at animals, hair, hooves and hands instead of patients.
+  Pet grooming shears, veterinary and farrier tools, podiatry and nail implements, and leather gloves carry
+  <em>no</em> TGA burden. This is the highest-leverage insight in the document.</p>
+
+  <div class="warnbox">
+    <h4>Regulatory line to hold</h4>
+    <p style="margin:0">The moment a product makes a therapeutic claim, or is intended for use on humans in a
+    clinical setting, it becomes a medical device. “Podiatry nippers” sold to a podiatry clinic is a grey zone.
+    “Professional nail nippers” sold to nail salons is not. Sell to the beauty channel, write the copy carefully,
+    and get a customs broker to confirm your tariff classification and a lawyer to sight your product claims
+    before your first shipment. This is a A$400 conversation that protects the whole business.</p>
+  </div>
+
+  <h3 class="sub">Duty, freight and the real landed cost</h3>
+  <div class="grid2">
+    <div class="card">
+      <h4>🇨🇳 China</h4>
+      <p><b>Duty: 0%</b> on effectively all goods under ChAFTA, which reached 100% tariff elimination on
+      1 January 2019 — provided you hold a valid Certificate of Origin. <span class="chip v">Verified</span></p>
+      <p><b>Freight:</b> LCL sea has been running roughly <b>US$35–60 per cbm</b> through 2026, with 21–31 days
+      port-to-port to Sydney/Melbourne/Brisbane. FCL only becomes cheaper per cbm past ~14 cbm.</p>
+    </div>
+    <div class="card">
+      <h4>🇵🇰 Pakistan</h4>
+      <p><b>Duty:</b> Pakistan is covered by the Australian System of Tariff Preferences as a Developing Country
+      (DCS). Preference is real but rate-by-rate — <b>budget 5% and be pleasantly surprised</b> rather than
+      assuming free entry. <span class="chip e">Confirm per HS code with your broker</span></p>
+      <p><b>Freight:</b> Karachi to east-coast Australia typically transits via Singapore or Port Klang;
+      allow <b>30–40 days door-to-door</b> for LCL including consolidation. For shears and instruments,
+      air freight is often cheaper in practice because the cube is trivial.</p>
+    </div>
+    <div class="card">
+      <h4>🇦🇺 On arrival — every shipment</h4>
+      <p><b>GST 10%</b> is charged on customs value <em>plus</em> freight, insurance and duty — not on the
+      goods alone. Register for GST and you claim it back; the cash still leaves your account first.</p>
+      <p>Consignments over <b>A$1,000</b> attract duty, GST and an Import Processing Charge. Under A$1,000
+      there is no border duty or GST — which is exactly why sample orders are cheap to run and why you
+      should run several before committing.</p>
+    </div>
+    <div class="card">
+      <h4>The costs people leave out</h4>
+      <p>Amazon AU and eBay AU take roughly <b>12–15%</b>. Payment processing takes ~1.75% + 30c.
+      Returns on shears run 3–6%; on apparel, 20%+. Add photography, barcodes, packaging, a satchel,
+      and the hour you spend on each order.</p>
+      <p>My rule for this document: if a product doesn't clear <b>3.5× landed cost</b> at retail,
+      it isn't a business, it's a hobby with paperwork.</p>
+    </div>
+  </div>
+
+  <h3 class="sub">Group A in full</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th class="n">#</th><th>Product</th><th>Source</th><th>Australian demand evidence</th><th class="n">Landed</th><th class="n">Sells for</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr><td class="rank">A1</td><td class="name">Pet grooming shears — curved / chunker / straight sets, 440C or VG10</td><td><span class="chip pk">PK</span></td><td>4,000+ dog groomers nationally; dedicated retailers OzGroomingWorld, Grooming Scissors Direct, Artero AU, K5 International all stocking imported shears</td><td class="n">$28–32</td><td class="n">$120–180</td><td><span class="verdict v-hi">High</span></td></tr>
+      <tr><td class="rank">A2</td><td class="name">Farrier tools — hoof nippers, clinchers, knives, rasps</td><td><span class="chip pk">PK</span></td><td>Sialkot houses dedicated farrier-tool exporters (Hayat Khan, HFrox, Vetaxa); Australian equestrian and racing sector supports a standing farrier population</td><td class="n">$22–40</td><td class="n">$90–190</td><td><span class="verdict v-hi">High</span></td></tr>
+      <tr><td class="rank">A3</td><td class="name">Veterinary livestock instruments — hoof knives, obstetric, dehorners, castration</td><td><span class="chip pk">PK</span></td><td>Bainbridge, Aussie Vet Products, vet-n-pet DIRECT, Austral Ag, FarmShop all import and resell; no TGA exposure for animal-use instruments</td><td class="n">$12–45</td><td class="n">$45–160</td><td><span class="verdict v-hi">High</span></td></tr>
+      <tr><td class="rank">A4</td><td class="name">Leather welding &amp; rigger gloves, EN388 certified</td><td><span class="chip pk">PK</span></td><td>AU industrial safety glove market US$212m (2024) → US$406m (2033), 7.5% CAGR; Sialkot tanneries (Ocean Gloves, ASK, Tough Safety) already export to Australia audit-ready</td><td class="n">$7–9</td><td class="n">$22–28</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">A5</td><td class="name">Cable markers, ferrules, heatshrink identification sleeves</td><td><span class="chip cn">CN</span></td><td>48,800 electrical services businesses; every switchboard and every panel consumes them; sold by Wiremarkers, IPD, Tradezone</td><td class="n">$0.02–0.30</td><td class="n">$0.15–1.20</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">A6</td><td class="name">Boxing &amp; MMA gloves / pads — gym-branded private label</td><td><span class="chip pk">PK</span></td><td>Sialkot OEM houses quoting MOQs of 25–50 pairs with embroidery and sublimation; Australian boxing and MMA gyms routinely brand their own gear</td><td class="n">$28–45</td><td class="n">$110–180</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">A7</td><td class="name">Podiatry &amp; professional nail implements (beauty channel)</td><td><span class="chip pk">PK</span></td><td>39,543 hairdressing and beauty businesses in AU, a A$12.4bn market growing 1.1%; nail salons buy nippers as consumables</td><td class="n">$4–11</td><td class="n">$25–60</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">A8</td><td class="name">Weightlifting belts, lifting straps, wrist wraps — leather</td><td><span class="chip pk">PK</span></td><td>Sialkot leather cluster; Australian gym-brand market well established with multiple independent labels</td><td class="n">$14–24</td><td class="n">$70–120</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">A9</td><td class="name">Hairdressing &amp; barber scissors — private label</td><td><span class="chip pk">PK</span></td><td>Proven model: iCandy (AU family-owned since 2012), Japan Scissors, Scissor Tech AU, K5 International, Salon Direct, AMR all selling. Demand verified — <em>and that is the problem</em></td><td class="n">$25–45</td><td class="n">$150–400</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">A10</td><td class="name">Arc-flash rated PPE — switching coats, hoods, gloves</td><td><span class="chip pk">PK</span> <span class="chip cn">CN</span></td><td>Tightening AS/NZS arc-flash practice across utilities and mining; high-value, spec-driven, low return rate</td><td class="n">$110–260</td><td class="n">$390–850</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">A11</td><td class="name">Leather aprons — chef, BBQ, welding, barber</td><td><span class="chip pk">PK</span></td><td>Sialkot leather goods cluster; Australian hospitality and barber channels both buy branded aprons as merchandise and uniform</td><td class="n">$16–28</td><td class="n">$70–140</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">A12</td><td class="name">Barber capes, tool rolls, salon textiles</td><td><span class="chip pk">PK</span></td><td>Same 39,543-business channel as A7/A9; low ticket, easy add-on to a shear order, no compliance load</td><td class="n">$6–14</td><td class="n">$30–65</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">A13</td><td class="name">Cricket equipment — bats, pads, keeping gloves</td><td><span class="chip pk">PK</span></td><td>Sialkot manufactures cricket kit at scale; Australian participation is structurally large and club-based</td><td class="n">$30–120</td><td class="n">$120–450</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">A14</td><td class="name">Hospitality bath towels &amp; robes, 600–700gsm combed cotton</td><td><span class="chip pk">PK</span></td><td>Australian Linen Supply, Linen and Towels, LePack, BnB Supplies all importing; textiles are 68.6% of Pakistan's export mix to AU</td><td class="n">$9–17</td><td class="n">$26–48</td><td><span class="verdict v-lo">Low</span></td></tr>
+      <tr><td class="rank">A15</td><td class="name">Engraving laminate (traffolyte) sheet stock</td><td><span class="chip cn">CN</span></td><td>Feeds your own machine business and every other engraver; Engraving Supplies and Wiremarkers resell it nationally</td><td class="n">$18–40/sheet</td><td class="n">$55–95</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">A16</td><td class="name">Blank anodised aluminium &amp; 316 stainless tags</td><td><span class="chip cn">CN</span></td><td>Inscribe, TUFFA, BKLD and MapTrack all sell blanks and pre-engraved; direct input to the fibre-laser business</td><td class="n">$0.20–1.10</td><td class="n">$1.50–6.00</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">A17</td><td class="name">Hi-vis workwear to AS/NZS 4602.1</td><td><span class="chip pk">PK</span> <span class="chip cn">CN</span></td><td>Genuinely enormous demand — and genuinely dominated by Bisley, KingGee, Hard Yakka and the trade wholesalers</td><td class="n">$9–20</td><td class="n">$30–60</td><td><span class="verdict v-lo">Low</span></td></tr>
+      <tr><td class="rank">A18</td><td class="name">Pallet racking safety — column guards, mesh decks</td><td><span class="chip cn">CN</span></td><td>Warehousing compliance driver is real; but steel is heavy and freight eats the margin at your volume</td><td class="n">$18–70</td><td class="n">$55–190</td><td><span class="verdict v-lo">Low</span></td></tr>
+      <tr><td class="rank">A19</td><td class="name">DIN rail terminal blocks and accessories</td><td><span class="chip cn">CN</span></td><td>Consumed on every panel — but you are competing with Phoenix Contact, Weidmüller and NHP on a spec buyers won't deviate from</td><td class="n">$0.20–2.00</td><td class="n">$0.80–6.00</td><td><span class="verdict v-lo">Low</span></td></tr>
+      <tr><td class="rank">A20</td><td class="name">Industrial anti-fatigue matting</td><td><span class="chip cn">CN</span></td><td>Steady B2B repeat, but heavy and bulky: freight per dollar of value is among the worst on this list</td><td class="n">$22–60</td><td class="n">$70–180</td><td><span class="verdict v-lo">Low</span></td></tr>
+      <tr><td class="rank">A21</td><td class="name">Cable glands, gland kits, conduit fittings</td><td><span class="chip cn">CN</span></td><td>High repeat, low cube — but a pure commodity where the wholesalers buy at volumes you cannot approach</td><td class="n">$0.30–3.00</td><td class="n">$1.50–9.00</td><td><span class="verdict v-lo">Low</span></td></tr>
+      <tr><td class="rank">A22</td><td class="name">Stainless IP66 electrical enclosures, small format</td><td><span class="chip cn">CN</span></td><td>IPD, IP Enclosures, B&amp;R, Excalibur, AE Stainless all established; Chinese makers (E-Abel) already service Australia directly</td><td class="n">$45–160</td><td class="n">$140–450</td><td><span class="verdict v-lo">Low</span></td></tr>
+      <tr><td class="rank">A23</td><td class="name">Industrial castors &amp; wheels</td><td><span class="chip cn">CN</span></td><td>Textbook commodity: heavy, price-shopped, and already served by national distributors on standing stock</td><td class="n">$2–18</td><td class="n">$7–50</td><td><span class="verdict v-lo">Low</span></td></tr>
+      <tr><td class="rank">A24</td><td class="name">12V DC-DC chargers &amp; lithium accessories for 4WD / caravan</td><td><span class="chip cn">CN</span></td><td>AU caravan market growing ~7% CAGR to 2031 and lithium is now standard — but electrical compliance plus KickAss, Redarc and Enerdrive make this a knife fight</td><td class="n">$70–190</td><td class="n">$200–520</td><td><span class="verdict v-lo">Low</span></td></tr>
+      <tr><td class="rank">A25</td><td class="name">Human surgical &amp; dental instruments</td><td><span class="chip pk">PK</span></td><td>Sialkot's flagship export and 3.0% of Pakistan's shipments to Australia. Listed so you can see the trap explicitly, not because you should do it</td><td class="n">$3–30</td><td class="n">$20–200</td><td><span class="verdict v-lo">Avoid</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="footnote">Landed cost = FOB + freight + insurance + duty + Import Processing Charge, excluding recoverable GST.
+  Ranges are modelled from quoted FOB bands and current freight rates; treat them as a planning envelope, not a quote.
+  Selling prices are observed Australian retail bands from the retailers named in each row.</p>
+</section>
+
+<!-- ============================ GROUP B ============================ -->
+<section role="tabpanel" id="p-b" aria-labelledby="t-b" hidden>
+  <div class="sec-head">
+    <p class="eyebrow">Group B · 30 opportunities</p>
+    <h2 class="sec">Ahead of the crowd — or too early to matter</h2>
+  </div>
+
+  <div class="tldr">
+    <h4>How I hunted these</h4>
+    <ul>
+      <li><b>Demand signal:</b> measurable participation or installed-base growth in Australia, not TikTok view counts.</li>
+      <li><b>Supply gap:</b> the category is mature in the US, Europe, Japan or the Gulf but thinly served here — or Australians are importing it individually because no good local seller exists.</li>
+      <li><b>Pain point:</b> a customer complaint you can actually fix — “I can't get this here”, “the local version is a decade behind”, “nobody will do a small run”.</li>
+      <li><b>Reachability:</b> and then I killed anything you can't test for under about A$5,000.</li>
+    </ul>
+  </div>
+
+  <h3 class="sub">The two strongest emerging signals in Australia right now</h3>
+  <div class="grid2">
+    <div class="card">
+      <h4>🏓 Pickleball — the numbers are not hype</h4>
+      <p>AusPlay data released April 2025 put <b>over 155,000 Australians</b> actively participating — roughly
+      <b>70% growth in ten months</b>. Pickleball Australia has facilitated <b>220+ clubs</b> and passed
+      9,000 then 13,200 members. The 2025 Australian Open hosted an inaugural AO Pickleball Slam with a
+      A$100,000 prize pool on Melbourne Park's Court 3. <span class="chip v">Verified</span></p>
+      <p>Average participant age is <b>56</b>, and ~70% come from tennis. That is a demographic with money,
+      brand loyalty in the making, and a strong preference for buying from someone who answers the phone.
+      No dominant Australian paddle brand has emerged yet.</p>
+      <p><b>The play:</b> thermoformed carbon-face paddles from China at A$45–75 landed, retailing A$180–280,
+      sold to clubs as branded club paddles rather than to individuals via ads. Club sales are bulk,
+      repeat and ad-free.</p>
+    </div>
+    <div class="card">
+      <h4>🎾 Padel — smaller, faster, more capital-hungry</h4>
+      <p><b>154 courts across 33 clubs</b> as of May 2026, up from under 100 during 2025 — a ~40% year-on-year
+      increase in courts, with more than <b>90,000 Australians</b> having now played, up 50% year-on-year.
+      Ten new clubs opened in twelve months including South Australia's first. <span class="chip v">Verified</span></p>
+      <p><b>The catch:</b> padel rackets are carbon-fibre composites where Spanish and Chinese brands already
+      own mindshare, and 33 clubs is a customer list you can call in a week — which means so can everyone else.
+      Padel is the better <em>story</em>; pickleball is the better <em>business</em>, because the installed base
+      is 1.7× larger and the equipment is consumable.</p>
+    </div>
+  </div>
+
+  <h3 class="sub">All 30, honestly graded</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th class="n">#</th><th>Opportunity</th><th>Source</th><th>Why now — the signal</th><th>Why it might not work</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr><td class="rank">B1</td><td class="name">Pickleball paddles — club-branded bulk</td><td><span class="chip cn">CN</span></td><td>155,000 participants, ~70% growth in 10 months, 220+ clubs, no dominant AU brand</td><td>Paddle tech is commoditising fast; US brands will land here</td><td><span class="verdict v-hi">High</span></td></tr>
+      <tr><td class="rank">B2</td><td class="name">Test &amp; tag consumables — tags, labels, log systems</td><td><span class="chip cn">CN</span> <span class="chip au">AU</span></td><td>AS/NZS 3760 testing is legally driven and recurs on a fixed cycle; every tag is consumed and replaced</td><td>Low ticket; needs volume and a channel, not ads</td><td><span class="verdict v-hi">High</span></td></tr>
+      <tr><td class="rank">B3</td><td class="name">Foam tool-control inserts &amp; shadow boards</td><td><span class="chip au">AU</span></td><td>Mining, aviation and defence maintenance mandate tool accountability; currently made by a handful of shops with long lead times</td><td>Requires CNC and design time per job; not a catalogue product</td><td><span class="verdict v-hi">High</span></td></tr>
+      <tr><td class="rank">B4</td><td class="name">Sensory, AAC and adaptive aids for NDIS &amp; schools</td><td><span class="chip cn">CN</span></td><td>NDIS is an Australia-specific funding tailwind with no overseas analogue; buyers are funded, not price-led</td><td>Provider registration and audit expectations; slow procurement</td><td><span class="verdict v-hi">High</span></td></tr>
+      <tr><td class="rank">B5</td><td class="name">Classroom CO₂ / air quality monitors</td><td><span class="chip cn">CN</span></td><td>Post-pandemic ventilation focus; schools buy in fleets on a purchase order</td><td>Battery/plug versions trip electrical compliance; pick USB-C only</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">B6</td><td class="name">Padel rackets &amp; club consumables</td><td><span class="chip cn">CN</span></td><td>154 courts / 33 clubs, 40% YoY court growth, 90,000 players</td><td>Tiny addressable list; Spanish brands own the premium tier</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">B7</td><td class="name">Crash-tested dog car harnesses</td><td><span class="chip cn">CN</span></td><td>Certification is the moat — most of the market sells untested webbing</td><td>Real testing costs real money; cheap sellers will claim it anyway</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">B8</td><td class="name">Dog cooling vests &amp; mats, Australian-summer spec</td><td><span class="chip cn">CN</span></td><td>Genuinely climate-specific; northern-hemisphere product ranges under-serve it</td><td>Seasonal cashflow; six months of dead stock</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">B9</td><td class="name">Conduit rodders, cable pulling &amp; fishing tools</td><td><span class="chip cn">CN</span></td><td>48,800 electrical businesses; tradies replace these constantly and complain about local pricing</td><td>Klein, Jonard and C.K already own the trusted end</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">B10</td><td class="name">Commercial solar panel cleaning systems</td><td><span class="chip cn">CN</span></td><td>Australia's installed commercial solar base is now large enough to sustain a maintenance industry</td><td>You'd be selling to a service industry that is itself new and undercapitalised</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">B11</td><td class="name">Remote-worksite first aid &amp; trauma kits</td><td><span class="chip cn">CN</span></td><td>Mining and civil contractors must carry them; content lists are prescribed, which suits a kit assembler</td><td>Some contents are therapeutic goods — the kit is fine, the contents may not be</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">B12</td><td class="name">Thermal imaging attachments for electrical inspection</td><td><span class="chip cn">CN</span></td><td>Predictive maintenance is now standard practice in switchboard inspection</td><td>FLIR and Fluke dominate; buyers distrust unknown brands on measurement gear</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">B13</td><td class="name">Reusable silicone &amp; stainless food service for cafés</td><td><span class="chip cn">CN</span></td><td>Single-use plastics bans across most states created a forced substitution</td><td>Already crowded; cafés are the most price-sensitive B2B buyer in the country</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">B14</td><td class="name">Compostable &amp; moulded-fibre food packaging</td><td><span class="chip cn">CN</span></td><td>Same regulatory driver, larger volumes, genuinely repeat</td><td>Bulky, low-value-per-cbm, and BioPak owns the brand position</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">B15</td><td class="name">Microgreens &amp; fodder growing systems</td><td><span class="chip cn">CN</span></td><td>Small-scale commercial growers are multiplying; equipment is fragmented and poorly marketed</td><td>Anything touching seed or organic matter risks biosecurity attention</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">B16</td><td class="name">Beekeeping equipment &amp; protective suits</td><td><span class="chip pk">PK</span> <span class="chip cn">CN</span></td><td>Suits are a textile product Sialkot can make; hobby beekeeping continues to grow</td><td>Varroa response has disrupted the sector; hive components face biosecurity screening</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">B17</td><td class="name">Robot mower boundary &amp; installation accessories</td><td><span class="chip cn">CN</span></td><td>Installed base growing quickly; accessories are an aftermarket nobody owns</td><td>Wire-boundary models are being obsoleted by RTK navigation — a shrinking window</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">B18</td><td class="name">Padel &amp; pickleball court maintenance consumables</td><td><span class="chip cn">CN</span></td><td>Follows the court build-out with a 12–18 month lag; pure repeat</td><td>187 courts total is not yet a market</td><td><span class="verdict v-md">Medium</span></td></tr>
+      <tr><td class="rank">B19</td><td class="name">Home air quality monitors, consumer</td><td><span class="chip cn">CN</span></td><td>Bushfire smoke seasons drive genuine Australian-specific demand spikes</td><td>Ad-dependent B2C against Temu pricing; classic trap</td><td><span class="verdict v-lo">Low</span></td></tr>
+      <tr><td class="rank">B20</td><td class="name">Cold plunge chillers (the chiller, not the tub)</td><td><span class="chip cn">CN</span></td><td>AU/NZ cold plunge market forecast ~7.2% CAGR 2025–2035; the tub is commoditised but the chiller is the real purchase</td><td>Refrigerant handling, warranty exposure, and a plug — electrical compliance applies</td><td><span class="verdict v-lo">Low</span></td></tr>
+      <tr><td class="rank">B21</td><td class="name">Infrared sauna panels &amp; heaters</td><td><span class="chip cn">CN</span></td><td>Home recovery category converging with cold plunge; strong consumer interest</td><td>In-scope electrical equipment. EESS registration, RCM, responsible-supplier liability</td><td><span class="verdict v-lo">Low</span></td></tr>
+      <tr><td class="rank">B22</td><td class="name">Barrel sauna heaters &amp; digital controls</td><td><span class="chip cn">CN</span></td><td>Your electrical background genuinely helps here</td><td>High-wattage heating appliance — the worst-case compliance and product-liability category for a first-time importer</td><td><span class="verdict v-lo">Low</span></td></tr>
+      <tr><td class="rank">B23</td><td class="name">Bidet seats &amp; washlets</td><td><span class="chip cn">CN</span></td><td>Adoption climbing from a low base; Japan and Korea a decade ahead</td><td>WaterMark certification plus an electrical plug. Two regulators, one product</td><td><span class="verdict v-lo">Low</span></td></tr>
+      <tr><td class="rank">B24</td><td class="name">Heat pump hot water accessories</td><td><span class="chip cn">CN</span></td><td>Rebate-driven installation boom creates an accessory aftermarket</td><td>Installers buy through their existing wholesaler and will not switch for you</td><td><span class="verdict v-lo">Low</span></td></tr>
+      <tr><td class="rank">B25</td><td class="name">Livestock EID readers &amp; NLIS-compatible tags</td><td><span class="chip cn">CN</span></td><td>Sheep EID mandates rolling through the states create a hard deadline for producers</td><td>NLIS device accreditation is a formal process; non-accredited devices are unsaleable</td><td><span class="verdict v-lo">Low</span></td></tr>
+      <tr><td class="rank">B26</td><td class="name">Portable power stations</td><td><span class="chip cn">CN</span></td><td>Camping and blackout demand both real and growing</td><td>Lithium batteries are dangerous goods freight, plus EESS. Jackery and EcoFlow own it</td><td><span class="verdict v-lo">Low</span></td></tr>
+      <tr><td class="rank">B27</td><td class="name">Type 2 EV charging cables</td><td><span class="chip cn">CN</span></td><td>EV fleet growth is structural and cables are consumable and frequently lost</td><td>In-scope electrical equipment with a live safety failure mode. Not a beginner import</td><td><span class="verdict v-lo">Low</span></td></tr>
+      <tr><td class="rank">B28</td><td class="name">Portable EVSE / granny chargers</td><td><span class="chip cn">CN</span></td><td>Genuine gap in reliable mid-priced units</td><td>Highest regulatory risk on this entire list. Do not</td><td><span class="verdict v-lo">Low</span></td></tr>
+      <tr><td class="rank">B29</td><td class="name">Hydrogen-water bottles, red-light panels, wellness devices</td><td><span class="chip cn">CN</span></td><td>Loud social demand signal</td><td>Therapeutic claims invite TGA advertising enforcement; the category churns brands quarterly</td><td><span class="verdict v-lo">Low</span></td></tr>
+      <tr><td class="rank">B30</td><td class="name">Anything TikTok is currently selling</td><td><span class="chip cn">CN</span></td><td>Vertical demand curve</td><td>Vertical supply curve two weeks later. This row exists to be rejected</td><td><span class="verdict v-lo">Avoid</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="notebox">
+    <b>The pattern worth noticing.</b> Every Group B opportunity I graded <em>Low</em> failed for the same two
+    reasons: it had a plug on it, or it needed advertising to sell. Australia's electrical compliance regime
+    (EESS registration, RCM marking, responsible-supplier liability) is a genuine barrier — which is exactly
+    why it's a moat for someone with A$40k and electrical credentials, and a trap for someone with A$5k.
+    Come back to B20–B28 in two years.
+  </div>
+</section>
+
+<!-- ============================ GROUP C ============================ -->
+<section role="tabpanel" id="p-c" aria-labelledby="t-c" hidden>
+  <div class="sec-head">
+    <p class="eyebrow">Group C · 17 machine-based businesses</p>
+    <h2 class="sec">Buy a machine. Make the thing here.</h2>
+  </div>
+
+  <div class="tldr">
+    <h4>Why this section beat the import section</h4>
+    <ul>
+      <li><b>No MOQ.</b> An import forces you to buy 300 of something before you know whether one sells. A machine lets you make one.</li>
+      <li><b>Cash converts in days.</b> Import cycle: pay deposit → 30 days production → 30 days freight → customs → list → sell. That's 90+ days of dead capital. Machine cycle: order Tuesday, ship Thursday, paid Friday.</li>
+      <li><b>Turnaround is a moat Temu cannot copy.</b> Nobody in Shenzhen can get a custom label to a Perth switchboard builder tomorrow.</li>
+      <li><b>The regulatory load collapses.</b> No importer liability, no EESS, no ARTG, no biosecurity, no tariff classification argument.</li>
+      <li><b>The catch, stated plainly:</b> you are selling your hours. This is only a good business if you automate the quoting and the artwork — which is precisely the part you're equipped to do.</li>
+    </ul>
+  </div>
+
+  <h3 class="sub">Machine comparison — the whole field</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr>
+      <th class="n">#</th><th>Machine</th><th class="n">Cost</th><th>Product created &amp; who buys it</th>
+      <th class="n">Profit / unit</th><th class="n">Monthly capacity*</th><th class="n">Break-even</th><th>Difficulty</th><th class="n">Auto /10</th><th class="n">Score</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="rank">C1</td><td class="name">CO₂ laser, 60–70W</td><td class="n">A$2,800–4,200</td><td>Traffolyte switchboard labels, plant &amp; equipment ID, safety signage → electrical contractors, switchboard builders, facilities managers</td><td class="n">A$1.00–2.20/label<br>A$55–95/schedule</td><td class="n">~180 schedules</td><td class="n">8–14 wks</td><td>Low</td><td class="n">9</td><td class="n">87</td></tr>
+      <tr><td class="rank">C2</td><td class="name">Fibre laser, 20–30W</td><td class="n">A$3,200–3,700</td><td>316 stainless valve tags, asset plates, QR equipment tags → mining, water utilities, councils, food plants</td><td class="n">A$2.50–7.00/tag</td><td class="n">~4,000 tags</td><td class="n">10–16 wks</td><td>Low</td><td class="n">9</td><td class="n">82</td></tr>
+      <tr><td class="rank">C3</td><td class="name">Hollow-grind sharpening system</td><td class="n">A$2,000–4,000</td><td>Shear &amp; clipper-blade sharpening → 39,543 salons and 4,000+ groomers, on a 3–6 month cycle</td><td class="n">A$18–35/service</td><td class="n">~320 services</td><td class="n">6–10 wks</td><td>Medium — real skill</td><td class="n">4</td><td class="n">80</td></tr>
+      <tr><td class="rank">C4</td><td class="name">Fibre laser (second use)</td><td class="n">shared with C2</td><td>Brand-marking imported Sialkot shears and instruments with your own or a customer's mark → converts a commodity into your SKU</td><td class="n">adds A$25–60 to a A$130 shear</td><td class="n">unlimited</td><td class="n">n/a</td><td>Low</td><td class="n">8</td><td class="n">78</td></tr>
+      <tr><td class="rank">C5</td><td class="name">UV DTF / UV flatbed printer</td><td class="n">A$5,000–9,000</td><td>Branded drink bottles, tool cases, plaques, hard-surface transfers → promotional distributors in a A$1.34bn AU market</td><td class="n">A$4–22/piece</td><td class="n">~1,800 pieces</td><td class="n">14–22 wks</td><td>Medium</td><td class="n">7</td><td class="n">70</td></tr>
+      <tr><td class="rank">C6</td><td class="name">CNC router, 1200×1200</td><td class="n">A$6,000–14,000</td><td>Foam tool-control inserts, shadow boards → mining, aviation, defence maintenance teams</td><td class="n">A$120–450/board</td><td class="n">~70 boards</td><td class="n">16–26 wks</td><td>High</td><td class="n">5</td><td class="n">69</td></tr>
+      <tr><td class="rank">C7</td><td class="name">Multi-head embroidery</td><td class="n">A$12,000–25,000</td><td>Workwear and uniform logo decoration → trades, hospitality, schools, clubs</td><td class="n">A$6–14/garment</td><td class="n">~2,200 garments</td><td class="n">22–40 wks</td><td>Medium</td><td class="n">6</td><td class="n">65</td></tr>
+      <tr><td class="rank">C8</td><td class="name">DTF textile printer</td><td class="n">A$4,500–9,000</td><td>Full-colour transfers for workwear, club kit, event merch → same channel as C7 at lower ticket</td><td class="n">A$3–9/print</td><td class="n">~2,500 prints</td><td class="n">16–24 wks</td><td>Medium</td><td class="n">6</td><td class="n">63</td></tr>
+      <tr><td class="rank">C9</td><td class="name">Rotary / diamond-drag engraver</td><td class="n">A$2,500–6,000</td><td>Brass plaques, trophies, memorial plates, control-panel legends → trophy shops, funeral directors, councils</td><td class="n">A$12–70/piece</td><td class="n">~400 pieces</td><td class="n">12–18 wks</td><td>Low</td><td class="n">6</td><td class="n">61</td></tr>
+      <tr><td class="rank">C10</td><td class="name">Vinyl cutter / plotter</td><td class="n">A$900–3,500</td><td>Safety signage, vehicle lettering, floor marking → trades, warehouses, small fleets</td><td class="n">A$15–90/job</td><td class="n">~250 jobs</td><td class="n">5–9 wks</td><td>Low</td><td class="n">5</td><td class="n">57</td></tr>
+      <tr><td class="rank">C11</td><td class="name">CNC router (second use)</td><td class="n">shared with C6</td><td>Acrylic and aluminium composite signage, reception walls → shopfitters, architects</td><td class="n">A$90–600/job</td><td class="n">~50 jobs</td><td class="n">n/a</td><td>High</td><td class="n">4</td><td class="n">55</td></tr>
+      <tr><td class="rank">C12</td><td class="name">Heat press + sublimation</td><td class="n">A$1,200–3,500</td><td>Club and team kit, mugs, mousepads → sports clubs, schools</td><td class="n">A$8–25/piece</td><td class="n">~900 pieces</td><td class="n">6–12 wks</td><td>Low</td><td class="n">5</td><td class="n">54</td></tr>
+      <tr><td class="rank">C13</td><td class="name">Crimp press &amp; cable assembly bench</td><td class="n">A$3,000–8,000</td><td>Control panel wiring looms, custom cable assemblies → panel builders and OEMs facing 2–5 week lead times</td><td class="n">A$25–140/loom</td><td class="n">~200 looms</td><td class="n">14–24 wks</td><td>High — your domain</td><td class="n">3</td><td class="n">54</td></tr>
+      <tr><td class="rank">C14</td><td class="name">Industrial FDM 3D printer farm</td><td class="n">A$3,000–9,000</td><td>Jigs, fixtures, obsolete spare parts → maintenance teams and small manufacturers</td><td class="n">A$15–200/part</td><td class="n">~300 parts</td><td class="n">14–22 wks</td><td>Medium</td><td class="n">8</td><td class="n">53</td></tr>
+      <tr><td class="rank">C15</td><td class="name">Thermal transfer label printer</td><td class="n">A$1,500–4,000</td><td>Test-and-tag labels, asset labels, cable markers → electrical contractors and compliance firms</td><td class="n">A$0.10–0.60/label</td><td class="n">~40,000 labels</td><td class="n">10–20 wks</td><td>Low</td><td class="n">9</td><td class="n">52</td></tr>
+      <tr><td class="rank">C16</td><td class="name">Benchtop injection moulder / silicone casting</td><td class="n">A$4,000–15,000</td><td>Small custom polymer parts, gaskets, seals → niche OEMs</td><td class="n">A$1–20/part</td><td class="n">varies wildly</td><td class="n">30+ wks</td><td>Very high</td><td class="n">7</td><td class="n">46</td></tr>
+      <tr><td class="rank">C17</td><td class="name">Food processing / packaging equipment</td><td class="n">A$8,000–40,000</td><td>Repackaging, sealing, labelling → food SMEs</td><td class="n">thin</td><td class="n">n/a</td><td class="n">40+ wks</td><td>Very high</td><td class="n">6</td><td class="n">34</td></tr>
+    </tbody>
+    <caption>*Monthly capacity assumes 15 productive hours per week — 65 hours a month — at realistic run rates
+    including setup, artwork, admin and packing, which is where beginners consistently underestimate.
+    Machine prices are current Australian retail (OMTech AU, Prytec, Engraving Supplies) or landed-from-China estimates
+    where no local price was found. Break-even is on machine + setup only, at base-case volume.</caption>
+  </table>
+  </div>
+
+  <h3 class="sub">The import + local value-add model you asked about</h3>
+  <p class="prose">You specifically wanted opportunities shaped like
+  <b>import raw or semi-finished → add value in Australia → sell at a premium</b>. This is the strongest
+  structural idea in the whole document, and there are four versions of it worth your time:</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h4>1 · Blank tags → engraved tags</h4>
+      <p>Import 316 stainless and anodised aluminium blanks from China at <b>A$0.20–1.10</b> each under ChAFTA
+      at 0% duty. Laser-mark to order. Sell at <b>A$3–8</b>. The blank is a commodity; the engraving,
+      the same-week turnaround and the asset-register file you return with it are not.</p>
+      <p><b>Why they buy from you:</b> a mine's shutdown schedule doesn't wait six weeks for an overseas order.</p>
+    </div>
+    <div class="card">
+      <h4>2 · Sialkot shears → your brand</h4>
+      <p>Import unbranded 440C shears at <b>A$28–32</b> landed. Fibre-laser your mark, or the salon's own name,
+      onto the blade. Sell at <b>A$120–180</b> — and at the top of that range specifically <em>because</em> it's
+      personalised, which is the one thing an anonymous Amazon listing cannot offer.</p>
+      <p><b>Why they buy from you:</b> a groomer's shears are their identity. Engraving converts a tool into
+      a possession, and possessions don't get returned.</p>
+    </div>
+    <div class="card">
+      <h4>3 · Shears → sharpening → shears</h4>
+      <p>The sharpening service is the customer acquisition channel. Every salon and grooming shop in your
+      postcode has shears going blunt right now. You sharpen them for <b>A$25–35</b>, they meet you,
+      and six months later when they need a new pair you are the person they call.</p>
+      <p><b>Why they buy from you:</b> you have already handled their most expensive tool and given it back sharp.</p>
+    </div>
+    <div class="card">
+      <h4>4 · Components → control panel looms</h4>
+      <p>Import terminals, ferrules, glands and cable from China; assemble tested wiring looms to a customer's
+      schedule in Australia. Australian assemblers quote <b>2–3 weeks for prototypes and 4–5 weeks for volume</b>.
+      Undercut that and you have a business.</p>
+      <p><b>Why they buy from you:</b> lead time, and someone who reads a drawing correctly the first time.
+      This is the single best fit for your professional background — but it's labour-heavy and I've ranked it
+      accordingly, not romantically.</p>
+    </div>
+  </div>
+
+  <div class="notebox">
+    <b>The elegant part:</b> one A$3,600 fibre laser serves opportunities 1 and 2. One A$4,200 CO₂ laser serves
+    the traffolyte business. A A$2,500 sharpening setup serves opportunity 3 and feeds customers to opportunity 2.
+    The whole cluster is reachable inside your budget <em>sequentially</em>, funded by the previous step —
+    which is exactly how a low-risk operator should build.
+  </div>
+
+  <h3 class="sub">So: import finished goods, or buy a machine?</h3>
+  <p class="prose">You asked for an honest answer based on economics, so here it is without hedging.</p>
+  <p class="prose"><b>At A$5,000, the machine wins, and it isn't close.</b> Put A$5,000 into inventory and you
+  buy roughly 150–500 units of one SKU in one size and one colour, chosen before you have a single customer,
+  landing 90 days later, competing with sellers who bought 5,000. Put A$5,000 into a laser and you own
+  productive capacity that starts converting cash within a fortnight, carries no obsolescence risk, has a
+  resale value of maybe 50–60% if you quit, and gets you in front of business customers who pay on invoice
+  and reorder without being advertised to.</p>
+  <p class="prose"><b>At A$40,000+, the answer flips.</b> Importing scales without your hands. A machine business
+  scales by adding machines and people, which is a harder second act. The correct sequence for your situation
+  is therefore: <b>machine first to generate cashflow and a customer list, import second using that cashflow,
+  and combine them via the value-add model above.</b> Don't pick one. Order them.</p>
+  <p class="prose">The one honest caveat: a job shop is not passive. If you buy a laser and quote every job by
+  hand, you have bought yourself a second job at roughly A$60–90 an hour. That is not nothing — it clears your
+  A$1–3k target — but it does not become semi-passive until you automate the quoting and the artwork.
+  That automation is the actual asset. See the Top 3 section.</p>
+</section>
+
+<!-- ============================ SCORECARDS ============================ -->
+<section role="tabpanel" id="p-cards" aria-labelledby="t-cards" hidden>
+  <div class="sec-head">
+    <p class="eyebrow">Full scorecards · top 12</p>
+    <h2 class="sec">The ones worth this much detail</h2>
+  </div>
+  <p class="lede">Every field you asked for, on the twelve opportunities that survived screening.
+  The other 58 are scored on the leaderboard — producing a 25-field scorecard for an opportunity
+  I'm telling you to reject would be theatre, not analysis.</p>
+
+  <div class="plates">
+
+    <article class="plate">
+      <div class="plate-hd"><h4>Traffolyte switchboard labels &amp; industrial ID</h4><span class="rk">RANK 01</span></div>
+      <div class="plate-tags"><span class="chip">Group C · Machine</span><span class="chip au">Made in AU</span><span class="chip">B2B</span><span class="chip v">Demand verified</span></div>
+      <dl class="plate-grid">
+        <div><dt>AU demand evidence</dt><dd>9 / 10</dd></div>
+        <div><dt>Commercial proof</dt><dd>9 / 10</dd></div>
+        <div><dt>Low competition</dt><dd>5 / 10</dd></div>
+        <div><dt>Saturation risk</dt><dd>Medium</dd></div>
+        <div><dt>Starting capital</dt><dd>A$4,900</dd></div>
+        <div><dt>Material / unit</dt><dd>A$0.15–0.30</dd></div>
+        <div><dt>All-in cost / unit</dt><dd>A$0.35–0.55</dd></div>
+        <div><dt>Sells for</dt><dd>A$1.20–2.50</dd></div>
+        <div><dt>Gross margin</dt><dd>~82–88%</dd></div>
+        <div><dt>Net margin</dt><dd>~55–65%</dd></div>
+        <div><dt>Min order qty</dt><dd>None</dd></div>
+        <div><dt>Time to 1st sale</dt><dd>2–4 weeks</dd></div>
+        <div><dt>Inventory risk</dt><dd>Low</dd></div>
+        <div><dt>Regulatory risk</dt><dd>Low</dd></div>
+        <div><dt>Shipping difficulty</dt><dd>Low</dd></div>
+        <div><dt>Return risk</dt><dd>Low</dd></div>
+        <div><dt>Automation</dt><dd>9 / 10</dd></div>
+        <div><dt>Repeat purchase</dt><dd>9 / 10</dd></div>
+        <div><dt>Differentiation</dt><dd>7 / 10</dd></div>
+        <div><dt>Long-term</dt><dd>8 / 10</dd></div>
+      </dl>
+      <div class="plate-body">
+        <p class="win"><b class="lbl">Why it could win</b>48,800 electrical services businesses in Australia, every one of which
+        labels every board it builds. Incumbents (Vernect, Engratek, Wiremarkers, Engraving Supplies, Instant Engraving)
+        are regional and quote manually. Your unfair advantage is that you can read a panel schedule and build the
+        pipeline that turns an uploaded PDF into a priced quote and a ready engraving file — nobody else in this
+        category has both halves of that skill set.</p>
+        <p class="fail"><b class="lbl">Why it could fail</b>It is a service business, and services need selling. If you will not
+        cold-call switchboard builders and wholesalers, this becomes a laser gathering dust in your garage. The
+        category is also genuinely competitive — “less competition” scores only 5/10 — so you win on turnaround,
+        accuracy and automation, never on price.</p>
+      </div>
+      <div class="plate-ft"><span class="verdict v-hi">🟢 High potential</span><span class="total">87<small>/100</small></span></div>
+    </article>
+
+    <article class="plate">
+      <div class="plate-hd"><h4>Pet grooming shears — private label</h4><span class="rk">RANK 02</span></div>
+      <div class="plate-tags"><span class="chip">Group A · Proven import</span><span class="chip pk">Sialkot</span><span class="chip">B2C + B2B</span><span class="chip v">Demand verified</span></div>
+      <dl class="plate-grid">
+        <div><dt>AU demand evidence</dt><dd>8 / 10</dd></div>
+        <div><dt>Commercial proof</dt><dd>8 / 10</dd></div>
+        <div><dt>Low competition</dt><dd>6 / 10</dd></div>
+        <div><dt>Saturation risk</dt><dd>Medium</dd></div>
+        <div><dt>Starting capital</dt><dd>A$3,800</dd></div>
+        <div><dt>FOB cost</dt><dd>A$14–25</dd></div>
+        <div><dt>Landed cost</dt><dd>A$28–32</dd></div>
+        <div><dt>Sells for</dt><dd>A$120–180</dd></div>
+        <div><dt>Gross margin</dt><dd>~72–78%</dd></div>
+        <div><dt>Net margin</dt><dd>~38–48%</dd></div>
+        <div><dt>Min order qty</dt><dd>50–100 pairs</dd></div>
+        <div><dt>Time to 1st sale</dt><dd>8–12 weeks</dd></div>
+        <div><dt>Inventory risk</dt><dd>Medium</dd></div>
+        <div><dt>Regulatory risk</dt><dd>Low</dd></div>
+        <div><dt>Shipping difficulty</dt><dd>Low</dd></div>
+        <div><dt>Return risk</dt><dd>Low–Med</dd></div>
+        <div><dt>Automation</dt><dd>7 / 10</dd></div>
+        <div><dt>Repeat purchase</dt><dd>6 / 10</dd></div>
+        <div><dt>Differentiation</dt><dd>8 / 10</dd></div>
+        <div><dt>Long-term</dt><dd>8 / 10</dd></div>
+      </dl>
+      <div class="plate-body">
+        <p class="win"><b class="lbl">Why it could win</b>4,000+ Australian dog groomers, served by dedicated specialist retailers —
+        proof the channel exists and pays premium prices. Sialkot factories quote private label at MOQs you can afford,
+        in the same Japanese J2 and 440C steel the premium brands use. Zero TGA exposure. Freight cube is almost nil,
+        so landed cost is dominated by product, not logistics. And your family can inspect before it ships, which is
+        the exact failure point that kills most first-time importers.</p>
+        <p class="fail"><b class="lbl">Why it could fail</b>Quality variance in Sialkot is real and brutal — the gap between an
+        excellent workshop and a bad one making the "same" 440C shear is enormous, and a bad batch of 100 shears is
+        A$3,000 of scrap. Established groomer brands (Matsui, Kamisori, Artero) have lifetime-warranty positioning
+        you can't match on day one. You must arrive with a reason to exist beyond being cheaper.</p>
+      </div>
+      <div class="plate-ft"><span class="verdict v-hi">🟢 High potential</span><span class="total">83<small>/100</small></span></div>
+    </article>
+
+    <article class="plate">
+      <div class="plate-hd"><h4>Stainless valve, pipe &amp; asset tags</h4><span class="rk">RANK 03</span></div>
+      <div class="plate-tags"><span class="chip">Group C · Machine</span><span class="chip au">Made in AU</span><span class="chip">B2B</span><span class="chip v">Demand verified</span></div>
+      <dl class="plate-grid">
+        <div><dt>AU demand evidence</dt><dd>8 / 10</dd></div>
+        <div><dt>Commercial proof</dt><dd>8 / 10</dd></div>
+        <div><dt>Low competition</dt><dd>6 / 10</dd></div>
+        <div><dt>Saturation risk</dt><dd>Medium</dd></div>
+        <div><dt>Starting capital</dt><dd>A$4,300</dd></div>
+        <div><dt>Blank cost</dt><dd>A$0.20–1.10</dd></div>
+        <div><dt>All-in cost</dt><dd>A$0.45–1.60</dd></div>
+        <div><dt>Sells for</dt><dd>A$3.00–8.00</dd></div>
+        <div><dt>Gross margin</dt><dd>~75–85%</dd></div>
+        <div><dt>Net margin</dt><dd>~50–60%</dd></div>
+        <div><dt>Min order qty</dt><dd>500 blanks</dd></div>
+        <div><dt>Time to 1st sale</dt><dd>4–8 weeks</dd></div>
+        <div><dt>Inventory risk</dt><dd>Low</dd></div>
+        <div><dt>Regulatory risk</dt><dd>Low</dd></div>
+        <div><dt>Shipping difficulty</dt><dd>Low</dd></div>
+        <div><dt>Return risk</dt><dd>Low</dd></div>
+        <div><dt>Automation</dt><dd>9 / 10</dd></div>
+        <div><dt>Repeat purchase</dt><dd>8 / 10</dd></div>
+        <div><dt>Differentiation</dt><dd>6 / 10</dd></div>
+        <div><dt>Long-term</dt><dd>8 / 10</dd></div>
+      </dl>
+      <div class="plate-body">
+        <p class="win"><b class="lbl">Why it could win</b>Mining, water utilities, councils and food plants specify permanent
+        marking on 316 stainless — a spec that structurally excludes printed labels and every cheap import.
+        Established players (Plastic Tags Australia, BKLD, Inscribe, TUFFA, MapTrack) prove the demand and the price
+        point. Orders arrive as spreadsheets of a few hundred tags, which is exactly the shape of work that
+        automates well. Blank stainless is 0% duty from China and stores in a shoebox.</p>
+        <p class="fail"><b class="lbl">Why it could fail</b>Procurement in mining and utilities is slow, vendor-panelled and
+        insurance-conscious; a sole trader with a garage laser may not get past the supplier onboarding form.
+        The realistic entry is via the contractors and shutdown crews who buy on a credit card, not the asset owner.
+        Expect a longer sales cycle than the traffolyte business — this is opportunity #2, not #1.</p>
+      </div>
+      <div class="plate-ft"><span class="verdict v-hi">🟢 High potential</span><span class="total">82<small>/100</small></span></div>
+    </article>
+
+    <article class="plate">
+      <div class="plate-hd"><h4>Blade &amp; clipper sharpening service</h4><span class="rk">RANK 04</span></div>
+      <div class="plate-tags"><span class="chip">Group C · Machine</span><span class="chip au">Local service</span><span class="chip">B2B</span><span class="chip e">Economics modelled</span></div>
+      <dl class="plate-grid">
+        <div><dt>AU demand evidence</dt><dd>8 / 10</dd></div>
+        <div><dt>Commercial proof</dt><dd>7 / 10</dd></div>
+        <div><dt>Low competition</dt><dd>7 / 10</dd></div>
+        <div><dt>Saturation risk</dt><dd>Low</dd></div>
+        <div><dt>Starting capital</dt><dd>A$2,000</dd></div>
+        <div><dt>Cost / service</dt><dd>A$1–3</dd></div>
+        <div><dt>All-in cost</dt><dd>A$4–8</dd></div>
+        <div><dt>Sells for</dt><dd>A$25–35</dd></div>
+        <div><dt>Gross margin</dt><dd>~85–90%</dd></div>
+        <div><dt>Net margin</dt><dd>~60–70%</dd></div>
+        <div><dt>Min order qty</dt><dd>None</dd></div>
+        <div><dt>Time to 1st sale</dt><dd>1–2 weeks</dd></div>
+        <div><dt>Inventory risk</dt><dd>None</dd></div>
+        <div><dt>Regulatory risk</dt><dd>Low</dd></div>
+        <div><dt>Shipping difficulty</dt><dd>Low</dd></div>
+        <div><dt>Return risk</dt><dd>Medium</dd></div>
+        <div><dt>Automation</dt><dd>4 / 10</dd></div>
+        <div><dt>Repeat purchase</dt><dd>10 / 10</dd></div>
+        <div><dt>Differentiation</dt><dd>7 / 10</dd></div>
+        <div><dt>Long-term</dt><dd>7 / 10</dd></div>
+      </dl>
+      <div class="plate-body">
+        <p class="win"><b class="lbl">Why it could win</b>The cheapest genuine test on this entire list — A$2,000 and revenue
+        inside a fortnight. Demand is guaranteed by metallurgy: steel dulls, and 39,543 hairdressing and beauty
+        businesses plus 4,000+ groomers all own shears that need servicing 2–4 times a year. Repeat purchase scores a
+        perfect 10 because the customer physically cannot avoid coming back. Crucially, it builds the exact customer
+        list that the Sialkot shear business needs — this is a customer-acquisition engine disguised as a service.</p>
+        <p class="fail"><b class="lbl">Why it could fail</b>It is a genuine craft skill, not a button. Ruin a stylist's A$700
+        Japanese shears and you have bought them, plus lost the salon. Budget 20–30 hours of practice on cheap
+        second-hand shears before you touch a paying customer's. It also has the worst automation score of the top
+        four — this will never run without your hands on it, which is precisely why it's the on-ramp and not the
+        destination.</p>
+      </div>
+      <div class="plate-ft"><span class="verdict v-hi">🟢 High potential</span><span class="total">80<small>/100</small></span></div>
+    </article>
+
+    <article class="plate">
+      <div class="plate-hd"><h4>Farrier tools — hoof nippers, knives, clinchers</h4><span class="rk">RANK 06</span></div>
+      <div class="plate-tags"><span class="chip">Group A · Proven import</span><span class="chip pk">Sialkot</span><span class="chip">B2C + B2B</span><span class="chip v">Supply verified</span></div>
+      <dl class="plate-grid">
+        <div><dt>AU demand evidence</dt><dd>7 / 10</dd></div>
+        <div><dt>Commercial proof</dt><dd>7 / 10</dd></div>
+        <div><dt>Low competition</dt><dd>8 / 10</dd></div>
+        <div><dt>Saturation risk</dt><dd>Low</dd></div>
+        <div><dt>Starting capital</dt><dd>A$3,500</dd></div>
+        <div><dt>FOB cost</dt><dd>A$14–30</dd></div>
+        <div><dt>Landed cost</dt><dd>A$22–40</dd></div>
+        <div><dt>Sells for</dt><dd>A$90–190</dd></div>
+        <div><dt>Gross margin</dt><dd>~70–78%</dd></div>
+        <div><dt>Net margin</dt><dd>~40–50%</dd></div>
+        <div><dt>Min order qty</dt><dd>50–100 units</dd></div>
+        <div><dt>Time to 1st sale</dt><dd>8–12 weeks</dd></div>
+        <div><dt>Inventory risk</dt><dd>Medium</dd></div>
+        <div><dt>Regulatory risk</dt><dd>Low</dd></div>
+        <div><dt>Shipping difficulty</dt><dd>Low</dd></div>
+        <div><dt>Return risk</dt><dd>Low</dd></div>
+        <div><dt>Automation</dt><dd>6 / 10</dd></div>
+        <div><dt>Repeat purchase</dt><dd>7 / 10</dd></div>
+        <div><dt>Differentiation</dt><dd>7 / 10</dd></div>
+        <div><dt>Long-term</dt><dd>7 / 10</dd></div>
+      </dl>
+      <div class="plate-body">
+        <p class="win"><b class="lbl">Why it could win</b>Sialkot has dedicated farrier-tool exporters offering private label —
+        this is a real specialisation, not a factory dabbling. The Australian buyer is a working professional who
+        replaces nippers and knives on wear, buys on recommendation rather than price, and is reached through a small
+        number of trade channels and Facebook groups rather than paid advertising. Competition scores 8/10 because
+        almost nobody is fighting over this niche.</p>
+        <p class="fail"><b class="lbl">Why it could fail</b>Farriers are a small, conservative, tightly networked trade.
+        One batch with soft steel and the word travels through the entire east coast in a month. Heat treatment is
+        the whole product here, and it is exactly the specification a distant buyer cannot verify from photos —
+        which is why this only works with your family doing physical QC, and why I'd hardness-test a sample
+        independently before committing.</p>
+      </div>
+      <div class="plate-ft"><span class="verdict v-hi">🟢 High potential</span><span class="total">75<small>/100</small></span></div>
+    </article>
+
+    <article class="plate">
+      <div class="plate-hd"><h4>Veterinary livestock instruments</h4><span class="rk">RANK 07</span></div>
+      <div class="plate-tags"><span class="chip">Group A · Proven import</span><span class="chip pk">Sialkot</span><span class="chip">B2B</span><span class="chip v">Channel verified</span></div>
+      <dl class="plate-grid">
+        <div><dt>AU demand evidence</dt><dd>8 / 10</dd></div>
+        <div><dt>Commercial proof</dt><dd>7 / 10</dd></div>
+        <div><dt>Low competition</dt><dd>7 / 10</dd></div>
+        <div><dt>Saturation risk</dt><dd>Low</dd></div>
+        <div><dt>Starting capital</dt><dd>A$3,500</dd></div>
+        <div><dt>FOB cost</dt><dd>A$6–28</dd></div>
+        <div><dt>Landed cost</dt><dd>A$12–45</dd></div>
+        <div><dt>Sells for</dt><dd>A$45–160</dd></div>
+        <div><dt>Gross margin</dt><dd>~68–75%</dd></div>
+        <div><dt>Net margin</dt><dd>~35–45%</dd></div>
+        <div><dt>Min order qty</dt><dd>100 units</dd></div>
+        <div><dt>Time to 1st sale</dt><dd>10–14 weeks</dd></div>
+        <div><dt>Inventory risk</dt><dd>Medium</dd></div>
+        <div><dt>Regulatory risk</dt><dd>Low</dd></div>
+        <div><dt>Shipping difficulty</dt><dd>Low</dd></div>
+        <div><dt>Return risk</dt><dd>Low</dd></div>
+        <div><dt>Automation</dt><dd>6 / 10</dd></div>
+        <div><dt>Repeat purchase</dt><dd>7 / 10</dd></div>
+        <div><dt>Differentiation</dt><dd>6 / 10</dd></div>
+        <div><dt>Long-term</dt><dd>7 / 10</dd></div>
+      </dl>
+      <div class="plate-body">
+        <p class="win"><b class="lbl">Why it could win</b>The regulatory arbitrage is the entire thesis: instruments for animal use
+        sit outside the TGA medical-device regime that makes the human equivalent unviable for you. Australia's
+        cattle and sheep sector is enormous and the channel is already visibly importing — Bainbridge, Aussie Vet
+        Products, vet-n-pet DIRECT, Austral Ag and FarmShop all stock this category. Rural resellers order on
+        purchase orders, in cartons, on repeat.</p>
+        <p class="fail"><b class="lbl">Why it could fail</b>You are selling into a distribution structure that already exists,
+        which means your realistic path is wholesale at wholesale margins, not direct at retail margins. Rural
+        stockists are relationship-driven and slow to switch. And while the instruments are unregulated, anything
+        adjacent that is a chemical or a drench is APVMA territory — stay strictly on the steel.</p>
+      </div>
+      <div class="plate-ft"><span class="verdict v-hi">🟢 High potential</span><span class="total">74<small>/100</small></span></div>
+    </article>
+
+    <article class="plate">
+      <div class="plate-hd"><h4>Leather welding &amp; rigger gloves</h4><span class="rk">RANK 08</span></div>
+      <div class="plate-tags"><span class="chip">Group A · Proven import</span><span class="chip pk">Sialkot</span><span class="chip">B2B</span><span class="chip v">Market verified</span></div>
+      <dl class="plate-grid">
+        <div><dt>AU demand evidence</dt><dd>9 / 10</dd></div>
+        <div><dt>Commercial proof</dt><dd>9 / 10</dd></div>
+        <div><dt>Low competition</dt><dd>4 / 10</dd></div>
+        <div><dt>Saturation risk</dt><dd>High</dd></div>
+        <div><dt>Starting capital</dt><dd>A$4,200</dd></div>
+        <div><dt>FOB cost</dt><dd>A$4.50–8.00</dd></div>
+        <div><dt>Landed cost</dt><dd>A$7.00–9.00</dd></div>
+        <div><dt>Sells for</dt><dd>A$22–28 retail<br>A$14–18 trade</dd></div>
+        <div><dt>Gross margin</dt><dd>~48–62%</dd></div>
+        <div><dt>Net margin</dt><dd>~22–32%</dd></div>
+        <div><dt>Min order qty</dt><dd>300–500 pairs</dd></div>
+        <div><dt>Time to 1st sale</dt><dd>10–14 weeks</dd></div>
+        <div><dt>Inventory risk</dt><dd>Medium</dd></div>
+        <div><dt>Regulatory risk</dt><dd>Medium</dd></div>
+        <div><dt>Shipping difficulty</dt><dd>Medium</dd></div>
+        <div><dt>Return risk</dt><dd>Low</dd></div>
+        <div><dt>Automation</dt><dd>7 / 10</dd></div>
+        <div><dt>Repeat purchase</dt><dd>10 / 10</dd></div>
+        <div><dt>Differentiation</dt><dd>4 / 10</dd></div>
+        <div><dt>Long-term</dt><dd>7 / 10</dd></div>
+      </dl>
+      <div class="plate-body">
+        <p class="win"><b class="lbl">Why it could win</b>The best repeat-purchase profile on the list — a boilermaker destroys a
+        pair a fortnight, and the buyer is a purchasing officer replenishing a bin, not a consumer deciding.
+        Australia's industrial safety glove market runs US$212m (2024) toward US$406m (2033) at ~7.5% CAGR.
+        Sialkot tanneries already ship EN388/CE/ISO9001 certified product into Australia audit-ready, which
+        removes the compliance objection before you make it.</p>
+        <p class="fail"><b class="lbl">Why it could fail</b>Differentiation scores 4/10 and that is the whole problem — a glove
+        is a glove, and you're pricing against Blackwoods, Bunnings, Total Tools and national safety wholesalers
+        who buy containers. Margin is the thinnest of the top eight. This is a volume game, and volume needs capital
+        you don't have yet. Correct as product #2 or #3 funded by cashflow; wrong as your opening move.</p>
+      </div>
+      <div class="plate-ft"><span class="verdict v-md">🟡 Medium potential</span><span class="total">73<small>/100</small></span></div>
+    </article>
+
+    <article class="plate">
+      <div class="plate-hd"><h4>Cable markers, ferrules &amp; heatshrink ID</h4><span class="rk">RANK 05</span></div>
+      <div class="plate-tags"><span class="chip">Group A · Proven import</span><span class="chip cn">China</span><span class="chip">B2B</span><span class="chip v">Channel verified</span></div>
+      <dl class="plate-grid">
+        <div><dt>AU demand evidence</dt><dd>9 / 10</dd></div>
+        <div><dt>Commercial proof</dt><dd>8 / 10</dd></div>
+        <div><dt>Low competition</dt><dd>5 / 10</dd></div>
+        <div><dt>Saturation risk</dt><dd>Medium</dd></div>
+        <div><dt>Starting capital</dt><dd>A$2,500</dd></div>
+        <div><dt>FOB cost</dt><dd>A$0.01–0.25</dd></div>
+        <div><dt>Landed cost</dt><dd>A$0.02–0.30</dd></div>
+        <div><dt>Sells for</dt><dd>A$0.15–1.20</dd></div>
+        <div><dt>Gross margin</dt><dd>~70–80%</dd></div>
+        <div><dt>Net margin</dt><dd>~35–45%</dd></div>
+        <div><dt>Min order qty</dt><dd>5,000+ pieces</dd></div>
+        <div><dt>Time to 1st sale</dt><dd>8–12 weeks</dd></div>
+        <div><dt>Inventory risk</dt><dd>Low</dd></div>
+        <div><dt>Regulatory risk</dt><dd>Low</dd></div>
+        <div><dt>Shipping difficulty</dt><dd>Low</dd></div>
+        <div><dt>Return risk</dt><dd>Low</dd></div>
+        <div><dt>Automation</dt><dd>8 / 10</dd></div>
+        <div><dt>Repeat purchase</dt><dd>9 / 10</dd></div>
+        <div><dt>Differentiation</dt><dd>4 / 10</dd></div>
+        <div><dt>Long-term</dt><dd>7 / 10</dd></div>
+      </dl>
+      <div class="plate-body">
+        <p class="win"><b class="lbl">Why it could win</b>This is the natural attachment sale to the label business — identical
+        customer, identical order, one invoice. ChAFTA puts duty at 0%, the cube is trivial so freight barely
+        registers, and the product cannot expire or go out of fashion. Once you are already the person a
+        switchboard builder emails for labels, adding markers and ferrules to that email costs you nothing
+        in customer acquisition, which is where all the money usually goes.</p>
+        <p class="fail"><b class="lbl">Why it could fail</b>Standalone, this is a bad business — a pure commodity where
+        wholesalers buy at volumes you cannot approach and buyers have no reason to switch. Its score depends
+        almost entirely on it riding on top of an existing customer relationship. If the label business doesn't
+        happen, delete this row.</p>
+      </div>
+      <div class="plate-ft"><span class="verdict v-md">🟡 Medium potential</span><span class="total">76<small>/100</small></span></div>
+    </article>
+
+    <article class="plate">
+      <div class="plate-hd"><h4>Pickleball paddles — club-branded</h4><span class="rk">RANK 09</span></div>
+      <div class="plate-tags"><span class="chip">Group B · Emerging</span><span class="chip cn">China</span><span class="chip">B2B + B2C</span><span class="chip v">Growth verified</span></div>
+      <dl class="plate-grid">
+        <div><dt>AU demand evidence</dt><dd>8 / 10</dd></div>
+        <div><dt>Commercial proof</dt><dd>6 / 10</dd></div>
+        <div><dt>Low competition</dt><dd>7 / 10</dd></div>
+        <div><dt>Saturation risk</dt><dd>Medium</dd></div>
+        <div><dt>Starting capital</dt><dd>A$4,500</dd></div>
+        <div><dt>FOB cost</dt><dd>A$32–55</dd></div>
+        <div><dt>Landed cost</dt><dd>A$45–75</dd></div>
+        <div><dt>Sells for</dt><dd>A$180–280</dd></div>
+        <div><dt>Gross margin</dt><dd>~68–75%</dd></div>
+        <div><dt>Net margin</dt><dd>~35–45%</dd></div>
+        <div><dt>Min order qty</dt><dd>50–100 units</dd></div>
+        <div><dt>Time to 1st sale</dt><dd>10–14 weeks</dd></div>
+        <div><dt>Inventory risk</dt><dd>Medium–High</dd></div>
+        <div><dt>Regulatory risk</dt><dd>Low</dd></div>
+        <div><dt>Shipping difficulty</dt><dd>Low</dd></div>
+        <div><dt>Return risk</dt><dd>Medium</dd></div>
+        <div><dt>Automation</dt><dd>7 / 10</dd></div>
+        <div><dt>Repeat purchase</dt><dd>6 / 10</dd></div>
+        <div><dt>Differentiation</dt><dd>6 / 10</dd></div>
+        <div><dt>Long-term</dt><dd>7 / 10</dd></div>
+      </dl>
+      <div class="plate-body">
+        <p class="win"><b class="lbl">Why it could win</b>The cleanest growth signal in Australian consumer sport: 155,000
+        participants per AusPlay (April 2025), roughly 70% growth in ten months, 220+ clubs, and inclusion at the
+        2025 Australian Open. Average player age of 56 means disposable income and low price sensitivity. Selling
+        club-branded paddles in bulk to those 220 clubs sidesteps advertising entirely — and the same laser from
+        opportunity #1 can personalise them.</p>
+        <p class="fail"><b class="lbl">Why it could fail</b>Paddle technology is commoditising fast and US brands with real
+        budgets will land here. Inventory risk is the highest in the top ten: paddles are bulky relative to value,
+        and 100 unsold units is A$5,000 sitting in your garage in a category that could cool. Sell to clubs on
+        deposit before you order, or don't order.</p>
+      </div>
+      <div class="plate-ft"><span class="verdict v-md">🟡 Medium potential</span><span class="total">72<small>/100</small></span></div>
+    </article>
+
+    <article class="plate">
+      <div class="plate-hd"><h4>Boxing &amp; MMA gear — gym private label</h4><span class="rk">RANK 11</span></div>
+      <div class="plate-tags"><span class="chip">Group A · Proven import</span><span class="chip pk">Sialkot</span><span class="chip">B2B</span><span class="chip v">Supply verified</span></div>
+      <dl class="plate-grid">
+        <div><dt>AU demand evidence</dt><dd>7 / 10</dd></div>
+        <div><dt>Commercial proof</dt><dd>7 / 10</dd></div>
+        <div><dt>Low competition</dt><dd>6 / 10</dd></div>
+        <div><dt>Saturation risk</dt><dd>Medium</dd></div>
+        <div><dt>Starting capital</dt><dd>A$4,000</dd></div>
+        <div><dt>FOB cost</dt><dd>A$20–35</dd></div>
+        <div><dt>Landed cost</dt><dd>A$28–45</dd></div>
+        <div><dt>Sells for</dt><dd>A$110–180</dd></div>
+        <div><dt>Gross margin</dt><dd>~65–74%</dd></div>
+        <div><dt>Net margin</dt><dd>~32–42%</dd></div>
+        <div><dt>Min order qty</dt><dd>25–50 pairs</dd></div>
+        <div><dt>Time to 1st sale</dt><dd>10–16 weeks</dd></div>
+        <div><dt>Inventory risk</dt><dd>Low if pre-sold</dd></div>
+        <div><dt>Regulatory risk</dt><dd>Low</dd></div>
+        <div><dt>Shipping difficulty</dt><dd>Medium</dd></div>
+        <div><dt>Return risk</dt><dd>Medium</dd></div>
+        <div><dt>Automation</dt><dd>5 / 10</dd></div>
+        <div><dt>Repeat purchase</dt><dd>7 / 10</dd></div>
+        <div><dt>Differentiation</dt><dd>7 / 10</dd></div>
+        <div><dt>Long-term</dt><dd>6 / 10</dd></div>
+      </dl>
+      <div class="plate-body">
+        <p class="win"><b class="lbl">Why it could win</b>MOQs of 25–50 pairs with embroidery and sublimation included mean a
+        gym can order its own branded gloves affordably — and gyms want this, because branded gear is both revenue
+        and marketing for them. You sell to the gym owner, they sell to 300 members. Production runs 4–6 weeks.
+        Because each order is pre-sold to a specific gym, inventory risk collapses to near zero, which is unusual
+        for an import.</p>
+        <p class="fail"><b class="lbl">Why it could fail</b>It's project revenue, not recurring — each gym orders once or twice
+        a year and you start again. Sizing and fit complaints are real. And glove quality claims are hard to verify:
+        padding density and stitching are where cheap factories cut, and the failure shows up as an injured member,
+        which is a conversation you never want to have.</p>
+      </div>
+      <div class="plate-ft"><span class="verdict v-md">🟡 Medium potential</span><span class="total">70<small>/100</small></span></div>
+    </article>
+
+    <article class="plate">
+      <div class="plate-hd"><h4>Hairdressing &amp; barber scissors</h4><span class="rk">RANK 16</span></div>
+      <div class="plate-tags"><span class="chip">Group A · Proven import</span><span class="chip pk">Sialkot</span><span class="chip a">Crowded</span></div>
+      <dl class="plate-grid">
+        <div><dt>AU demand evidence</dt><dd>10 / 10</dd></div>
+        <div><dt>Commercial proof</dt><dd>10 / 10</dd></div>
+        <div><dt>Low competition</dt><dd>2 / 10</dd></div>
+        <div><dt>Saturation risk</dt><dd>High</dd></div>
+        <div><dt>Starting capital</dt><dd>A$4,000</dd></div>
+        <div><dt>FOB cost</dt><dd>A$18–35</dd></div>
+        <div><dt>Landed cost</dt><dd>A$25–45</dd></div>
+        <div><dt>Sells for</dt><dd>A$150–400</dd></div>
+        <div><dt>Gross margin</dt><dd>~72–82%</dd></div>
+        <div><dt>Net margin</dt><dd>~25–35%</dd></div>
+        <div><dt>Min order qty</dt><dd>50–100 pairs</dd></div>
+        <div><dt>Time to 1st sale</dt><dd>10–14 weeks</dd></div>
+        <div><dt>Inventory risk</dt><dd>High</dd></div>
+        <div><dt>Regulatory risk</dt><dd>Low</dd></div>
+        <div><dt>Shipping difficulty</dt><dd>Low</dd></div>
+        <div><dt>Return risk</dt><dd>Medium</dd></div>
+        <div><dt>Automation</dt><dd>7 / 10</dd></div>
+        <div><dt>Repeat purchase</dt><dd>5 / 10</dd></div>
+        <div><dt>Differentiation</dt><dd>3 / 10</dd></div>
+        <div><dt>Long-term</dt><dd>5 / 10</dd></div>
+      </dl>
+      <div class="plate-body">
+        <p class="win"><b class="lbl">Why it could win</b>The demand evidence is the strongest in the document — 39,543
+        hairdressing and beauty businesses, a A$12.4bn market, and a whole shelf of Australian companies
+        (iCandy since 2012, Japan Scissors, Scissor Tech AU, K5 International, Salon Direct, AMR) visibly
+        making a living doing exactly this. It absolutely works as a business model. Sialkot supply is
+        world-class and available at low MOQ with private label.</p>
+        <p class="fail"><b class="lbl">Why it could fail</b>It works so well that everyone already does it. Competition scores
+        2/10 and differentiation 3/10 — the worst pair in the top twenty. Every Australian brand here is telling the
+        same story about Japanese steel, and the incumbents have a decade of stylist relationships and warranty
+        reputation. This is the textbook example of demand evidence being necessary but nowhere near sufficient.
+        <b>Go grooming instead</b> — same factory, same steel, a fraction of the competition.</p>
+      </div>
+      <div class="plate-ft"><span class="verdict v-md">🟡 Medium — only via grooming</span><span class="total">66<small>/100</small></span></div>
+    </article>
+
+    <article class="plate">
+      <div class="plate-hd"><h4>Human surgical &amp; dental instruments</h4><span class="rk">RANK 67</span></div>
+      <div class="plate-tags"><span class="chip">Group A</span><span class="chip pk">Sialkot</span><span class="chip a">Do not proceed</span></div>
+      <dl class="plate-grid">
+        <div><dt>AU demand evidence</dt><dd>9 / 10</dd></div>
+        <div><dt>Commercial proof</dt><dd>8 / 10</dd></div>
+        <div><dt>Low competition</dt><dd>5 / 10</dd></div>
+        <div><dt>Saturation risk</dt><dd>Medium</dd></div>
+        <div><dt>Starting capital</dt><dd>A$15,000+</dd></div>
+        <div><dt>FOB cost</dt><dd>A$2–25</dd></div>
+        <div><dt>Landed cost</dt><dd>A$3–30</dd></div>
+        <div><dt>Sells for</dt><dd>A$20–200</dd></div>
+        <div><dt>Gross margin</dt><dd>~80%+</dd></div>
+        <div><dt>Net margin</dt><dd>Negative yr 1–3</dd></div>
+        <div><dt>Min order qty</dt><dd>Irrelevant</dd></div>
+        <div><dt>Time to 1st sale</dt><dd>12–24 months</dd></div>
+        <div><dt>Inventory risk</dt><dd>Medium</dd></div>
+        <div><dt>Regulatory risk</dt><dd>Very high</dd></div>
+        <div><dt>Shipping difficulty</dt><dd>Low</dd></div>
+        <div><dt>Return risk</dt><dd>Low</dd></div>
+        <div><dt>Automation</dt><dd>6 / 10</dd></div>
+        <div><dt>Repeat purchase</dt><dd>8 / 10</dd></div>
+        <div><dt>Differentiation</dt><dd>5 / 10</dd></div>
+        <div><dt>Long-term</dt><dd>7 / 10</dd></div>
+      </dl>
+      <div class="plate-body">
+        <p class="win"><b class="lbl">Why it looks tempting</b>It is the thing Sialkot is most famous for — roughly 70% of the
+        world's hand-made surgical instruments, and already 3.0% of Pakistan's export mix to Australia.
+        Your family is standing in the middle of the best supply base on earth for it. The pull is completely
+        understandable, and I expect it was near the top of your own list.</p>
+        <p class="fail"><b class="lbl">Why you must not</b>Surgical instruments are TGA Class IIa medical devices. You need an
+        Australian sponsor, ARTG inclusion, and a realistic three-year budget around US$7,000–18,000 before
+        conformity assessment or clinical evidence — sponsor representation alone starts near US$2,000/year.
+        That consumes your entire capital and your entire risk budget before you sell one instrument, in a category
+        where a compliance failure is not a refund, it's a regulator. Revisit at A$100k and with a partner who has
+        done ARTG inclusions before.</p>
+      </div>
+      <div class="plate-ft"><span class="verdict v-lo">🔴 Low — avoid</span><span class="total">22<small>/100</small></span></div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============================ PROFIT MODELS ============================ -->
+<section role="tabpanel" id="p-money" aria-labelledby="t-money" hidden>
+  <div class="sec-head">
+    <p class="eyebrow">Realistic profit models</p>
+    <h2 class="sec">Where the money actually is — and isn't</h2>
+  </div>
+
+  <div class="warnbox">
+    <h4>Read this before the tables</h4>
+    <p style="margin:0 0 8px">Revenue is not profit. Gross profit is not net profit. Net profit is not cash in your
+    pocket — income tax comes out of that, and inventory eats it before you see it.</p>
+    <p style="margin:0">Every scenario below is <b>before your own labour</b> and <b>before income tax</b>.
+    If you value your time at A$50/hr, the base case for the label business is paying you roughly A$45/hr
+    for 12 hours a week <em>plus</em> the equity you're building. That is a fair deal for a side business.
+    It is not "passive income", and anyone modelling it as passive is lying to you or to themselves.</p>
+  </div>
+
+  <h3 class="sub">Model 1 · Engraved industrial identification</h3>
+  <h4 class="mini">Cash required to start</h4>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Line item</th><th class="n">Amount</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td>CO₂ laser, 60–70W, Australian-supplied with warranty</td><td class="n">A$4,200</td><td>Local purchase deliberately — warranty and parts beat saving A$900 on a direct import</td></tr>
+      <tr><td>Fume extraction &amp; filtration</td><td class="n">A$450</td><td>Non-negotiable. Engraving laminate produces genuinely nasty fumes</td></tr>
+      <tr><td>Traffolyte sheet stock, opening range</td><td class="n">A$320</td><td>6–8 sheets: black/white, white/black, red/white, yellow/black</td></tr>
+      <tr><td>LightBurn licence</td><td class="n">A$180</td><td>One-off</td></tr>
+      <tr><td>Rotary tool, adhesives, fixings, packaging</td><td class="n">A$250</td><td>Double-sided tape, self-tappers, satchels</td></tr>
+      <tr><td>Business setup — ABN, GST, insurance, domain</td><td class="n">A$600</td><td>Public liability is essential the moment you sell B2B</td></tr>
+      <tr><td>Marketing test budget</td><td class="n">A$400</td><td>Mostly Google Ads on "traffolyte labels" style intent terms</td></tr>
+      <tr style="font-weight:700"><td>Total cash required</td><td class="n">A$6,400</td><td>Trim to A$4,900 by starting with a 60W machine and less stock</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h4 class="mini">Three scenarios · monthly, at steady state</h4>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Metric</th><th class="n">🔴 Conservative</th><th class="n">🟡 Base</th><th class="n">🟢 Strong</th></tr></thead>
+    <tbody>
+      <tr><td>Switchboard schedules / month</td><td class="n">12</td><td class="n">40</td><td class="n">80</td></tr>
+      <tr><td>Average order value</td><td class="n">A$82</td><td class="n">A$85</td><td class="n">A$95</td></tr>
+      <tr><td>Revenue</td><td class="n">A$984</td><td class="n">A$3,400</td><td class="n">A$7,600</td></tr>
+      <tr><td>Material cost</td><td class="n">A$130</td><td class="n">A$440</td><td class="n">A$920</td></tr>
+      <tr><td>Gross profit</td><td class="n">A$854</td><td class="n">A$2,960</td><td class="n">A$6,680</td></tr>
+      <tr><td>Postage &amp; packaging</td><td class="n">A$110</td><td class="n">A$360</td><td class="n">A$720</td></tr>
+      <tr><td>Advertising</td><td class="n">A$150</td><td class="n">A$250</td><td class="n">A$400</td></tr>
+      <tr><td>Power, consumables, software, insurance</td><td class="n">A$120</td><td class="n">A$170</td><td class="n">A$260</td></tr>
+      <tr><td>Casual labour @ A$32/hr</td><td class="n">—</td><td class="n">—</td><td class="n">A$1,150</td></tr>
+      <tr style="font-weight:700"><td>Net profit (pre-tax, pre-your-labour)</td><td class="n">A$474</td><td class="n">A$2,180</td><td class="n">A$4,150</td></tr>
+      <tr><td>Hours you work / week</td><td class="n">4</td><td class="n">12</td><td class="n">16</td></tr>
+      <tr><td>Cash tied up in inventory</td><td class="n">A$320</td><td class="n">A$500</td><td class="n">A$900</td></tr>
+      <tr><td>Payback on A$6,400 setup</td><td class="n">~13 months</td><td class="n">~3 months</td><td class="n">~7 weeks</td></tr>
+      <tr><td>12-month return on capital</td><td class="n">~89%</td><td class="n">~409%</td><td class="n">~778%</td></tr>
+    </tbody>
+    <caption>Base case clears your stated A$1–3k/month target at 12 hours a week. Note that inventory never exceeds
+    A$900 — this is the whole structural argument for the machine over the import.</caption>
+  </table>
+  </div>
+
+  <hr class="rule">
+
+  <h3 class="sub">Model 2 · Sialkot pet grooming shears</h3>
+  <h4 class="mini">Cash required for a first test order</h4>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Line item</th><th class="n">Amount</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td>Samples from 5 workshops (2 pairs each)</td><td class="n">A$420</td><td>Spend this <em>first</em>, weeks before anything else</td></tr>
+      <tr><td>Independent hardness &amp; edge testing</td><td class="n">A$250</td><td>The single most valuable A$250 in this plan</td></tr>
+      <tr><td>First order — 100 pairs @ A$20 FOB</td><td class="n">A$2,000</td><td>Split across 2 SKUs, not 1; never 500 units of one thing</td></tr>
+      <tr><td>Air freight (light cube — genuinely cheaper than sea here)</td><td class="n">A$420</td><td>Sea is ~A$150 but 30–40 days; buy the speed while testing</td></tr>
+      <tr><td>Duty @ 5% + Import Processing Charge</td><td class="n">A$180</td><td>Budget 5%; DCS preference may reduce it — confirm per HS code</td></tr>
+      <tr><td>Cases, packaging, branding, photography</td><td class="n">A$480</td><td>Presentation is most of the perceived value at A$150</td></tr>
+      <tr><td>Marketing test budget</td><td class="n">A$400</td><td>Groomer Facebook groups and trade days beat paid ads here</td></tr>
+      <tr style="font-weight:700"><td>Total cash required</td><td class="n">A$4,150</td><td>GST is additional at the border and reclaimed later</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h4 class="mini">Three scenarios · monthly, once stock has landed</h4>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Metric</th><th class="n">🔴 Conservative</th><th class="n">🟡 Base</th><th class="n">🟢 Strong</th></tr></thead>
+    <tbody>
+      <tr><td>Pairs sold / month</td><td class="n">12</td><td class="n">35</td><td class="n">75</td></tr>
+      <tr><td>Blended selling price (direct + wholesale)</td><td class="n">A$130</td><td class="n">A$135</td><td class="n">A$118</td></tr>
+      <tr><td>Revenue</td><td class="n">A$1,560</td><td class="n">A$4,725</td><td class="n">A$8,850</td></tr>
+      <tr><td>Landed cost of goods</td><td class="n">A$372</td><td class="n">A$1,085</td><td class="n">A$2,325</td></tr>
+      <tr><td>Gross profit</td><td class="n">A$1,188</td><td class="n">A$3,640</td><td class="n">A$6,525</td></tr>
+      <tr><td>Marketplace &amp; payment fees</td><td class="n">A$180</td><td class="n">A$520</td><td class="n">A$880</td></tr>
+      <tr><td>Advertising</td><td class="n">A$350</td><td class="n">A$700</td><td class="n">A$1,100</td></tr>
+      <tr><td>Packaging, postage, returns (≈4%)</td><td class="n">A$150</td><td class="n">A$420</td><td class="n">A$820</td></tr>
+      <tr style="font-weight:700"><td>Net profit (pre-tax, pre-your-labour)</td><td class="n">A$508</td><td class="n">A$2,000</td><td class="n">A$3,725</td></tr>
+      <tr><td>Cash tied up in inventory</td><td class="n">A$2,800</td><td class="n">A$4,500</td><td class="n">A$9,000</td></tr>
+      <tr><td>Payback on A$4,150</td><td class="n">~8 months</td><td class="n">~2 months</td><td class="n">~5 weeks</td></tr>
+      <tr><td>Reorder lead time (cash locked)</td><td class="n">8–12 weeks</td><td class="n">8–12 weeks</td><td class="n">8–12 weeks</td></tr>
+    </tbody>
+    <caption>Compare the inventory rows against Model 1. Same net profit at base case, 9× the cash locked up,
+    and a 10-week delay every time you want more stock. That difference is the entire thesis of this document.</caption>
+  </table>
+  </div>
+
+  <hr class="rule">
+
+  <h3 class="sub">Model 3 · Blade sharpening service (the cheap test)</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Metric</th><th class="n">Setup</th><th class="n">🔴 Conservative</th><th class="n">🟡 Base</th><th class="n">🟢 Strong</th></tr></thead>
+    <tbody>
+      <tr><td>Equipment, jigs, practice stock, insurance</td><td class="n">A$2,000</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr>
+      <tr><td>Services / month</td><td class="n">—</td><td class="n">25</td><td class="n">70</td><td class="n">140</td></tr>
+      <tr><td>Average price</td><td class="n">—</td><td class="n">A$28</td><td class="n">A$29</td><td class="n">A$27</td></tr>
+      <tr><td>Revenue</td><td class="n">—</td><td class="n">A$700</td><td class="n">A$2,030</td><td class="n">A$3,780</td></tr>
+      <tr><td>Consumables, return postage, insurance</td><td class="n">—</td><td class="n">A$185</td><td class="n">A$480</td><td class="n">A$910</td></tr>
+      <tr style="font-weight:700"><td>Net profit (pre-tax, pre-your-labour)</td><td class="n">—</td><td class="n">A$515</td><td class="n">A$1,550</td><td class="n">A$2,870</td></tr>
+      <tr><td>Hours / week</td><td class="n">—</td><td class="n">3</td><td class="n">8</td><td class="n">15</td></tr>
+      <tr><td>Payback</td><td class="n">—</td><td class="n">~4 months</td><td class="n">~6 weeks</td><td class="n">~3 weeks</td></tr>
+    </tbody>
+    <caption>Lowest ceiling of the three, and by far the lowest risk. Its real value is strategic: it builds the
+    salon and groomer customer list that Model 2 needs, for A$2,000 instead of A$4,150 of advertising.</caption>
+  </table>
+  </div>
+
+  <h3 class="sub">The combined 18-month picture</h3>
+  <p class="prose">Run sequentially rather than simultaneously, funded by cashflow, this is what your stated
+  A$5,000 realistically becomes. I've assumed you hit base case, not strong, and that months 1–3 are
+  substantially loss-making because they will be.</p>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Phase</th><th>Months</th><th>Cash in</th><th class="n">Monthly net at exit</th><th class="n">Cumulative net</th></tr></thead>
+    <tbody>
+      <tr><td class="name">Sharpening service only</td><td>1–3</td><td class="n">A$2,000</td><td class="n">A$900</td><td class="n">A$1,100</td></tr>
+      <tr><td class="name">+ CO₂ laser, label business begins</td><td>3–8</td><td class="n">A$4,400 (A$2,900 from cashflow)</td><td class="n">A$2,400</td><td class="n">A$8,900</td></tr>
+      <tr><td class="name">+ Fibre laser, stainless tags &amp; shear branding</td><td>8–12</td><td class="n">A$3,600 (from cashflow)</td><td class="n">A$3,300</td><td class="n">A$19,500</td></tr>
+      <tr><td class="name">+ First Sialkot shear order</td><td>12–18</td><td class="n">A$4,150 (from cashflow)</td><td class="n">A$4,800</td><td class="n">A$41,000</td></tr>
+    </tbody>
+    <caption>Total external capital required: A$2,000 at month 1 and A$1,500 at month 3. Everything after that is
+    funded by the business. Your A$3–10k maximum-loss tolerance is never actually tested — which is the point.</caption>
+  </table>
+  </div>
+  <p class="footnote">These are models, not forecasts. The two assumptions most likely to be wrong are (a) that you can
+  win 40 label orders a month within six months, which depends entirely on whether you sell, and (b) that Sialkot
+  shear quality lands where the samples suggest. Both are testable cheaply and early, which is why the 90-day plan
+  tests exactly those two things first.</p>
+</section>
+
+<!-- ============================ RISKS ============================ -->
+<section role="tabpanel" id="p-risk" aria-labelledby="t-risk" hidden>
+  <div class="sec-head">
+    <p class="eyebrow">Risk register &amp; exclusions</p>
+    <h2 class="sec">What will actually go wrong</h2>
+  </div>
+
+  <h3 class="sub">The eight biggest risks, ranked by what they'd cost you</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th class="n">#</th><th>Risk</th><th>Likelihood</th><th>What it costs</th><th>How you defuse it</th></tr></thead>
+    <tbody>
+      <tr><td class="rank">1</td><td class="name">You buy the machine and don't sell</td><td>High</td><td>A$4,900 and six months</td><td>Get 5 paying label customers <em>before</em> you buy. Outsource the first jobs to an existing engraver at a loss if you must — you're buying proof, not margin</td></tr>
+      <tr><td class="rank">2</td><td class="name">Sialkot quality variance between sample and production</td><td>High</td><td>A$2,000–3,000 of unsellable stock</td><td>Family inspects and photographs the actual production run, not the sample. Hold 30% of payment until post-production inspection. Hardness-test a random pair from the batch</td></tr>
+      <tr><td class="rank">3</td><td class="name">Underpricing your own labour into a wage job</td><td>High</td><td>Your enthusiasm</td><td>Price per label, not per hour, and track actual minutes for the first 30 orders. If a job lands under A$60/hr all-in, raise the price or decline the work</td></tr>
+      <tr><td class="rank">4</td><td class="name">Tariff classification wrong at the border</td><td>Medium</td><td>A$500–2,000 plus delay</td><td>A$300–500 with a licensed customs broker before your first shipment. Do not classify your own goods from a website</td></tr>
+      <tr><td class="rank">5</td><td class="name">A regulated product slips into your range</td><td>Medium</td><td>Recall, penalty, stock write-off</td><td>Hard rule: nothing with a plug, nothing making a health claim, nothing used on a human patient. Write it on the wall</td></tr>
+      <tr><td class="rank">6</td><td class="name">Concentration — one big customer becomes 60% of revenue</td><td>Medium</td><td>The business, when they leave</td><td>Cap any single customer at 25% of monthly revenue. When one approaches it, that's the signal to go find three more</td></tr>
+      <tr><td class="rank">7</td><td class="name">An incumbent automates quoting before you do</td><td>Medium</td><td>Your differentiation</td><td>Ship the upload-a-schedule quoting tool inside 90 days. It's your moat and it has a clock on it</td></tr>
+      <tr><td class="rank">8</td><td class="name">Full-time job load spikes and the side business stalls</td><td>High</td><td>Momentum, not money</td><td>Build for a floor of 5 hrs/week, not a ceiling of 20. Structure so a quiet month costs you nothing — which the machine model does and the inventory model doesn't</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="sub">❌ The avoid list — and the reasoning, not just the verdict</h3>
+  <div class="kill">
+    <div><b>Anything with a mains plug</b>Saunas, chillers, EV chargers, power stations, bidets. EESS registration, RCM marking and responsible-supplier liability. You become legally the manufacturer in Australia's eyes.</div>
+    <div><b>Human surgical &amp; dental instruments</b>TGA Class IIa. ~US$7–18k over three years before conformity assessment. Sialkot's most famous product is your worst option.</div>
+    <div><b>Hi-vis and general workwear</b>Bisley, KingGee and Hard Yakka. Sizing returns. AS/NZS 4602.1 compliance. A category that punishes small players specifically.</div>
+    <div><b>Heavy steel — racking, matting, castors</b>Freight cost per dollar of value is ruinous at LCL volumes. You'd be paying to ship air and iron.</div>
+    <div><b>Towels, bedding, rice</b>Pakistan's genuine export strength to Australia, which is exactly why margins are gone. Established importers buy containers; you'd buy pallets.</div>
+    <div><b>Anything Temu can list next week</b>If it has no certification, no customisation, no service component and no relationship, your only lever is price — against sellers with no landed cost.</div>
+    <div><b>Products needing heavy advertising to move</b>At A$5k, an ad budget is a loan to Meta. Prefer channels where the customer already has intent: search, trade groups, direct B2B.</div>
+    <div><b>Fashion, footwear, anything sized</b>20%+ return rates destroy the margin model before you start. Not worth modelling.</div>
+    <div><b>Wellness devices with health claims</b>Red-light panels, hydrogen bottles. TGA advertising enforcement is active, and the category churns brands quarterly.</div>
+    <div><b>Anything organic, seed-bearing or animal-derived</b>Biosecurity screening can hold or destroy a shipment. Leather is fine when tanned and documented; raw materials are not.</div>
+  </div>
+
+  <h3 class="sub">Where I might be wrong</h3>
+  <p class="prose">Intellectual honesty requires flagging the weak points in my own analysis:</p>
+  <ul class="tight prose">
+    <li><b>I could not verify Pakistan's exact DCS duty rate per HS code.</b> The Australian Border Force site is not reachable from this environment. I've modelled 5% as a conservative worst case; the true rate may be free for some classifications, which would <em>improve</em> the Sialkot models. Confirm with a broker before ordering.</li>
+    <li><b>Traffolyte pricing is thinly sourced.</b> I found A$0.75/label at the low end and A$2.52 at the high end, plus one supplier quoting most switchboard schedules "under A$66". My A$85 average order value assumes a mix skewed to larger schedules. If real AOV is A$60, base-case net drops to roughly A$1,450 — still inside your target, but tighter.</li>
+    <li><b>I have no direct evidence of Australian farrier population size.</b> The Sialkot supply side is well documented; the Australian demand side I've inferred from the equestrian and racing sector. Validate by counting listed farriers in three states before ordering.</li>
+    <li><b>I could not access Reddit or trade-forum operator accounts</b> for first-hand Australian importer experiences. Several attempted searches returned aggregator content rather than primary discussion. Treat my competitive-intensity scores as informed judgement rather than sampled operator sentiment.</li>
+    <li><b>The electrical-background assumption may be wrong.</b> It is inferred from your workspace tooling, not from anything you told me. If it's wrong, recommendation #1 loses its differentiation and drops behind the Sialkot plays.</li>
+  </ul>
+</section>
+
+<!-- ============================ TOP 3 + PLAN ============================ -->
+<section role="tabpanel" id="p-top3" aria-labelledby="t-top3" hidden>
+  <div class="sec-head">
+    <p class="eyebrow">Final recommendation</p>
+    <h2 class="sec">If I were in your position</h2>
+  </div>
+
+  <p class="lede">Not options — a decision. These three, in this order, run partly in parallel,
+  funded so that the second is paid for by the first.</p>
+
+  <h3 class="sub">Opportunity 1 · Engraved industrial identification</h3>
+  <div class="grid2">
+    <div class="card">
+      <h4>Why it's ranked first</h4>
+      <p>It is the only opportunity in seventy that scores well on demand, margin, capital fit
+      <em>and</em> defensibility at the same time. 48,800 electrical services businesses need it,
+      it needs no inventory, no MOQ, no customs and no regulator, and it converts cash to revenue in days
+      rather than a 90-day import cycle.</p>
+      <p>Decisively: it is the only one where your specific professional knowledge is worth money.
+      Anyone can buy a laser. Very few laser owners can read a panel schedule, and almost none can build
+      the tool that turns an uploaded schedule into a quote and an engraving file automatically.
+      That combination is your moat, and it's also the path from job shop to semi-passive.</p>
+    </div>
+    <div class="card">
+      <h4>Exactly how to validate it — before spending A$4,900</h4>
+      <p><b>Do not buy the machine first.</b> Spend two weeks and about A$300 instead:</p>
+      <ul class="tight">
+        <li>Build a one-page site with an upload-your-schedule quote form.</li>
+        <li>Run A$200 of Google Ads on high-intent terms: "traffolyte labels", "switchboard labels", "engraved electrical labels" plus your city.</li>
+        <li>Call 25 switchboard builders and electrical contractors. Ask three questions: who do you use, what's your turnaround, what annoys you about it.</li>
+        <li>Take real orders. Fulfil them by outsourcing to an existing engraver at zero or negative margin.</li>
+      </ul>
+      <p><b>The gate:</b> five paying customers in 21 days. Then buy the machine. If you can't get five, the machine would not have saved you.</p>
+    </div>
+    <div class="card">
+      <h4>What to spend first, and where</h4>
+      <p><b>A$300</b> — domain, one-page site, Google Ads test.<br>
+      <b>A$0</b> — 25 phone calls.<br>
+      <b>Then, only on passing the gate:</b> A$4,200 CO₂ laser from an Australian supplier (OMTech AU, Prytec Solutions, or Engraving Supplies who sell traffolyte-specific systems and offer finance from ~A$44/week), A$450 extraction, A$320 sheet stock.</p>
+      <p><b>Buy locally, not direct from China.</b> You'll pay perhaps A$900 more and get warranty, a tube you can replace and someone to call. On your first machine that is worth every dollar.</p>
+    </div>
+    <div class="card">
+      <h4>Biggest risk &amp; first milestone</h4>
+      <p><b>Biggest risk:</b> you buy the laser and discover you won't do the selling. This is a sales business wearing a manufacturing costume. Everything else — the machine, the material, the software — is solved and cheap. The customers are the hard part, which is precisely why the validation step is customers-before-machine.</p>
+      <p><b>First success milestone:</b> <b>A$1,000 of invoiced label work in a single month, from at least four different customers.</b> Four matters more than the thousand — one customer is a favour, four is a market.</p>
+    </div>
+  </div>
+
+  <h3 class="sub">Opportunity 2 · Blade sharpening service</h3>
+  <div class="grid2">
+    <div class="card">
+      <h4>Why it's second</h4>
+      <p>Cheapest real test available to you — A$2,000, revenue in a fortnight, zero inventory, and guaranteed
+      demand because steel dulls whether the economy is good or not. 39,543 hairdressing and beauty businesses
+      plus 4,000+ groomers, each needing service two to four times a year.</p>
+      <p>Its strategic value exceeds its profit: it hands you the exact customer list that Opportunity 3 needs,
+      and it hands it to you having already proven you can be trusted with their most expensive tool.</p>
+    </div>
+    <div class="card">
+      <h4>How to validate &amp; what to spend</h4>
+      <p><b>A$150 first:</b> buy 10 pairs of second-hand shears on eBay/Facebook Marketplace and practise until
+      you can consistently produce a clean convex edge. Budget 20–30 hours. This is a craft.</p>
+      <p><b>Then A$1,850:</b> hollow-grind system, jigs, magnification, insurance.</p>
+      <p><b>Test demand for A$0:</b> walk into 20 salons and 10 grooming shops within 20 minutes of home.
+      Offer the first sharpen free. This is a face-to-face business — do not try to run it through ads.</p>
+      <p><b>Units to test:</b> 30 free sharpens. If fewer than 8 convert to paid repeat within 8 weeks, stop.</p>
+    </div>
+    <div class="card">
+      <h4>Biggest risk</h4>
+      <p>You damage an expensive pair of shears. A stylist's Japanese shears can be A$700+, and ruining one
+      costs you the shears, the salon and the referrals. Mitigate absolutely: practise on your own stock first,
+      carry insurance from day one, decline anything you're unsure of, and be honest about damage rather than
+      hiding it — the recoverable mistake is the one you disclose.</p>
+    </div>
+    <div class="card">
+      <h4>First milestone</h4>
+      <p><b>15 repeat customers</b> — people who have paid you twice. Repeat, not volume, is the whole
+      signal here, because repeat is what makes the customer list worth building Opportunity 3 on.</p>
+    </div>
+  </div>
+
+  <h3 class="sub">Opportunity 3 · Sialkot pet grooming shears, private label</h3>
+  <div class="grid2">
+    <div class="card">
+      <h4>Why it's third — and why it's still on the list</h4>
+      <p>It has the highest ceiling of the three and the best use of your genuine structural advantage:
+      family in Sialkot doing physical QC is something no Alibaba importer can replicate. 4,000+ Australian
+      groomers buy through specialist retailers at premium prices, and there's no TGA exposure.</p>
+      <p>It's third only because it needs inventory, a 10-week cash cycle, and a brand — and because
+      Opportunities 1 and 2 can fund it entirely, so there is no reason to risk your own A$4,150 on it in month one.</p>
+    </div>
+    <div class="card">
+      <h4>Where to find suppliers</h4>
+      <p><b>Use the family first, Alibaba second.</b> Have them physically visit workshops in the Sialkot
+      instrument and scissor cluster — the Daska Road and Sambrial Road corridors. A relative walking a floor
+      is worth more than fifty supplier profiles.</p>
+      <p>Cross-reference against exporters visibly serving Western markets with private label at low MOQ
+      (Scissors Way, Scissors Hut, Salons Matrix, Yoshiki Edges are all in this space and all quote OEM).
+      Ask each for two things most buyers never ask: the steel certificate, and the heat-treatment process.
+      The answers separate the real workshops from the traders instantly.</p>
+    </div>
+    <div class="card">
+      <h4>How to test demand before a large order</h4>
+      <p><b>Sample stage (A$420):</b> 2 pairs from each of 5 workshops. Have the family inspect before shipping.</p>
+      <p><b>Validation stage (A$250):</b> independent hardness and edge-retention testing. Non-negotiable —
+      this is the one thing photos cannot tell you and the one thing that will sink you.</p>
+      <p><b>Pre-sell stage (A$0):</b> take the best samples to the sharpening customers you built in Opportunity 2.
+      Let 20 groomers actually cut with them. Take deposits.</p>
+      <p><b>Test order: 100 pairs across 2 SKUs</b> — a 7.5" curved and a chunker. Never 500 of one thing.
+      100 is enough to learn and small enough that total loss is A$3,000, inside your stated tolerance.</p>
+    </div>
+    <div class="card">
+      <h4>Biggest risk &amp; first milestone</h4>
+      <p><b>Biggest risk:</b> the production run doesn't match the sample. This is the classic Sialkot failure
+      and it's why the family's role is inspection, not just introduction. Hold 30% of payment until
+      post-production inspection with photographs of the actual batch.</p>
+      <p><b>First success milestone:</b> <b>40 of the first 100 pairs sold within 90 days of landing, with fewer
+      than 3 quality complaints.</b> Hit that and reorder 300 with confidence. Miss it and you've lost A$3,000
+      and learned which workshop to never use again — an acceptable outcome, and exactly what your risk budget
+      is for.</p>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <h3 class="sub">📅 The 90-day plan</h3>
+  <p class="prose">Written to run Opportunities 1 and 2 concurrently, because they use different hours
+  (calls and machine time versus evenings and weekends) and one funds the other.</p>
+
+  <div class="timeline">
+    <div class="phase">
+      <p class="days">Days 1–7 · Research &amp; supplier discovery</p>
+      <h4>Spend almost nothing. Learn almost everything.</h4>
+      <ul>
+        <li>Register the ABN, GST and public liability insurance. Open a separate bank account — commingled finances make it impossible to know whether this works.</li>
+        <li>Call a licensed customs broker. Confirm HS classification and the actual DCS rate for shears, instruments and gloves from Pakistan. Budget A$300–500. This is the single highest-value call in the plan.</li>
+        <li>Brief the family in Sialkot: shortlist 5 workshops in grooming shears, 3 in farrier tools. They visit; they photograph; they ask about steel certificates and heat treatment.</li>
+        <li>Build the one-page label site with an upload-a-schedule quote form. Buy the domain.</li>
+        <li>Buy 10 second-hand shears for sharpening practice.</li>
+      </ul>
+      <div class="gate"><b>Spend to date:</b> ~A$900 · <b>Gate:</b> broker has given you real duty rates and family has visited at least 3 workshops.</div>
+    </div>
+
+    <div class="phase">
+      <p class="days">Days 8–21 · Samples &amp; competitor reality-check</p>
+      <h4>Find out whether the products and the market are what you think.</h4>
+      <ul>
+        <li>Order shear samples from 5 Sialkot workshops (A$420). Family inspects before dispatch.</li>
+        <li>Run A$200 of Google Ads to the label quote page. Measure enquiries, not clicks.</li>
+        <li>Call 25 switchboard builders and electrical contractors. Log incumbent supplier, turnaround, and one complaint each. This log is more valuable than the ad data.</li>
+        <li>Mystery-shop three incumbent label suppliers. Order a small real job from each. Time the turnaround, keep the packaging, read the invoice.</li>
+        <li>Practise sharpening. 20+ hours. Get to a repeatable convex edge.</li>
+      </ul>
+      <div class="gate"><b>Spend to date:</b> ~A$1,700 · <b>Gate:</b> at least 6 of 25 contractors express dissatisfaction with current turnaround or pricing. Below 3, the label thesis is weaker than I've modelled — tell me and we'll re-rank.</div>
+    </div>
+
+    <div class="phase">
+      <p class="days">Days 22–45 · Demand validation</p>
+      <h4>Take money from strangers. Nothing else counts.</h4>
+      <ul>
+        <li>Take real label orders and fulfil them by outsourcing to an existing engraver. Accept zero or negative margin — you are buying proof, not profit.</li>
+        <li>Walk into 20 salons and 10 grooming shops. Offer 30 free sharpens. Collect names and phone numbers.</li>
+        <li>Send the two best shear samples to independent hardness testing (A$250).</li>
+        <li>Put the samples in 20 groomers' hands. Watch which one they reach for twice.</li>
+      </ul>
+      <div class="gate"><b>Spend to date:</b> ~A$2,400 · <b>Gate:</b> 5 paying label customers AND 8 paid repeat sharpening customers. Pass both → buy the machines. Pass one → proceed with that one only. Pass neither → stop and re-plan. Do not buy equipment to rescue a failed validation.</div>
+    </div>
+
+    <div class="phase">
+      <p class="days">Days 46–75 · Small launch</p>
+      <h4>Buy capacity only for demand you have already proven.</h4>
+      <ul>
+        <li>Buy the CO₂ laser and extraction (A$4,650). Australian supplier, warranty included.</li>
+        <li>Bring the outsourced label customers in-house. Measure your true minutes per job for the first 30 orders and reprice anything under A$60/hr.</li>
+        <li>Buy the sharpening system (A$1,850). Convert free trials to paid.</li>
+        <li>Build v1 of the schedule-to-quote tool. Even a rough version that parses a PDF and returns a priced list beats every incumbent's manual email.</li>
+        <li>Place the 100-pair shear order <em>only if</em> the hardness testing passed and groomers took the samples seriously.</li>
+      </ul>
+      <div class="gate"><b>Cumulative spend:</b> ~A$9,000, of which ~A$3,000 should now be coming from revenue · <b>Gate:</b> A$1,000+ invoiced in month 3.</div>
+    </div>
+
+    <div class="phase">
+      <p class="days">Days 76–90 · Decision</p>
+      <h4>Scale, modify, or stop — with rules set in advance, not feelings decided after.</h4>
+      <div class="gate" style="border-left:4px solid var(--good)">
+        <b style="color:var(--good)">🟢 Scale</b> — if month-3 revenue exceeds A$1,500 with 6+ distinct customers and repeat orders from at least 3.
+        <br>Then: buy the fibre laser, finish the quoting tool, raise prices 10%, and place the shear order.
+      </div>
+      <div class="gate" style="border-left:4px solid var(--warn)">
+        <b style="color:var(--warn)">🟡 Modify</b> — if revenue is A$500–1,500, or customers are repeating but the volume isn't there.
+        <br>Then: the offer is right and the distribution is wrong. Give it 60 more days with the effort moved from advertising to direct outbound. Change one variable, not five.
+      </div>
+      <div class="gate" style="border-left:4px solid var(--bad)">
+        <b style="color:var(--bad)">🔴 Stop</b> — if revenue is under A$500 with fewer than 3 customers after 90 days of genuine effort.
+        <br>Then: sell the laser (expect 50–60% recovery), keep the sharpening kit, and take the A$2,000–2,500 loss. That is well inside your stated tolerance and you'll have bought a real education for less than a TAFE course. <b>Write this rule down now, while you're unattached.</b>
+      </div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <h3 class="sub">🎯 Final verdict — the direct answer</h3>
+  <div class="tldr">
+    <h4>Which would I personally start with, for a side business that becomes semi-passive and scalable?</h4>
+    <p style="margin:0 0 12px"><b>Engraved industrial identification — traffolyte switchboard labels first,
+    stainless asset tags second — sold B2B, with an automated schedule-to-quote pipeline as the actual asset.</b></p>
+    <p style="margin:0 0 12px">Not because labels are exciting. They are not. Because it is the only opportunity
+    on this list where all five things are true at once: the demand is verified and structural, the margin is
+    real after every cost, it fits inside A$5,000, it needs no inventory and no regulator — and the labour that
+    makes it non-passive is labour <em>you specifically</em> can automate away.</p>
+    <p style="margin:0"><b>The honest caveat:</b> in year one it will not be passive. You will engrave labels in
+    your garage on Saturday mornings. The semi-passive version arrives when the quoting tool is doing the
+    estimating and someone else is tending the machine, and that is a month-18 outcome, not a month-3 one.
+    Any product that promises less work than that is either not real or already saturated by people who
+    believed the same promise.</p>
+  </div>
+  <p class="prose">And the second thing I'd do, starting the same week for A$150, is buy ten second-hand shears
+  and learn to sharpen. It costs almost nothing, it earns inside a fortnight, and it quietly builds the customer
+  list that makes your family's presence in Sialkot worth real money eighteen months from now.</p>
+</section>
+
+<!-- ============================ METHOD ============================ -->
+<section role="tabpanel" id="p-method" aria-labelledby="t-method" hidden>
+  <div class="sec-head">
+    <p class="eyebrow">Method &amp; sources</p>
+    <h2 class="sec">How this was built, and what to trust</h2>
+  </div>
+
+  <h3 class="sub">The scoring model</h3>
+  <p class="prose">You asked me not to pretend I can predict a probability of success, and I haven't.
+  The Overall score is a <b>Probability-Adjusted Opportunity Score</b> — a weighted composite of ten factors,
+  deliberately weighted for <em>your</em> constraints rather than for a generic operator with unlimited capital.</p>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Factor</th><th class="n">Weight</th><th>Why this weight, for you specifically</th></tr></thead>
+    <tbody>
+      <tr><td class="name">Capital fit (reachable on A$5k)</td><td class="n">18%</td><td>The binding constraint. An excellent business you cannot afford scores zero for you</td></tr>
+      <tr><td class="name">Proven Australian demand</td><td class="n">15%</td><td>Named importers and retailers, participation data, business counts — not search trends</td></tr>
+      <tr><td class="name">Competitive intensity</td><td class="n">13%</td><td>Heavily penalises categories where incumbents have a decade of relationships</td></tr>
+      <tr><td class="name">Net margin after full landed cost</td><td class="n">12%</td><td>After freight, duty, fees, ads, returns — not gross margin, which flatters everything</td></tr>
+      <tr><td class="name">Ability to differentiate</td><td class="n">11%</td><td>Your explicit brief: reward a moat, punish anything Temu can copy</td></tr>
+      <tr><td class="name">Ease and cheapness of testing</td><td class="n">9%</td><td>Matches your low–moderate risk tolerance. Cheap failure is a feature</td></tr>
+      <tr><td class="name">Regulatory risk</td><td class="n">8%</td><td>EESS, TGA, WaterMark and biosecurity each kill an otherwise fine opportunity</td></tr>
+      <tr><td class="name">Repeat purchase</td><td class="n">6%</td><td>Recurring revenue is worth more than one-off at every capital level</td></tr>
+      <tr><td class="name">Inventory &amp; cash-cycle risk</td><td class="n">5%</td><td>Where most first-time importers actually die — not on margin, on cash timing</td></tr>
+      <tr><td class="name">Automation potential</td><td class="n">3%</td><td>Your semi-passive goal, weighted honestly low because it's a year-two concern</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="sub">Verified vs estimated — the convention used throughout</h3>
+  <div class="grid2">
+    <div class="card">
+      <h4><span class="chip v">Verified</span> Sourced facts</h4>
+      <p>Business counts, market sizes, participation figures, duty regimes, freight rates, machine prices,
+      regulatory fees, and the existence of named Australian importers and retailers. Every one traces to a
+      source listed below.</p>
+    </div>
+    <div class="card">
+      <h4><span class="chip e">Estimated</span> My modelling</h4>
+      <p>FOB cost bands, landed costs, net margins, monthly capacities, break-even periods and all three
+      scenario models. These are constructed from verified inputs plus judgement. They are planning envelopes,
+      not quotes — every one should be replaced with a real number from a real supplier before you spend.</p>
+    </div>
+    <div class="card">
+      <h4><span class="chip a">Assumption</span> Flagged inferences</h4>
+      <p>Chiefly: that you work in electrical or industrial control, and that Pakistan's DCS duty rate is at
+      worst 5%. Both are stated openly in the Risks section, along with what changes if either is wrong.</p>
+    </div>
+    <div class="card">
+      <h4>What I deliberately did not do</h4>
+      <p>No revenue screenshots. No "this seller does $50k/month" claims. No treating a Google Trends line as
+      demand. No recommending a product because it's trending. Where I could not verify something, I've said so
+      rather than filling the gap with a confident number.</p>
+    </div>
+  </div>
+
+  <h3 class="sub">Sources</h3>
+  <h4 class="mini">Trade, duty &amp; freight</h4>
+  <ul class="tight">
+    <li><a href="https://www.dfat.gov.au/trade/agreements/in-force/chafta/doing-business-with-china/chafta-frequently-asked-questions">DFAT — ChAFTA FAQ</a> and <a href="https://www.dfat.gov.au/trade/agreements/in-force/chafta/doing-business-with-china/guide-to-using-chafta-to-export-or-import">Guide to using ChAFTA</a> (100% tariff elimination from 1 Jan 2019)</li>
+    <li><a href="https://www.abf.gov.au/importing-exporting-and-manufacturing/fta/other-preferential-arrangements/developing-countries-or-least-developed-countries">Australian Border Force — Developing / Least Developed Countries preference</a> (ASTP, 179 countries)</li>
+    <li><a href="https://www.dhl.com/discover/en-au/logistics-advice/import-export-advice/guide-to-custom-duties-in-australia">DHL — Guide to customs duties in Australia</a>; <a href="https://www.skutopia.com/blog/import-tax-australia">SKUTOPIA — Import tax Australia</a> (A$1,000 threshold, GST on CIF + duty)</li>
+    <li><a href="https://www.sino-shipping.com/country-guides/freight-from-china-to-australia/">Sino Shipping — China to Australia freight</a>; <a href="https://suaidglobal.com/insights/lcl-cost-per-cbm/">LCL cost per CBM 2026</a></li>
+    <li><a href="https://www.dfat.gov.au/geo/pakistan/pakistan-country-brief">DFAT — Pakistan country brief</a>; <a href="https://pakconsulate.org.au/pak-australia-bilateral-trade/">Pakistan Consulate Sydney — bilateral trade</a>; <a href="https://tradingeconomics.com/australia/imports/pakistan">Trading Economics — Australia imports from Pakistan</a></li>
+    <li><a href="https://www.abs.gov.au/statistics/economy/international-trade/characteristics-australian-importers/2020-21">ABS — Characteristics of Australian Importers</a> (67% of importers are small businesses, 2% of import value)</li>
+  </ul>
+  <h4 class="mini">Pakistan / Sialkot supply base</h4>
+  <ul class="tight">
+    <li><a href="https://aurora.dawn.com/news/1144629/the-sialkot-cluster">Dawn/Aurora — The Sialkot Cluster</a>; <a href="https://punjab.gov.pk/sialkot_key_industry">Government of Punjab — Sialkot key industries</a></li>
+    <li><a href="https://www.pbc.org.pk/research/enhancing-the-competitiveness-of-pakistans-surgical-instruments-industry/">Pakistan Business Council — surgical instruments industry</a></li>
+    <li><a href="https://oceangloves.com/">Ocean Gloves Corporation</a> (EN388/CE/ISO9001, exports to Australia); <a href="https://toughsafetywears.com/product-category/leather-work-gloves/">Tough Safety Wears</a>; <a href="https://www.askgloves.com/">ASK Gloves</a></li>
+    <li><a href="https://hayatkhanind.com/product-category/farrier-tools/">Hayat Khan Industries</a>, <a href="https://hfroxequestrian.com/product-category/farrier-tools/hoof-clinchers/">HFrox Equestrian</a>, <a href="https://www.vetaxavet.com/hoof-knives/">Vetaxa</a> — farrier tools</li>
+    <li><a href="https://scissorsway.com/">Scissors Way</a>, <a href="https://scissorshut.com/">Scissors Hut</a>, <a href="https://salonsmatrix.com/product-category/hairdressing-scissors/">Salons Matrix</a>, <a href="https://www.yoshikiedges.com/">Yoshiki Edges</a> — OEM scissors, Japanese J2 / 440C</li>
+    <li><a href="https://www.fandarintl.com/custom-boxing-gloves-manufacturer-pakistan/">Fandar International</a> (MOQ from 50 pairs), <a href="https://goatedpro.com/wholesale-boxing-gloves-manufacturer/">Goated Pro</a> (MOQ 25 pairs)</li>
+  </ul>
+  <h4 class="mini">Australian market evidence</h4>
+  <ul class="tight">
+    <li><a href="https://www.ibisworld.com/australia/number-of-businesses/hairdressing-and-beauty-services/677/">IBISWorld — 39,543 hairdressing &amp; beauty businesses</a>; <a href="https://www.ibisworld.com/australia/market-size/hairdressing-and-beauty-services/677/">market size A$12.4bn</a></li>
+    <li><a href="https://www.ibisworld.com/australia/number-of-businesses/electrical-services/325/">IBISWorld — 48,800 electrical services businesses</a></li>
+    <li><a href="https://www.dogster.com/statistics/pet-industry-statistics-australia">Australian pet industry statistics</a> (4,000+ dog groomers)</li>
+    <li><a href="https://www.imarcgroup.com/australia-industrial-safety-gloves-market">IMARC — Australia industrial safety gloves market</a>; <a href="https://www.imarcgroup.com/australia-personal-protective-equipment-market">Australia PPE market</a></li>
+    <li><a href="https://www.pickleballaus.org/pickleball-australia-charts-bold-strategic-future">Pickleball Australia</a>; <a href="https://en.wikipedia.org/wiki/Pickleball_in_Australia">AusPlay data — 155,000 participants</a></li>
+    <li><a href="https://padelracket.com.au/pages/padel-courts-australia">Padel Australia court tracker — 154 courts / 33 clubs</a>; <a href="https://www.padelaus.com.au/news/a-breakout-year-for-padel-in-australia">Padel AUS — breakout year</a></li>
+    <li><a href="https://www.6wresearch.com/industry-report/australia-caravan-market-outlook">Australia caravan market outlook</a>; <a href="https://www.imarcgroup.com/australia-leisure-battery-market">Australia leisure battery market</a></li>
+    <li><a href="https://www.appa.com.au/">APPA</a> and <a href="https://custommerchaustralia.com.au/promotional-product-industry-revenue-statistics-australia/">Australian promotional products revenue</a> (A$1.34bn)</li>
+    <li>Australian retail comparators sighted for pricing: <a href="https://www.ozgroomingworld.com.au/tools/scissors/">OzGroomingWorld</a>, <a href="https://www.groomingscissorsdirect.com.au/">Grooming Scissors Direct</a>, <a href="https://icandyscissors.com.au/">iCandy</a>, <a href="https://www.japanscissors.com.au/">Japan Scissors</a>, <a href="https://www.bainbridgevet.com.au/">Bainbridge</a>, <a href="https://www.vetnpetdirect.com.au/collections/cattle-equipment">vet-n-pet DIRECT</a>, <a href="https://www.arborgreen.com.au/category/3-pruning-tools-knives">Arborgreen</a></li>
+  </ul>
+  <h4 class="mini">Machines, regulation &amp; the label market</h4>
+  <ul class="tight">
+    <li><a href="https://www.omtech.au/collections/fiber-laser-machines">OMTech AU — fibre laser marking machines</a> (20W A$3,629.99); <a href="https://www.omtech.au/collections/mid-range-laser-engravers">CO₂ engravers</a> (70W from A$4,199.99)</li>
+    <li><a href="https://engravingsupplies.com.au/traffolyte-engraving-machines/">Engraving Supplies — traffolyte engraving machines</a> (finance from ~A$44/week); <a href="https://prytec.com.au/product/10/PLS-7050-60W-Laser-Engraver-and-Cutter">Prytec Solutions PLS-7050</a></li>
+    <li>Label market comparators: <a href="https://www.vernect.com.au/">Vernect</a> (schedules "under A$66", 48-hour dispatch), <a href="https://wiremarkers.com.au/collections/traffolyte-labels">Wiremarkers Australia</a>, <a href="https://engratek.com.au/products/switchboard-labels/">Engratek</a>, <a href="https://instantengraving.com.au/product-category/industrial-labels/">Instant Engraving</a>, <a href="https://rbz3d.au/traffolyte-labels">RBZ 3D</a></li>
+    <li>Stainless tag comparators: <a href="https://plastictags.com.au/industries/mining">Plastic Tags Australia</a>, <a href="https://bkld.com.au/product/valve-tags/">BKLD</a>, <a href="https://www.inscribe.com.au/labels/valve-pipe-tags/">Inscribe</a>, <a href="https://tuffaproducts.com.au/product/stainless-steel-valve-pipe-tags/">TUFFA</a>, <a href="https://www.maptrack.com/asset-labels/metal-asset-tags-australia">MapTrack</a></li>
+    <li><a href="https://www.eess.gov.au/responsible-supplier/manufacturers-and-importers-responsible-suppliers/">EESS — Responsible Suppliers</a>; <a href="https://www.eess.gov.au/registration/registration-in-scope-electrical-equipment/">EESS registration of in-scope equipment</a></li>
+    <li><a href="https://meddeviceguide.com/blog/australia-medical-device-registration-sponsor-pricing-flat-fee-guide">TGA sponsor pricing guide 2026</a>; <a href="https://www.pureglobal.com/news/tga-medical-device-ivd-fees-annual-charges-2026">TGA fees &amp; annual charges 2026</a></li>
+    <li><a href="https://aaprintsupplyco.com/blogs/news/uv-dtf-printing-complete-business-guide">UV DTF business economics</a>; <a href="https://www.omtech.au/blogs/news/how-to-make-money-with-a-uv-printer">OMTech AU — UV printer economics</a></li>
+    <li>Workwear decoration profit comparators sighted at <a href="https://www.businessforsale.com.au/for-sale/work-wear-uniforms/">BusinessForSale.com.au</a> (A$6.15m revenue / A$1.01m net; A$1m revenue / A$290k net)</li>
+  </ul>
+
+  <div class="notebox">
+    <b>What I could not reach.</b> The Australian Border Force tariff schedule and Vernect's live pricing page
+    are both blocked from this environment, and searches for first-hand Australian importer discussion on
+    Reddit and trade forums returned aggregator content rather than primary threads. Those three gaps are
+    reflected in the "Where I might be wrong" list rather than papered over.
+  </div>
+</section>
+
+</div><!-- /wrap -->
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- tabs ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  var panels = Array.prototype.slice.call(document.querySelectorAll('[role="tabpanel"]'));
+  function show(id){
+    tabs.forEach(function(t){
+      var on = t.getAttribute('aria-controls') === id;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    panels.forEach(function(p){ p.hidden = (p.id !== id); });
+    try{ localStorage.setItem('ph-tab', id); }catch(e){}
+    window.scrollTo({top:0, behavior:'instant' in window ? 'auto' : 'auto'});
+  }
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){ show(t.getAttribute('aria-controls')); });
+    t.addEventListener('keydown', function(e){
+      var i = tabs.indexOf(t), n = null;
+      if(e.key === 'ArrowRight') n = tabs[(i+1) % tabs.length];
+      if(e.key === 'ArrowLeft')  n = tabs[(i-1+tabs.length) % tabs.length];
+      if(n){ e.preventDefault(); n.focus(); show(n.getAttribute('aria-controls')); }
+    });
+  });
+  try{
+    var saved = localStorage.getItem('ph-tab');
+    if(saved && document.getElementById(saved)) show(saved);
+  }catch(e){}
+
+  /* ---------- leaderboard data ---------- */
+  /* g: group  s: source  cap: A$ start  nm: net margin %  su/co/am: /10  ov: /100  b2b: 1 */
+  var D = [
+   ["Traffolyte switchboard labels & industrial ID","C","AU",4900,60,9,5,9,87,1],
+   ["Pet grooming shears — private label","A","PK",3800,43,8,6,7,83,1],
+   ["Stainless valve, pipe & asset tags","C","AU",4300,55,8,6,9,82,1],
+   ["Blade & clipper sharpening service","C","AU",2000,65,8,7,4,80,1],
+   ["Cable markers, ferrules & heatshrink ID","A","CN",2500,40,8,5,8,76,1],
+   ["Farrier tools — nippers, knives, clinchers","A","PK",3500,45,7,8,6,75,0],
+   ["Veterinary livestock instruments","A","PK",3500,40,8,7,6,74,1],
+   ["Leather welding & rigger gloves","A","PK",4200,27,8,4,7,73,1],
+   ["Pickleball paddles — club-branded","B","CN",4500,40,8,7,7,72,1],
+   ["Test & tag consumables and labels","B","CN",2200,42,8,6,9,72,1],
+   ["Boxing & MMA gear — gym private label","A","PK",4000,37,7,6,5,70,1],
+   ["UV DTF branded hard goods","C","AU",6500,45,7,5,7,70,1],
+   ["Foam tool-control inserts & shadow boards","C","AU",9000,48,7,8,5,69,1],
+   ["Podiatry & professional nail implements","A","PK",2800,42,7,6,7,68,1],
+   ["Weightlifting belts, straps & wraps","A","PK",3200,40,6,5,7,67,0],
+   ["Hairdressing & barber scissors","A","PK",4000,30,7,2,7,66,1],
+   ["Arc-flash rated PPE","A","PK",6800,35,7,7,6,65,1],
+   ["Workwear embroidery & decoration","C","AU",18000,38,8,4,6,65,1],
+   ["Leather aprons — chef, BBQ, welding","A","PK",2600,44,6,6,6,64,0],
+   ["Padel rackets & club consumables","B","CN",4200,38,6,7,6,63,1],
+   ["DTF textile printing — workwear & club kit","C","AU",7500,40,7,4,6,63,1],
+   ["Sensory, AAC & adaptive aids for NDIS","B","CN",4000,45,7,8,6,62,1],
+   ["Rotary engraver — plaques & trophies","C","AU",3800,50,6,5,6,61,1],
+   ["Classroom CO2 / air quality monitors","B","CN",3600,38,6,7,7,60,1],
+   ["Dog cooling vests & mats","B","CN",3000,38,6,6,6,59,0],
+   ["Crash-tested dog car harnesses","B","CN",4400,40,6,7,6,58,0],
+   ["Cricket equipment — bats, pads, gloves","A","PK",4500,35,6,5,5,58,0],
+   ["Commercial solar panel cleaning systems","B","CN",5200,36,6,7,4,57,1],
+   ["Vinyl cutter — safety & vehicle signage","C","AU",2400,45,6,4,5,57,1],
+   ["Conduit rodders & cable pulling tools","B","CN",3400,33,6,5,6,56,1],
+   ["Hospitality towels & robes 600-700gsm","A","PK",4800,24,7,3,7,56,1],
+   ["Barber capes, tool rolls, salon textiles","A","PK",2200,40,6,4,6,55,1],
+   ["CNC router — acrylic & aluminium signage","C","AU",11000,38,6,4,4,55,1],
+   ["Heat press & sublimation — team kit","C","AU",2800,42,6,3,5,54,1],
+   ["Cable assembly & control panel looms","C","AU",6000,40,7,6,3,54,1],
+   ["Remote-worksite first aid & trauma kits","B","CN",4000,35,6,6,6,53,1],
+   ["3D printer farm — jigs, fixtures, spares","C","AU",5500,45,5,6,8,53,1],
+   ["Reusable silicone & stainless food service","B","CN",3400,30,6,4,6,52,1],
+   ["Thermal transfer label printing","C","AU",3000,42,5,4,9,52,1],
+   ["Compostable & moulded-fibre food packaging","B","CN",5000,22,6,3,6,51,1],
+   ["Engraving laminate (traffolyte) sheet stock","A","CN",3000,35,6,4,7,50,1],
+   ["Blank anodised & stainless tags","A","CN",2000,38,6,4,8,50,1],
+   ["Thermal imaging attachments","B","CN",4600,32,5,5,6,50,1],
+   ["Beekeeping equipment & suits","B","PK",3400,36,5,6,5,49,0],
+   ["Microgreens & fodder growing systems","B","CN",4200,34,5,6,5,48,1],
+   ["Robot mower boundary accessories","B","CN",2800,35,5,6,6,47,0],
+   ["Hi-vis workwear to AS/NZS 4602.1","A","PK",5200,22,7,2,6,47,1],
+   ["Benchtop injection moulding / casting","C","AU",9000,40,4,6,7,46,1],
+   ["Pallet racking safety accessories","A","CN",6000,25,6,4,5,45,1],
+   ["DIN rail terminal blocks & accessories","A","CN",4000,24,6,2,7,44,1],
+   ["Industrial anti-fatigue matting","A","CN",5500,26,6,3,6,43,1],
+   ["Cable glands, gland kits & fittings","A","CN",3000,26,6,2,7,43,1],
+   ["Home air quality monitors (consumer)","B","CN",3200,28,5,3,6,42,0],
+   ["Padel & pickleball court consumables","B","CN",2600,32,4,6,5,42,1],
+   ["Stainless IP66 electrical enclosures","A","CN",7000,24,6,3,5,41,1],
+   ["Industrial castors & wheels","A","CN",4500,22,6,2,6,40,1],
+   ["Custom PVC & silicone promotional items","A","CN",3000,30,5,3,6,40,1],
+   ["Bidet seats & washlets","B","CN",6500,28,5,5,5,38,0],
+   ["Infrared sauna panels & heaters","B","CN",8000,30,5,5,4,37,0],
+   ["Cold plunge chillers","B","CN",9000,30,5,6,4,36,0],
+   ["Barrel sauna heaters & controls","B","CN",9500,28,4,6,4,34,0],
+   ["Food processing & packaging equipment","C","AU",20000,25,4,5,6,34,1],
+   ["Heat pump hot water accessories","B","CN",5000,25,4,4,5,33,1],
+   ["Livestock EID readers & NLIS tags","B","CN",7000,28,4,5,5,32,1],
+   ["12V DC-DC chargers & lithium 4WD gear","A","CN",6500,25,4,2,5,31,0],
+   ["Portable power stations","B","CN",9000,20,3,2,5,27,0],
+   ["Type 2 EV charging cables","B","CN",7500,26,3,3,5,25,0],
+   ["Portable EVSE / granny chargers","B","CN",8500,26,2,3,5,24,0],
+   ["Human surgical & dental instruments","A","PK",15000,0,3,5,6,22,1],
+   ["Generic phone, kitchen & fitness accessories","A","CN",3000,12,2,1,5,12,0]
+  ].map(function(r,i){
+    return {n:r[0], g:r[1], s:r[2], cap:r[3], nm:r[4], su:r[5], co:r[6], am:r[7], ov:r[8], b2b:r[9], r:i+1};
+  });
+
+  var GN = {A:"A · Proven import", B:"B · Emerging", C:"C · Machine"};
+  var SN = {PK:'<span class="chip pk">🇵🇰 Pakistan</span>', CN:'<span class="chip cn">🇨🇳 China</span>', AU:'<span class="chip au">🇦🇺 Made here</span>'};
+  function bar(v){
+    var cls = v>=7 ? 'hi' : (v>=5 ? 'md' : 'lo');
+    return '<span class="bar"><i class="'+cls+'"><b style="width:'+(v*10)+'%"></b></i><span>'+v+'</span></span>';
+  }
+  var tbody = document.querySelector('#lb tbody');
+  var state = {g:'all', s:'all', b2b:false, capOnly:false, sort:'ov', dir:-1};
+
+  function render(){
+    var rows = D.filter(function(d){
+      if(state.g   !== 'all' && d.g !== state.g) return false;
+      if(state.s   !== 'all' && d.s !== state.s) return false;
+      if(state.b2b && !d.b2b) return false;
+      if(state.capOnly && d.cap > 5000) return false;
+      return true;
+    });
+    rows.sort(function(a,b){
+      var k = state.sort, x = a[k], y = b[k];
+      if(typeof x === 'string') return state.dir * x.localeCompare(y);
+      return state.dir * (x - y);
+    });
+    tbody.innerHTML = rows.map(function(d){
+      return '<tr>'
+        + '<td class="rank">'+d.r+'</td>'
+        + '<td class="name">'+d.n+'</td>'
+        + '<td>'+GN[d.g]+(d.b2b?' <span class="chip">B2B</span>':'')+'</td>'
+        + '<td>'+SN[d.s]+'</td>'
+        + '<td class="n">A$'+d.cap.toLocaleString()+'</td>'
+        + '<td class="n">'+(d.nm>0? d.nm+'%' : '—')+'</td>'
+        + '<td class="n">'+bar(d.su)+'</td>'
+        + '<td class="n">'+bar(d.co)+'</td>'
+        + '<td class="n">'+bar(d.am)+'</td>'
+        + '<td class="n"><b>'+d.ov+'</b></td>'
+        + '</tr>';
+    }).join('');
+    document.getElementById('lbCount').textContent =
+      'Showing ' + rows.length + ' of ' + D.length + ' opportunities.'
+      + (state.capOnly ? '  Filtered to those reachable on A$5,000 — note how many drop out.' : '');
+  }
+
+  document.getElementById('lbFilters').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    var f = b.dataset.f, v = b.dataset.v;
+    if(f === 'b2b'){ state.b2b = !state.b2b; b.setAttribute('aria-pressed', state.b2b?'true':'false'); }
+    else if(f === 'cap'){ state.capOnly = !state.capOnly; b.setAttribute('aria-pressed', state.capOnly?'true':'false'); }
+    else {
+      state[f] = v;
+      Array.prototype.forEach.call(this.querySelectorAll('button[data-f="'+f+'"]'), function(o){
+        o.setAttribute('aria-pressed', o === b ? 'true' : 'false');
+      });
+    }
+    render();
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll('#lb th.sortable'), function(th){
+    th.addEventListener('click', function(){
+      var k = th.dataset.k;
+      if(state.sort === k){ state.dir *= -1; }
+      else { state.sort = k; state.dir = (k === 'n' || k === 'g' || k === 's') ? 1 : -1; }
+      render();
+    });
+  });
+
+  render();
+})();
+</script>
