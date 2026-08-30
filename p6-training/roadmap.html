@@ -1,0 +1,724 @@
+<title>P6 for Switchboards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#E7EAE6;
+  --surface:#F7F8F6;
+  --card:#FDFDFC;
+  --ink:#14181A;
+  --ink2:#59615F;
+  --ink3:#8B928F;
+  --rule:#CBD0CA;
+  --rule2:#DDE1DB;
+  --copper:#A9541B;
+  --copper-soft:#EBD9CB;
+  --live:#C98A05;
+  --earth:#3E7442;
+  --earth-soft:#D9E6D8;
+  --shadow:0 1px 2px rgba(20,24,26,.06), 0 8px 24px -16px rgba(20,24,26,.30);
+  --labw:250px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121618;
+    --surface:#191E21;
+    --card:#1E2427;
+    --ink:#E6EAE6;
+    --ink2:#9AA3A1;
+    --ink3:#6D7674;
+    --rule:#2C3438;
+    --rule2:#232A2D;
+    --copper:#D9884A;
+    --copper-soft:#3A2A1E;
+    --live:#E0A62A;
+    --earth:#6FAE6E;
+    --earth-soft:#1F2E20;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -18px rgba(0,0,0,.8);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121618;
+  --surface:#191E21;
+  --card:#1E2427;
+  --ink:#E6EAE6;
+  --ink2:#9AA3A1;
+  --ink3:#6D7674;
+  --rule:#2C3438;
+  --rule2:#232A2D;
+  --copper:#D9884A;
+  --copper-soft:#3A2A1E;
+  --live:#E0A62A;
+  --earth:#6FAE6E;
+  --earth-soft:#1F2E20;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -18px rgba(0,0,0,.8);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--ground);
+  color:var(--ink);
+  font-family:"IBM Plex Sans","Segoe UI",Helvetica,Arial,sans-serif;
+  font-size:15px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:36px 22px 90px}
+
+/* ---------- type ---------- */
+h1,h2,h3,.cond{font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-weight:700;letter-spacing:.01em;text-wrap:balance}
+h1{font-size:clamp(40px,7vw,68px);line-height:.94;margin:.18em 0 .12em;text-transform:uppercase}
+h2{font-size:26px;text-transform:uppercase;letter-spacing:.06em;margin:0}
+.eyebrow{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:500;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--copper);
+}
+.mono{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+.lede{max-width:62ch;color:var(--ink2);font-size:16.5px;margin:14px 0 0}
+
+/* ---------- header ---------- */
+header{border-bottom:2px solid var(--ink);padding-bottom:26px}
+.titleblock{display:flex;flex-wrap:wrap;gap:26px;align-items:flex-end;justify-content:space-between}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid var(--rule);border-radius:2px;padding:5px 9px;color:var(--ink2);background:var(--surface);
+}
+.chip b{color:var(--ink);font-weight:600}
+
+/* ---------- progress meter ---------- */
+.meter{
+  min-width:230px;border:1px solid var(--rule);background:var(--card);border-radius:3px;
+  padding:14px 16px;box-shadow:var(--shadow);
+}
+.meter .k{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.meter .v{font-family:"Barlow Condensed",sans-serif;font-size:44px;line-height:1;font-weight:700;font-variant-numeric:tabular-nums}
+.meter .v small{font-size:18px;color:var(--ink2);font-weight:600}
+.meter .track{height:7px;background:var(--rule2);border-radius:1px;margin-top:10px;overflow:hidden}
+.meter .fill{height:100%;background:var(--earth);width:0%;transition:width .5s cubic-bezier(.2,.7,.3,1)}
+.meter .sub{font-size:12px;color:var(--ink2);margin-top:8px}
+
+/* ---------- section ---------- */
+section{margin-top:52px}
+.sechead{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--rule);padding-bottom:9px;margin-bottom:20px}
+.sechead .num{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--copper);letter-spacing:.14em}
+.sechead p{margin:0 0 0 auto;font-size:12.5px;color:var(--ink3)}
+
+/* ---------- gantt ---------- */
+.gantt-scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:3px;background:var(--card);box-shadow:var(--shadow)}
+.gantt{position:relative;min-width:800px;padding:0 0 6px}
+.grow{display:grid;grid-template-columns:var(--labw) repeat(13,minmax(38px,1fr));align-items:center;min-height:34px}
+.grow:nth-child(odd of .grow){background:transparent}
+.ghead{border-bottom:1px solid var(--rule);position:sticky;top:0;background:var(--card);z-index:3}
+.ghead .lab{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;color:var(--ink3);text-transform:uppercase}
+.wk{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;text-align:center;color:var(--ink3);
+  border-left:1px solid var(--rule2);padding:9px 0;font-variant-numeric:tabular-nums;
+}
+.lab{padding:6px 14px;font-size:13px;display:flex;gap:9px;align-items:center;border-right:1px solid var(--rule)}
+.lab .idx{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--copper);min-width:20px}
+.lab .nm{font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:16px;letter-spacing:.02em;text-transform:uppercase;line-height:1.15}
+.lab .hrs{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink3)}
+.cell{height:100%;border-left:1px solid var(--rule2);min-height:30px}
+.bar{
+  grid-row:1;height:15px;border-radius:2px;background:var(--rule2);
+  border:1px solid var(--rule);position:relative;overflow:hidden;margin:0 3px;z-index:2;
+}
+.bar .pf{position:absolute;inset:0;width:0%;background:var(--earth);transition:width .5s cubic-bezier(.2,.7,.3,1)}
+.bar.active{border-color:var(--copper);background:var(--copper-soft)}
+.ms{grid-row:1;z-index:2;justify-self:center;width:12px;height:12px;background:var(--ink);transform:rotate(45deg);border-radius:1px}
+.ms.hit{background:var(--earth)}
+.mslab{grid-row:1;font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--ink3);white-space:nowrap;align-self:end;padding-bottom:1px}
+.dd{
+  position:absolute;top:0;bottom:0;width:0;border-left:2px dashed var(--live);z-index:4;pointer-events:none;
+  transition:left .5s cubic-bezier(.2,.7,.3,1);
+}
+.dd::after{
+  content:"DATA DATE";position:absolute;top:2px;left:5px;font-family:"IBM Plex Mono",monospace;
+  font-size:9px;letter-spacing:.12em;color:var(--live);background:var(--card);padding:1px 3px;
+}
+.legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:11.5px;color:var(--ink2);font-family:"IBM Plex Mono",monospace}
+.legend i{display:inline-block;width:22px;height:9px;border-radius:2px;vertical-align:middle;margin-right:6px;border:1px solid var(--rule)}
+
+/* ---------- phase cards ---------- */
+.phases{display:flex;flex-direction:column;gap:12px}
+details.ph{
+  border:1px solid var(--rule);border-left:3px solid var(--rule);border-radius:3px;background:var(--card);
+  box-shadow:var(--shadow);overflow:hidden;
+}
+details.ph[open]{border-left-color:var(--copper)}
+details.ph.done{border-left-color:var(--earth)}
+summary{
+  list-style:none;cursor:pointer;padding:14px 18px;display:flex;align-items:center;gap:14px;
+}
+summary::-webkit-details-marker{display:none}
+summary:focus-visible{outline:2px solid var(--copper);outline-offset:-2px}
+.ph .pnum{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--copper);letter-spacing:.1em;
+  border:1px solid var(--copper);border-radius:2px;padding:3px 6px;flex:none;
+}
+.ph.done .pnum{color:var(--earth);border-color:var(--earth)}
+.ph h3{font-size:22px;margin:0;text-transform:uppercase;letter-spacing:.03em;line-height:1.1}
+.ph .ptag{font-size:12px;color:var(--ink2);margin:2px 0 0}
+.ph .right{margin-left:auto;display:flex;align-items:center;gap:12px;flex:none}
+.pill{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 8px;border-radius:2px;background:var(--surface);border:1px solid var(--rule);color:var(--ink2);
+}
+.pill.live{background:var(--copper-soft);border-color:var(--copper);color:var(--copper)}
+.pill.ok{background:var(--earth-soft);border-color:var(--earth);color:var(--earth)}
+.caret{color:var(--ink3);font-size:12px;transition:transform .2s}
+details[open] .caret{transform:rotate(90deg)}
+.pbody{padding:4px 18px 20px;border-top:1px solid var(--rule2)}
+.pbody .grid{display:grid;grid-template-columns:1fr;gap:18px}
+@media(min-width:760px){.pbody .grid{grid-template-columns:1.35fr .95fr}}
+
+ul.checks{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:2px}
+ul.checks li{margin:0}
+ul.checks label{
+  display:flex;gap:11px;align-items:flex-start;padding:7px 9px;border-radius:3px;cursor:pointer;
+  font-size:14.5px;line-height:1.45;
+}
+ul.checks label:hover{background:var(--surface)}
+ul.checks input{
+  appearance:none;width:17px;height:17px;flex:none;margin-top:2px;border:1.5px solid var(--rule);
+  border-radius:2px;background:var(--card);position:relative;cursor:pointer;transition:all .12s;
+}
+ul.checks input:hover{border-color:var(--copper)}
+ul.checks input:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+ul.checks input:checked{background:var(--earth);border-color:var(--earth)}
+ul.checks input:checked::after{
+  content:"";position:absolute;left:5px;top:1.5px;width:4px;height:9px;
+  border:solid #fff;border-width:0 2px 2px 0;transform:rotate(42deg);
+}
+ul.checks input:checked + span{color:var(--ink3);text-decoration:line-through;text-decoration-thickness:1px}
+.sublab{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin:18px 0 0}
+
+.task{border:1px dashed var(--copper);background:var(--copper-soft);border-radius:3px;padding:13px 15px;margin-top:10px}
+.task .t{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper);margin-bottom:5px}
+.task p{margin:0;font-size:14px}
+.deliv{border-left:2px solid var(--earth);padding:4px 0 4px 12px;margin-top:16px}
+.deliv .t{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--earth);margin-bottom:3px}
+.deliv p{margin:0;font-size:14px;color:var(--ink2)}
+
+/* ---------- tables ---------- */
+.tblwrap{overflow-x:auto;border:1px solid var(--rule);border-radius:3px;background:var(--card);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--rule2)}
+th{
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink3);border-bottom:1px solid var(--rule);white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:none}
+td.n{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ink2)}
+
+.note{font-size:13px;color:var(--ink3);margin-top:14px;max-width:70ch}
+footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--rule);font-size:12.5px;color:var(--ink3);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
+
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<script type="application/json" id="progress-state">{"done":[]}</script>
+
+<div class="wrap">
+  <header>
+    <div class="titleblock">
+      <div>
+        <div class="eyebrow">Primavera P6 · Personal Training Programme</div>
+        <h1>P6 for<br>Switchboards</h1>
+        <p class="lede">Thirteen weeks, seventy-eight hours, zero to job-ready. Every concept is taught against one running capstone: a switchboard build that leaves the factory, lands on a data centre site, and gets energised — planned the way a real project controls team would plan it.</p>
+        <div class="chips">
+          <span class="chip"><b>13</b> weeks</span>
+          <span class="chip"><b>78</b> study hours</span>
+          <span class="chip"><b>5–7</b> hrs/week</span>
+          <span class="chip"><b>11</b> phases</span>
+          <span class="chip"><b>1</b> capstone schedule</span>
+        </div>
+      </div>
+      <div class="meter">
+        <div class="k">Course % complete</div>
+        <div class="v"><span id="pct">0</span><small>%</small></div>
+        <div class="track"><div class="fill" id="fill"></div></div>
+        <div class="sub"><span id="donecount">0</span> of <span id="totcount">0</span> lessons signed off</div>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="sechead">
+      <span class="num">01</span><h2>The Programme, as a Bar Chart</h2>
+      <p>Tick lessons below — bars fill and the data date advances.</p>
+    </div>
+    <div class="gantt-scroll">
+      <div class="gantt" id="gantt"></div>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--rule2)"></i>Remaining</span>
+      <span><i style="background:var(--earth)"></i>Complete</span>
+      <span><i style="background:var(--copper-soft);border-color:var(--copper)"></i>In progress</span>
+      <span><i style="background:var(--ink);width:11px;height:11px;transform:rotate(45deg);border:0"></i>Milestone</span>
+      <span><i style="border:0;border-left:2px dashed var(--live);width:2px;height:14px"></i>Data date</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <span class="num">02</span><h2>Phases &amp; Lesson Register</h2>
+      <p>One concept at a time. Task + quiz after every lesson.</p>
+    </div>
+    <div class="phases" id="phases"></div>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <span class="num">03</span><h2>Capstone Deliverables</h2>
+      <p>What you will physically own at the end.</p>
+    </div>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th>#</th><th>Deliverable</th><th>Built in</th><th>Proves to an employer</th></tr></thead>
+        <tbody id="deliv"></tbody>
+      </table>
+    </div>
+    <p class="note">Everything above lives in one P6 project — <span class="mono">SWB-CAP-01 · 4000A Switchroom, Data Centre Stage 2</span> — exported as an XER at each major stage so you keep a versioned history you can show in an interview.</p>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <span class="num">04</span><h2>Final Assessment Rubric</h2>
+      <p>How I will score you in Week 13.</p>
+    </div>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th>Criterion</th><th>Weight</th><th>What full marks looks like</th></tr></thead>
+        <tbody>
+          <tr><td>Logic integrity</td><td class="n">25</td><td>No open ends, no danglers, &lt;5% lags, no SF without written justification, every activity has a driving predecessor and successor.</td></tr>
+          <tr><td>Structure &amp; coding</td><td class="n">15</td><td>WBS mirrors how the job is actually delivered and invoiced; activity codes let you filter by discipline, area, contractor and phase in one click.</td></tr>
+          <tr><td>Realism of durations</td><td class="n">15</td><td>Durations traceable to production rates, supplier lead times or crew sizes — not round numbers guessed to fit the end date.</td></tr>
+          <tr><td>Critical path defensibility</td><td class="n">15</td><td>Longest path runs award → procurement → assembly → FAT → site → energisation without being manufactured by hard constraints.</td></tr>
+          <tr><td>Update &amp; forecast quality</td><td class="n">15</td><td>Clean data date, actuals only in the past, remaining durations re-estimated rather than auto-calculated, out-of-sequence handled deliberately.</td></tr>
+          <tr><td>Reporting &amp; communication</td><td class="n">15</td><td>A one-page exec view, a two-week lookahead the factory floor can work to, and a delay narrative that survives a contractual reading.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <span>Capstone: 4000A form 4b switchroom · factory build → site energisation</span>
+    <span class="mono">TICK AS YOU GO — PROGRESS SAVES AUTOMATICALLY</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var PRISTINE = "<!doctype html>\n" + document.documentElement.outerHTML;
+
+  var WEEKS = 13;
+
+  var PHASES = [
+    { n:"00", name:"Set Up Your Toolbox", tag:"Get P6 running legally on your machine",
+      hrs:3, start:1, span:1,
+      lessons:[
+        "Where to legally get P6: employer licence, Oracle trial, or a hosted training instance",
+        "Install P6 Professional and create a local standalone database",
+        "First login, admin vs user, and what a P6 'database' actually contains",
+        "Set user preferences: dates, time units, currency (AUD), duration format",
+        "Guided tour: Home, Projects, Activities, WBS, Resources, Reports windows"
+      ],
+      task:"Create an EPS node called TRAINING and an empty project SWB-CAP-01. Screenshot the Projects window and send it to me.",
+      deliv:"A working P6 install and an empty capstone project shell." },
+
+    { n:"01", name:"Planning Fundamentals", tag:"Think like a planner before touching software",
+      hrs:8, start:1, span:2,
+      lessons:[
+        "What P6 is, who uses it, and why switchgear manufacturers and data centre builders demand it",
+        "The project lifecycle of a switchboard job: tender → award → engineering → procurement → build → FAT → site → energisation",
+        "Project management vs project controls — two different jobs, two different mindsets",
+        "What a schedule really is: a model of how work will be executed, not a list of dates",
+        "Work Breakdown Structure: decomposing a switchroom into manageable, ownable chunks",
+        "Activities vs milestones — and the three questions that decide which one you need",
+        "Calendars: why factory 5-day and site 6-day calendars must not be mixed",
+        "Durations: original, remaining, at-completion — and where beginners get burned",
+        "Relationships and logic: the difference between a schedule and a Gantt picture",
+        "Critical Path Method by hand: forward pass, backward pass, on a 9-activity switchboard",
+        "Float: total vs free, and why float is a contractual asset people fight over",
+        "Constraints: what they are, and why 90% of them are a planner covering a logic gap",
+        "Baselines: the frozen promise you get measured against",
+        "Resources and costs: what schedule integration actually buys you"
+      ],
+      task:"Hand-draw the WBS for a 4000A switchroom project on paper — no software. Then list 25 activities under it and mark which are milestones.",
+      deliv:"A paper WBS and activity list you will type straight into P6 in Phase 3." },
+
+    { n:"02", name:"P6 Software Basics", tag:"Navigate the tool without fear",
+      hrs:7, start:2, span:2,
+      lessons:[
+        "Enterprise structure: how one database holds every project your company runs",
+        "EPS — the company's project filing cabinet, and where your job sits in it",
+        "OBS — who is responsible, and how P6 uses it to control access",
+        "Creating a project: ID, name, planned start, must-finish-by, default calendar",
+        "The WBS window: building, indenting, re-sequencing, and WBS summary bars",
+        "The Activities window anatomy: table, Gantt, details tabs, and the toolbar",
+        "Activity codes vs WBS: coding by discipline, area, cubicle, contractor, phase",
+        "Calendars: global, project and resource — creating a factory shutdown calendar",
+        "Columns: the 20 columns a working planner actually keeps on screen",
+        "Filters: building a filter for 'critical activities in the next 14 days'",
+        "Group &amp; sort: the single feature that makes a 1,000-activity schedule readable",
+        "Layouts: saving, sharing, and building your three standard working views",
+        "The Gantt chart: bar styles, timescale, curtains, and progress line",
+        "Printing and exporting: PDF for the client, XER for the contractor, XLSX for the factory"
+      ],
+      task:"Build and save three layouts: 'Logic Review', 'Weekly Progress Review', and '2-Week Lookahead'. List the columns you chose for each and justify three of them.",
+      deliv:"Three saved, reusable layouts — the mark of someone who has used P6 before." },
+
+    { n:"03", name:"Build The Capstone",
+      tag:"100+ activities: award → FAT → site → energisation",
+      hrs:12, start:3, span:3,
+      lessons:[
+        "Build the WBS: Engineering / Procurement / Manufacture / Test / Logistics / Site / Commissioning",
+        "Enter the engineering activities: kick-off, design review, SLD development, shop drawings, client approval cycles",
+        "Enter procurement: long-lead register, ACB and MCCB ordering, CT/VT, PLC and metering, cable and busbar",
+        "Enter manufacture: enclosure fabrication, powder coat, busbar machining, cubicle assembly, internal wiring, labelling",
+        "Enter test and release: QA inspection, pre-FAT snag, FAT preparation, FAT, client defects, rectification, release note",
+        "Enter logistics and site: packing, transport permits, delivery, offload, setting to position, interconnection",
+        "Enter site works: terminations, glanding, earthing, secondary injection, primary injection, protection settings",
+        "Enter commissioning: pre-energisation checks, energisation, load transfer, practical completion",
+        "Assign realistic durations using production rates, not guesses",
+        "Link the logic — 150+ relationships with the right type each time",
+        "Add the milestone set: award, approval, order placed, delivery, FAT pass, energised, PC",
+        "Assign the factory and site calendars to the right activity groups",
+        "Run F9 and find your critical path for the first time",
+        "Add only the constraints that are genuinely real (and document why)"
+      ],
+      task:"Complete the build to 100+ activities. Export the XER and tell me your project finish date and the length of your critical path in working days.",
+      deliv:"SWB-CAP-01 — a logic-complete, calendar-correct 100+ activity schedule." },
+
+    { n:"04", name:"Relationship Mastery", tag:"FS, SS, FF, SF, leads and lags — drilled",
+      hrs:5, start:5, span:2,
+      lessons:[
+        "Finish-to-Start: the default, and why 80–90% of your logic should be FS",
+        "Start-to-Start: overlapping wiring and labelling in the same cubicle",
+        "Finish-to-Finish: why 'test complete' cannot precede 'wiring complete'",
+        "Start-to-Finish: the rare, genuinely valid case (shift handover, temporary supply)",
+        "Lags: modelling concrete cure, powder coat cure, shipping transit, approval turnaround",
+        "Leads (negative lag): why most schedule auditors treat them as a defect",
+        "Choosing the right type: a decision tree you can apply in five seconds",
+        "Redundant and circular logic — finding and killing both"
+      ],
+      task:"Find 10 places in your capstone where you used FS but reality is SS or FF. Change them, re-run F9, and report what happened to your finish date.",
+      deliv:"Logic you can defend line-by-line in a schedule review." },
+
+    { n:"05", name:"Advanced Scheduling", tag:"Float, longest path, data date, schedule health",
+      hrs:9, start:6, span:2,
+      lessons:[
+        "Critical path vs longest path — and why P6 gives you both",
+        "Total float, free float, and reading the difference correctly",
+        "Negative float: what causes it, and how to respond without lying to the schedule",
+        "Driving vs non-driving relationships, and driving predecessor analysis",
+        "Scheduling options (F9): retained logic vs progress override vs actual dates",
+        "The data date — the single most misunderstood field in P6",
+        "Progress calculation: duration %, units %, and physical % complete",
+        "Remaining duration: the number that separates real planners from date-typists",
+        "Out-of-sequence progress: what it means and how to clean it up",
+        "Open-ended and dangling activities — how to find every one of them",
+        "Excessive lags and hard constraints: the two biggest schedule lies",
+        "The DCMA 14-point schedule health check, applied to your capstone",
+        "The 12 mistakes beginner planners make (and how reviewers spot them instantly)"
+      ],
+      task:"Run a full DCMA 14-point check on SWB-CAP-01. Report your score on each of the 14 metrics and fix every failure.",
+      deliv:"A schedule health report and a cleaned schedule that passes an audit." },
+
+    { n:"06", name:"Baselines &amp; Updates", tag:"The weekly cycle, delays, and recovery",
+      hrs:8, start:8, span:2,
+      lessons:[
+        "Creating and assigning a baseline — project baseline vs user baseline",
+        "Original baseline vs revised baseline: when a re-baseline is legitimate",
+        "The professional weekly update cycle, step by step",
+        "Entering actual start and actual finish dates correctly",
+        "Re-estimating remaining duration instead of trusting the default",
+        "Moving the data date and re-running the schedule",
+        "Baseline bars and variance columns: reading planned vs actual at a glance",
+        "Identifying delay: which activities moved, which drove the movement",
+        "Delay impact analysis: time impact analysis in plain terms",
+        "Building a recovery schedule: crashing, fast-tracking, re-sequencing, re-scoping"
+      ],
+      task:"I will inject a delay — your 4000A ACBs slip 3 weeks and FAT fails on 2 cubicles. Run four weekly updates, then produce a recovery schedule that saves the energisation date.",
+      deliv:"An updated, baselined schedule with a documented delay and recovery plan." },
+
+    { n:"07", name:"Resources &amp; Costs", tag:"Load labour, plant, materials and money",
+      hrs:8, start:9, span:2,
+      lessons:[
+        "Labour, non-labour and material resource types — and when to use each",
+        "Building your resource pool: design engineer, draftsperson, assembler, wireman, test engineer, PM",
+        "Non-labour resources: factory bay, overhead crane, HV test set, transport",
+        "Material resources: copper busbar, ACBs, MCCBs, CTs, cable, gland kits",
+        "Resource calendars and availability limits",
+        "Assigning resources: budgeted units, units/time, and duration-driven vs unit-driven",
+        "Resource loading the capstone and reading the histogram",
+        "Over-allocation: spotting it, then resource levelling (and its dangers)",
+        "Cost loading: rates, budgeted cost, and cost accounts",
+        "Budgets, the BAC, and building a project cash flow",
+        "Generating the S-curve your finance team actually wants"
+      ],
+      task:"Load 8 resources and a ~$2.4M budget across the capstone. Produce a cash flow curve and tell me your peak monthly spend and peak assembler headcount.",
+      deliv:"A resource- and cost-loaded schedule with an S-curve and cash flow." },
+
+    { n:"08", name:"Earned Value", tag:"PV, EV, AC, CPI, SPI, EAC — by hand then in P6",
+      hrs:6, start:11, span:1,
+      lessons:[
+        "Why earned value exists: the three-number problem it solves",
+        "BAC, PV, EV, AC defined in switchboard-factory language",
+        "Cost variance and schedule variance: sign conventions and meaning",
+        "CPI and SPI: calculating, then interpreting honestly",
+        "EAC — the four formulas and when each is the right one",
+        "ETC, VAC and TCPI: forecasting the rest of the job",
+        "Where P6 stores each value and how to display them",
+        "The limits of EV: why SPI goes to 1.0 at the end even on a late job"
+      ],
+      task:"At Update 3, calculate PV, EV, AC, CV, SV, CPI, SPI and EAC by hand on paper. Then check yourself against P6 and explain any difference.",
+      deliv:"A one-page earned value summary you could put in a board pack." },
+
+    { n:"09", name:"Professional Reporting", tag:"Say the right thing to the right audience",
+      hrs:6, start:12, span:1,
+      lessons:[
+        "Formatting a Gantt chart that a client will actually read",
+        "Two-week and four-week lookaheads: filters, layout, and factory-floor usability",
+        "The weekly progress report: structure, content, and what to leave out",
+        "Milestone and critical path reports",
+        "Delay reports and extension-of-time narratives that hold up contractually",
+        "Resource and cash flow reports for procurement and finance",
+        "Building a one-page executive dashboard",
+        "Tailoring the same schedule for management, client, site, procurement and engineering"
+      ],
+      task:"Produce a 5-part weekly report pack from your capstone at Update 4: exec page, milestone status, critical path, 2-week lookahead, delay narrative.",
+      deliv:"A complete weekly reporting pack — the artefact employers ask to see." },
+
+    { n:"10", name:"Job Readiness", tag:"Interviews, audits, and defending a programme",
+      hrs:6, start:13, span:1,
+      lessons:[
+        "How a Project Engineer uses P6 day to day (your current role, upgraded)",
+        "How a Planner/Scheduler uses P6 — and what they are judged on",
+        "How Project Controls uses P6 with cost and risk systems",
+        "P6 terminology drill: speak the language without hesitating",
+        "Reading an unfamiliar 3,000-activity schedule in 20 minutes",
+        "Auditing a poor schedule: my broken-schedule exercise",
+        "Challenging unrealistic durations without starting a war",
+        "Reading risk out of a schedule: float erosion, path convergence, single points of failure",
+        "Managing and communicating delay professionally",
+        "30 common P6 interview questions with model answers"
+      ],
+      task:"I will hand you a deliberately broken switchroom schedule. Audit it, score it, and write the review email you would send to its author.",
+      deliv:"A final schedule health score out of 100 and a job-readiness assessment." }
+  ];
+
+  var MILESTONES = [
+    { wk:1,  label:"P6 live" },
+    { wk:5,  label:"Logic complete" },
+    { wk:7,  label:"Baselined" },
+    { wk:9,  label:"Delay + recovery" },
+    { wk:11, label:"Cost loaded" },
+    { wk:13, label:"Audit + score" }
+  ];
+
+  var DELIVERABLES = [
+    ["01","Complete WBS (7 top-level, ~30 elements)","Phase 3","You can structure a job, not just list tasks"],
+    ["02","100+ realistic activities, award to energisation","Phase 3","You understand how switchgear actually gets built"],
+    ["03","150+ relationships, correct types","Phases 3–4","Your logic survives a review"],
+    ["04","Milestone set, factory + site calendars","Phase 3","You model reality, not a calendar year"],
+    ["05","Defensible critical path","Phases 3–5","You can say why the end date is the end date"],
+    ["06","DCMA 14-point health report","Phase 5","You audit your own work before someone else does"],
+    ["07","Baseline + 4 weekly updates","Phase 6","You can run a live schedule, not just build one"],
+    ["08","Delay scenario + recovery schedule","Phase 6","You perform when the job goes wrong"],
+    ["09","Resource-loaded schedule + histogram","Phase 7","You link the schedule to real crews and plant"],
+    ["10","Cost-loaded budget, cash flow, S-curve","Phase 7","You speak finance's language"],
+    ["11","Earned value summary (CPI / SPI / EAC)","Phase 8","You forecast instead of report history"],
+    ["12","Two-week lookahead for the factory floor","Phase 9","Your schedule is usable by the people doing the work"],
+    ["13","Executive report pack","Phase 9","You communicate upward without drowning people"],
+    ["14","Audit of a broken schedule + review email","Phase 10","You are ready to be trusted with someone else's programme"]
+  ];
+
+  /* ---------- state ---------- */
+  var state = { done: [] };
+  try{
+    var raw = document.getElementById("progress-state").textContent;
+    var parsed = JSON.parse(raw);
+    if (parsed && Array.isArray(parsed.done)) state.done = parsed.done;
+  }catch(e){}
+  try{
+    var ls = localStorage.getItem("p6sb-progress");
+    if (ls){
+      var lp = JSON.parse(ls);
+      if (lp && Array.isArray(lp.done) && lp.done.length > state.done.length) state.done = lp.done;
+    }
+  }catch(e){}
+
+  var doneSet = {};
+  state.done.forEach(function(id){ doneSet[id] = true; });
+
+  function idFor(p,i){ return "p" + PHASES[p].n + "-" + i; }
+  function totalLessons(){ var t=0; PHASES.forEach(function(p){ t += p.lessons.length; }); return t; }
+  function phaseDone(p){
+    var c=0;
+    for (var i=0;i<PHASES[p].lessons.length;i++){ if (doneSet[idFor(p,i)]) c++; }
+    return c;
+  }
+  function allDone(){ var c=0; PHASES.forEach(function(p,pi){ c += phaseDone(pi); }); return c; }
+
+  /* ---------- gantt ---------- */
+  function buildGantt(){
+    var g = document.getElementById("gantt");
+    var h = '<div class="grow ghead"><div class="lab"><span class="nm" style="font-size:13px">Phase</span></div>';
+    for (var w=1; w<=WEEKS; w++) h += '<div class="wk">W' + w + '</div>';
+    h += '</div>';
+
+    PHASES.forEach(function(p,pi){
+      h += '<div class="grow">';
+      h += '<div class="lab"><span class="idx mono">' + p.n + '</span><span class="nm">' + p.name + '</span><span class="hrs">' + p.hrs + 'h</span></div>';
+      for (var w=1; w<=WEEKS; w++) h += '<div class="cell"></div>';
+      h += '<div class="bar" id="bar-' + pi + '" style="grid-column:' + (p.start+1) + ' / span ' + p.span + '"><div class="pf" id="pf-' + pi + '"></div></div>';
+      h += '</div>';
+    });
+
+    h += '<div class="grow" style="border-top:1px solid var(--rule)">';
+    h += '<div class="lab"><span class="nm" style="color:var(--ink2)">Milestones</span></div>';
+    for (var w=1; w<=WEEKS; w++) h += '<div class="cell"></div>';
+    MILESTONES.forEach(function(m,mi){
+      h += '<div class="ms" id="ms-' + mi + '" style="grid-column:' + (m.wk+1) + '" title="' + m.label + '"></div>';
+    });
+    h += '</div>';
+
+    h += '<div class="grow" style="min-height:20px">';
+    h += '<div class="lab" style="border-right:1px solid var(--rule)"></div>';
+    for (var w=1; w<=WEEKS; w++) h += '<div class="cell" style="min-height:16px"></div>';
+    MILESTONES.forEach(function(m){
+      var col = Math.max(2, m.wk - 1);
+      h += '<div class="mslab" style="grid-column:' + col + ' / span 4">' + m.label + '</div>';
+    });
+    h += '</div>';
+
+    h += '<div class="dd" id="dd"></div>';
+    g.innerHTML = h;
+  }
+
+  /* ---------- phase cards ---------- */
+  function buildPhases(){
+    var c = document.getElementById("phases");
+    var html = "";
+    PHASES.forEach(function(p,pi){
+      html += '<details class="ph" id="ph-' + pi + '" data-p="' + pi + '">';
+      html += '<summary>';
+      html += '<span class="pnum">P' + p.n + '</span>';
+      html += '<span><h3>' + p.name + '</h3><p class="ptag">' + p.tag + '</p></span>';
+      html += '<span class="right">';
+      html += '<span class="pill mono">' + p.hrs + ' h</span>';
+      html += '<span class="pill mono">wk ' + p.start + (p.span>1 ? '–' + (p.start+p.span-1) : '') + '</span>';
+      html += '<span class="pill mono" id="pp-' + pi + '">0/' + p.lessons.length + '</span>';
+      html += '<span class="caret">&#9654;</span>';
+      html += '</span></summary>';
+      html += '<div class="pbody"><div class="grid"><div>';
+      html += '<p class="sublab">Lessons</p><ul class="checks">';
+      p.lessons.forEach(function(l,li){
+        var id = idFor(pi,li);
+        html += '<li><label><input type="checkbox" data-id="' + id + '"' + (doneSet[id] ? ' checked' : '') + '><span>' + l + '</span></label></li>';
+      });
+      html += '</ul></div><div>';
+      html += '<div class="task"><div class="t">Practical task</div><p>' + p.task + '</p></div>';
+      html += '<div class="deliv"><div class="t">You will own</div><p>' + p.deliv + '</p></div>';
+      html += '</div></div></div></details>';
+    });
+    c.innerHTML = html;
+
+    c.addEventListener("change", function(e){
+      var t = e.target;
+      if (!t || t.type !== "checkbox") return;
+      var id = t.getAttribute("data-id");
+      if (t.checked) doneSet[id] = true; else delete doneSet[id];
+      state.done = Object.keys(doneSet);
+      render();
+      save();
+    });
+  }
+
+  function buildDeliv(){
+    var b = document.getElementById("deliv");
+    var h = "";
+    DELIVERABLES.forEach(function(d){
+      h += '<tr><td class="n">' + d[0] + '</td><td><b>' + d[1] + '</b></td><td class="n">' + d[2] + '</td><td style="color:var(--ink2)">' + d[3] + '</td></tr>';
+    });
+    b.innerHTML = h;
+  }
+
+  /* ---------- render ---------- */
+  function render(){
+    var tot = totalLessons(), dn = allDone();
+    var pct = tot ? Math.round(dn / tot * 100) : 0;
+    document.getElementById("pct").textContent = pct;
+    document.getElementById("donecount").textContent = dn;
+    document.getElementById("totcount").textContent = tot;
+    document.getElementById("fill").style.width = pct + "%";
+
+    PHASES.forEach(function(p,pi){
+      var c = phaseDone(pi), n = p.lessons.length;
+      var pf = document.getElementById("pf-" + pi);
+      var bar = document.getElementById("bar-" + pi);
+      if (pf) pf.style.width = (c / n * 100) + "%";
+      if (bar) bar.className = "bar" + (c > 0 && c < n ? " active" : "");
+      var pill = document.getElementById("pp-" + pi);
+      if (pill){
+        pill.textContent = c + "/" + n;
+        pill.className = "pill mono" + (c === n ? " ok" : (c > 0 ? " live" : ""));
+      }
+      var card = document.getElementById("ph-" + pi);
+      if (card) card.classList.toggle("done", c === n);
+    });
+
+    MILESTONES.forEach(function(m,mi){
+      var hit = true;
+      PHASES.forEach(function(p,pi){
+        if (p.start + p.span - 1 <= m.wk && phaseDone(pi) < p.lessons.length) hit = false;
+      });
+      var el = document.getElementById("ms-" + mi);
+      if (el) el.classList.toggle("hit", hit);
+    });
+
+    var dd = document.getElementById("dd");
+    if (dd) dd.style.left = "calc(var(--labw) + (100% - var(--labw)) * " + (pct/100) + ")";
+  }
+
+  /* ---------- persistence ---------- */
+  var artifactApi = null, pending = null;
+  if (window.claude && typeof window.claude.use === "function"){
+    window.claude.use("artifact").then(function(a){ artifactApi = a; }).catch(function(){});
+  }
+  function buildDoc(){
+    return PRISTINE.replace(
+      /(<script type="application\/json" id="progress-state">)[\s\S]*?(<\/script>)/,
+      function(m,a,b){ return a + JSON.stringify(state) + b; }
+    );
+  }
+  function save(){
+    try{ localStorage.setItem("p6sb-progress", JSON.stringify(state)); }catch(e){}
+    if (!artifactApi) return;
+    clearTimeout(pending);
+    pending = setTimeout(function(){
+      try{ artifactApi.publish(buildDoc()).catch(function(){}); }catch(e){}
+    }, 3000);
+  }
+
+  buildGantt();
+  buildPhases();
+  buildDeliv();
+  render();
+
+  for (var pi=0; pi<PHASES.length; pi++){
+    if (phaseDone(pi) < PHASES[pi].lessons.length){
+      var el = document.getElementById("ph-" + pi);
+      if (el) el.open = true;
+      break;
+    }
+  }
+})();
+</script>
