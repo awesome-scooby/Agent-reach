@@ -1,0 +1,1836 @@
+<title>Trajectory 2076</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --ground:#EDEFF0; --surface:#FFFFFF; --surface2:#E3E7E9; --surface3:#D6DBDE;
+  --ink:#14181B; --ink2:#464E54; --ink3:#737C83;
+  --rule:#C9CFD3; --rule2:#DDE2E5;
+  --copper:#9A5A20; --copper2:#B87333; --steel:#2A5F82;
+  --good:#2C6A48; --warn:#8A5D08; --crit:#9E2F26;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300;
+  --shadow:0 1px 2px rgba(20,24,27,.06),0 8px 24px -12px rgba(20,24,27,.18);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  color-scheme: dark;
+  --ground:#111418; --surface:#191D21; --surface2:#212930; --surface3:#2B343B;
+  --ink:#E9ECEE; --ink2:#A9B2B9; --ink3:#7A848B;
+  --rule:#333C43; --rule2:#262E34;
+  --copper:#D08C4E; --copper2:#E0A56B; --steel:#7FB2D4;
+  --good:#6FBB8F; --warn:#D6AB5E; --crit:#E5867B;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#3fa03f;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -14px rgba(0,0,0,.7);
+}}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ground:#111418; --surface:#191D21; --surface2:#212930; --surface3:#2B343B;
+  --ink:#E9ECEE; --ink2:#A9B2B9; --ink3:#7A848B;
+  --rule:#333C43; --rule2:#262E34;
+  --copper:#D08C4E; --copper2:#E0A56B; --steel:#7FB2D4;
+  --good:#6FBB8F; --warn:#D6AB5E; --crit:#E5867B;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#3fa03f;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -14px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,.arch{font-family:Archivo,"Helvetica Neue",Arial,sans-serif}
+.mono,code,td.num,th{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+a{color:var(--copper)}
+:focus-visible{outline:2px solid var(--copper);outline-offset:2px;border-radius:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---- shell ---- */
+.wrap{max-width:1220px;margin:0 auto;padding:0 20px 120px}
+.layout{display:grid;grid-template-columns:210px minmax(0,1fr);gap:44px;align-items:start}
+.layout>*{min-width:0}
+@media(max-width:980px){.layout{grid-template-columns:1fr;gap:0}}
+
+/* ---- masthead ---- */
+.mast{padding:56px 0 34px;border-bottom:3px solid var(--copper);margin-bottom:34px}
+.mast .kicker{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--copper);margin:0 0 16px}
+.mast h1{font-size:clamp(40px,7vw,76px);line-height:.94;margin:0;font-weight:800;
+  letter-spacing:-.03em;text-wrap:balance}
+.mast .sub{font-size:19px;color:var(--ink2);max-width:60ch;margin:18px 0 0}
+.mast .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.chip{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.09em;
+  text-transform:uppercase;padding:5px 9px;border:1px solid var(--rule);border-radius:3px;
+  color:var(--ink2);background:var(--surface)}
+
+/* ---- busbar nav ---- */
+.rail{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;padding-right:6px}
+@media(max-width:980px){.rail{position:static;max-height:none;margin-bottom:36px}}
+.rail .rl{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--ink3);margin:0 0 12px;padding-left:14px}
+.bus{position:relative;padding-left:14px}
+.bus::before{content:"";position:absolute;left:3px;top:4px;bottom:4px;width:3px;
+  background:linear-gradient(180deg,var(--copper2),var(--copper));border-radius:2px}
+.way{display:flex;gap:9px;align-items:baseline;padding:4px 0 4px 4px;
+  color:var(--ink2);text-decoration:none;font-size:13px;line-height:1.3;
+  font-family:Archivo,sans-serif;border-left:2px solid transparent;margin-left:-4px}
+.way b{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--ink3);
+  font-weight:500;flex:0 0 auto}
+.way:hover{color:var(--copper)}
+.way.on{color:var(--ink);font-weight:600;border-left-color:var(--copper)}
+.way.on b{color:var(--copper)}
+
+/* ---- sections ---- */
+section{scroll-margin-top:20px;margin:0 0 68px}
+.shead{display:flex;gap:14px;align-items:baseline;border-bottom:1px solid var(--rule);
+  padding-bottom:10px;margin-bottom:22px}
+.shead .no{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--copper);
+  letter-spacing:.14em;flex:0 0 auto;padding-top:5px}
+.shead h2{font-size:clamp(24px,3.4vw,33px);margin:0;font-weight:700;letter-spacing:-.02em;
+  line-height:1.1;text-wrap:balance}
+.lede{font-size:18.5px;color:var(--ink2);max-width:64ch;margin:0 0 24px}
+p{max-width:66ch}
+h3{font-size:16px;text-transform:uppercase;letter-spacing:.1em;margin:32px 0 12px;
+  color:var(--ink);font-weight:700}
+h4{font-size:15px;margin:22px 0 8px;font-weight:700;letter-spacing:-.01em}
+
+/* ---- cards / callouts ---- */
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:6px;
+  padding:20px 22px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:16px}
+@media(min-width:700px){.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}}
+.verdict{border-left:4px solid var(--copper);background:var(--surface);padding:18px 22px;
+  border-radius:0 6px 6px 0;margin:22px 0;box-shadow:var(--shadow)}
+.verdict .vl{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--copper);display:block;margin-bottom:7px}
+.verdict.bad{border-left-color:var(--crit)} .verdict.bad .vl{color:var(--crit)}
+.verdict.ok{border-left-color:var(--good)} .verdict.ok .vl{color:var(--good)}
+
+/* ---- tables ---- */
+.tw{overflow-x:auto;max-width:100%;margin:18px 0;border:1px solid var(--rule);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-family:Archivo,sans-serif;font-size:14px}
+th{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink3);text-align:left;font-weight:500;
+  padding:11px 13px;border-bottom:1px solid var(--rule);white-space:nowrap;background:var(--surface2)}
+td{padding:10px 13px;border-bottom:1px solid var(--rule2);vertical-align:top;color:var(--ink2)}
+tr:last-child td{border-bottom:0}
+td:first-child{color:var(--ink);font-weight:600}
+.num,td.n,th.n{font-variant-numeric:tabular-nums;text-align:right}
+tbody tr:hover td{background:var(--surface2)}
+
+/* ---- pills ---- */
+.p{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:9.5px;
+  letter-spacing:.09em;text-transform:uppercase;padding:2.5px 7px;border-radius:3px;
+  border:1px solid currentColor;white-space:nowrap;font-weight:500}
+.p-crit{color:var(--crit)} .p-high{color:var(--warn)} .p-med{color:var(--steel)}
+.p-low{color:var(--ink3)} .p-yes{color:var(--good)} .p-no{color:var(--crit)}
+.p-maybe{color:var(--warn)} .p-cop{color:var(--copper)}
+
+/* ---- score bars ---- */
+.bar{height:7px;background:var(--surface3);border-radius:4px;overflow:hidden;min-width:70px}
+.bar i{display:block;height:100%;background:var(--copper);border-radius:4px}
+.rank{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink3);width:26px}
+
+/* ---- controls ---- */
+.panel{background:var(--surface2);border:1px solid var(--rule);border-radius:6px;padding:18px 20px;margin:18px 0}
+.panel h4{margin-top:0}
+.sliders{display:grid;gap:11px}
+@media(min-width:640px){.sliders{grid-template-columns:1fr 1fr;gap:11px 26px}}
+.sl{display:grid;grid-template-columns:1fr 46px;gap:10px;align-items:center}
+.sl label{font-family:Archivo,sans-serif;font-size:12.5px;color:var(--ink2)}
+.sl output{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--copper);text-align:right;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--copper);height:20px}
+.btn{font-family:Archivo,sans-serif;font-size:12.5px;font-weight:600;padding:7px 14px;
+  border:1px solid var(--rule);background:var(--surface);color:var(--ink);border-radius:4px;
+  cursor:pointer;letter-spacing:.01em}
+.btn:hover{border-color:var(--copper);color:var(--copper)}
+.btn.pri{background:var(--copper);border-color:var(--copper);color:#fff}
+.btn.pri:hover{background:var(--copper2);border-color:var(--copper2);color:#fff}
+.btnrow{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:14px}
+select,input[type=number],input[type=text]{font-family:Archivo,sans-serif;font-size:13px;
+  padding:6px 9px;border:1px solid var(--rule);border-radius:4px;background:var(--surface);color:var(--ink)}
+
+/* ---- pick list ---- */
+.picks{display:grid;gap:9px;margin:16px 0}
+.pick{display:flex;gap:12px;align-items:center;padding:11px 14px;background:var(--surface);
+  border:1px solid var(--rule);border-radius:5px;cursor:pointer}
+.pick:hover{border-color:var(--copper)}
+.pick.sel{border-color:var(--copper);box-shadow:inset 3px 0 0 var(--copper)}
+.pick input{accent-color:var(--copper);width:16px;height:16px;flex:0 0 auto}
+.pick .pt{flex:1;min-width:0}
+.pick .pn{font-family:Archivo,sans-serif;font-weight:600;font-size:14px;color:var(--ink);display:block}
+.pick .pd{font-size:13px;color:var(--ink3);font-family:Archivo,sans-serif;display:block;margin-top:1px}
+.pick .ps{font-family:"IBM Plex Mono",monospace;font-size:15px;color:var(--copper);
+  font-variant-numeric:tabular-nums;flex:0 0 auto}
+
+/* ---- accordion ---- */
+details{background:var(--surface);border:1px solid var(--rule);border-radius:5px;margin-bottom:9px}
+details[open]{border-color:var(--copper)}
+summary{cursor:pointer;padding:13px 16px;font-family:Archivo,sans-serif;font-weight:600;
+  font-size:14.5px;display:flex;gap:12px;align-items:baseline;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+";font-family:"IBM Plex Mono",monospace;color:var(--copper);
+  font-size:14px;flex:0 0 auto}
+details[open] summary::before{content:"\2212"}
+summary .sn{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink3);flex:0 0 auto}
+summary{flex-wrap:wrap}
+summary .stag{margin-left:auto}
+@media(max-width:760px){summary .stag{margin-left:0;order:3;flex-basis:100%}}
+.dbody{padding:2px 16px 18px 40px;font-size:15px}
+.dbody dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:0}
+.dbody dt{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink3);padding-top:4px;white-space:nowrap}
+.dbody dd{margin:0;color:var(--ink2)}
+.dbody dd.rec{color:var(--ink);font-weight:600;font-family:Archivo,sans-serif;font-size:14px}
+@media(max-width:620px){.dbody{padding-left:16px}.dbody dl{grid-template-columns:1fr;gap:2px 0}
+  .dbody dd{margin-bottom:9px}}
+
+/* ---- checklist ---- */
+.mo{border:1px solid var(--rule);border-radius:6px;background:var(--surface);margin-bottom:11px;overflow:hidden}
+.mo>h4{margin:0;padding:12px 16px;background:var(--surface2);border-bottom:1px solid var(--rule);
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--copper);display:flex;justify-content:space-between;align-items:center}
+.mo ul{list-style:none;margin:0;padding:8px 16px 14px}
+.mo li{display:flex;gap:11px;align-items:flex-start;padding:6px 0;font-size:14.5px;
+  font-family:Archivo,sans-serif;color:var(--ink2);line-height:1.45}
+.mo li input{accent-color:var(--copper);margin-top:3px;width:15px;height:15px;flex:0 0 auto}
+.mo li .tag{font-family:"IBM Plex Mono",monospace;font-size:8.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink3);flex:0 0 74px;padding-top:3px}
+.mo li.done label{text-decoration:line-through;color:var(--ink3)}
+.prog{height:4px;background:var(--surface3);border-radius:3px;overflow:hidden;margin:14px 0 20px}
+.prog i{display:block;height:100%;background:var(--copper);transition:width .3s}
+
+/* ---- chart ---- */
+.chartbox{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:18px;margin:18px 0}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:12px}
+.lg{display:flex;gap:7px;align-items:center;font-family:Archivo,sans-serif;font-size:12.5px;color:var(--ink2)}
+.lg i{width:14px;height:3px;border-radius:2px;flex:0 0 auto}
+.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--rule);
+  border-radius:5px;padding:9px 11px;font-family:Archivo,sans-serif;font-size:12.5px;
+  box-shadow:var(--shadow);z-index:20;opacity:0;transition:opacity .12s;min-width:150px}
+.tip b{display:block;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.12em;
+  color:var(--ink3);margin-bottom:6px;text-transform:uppercase}
+.tip .tr{display:flex;justify-content:space-between;gap:14px;color:var(--ink2);line-height:1.7}
+.tip .tr span:last-child{font-variant-numeric:tabular-nums;font-family:"IBM Plex Mono",monospace;color:var(--ink)}
+.tip .sw{width:9px;height:9px;border-radius:2px;display:inline-block;margin-right:6px}
+
+/* ---- scorecard ---- */
+.qs{display:grid;gap:8px;margin:16px 0}
+.qrow{display:grid;grid-template-columns:1fr 120px 42px;gap:12px;align-items:center;
+  padding:7px 12px;background:var(--surface);border:1px solid var(--rule);border-radius:4px}
+.qrow label{font-family:Archivo,sans-serif;font-size:13.5px;color:var(--ink2)}
+.qrow output{font-family:"IBM Plex Mono",monospace;font-size:13px;text-align:right;
+  color:var(--ink);font-variant-numeric:tabular-nums}
+@media(max-width:560px){.qrow{grid-template-columns:1fr 80px 36px;gap:8px}}
+.gauge{display:flex;gap:20px;align-items:center;flex-wrap:wrap;padding:20px 22px;
+  background:var(--surface);border:1px solid var(--rule);border-radius:6px;margin:18px 0}
+.gauge .gv{font-family:Archivo,sans-serif;font-size:56px;font-weight:800;line-height:1;
+  letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.gauge .gt{flex:1;min-width:200px}
+.gauge .gt strong{display:block;font-family:Archivo,sans-serif;font-size:15px;margin-bottom:3px}
+.gauge .gt span{font-size:14px;color:var(--ink2);font-family:Archivo,sans-serif}
+
+/* ---- filters ---- */
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin:16px 0}
+.ft{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  padding:5px 10px;border:1px solid var(--rule);border-radius:3px;background:var(--surface);
+  color:var(--ink2);cursor:pointer}
+.ft:hover{border-color:var(--copper)}
+.ft.on{background:var(--copper);border-color:var(--copper);color:#fff}
+
+/* ---- rules ---- */
+.rule-item{display:grid;grid-template-columns:auto 1fr;gap:14px;padding:13px 16px;
+  background:var(--surface);border:1px solid var(--rule);border-radius:5px;margin-bottom:8px}
+.rule-item .rn{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--copper);padding-top:3px}
+.rule-item .rif{font-family:Archivo,sans-serif;font-size:14px;color:var(--ink);font-weight:600;display:block}
+.rule-item .rth{font-family:Archivo,sans-serif;font-size:14px;color:var(--ink2);display:block;margin-top:4px}
+.rule-item .rth::before{content:"→ ";color:var(--copper);font-weight:700}
+
+.footnote{font-size:13.5px;color:var(--ink3);border-top:1px solid var(--rule);padding-top:14px;margin-top:30px;max-width:70ch}
+.savebar{position:sticky;bottom:0;background:var(--surface);border-top:2px solid var(--copper);
+  padding:10px 20px;display:flex;gap:12px;align-items:center;justify-content:space-between;
+  box-shadow:0 -6px 20px -10px rgba(0,0,0,.3);z-index:30;flex-wrap:wrap}
+.savebar .st{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink3)}
+ul.tight{padding-left:20px;max-width:66ch}
+ul.tight li{margin-bottom:6px;color:var(--ink2)}
+ul.tight li strong{color:var(--ink)}
+.two-col{columns:2;column-gap:34px}
+@media(max-width:760px){.two-col{columns:1}}
+.two-col li{break-inside:avoid}
+</style>
+
+<div class="wrap">
+<header class="mast">
+  <p class="kicker">Career Strategy · 2026 &ndash; 2076 · Prepared 1 September 2026</p>
+  <h1>Trajectory 2076</h1>
+  <p class="sub">A fifty-year decision system for an Australian electrical project engineer &mdash; built to be argued with, scored, re-weighted and reviewed every quarter. Not a list of jobs.</p>
+  <div class="meta">
+    <span class="chip">AU citizen</span><span class="chip">Accredited BE (Elec)</span>
+    <span class="chip">M.Eng.Mgmt</span><span class="chip">5&ndash;7 yrs</span>
+    <span class="chip">Switchgear OEM</span><span class="chip">Perth</span>
+    <span class="chip">$110&ndash;140k</span><span class="chip">Renting · no dependents</span>
+    <span class="chip">10+ hrs/wk</span>
+  </div>
+</header>
+
+<div class="layout">
+<nav class="rail" aria-label="Sections">
+  <p class="rl">Contents</p>
+  <div class="bus" id="nav"></div>
+</nav>
+
+<main id="main">
+
+<section id="s01">
+  <div class="shead"><span class="no">WAY 01</span><h2>Diagnosis: where you actually stand</h2></div>
+  <p class="lede">You are not blocked by qualifications. You are blocked by authority. Nothing on your CV is missing except budget ownership and direct reports.</p>
+
+  <div class="grid g3" style="margin-bottom:24px">
+    <div class="card"><span class="p p-cop">Finding 01</span><h4>Authority, not credentials</h4>
+      <p style="font-size:14.5px;margin:0">Accredited degree, a Master's, seven years, $5&ndash;20M of owned scope. Every PM job ad screens for cost ownership and people. You have neither. Adding a fourth qualification is adding a lock to a door that was never locked.</p></div>
+    <div class="card"><span class="p p-cop">Finding 02</span><h4>The OEM has a hard ceiling</h4>
+      <p style="font-size:14.5px;margin:0">An OEM sells a <em>product</em>, so its project roles are order-fulfilment roles. Estimated ceiling $150&ndash;175k. You will never touch the contract, the margin or a site. Two more years is fine. Five is career-defining.</p></div>
+    <div class="card"><span class="p p-cop">Finding 03</span><h4>You are underpaid, and it is a symptom</h4>
+      <p style="font-size:14.5px;margin:0">$110&ndash;140k for this profile in Perth is roughly $20&ndash;40k under market (estimate). Underpayment at your capability level is almost always a self-advocacy problem, not a market problem.</p></div>
+  </div>
+
+  <h3>Capability scorecard</h3>
+  <p>Current level against the two gates that matter. Read the <em>shape</em>: everything you are strong at is delivery; everything critical you are weak at is money, contracts, risk and people.</p>
+  <div id="mount-cap"></div>
+
+  <div class="grid g2" style="margin-top:26px">
+    <div>
+      <h3 style="margin-top:0">Top 5 strengths</h3>
+      <ul class="tight">
+        <li><strong>Switchgear/LV&ndash;MV technical credibility.</strong> You can read a scheme, challenge a supplier and survive a FAT. Most PMs above you cannot. Scarce, and it travels.</li>
+        <li><strong>Concurrent multi-project delivery.</strong> The core PM muscle, already present, unrecognised on your CV.</li>
+        <li><strong>Interface fluency.</strong> Engineering &harr; procurement &harr; manufacturing &harr; client &harr; QA. The connective tissue where PMs are grown.</li>
+        <li><strong>Citizenship + accredited degree + Master's + hardware depth.</strong> Uncommon as a combination. Defence and critical infrastructure pay a premium for it.</li>
+        <li><strong>Maximum life flexibility, right now.</strong> Renting, no dependents, mobile, 10+ hrs/week. Almost nobody at your capability level still has this.</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="margin-top:0">Top 10 gaps, in priority order</h3>
+      <ol class="tight">
+        <li><strong>No budget or cost ownership.</strong> The number one blocker.</li>
+        <li><strong>No direct reports.</strong> The number two blocker.</li>
+        <li><strong>No contract literacy</strong> (AS 4000 / AS 4902 / AS 2124, NEC, FIDIC).</li>
+        <li><strong>No formal scheduling</strong> (P6, EVM). Locks you out of project controls entirely.</li>
+        <li><strong>No claims / variation / EOT experience.</strong> Where project money is actually won.</li>
+        <li><strong>No P&amp;L or margin exposure.</strong> You deliver scope; you don't know if it made money.</li>
+        <li><strong>Risk management is informal.</strong> No register you own, nothing quantified.</li>
+        <li><strong>Under-negotiated.</strong> A symptom of gap 9.</li>
+        <li><strong>Low executive visibility.</strong> High competence, low positioning. Common and expensive.</li>
+        <li><strong>OEM-bounded network.</strong> Suppliers and internal staff &mdash; not the clients, contractors and owners who hire PMs.</li>
+      </ol>
+    </div>
+  </div>
+
+  <h3>Hidden strengths you are underusing</h3>
+  <ul class="tight two-col">
+    <li><strong>Your citizenship.</strong> Henderson, AUKUS and Commonwealth work pay a real premium for a clearable electrical engineer. You have never priced this.</li>
+    <li><strong>Your telecom/electronics background.</strong> Everyone frames this as "not power". It is actually the bridge to <em>data centres</em> &mdash; where electrical + controls + comms literacy is the exact scarce combination.</li>
+    <li><strong>You already do PM work.</strong> Client-facing, $5&ndash;20M scope, multi-project. Roughly 60% of the PM job, with none of the title or pay.</li>
+    <li><strong>Your Master's is in Engineering <em>Management</em>.</strong> You are already credentialed for management and are not trading on it.</li>
+  </ul>
+
+  <div class="grid g2" style="margin-top:22px">
+    <div class="verdict bad"><span class="vl">Career risks</span>
+      <ul class="tight" style="margin:0">
+        <li>Becoming a 40-year-old OEM coordinator with no budget authority &mdash; your <em>actual</em> job-security risk.</li>
+        <li>Title stagnation past year 9 reading as a plateau to recruiters.</li>
+        <li>Anchoring mobility to a mortgage in a lower-paying city at the worst possible moment.</li>
+        <li>Deep product specialisation that does not transfer when the OEM restructures.</li>
+      </ul>
+    </div>
+    <div class="verdict ok"><span class="vl">Career opportunities</span>
+      <ul class="tight" style="margin:0">
+        <li>The largest electrification build-out in Australian history, and you are an electrical engineer in it.</li>
+        <li>Data centre construction &mdash; the scarcest electrical delivery talent pool in the country.</li>
+        <li>Perth as the global capital of your exact discipline, with you already in it.</li>
+        <li>A tax-advantaged Gulf posting at 38&ndash;41, once you carry a PM title worth repatriating.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="s02">
+  <div class="shead"><span class="no">WAY 02</span><h2>Assumption test: the electrician question</h2></div>
+  <p class="lede">You want the trade ticket as job-security insurance. As insurance it is priced absurdly, and it does not cover the risk you actually face.</p>
+
+  <p>The mandatory question for any 1,000&ndash;3,000 hour commitment is not "is this useful?" &mdash; almost everything is useful. It is <strong>"what else could these hours have bought?"</strong> Here is that comparison, honestly.</p>
+
+  <div id="mount-elec"></div>
+
+  <div class="verdict bad"><span class="vl">Verdict &mdash; Option D</span>
+    <p style="margin:0 0 10px"><strong>Do not do the apprenticeship. Take Option D: buy the practical competency without the ticket.</strong></p>
+    <p style="margin:0">Roughly <strong>4 years and 6,000&ndash;8,000 hours</strong>, with <strong>$150&ndash;250k of forgone income</strong>, to hedge the scenario "electrical engineering roles dry up for an Australian citizen with an accredited degree during the largest grid and electrification build-out in the nation's history." That is close to the least likely macro outcome available. And the policy does not even pay out: if engineering collapsed, you would be a 36-year-old first-year sparky competing on wage with 21-year-olds. Meanwhile the course consumes precisely the years 31&ndash;35 in which the PM transition has to happen &mdash; so it <em>increases</em> the risk it was bought to cover.</p>
+  </div>
+
+  <h4>What Option D actually looks like (~200 hours, not 6,000)</h4>
+  <ul class="tight">
+    <li>A <strong>restricted electrical licence / EWP</strong> or equivalent competency unit if your state offers one relevant to test and inspection.</li>
+    <li><strong>AS/NZS 3000 and AS/NZS 3008</strong> read properly, not skimmed &mdash; plus AS 61439 for assemblies, which you should already own.</li>
+    <li>Two weeks deliberately spent on the <strong>factory floor and at site commissioning</strong>, wiring and terminating alongside the techs. Ask your manager; it costs the business nothing.</li>
+    <li><strong>HV switching / HV operator training</strong> and an <strong>LV/HV rescue and safe-work</strong> ticket. High credibility per hour, genuinely useful, and cheap.</li>
+    <li><strong>Protection relay fundamentals</strong> (SEL / SIPROTEC / Micom hands-on). This is the single highest-credibility technical skill available to you, and it is scarce.</li>
+  </ul>
+  <p>That package costs perhaps $4&ndash;8k and 200 hours, and it closes the credibility gap almost as well as a trade ticket does &mdash; because what earns respect on site is knowing the standard and the kit, not holding the licence.</p>
+
+  <h3>The property assumption</h3>
+  <p>You raised the Melbourne move as a housing decision. It is a career decision wearing a housing costume, and it deserves the same test.</p>
+  <div id="mount-prop"></div>
+  <div class="verdict"><span class="vl">Verdict &mdash; Option C, then B</span>
+    <p style="margin:0">Your relative-value read on Melbourne is defensible; your <em>vehicle</em> is wrong. You do not have to live in an asset to own it. Option A's one-off ~$45k of first-home benefits is erased by the career differential in year one. And borrowing capacity is a function of income: buying at $125k locks you into the $550k tier &mdash; the exact tier your own thesis does not cover. Buying at 33&ndash;34 on $200&ndash;230k opens the $850k&ndash;1M tier, which is the part of Melbourne that is genuinely mispriced. <strong>Defer 18&ndash;24 months, execute the employer move, then buy as an investment from a materially stronger balance sheet.</strong> Verify all concession figures with a broker and the Victorian SRO &mdash; those rules change.</p>
+  </div>
+</section>
+
+<section id="s03">
+  <div class="shead"><span class="no">WAY 03</span><h2>The ten avenues</h2></div>
+  <p class="lede">Ten trajectories, each scored against the weighted model in Way 04. Select up to four to carry through the roadmap, income model and action plan.</p>
+  <p>Selection here propagates: the income chart, the 12-month plan and the decision tree all respond to what you tick. Your choices save automatically.</p>
+  <div id="mount-paths"></div>
+  <div id="mount-pathdetail"></div>
+</section>
+
+<section id="s04">
+  <div class="shead"><span class="no">WAY 04</span><h2>The scoring model</h2></div>
+  <p class="lede">Your proposed weights, with two deliberate changes. Move any slider and every path re-ranks live.</p>
+  <div class="grid g2">
+    <div class="verdict"><span class="vl">Weight change 01</span><p style="margin:0"><strong>Fit with existing experience: 10% &rarr; 8%.</strong> You have unusually high risk capacity &mdash; renting, no dependents, citizen, 10 hrs/week free. "It fits what I already do" is a comfort criterion, and comfort is exactly what you can currently afford to spend.</p></div>
+    <div class="verdict"><span class="vl">Weight change 02</span><p style="margin:0"><strong>Cost/time to transition: 5% &rarr; 7%.</strong> You are at the front edge of the PM transition window. How fast a path converts to authority now matters more than it would at 25 or at 45.</p></div>
+  </div>
+  <div id="mount-weights"></div>
+  <div id="mount-ranking"></div>
+</section>
+
+<section id="s05">
+  <div class="shead"><span class="no">WAY 05</span><h2>Income strategy</h2></div>
+  <p class="lede">Salary is one of seven vehicles, and it is the weakest one after about 45. Here is what each is actually worth over a life.</p>
+  <div class="verdict bad"><span class="vl">The largest number in this document</span><p style="margin:0">Staying where you are costs you roughly <strong>$150&ndash;250k per year by age 45</strong>. Across the remaining career that is a seven-to-eight-figure decision &mdash; and right now it is being made by inertia rather than by choice.</p></div>
+  <div id="mount-income"></div>
+  <h3>The seven vehicles compared</h3>
+  <div id="mount-vehicles"></div>
+</section>
+
+<section id="s06">
+  <div class="shead"><span class="no">WAY 06</span><h2>The fifty-year roadmap</h2></div>
+  <p class="lede">Seven phases. Each one names what to target, what to refuse, who to meet, and what to stop doing &mdash; because what you stop doing is usually the binding constraint.</p>
+  <div id="mount-roadmap"></div>
+</section>
+
+<section id="s07">
+  <div class="shead"><span class="no">WAY 07</span><h2>Skills roadmap</h2></div>
+  <p class="lede">Ranked by criticality and ordered by when to learn them. The order matters more than the list: contract literacy before certification, cost before schedule, people before both.</p>
+  <div id="mount-skillfilters"></div>
+  <div id="mount-skills"></div>
+  <div class="verdict"><span class="vl">Learning order &mdash; first 24 months</span>
+    <p style="margin:0">Contracts (AS 4000/4902) &rarr; cost control &amp; forecasting &rarr; P6 fundamentals &rarr; risk registers &amp; quantified risk &rarr; claims/variations/EOT &rarr; negotiation &rarr; protection &amp; HV fundamentals &rarr; Power BI over project data &rarr; AI workflow automation &rarr; executive communication. Everything else waits.</p>
+  </div>
+</section>
+
+<section id="s08">
+  <div class="shead"><span class="no">WAY 08</span><h2>Certifications and education</h2></div>
+  <p class="lede">You already hold a Master's in Engineering Management. That is roughly 70% of what an MBA would give you. You do not need another degree &mdash; you need three specific certificates and a licence to sign things.</p>
+  <div id="mount-certfilters"></div>
+  <div id="mount-certs"></div>
+  <div class="verdict"><span class="vl">The short answer</span>
+    <p style="margin:0"><strong>Do:</strong> CPEng/NER (2027&ndash;28), AS 4000/4902 contract training (now), a cost-control or PMI-SP-adjacent scheduling capability (2027), AIPM CPPP/CPPM as the Australian-recognised PM credential, and eventually FIDIC if the Gulf plan proceeds. <strong>Skip:</strong> a second Master's, an MBA before 40, PRINCE2 in an Australian resources context, and any short course whose main output is a LinkedIn badge.</p>
+  </div>
+</section>
+
+<section id="s09">
+  <div class="shead"><span class="no">WAY 09</span><h2>Controller vs. Manager vs. Director</h2></div>
+  <p class="lede">The most important comparison in this document, because the two questions have different answers.</p>
+  <div id="mount-roles"></div>
+  <div class="grid g2" style="margin-top:22px">
+    <div class="verdict"><span class="vl">Target next</span>
+      <p style="margin:0 0 8px"><strong>Project Engineer &rarr; Senior Project Engineer, on the owner or head-contractor side, with explicit cost ownership.</strong></p>
+      <p style="margin:0">Not Project Controller, and not yet PM. Here is why: Project Controls is a superb <em>skill</em> and a mediocre <em>destination</em> &mdash; it is the most automatable role in this table, it caps around $220&ndash;260k, and controllers rarely convert to Project Director because they never carry delivery accountability. Meanwhile jumping straight to PM from an OEM with no cost or contract exposure usually means taking a small, low-visibility PM role at a small company &mdash; a title without career capital. The senior PE seat on the owner side gets you budget, contract exposure and a major project on the CV, and it converts to PM in 18&ndash;30 months at a much higher band. <em>Learn</em> controls; do not <em>become</em> controls.</p>
+    </div>
+    <div class="verdict ok"><span class="vl">Ultimate destination</span>
+      <p style="margin:0 0 8px"><strong>Project Director &mdash; then owner of a specialist delivery or advisory business, on your own timing.</strong></p>
+      <p style="margin:0">Project Director is the highest-paid role reachable from your starting position through employment alone, it is the most AI-resilient seat in the table (accountability cannot be automated), and it is the only one that generates the client relationships a business can later be built on. Engineering Manager is a comfortable trap: high status, lower pay, and a narrowing path. Commercial Manager pays similarly to PD and is more AI-resilient still, but it is a harder switch from where you sit &mdash; so treat commercial capability as something you <em>acquire</em> en route to PD rather than a destination you chase.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s10">
+  <div class="shead"><span class="no">WAY 10</span><h2>Decision tree</h2></div>
+  <p class="lede">Twenty-two decision points from today forward. Each names its trigger, the evidence to collect before deciding, and a hard deadline &mdash; because an undecided decision is a decision to stay.</p>
+  <div id="mount-tree"></div>
+</section>
+
+<section id="s11">
+  <div class="shead"><span class="no">WAY 11</span><h2>If this happens, do this</h2></div>
+  <p class="lede">Thirty-four standing rules. Written now, while you are calm, so that they hold later when you are flattered, tired, or offered money.</p>
+  <div id="mount-rulefilters"></div>
+  <div id="mount-rules"></div>
+</section>
+
+<section id="s12">
+  <div class="shead"><span class="no">WAY 12</span><h2>Anti-patterns</h2></div>
+  <p class="lede">Career traps, ranked by how likely you personally are to fall into each one. This is the section to re-read annually.</p>
+  <div id="mount-anti"></div>
+</section>
+
+<section id="s13">
+  <div class="shead"><span class="no">WAY 13</span><h2>Twelve-month execution plan</h2></div>
+  <p class="lede">Sized for someone in a full-time job with about ten hours a week. Six action types a month. Tick as you go &mdash; progress saves automatically.</p>
+  <div id="mount-progress"></div>
+  <div id="mount-plan"></div>
+</section>
+
+<section id="s14">
+  <div class="shead"><span class="no">WAY 14</span><h2>Weekly operating system</h2></div>
+  <p class="lede">You said 10+ hours. I am going to spend them differently from how you proposed &mdash; less technical, far more commercial.</p>
+  <p>Your instinct was two hours technical, one PM, one networking, one strategy. That allocation deepens the thing you are already best at and starves the four things blocking you. Technical study is the most <em>comfortable</em> hour in your week and the lowest-yield. Here is the corrected split.</p>
+  <div id="mount-weekly"></div>
+  <div class="verdict"><span class="vl">The one non-negotiable</span><p style="margin:0">The Friday <strong>commercial hour</strong> is the hour that changes your life, and it will be the first one you skip &mdash; because it is unassigned, nobody is waiting on it, and it feels like it is not real work. Book it as a recurring calendar block with a name that is not "career". Treat missing it twice in a row as a red flag in your quarterly review.</p></div>
+</section>
+
+<section id="s15">
+  <div class="shead"><span class="no">WAY 15</span><h2>Quarterly review</h2></div>
+  <p class="lede">Twelve dimensions, scored 0&ndash;100, weighted. Run it every quarter. Below 55 for two consecutive quarters is a hard trigger to change employers.</p>
+  <div id="mount-quarterly"></div>
+  <div id="mount-gauge"></div>
+  <div id="mount-qlog"></div>
+</section>
+
+<section id="s16">
+  <div class="shead"><span class="no">WAY 16</span><h2>Future-proofing to 2076</h2></div>
+  <p class="lede">Which of your skills appreciate, which get commoditised, and which get automated outright. Position yourself where accountability, physical assets and relationships intersect &mdash; that is the part machines cannot take.</p>
+  <div id="mount-future"></div>
+  <div class="verdict"><span class="vl">Where to stand</span>
+    <p style="margin:0">The durable position is: <strong>accountable for physical electrical infrastructure that carries a contract and a deadline, in a sector with a multi-decade capital pipeline.</strong> Machines will do the takeoffs, the schedules, the progress reports, the document control and most of the estimating. They will not sign a variation, take the risk, front an angry client, or be liable when the substation does not energise. Every hour you invest in the accountable half appreciates; every hour in the reporting half depreciates. Your current job is roughly 70% in the depreciating half. That, not automation itself, is the risk.</p>
+  </div>
+</section>
+
+<section id="s17">
+  <div class="shead"><span class="no">WAY 17</span><h2>The barbell</h2></div>
+  <p class="lede">A highly employable core, plus a small allocation to high-variance upside. Not a business today &mdash; a business when the conditions below are actually met.</p>
+  <p>The mistake most engineers make is starting a business at 34 with no client relationships, no capital and no reputation, and calling it entrepreneurship. It is not; it is buying yourself a low-paid job with extra risk. The correct sequence is to accumulate the three assets a business runs on &mdash; <strong>relationships, reputation and capital</strong> &mdash; inside someone else's balance sheet, and only then to leave.</p>
+  <div id="mount-barbell"></div>
+  <div class="verdict"><span class="vl">The trigger conditions</span>
+    <p style="margin:0">Go independent when <strong>all four</strong> are true, not before: (1) three or more clients would hire you personally by name, without your employer's brand; (2) you have delivered a project above $50M and can point to it; (3) you hold 12&ndash;18 months of living expenses in liquid savings; and (4) inbound work is arriving that you are currently turning down. On the current plan those converge around <strong>2038&ndash;2044, age 43&ndash;49</strong>. Every year you start before that, you pay for in equity and stress; every year you delay past it, you pay for in foregone upside.</p>
+  </div>
+</section>
+
+<section id="s18">
+  <div class="shead"><span class="no">WAY 18</span><h2>The brutal conclusion</h2></div>
+  <p class="lede">Eighteen questions, answered directly. No hedging.</p>
+  <div id="mount-final"></div>
+  <p class="footnote"><strong>On the numbers.</strong> Every dollar figure in this document is a market estimate built from general knowledge of the Australian engineering and construction market, expressed in today's dollars. None of it is verified live data, and the post-2035 figures are a model, not a forecast. Salary bands, tax treatment, property concessions and licensing rules all change; verify anything you are about to act on with a recruiter, a broker, or the relevant regulator. Treat the <em>relative gaps</em> between paths as the durable finding and the absolute numbers as indicative &mdash; the ranking is far more robust than the dollars.</p>
+</section>
+
+</main>
+</div>
+</div>
+
+<div class="savebar">
+  <span class="st" id="savestate">Loading&hellip;</span>
+  <div style="display:flex;gap:9px">
+    <button class="btn" id="btn-reset">Reset plan</button>
+    <button class="btn pri" id="btn-save">Save plan</button>
+  </div>
+</div>
+<div class="tip" id="tip" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+/* ============================ DATA · PART A ============================ */
+
+const CAP = [
+ ["Technical — LV/MV switchgear",8,6,5],["Project engineering execution",8,7,6],
+ ["Documentation / MDR / FAT / QA",8,6,5],["Industry knowledge",7,6,7],
+ ["Stakeholder management",6,8,9],["Client management",6,8,9],["Communication",6,8,9],
+ ["Procurement",6,7,7],["Project management (formal)",5,8,8],["Risk management",4,7,8],
+ ["Scheduling / EVM",4,7,7],["Digital & technology",4,5,6],["Electrical practical (hands-on)",4,4,3],
+ ["Executive potential",4,6,8],["Leadership of people",3,7,9],["Cost control",3,8,8],
+ ["Commercial capability",3,7,9],["Contract management",3,7,9],["Negotiation",3,7,9],
+ ["Financial literacy / P&L",3,6,9],["AI capability",3,5,6],["Business development",2,4,8]
+];
+
+const ELEC = {
+ cols:["Time","Cash cost","Opportunity cost","Short-term income","Long-term ceiling","Path to PM","Path to Director","Business option","AI resilience","10-yr ROI","20-yr ROI","30-yr ROI"],
+ rows:[
+  ["A — Stay on engineering/PM path","0 hrs","$0","None","Neutral now","$400–500k","Direct","Direct","Consulting / PM firm","High","High","Very high","Very high"],
+  ["B — Apprenticeship alongside work","5,000+ hrs over 5–6 yrs","$10–20k","Every evening for 6 yrs","Neutral","Unchanged","Delayed 2–3 yrs","Delayed","Marginal gain","High","Negative","Low","Low"],
+  ["C — Step away, become an electrician","6,000–8,000 hrs / 4 yrs","$15–25k","$150–250k forgone","−40 to −55%","$180–220k as contractor","Reset to zero","Effectively closed","Strong (own licence)","High","Strongly negative","Negative","Neutral"],
+  ["D — Practical competency, no ticket","~200 hrs","$4–8k","Two weekends a month for 6 months","None","Unchanged, +credibility","Accelerates","Accelerates","Unchanged","High","Very high","Very high","Very high"],
+  ["E — Alternative technical qual (protection / HV / power systems)","250–400 hrs","$6–14k","One evening a week for a year","None","+$10–25k band","Accelerates","Accelerates","Strong (specialist advisory)","Very high","Very high","High","High"]
+ ]
+};
+
+const PROP = {
+ cols:["Captures the Melbourne thesis","First-home concessions","Career cost","Mobility retained","Tier you can buy in"],
+ rows:[
+  ["A — Move + buy owner-occupier","Yes","~$45k retained","$30–60k/yr now → $150–250k/yr by 45","No","$550k (weakest slice)"],
+  ["B — Stay Perth, buy Melbourne as investment","Yes","Forfeited, permanently","Zero","Mostly","$550k, deductible interest"],
+  ["C — Defer 18–24 months, move employer first","Only if it holds","Preserved","Zero","Fully","$850k–1M at 33–34"]
+ ]
+};
+
+const FACTORS = [
+ {k:"income", n:"Long-term income potential", w:20},
+ {k:"lead",   n:"Probability of senior leadership", w:15},
+ {k:"demand", n:"Demand over next 20 years", w:10},
+ {k:"ai",     n:"AI resilience", w:10},
+ {k:"trans",  n:"Transferability", w:5},
+ {k:"owner",  n:"Route to business ownership", w:10},
+ {k:"wlb",    n:"Work-life sustainability", w:5},
+ {k:"intl",   n:"International opportunity", w:5},
+ {k:"fit",    n:"Fit with your experience", w:8},
+ {k:"cost",   n:"Speed / low cost of transition", w:7},
+ {k:"dev",    n:"Personal development", w:5}
+];
+
+const PATHS = [
+ {id:"owner", n:"Owner-side delivery", d:"Client-side PE → PM → Project Director (mining, energy, utility)",
+  s:{income:9,lead:9,demand:9,ai:8,trans:7,owner:5,wlb:7,intl:6,fit:9,cost:9,dev:8}, series:0,
+  why:"The single best risk-adjusted move available to you. The client owns the money, the contract and the decisions — which is exactly the authority you are missing. Your switchgear depth becomes a superpower on the owner's side of the table, because owners chronically lack people who can technically challenge a contractor. Perth is the deepest market on earth for this. Entry is realistic within 6–12 months at $160–185k.",
+  risk:"Owner organisations move slowly and can be politically dense. Some owner-side roles are governance-heavy and starve you of real delivery — screen hard for this."},
+ {id:"dc", n:"Data centre electrical", d:"Electrical delivery lead → PM → Program Manager (hyperscale / colocation)",
+  s:{income:10,lead:8,demand:10,ai:9,trans:8,owner:7,wlb:5,intl:9,fit:8,cost:8,dev:9}, series:1,
+  why:"The highest-paid electrical delivery market in Australia and structurally short of people. Your telecom/electronics background — which everyone else treats as a weakness — is the exact bridge, because data centre electrical sits at the intersection of power, controls and comms. Multi-billion-dollar pipelines in Sydney, Melbourne and increasingly Perth. Global portability is unmatched.",
+  risk:"Schedule brutality is real; the sector runs hot and burns people. It is also the most cyclical of the top paths — an AI capex pause would cool hiring quickly. Do not take a data centre role you cannot leave."},
+ {id:"comm", n:"Commercial & contracts", d:"Contracts Engineer → Commercial Manager → Project Director",
+  s:{income:9,lead:9,demand:8,ai:9,trans:8,owner:8,wlb:7,intl:8,fit:5,cost:6,dev:9}, series:2,
+  why:"The most AI-resilient and most under-supplied capability in construction, and the one your profile is furthest from. Engineers who genuinely understand contracts are rare and expensive, because the money on a project is won and lost in variations, EOTs and claims — not in delivery. Even if you never take the title, acquiring this capability raises your value on every other path.",
+  risk:"The switch is genuinely hard from an OEM seat and may cost a lateral move or a small pay dip. Also: it is adversarial work, and some people hate it. Test it before committing."},
+ {id:"energy", n:"Energy, renewables & grid", d:"Electrical PE → PM → Program Manager (transmission, BESS, connections)",
+  s:{income:8,lead:8,demand:10,ai:8,trans:8,owner:6,wlb:7,intl:8,fit:8,cost:8,dev:8}, series:3,
+  why:"A legislated, multi-decade capital pipeline — transmission rebuild, firming, storage, grid connections. Demand visibility here is better than anywhere else in this table. Your protection and switchgear knowledge is directly on-point, and grid connection work is chronically short of engineers who understand both the hardware and the process.",
+  risk:"Utility and government-adjacent pay bands are more compressed than mining or data centres. Excellent security, slightly lower ceiling."},
+ {id:"me", n:"Middle East major projects", d:"Senior PM / PM on Gulf megaprojects, 3–5 years, then repatriate",
+  s:{income:10,lead:7,demand:7,ai:7,trans:6,owner:9,wlb:4,intl:10,fit:8,cost:7,dev:8}, series:4,
+  why:"The fastest capital accumulation available to you, and correctly timed at 38–41 rather than now. Going as a Senior PM with a delivered Australian major project gets a large tax-advantaged package and a title that repatriates. Three to five years there can compress a decade of saving.",
+  risk:"Going too early is the classic error: you return with experience nobody weights, at a title you could have got at home. Lifestyle and rights considerations are real and personal. Have a defined exit date before you go."},
+ {id:"def", n:"Defence & AUKUS", d:"Electrical engineer → PM (cleared) → Program Manager, Henderson / Osborne",
+  s:{income:7,lead:8,demand:10,ai:10,trans:4,owner:4,wlb:8,intl:2,fit:8,cost:8,dev:7}, series:5,
+  why:"The most secure long-horizon pipeline in the country, and your citizenship is a hard barrier to entry that most of your competition cannot clear. A security clearance is a genuinely scarce, appreciating asset. Work-life balance is materially better than mining or data centres.",
+  risk:"Pay bands are lower than resources, clearances take time, and skills transfer poorly outside defence — the moat works in both directions. Best as a mid-career stabiliser or a late-career landing, not as the whole plan."},
+ {id:"ctrl", n:"Project controls", d:"Cost/planning engineer → Project Controls Manager → PMO lead",
+  s:{income:7,lead:7,demand:9,ai:5,trans:9,owner:5,wlb:8,intl:8,fit:7,cost:8,dev:7}, series:0,
+  why:"Superb as a capability, mediocre as a destination. It is the fastest way to acquire cost, schedule and forecasting fluency, and it makes you a far better PM. Highly transferable and very portable internationally.",
+  risk:"The most automatable role in this table — progress measurement, forecasting and reporting are exactly what AI does well. Controllers also rarely convert to Project Director, because they never carry delivery accountability. Learn it; do not become it."},
+ {id:"cons", n:"Engineering consultancy", d:"Senior engineer → Principal → Practice Director",
+  s:{income:6,lead:8,demand:7,ai:6,trans:7,owner:8,wlb:6,intl:7,fit:6,cost:7,dev:8}, series:1,
+  why:"The cleanest institutional path to owning a business, because consultancies teach you to sell, price and manage utilisation — the three things engineers who start businesses always lack. Strong for reputation-building and personal brand.",
+  risk:"Lower cash comp than owner-side or data centres for a decade, and the Principal ladder is slow and political. Only worth it if the endgame is genuinely ownership."},
+ {id:"auto", n:"Automation & controls", d:"Controls engineer → Controls Lead → Automation Manager",
+  s:{income:6,lead:5,demand:8,ai:7,trans:7,owner:7,wlb:7,intl:7,fit:7,cost:6,dev:7}, series:2,
+  why:"Genuine technical scarcity and a plausible small-business route (systems integration). Aligns with your PLC/SCADA exposure and mining automation demand.",
+  risk:"A specialist ceiling and a narrowing path to general leadership. Automation managers are rarely considered for Project Director. It also competes directly for the hours you need for commercial capability."},
+ {id:"spark", n:"Electrician → contracting", d:"Apprenticeship → licence → electrical contracting business",
+  s:{income:4,lead:3,demand:7,ai:8,trans:3,owner:9,wlb:5,intl:4,fit:3,cost:2,dev:4}, series:3,
+  why:"The only genuine argument is business ownership: an electrical contracting licence lets you own a trade business outright. That is a real asset and it is why this scores as well as it does on ownership.",
+  risk:"Everything else. Four years, 6,000–8,000 hours, $150–250k forgone, a 40–55% income cut, and it consumes exactly the 31–35 window in which the PM transition must happen. As job-security insurance — your stated reason — it is the wrong policy for the wrong risk at an extraordinary premium."}
+];
+
+const AGES=[31,35,40,45,50,60,70,80];
+const INCOME = {
+ stay:      [125,150,168,178,185,190,120,60],
+ owner:     [125,205,290,370,420,430,200,80],
+ dc:        [125,220,320,420,480,450,220,90],
+ comm:      [125,200,300,400,470,480,250,100],
+ energy:    [125,195,275,345,395,410,210,85],
+ me:        [125,230,340,400,430,400,200,80],
+ def:       [125,195,265,330,370,390,200,80],
+ ctrl:      [125,190,250,300,330,340,180,70],
+ cons:      [125,180,250,330,400,420,250,120],
+ auto:      [125,175,235,285,320,330,170,70],
+ spark:     [125,110,175,230,270,260,140,60]
+};
+const SCEN={cons:0.78, base:1.0, agg:1.35};
+
+const VEHICLES=[
+ ["Salaried employee","Low","$180–260k","Highest security, lowest ceiling. Fine to 40, a trap after.","Every path"],
+ ["Management career","Low–med","$300–500k","The main road. Project Director is the realistic peak from your start.","Owner-side, data centre, energy"],
+ ["Technical specialist","Low","$180–250k","Protection, HV, power systems. Comfortable, capped, and increasingly assisted by AI.","Automation, energy"],
+ ["Consulting (employed)","Medium","$250–420k","Builds the sales muscle. Slower cash, better ownership optionality.","Consultancy"],
+ ["Contracting (day rate)","Medium","$1,400–2,400/day","$320–500k gross in a good year. No leave, no super, cyclical. Best at 40–55 once you are known.","Any, after PM"],
+ ["Business ownership","High","$0 → $1M+","Real wealth lives here, and so does real failure. Only after the four trigger conditions in Way 17.","Consultancy, contracting, automation"],
+ ["Investment + career","Low–med","Compounding","The quiet winner. A $250k income with a 40% savings rate beats a $400k income with a 10% rate, every time."," All"]
+];
+
+const ROLES={
+ cols:["Typical package","Ceiling","Stress","Accountability","Transferability","Technical depth","Commercial exposure","Executive exposure","Ease from here","Ownership route"],
+ rows:[
+  ["Project Engineer","$110–150k","Low","Low","Coordination","High","Deep","None","None","—","Weak"],
+  ["Project Controller","$140–190k","$220–260k","Medium","Reporting","Very high","Low","Medium","Low","Easy","Weak"],
+  ["Senior Project Engineer","$150–190k","$210k","Medium","Package delivery","High","Deep","Low–med","Low","Easy","Weak"],
+  ["Project Manager","$180–260k","$300k","High","Full delivery","High","Medium","High","Medium","Moderate","Good"],
+  ["Project Controls Manager","$200–260k","$290k","Medium","Controls function","High","Low","High","Medium","Moderate","Weak"],
+  ["Commercial Manager","$220–320k","$420k","High","Contract & margin","Very high","Low","Very high","High","Hard","Very good"],
+  ["Engineering Manager","$200–270k","$320k","Medium","Technical integrity","Medium","Very deep","Low","Medium","Moderate","Medium"],
+  ["Senior Project Manager","$250–330k","$380k","Very high","Multi-project P&L","High","Medium","Very high","High","Later","Very good"],
+  ["Project Director","$320–480k","$550k+","Very high","Program P&L","High","Medium","Very high","Very high","Later","Excellent"]
+ ]
+};
+
+/* ============================ DATA · PART B ============================ */
+
+const ROADMAP=[
+{era:"2026–2028", age:"31–33", name:"Immediate positioning", tag:"Escape the OEM ceiling",
+ thesis:"Everything in this phase serves one objective: acquire budget ownership and a line of people, on the owner or head-contractor side, in Perth. Nothing else matters yet.",
+ f:[
+ ["Titles to target","Senior Project Engineer or Project Engineer (owner-side / Tier 1 contractor). Accept the same title if the seat carries cost ownership."],
+ ["Income target","$160–185k by end 2027. $200k+ by end 2028."],
+ ["Industries","Mining & resources (BHP, Rio, Fortescue, Roy Hill), energy/utilities (Western Power, Alinta, APA), data centres (NEXTDC, AirTrunk, DCI, plus the hyperscaler build partners)."],
+ ["Employers","Owner-side first. Then Tier 1 contractors: Monadelphous, UGL, Downer, Zenviron, Decmil, Fredon, MPC Kinetic. Consultancies as a fallback, not a target."],
+ ["Skills","Contract literacy (AS 4000, AS 4902), cost forecasting and cost reports, Primavera P6 fundamentals, quantified risk registers, variation and EOT mechanics."],
+ ["Certifications","CPEng / NER application started 2027. AS 4000 contract training. A cost-control short course. HV switching ticket."],
+ ["Responsibilities to seek","A cost report you own. A forecast you sign. One direct report or a supervised graduate. A client-facing commercial conversation, not just technical."],
+ ["Responsibilities to avoid","More document control. More MDR compilation. Being the default FAT attendee. Any role described as 'coordination'."],
+ ["Network","Twelve owner-side and contractor PMs and Project Directors. Two specialist recruiters in Perth. Your state AIPM and Engineers Australia chapter."],
+ ["People to meet","The Project Directors at the three clients you currently supply. Your own company's Contracts Manager. Two recruiters you keep warm permanently."],
+ ["Projects to seek","Anything site-based, anything with a live contract and variations, anything where you sit on the client's side of the table."],
+ ["Stop","Being the person who fixes everyone's documentation. Volunteering for quality tasks. Studying technical depth you already have."],
+ ["Start","A monthly commercial-outcome log. Asking to see the project's cost report every month until someone shows you."],
+ ["Delegate","MDR assembly, transmittals, drawing registers, routine supplier chasing."],
+ ["Automate","Progress reporting, supplier follow-ups and document registers — build it with AI and Power Automate, then show your manager the hours saved. This is your visibility play."],
+ ["Learn","How a project makes money. Then how it loses it. Then who decides."],
+ ["Credentials that matter","CPEng/NER. Contract training. A cost report with your name on it."],
+ ["Résumé decoration","Another short course in project management fundamentals. Vendor product certificates. LinkedIn badges."]
+]},
+{era:"2028–2031", age:"33–36", name:"Acceleration", tag:"Get the PM title on a real project",
+ thesis:"Convert authority into a title, and a title into a major project. Buy the Melbourne investment property in this window, from a much stronger income.",
+ f:[
+ ["Titles to target","Project Manager. Failing that, Package Manager or Area Manager on a major project — both convert to PM within 18 months."],
+ ["Income target","$220–260k by 2031."],
+ ["Industries","As above, weighted toward whichever of mining, data centres or grid has the strongest live pipeline when you move."],
+ ["Employers","Tier 1 contractor or owner-side major projects team. Avoid small PM roles at small companies — the title without the capital."],
+ ["Skills","Full P&L for a project. Claims and EOT preparation. Negotiation. Leading 5–15 people. Executive-level reporting."],
+ ["Certifications","AIPM CPPM. Complete CPEng. Consider PMI-SP only if you go deep on schedule. FIDIC if the Gulf plan is firming."],
+ ["Responsibilities to seek","A project P&L. A team. A contract you administer. A claim you run end to end."],
+ ["Responsibilities to avoid","Pure PMO or governance roles. 'Head of process improvement'. Anything without a budget."],
+ ["Network","Two mentors: one Project Director, one Commercial Manager. Five peers who will be Project Directors in a decade — those are the relationships that pay at 45."],
+ ["People to meet","The people who award contracts, not the people who deliver them."],
+ ["Projects to seek","One project above $100M with your name on the delivery. This single line on your CV is worth more than every certificate combined."],
+ ["Stop","Doing technical work yourself because it is faster. That habit caps you here."],
+ ["Start","Buying the Melbourne investment property (2028–29, from $200k+ income). Saying no to scope without money attached."],
+ ["Delegate","All engineering execution. Your job is now decisions, money and people."],
+ ["Automate","Reporting packs, cost dashboards, risk register maintenance."],
+ ["Learn","Negotiation as a discipline, not a personality trait. How to be liked and still say no."],
+ ["Credentials that matter","A delivered project above $100M. AIPM CPPM. CPEng."],
+ ["Résumé decoration","PRINCE2 in an Australian resources context. A second Master's. Agile certifications."]
+]},
+{era:"2031–2036", age:"36–41", name:"Management transition", tag:"Senior PM, then the Gulf window",
+ thesis:"Two or three projects as PM, then the Middle East decision at 38–41 — correctly timed, with a title that repatriates.",
+ f:[
+ ["Titles to target","Senior Project Manager. Then either Project Director (Australia) or Senior PM / Project Manager on a Gulf megaproject."],
+ ["Income target","$300–360k in Australia, or $350–450k tax-advantaged in the Gulf."],
+ ["Industries","Major projects wherever the capital is: iron ore and lithium expansion, transmission rebuild, hyperscale data centres, NEOM/Aramco/ADNOC/Masdar if going offshore."],
+ ["Employers","Tier 1 contractors and owner major-projects teams. Offshore: Bechtel, Jacobs, Parsons, WorleyParsons, Saudi Aramco, ADNOC, AtkinsRéalis."],
+ ["Skills","Multi-project portfolio management. Commercial strategy. Executive influence. Building and firing a team."],
+ ["Certifications","FIDIC contract training before any Gulf move. Chartered status maintained. An executive short program (AGSM, Melbourne Business School) — not a full MBA."],
+ ["Responsibilities to seek","Multiple concurrent projects. A P&L above $50M. Client relationship ownership."],
+ ["Responsibilities to avoid","A single-project role with no portfolio. Any role where you are the most technical person in the room."],
+ ["Network","Client executives. Two head-hunters at executive search firms. An international network if the Gulf plan proceeds."],
+ ["People to meet","The people who decide who becomes Project Director."],
+ ["Projects to seek","A troubled project to rescue. Turnarounds make careers faster than clean deliveries — and they are the only projects where commercial skill is visible."],
+ ["Stop","Managing detail. Attending meetings you do not decide anything in."],
+ ["Delegate","Everything below decision level. Build a deputy."],
+ ["Automate","Portfolio reporting, forecasting, resource modelling."],
+ ["Learn","How to be accountable for work you cannot personally check."],
+ ["Credentials that matter","Two or three delivered projects. A reputation for landing troubled work."],
+ ["Résumé decoration","Anything at all. At this point only your delivery record counts."]
+]},
+{era:"2036–2041", age:"41–46", name:"Senior leadership", tag:"Project Director; build the base for ownership",
+ thesis:"Reach the ceiling of employment, and quietly accumulate the three assets a business runs on: relationships, reputation, capital.",
+ f:[
+ ["Titles to target","Project Director. Program Director. Operations Manager. Or repatriate from the Gulf directly into a PD seat."],
+ ["Income target","$380–480k. Savings rate above 35% is now more important than the headline number."],
+ ["Industries","Whichever has a 20-year pipeline. Energy transition and data centres are the two safest bets from here."],
+ ["Employers","Tier 1, or a mid-tier where you can hold equity. Mid-tier equity beats Tier 1 salary after 45."],
+ ["Skills","Business development. Bid strategy and pricing. Board-level communication. Capital allocation."],
+ ["Certifications","Company directors' course (AICD) around 44. This is the one late-career credential that genuinely opens doors."],
+ ["Responsibilities to seek","Program P&L. Bid ownership. Hiring authority. A seat where clients ask for you by name."],
+ ["Responsibilities to avoid","Pure operations management with no client ownership. Corporate roles far from delivery."],
+ ["Network","This is now the asset. Your network becomes your business plan."],
+ ["People to meet","Future clients. Future partners. Your future first two hires."],
+ ["Projects to seek","Programs, not projects. Anything with repeat-client potential."],
+ ["Stop","Confusing being busy with being valuable. Working for a company that will not discuss equity."],
+ ["Start","Testing the four ownership trigger conditions annually (Way 17). Advisory or non-executive work on the side."],
+ ["Delegate","Delivery entirely."],
+ ["Automate","Bid analytics, pipeline tracking, portfolio dashboards."],
+ ["Learn","How money is made from projects rather than paid for delivering them."],
+ ["Credentials that matter","Clients who ask for you personally. AICD."],
+ ["Résumé decoration","Everything else."]
+]},
+{era:"2041–2051", age:"46–56", name:"Executive & ownership", tag:"Convert career capital into equity",
+ thesis:"The barbell fires. Either take an executive seat with equity, or leave and own the thing outright.",
+ f:[
+ ["Titles to target","General Manager. Executive Director. Or Founder/Principal of a specialist delivery, advisory or PM consultancy."],
+ ["Income target","$450–700k employed, or $300k–$1M+ with equity and high variance."],
+ ["Industries","Specialist niche where you are known: electrical major projects, grid connection, data centre delivery."],
+ ["Employers","Yourself, or a firm that gives you equity. Not a salary."],
+ ["Skills","Sales. Pricing. Cash flow. Recruiting. Everything you avoided for twenty years."],
+ ["Certifications","None. Nobody at this level cares."],
+ ["Responsibilities to seek","Ownership, revenue, hiring. P&L you actually own."],
+ ["Responsibilities to avoid","A senior title with no equity and no revenue authority. That is the most common trap of this decade."],
+ ["Network","Convert it to a client list."],
+ ["People to meet","Buyers of your services. Potential acquirers of your business."],
+ ["Projects to seek","Repeatable, high-margin, relationship-driven work."],
+ ["Stop","Trading time for money as the primary vehicle."],
+ ["Start","Building something that earns when you are asleep: a team, an IP product, a recurring services contract."],
+ ["Delegate","Delivery, admin, finance."],
+ ["Automate","Estimating, proposals, reporting, back office."],
+ ["Learn","How to sell without being present. How to hire people better than you."],
+ ["Credentials that matter","Revenue."],
+ ["Résumé decoration","Titles."]
+]},
+{era:"2051–2061", age:"56–66", name:"Portfolio phase", tag:"De-risk, diversify, extract",
+ thesis:"Shift weight from labour income to asset income, and from one business to several sources.",
+ f:[
+ ["Titles to target","Owner. Chair. Non-executive director. Principal advisor."],
+ ["Income target","Employment income declining by design; asset and equity income rising to majority share."],
+ ["Industries","Wherever your reputation still trades — plus deliberately uncorrelated investments."],
+ ["Employers","Boards. Your own entities."],
+ ["Skills","Governance. Investment. Succession. Mentoring."],
+ ["Certifications","AICD refresh if taking board seats."],
+ ["Responsibilities to seek","Board seats, advisory retainers, equity positions."],
+ ["Responsibilities to avoid","Operational delivery. Full-time executive roles."],
+ ["Network","Fewer, deeper, more senior."],
+ ["People to meet","Successors and buyers."],
+ ["Projects to seek","Only the interesting ones."],
+ ["Stop","Being indispensable to anything you own — that is a valuation discount, not a virtue."],
+ ["Start","Formal succession planning. Sell-side preparation if there is a business to sell."],
+ ["Delegate","Operations entirely."],
+ ["Automate","Everything that is not judgement."],
+ ["Learn","How to let go while it is still worth something."],
+ ["Credentials that matter","Track record and reputation."],
+ ["Résumé decoration","All of it."]
+]},
+{era:"2061–2076", age:"66–81", name:"Legacy", tag:"Advisory, ownership, transfer",
+ thesis:"Income from assets, work by choice, and the deliberate transfer of what you know.",
+ f:[
+ ["Titles to target","Non-executive director. Expert witness. Advisor. Owner."],
+ ["Income target","Asset income sufficient that labour income is optional. Advisory work at $2,000–4,000/day when you want it."],
+ ["Industries","Whatever still interests you. Expert-witness work in construction disputes is unusually well paid and unusually AI-resistant."],
+ ["Employers","None."],
+ ["Skills","Judgement. Teaching. Governance."],
+ ["Certifications","None."],
+ ["Responsibilities to seek","Whatever you find worth doing."],
+ ["Responsibilities to avoid","Anything with a deadline you did not choose."],
+ ["Network","Maintain the twenty relationships that matter."],
+ ["People to meet","The engineers you are training to replace you."],
+ ["Projects to seek","Disputes, arbitrations, mentoring, board work."],
+ ["Stop","Optimising."],
+ ["Start","Writing it down. Forty years of hard-won judgement is worth more transferred than held."],
+ ["Delegate","Everything."],
+ ["Automate","Everything."],
+ ["Learn","Whatever you like. This is the point of the whole exercise."],
+ ["Credentials that matter","None."],
+ ["Résumé decoration","Everything."]
+]}
+];
+
+const SKILLS=[
+ // [name, group, rank, order, note]
+ ["Contract literacy — AS 4000 / 4902 / 2124","Project Management","Critical",1,"The single highest-return skill available to you. You cannot manage what you cannot read."],
+ ["Cost control & forecasting","Project Management","Critical",2,"The gate on every PM role. Learn it on a real cost report, not a course."],
+ ["Commercial management","Project Management","Critical",3,"Margin, cash, exposure. This is what separates $150k from $400k."],
+ ["Claims, variations & EOT","Project Management","Critical",4,"Where project money is actually won and lost."],
+ ["Negotiation","Leadership","Critical",5,"A trainable discipline. Most engineers never train it, which is why most engineers lose."],
+ ["Risk management (quantified)","Project Management","Critical",6,"Own a register. Put numbers on it. Present it to someone senior."],
+ ["Team leadership & delegation","Leadership","Critical",7,"You cannot get past Senior PE without people, and you cannot lead people you will not delegate to."],
+ ["Executive communication","Leadership","Critical",8,"One page, three points, a recommendation. Practise until it is automatic."],
+ ["Scheduling — Primavera P6","Project Management","High",9,"Fluency, not mastery. You need to challenge a schedule, not build one."],
+ ["Earned Value Management","Project Management","High",10,"Two days to learn, permanently useful, and it makes you credible in controls conversations."],
+ ["Client management","Leadership","High",11,"Your existing client exposure is an asset. Deepen it deliberately."],
+ ["Protection systems fundamentals","Technical","High",12,"Highest-credibility technical skill per hour available to you, and genuinely scarce."],
+ ["HV switching & safe work","Technical","High",13,"Cheap, fast, and it buys immediate site credibility."],
+ ["Power systems & grid connection","Technical","High",14,"Directly relevant if the energy path is taken. Connection engineers are chronically short."],
+ ["AI workflow automation","Digital","High",15,"Not prompting — building. Automate your own reporting and show the hours saved."],
+ ["Power BI over project data","Digital","High",16,"The fastest way to look senior. A good cost dashboard gets you invited to rooms."],
+ ["Procurement & subcontract strategy","Project Management","High",17,"You know supplier management; you do not yet know subcontract strategy."],
+ ["Conflict management","Leadership","High",18,"Unavoidable at PM. Better handled deliberately than instinctively."],
+ ["Change management","Project Management","Medium",19,"Matters more as scope grows."],
+ ["Commercial decision-making","Leadership","Medium",20,"Develops naturally once you have a P&L."],
+ ["Advanced Excel & modelling","Digital","Medium",21,"You likely have enough. Do not over-invest here — it feels productive and rarely is."],
+ ["ERP systems (SAP, Oracle)","Digital","Medium",22,"Learn the one your employer uses. Nothing more."],
+ ["Renewable energy & BESS","Technical","Medium",23,"High growth, but only if you take the energy path."],
+ ["SCADA & industrial systems","Technical","Medium",24,"Useful context; low leverage on your ladder."],
+ ["Business development & bidding","Leadership","Medium",25,"Critical from 40. Ignore until 36."],
+ ["Power Automate","Digital","Medium",26,"Pairs with AI automation. Two weekends."],
+ ["FIDIC & international contracts","Project Management","Medium",27,"Only when the Gulf move firms up. Then it becomes Critical."],
+ ["PLC programming","Technical","Low",28,"Interesting, not leveraged. This is a hobby for you, not a strategy."],
+ ["LV/MV switchgear design detail","Technical","Low",29,"You are already at 8/10. Further depth has near-zero marginal return."],
+ ["Data analytics / Python","Digital","Low",30,"Genuinely useful, genuinely optional. Only if you enjoy it."]
+];
+
+const CERTS=[
+ ["CPEng / NER (Engineers Australia)","YES","The one credential that is a licence rather than a badge. Required for senior roles, RPEQ reciprocity, and any international move. Do it in 2027 while your technical work is still recent enough to evidence."],
+ ["AS 4000 / AS 4902 contract training","YES","Two days. Possibly the highest ROI per hour in this entire document. Do it in the next 90 days."],
+ ["AIPM CPPP → CPPM","YES","The Australian-recognised PM credential, competency-assessed rather than exam-crammed, and it maps to work you are already doing. Better signal locally than PMP."],
+ ["Project controls / cost engineering short course","YES","You need cost fluency and you cannot get it at your current desk. Buy the fundamentals, then apply them on a live report."],
+ ["HV switching & safe work tickets","YES","Cheap, fast, high credibility on site. Directly closes the gap that made you consider the trade."],
+ ["Protection relay training (SEL / SIPROTEC / Micom)","YES","Scarce, well-paid, and it makes you the person who can challenge the contractor's protection engineer."],
+ ["FIDIC contract training","MAYBE","Only once the Middle East plan is real — around 2033–35. Before that it is theory you will forget."],
+ ["PMP (PMI)","MAYBE","Genuinely useful if you go international or into a PMI-aligned multinational. In Australian resources, AIPM reads better. Do not do both."],
+ ["PMI-SP (scheduling)","MAYBE","Only if you deliberately take the project controls path. Otherwise P6 fluency is enough."],
+ ["Quantity surveying / commercial training","MAYBE","Strong if you commit to the commercial path. Overkill otherwise — take contract training instead."],
+ ["Company Directors Course (AICD)","MAYBE","Excellent, but not before 43. Too early and it is expensive theatre; at the right time it opens board seats."],
+ ["Executive short program (AGSM / MBS)","MAYBE","A two-week executive program around 38 gives you most of what an MBA would, at a tenth of the cost and time."],
+ ["Renewable energy / BESS qualification","MAYBE","Only if you commit to the energy path. Then it becomes a YES."],
+ ["Power systems postgrad units","MAYBE","Genuinely valuable for the grid path, and only for that path. Take individual units, never a whole degree."],
+ ["PRINCE2","NO","UK/government-oriented and poorly recognised in Australian resources and construction. It signals process literacy, not delivery capability."],
+ ["MBA","NO","You hold a Master's in Engineering Management. An MBA duplicates roughly 70% of it for $80–120k and 800+ hours. If you ever want the network, buy the two-week executive program instead."],
+ ["A second Master's","NO","There is no version of this that improves your career. You have a credential problem in exactly zero areas."],
+ ["Electrician apprenticeship","NO","Answered in full in Way 02. Four years and $150–250k to insure against the wrong risk."],
+ ["Graduate certificates (generic PM/business)","NO","Résumé decoration. A cost report with your name on it beats every one of them."],
+ ["PLC / automation vendor certifications","NO","Useful only if you take the automation path, which scores ninth of ten. Otherwise this is comfortable procrastination."],
+ ["Agile / Scrum certifications","NO","Almost no application to capital electrical projects. Pure noise on your CV."],
+ ["LinkedIn / vendor micro-credentials","NO","Zero market value. They also create the illusion of progress, which is worse than doing nothing."]
+];
+
+const TREE=[
+{n:"D01",t:"Today — Electrical Project Engineer, switchgear OEM, Perth, $110–140k",
+ dec:"Do you stay at the OEM or move to the owner/contractor side?",
+ a:"Stay and negotiate cost ownership + a direct report within 6 months.",
+ b:"Begin an active market search immediately for an owner-side or Tier 1 role.",
+ out:"B produces a $30–50k raise and the missing authority within 6–12 months. A produces the same outcome only if management genuinely commits in writing.",
+ risk:"Staying is the default, and defaults win by inertia. Two more years here costs roughly $80k and one rung.",
+ opp:"Perth is the deepest market on earth for your exact profile. This option is not permanently available.",
+ ev:"Ten current job ads for owner-side project engineers with their bands. One recruiter conversation. Your manager's answer, in writing, on cost ownership.",
+ dl:"Decide by 31 December 2026.",
+ rec:"Run both in parallel. Ask for cost ownership, and search anyway. If the answer is not a written yes within 60 days, take B."},
+{n:"D02",t:"Your manager says 'maybe later' on budget ownership",
+ dec:"Is this a real path or a retention tactic?",
+ a:"Accept it and set a review date.",
+ b:"Treat it as a no and accelerate the search.",
+ out:"In an OEM, 'maybe later' resolves to nothing roughly 80% of the time, because the structure does not have the seat to give you.",
+ risk:"You lose a year and gain a promise.",
+ opp:"Their reluctance is free information about your ceiling here.",
+ ev:"Has anyone in your role at this company ever been given a P&L? Ask directly. The answer is usually the whole answer.",
+ dl:"60 days from the conversation.",
+ rec:"B. A vague yes from a company with no seat to offer is a no with better manners."},
+{n:"D03",t:"You receive an owner-side offer at the same or slightly lower pay",
+ dec:"Accept a lateral or slightly negative move for authority?",
+ a:"Decline; hold out for more money.",
+ b:"Accept if it carries cost ownership and a major project.",
+ out:"B typically recovers the difference within 18 months and adds $100k+ to your band by 40.",
+ risk:"A pay dip with no authority gained is the worst outcome. Verify the authority in writing before accepting.",
+ opp:"You are renting with no dependents. This is the cheapest moment of your life to buy career capital with cash.",
+ ev:"Confirm in writing: budget ownership, reporting line, team size, project value, contract type.",
+ dl:"Within the offer window.",
+ rec:"Accept a dip up to 10% for genuine cost ownership on a project above $50M. Decline any dip without it."},
+{n:"D04",t:"A Project Controller role is offered at +$20–30k",
+ dec:"Take the controls seat or hold for delivery?",
+ a:"Take it — the money and the skill are both real.",
+ b:"Decline; take a delivery role instead.",
+ out:"Controls pays more now and less later. It is the most automatable role in the table and it rarely converts to Project Director.",
+ risk:"Two to three years in controls can quietly relabel you as a controls person. Recruiters do not un-label people easily.",
+ opp:"The cost and schedule fluency is genuinely valuable and you currently lack it.",
+ ev:"Ask the hiring manager how many of their controllers have become PMs. If the answer is 'none', that is the answer.",
+ dl:"Within the offer window.",
+ rec:"Take it only with a written 24-month path back to delivery, or a hybrid cost-engineer role inside a delivery team. Otherwise decline. Learn controls; do not become controls."},
+{n:"D05",t:"A PM offer arrives with poor salary but excellent exposure",
+ dec:"Is the exposure worth the money?",
+ a:"Decline on pay.",
+ b:"Accept for the title and the project.",
+ out:"Depends entirely on project size. PM of a $5M job is a worse asset than Senior PE on a $200M job.",
+ risk:"A PM title on small projects is a title without career capital, and it is very hard to shed.",
+ opp:"A PM title on a large project is worth $100k+ over the following five years.",
+ ev:"Project value, contract type, team size, who the client is, and who you report to.",
+ dl:"Within the offer window.",
+ rec:"Accept if the project is above $50M and you own the P&L. Decline below $20M regardless of title."},
+{n:"D06",t:"You cannot secure an owner-side or Tier 1 role within 9 months",
+ dec:"What is the alternative route?",
+ a:"Keep applying to the same roles.",
+ b:"Take a deliberate bridge: site-based package engineer, or a contractor's project engineer role.",
+ out:"The bridge role adds site delivery and contract exposure and unlocks the target roles within 12–18 months.",
+ risk:"Repeating the same application with the same CV for another year.",
+ opp:"Site experience is the most common single gap on OEM-based CVs and it is fixable in one role.",
+ ev:"Collect rejection reasons. If 'no site experience' or 'no cost exposure' appears twice, that is your bridge.",
+ dl:"September 2027.",
+ rec:"B. Take the bridge. Do not spend a second year applying with an unchanged CV."},
+{n:"D07",t:"The Melbourne property decision comes due",
+ dec:"Buy now as owner-occupier, buy as an investment, or defer?",
+ a:"Move and buy owner-occupier.",
+ b:"Stay in Perth; buy Melbourne as an investment, or defer 18–24 months.",
+ out:"A costs $30–60k/year immediately and $150–250k/year by 45. B costs nothing.",
+ risk:"A converts your greatest current asset — mobility — into a fixed monthly obligation in a city that pays your discipline less.",
+ opp:"Deferring to 33–34 doubles your borrowing capacity and opens the $850k–1M tier your own thesis actually applies to.",
+ ev:"Perth vs Melbourne salary bands for your discipline. Victorian land tax on the specific property. First-home concession value from a broker.",
+ dl:"Do not decide before the employer move is complete.",
+ rec:"Defer 18–24 months, execute the employer move, then buy as an investment from a stronger income. Never buy owner-occupier in a city that pays you less."},
+{n:"D08",t:"You are offered a data centre electrical role",
+ dec:"Take it?",
+ a:"Decline — the hours are brutal.",
+ b:"Accept — highest pay, highest demand, best international portability.",
+ out:"Data centres pay a 20–35% premium and are structurally short of your exact profile.",
+ risk:"Genuine burnout risk, and cyclicality tied to AI capital expenditure.",
+ opp:"Your telecom/electronics background is the differentiator here that it is nowhere else.",
+ ev:"Client pipeline length, team size, whether the role is construction or operations, and the actual roster.",
+ dl:"Within the offer window.",
+ rec:"Accept if construction-side and the pipeline runs 3+ years. This is one of the two best paths available to you."},
+{n:"D09",t:"You are offered a residential-site role in regional WA",
+ dec:"Relocate?",
+ a:"Stay in Perth.",
+ b:"Take the site role for 2–3 years.",
+ out:"Site delivery is the fastest route to PM and typically adds a 15–25% site allowance on top.",
+ risk:"Social and relationship cost is real. Two to three years is the sensible cap.",
+ opp:"You said residential-site is acceptable — this is the single highest-yield use of that flexibility.",
+ ev:"Contract length, roster, allowance, and whether the role carries cost ownership.",
+ dl:"Within the offer window.",
+ rec:"Accept once, for 2–3 years, before 35 — ideally with cost ownership attached. It compresses your timeline by roughly two years."},
+{n:"D10",t:"An Engineering Manager role is offered",
+ dec:"Technical leadership or delivery leadership?",
+ a:"Accept — status, security, and it uses your strengths.",
+ b:"Decline and stay on the delivery ladder.",
+ out:"EM caps around $320k. Project Director reaches $480k+. EM also rarely converts to PD.",
+ risk:"This is the most seductive trap on your ladder, because it rewards precisely what you are already good at.",
+ opp:"EM is genuinely right if you eventually discover you dislike commercial accountability.",
+ ev:"Ask whether the EM in that organisation sits on the leadership team and controls a budget. Usually not.",
+ dl:"Within the offer window.",
+ rec:"Decline before 40 unless it carries a P&L. Comfortable is not the same as optimal."},
+{n:"D11",t:"You are still a Project Engineer in September 2029",
+ dec:"What now?",
+ a:"Wait for the next cycle.",
+ b:"Change employer immediately, accepting a sideways title if it carries budget.",
+ out:"Nine-plus years in one title starts reading as a plateau, and the read is very hard to reverse.",
+ risk:"The single most likely bad outcome in this entire document.",
+ opp:"Even a lateral move resets the clock on how recruiters read your trajectory.",
+ ev:"Count the years. That is the whole test.",
+ dl:"Hard trigger. No deliberation.",
+ rec:"B, without discussion. This is the rule you will most want to argue with, which is exactly why it is written down now."},
+{n:"D12",t:"Your employer counter-offers when you resign",
+ dec:"Stay for more money?",
+ a:"Accept the counter.",
+ b:"Leave as planned.",
+ out:"Counter-offers overwhelmingly fail: the structural problem — no seat with a P&L — is unchanged by a raise.",
+ risk:"You have also now told them you are leaving. That knowledge does not expire.",
+ opp:"The counter proves you were underpaid, which is useful information for the rest of your career.",
+ ev:"Does the counter include budget ownership and direct reports in writing? If it is only money, it is only money.",
+ dl:"48 hours.",
+ rec:"Leave. Accept a counter only if it includes written authority, not just cash."},
+{n:"D13",t:"You are offered your first project P&L",
+ dec:"Take it even if the project is troubled?",
+ a:"Decline the troubled one; wait for a clean project.",
+ b:"Take the troubled one.",
+ out:"Turnarounds build careers faster than clean deliveries, because commercial skill is only visible when things go wrong.",
+ risk:"A genuinely unrecoverable project can damage you. Distinguish 'difficult' from 'already lost'.",
+ opp:"Rescuing a project is the fastest reputation you can buy.",
+ ev:"How far through is it, what is the contract position, does the client want it saved, and will leadership back you?",
+ dl:"Within the offer window.",
+ rec:"Take it if it is under 60% complete and leadership is genuinely behind you. Decline a project already in dispute with no sponsor."},
+{n:"D14",t:"The Middle East window opens (2033–2036)",
+ dec:"Go or stay?",
+ a:"Stay in Australia and progress to Project Director.",
+ b:"Take 3–5 years in the Gulf at Senior PM or above.",
+ out:"B can compress a decade of saving. A builds a more linear Australian trajectory.",
+ risk:"Going too early — as a PE or junior PM — returns experience nobody weights. Going without an exit date is worse.",
+ opp:"Correctly timed, it funds the ownership phase outright.",
+ ev:"The offered title and package, the project's funding status, the repatriation market for that title, and the tax treatment.",
+ dl:"Between 38 and 41. After 43 the calculus weakens sharply.",
+ rec:"Go only at Senior PM or above, only with a delivered Australian major project behind you, and only with a written 3–5 year exit plan."},
+{n:"D15",t:"You are offered equity in a mid-tier firm instead of a Tier 1 salary",
+ dec:"Salary or equity?",
+ a:"Take the Tier 1 salary.",
+ b:"Take the mid-tier equity.",
+ out:"Before 40, salary and brand usually win. After 42, equity usually wins.",
+ risk:"Illiquid equity in a firm with no exit path is decoration, not wealth.",
+ opp:"Mid-tier equity is the most realistic route to real wealth for an engineer who does not want to found from scratch.",
+ ev:"Valuation, vesting, the shareholders' agreement, dividend history, and whether anyone has ever been paid out.",
+ dl:"Within the offer window.",
+ rec:"Decline before 40. Take it seriously after 42, and only with a lawyer reading the agreement."},
+{n:"D16",t:"AI begins visibly absorbing project administration in your organisation",
+ dec:"How do you position?",
+ a:"Ignore it; delivery is safe.",
+ b:"Become the person who deploys it, and move deliberately toward accountability-heavy work.",
+ out:"The reporting and coordination half of your current job is the half that disappears. Accountability does not.",
+ risk:"Project engineers whose value is coordination are the most exposed group in construction.",
+ opp:"Being the person who automated the reporting is the cheapest visibility play available to you.",
+ ev:"Which of your weekly tasks could a competent tool do today? Count the hours honestly.",
+ dl:"Ongoing.",
+ rec:"B. Automate your own admin, publish the hours saved internally, and redirect them into commercial work."},
+{n:"D17",t:"You discover you genuinely prefer controls or commercial work to delivery",
+ dec:"Change trajectory?",
+ a:"Push through; PM is the plan.",
+ b:"Redirect toward Commercial Manager.",
+ out:"Commercial Manager reaches similar money to Project Director with better AI resilience and lower stress.",
+ risk:"Controls is a lower ceiling than commercial. If you are redirecting, redirect to commercial, not controls.",
+ opp:"Commercial is under-supplied and under-contested.",
+ ev:"Which work do you still have energy for at 5pm? That is a more reliable signal than anything you tell yourself.",
+ dl:"Reassess at each quarterly review.",
+ rec:"Redirect to commercial if the preference persists across three consecutive quarters. Never redirect to controls as a destination."},
+{n:"D18",t:"You reach $250k and progression stalls",
+ dec:"Push for Project Director, or go independent?",
+ a:"Push internally for PD.",
+ b:"Move to contracting at a day rate.",
+ out:"Contracting at $1,600–2,200/day is $350–450k gross, but with no leave, no super and real gaps between contracts.",
+ risk:"Contracting too early stops your leadership progression cold — day-rate contractors are rarely made directors.",
+ opp:"After 45, contracting is an excellent wealth vehicle.",
+ ev:"How many PD seats exist in your organisation, and when do they turn over? Ask.",
+ dl:"Reassess annually from 40.",
+ rec:"Push for PD until 45. Contract after 45 only if the PD seat is genuinely unavailable."},
+{n:"D19",t:"The four ownership trigger conditions are all met",
+ dec:"Leave and build?",
+ a:"Stay employed; the salary is excellent.",
+ b:"Leave and start the business.",
+ out:"If all four conditions genuinely hold, the risk is far lower than it feels — you are leaving with clients, not hope.",
+ risk:"Leaving before all four are met is the most common way engineers destroy a good career.",
+ opp:"This is the only real wealth vehicle in the document.",
+ ev:"Test all four annually and write down the answers. Three out of four is not four.",
+ dl:"Test each year from 42.",
+ rec:"Leave only on four out of four. Every year you go early costs equity; every year you delay past it costs upside."},
+{n:"D20",t:"A recruiter approaches with a 20%+ raise but a lateral title",
+ dec:"Money or trajectory?",
+ a:"Take the money.",
+ b:"Decline and hold for a title move.",
+ out:"Before 35, trajectory compounds faster than salary. After 45, salary and equity matter more.",
+ risk:"Two lateral moves for money in a row and you are a well-paid engineer with no ladder.",
+ opp:"A raise with the same authority is still a raise, and it may reset your band favourably.",
+ ev:"Does the new role carry budget or people that the current one does not?",
+ dl:"Within the offer window.",
+ rec:"Before 35: take it only if it adds authority. After 45: take the money."},
+{n:"D21",t:"You are asked to relocate internationally outside the Gulf (Canada, NZ, Singapore, UK)",
+ dec:"Go?",
+ a:"Stay.",
+ b:"Go.",
+ out:"Canada and NZ are close to lateral on money. Singapore is strong for data centres. The UK is generally a pay cut.",
+ risk:"An international move without a pay or title jump is a lifestyle decision, not a career one — which is fine, as long as you know that is what you are choosing.",
+ opp:"Singapore and the Gulf are the only two that clearly beat Australia on money for your profile.",
+ ev:"Post-tax, post-cost-of-living comparison. Not the headline number.",
+ dl:"Case by case.",
+ rec:"Only for a title jump plus a real post-tax gain. Otherwise Australia pays your discipline better than most people assume."},
+{n:"D22",t:"You are 45 and have not reached Project Director",
+ dec:"Accept the plateau or change vehicle?",
+ a:"Continue as Senior PM to retirement.",
+ b:"Switch to contracting, consulting or ownership.",
+ out:"Senior PM to 65 is roughly $350k/year, secure, and finite. The alternative vehicles have higher ceilings and higher variance.",
+ risk:"Doing nothing by default is the real risk here, not choosing wrongly.",
+ opp:"At 45 with a strong network, contracting and consulting are genuinely low-risk.",
+ ev:"How many PD seats exist, who holds them, and when do they turn over?",
+ dl:"Age 45, hard checkpoint.",
+ rec:"If no PD seat is realistically available within 24 months, switch vehicle. Do not wait it out."}
+];
+
+const RULES=[
+ ["Timing","If you are still titled Project Engineer in September 2029, change employer within 90 days — sideways title is acceptable, no budget is not."],
+ ["Timing","If you have been in the same role for 30 months without new authority, start searching that month. Not that quarter."],
+ ["Timing","If two years pass without a pay rise above inflation, you are being quietly repriced downward. Move."],
+ ["Money","If you receive an offer 15%+ higher, do not accept on money alone — score it on authority, project size and the client, then decide."],
+ ["Money","If a counter-offer contains no written budget ownership or reporting line, leave anyway. Cash does not fix structure."],
+ ["Money","If you take a pay cut, cap it at 10% and only in exchange for written cost ownership on a project above $50M."],
+ ["Money","If your total package passes $250k, redirect all further effort from salary negotiation to equity, day rate or ownership. Salary growth flattens hard after this point."],
+ ["Money","If your savings rate falls below 30% while your income is above $200k, fix the spending before chasing the next raise."],
+ ["Authority","If you are given responsibility for budgets above $10M, immediately pursue AIPM CPPM and start applying for PM roles — you now meet the screen."],
+ ["Authority","If you are asked to take on scope with no budget and no headcount, say yes once for goodwill and no every time after."],
+ ["Authority","If you have no direct report by age 34, make acquiring one the single objective of the next 12 months, above money and above title."],
+ ["Authority","If your manager will not show you the project cost report after two direct requests, treat that as a formal answer about your ceiling."],
+ ["Employer","If your employer has never promoted anyone from your role into a P&L seat, no amount of performance will make you the first. Leave."],
+ ["Employer","If you have been at one employer for more than five years without two title changes, the loyalty is costing you roughly $20k a year."],
+ ["Employer","If your company refuses promotion after documented delivery, give them one written 90-day plan, then leave when it lapses."],
+ ["Employer","If a company will not discuss equity after you turn 42, they are not your long-term employer."],
+ ["Path","If you find you prefer commercial work to delivery for three consecutive quarters, redirect to Commercial Manager — do not redirect to controls."],
+ ["Path","If you are offered a controls role, accept only with a written 24-month path back into delivery."],
+ ["Path","If you are offered Engineering Manager before 40 without a P&L, decline. Comfortable is not optimal."],
+ ["Path","If a PM title is offered on a project under $20M, decline. A PM title without scale is a label you cannot remove."],
+ ["Industry","If a mining, energy or data centre opportunity arrives, score it on the Way 04 model before responding emotionally to the money."],
+ ["Industry","If changing industry raises your income by more than 15% and does not reduce your authority, take it. Industry loyalty pays nothing."],
+ ["Industry","If your sector's capital pipeline visibility drops below three years, begin repositioning while you are still valuable, not after."],
+ ["Geography","If a role requires leaving Perth for a city that pays your discipline less, it must carry a title jump. Money alone is not enough."],
+ ["Geography","If you consider buying a home, first confirm the city pays your discipline at or above where you are. If not, buy it as an investment and stay put."],
+ ["Geography","If a Gulf offer arrives before you hold a Senior PM title, decline it. Going early is the classic error."],
+ ["Geography","If you do go to the Gulf, fix the exit date before you sign. People who go without one stay eight years and return unplaceable."],
+ ["AI","If AI absorbs a task you do weekly, do not defend the task — deploy the tool, publish the hours saved, and reinvest them in commercial work."],
+ ["AI","If more than half your week is reporting, coordinating or document handling, you are in the depreciating half of the profession. Move within 12 months."],
+ ["Learning","If a course does not increase your market value, your authority, or your optionality, do not take it — however interesting it is."],
+ ["Learning","If you are about to commit more than 500 hours to anything, write down what else those hours could buy. If you cannot make the comparison favourable on paper, do not start."],
+ ["Learning","If you catch yourself studying technical depth you already have at 8/10, stop. That is comfort, not strategy."],
+ ["Review","If your quarterly score falls below 55 for two consecutive quarters, begin an active search that week. No deliberation."],
+ ["Review","If you skip the Friday commercial hour twice in a row, treat it as a leading indicator and put it back before anything else."]
+];
+
+const ANTI=[
+ ["Very high","The comfortable OEM plateau","You are technically excellent and structurally stuck. The OEM will keep rewarding you with harder technical problems, which feels like progression and is not. This is the trap you are currently standing in."],
+ ["Very high","Credential substitution","Reaching for a qualification — the electrician ticket, another Master's, a stack of short courses — when the actual gap is authority. Certificates are the thing you can control; authority is the thing you have to ask for. So you reach for certificates."],
+ ["Very high","Technically useful, commercially invisible","Being the person everyone needs and nobody promotes, because your value shows up in avoided problems rather than in numbers anyone reports upward."],
+ ["High","The indispensable fixer","Becoming so good at unblocking everyone else that removing you from the current role becomes expensive. Being irreplaceable where you are is the same thing as being unpromotable."],
+ ["High","Coordination drift","Sliding from engineering into administration one small task at a time. MDRs, transmittals, registers, chasing. It is the most automatable work in the industry and it is quietly eating your week."],
+ ["High","Loyalty tax","Staying at one employer through the years when moving pays most. Roughly $20k a year in your case, compounding, and invisible because it never appears as a loss."],
+ ["High","The wrong-city mortgage","Anchoring your mobility to a house in a market that pays your discipline less, at the exact moment mobility is your most valuable asset."],
+ ["Medium","Chasing titles without responsibility","PM of a $5M job at a small company. The title is real and worth almost nothing, and it is hard to trade up from."],
+ ["Medium","Chasing salary without career capital","Two lateral moves for money and you are a well-paid engineer with no ladder. Money is a lagging indicator; authority is the leading one."],
+ ["Medium","Over-specialisation","Becoming the switchgear person. It pays well until the technology, the employer or the sector shifts, and then it does not transfer."],
+ ["Medium","Premature generalisation","Moving to management before your technical credibility is banked. You have banked it — this trap is behind you, not ahead."],
+ ["Medium","Avoiding commercial responsibility","Letting someone else own the contract because it is uncomfortable and adversarial. This single avoidance caps more engineering careers than any other."],
+ ["Medium","Avoiding leadership","Preferring to do the work yourself because it is faster and better. True, and it is a ceiling."],
+ ["Medium","The controls cul-de-sac","Taking a controls role for the money and being relabelled. Excellent skill, mediocre destination, and very hard to reverse after three years."],
+ ["Low","Founding too early","Starting a business at 35 with no clients, no capital and no reputation. That is not entrepreneurship; it is buying yourself a low-paid job with extra risk."],
+ ["Low","Contracting too early","Day rates before 45 look great and stop your leadership progression cold. Contractors are rarely made directors."],
+ ["Low","Waiting for permission","Assuming a promotion arrives if the work is good enough. Nobody is managing your career. There is no queue and no one is holding your place in it."]
+];
+
+const PLAN=[
+ {m:"Month 1", items:[
+  ["Career","Ask your manager directly for cost ownership on one project and one graduate to supervise. Get the answer in writing."],
+  ["Skill","Book AS 4000 / AS 4902 contract training. Two days. Do it before anything else."],
+  ["Network","Reconnect with three former colleagues now on the client or contractor side. No agenda — just re-open the line."],
+  ["Market","Rewrite your CV around scope value, budget influence and client outcomes. Delete every line about document control."],
+  ["Financial","Calculate your true savings rate and set the deposit fund aside. Do not buy anything yet."],
+  ["Learning","Read your current project's contract end to end. All of it. This will be uncomfortable and it is the point."]]},
+ {m:"Month 2", items:[
+  ["Career","Volunteer for the next variation or claim on any project you touch."],
+  ["Skill","Complete the contract training. Write a one-page summary of your project's risk allocation."],
+  ["Network","Contact two Perth recruiters specialising in resources and energy project roles. Ask for a market and band read, not a job."],
+  ["Market","Apply to three owner-side roles even if you feel underqualified. The feedback is the product."],
+  ["Financial","Model Perth vs Melbourne after-tax income for your discipline. Put real numbers on the earlier decision."],
+  ["Learning","Learn to read a project cost report: committed, accrued, forecast, variance at completion."]]},
+ {m:"Month 3", items:[
+  ["Career","Present one commercial insight to your manager — a cost risk, a supplier exposure, a variation opportunity. Establish the new register you are playing in."],
+  ["Skill","Begin P6 fundamentals. Aim to challenge a schedule, not build one."],
+  ["Network","Attend one AIPM or Engineers Australia event. Speak to three people. Follow up with two within 48 hours."],
+  ["Market","Run your first quarterly review (Way 15). Record the baseline score."],
+  ["Financial","Open a dedicated high-interest account for the deposit. Automate the transfer."],
+  ["Learning","Start CPEng / NER evidence collection. It takes months; start now."]]},
+ {m:"Month 4", items:[
+  ["Career","Ask to attend the monthly project cost review. Say nothing for the first two. Learn the vocabulary."],
+  ["Skill","Build one Power BI dashboard over real project data. Show it to your manager."],
+  ["Network","Coffee with one Project Director. Ask how they got their first P&L, and what they would do differently."],
+  ["Market","Interview for one role even if you would decline it. Interviewing is a skill and it decays."],
+  ["Financial","Review super and insurance. Boring, ten minutes, and it compounds for fifty years."],
+  ["Learning","Study one real claim or EOT from your own company's history."]]},
+ {m:"Month 5", items:[
+  ["Career","Take the graduate or technician supervision if offered. If it is not offered, ask again."],
+  ["Skill","Automate one recurring report using AI plus Power Automate. Measure the hours saved."],
+  ["Network","Ten deliberate LinkedIn connections with owner-side PMs. A short, specific note with each."],
+  ["Market","Track your applications and outcomes in one sheet. Patterns only appear when written down."],
+  ["Financial","Set the target: $160–185k by end 2027. Write it down."],
+  ["Learning","HV switching / safe work ticket booked."]]},
+ {m:"Month 6", items:[
+  ["Career","Formal review with your manager. Present the automation hours saved and the commercial insights. Ask directly about the path to PM."],
+  ["Skill","Finish P6 fundamentals."],
+  ["Network","Your second Project Director conversation."],
+  ["Market","Second quarterly review. Compare against the baseline."],
+  ["Financial","Six-month savings checkpoint against target."],
+  ["Learning","Begin protection relay fundamentals."]]},
+ {m:"Month 7", items:[
+  ["Career","Decision point D01/D02: if there is no written commitment on cost ownership by now, escalate the search to primary priority."],
+  ["Skill","Quantified risk register — build one properly on a live project."],
+  ["Network","Ask one recruiter for a candid read on how your CV is landing. Ask for the criticism specifically."],
+  ["Market","Apply to five roles this month, not three."],
+  ["Financial","Re-run the Perth vs Melbourne numbers with your updated income."],
+  ["Learning","Study one AS 4902 claim scenario end to end."]]},
+ {m:"Month 8", items:[
+  ["Career","Own one supplier negotiation from strategy through to close."],
+  ["Skill","Negotiation training — a book plus a course plus deliberate practice. Not just the book."],
+  ["Network","Reconnect with your Master's cohort. Several of them are now in the seats you want."],
+  ["Market","First real interviews for target roles."],
+  ["Financial","Deposit fund checkpoint."],
+  ["Learning","Complete protection fundamentals."]]},
+ {m:"Month 9", items:[
+  ["Career","If no movement internally, accelerate externally. Nine months is enough evidence."],
+  ["Skill","Complete the HV switching ticket."],
+  ["Network","Third Project Director conversation. Ask each of them to keep you in mind — explicitly."],
+  ["Market","Third quarterly review. Check the trend, not the score."],
+  ["Financial","Confirm the property decision is deferred and the fund keeps building."],
+  ["Learning","Submit the CPEng / NER application."]]},
+ {m:"Month 10", items:[
+  ["Career","Negotiate whatever is available: title, scope, budget, or pay — in that order of preference."],
+  ["Skill","EVM fundamentals. Two days, permanently useful."],
+  ["Network","Maintain your recruiter relationships even while employed. Especially while employed."],
+  ["Market","Aim to hold at least one live offer or advanced process."],
+  ["Financial","Model the impact of a $170k package on your savings and borrowing capacity."],
+  ["Learning","Begin AIPM CPPP evidence collection."]]},
+ {m:"Month 11", items:[
+  ["Career","Evaluate any live offers against the Way 04 model and the Way 10 decision points. Do not decide emotionally."],
+  ["Skill","Consolidate: one dashboard, one automation, one risk register, one negotiation. That is your evidence pack."],
+  ["Network","Thank everyone who helped. This is not politeness; it is how networks stay alive."],
+  ["Market","Decide: move, or commit to a defined 12-month internal plan with written milestones."],
+  ["Financial","Annual financial review."],
+  ["Learning","Plan year two: commercial capability is the entire theme."]]},
+ {m:"Month 12", items:[
+  ["Career","Execute the move, or start the written internal plan with dated milestones and a named sponsor."],
+  ["Skill","Full skills audit against Way 07. Re-rank what remains."],
+  ["Network","You should now know at least eight owner-side or contractor PMs by name. Count them."],
+  ["Market","Fourth quarterly review. Compare to the Month 3 baseline honestly."],
+  ["Financial","Set the year-two income target: $200k+."],
+  ["Learning","Set the year-two learning plan: contracts deepened, claims, negotiation, leadership."]]}
+];
+
+const WEEKLY=[
+ ["2.5 hrs","Commercial & contracts","Contract clauses, cost reports, claims, negotiation. The highest-yield block in your week and the one you will most want to skip.","Mon & Wed evenings"],
+ ["2.0 hrs","Project management craft","P6, EVM, risk, planning. Applied to a live project wherever possible, never purely theoretical.","Tue evening"],
+ ["1.5 hrs","Networking & visibility","One coffee or call a week, plus deliberate follow-ups. Relationships are the only asset here that appreciates without maintenance cost.","Thu, and one weekday lunch"],
+ ["1.5 hrs","Technical (capped deliberately)","Protection, HV, power systems. Capped on purpose — this is your comfort zone and it is already at 8/10.","Sat morning"],
+ ["1.5 hrs","Digital & AI leverage","Automating your own reporting, building dashboards. Compounds fast and buys back time.","Sat morning"],
+ ["1.0 hr","Strategic review & job market","Scan the market weekly even when happy. Update the log. Re-read Way 11.","Fri — the non-negotiable hour"]
+];
+
+const QDIMS=[
+ ["Income vs. target",12],["Budget / cost responsibility",12],["Direct reports & leadership",11],
+ ["Commercial & contract exposure",11],["Marketability (inbound interest)",10],["Network growth & quality",9],
+ ["Project scale & complexity",9],["Management capability",8],["Technical relevance",6],
+ ["Certifications & credentials in progress",4],["Career satisfaction",4],["Future relevance / AI resilience",4]
+];
+
+const FUTURE=[
+ ["More valuable","Commercial and contract judgement","Contracts are adversarial, contextual and legally consequential. Machines will draft them; people will still argue and sign them."],
+ ["More valuable","Accountability for physical assets","Someone must be liable when the substation does not energise. Liability cannot be delegated to software."],
+ ["More valuable","Client relationships and trust","Repeat work comes from people, and always will."],
+ ["More valuable","Negotiation and conflict resolution","Higher stakes, fewer capable people, no automation path."],
+ ["More valuable","Grid, storage and electrification expertise","A legislated multi-decade pipeline with a structural skills shortage."],
+ ["Extremely scarce","Engineers who understand contracts","The rarest and best-paid combination in the industry. This is your single biggest opportunity."],
+ ["Extremely scarce","Data centre electrical delivery leaders","Demand is growing faster than the talent pool can possibly supply."],
+ ["Extremely scarce","Cleared engineers on defence programs","Citizenship plus clearance plus electrical is a very small pool."],
+ ["Extremely scarce","People who can lead both engineers and AI systems","An emerging category. Being early here is cheap and will not stay cheap."],
+ ["Less valuable","Manual scheduling and progress measurement","Already being absorbed. Learn it to challenge it, not to do it."],
+ ["Less valuable","Document control and MDR compilation","Effectively solved. Stop doing this immediately."],
+ ["Less valuable","Routine design calculation","Software has done this for years; AI finishes the job."],
+ ["Less valuable","Being the person who knows where the files are","Zero future value. Some present value, which is precisely the trap."],
+ ["Automated","Progress reporting and dashboards","Fully automatable now."],
+ ["Automated","Quantity takeoff and estimating support","Largely automated within a decade."],
+ ["Automated","Standard compliance checking","Rules-based work; the first thing to go."],
+ ["Automated","Meeting minutes, transmittals, correspondence","Already gone."],
+ ["Commoditised","Generic project coordination","Abundant supply, falling price, offshoring pressure."],
+ ["Commoditised","Basic PM certification holders","Certificate supply has far outrun demand. This is why credentials are not career capital."],
+ ["Commoditised","Standard electrical design","Increasingly templated and automated."]
+];
+
+const BARBELL=[
+ ["Core — 85%","Employed delivery career","Owner-side or data centre PM → Senior PM → Project Director. Highly employable, downside-protected, funds everything else. This is the ballast, and it must stay strong."],
+ ["Upside — 10%","Contracting optionality","Build the network and reputation so that a $1,800/day contract is always available. This is a free option: it costs nothing to hold and pays in every downturn."],
+ ["Upside — 3%","Advisory & expert work","From 45: technical due diligence, expert witness, dispute advisory. High rate, low hours, extremely AI-resistant, and it compounds reputation."],
+ ["Upside — 2%","Business ownership","From 43–49, once all four trigger conditions hold. A specialist PM consultancy or electrical delivery firm. The only genuine wealth vehicle here."],
+ ["Ballast","Investment discipline","Boring and decisive: a savings rate above 35% from age 35 on a $250k+ income outperforms most of the exciting options in this document. The quiet winner."]
+];
+
+const FINAL=[
+ ["What should I do in the next 12 months?","Leave the switchgear OEM for an owner-side or Tier 1 contractor role in Perth that carries cost ownership. Take the AS 4000 contract training in the next 90 days, start CPEng, and do not buy a house. If you do only the first thing on that list, the year is still a success."],
+ ["Should I pursue an electrician qualification?","No. Four years and 6,000–8,000 hours to insure against a risk that barely exists, while consuming the exact window your PM transition has to happen in. Buy the practical competency instead — about 200 hours, and it closes the credibility gap almost as well."],
+ ["Should I move toward Project Controls?","Learn it. Do not become it. It is the most automatable role in the comparison, it caps around $220–260k, and controllers rarely convert to Project Director. Take a controls role only with a written 24-month path back to delivery."],
+ ["Should I pursue Project Management?","Yes — but via Senior Project Engineer with cost ownership on the owner side, not by jumping to a PM title at a small company. The route matters more than the title."],
+ ["Should I remain technically focused?","No. You are at 8/10 technically and 3/10 commercially. Further technical depth has near-zero marginal return; the next hour spent on contracts is worth roughly ten spent on switchgear."],
+ ["Should I change industries?","Change employers first, then let the industry follow. The employer type — OEM versus owner versus contractor — is doing more damage to your ceiling than the industry is."],
+ ["Which industry should I target?","Mining and resources or data centres, both from Perth. Energy and grid as the safest long-horizon third. Defence as a stabiliser later, when your citizenship becomes the scarce asset."],
+ ["What should my next job title ideally be?","Senior Project Engineer or Project Engineer, owner-side or Tier 1, with explicit cost ownership and at least one direct report. The title matters far less than those two attributes."],
+ ["What should my job title be 5 years from now?","Project Manager, moving to Senior Project Manager, with one project above $100M delivered and your name on it."],
+ ["What should my ultimate career destination be?","Project Director — then owner of a specialist delivery or advisory business, on your own timing, once all four trigger conditions in Way 17 hold."],
+ ["What skills should I develop immediately?","Contract literacy, cost control, quantified risk, negotiation. In that order. Everything else can wait twelve months."],
+ ["What should I stop doing?","Document control. MDR compilation. Being the default FAT attendee. Studying technical depth you already have. Waiting to be offered things."],
+ ["What should I never waste time on?","The electrician apprenticeship. An MBA. A second Master's. PRINCE2. Vendor certifications. Any course whose main output is a badge."],
+ ["What is my biggest career risk?","Becoming a 40-year-old OEM project engineer who is technically excellent, commercially invisible, and structurally unpromotable. It is also the most likely single outcome if nothing changes — which is what makes it the risk rather than a worry."],
+ ["What is my biggest career opportunity?","Being an accredited, citizen electrical engineer with genuine switchgear depth, in Perth, during the largest electrification build-out in Australian history — with no dependents and full mobility. That combination is not going to be available to you again."],
+ ["What decision would have the biggest positive impact on my next 10 years?","Leaving the OEM within 12 months for a seat with a budget. Everything else in this document is downstream of that one move."],
+ ["What would I do in your exact position?","Give notice within nine months. Take an owner-side role in Perth even at flat pay if it carries cost ownership. Do the contract training immediately. Take one residential-site role for 2–3 years before 35. Buy the Melbourne property as an investment at 33–34, from $200k+. Go to the Gulf at 38–41 as a Senior PM with a fixed exit date. Come home at 43 into a Project Director seat. Start the business at 46–49, and only on four out of four."],
+ ["What would I absolutely not do?","Buy an owner-occupier house in Melbourne next year and move there. It converts your greatest current asset — mobility, at the one moment it is worth most — into a mortgage in a city that pays your discipline less, at the exact moment your career needs the opposite. If you take one thing from this document, take that."]
+];
+
+/* ============================== STATE ============================== */
+const SECTIONS=[["s01","Diagnosis"],["s02","Assumption test"],["s03","The ten avenues"],
+ ["s04","Scoring model"],["s05","Income strategy"],["s06","50-year roadmap"],["s07","Skills roadmap"],
+ ["s08","Certifications"],["s09","Controller vs Manager"],["s10","Decision tree"],["s11","If–then rules"],
+ ["s12","Anti-patterns"],["s13","12-month plan"],["s14","Weekly OS"],["s15","Quarterly review"],
+ ["s16","Future-proofing"],["s17","The barbell"],["s18","Conclusion"]];
+
+const DEFAULTS={
+ w:Object.fromEntries(FACTORS.map(f=>[f.k,f.w])),
+ sel:["owner","dc","comm"],
+ scen:"base",
+ done:{},
+ q:Object.fromEntries(QDIMS.map(d=>[d[0],50])),
+ qlog:[]
+};
+let S=JSON.parse(JSON.stringify(DEFAULTS));
+let DB=null, saveTimer=null, dirty=false;
+const $=(s,r)=>(r||document).querySelector(s);
+const el=(t,c,h)=>{const e=document.createElement(t); if(c)e.className=c; if(h!=null)e.innerHTML=h; return e;};
+const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+
+function lsGet(){try{const r=localStorage.getItem("traj2076");return r?JSON.parse(r):null}catch(e){return null}}
+function lsSet(v){try{localStorage.setItem("traj2076",JSON.stringify(Object.assign({},v,{at:Date.now()})))}catch(e){}}
+function status(t){const n=$("#savestate"); if(n)n.textContent=t;}
+
+function merge(loaded){
+ if(!loaded||typeof loaded!=="object")return;
+ if(loaded.w)Object.keys(DEFAULTS.w).forEach(k=>{if(typeof loaded.w[k]==="number")S.w[k]=loaded.w[k]});
+ if(Array.isArray(loaded.sel))S.sel=loaded.sel.filter(id=>PATHS.some(p=>p.id===id)).slice(0,4);
+ if(typeof loaded.scen==="string"&&SCEN[loaded.scen])S.scen=loaded.scen;
+ if(loaded.done&&typeof loaded.done==="object")S.done=loaded.done;
+ if(loaded.q)Object.keys(DEFAULTS.q).forEach(k=>{if(typeof loaded.q[k]==="number")S.q[k]=loaded.q[k]});
+ if(Array.isArray(loaded.qlog))S.qlog=loaded.qlog.slice(-24);
+}
+function touch(){dirty=true;status("Unsaved changes");lsSet(S);clearTimeout(saveTimer);saveTimer=setTimeout(save,1500);}
+async function save(){
+ lsSet(S);
+ if(!DB){dirty=false;status("Saved on this device");return;}
+ try{await DB.doc("plan/state").set({v:1,data:JSON.stringify(S),at:Date.now()});dirty=false;
+   status("Saved — "+new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"}));}
+ catch(e){status("Saved locally only");}
+}
+
+/* ============================ SCORING ============================ */
+function wsum(){return FACTORS.reduce((a,f)=>a+S.w[f.k],0)||1;}
+function score(p){const t=wsum();return FACTORS.reduce((a,f)=>a+S.w[f.k]*p.s[f.k],0)/t*10;}
+function ranked(){return PATHS.map(p=>({p,v:score(p)})).sort((a,b)=>b.v-a.v);}
+
+/* ============================ RENDER ============================ */
+function tbl(cols,rows,firstWide){
+ const w=el("div","tw"),t=el("table");
+ const th=el("thead"),tr=el("tr");
+ cols.forEach((c,i)=>{const h=el("th",i>0&&firstWide?"":"",esc(c));tr.appendChild(h)});
+ th.appendChild(tr);t.appendChild(th);
+ const tb=el("tbody");
+ rows.forEach(r=>{const x=el("tr");r.forEach(c=>{const td=el("td");td.innerHTML=c;x.appendChild(td)});tb.appendChild(x)});
+ t.appendChild(tb);w.appendChild(t);return w;
+}
+function pill(txt){
+ const m={"Critical":"p-crit","High":"p-high","Medium":"p-med","Low":"p-low",
+  "YES":"p-yes","NO":"p-no","MAYBE":"p-maybe","Very high":"p-crit"};
+ return '<span class="p '+(m[txt]||"p-cop")+'">'+esc(txt)+'</span>';
+}
+
+function renderNav(){
+ const n=$("#nav");
+ SECTIONS.forEach((s,i)=>{
+  const a=el("a","way",'<b>'+String(i+1).padStart(2,"0")+'</b><span>'+esc(s[1])+'</span>');
+  a.href="#"+s[0];a.dataset.t=s[0];n.appendChild(a);
+ });
+ const obs=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){
+   document.querySelectorAll(".way").forEach(w=>w.classList.toggle("on",w.dataset.t===e.target.id));}});
+ },{rootMargin:"-10% 0px -75% 0px"});
+ SECTIONS.forEach(s=>{const t=document.getElementById(s[0]);if(t)obs.observe(t)});
+}
+
+function renderCap(){
+ const rows=CAP.map(c=>{
+  const gap=Math.max(c[2]-c[1],0);
+  const lab=gap>=4?"Critical gap":gap>=2?"Gap":c[1]-c[2]>=1?"Surplus":"On level";
+  return [esc(c[0]),
+   '<div style="display:flex;gap:8px;align-items:center"><span class="num" style="width:14px">'+c[1]+'</span><div class="bar" style="flex:1"><i style="width:'+(c[1]*10)+'%"></i></div></div>',
+   '<span class="num">'+c[2]+'</span>','<span class="num">'+c[3]+'</span>',pill(lab)];
+ });
+ $("#mount-cap").appendChild(tbl(["Capability","You now (1–10)","Need: PM","Need: Director","Read"],rows));
+}
+function renderElec(){
+ $("#mount-elec").appendChild(tbl(["Option"].concat(ELEC.cols),ELEC.rows.map(r=>r.map(esc))));
+}
+function renderProp(){
+ $("#mount-prop").appendChild(tbl(["Option"].concat(PROP.cols),PROP.rows.map(r=>r.map(esc))));
+}
+
+function renderPaths(){
+ const box=$("#mount-paths");box.innerHTML="";
+ const head=el("div","btnrow");
+ head.innerHTML='<span class="st mono" style="font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)">Select up to four</span>';
+ box.appendChild(head);
+ const list=el("div","picks");
+ ranked().forEach((r,i)=>{
+  const p=r.p,on=S.sel.includes(p.id);
+  const d=el("label","pick"+(on?" sel":""));
+  d.innerHTML='<input type="checkbox" '+(on?"checked":"")+' aria-label="Select '+esc(p.n)+'">'+
+   '<span class="rank mono">#'+(i+1)+'</span>'+
+   '<span class="pt"><span class="pn">'+esc(p.n)+'</span><span class="pd">'+esc(p.d)+'</span></span>'+
+   '<span class="ps">'+r.v.toFixed(1)+'</span>';
+  $("input",d).addEventListener("change",ev=>{
+   if(ev.target.checked){ if(S.sel.length>=4){ev.target.checked=false;status("Four paths maximum — deselect one first");return;} S.sel.push(p.id);}
+   else S.sel=S.sel.filter(x=>x!==p.id);
+   touch();renderPaths();renderPathDetail();renderIncome();renderRanking();
+  });
+  list.appendChild(d);
+ });
+ box.appendChild(list);
+}
+function renderPathDetail(){
+ const box=$("#mount-pathdetail");box.innerHTML="";
+ if(!S.sel.length){box.appendChild(el("p","",'<em style="color:var(--ink3)">Select a path above to see the case for and against it.</em>'));return;}
+ box.appendChild(el("h3","","Your selected paths"));
+ S.sel.forEach(id=>{
+  const p=PATHS.find(x=>x.id===id);if(!p)return;
+  const c=el("div","card");c.style.marginBottom="14px";
+  c.innerHTML='<h4 style="margin-top:0">'+esc(p.n)+' <span class="p p-cop">'+score(p).toFixed(1)+'</span></h4>'+
+   '<p style="font-size:14.5px;margin:0 0 10px"><strong>The case for.</strong> '+esc(p.why)+'</p>'+
+   '<p style="font-size:14.5px;margin:0;color:var(--ink3)"><strong style="color:var(--crit)">The case against.</strong> '+esc(p.risk)+'</p>';
+  box.appendChild(c);
+ });
+}
+function renderWeights(){
+ const box=$("#mount-weights");box.innerHTML="";
+ const p=el("div","panel");
+ p.appendChild(el("h4","","Adjust the weights"));
+ const g=el("div","sliders");
+ FACTORS.forEach(f=>{
+  const r=el("div","sl");
+  r.innerHTML='<label for="w-'+f.k+'">'+esc(f.n)+'</label><output id="o-'+f.k+'">'+S.w[f.k]+'%</output>';
+  const inp=el("input");inp.type="range";inp.min=0;inp.max=30;inp.step=1;inp.value=S.w[f.k];inp.id="w-"+f.k;
+  inp.style.gridColumn="1 / -1";
+  inp.addEventListener("input",e=>{S.w[f.k]=+e.target.value;$("#o-"+f.k).textContent=e.target.value+"%";
+   renderRanking();renderPaths();renderPathDetail();touch();});
+  r.appendChild(inp);g.appendChild(r);
+ });
+ p.appendChild(g);
+ const br=el("div","btnrow");
+ const b1=el("button","btn","Reset to recommended");b1.addEventListener("click",()=>{
+  S.w=JSON.parse(JSON.stringify(DEFAULTS.w));renderWeights();renderRanking();renderPaths();renderPathDetail();touch();});
+ const tot=el("span","st");tot.id="wtot";
+ br.appendChild(b1);br.appendChild(tot);p.appendChild(br);
+ box.appendChild(p);
+ $("#wtot").textContent="Total "+wsum()+"%";
+}
+function renderRanking(){
+ const box=$("#mount-ranking");box.innerHTML="";
+ const w=$("#wtot"); if(w)w.textContent="Total "+wsum()+"%";
+ const rows=ranked().map((r,i)=>[
+  '<span class="mono" style="color:var(--copper)">#'+(i+1)+'</span>',
+  esc(r.p.n)+(S.sel.includes(r.p.id)?' <span class="p p-cop">selected</span>':""),
+  esc(r.p.d),
+  '<div style="display:flex;gap:9px;align-items:center"><div class="bar" style="flex:1"><i style="width:'+r.v.toFixed(0)+'%"></i></div><span class="num mono" style="width:34px">'+r.v.toFixed(1)+'</span></div>'
+ ]);
+ box.appendChild(tbl(["Rank","Path","Route","Score / 100"],rows));
+ const note=el("p","");note.style.fontSize="14.5px";note.style.color="var(--ink3)";
+ note.innerHTML="Under the recommended weights the top four land within six points of each other &mdash; which is the real finding. Owner-side, data centres, commercial and energy are not competing strategies so much as different entry doors into the same destination. The genuinely separated result is at the bottom: the trade path scores roughly thirty points below the field, and no defensible weighting closes that gap.";
+ box.appendChild(note);
+}
+
+/* ============================ INCOME CHART ============================ */
+const SCOL=["var(--s1)","var(--s2)","var(--s3)","var(--s4)","var(--s5)"];
+function scaled(id){
+ const m=SCEN[S.scen], base=INCOME[id]||INCOME.stay;
+ return base.map((v,i)=>i===0?v:Math.round(v*m));
+}
+function renderIncome(){
+ const box=$("#mount-income");box.innerHTML="";
+ const ctl=el("div","btnrow");
+ ctl.innerHTML='<span class="st">Scenario</span>';
+ [["cons","Conservative"],["base","Base"],["agg","Aggressive"]].forEach(([k,n])=>{
+  const b=el("button","ft"+(S.scen===k?" on":""),n);
+  b.addEventListener("click",()=>{S.scen=k;touch();renderIncome();});
+  ctl.appendChild(b);
+ });
+ const tglBtn=el("button","btn","Show data table");
+ ctl.appendChild(tglBtn);
+ box.appendChild(ctl);
+
+ const series=[{id:"stay",n:"Stay at the OEM",col:"var(--ink3)",dash:"5 4"}]
+  .concat(S.sel.map((id,i)=>{const p=PATHS.find(x=>x.id===id);
+   return {id:id,n:p?p.n:id,col:SCOL[i%SCOL.length],dash:null};}));
+
+ const lg=el("div","legend");
+ series.forEach(s=>lg.appendChild(el("div","lg",'<i style="background:'+s.col+(s.dash?';opacity:.8':"")+'"></i>'+esc(s.n))));
+ const cb=el("div","chartbox");cb.style.position="relative";
+ cb.appendChild(lg);
+
+ const W=880,H=360,PL=54,PR=118,PT=14,PB=36;
+ const all=series.flatMap(s=>scaled(s.id));
+ const ymax=Math.ceil(Math.max.apply(null,all)*1.12/50)*50;
+ const x=a=>PL+(a-31)/(80-31)*(W-PL-PR);
+ const y=v=>H-PB-(v/ymax)*(H-PT-PB);
+ let svg='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="'+H+'" role="img" aria-label="Modelled total package by age for the selected paths" style="display:block;overflow:visible">';
+ for(let g=0;g<=ymax;g+=(ymax>600?200:100)){
+  svg+='<line x1="'+PL+'" x2="'+(W-PR)+'" y1="'+y(g)+'" y2="'+y(g)+'" stroke="var(--rule2)" stroke-width="1"/>';
+  svg+='<text x="'+(PL-9)+'" y="'+(y(g)+4)+'" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink3)">$'+g+'k</text>';
+ }
+ AGES.forEach(a=>{
+  svg+='<text x="'+x(a)+'" y="'+(H-PB+19)+'" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="var(--ink3)">'+a+'</text>';
+ });
+ svg+='<line x1="'+PL+'" x2="'+(W-PR)+'" y1="'+(H-PB)+'" y2="'+(H-PB)+'" stroke="var(--rule)" stroke-width="1"/>';
+ svg+='<line class="cross" x1="0" x2="0" y1="'+PT+'" y2="'+(H-PB)+'" stroke="var(--copper)" stroke-width="1" opacity="0"/>';
+ const labs=[];
+ series.forEach(s=>{
+  const d=scaled(s.id);
+  const pts=AGES.map((a,i)=>x(a).toFixed(1)+","+y(d[i]).toFixed(1)).join(" ");
+  svg+='<polyline points="'+pts+'" fill="none" stroke="'+s.col+'" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"'+(s.dash?' stroke-dasharray="'+s.dash+'"':"")+'/>';
+  AGES.forEach((a,i)=>{svg+='<circle cx="'+x(a).toFixed(1)+'" cy="'+y(d[i]).toFixed(1)+'" r="3.2" fill="'+s.col+'" stroke="var(--surface)" stroke-width="2"/>';});
+  labs.push({y:y(d[5]),anchor:y(d[5]),col:s.col,n:s.n});
+ });
+ labs.sort((a,b)=>a.y-b.y);
+ for(let i=1;i<labs.length;i++){if(labs[i].y-labs[i-1].y<15)labs[i].y=labs[i-1].y+15;}
+ const over=labs.length?labs[labs.length-1].y-(H-PB):0;
+ if(over>0)labs.forEach(l=>l.y-=over);
+ labs.forEach(l=>{
+  svg+='<line x1="'+(W-PR-2)+'" x2="'+(W-PR+6)+'" y1="'+l.anchor.toFixed(1)+'" y2="'+l.y.toFixed(1)+'" stroke="'+l.col+'" stroke-width="1" opacity=".5"/>';
+  svg+='<text x="'+(W-PR+9)+'" y="'+(l.y+4).toFixed(1)+'" font-family="Archivo,sans-serif" font-size="11" font-weight="600" fill="'+l.col+'">'+esc(l.n.length>18?l.n.slice(0,17)+"\u2026":l.n)+'</text>';
+ });
+ svg+='</svg>';
+ const holder=el("div","",svg);holder.style.position="relative";
+ cb.appendChild(holder);
+ const cap=el("p","");cap.style.cssText="font-size:12.5px;color:var(--ink3);margin:10px 0 0;font-family:Archivo,sans-serif";
+ cap.innerHTML="Modelled total package in today's dollars (AUD, thousands). Ages 70 and 80 represent advisory, board and asset income rather than employment. Conservative &times;0.78, aggressive &times;1.35 from age 35. Estimates, not verified market data &mdash; read the gaps, not the dollars.";
+ cb.appendChild(cap);
+ box.appendChild(cb);
+
+ const tblBox=el("div");tblBox.hidden=true;
+ tblBox.appendChild(tbl(["Path"].concat(AGES.map(a=>"Age "+a)),
+   series.map(s=>[esc(s.n)].concat(scaled(s.id).map(v=>'<span class="num">$'+v+'k</span>')))));
+ box.appendChild(tblBox);
+ tglBtn.addEventListener("click",()=>{tblBox.hidden=!tblBox.hidden;tglBtn.textContent=tblBox.hidden?"Show data table":"Hide data table";});
+
+ const tip=$("#tip"),svgEl=$("svg",holder),cross=$(".cross",svgEl);
+ function move(ev){
+  const r=svgEl.getBoundingClientRect();
+  const px=(ev.clientX-r.left)/r.width*W;
+  let bi=0,bd=1e9;
+  AGES.forEach((a,i)=>{const d=Math.abs(x(a)-px);if(d<bd){bd=d;bi=i}});
+  cross.setAttribute("x1",x(AGES[bi]));cross.setAttribute("x2",x(AGES[bi]));cross.setAttribute("opacity",".45");
+  let h='<b>Age '+AGES[bi]+'</b>';
+  series.forEach(s=>{h+='<div class="tr"><span><i class="sw" style="background:'+s.col+'"></i>'+esc(s.n)+'</span><span>$'+scaled(s.id)[bi]+'k</span></div>';});
+  tip.innerHTML=h;tip.style.opacity="1";
+  const tw=tip.offsetWidth;
+  tip.style.left=Math.min(window.innerWidth-tw-14,Math.max(8,ev.clientX+16))+"px";
+  tip.style.top=(ev.clientY+window.scrollY-10)+"px";
+ }
+ svgEl.addEventListener("mousemove",move);
+ svgEl.addEventListener("mouseleave",()=>{tip.style.opacity="0";cross.setAttribute("opacity","0");});
+}
+function renderVehicles(){
+ $("#mount-vehicles").appendChild(tbl(["Vehicle","Risk","Realistic peak","Assessment","Best paths"],VEHICLES.map(v=>v.map(esc))));
+}
+function renderRoles(){
+ $("#mount-roles").appendChild(tbl(["Role"].concat(ROLES.cols),ROLES.rows.map(r=>r.map(esc))));
+}
+
+function renderRoadmap(){
+ const box=$("#mount-roadmap");
+ ROADMAP.forEach((ph,i)=>{
+  const d=el("details");if(i===0)d.open=true;
+  const s=el("summary");
+  s.innerHTML='<span class="sn">'+esc(ph.era)+' &middot; age '+esc(ph.age)+'</span><span>'+esc(ph.name)+'</span>'+
+   '<span class="p p-cop stag">'+esc(ph.tag)+'</span>';
+  d.appendChild(s);
+  const b=el("div","dbody");
+  b.innerHTML='<p style="margin:0 0 16px;color:var(--ink);font-style:italic;max-width:66ch">'+esc(ph.thesis)+'</p>';
+  const dl=el("dl");
+  ph.f.forEach(([k,v])=>{dl.appendChild(el("dt","",esc(k)));dl.appendChild(el("dd","",esc(v)));});
+  b.appendChild(dl);d.appendChild(b);box.appendChild(d);
+ });
+}
+function renderSkills(){
+ const fb=$("#mount-skillfilters"),box=$("#mount-skills");
+ let filt="All";
+ const groups=["All","Critical","High","Medium","Low"];
+ const bar=el("div","filters");
+ groups.forEach(g=>{const b=el("button","ft"+(g===filt?" on":""),g);
+  b.addEventListener("click",()=>{filt=g;[...bar.children].forEach(c=>c.classList.toggle("on",c.textContent===g));draw();});
+  bar.appendChild(b);});
+ fb.appendChild(bar);
+ function draw(){
+  box.innerHTML="";
+  const rows=SKILLS.filter(s=>filt==="All"||s[2]===filt).sort((a,b)=>a[3]-b[3])
+   .map(s=>['<span class="mono" style="color:var(--copper)">'+String(s[3]).padStart(2,"0")+'</span>',esc(s[0]),esc(s[1]),pill(s[2]),esc(s[4])]);
+  box.appendChild(tbl(["Order","Skill","Group","Priority","Why / how"],rows));
+ }
+ draw();
+}
+function renderCerts(){
+ const fb=$("#mount-certfilters"),box=$("#mount-certs");
+ let filt="All";
+ const bar=el("div","filters");
+ ["All","YES","MAYBE","NO"].forEach(g=>{const b=el("button","ft"+(g==="All"?" on":""),g);
+  b.addEventListener("click",()=>{filt=g;[...bar.children].forEach(c=>c.classList.toggle("on",c.textContent===g));draw();});
+  bar.appendChild(b);});
+ fb.appendChild(bar);
+ function draw(){
+  box.innerHTML="";
+  const rows=CERTS.filter(c=>filt==="All"||c[1]===filt).map(c=>[esc(c[0]),pill(c[1]),esc(c[2])]);
+  box.appendChild(tbl(["Credential","Verdict","Reasoning"],rows));
+ }
+ draw();
+}
+function renderTree(){
+ const box=$("#mount-tree");
+ TREE.forEach((d,i)=>{
+  const x=el("details");
+  const s=el("summary");
+  s.innerHTML='<span class="sn">'+esc(d.n)+'</span><span>'+esc(d.t)+'</span>';
+  x.appendChild(s);
+  const b=el("div","dbody");
+  const dl=el("dl");
+  [["Decision",d.dec],["Option A",d.a],["Option B",d.b],["Expected outcome",d.out],
+   ["Risk",d.risk],["Opportunity",d.opp],["Evidence to collect",d.ev],["Deadline",d.dl]]
+   .forEach(([k,v])=>{dl.appendChild(el("dt","",esc(k)));dl.appendChild(el("dd","",esc(v)))});
+  dl.appendChild(el("dt","",'Recommended'));
+  dl.appendChild(el("dd","rec",esc(d.rec)));
+  b.appendChild(dl);x.appendChild(b);box.appendChild(x);
+ });
+}
+function renderRules(){
+ const fb=$("#mount-rulefilters"),box=$("#mount-rules");
+ const cats=["All"].concat([...new Set(RULES.map(r=>r[0]))]);
+ let filt="All";
+ const bar=el("div","filters");
+ cats.forEach(g=>{const b=el("button","ft"+(g==="All"?" on":""),g);
+  b.addEventListener("click",()=>{filt=g;[...bar.children].forEach(c=>c.classList.toggle("on",c.textContent===g));draw();});
+  bar.appendChild(b);});
+ fb.appendChild(bar);
+ function draw(){
+  box.innerHTML="";
+  RULES.filter(r=>filt==="All"||r[0]===filt).forEach((r,i)=>{
+   const idx=RULES.indexOf(r)+1;
+   const d=el("div","rule-item");
+   d.innerHTML='<span class="rn">R'+String(idx).padStart(2,"0")+'</span><div>'+
+    '<span class="rif">'+esc(r[1].split(/,(.+)/)[0])+'</span>'+
+    '<span class="rth">'+esc((r[1].split(/,(.+)/)[1]||"").trim())+'</span></div>';
+   box.appendChild(d);
+  });
+ }
+ draw();
+}
+function renderAnti(){
+ $("#mount-anti").appendChild(tbl(["Likelihood for you","Trap","Why it catches people like you"],
+  ANTI.map(a=>[pill(a[0]),'<strong>'+esc(a[1])+'</strong>',esc(a[2])])));
+}
+
+function planTotal(){return PLAN.reduce((a,m)=>a+m.items.length,0);}
+function planDone(){return Object.values(S.done).filter(Boolean).length;}
+function renderProgress(){
+ const box=$("#mount-progress");box.innerHTML="";
+ const t=planTotal(),d=planDone(),pc=t?Math.round(d/t*100):0;
+ const h=el("div");
+ h.innerHTML='<div style="display:flex;justify-content:space-between;align-items:baseline;font-family:IBM Plex Mono,monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)">'+
+  '<span>Year one progress</span><span style="color:var(--copper)">'+d+' / '+t+' &middot; '+pc+'%</span></div>'+
+  '<div class="prog"><i style="width:'+pc+'%"></i></div>';
+ box.appendChild(h);
+}
+function renderPlan(){
+ const box=$("#mount-plan");box.innerHTML="";
+ PLAN.forEach((m,mi)=>{
+  const d=el("div","mo");
+  d.appendChild(el("h4","",'<span>'+esc(m.m)+'</span>'));
+  const ul=el("ul");
+  m.items.forEach((it,ii)=>{
+   const key="m"+mi+"i"+ii, on=!!S.done[key];
+   const li=el("li",on?"done":"");
+   const id="chk-"+key;
+   li.innerHTML='<input type="checkbox" id="'+id+'" '+(on?"checked":"")+'><span class="tag">'+esc(it[0])+'</span><label for="'+id+'">'+esc(it[1])+'</label>';
+   $("input",li).addEventListener("change",e=>{
+    S.done[key]=e.target.checked;li.classList.toggle("done",e.target.checked);
+    renderProgress();touch();});
+   ul.appendChild(li);
+  });
+  d.appendChild(ul);box.appendChild(d);
+ });
+}
+function renderWeekly(){
+ $("#mount-weekly").appendChild(tbl(["Hours","Block","What it is for","When"],WEEKLY.map(w=>w.map(esc))));
+}
+function qScore(){
+ const tw=QDIMS.reduce((a,d)=>a+d[1],0);
+ return QDIMS.reduce((a,d)=>a+(S.q[d[0]]||0)*d[1],0)/tw;
+}
+function renderQuarterly(){
+ const box=$("#mount-quarterly");box.innerHTML="";
+ const g=el("div","qs");
+ QDIMS.forEach(d=>{
+  const r=el("div","qrow");
+  const id="q-"+d[0].replace(/\W+/g,"");
+  r.innerHTML='<label for="'+id+'">'+esc(d[0])+' <span class="mono" style="color:var(--ink3);font-size:10px">&times;'+d[1]+'%</span></label>';
+  const i=el("input");i.type="range";i.min=0;i.max=100;i.step=5;i.value=S.q[d[0]];i.id=id;
+  const o=el("output","",S.q[d[0]]);
+  i.addEventListener("input",e=>{S.q[d[0]]=+e.target.value;o.textContent=e.target.value;renderGauge();touch();});
+  r.appendChild(i);r.appendChild(o);g.appendChild(r);
+ });
+ box.appendChild(g);
+}
+function renderGauge(){
+ const box=$("#mount-gauge");box.innerHTML="";
+ const v=qScore();
+ let col,head,body;
+ if(v<40){col="var(--crit)";head="Critical — act this month";body="You are in the wrong seat. Begin an active search this week, not this quarter. Do not wait for a review cycle or a promised conversation.";}
+ else if(v<55){col="var(--crit)";head="Below threshold";body="Two consecutive quarters here is a hard trigger to change employers. Rule R33. No deliberation, no exceptions.";}
+ else if(v<70){col="var(--warn)";head="Progressing, not accelerating";body="Acceptable, but check that authority — budget and people — is actually growing. If it is flat, the score is being carried by the wrong dimensions.";}
+ else if(v<85){col="var(--good)";head="On trajectory";body="You are compounding. Keep the Friday commercial hour, and start looking one rung ahead of where you are.";}
+ else {col="var(--good)";head="Ahead of plan";body="Push for scope, equity or a larger project. At this level the constraint is ambition, not capability.";}
+ const d=el("div","gauge");
+ d.innerHTML='<div class="gv" style="color:'+col+'">'+v.toFixed(0)+'</div>'+
+  '<div class="gt"><strong style="color:'+col+'">'+head+'</strong><span>'+body+'</span></div>';
+ const b=el("button","btn pri","Log this quarter");
+ b.addEventListener("click",()=>{
+  S.qlog.push({d:new Date().toISOString().slice(0,10),v:+v.toFixed(1)});
+  if(S.qlog.length>24)S.qlog=S.qlog.slice(-24);
+  touch();renderQlog();});
+ d.appendChild(b);
+ box.appendChild(d);
+}
+function renderQlog(){
+ const box=$("#mount-qlog");box.innerHTML="";
+ if(!S.qlog.length){box.appendChild(el("p","",'<em style="color:var(--ink3)">No quarters logged yet. Score the twelve dimensions above, then log it — the trend is the finding, not any single score.</em>'));return;}
+ box.appendChild(el("h3","","Your logged quarters"));
+ const rows=S.qlog.slice().reverse().map((q,i,arr)=>{
+  const prev=arr[i+1];
+  const delta=prev?(q.v-prev.v):null;
+  return [esc(q.d),'<span class="num">'+q.v.toFixed(1)+'</span>',
+   delta===null?'<span style="color:var(--ink3)">baseline</span>':
+   '<span style="color:'+(delta>=0?"var(--good)":"var(--crit)")+'">'+(delta>=0?"+":"")+delta.toFixed(1)+'</span>',
+   q.v<55?'<span class="p p-crit">Below threshold</span>':q.v<70?'<span class="p p-high">Watch</span>':'<span class="p p-yes">On track</span>'];
+ });
+ box.appendChild(tbl(["Date","Score","Change","Status"],rows));
+ const belowRun=(()=>{let n=0;for(let i=S.qlog.length-1;i>=0;i--){if(S.qlog[i].v<55)n++;else break}return n})();
+ if(belowRun>=2){
+  const w=el("div","verdict bad");
+  w.innerHTML='<span class="vl">Trigger fired</span><p style="margin:0">'+belowRun+' consecutive quarters below 55. Rule R33 applies: begin an active search this week. You wrote this rule while you were calm, precisely so it would hold now.</p>';
+  box.appendChild(w);
+ }
+}
+function renderFuture(){
+ const box=$("#mount-future");
+ const order=["Extremely scarce","More valuable","Less valuable","Automated","Commoditised"];
+ const rows=FUTURE.slice().sort((a,b)=>order.indexOf(a[0])-order.indexOf(b[0]))
+  .map(f=>[pill(f[0]==="Extremely scarce"?"Critical":f[0]==="More valuable"?"High":f[0]==="Less valuable"?"Medium":"Low")+
+   ' <span style="font-size:12px;color:var(--ink3);font-family:Archivo,sans-serif">'+esc(f[0])+'</span>',
+   '<strong>'+esc(f[1])+'</strong>',esc(f[2])]);
+ box.appendChild(tbl(["Direction","Skill or capability","Assessment"],rows));
+}
+function renderBarbell(){
+ $("#mount-barbell").appendChild(tbl(["Allocation","Component","What it is and when"],
+  BARBELL.map(b=>['<span class="p p-cop">'+esc(b[0])+'</span>','<strong>'+esc(b[1])+'</strong>',esc(b[2])])));
+}
+function renderFinal(){
+ const box=$("#mount-final");
+ FINAL.forEach((f,i)=>{
+  const d=el("details");if(i>=15)d.open=true;
+  const s=el("summary");
+  s.innerHTML='<span class="sn">Q'+String(i+1).padStart(2,"0")+'</span><span>'+esc(f[0])+'</span>';
+  d.appendChild(s);
+  const b=el("div","dbody");
+  b.innerHTML='<p style="margin:0;color:var(--ink2)">'+esc(f[1])+'</p>';
+  d.appendChild(b);box.appendChild(d);
+ });
+}
+
+/* ============================== INIT ============================== */
+function renderAll(){
+ renderNav();renderCap();renderElec();renderProp();
+ renderPaths();renderPathDetail();renderWeights();renderRanking();
+ renderIncome();renderVehicles();renderRoles();renderRoadmap();
+ renderSkills();renderCerts();renderTree();renderRules();renderAnti();
+ renderProgress();renderPlan();renderWeekly();renderQuarterly();renderGauge();renderQlog();
+ renderFuture();renderBarbell();renderFinal();
+}
+const local=lsGet(); if(local)merge(local);
+renderAll();
+status(local?"Saved on this device":"Ready");
+
+$("#btn-save").addEventListener("click",()=>{clearTimeout(saveTimer);save();});
+$("#btn-reset").addEventListener("click",()=>{
+ if(!confirm("Reset weights, path selections, checklist progress and quarterly scores to defaults? Your logged quarters will be kept."))return;
+ const keep=S.qlog;
+ S=JSON.parse(JSON.stringify(DEFAULTS));S.qlog=keep;
+ document.querySelectorAll("#mount-skillfilters,#mount-certfilters,#mount-rulefilters,#mount-cap,#mount-elec,#mount-prop,#mount-vehicles,#mount-roles,#mount-roadmap,#mount-tree,#mount-anti,#mount-future,#mount-barbell,#mount-final,#nav,#mount-weekly").forEach(n=>n.innerHTML="");
+ renderAll();touch();
+});
+window.addEventListener("beforeunload",e=>{if(dirty){lsSet(S);}});
+
+(async()=>{
+ try{
+  if(!window.claude||typeof window.claude.use!=="function"){status(local?"Saved on this device":"Ready");return;}
+  const db=await window.claude.use("db");
+  if(!db){status(local?"Saved on this device":"Ready");return;}
+  DB=db;
+  const doc=await DB.doc("plan/state").get();
+  if(doc&&doc.data){
+   try{const remote=JSON.parse(doc.data);
+     if(!local||(doc.at||0)>(local.at||0)){merge(remote);
+      document.querySelectorAll("#mount-skillfilters,#mount-certfilters,#mount-rulefilters,#mount-cap,#mount-elec,#mount-prop,#mount-vehicles,#mount-roles,#mount-roadmap,#mount-tree,#mount-anti,#mount-future,#mount-barbell,#mount-final,#nav,#mount-weekly").forEach(n=>n.innerHTML="");
+      renderAll();}
+   }catch(e){}
+   status("Synced");
+  } else { status("Ready — changes will sync"); }
+ }catch(e){status(local?"Saved on this device":"Ready");}
+})();
+</script>
