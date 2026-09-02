@@ -1,0 +1,1631 @@
+<title>Registrar to Retirement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F2F3F0; --surface:#FBFBF9; --surface-2:#EAEDE9; --sunk:#E4E8E3;
+  --ink:#15201C; --ink-2:#3F514B; --muted:#71837C; --line:#D9DED8; --line-2:#C3CBC2;
+  --accent:#00806A; --accent-ink:#00584A; --accent-soft:#DFEDE8;
+  --good:#00806A; --warn:#A87A08; --bad:#A83A32;
+  --good-soft:#DFEDE8; --warn-soft:#F6EBD3; --bad-soft:#F6E1DE;
+  --s1:#00806A; --s2:#A83A32; --s3:#3457A8; --s4:#A87A08; --s5:#9B3E86; --s6:#6E7A22;
+  --shadow:0 1px 2px rgba(21,32,28,.06), 0 8px 24px -12px rgba(21,32,28,.18);
+  --rail:336px;
+}
+:root:not([data-theme="light"]) { color-scheme: light dark; }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121614; --surface:#1A201D; --surface-2:#222925; --sunk:#0D110F;
+    --ink:#E9EFEB; --ink-2:#B3C2BB; --muted:#7F908A; --line:#2B3330; --line-2:#3B453F;
+    --accent:#33A98F; --accent-ink:#5CC0A8; --accent-soft:#16302A;
+    --good:#33A98F; --warn:#B98C2E; --bad:#D96A5A;
+    --good-soft:#16302A; --warn-soft:#302713; --bad-soft:#331C19;
+    --s1:#33A98F; --s2:#D96A5A; --s3:#6486CC; --s4:#B98C2E; --s5:#B171A2; --s6:#8C9C47;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121614; --surface:#1A201D; --surface-2:#222925; --sunk:#0D110F;
+  --ink:#E9EFEB; --ink-2:#B3C2BB; --muted:#7F908A; --line:#2B3330; --line-2:#3B453F;
+  --accent:#33A98F; --accent-ink:#5CC0A8; --accent-soft:#16302A;
+  --good:#33A98F; --warn:#B98C2E; --bad:#D96A5A;
+  --good-soft:#16302A; --warn-soft:#302713; --bad-soft:#331C19;
+  --s1:#33A98F; --s2:#D96A5A; --s3:#6486CC; --s4:#B98C2E; --s5:#B171A2; --s6:#8C9C47;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -14px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:Fraunces,Georgia,"Times New Roman",serif;font-weight:700;text-wrap:balance;margin:0;line-height:1.15;letter-spacing:-.01em}
+h2{font-size:1.7rem} h3{font-size:1.18rem} h4{font-size:1rem}
+p{margin:0}
+a{color:var(--accent-ink)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
+.eyebrow{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+small{font-size:.82rem;color:var(--ink-2)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+
+/* ---------- shell ---------- */
+header.top{position:sticky;top:0;z-index:40;background:var(--surface);border-bottom:1px solid var(--line)}
+.top-in{display:flex;align-items:center;gap:16px;padding:11px 20px;flex-wrap:wrap}
+.brand{font-family:Fraunces,serif;font-weight:700;font-size:1.06rem;letter-spacing:-.02em;white-space:nowrap}
+.brand span{color:var(--accent);}
+.top-meta{font-size:.74rem;color:var(--muted);margin-left:auto;display:flex;gap:12px;align-items:center}
+.themebtn{border:1px solid var(--line-2);background:var(--surface-2);color:var(--ink-2);border-radius:999px;padding:4px 11px;font:inherit;font-size:.74rem;cursor:pointer}
+nav.tabs{display:flex;gap:2px;overflow-x:auto;padding:0 12px;background:var(--surface);border-bottom:1px solid var(--line);scrollbar-width:thin}
+nav.tabs button{flex:0 0 auto;border:0;background:none;font:inherit;font-size:.85rem;font-weight:600;color:var(--muted);padding:9px 13px 11px;cursor:pointer;border-bottom:2.5px solid transparent;white-space:nowrap}
+nav.tabs button:hover{color:var(--ink)}
+nav.tabs button[aria-selected="true"]{color:var(--accent-ink);border-bottom-color:var(--accent)}
+
+.layout{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);gap:0;align-items:start}
+aside.rail{position:sticky;top:97px;max-height:calc(100vh - 97px);overflow-y:auto;background:var(--surface);border-right:1px solid var(--line);padding:14px 16px 60px}
+main{padding:26px 30px 90px;max-width:1080px}
+@media (max-width:1000px){
+  .layout{grid-template-columns:1fr}
+  aside.rail{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--line)}
+  main{padding:20px 16px 70px}
+}
+
+/* ---------- controls ---------- */
+.railhead{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:10px}
+.presets{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
+.presets button{flex:1 1 auto;border:1px solid var(--line-2);background:var(--surface-2);color:var(--ink-2);border-radius:6px;padding:6px 8px;font:inherit;font-size:.75rem;font-weight:600;cursor:pointer}
+.presets button:hover{border-color:var(--accent);color:var(--accent-ink)}
+details.grp{border-top:1px solid var(--line);padding:9px 0}
+details.grp>summary{cursor:pointer;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--ink-2);list-style:none;display:flex;align-items:center;gap:7px}
+details.grp>summary::-webkit-details-marker{display:none}
+details.grp>summary::before{content:"";width:6px;height:6px;border-right:1.6px solid var(--muted);border-bottom:1.6px solid var(--muted);transform:rotate(-45deg);transition:transform .15s}
+details.grp[open]>summary::before{transform:rotate(45deg)}
+.ctl{margin:12px 0 2px}
+.ctl>label{display:flex;justify-content:space-between;gap:8px;font-size:.82rem;font-weight:500;color:var(--ink-2);margin-bottom:5px;align-items:baseline}
+.ctl .val{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:.82rem;font-weight:600;color:var(--ink);background:var(--surface-2);border-radius:4px;padding:1px 6px}
+input[type=range]{width:100%;-webkit-appearance:none;appearance:none;background:transparent;height:20px;cursor:pointer;margin:0}
+input[type=range]::-webkit-slider-runnable-track{height:4px;background:var(--sunk);border-radius:99px}
+input[type=range]::-moz-range-track{height:4px;background:var(--sunk);border-radius:99px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--accent);border:2.5px solid var(--surface);box-shadow:0 0 0 1px var(--accent);margin-top:-5.5px}
+input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--accent);border:2.5px solid var(--surface);box-shadow:0 0 0 1px var(--accent)}
+.seg{display:flex;gap:3px;background:var(--sunk);padding:3px;border-radius:7px}
+.seg button{flex:1;border:0;background:none;font:inherit;font-size:.74rem;font-weight:600;color:var(--ink-2);padding:5px 4px;border-radius:5px;cursor:pointer;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--accent-ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.chk{display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--ink-2);padding:3px 0;cursor:pointer}
+.chk input{accent-color:var(--accent);width:15px;height:15px}
+.swatch{width:11px;height:11px;border-radius:2.5px;flex:0 0 auto}
+
+/* ---------- content blocks ---------- */
+.panel{display:none}
+.panel.on{display:block;animation:fade .22s ease}
+@keyframes fade{from{opacity:.35}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.panel.on{animation:none}}
+.lede{font-size:1.02rem;color:var(--ink-2);max-width:62ch;margin-top:8px}
+section.blk{margin-top:30px}
+section.blk>h3{margin-bottom:4px}
+.hr{height:1px;background:var(--line);margin:26px 0}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:13px 15px;display:flex;flex-direction:column;gap:3px}
+.tile .k{font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.tile .v{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.tile .s{font-size:.78rem;color:var(--ink-2)}
+.tile.hero{background:var(--accent-soft);border-color:transparent}
+.tile.hero .v{color:var(--accent-ink);font-size:1.95rem}
+
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2.5px 8px;border-radius:999px;white-space:nowrap}
+.pill.g{background:var(--good-soft);color:var(--good)}
+.pill.w{background:var(--warn-soft);color:var(--warn)}
+.pill.r{background:var(--bad-soft);color:var(--bad)}
+.pill.n{background:var(--surface-2);color:var(--ink-2)}
+
+table{border-collapse:collapse;width:100%;font-size:.86rem}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:700;background:var(--surface-2);white-space:nowrap;position:sticky;top:0}
+tbody tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+tbody tr:hover{background:var(--surface-2)}
+td strong{font-weight:600}
+
+ul.list{margin:8px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+ul.list li{padding-left:2px}
+ol.list{margin:8px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:7px}
+
+.note{border-left:3px solid var(--accent);background:var(--surface);padding:11px 14px;border-radius:0 8px 8px 0;font-size:.88rem;color:var(--ink-2)}
+.note.w{border-left-color:var(--warn)}
+.note.r{border-left-color:var(--bad)}
+.note b{color:var(--ink)}
+
+/* decision tree */
+.tree{font-family:"IBM Plex Mono",monospace;font-size:.83rem;line-height:1.7;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;overflow-x:auto;white-space:pre;color:var(--ink-2)}
+.tree b{color:var(--ink);font-weight:600}
+.tree .a{color:var(--accent-ink);font-weight:600}
+.tree .r{color:var(--bad);font-weight:600}
+.tree .w{color:var(--warn);font-weight:600}
+
+.node{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;position:relative}
+.node.q{border-left:4px solid var(--s3)}
+.node.yes{border-left:4px solid var(--good)}
+.node.no{border-left:4px solid var(--bad)}
+.node.act{border-left:4px solid var(--warn)}
+.node h4{margin-bottom:5px}
+.node p{font-size:.87rem;color:var(--ink-2)}
+.branchwrap{display:flex;flex-direction:column;gap:10px;margin-top:10px;padding-left:18px;border-left:2px dashed var(--line-2)}
+
+figure{margin:0}
+figcaption{font-size:.78rem;color:var(--muted);margin-top:7px}
+svg{display:block;max-width:100%}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:.78rem;color:var(--ink-2);margin-top:10px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.bar{height:9px;border-radius:99px;background:var(--sunk);overflow:hidden}
+.bar>i{display:block;height:100%;border-radius:99px;background:var(--accent)}
+.kv{display:flex;justify-content:space-between;gap:12px;font-size:.86rem;padding:5px 0;border-bottom:1px dotted var(--line)}
+.kv:last-child{border-bottom:0}
+.kv b{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-weight:600}
+.src{font-size:.78rem;color:var(--muted)}
+.stack{display:flex;flex-direction:column;gap:12px}
+.rowsplit{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+</style>
+<header class="top">
+  <div class="top-in">
+    <div class="brand">Registrar <span>&rarr;</span> Retirement</div>
+    <div class="top-meta">
+      <span class="mono">FY2026&ndash;27 &middot; all figures in 2026 dollars</span>
+      <button class="themebtn" id="themebtn" type="button">Theme</button>
+    </div>
+  </div>
+  <nav class="tabs" id="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-p="decide">1 &middot; Decision trees</button>
+    <button role="tab" aria-selected="false" data-p="model">2 &middot; Live model</button>
+    <button role="tab" aria-selected="false" data-p="deal">3 &middot; The GP deal</button>
+    <button role="tab" aria-selected="false" data-p="domains">4 &middot; Work domains</button>
+    <button role="tab" aria-selected="false" data-p="tax">5 &middot; Tax &amp; structure</button>
+    <button role="tab" aria-selected="false" data-p="baby">6 &middot; Baby 2027</button>
+    <button role="tab" aria-selected="false" data-p="endorse">7 &middot; Endorsement</button>
+    <button role="tab" aria-selected="false" data-p="ladder">8 &middot; Income ladder</button>
+    <button role="tab" aria-selected="false" data-p="cities">9 &middot; Perth vs Melbourne</button>
+    <button role="tab" aria-selected="false" data-p="fifty">10 &middot; 50 years</button>
+    <button role="tab" aria-selected="false" data-p="now">11 &middot; Next 90 days</button>
+    <button role="tab" aria-selected="false" data-p="sources">12 &middot; Sources</button>
+  </nav>
+</header>
+
+<div class="layout">
+<aside class="rail">
+  <div class="railhead"><div class="eyebrow">Your assumptions</div><small id="railstamp" class="mono"></small></div>
+  <div class="presets">
+    <button type="button" data-preset="safe">Cautious</button>
+    <button type="button" data-preset="rec">Recommended</button>
+    <button type="button" data-preset="bold">Aggressive</button>
+  </div>
+
+  <details class="grp" open><summary>Employment</summary>
+    <div class="ctl"><label>Current package (incl. super) <span class="val" id="v_pkg"></span></label><input type="range" id="i_pkg" min="70000" max="180000" step="2500"></div>
+    <div class="ctl"><label>Salaried days kept per week <span class="val" id="v_empdays"></span></label><input type="range" id="i_empdays" min="0" max="5" step="0.5"></div>
+    <div class="ctl"><label>Pay rise on general reg. <span class="val" id="v_raise"></span></label><input type="range" id="i_raise" min="0" max="25" step="1"></div>
+  </details>
+
+  <details class="grp" open><summary>Private caseload</summary>
+    <div class="ctl"><label>Fee per session <span class="val" id="v_fee"></span></label><input type="range" id="i_fee" min="0" max="400" step="5"></div>
+    <div class="ctl"><label>Sessions per private day <span class="val" id="v_spd"></span></label><input type="range" id="i_spd" min="1" max="8" step="1"></div>
+    <div class="ctl"><label>Private days per week <span class="val" id="v_pdays"></span></label><input type="range" id="i_pdays" min="0" max="5" step="0.5"></div>
+    <div class="ctl"><label>Slots actually attended <span class="val" id="v_fill"></span></label><input type="range" id="i_fill" min="35" max="100" step="1"></div>
+    <div class="ctl"><label>Clinical weeks per year <span class="val" id="v_weeks"></span></label><input type="range" id="i_weeks" min="34" max="48" step="1"></div>
+  </details>
+
+  <details class="grp" open><summary>The GP practice deal</summary>
+    <div class="ctl"><label>Structure</label>
+      <div class="seg" id="seg_model">
+        <button type="button" data-v="split" aria-pressed="true">70/30 split</button>
+        <button type="button" data-v="rent" aria-pressed="false">Room rent</button>
+        <button type="button" data-v="own" aria-pressed="false">Own rooms</button>
+      </div>
+    </div>
+    <div class="ctl"><label>Practice share of billings <span class="val" id="v_split"></span></label><input type="range" id="i_split" min="0" max="50" step="1"></div>
+    <div class="ctl"><label>Room rent per day <span class="val" id="v_rent"></span></label><input type="range" id="i_rent" min="40" max="350" step="5"></div>
+    <div class="ctl"><label>Weeks per year rent is charged <span class="val" id="v_rentwk"></span></label><input type="range" id="i_rentwk" min="34" max="52" step="1"></div>
+    <div class="ctl"><label>Clients the practice sources <span class="val" id="v_sourced"></span></label><input type="range" id="i_sourced" min="0" max="100" step="5"></div>
+    <div class="ctl"><label>Own rooms: lease + reception / week <span class="val" id="v_ownwk"></span></label><input type="range" id="i_ownwk" min="200" max="2500" step="50"></div>
+  </details>
+
+  <details class="grp"><summary>Revenue mix</summary>
+    <div class="ctl"><label>Share of hours on NDIS <span class="val" id="v_ndis"></span></label><input type="range" id="i_ndis" min="0" max="70" step="5"></div>
+    <div class="ctl"><label>Share of hours on assessments <span class="val" id="v_assess"></span></label><input type="range" id="i_assess" min="0" max="60" step="5"></div>
+    <div class="ctl"><label>Assessment $ per billable hour <span class="val" id="v_assessrate"></span></label><input type="range" id="i_assessrate" min="150" max="500" step="10"></div>
+    <div class="ctl"><label>Clinical endorsement <span class="val" id="v_endorse"></span></label>
+      <div class="seg" id="seg_endorse">
+        <button type="button" data-v="0" aria-pressed="true">General</button>
+        <button type="button" data-v="1" aria-pressed="false">Clinical endorsed</button>
+      </div>
+    </div>
+  </details>
+
+  <details class="grp"><summary>Overheads &amp; tax</summary>
+    <div class="ctl"><label>Own business overheads / yr <span class="val" id="v_oh"></span></label><input type="range" id="i_oh" min="2000" max="30000" step="500"></div>
+    <div class="ctl"><label>Extra admin if you self-manage <span class="val" id="v_admin"></span></label><input type="range" id="i_admin" min="0" max="25000" step="500"></div>
+    <div class="ctl"><label>Personal deductible super <span class="val" id="v_super"></span></label><input type="range" id="i_super" min="0" max="30000" step="500"></div>
+    <div class="ctl"><label>Deductible work expenses <span class="val" id="v_ded"></span></label><input type="range" id="i_ded" min="0" max="15000" step="250"></div>
+  </details>
+
+  <details class="grp"><summary>Life &amp; wealth</summary>
+    <div class="ctl"><label>First baby &mdash; birth year <span class="val" id="v_baby"></span></label><input type="range" id="i_baby" min="2027" max="2033" step="1"></div>
+    <div class="ctl"><label>Months at reduced capacity <span class="val" id="v_off"></span></label><input type="range" id="i_off" min="0" max="36" step="3"></div>
+    <div class="ctl"><label>Children planned <span class="val" id="v_kids"></span></label><input type="range" id="i_kids" min="0" max="3" step="1"></div>
+    <div class="ctl"><label>Share of take-home saved <span class="val" id="v_save"></span></label><input type="range" id="i_save" min="0" max="70" step="1"></div>
+    <div class="ctl"><label>Real return after inflation <span class="val" id="v_ret"></span></label><input type="range" id="i_ret" min="1" max="9" step="0.5"></div>
+    <div class="ctl"><label>Starting savings <span class="val" id="v_start"></span></label><input type="range" id="i_start" min="0" max="200000" step="5000"></div>
+    <div class="ctl"><label>Base city</label>
+      <div class="seg" id="seg_city">
+        <button type="button" data-v="perth" aria-pressed="true">Perth</button>
+        <button type="button" data-v="melb" aria-pressed="false">Melbourne</button>
+        <button type="button" data-v="tele" aria-pressed="false">Telehealth</button>
+      </div>
+    </div>
+  </details>
+
+  <details class="grp" open><summary>Show on the 50-year chart</summary>
+    <label class="chk"><input type="checkbox" data-sc="A" checked><span class="swatch" style="background:var(--s3)"></span>A &middot; Salaried only</label>
+    <label class="chk"><input type="checkbox" data-sc="B" checked><span class="swatch" style="background:var(--s1)"></span>B &middot; Salary + private (yours)</label>
+    <label class="chk"><input type="checkbox" data-sc="C" checked><span class="swatch" style="background:var(--s4)"></span>C &middot; Full solo private</label>
+    <label class="chk"><input type="checkbox" data-sc="D" checked><span class="swatch" style="background:var(--s5)"></span>D &middot; Endorsed premium niche</label>
+    <label class="chk"><input type="checkbox" data-sc="E" checked><span class="swatch" style="background:var(--s2)"></span>E &middot; Group practice owner</label>
+    <label class="chk"><input type="checkbox" data-sc="F"><span class="swatch" style="background:var(--s6)"></span>F &middot; Assessment / medico-legal</label>
+  </details>
+</aside>
+
+<main>
+<section class="panel on" id="p_decide">
+  <div class="eyebrow">Phase 1 &mdash; decide before you plan</div>
+  <h2>Four decisions, in the order they actually bind</h2>
+  <p class="lede">Most of your question list is downstream of four things. Everything else &mdash; the ladder, the cities, the 50-year projection &mdash; is a consequence of how these resolve. Work top to bottom; don't skip.</p>
+
+  <div class="grid g2" style="margin-top:20px">
+    <div class="tile hero"><div class="k">The one decision now</div><div class="v" style="font-size:1.15rem;font-family:Fraunces,serif">Find out, in writing, whether your Masters makes you eligible for a registrar program</div><div class="s">It is worth roughly <b id="d_endval">$40k</b> a year in pricing power for the next 35 years. Nothing else on this page comes close. It costs one email.</div></div>
+    <div class="tile"><div class="k">The decision to <em>not</em> make</div><div class="v" style="font-size:1.15rem;font-family:Fraunces,serif">Do not resign the salaried job in 2027</div><div class="s">A baby due ~Sep 2027 means employer parental leave, the 12-month service test, and income continuity are worth more than a year of private-practice upside. Add private days <em>alongside</em> it.</div></div>
+  </div>
+
+  <section class="blk">
+    <h3>Gate 0 &middot; The three unknowns that change the whole plan</h3>
+    <p><small>You answered "don't know" to all three. Each is answerable this week and each swings six figures.</small></p>
+    <div class="grid g3" style="margin-top:12px">
+      <div class="node q"><span class="pill w">Answer this week</span><h4 style="margin-top:7px">1. Endorsement eligibility</h4><p>You hold a Master of Clinical Psychology, plus a Master of Applied Psychology and an overseas bachelor. Whether the Board treats the clinical Masters as an <em>approved higher degree</em> decides whether the registrar program is open to you. If it is, you can bill Medicare item 80010 instead of 80110 &mdash; a rebate gap of about <b class="mono">$50</b> per session at identical cost to the client.</p><p style="margin-top:7px"><b>Do:</b> email Ahpra and ask, verbatim, "Does my qualification satisfy the higher-degree requirement for entry to a Board-approved registrar program in clinical psychology?" Keep the reply.</p></div>
+      <div class="node q"><span class="pill w">Answer this week</span><h4 style="margin-top:7px">2. Your EAP contract</h4><p>You haven't read it. Two clauses matter: a restraint on private practice or outside work, and a non-solicitation clause covering clients and referrers. If a restraint exists and you breach it, you can lose the salary <em>and</em> the practice.</p><p style="margin-top:7px"><b>Do:</b> read clauses on outside employment, conflict of interest, IP and restraint. If restricted, ask in writing for a carve-out for private work on non-work days at an unrelated site. Most EAP employers grant it.</p></div>
+      <div class="node q"><span class="pill w">Answer this fortnight</span><h4 style="margin-top:7px">3. Is the GP offering clients or a room?</h4><p>This is the entire 70/30-versus-rent question. 30% of billings is a fair price for a referral pipeline and free reception. It is an outrageous price for a door and a chair.</p><p style="margin-top:7px"><b>Do:</b> ask how many GPs are on site, how many mental health treatment plans they write a month, and where their current psychologists' referrals come from. Ask to speak to a psychologist already there.</p></div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <h3>Tree 1 &middot; The next 18 months</h3>
+    <p><small>From today (Sep 2026) through general registration, conception (Dec 2026), and birth (~Sep 2027).</small></p>
+    <div class="tree" style="margin-top:12px"><b>SEP 2026 &mdash; provisional, salaried $100k package, 5&ndash;6 clients/day</b>
+│
+├─ <b>Read the EAP contract</b>
+│   ├─ <span class="r">Restraint on private work</span> ─→ request written carve-out
+│   │      ├─ <span class="a">granted</span>  ─→ continue below
+│   │      └─ <span class="r">refused</span>  ─→ private practice waits until after parental leave.
+│   │                    Use 2027 to bank salary + build referrer relationships instead.
+│   └─ <span class="a">No restraint</span> ─→ continue below
+│
+├─ <b>DEC 2026 (approx) &mdash; general registration granted</b>
+│   ├─ Apply for a <b>Medicare provider number</b> the same week (allow 2&ndash;4 weeks)
+│   ├─ Ask the EAP employer for the general-registration rate <span class="w">(you rate this unlikely &mdash; ask anyway, in writing)</span>
+│   │      ├─ <span class="a">rise granted</span> ─→ it raises your parental-leave base. Take it.
+│   │      └─ <span class="r">refused</span> ─→ do NOT resign. Note it; it becomes the 2028 argument.
+│   └─ Start <b>ONE</b> private day per week at the GP practice, on the <b>70/30</b>
+│          Reason: zero fixed cost while your calendar is half empty.
+│
+├─ <b>DEC 2026 &mdash; conception window opens</b>
+│   └─ From here, protect two things: continuous service, and the 330-hour work test.
+│         <span class="a">Keep the salaried role until at least 12 months' service AND the birth.</span>
+│
+├─ <b>MAR&ndash;AUG 2027 &mdash; ramp, don't leap</b>
+│   ├─ Private day 1 filling above 70%?  ─→ add a second private day (drop 0.5 salaried day)
+│   ├─ Private day 1 below 50% at month 4? ─→ the problem is referral flow, not price.
+│   │        Fix referrals before touching the fee. <span class="r">Do not discount to fill.</span>
+│   └─ Billing more than <b id="d_be1">$X</b>/day consistently? ─→ open the rent conversation now,
+│            while you still have leverage and no gap in your calendar.
+│
+└─ <b>SEP 2027 (approx) &mdash; birth</b>
+    ├─ Government Parental Leave Pay: 26 weeks at $1,004.70/wk + 12% super
+    ├─ Employer paid parental leave: <span class="w">only if still employed &mdash; check the policy NOW</span>
+    └─ Private caseload: hand over or pause. Tell clients 8 weeks out, not 2.
+</div>
+    <div class="note w" style="margin-top:12px"><b>The trap in this tree.</b> The natural instinct at general registration is to jump to full private practice because the hourly maths looks better. With a birth ~9 months later that is the single most expensive move available to you: you would give up employer parental leave, unpaid-leave return rights, and income protection, in exchange for a caseload that will be nine months old and cannot survive a six-month absence. The salaried job in 2027 is not a compromise. It is the highest-return asset you own that year.</div>
+  </section>
+
+  <section class="blk">
+    <h3>Tree 2 &middot; Deal structure &mdash; 70/30 or room rent</h3>
+    <div class="tree" style="margin-top:12px"><b>THE GP PRACTICE OFFER</b>
+│
+├─ <b>Who owns the client relationship?</b>
+│   ├─ <span class="a">Practice generates the referrals</span> (GPs on site writing MHTPs to you)
+│   │     ─→ 30% is a <b>client-acquisition fee</b>. Rational while you are filling.
+│   │        Renegotiate at 12 months, once you have your own referrers.
+│   ├─ <span class="w">Mixed</span> ─→ ask for a <b>hybrid</b>: 30% on practice-referred clients,
+│   │        fixed rent on the ones you bring. This is the deal to actually chase.
+│   └─ <span class="r">It's just a room</span> ─→ pay rent. Never pay a percentage for real estate.
+│
+├─ <b>Volume test</b> (the arithmetic, run live on the model tab)
+│   Break-even: practice share % × daily billings = daily rent + self-managed admin
+│   <span class="a">Above <b id="d_be2">$X</b> of billings a day &mdash; about <b id="d_be3">N</b> sessions at your fee &mdash; rent wins.</span>
+│   Below that, the split wins <em>and</em> carries no downside risk.
+│
+├─ <b>Timing test</b>
+│   ├─ Calendar under 60% full ─→ stay on the split. Fixed rent on empty days is
+│   │      how new practitioners go backwards.
+│   └─ Calendar over 75% full for 3 straight months ─→ switch, or use the switch
+│          as leverage for a better split (75/25 or a capped 30%).
+│
+└─ <b>The structure to actually negotiate (best of both)</b>
+    <span class="a">"30% on the first <b id="d_cap">$700</b> of billings per day; 10% above that."</span>
+    You keep the no-risk floor on slow days and stop being taxed on your best days.
+    Add: a fixed-rent election you can exercise on 60 days' notice.
+</div>
+  </section>
+
+  <section class="blk">
+    <h3>Tree 3 &middot; Which work to take on, and when</h3>
+    <p><small>Detail and full ranking on the <b>Work domains</b> tab. This is the sequencing rule.</small></p>
+    <div class="tree" style="margin-top:12px"><b>YEARS 1&ndash;2 (2027&ndash;28) &mdash; buy competence, not income</b>
+│   Take: EAP salary + general adult anxiety/depression, Better Access private.
+│   Add:  trauma training (you named it) &mdash; it is the cheapest step up in fee power.
+│   <span class="r">Refuse:</span> anything that needs a report you have never written before,
+│         on a deadline, for a lawyer or an insurer. You will lose money and sleep.
+│
+<b>YEARS 2&ndash;4 (2029&ndash;30) &mdash; buy pricing power</b>
+│   ├─ Endorsement eligible? ─→ <span class="a">registrar program, immediately</span>. Everything else waits.
+│   └─ Not eligible?
+│         ├─ <span class="a">Assessment stream</span> (ADHD / autism / cognitive): highest $/hour available
+│         │     to a general-registered psychologist without further degrees.
+│         └─ <span class="a">Reconsider NDIS.</span> You said no. At $252.99/hr with report and
+│               non-face-to-face time separately billable, it now pays more per hour
+│               than your therapy fee. Take a capped share, not a caseload.
+│
+<b>YEARS 4&ndash;8 (2031&ndash;34) &mdash; buy leverage</b>
+│   ├─ Supervision of provisional psychologists (Board-approved supervisor training)
+│   ├─ Medico-legal / insurer assessments &mdash; the top of the per-hour table
+│   ├─ Organisational + EAP <em>contracting</em> instead of EAP employment
+│   └─ First contractor psychologist under you, only if utilisation is capped out
+│
+<b>YEARS 8+ &mdash; buy time back</b>
+    Group practice, training, or nothing at all &mdash; see the ladder tab.
+    <span class="w">Warning:</span> most psychologists who "scale" simply buy themselves a
+    second unpaid job in admin. The ladder tab prices that honestly.
+</div>
+  </section>
+</section>
+<section class="panel" id="p_model">
+  <div class="eyebrow">Phase 2 &mdash; the live model</div>
+  <h2>What one year actually pays you</h2>
+  <p class="lede">Everything below recalculates from the rail on the left. It is a single steady-state year at the settings you choose &mdash; not a ramp-up year. FY2026&ndash;27 tax rates, 2% Medicare levy, low income tax offset included.</p>
+
+  <div class="grid g4" style="margin-top:20px">
+    <div class="tile hero"><div class="k">Take-home after tax</div><div class="v mono" id="m_takehome">&mdash;</div><div class="s" id="m_takehome_s">&mdash;</div></div>
+    <div class="tile"><div class="k">Total pre-tax income</div><div class="v mono" id="m_pretax">&mdash;</div><div class="s" id="m_pretax_s">&mdash;</div></div>
+    <div class="tile"><div class="k">Tax + levy</div><div class="v mono" id="m_tax">&mdash;</div><div class="s" id="m_tax_s">&mdash;</div></div>
+    <div class="tile"><div class="k">Super added</div><div class="v mono" id="m_super">&mdash;</div><div class="s" id="m_super_s">&mdash;</div></div>
+  </div>
+
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card">
+      <div class="eyebrow">Where the private dollar goes</div>
+      <div id="m_waterfall" style="margin-top:10px"></div>
+    </div>
+    <div class="card">
+      <div class="eyebrow">Line by line</div>
+      <div style="margin-top:8px" id="m_lines"></div>
+    </div>
+  </div>
+
+  <section class="blk">
+    <h3>Sensitivity &mdash; the three numbers that move your income</h3>
+    <p><small>Each row holds everything else at your current settings and moves one variable. Read it as: this is what a change is worth per year, after tax.</small></p>
+    <div class="tw" style="margin-top:12px"><table>
+      <thead><tr><th>Variable</th><th class="num">Low</th><th class="num">Your setting</th><th class="num">High</th><th class="num">Take-home swing</th><th>Control?</th></tr></thead>
+      <tbody id="m_sens"></tbody>
+    </table></div>
+  </section>
+
+  <section class="blk">
+    <h3>The ceiling problem</h3>
+    <div class="grid g2" style="margin-top:12px">
+      <div class="card"><div class="eyebrow">Solo clinical ceiling</div>
+        <p style="margin-top:8px">Your income as a solo clinician is <span class="mono">fee × sessions × weeks</span> and nothing else. At a genuinely sustainable ceiling &mdash; <b>25 sessions a week, 44 weeks, 85% attendance</b> &mdash; here is the most you can bill, at three price points:</p>
+        <div style="margin-top:10px" id="m_ceiling"></div>
+        <p style="margin-top:10px"><small>Every dollar past that ceiling has to come from someone else's hours, a higher-priced hour, or capital. That is the whole thesis of the ladder tab.</small></p>
+      </div>
+      <div class="card"><div class="eyebrow">Burnout maths, priced</div>
+        <p style="margin-top:8px">You currently see 5&ndash;6 clients a day. Sustained, that is 25&ndash;30 face-to-face hours a week plus notes. The honest research and the workforce data both point the same way: the practitioners who last three decades sit at 18&ndash;22 client hours a week and fill the rest with higher-priced non-clinical work.</p>
+        <p style="margin-top:8px">Dropping from 6 to 5 sessions a day costs you <b class="mono" id="m_burncost">&mdash;</b> a year at your current fee. Replacing that one hour with assessment or medico-legal work at <span class="mono">$300+/hr</span> makes it back and reduces emotional load. This is the trade the model rewards, and the one most people never make.</p>
+      </div>
+    </div>
+  </section>
+</section>
+
+<section class="panel" id="p_deal">
+  <div class="eyebrow">Phase 3 &mdash; the offer on the table</div>
+  <h2>70/30 versus a room, priced properly</h2>
+  <p class="lede">The break-even is arithmetic, not judgement. The judgement is in what the 30% is actually buying &mdash; and in the terms you sign, which matter more than the percentage.</p>
+
+  <div class="grid g3" style="margin-top:20px">
+    <div class="tile hero"><div class="k">Break-even billings</div><div class="v mono" id="b_daily">&mdash;</div><div class="s" id="b_daily_s">per day, before rent beats the split</div></div>
+    <div class="tile"><div class="k">In sessions</div><div class="v mono" id="b_sess">&mdash;</div><div class="s" id="b_sess_s">&mdash;</div></div>
+    <div class="tile"><div class="k">Rent vs split, at your volume</div><div class="v mono" id="b_delta">&mdash;</div><div class="s" id="b_delta_s">&mdash;</div></div>
+  </div>
+
+  <div class="note" style="margin-top:14px" id="b_verdict"></div>
+
+  <section class="blk">
+    <h3>Both models across the utilisation range</h3>
+    <p><small>Annual income to you before tax and before your own overheads, at your current fee, days per week and weeks per year. The crossover is where the lines meet.</small></p>
+    <figure style="margin-top:12px"><div id="b_chart"></div><figcaption id="b_chartcap"></figcaption></figure>
+    <div class="tw" style="margin-top:14px"><table>
+      <thead><tr><th>Utilisation</th><th class="num">Sessions/day</th><th class="num">Gross billings</th><th class="num">You keep &mdash; split</th><th class="num">You keep &mdash; rent</th><th class="num">Difference</th><th>Winner</th></tr></thead>
+      <tbody id="b_table"></tbody>
+    </table></div>
+  </section>
+
+  <section class="blk">
+    <h3>What the 30% has to be buying to be worth it</h3>
+    <div class="tw" style="margin-top:12px"><table>
+      <thead><tr><th>What you'd otherwise pay for</th><th class="num">Market cost / yr</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td><b>Reception, phone, rebooking</b></td><td class="num">$14,000&ndash;25,000</td><td>Genuinely valuable. A part-time receptionist or a virtual assistant at 15 hrs/wk is the comparison.</td></tr>
+        <tr><td><b>Medicare claiming and billing</b></td><td class="num">$2,000&ndash;4,000</td><td>Modest. Practice software does most of it; you can too.</td></tr>
+        <tr><td><b>Practice management software</b></td><td class="num">$900&ndash;1,900</td><td>Halaxy, Power Diary, Cliniko. Small money.</td></tr>
+        <tr><td><b>Marketing and web presence</b></td><td class="num">$1,000&ndash;5,000</td><td>Only counts if they actually market <em>you</em>, by name, with a profile page.</td></tr>
+        <tr><td><b>Referral flow from on-site GPs</b></td><td class="num">Not purchasable</td><td><span class="pill g">The real value</span> A full calendar from day one is worth more than every line above combined. This is what you are paying 30% for &mdash; and the only thing that justifies it.</td></tr>
+        <tr><td><b>Room, utilities, waiting area</b></td><td class="num" id="b_roomcost">&mdash;</td><td>At Perth market rates. Cheap relative to 30% of a full calendar.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note w" style="margin-top:12px"><b>The asymmetry.</b> Under the split, the practice takes 30% whether they sent you the client or you did. If you build your own referrer network &mdash; which you should &mdash; you end up paying a finder's fee on clients nobody found for you. That is the clause to fix at signing, not in year three.</div>
+  </section>
+
+  <section class="blk">
+    <h3>Contract terms &mdash; in priority order</h3>
+    <p><small>These are worth more than five percentage points of split. Get them in writing before you see a single client.</small></p>
+    <div class="tw" style="margin-top:12px"><table>
+      <thead><tr><th>Term</th><th>Ask for</th><th>Why it matters</th><th>Priority</th></tr></thead>
+      <tbody>
+        <tr><td><b>Client ownership</b></td><td>Clients are yours; you may take your files (subject to your record-keeping obligations) if you leave.</td><td>Without this, leaving means starting again. It is the single most expensive clause in allied health contracts.</td><td><span class="pill r">Critical</span></td></tr>
+        <tr><td><b>Restraint / non-compete</b></td><td>No restraint, or at most 6 months within 5 km, and no restriction on telehealth.</td><td>A wide restraint can bar you from practising across half of Perth. Overbroad restraints are often unenforceable, but litigating that costs more than negotiating it.</td><td><span class="pill r">Critical</span></td></tr>
+        <tr><td><b>Split step-down or cap</b></td><td>30% on the first <span class="mono" id="b_capfig">$700</span>/day of billings, 10% above; or a fixed-rent election on 60 days' notice.</td><td>Stops your best days subsidising the practice. Worth <span class="mono" id="b_capval">&mdash;</span> a year at your projected volume.</td><td><span class="pill r">Critical</span></td></tr>
+        <tr><td><b>Fee autonomy</b></td><td>You set your own fee and your own bulk-billing policy.</td><td>If the practice sets fees, they control your income and your ability to move upmarket.</td><td><span class="pill w">High</span></td></tr>
+        <tr><td><b>Room guarantee</b></td><td>Named days and a named room, not hot-desking. Notice period before rooms are reallocated.</td><td>Clients rebook a place as much as a person. Being moved weekly costs attendance.</td><td><span class="pill w">High</span></td></tr>
+        <tr><td><b>Termination notice</b></td><td>Mutual, 60&ndash;90 days.</td><td>You need time to move a caseload. Two weeks is not enough.</td><td><span class="pill w">High</span></td></tr>
+        <tr><td><b>Who holds the money</b></td><td>Payments settle to <em>your</em> account, you remit their share &mdash; not the reverse.</td><td>If they bank it and pay you monthly, you are an unsecured creditor of a business whose books you cannot see.</td><td><span class="pill w">High</span></td></tr>
+        <tr><td><b>Contractor status, honestly</b></td><td>Written contractor agreement; you set hours, carry your own insurance, invoice them.</td><td>A "contractor" who is directed like an employee can be found to be an employee &mdash; which changes super, payroll tax and leave. It is the practice's risk, but it becomes your dispute.</td><td><span class="pill n">Medium</span></td></tr>
+        <tr><td><b>Parental leave clause</b></td><td>Right to pause the arrangement for up to 12 months and return to the same days.</td><td>Given a 2027 birth this is not optional. Ask for it now, while they want you.</td><td><span class="pill r">Critical</span></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="blk">
+    <h3>The switching cost nobody models</h3>
+    <div class="card" style="margin-top:12px">
+      <p>You've set <b class="mono" id="b_srcpct">&mdash;</b> of clients as practice-sourced. If you move to your own rooms and lose that share of your caseload, the first-year cost of switching is:</p>
+      <div class="grid g3" style="margin-top:12px">
+        <div class="tile"><div class="k">Annual gain from rent</div><div class="v mono" id="b_gain">&mdash;</div><div class="s">at your current volume</div></div>
+        <div class="tile"><div class="k">Caseload lost in year 1</div><div class="v mono" id="b_loss">&mdash;</div><div class="s">income forgone rebuilding</div></div>
+        <div class="tile"><div class="k">Payback</div><div class="v mono" id="b_payback">&mdash;</div><div class="s">before switching is net positive</div></div>
+      </div>
+      <p style="margin-top:12px"><small>This is why the answer is almost never "switch now". It is "sign a deal that lets you switch cheaply later" &mdash; a fixed-rent election clause costs the practice nothing today and is very hard to get once you are established and dependent.</small></p>
+    </div>
+  </section>
+</section>
+<section class="panel" id="p_domains">
+  <div class="eyebrow">Phase 4 &mdash; where the hours go</div>
+  <h2>Every work domain open to you, ranked</h2>
+  <p class="lede">Sixteen kinds of paid psychology work, scored on what you actually care about. Move the weights &mdash; the ranking re-sorts live. Rates are per <em>billable</em> hour; the non-billable load column is the honest correction, because an $800 report hour that takes three unpaid hours is a $200 hour.</p>
+
+  <div class="card" style="margin-top:18px">
+    <div class="eyebrow">What matters to you right now</div>
+    <div class="grid g4" style="margin-top:10px">
+      <div class="ctl" style="margin:0"><label>Income per hour <span class="val" id="v_w1"></span></label><input type="range" id="i_w1" min="0" max="10" step="1"></div>
+      <div class="ctl" style="margin:0"><label>Low burnout <span class="val" id="v_w2"></span></label><input type="range" id="i_w2" min="0" max="10" step="1"></div>
+      <div class="ctl" style="margin:0"><label>Easy to start now <span class="val" id="v_w3"></span></label><input type="range" id="i_w3" min="0" max="10" step="1"></div>
+      <div class="ctl" style="margin:0"><label>Scalable / leverage <span class="val" id="v_w4"></span></label><input type="range" id="i_w4" min="0" max="10" step="1"></div>
+    </div>
+    <div class="rowsplit" style="margin-top:10px">
+      <small>Presets:</small>
+      <div class="seg" id="seg_wpre" style="flex:1;max-width:520px">
+        <button type="button" data-v="now" aria-pressed="true">2027 &mdash; pregnant, salaried</button>
+        <button type="button" data-v="build" aria-pressed="false">2030 &mdash; building</button>
+        <button type="button" data-v="scale" aria-pressed="false">2035 &mdash; leverage</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="tw" style="margin-top:16px"><table>
+    <thead><tr>
+      <th>#</th><th>Domain</th><th class="num">$ / billable hr</th><th class="num">Unpaid load</th><th class="num">Effective $/hr</th><th>Barrier</th><th>Ramp</th><th>Burnout</th><th>Scale</th><th class="num">Score</th>
+    </tr></thead>
+    <tbody id="dm_table"></tbody>
+  </table></div>
+  <div class="legend"><span><span class="swatch" style="background:var(--good)"></span>Add now</span><span><span class="swatch" style="background:var(--warn)"></span>Add in 2&ndash;4 years</span><span><span class="swatch" style="background:var(--bad)"></span>Not yet / avoid</span></div>
+
+  <section class="blk">
+    <h3>The three domains worth arguing with you about</h3>
+    <div class="grid g3" style="margin-top:12px">
+      <div class="node no"><span class="pill r">You said no</span><h4 style="margin-top:7px">NDIS</h4><p>You want to skip it. On the 2026&ndash;27 numbers that is now a costly preference. From 1 July 2026 the NDIS price limit for psychology rose to <b class="mono">$252.99/hr</b> &mdash; the only therapy discipline to get a rise &mdash; and the pricing structure was split into six separate line items so that <em>reports, non-face-to-face work and travel are billed separately</em> rather than absorbed.</p><p style="margin-top:7px">That makes it the highest-paying routine work available to a general-registered psychologist with no extra qualification. The real costs are administrative: plan management chasing, longer payment cycles, complex presentations, and documentation. <b>Verdict:</b> don't build a caseload on it; do take a capped 15&ndash;25% of your hours. Reassess if the price limit falls.</p></div>
+      <div class="node act"><span class="pill w">Underrated</span><h4 style="margin-top:7px">Supervision</h4><p>Once you have the required post-general experience and Board-approved supervisor training, supervising provisional psychologists pays roughly <b class="mono">$150&ndash;250/hr</b> <span class="src">(estimate &mdash; no public schedule)</span>, carries a fraction of the clinical load, is booked in blocks, and is the most recession-proof line in the table because the supply of supervisors is the workforce bottleneck.</p><p style="margin-top:7px">It is also the on-ramp to the two highest-leverage things on the ladder: employing juniors, and training. <b>Verdict:</b> plan for it around year 4&ndash;5, not year 15.</p></div>
+      <div class="node no"><span class="pill r">Overrated</span><h4 style="margin-top:7px">Courses and digital products</h4><p>Every "scale your psychology practice" pitch ends here. The honest base rate: most clinician-built courses sell to a few dozen people, gross under $20k, and consume 200&ndash;400 unpaid hours. They work for people who already have an audience or an institutional channel &mdash; a university, a professional body, an employer network.</p><p style="margin-top:7px"><b>Verdict:</b> not a 2027&ndash;2032 project. Revisit only when you have either (a) a distinctive clinical specialty other clinicians want training in, or (b) a corporate client who will pay you to build it. Selling training to organisations beats selling courses to individuals by a wide margin.</p></div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <h3>How the mix should change over time</h3>
+    <div class="tw" style="margin-top:12px"><table>
+      <thead><tr><th>Era</th><th>Therapy hours</th><th>Assessment</th><th>Non-clinical</th><th>Leverage income</th><th class="num">Target personal income</th></tr></thead>
+      <tbody>
+        <tr><td><b>2027&ndash;28</b> &middot; registration + baby</td><td>85%</td><td>10%</td><td>5%</td><td>&mdash;</td><td class="num">$95k&ndash;125k</td></tr>
+        <tr><td><b>2029&ndash;31</b> &middot; rebuild + specialise</td><td>65%</td><td>25%</td><td>10% supervision</td><td>&mdash;</td><td class="num">$150k&ndash;200k</td></tr>
+        <tr><td><b>2032&ndash;36</b> &middot; premium practice</td><td>45%</td><td>30%</td><td>25% supervision, medico-legal, corporate</td><td>0&ndash;2 contractors</td><td class="num">$220k&ndash;320k</td></tr>
+        <tr><td><b>2037&ndash;45</b> &middot; leverage</td><td>25%</td><td>20%</td><td>25%</td><td>30% &mdash; practice margin, training contracts</td><td class="num">$300k&ndash;500k</td></tr>
+        <tr><td><b>2046+</b> &middot; optional work</td><td>10&ndash;20%</td><td>10%</td><td>20%</td><td>50%+ &mdash; equity and investments</td><td class="num">Whatever you choose</td></tr>
+      </tbody>
+    </table></div>
+    <p style="margin-top:10px"><small>These are targets in today's dollars, at the settings on the left. The 50-year tab runs them through tax and compounding.</small></p>
+  </section>
+</section>
+<section class="panel" id="p_tax">
+  <div class="eyebrow">Phase 5 &mdash; keeping it</div>
+  <h2>Tax, structure and the things that are actually worth doing</h2>
+  <p class="lede">Ranked by dollars saved, not by how clever they sound. Two of the five things psychologists are most often told to do &mdash; a company for the tax rate, and paying a spouse for admin &mdash; usually do not work for a solo practitioner, and the reason is the same in both cases.</p>
+  <div class="note w" style="margin-top:14px"><b>General information, not tax advice.</b> Rates and thresholds are FY2026&ndash;27. Personal services income and structure questions turn on facts specific to you. Everything in the "get advice" column below is worth a one-hour session with a registered tax agent who has allied-health clients &mdash; roughly $300, and the highest-ROI professional fee on this page.</div>
+
+  <div class="grid g4" style="margin-top:18px">
+    <div class="tile"><div class="k">Your marginal rate</div><div class="v mono" id="t_marg">&mdash;</div><div class="s">incl. 2% Medicare levy</div></div>
+    <div class="tile"><div class="k">Average rate</div><div class="v mono" id="t_avg">&mdash;</div><div class="s">tax ÷ taxable income</div></div>
+    <div class="tile hero"><div class="k">Saved by super contribution</div><div class="v mono" id="t_supersave">&mdash;</div><div class="s" id="t_supersave_s">&mdash;</div></div>
+    <div class="tile"><div class="k">Saved by deductions</div><div class="v mono" id="t_dedsave">&mdash;</div><div class="s" id="t_dedsave_s">&mdash;</div></div>
+  </div>
+
+  <section class="blk">
+    <h3>The levers, ranked by what they are worth to you</h3>
+    <div class="tw" style="margin-top:12px"><table>
+      <thead><tr><th>#</th><th>Lever</th><th class="num">Worth / yr</th><th>Reality</th><th>Do it?</th></tr></thead>
+      <tbody id="t_levers"></tbody>
+    </table></div>
+  </section>
+
+  <section class="blk">
+    <h3>Structure &mdash; sole trader, company, or trust</h3>
+    <div class="tw" style="margin-top:12px"><table>
+      <thead><tr><th>Structure</th><th class="num">Setup / yr cost</th><th>What it does</th><th>The catch</th><th>When it makes sense for you</th></tr></thead>
+      <tbody>
+        <tr><td><b>Sole trader (ABN)</b><br><span class="pill g">Start here</span></td><td class="num">$0 setup<br>~$1,000&ndash;1,600 accounting</td><td>Simplest. Business income flows to your personal return. You already have the ABN.</td><td>No liability separation. No profit retention. All income taxed at your marginal rate.</td><td><b>2026&ndash;2030.</b> Until private profit consistently exceeds roughly $180k, a company adds cost and complexity for no benefit.</td></tr>
+        <tr><td><b>Company (Pty Ltd)</b></td><td class="num">~$600&ndash;1,200 setup<br>~$2,500&ndash;4,000/yr</td><td>Profits retained in the company are taxed at 25% (base rate entity) rather than up to 47%. Limited liability. Looks more credible to corporate clients.</td><td><b>Personal services income rules.</b> If your income is mainly a reward for your personal skill &mdash; which clinical psychology income is &mdash; and you fail the personal services business tests, the PSI rules attribute the income to you personally anyway. The 25% rate simply does not apply. You also cannot retain profits or split income.</td><td>Only once you either (a) pass a personal services business test on the facts, or (b) genuinely have income that is not personal services income &mdash; profit from <em>other</em> clinicians, or from products and training. Practically: when you employ your first clinician.</td></tr>
+        <tr><td><b>Discretionary trust</b></td><td class="num">~$1,500&ndash;2,500 setup<br>~$3,000&ndash;5,000/yr</td><td>Distribute business profit among beneficiaries. Asset protection. The standard structure for a multi-clinician practice.</td><td>Same PSI problem for your own clinical income. Distributions that fail the general anti-avoidance rules get unwound. Costs real money every year regardless of benefit.</td><td>When you own a practice with other clinicians generating profit that is not your personal services income. Not before.</td></tr>
+        <tr><td><b>Service entity</b><br>(company or trust that provides admin to your practice)</td><td class="num">Adds ~$2,000&ndash;3,500/yr</td><td>A separate entity charges your practice a commercial fee for premises, staff and admin, and can employ your husband.</td><td>The charge must be commercially justifiable and documented. Aggressive service-entity margins attract audit attention. Under PSI the deduction for an associate's non-principal work is denied regardless of the entity.</td><td>Genuinely useful only once there is real infrastructure and real staff &mdash; a multi-room practice with employees. Later than most advisers imply.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note r" style="margin-top:12px"><b>The company myth, plainly.</b> "Set up a Pty Ltd and pay 25% tax" is the most common piece of bad advice given to new private-practice psychologists. It fails on personal services income. A solo psychologist's fee income is a reward for personal effort; unless you satisfy one of the personal services business tests, the income is attributed to you and taxed at your marginal rate whatever the letterhead says. The company earns its keep when you are earning from <em>other people's</em> hours or from products &mdash; not from your own clinical hours.</div>
+  </section>
+
+  <section class="blk">
+    <h3>GST &mdash; the one where psychology is unusually well treated</h3>
+    <div class="grid g2" style="margin-top:12px">
+      <div class="card"><div class="eyebrow">GST-free</div><ul class="list"><li>Psychological services supplied to the patient by a recognised professional are <b>GST-free health supplies</b>. No GST on your therapy fees.</li><li>This means you are not forced to register at $75k of clinical turnover, and you save your clients 10%.</li></ul></div>
+      <div class="card"><div class="eyebrow">Taxable &mdash; watch the $75k line</div><ul class="list"><li>Medico-legal and insurer reports commissioned by a third party, corporate training and consulting, supervision supplied to other practitioners, and course sales are generally <b>taxable</b>.</li><li>Once <em>taxable</em> turnover passes $75,000 you must register and charge GST on those services.</li><li><b>The trap:</b> if you are not registered, the GST on your room rent, software and equipment is a real cost you cannot recover. Add roughly 10% to any quoted rent that is "plus GST" &mdash; the model on the left assumes your rent figure is GST-inclusive to you.</li></ul></div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <h3>Working from home &mdash; the two versions people confuse</h3>
+    <div class="grid g2" style="margin-top:12px">
+      <div class="card"><div class="eyebrow">Version 1 &mdash; telehealth from a home office</div><span class="pill g">Recommended</span>
+        <ul class="list" style="margin-top:8px">
+          <li>You see clients by video from a room in your home. No client ever attends.</li>
+          <li>Claim running expenses: the ATO fixed rate of <b>70c per hour</b> worked from home covers electricity, gas, internet, phone and stationery, or use the actual-cost method with records.</li>
+          <li>Depreciate the desk, chair and computer separately from the fixed rate.</li>
+          <li><b>No council approval needed</b> in most cases, because no clients visit and there is no signage or traffic.</li>
+          <li>Requirements that <em>are</em> real: a lockable room, a door that closes, no household audio bleed, secure storage for records, a compliant video platform, and a documented safety plan for clients in crisis in another state.</li>
+        </ul>
+      </div>
+      <div class="card"><div class="eyebrow">Version 2 &mdash; clients attending your house</div><span class="pill r">Think hard</span>
+        <ul class="list" style="margin-top:8px">
+          <li>Needs a <b>home occupation / home business permit</b> from your local government under the local planning scheme. Rules on client numbers, hours, parking and signage vary by council.</li>
+          <li>Your home and contents insurer must be told; professional indemnity and public liability must cover the premises.</li>
+          <li>Claiming <b>occupancy</b> costs (a share of rates, mortgage interest, insurance) requires the area to be a genuine place of business &mdash; and doing so can cost you part of the main-residence capital gains exemption when you sell. That can dwarf the deduction.</li>
+          <li>Clinically: it collapses the boundary between home and practice at exactly the life stage &mdash; a newborn in the house &mdash; where you least want that.</li>
+          <li><b>Verdict:</b> viable as a cheap start, but do it for a defined period with eyes open, not as a permanent model.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note" style="margin-top:12px"><b>Where this actually fits your plan.</b> A home telehealth room is the perfect 2028 asset: it lets you restart earning after the birth in one- and two-hour blocks with zero fixed cost and no commute, at a time when a rented room sitting empty would be bleeding you. Set it up <em>before</em> the birth, while you have time and income.</div>
+  </section>
+
+  <section class="blk">
+    <h3>Cash-flow discipline &mdash; the failure mode that actually gets people</h3>
+    <div class="grid g3" style="margin-top:12px">
+      <div class="card"><div class="eyebrow">Rule 1</div><h4>A separate tax account</h4><p style="margin-top:6px"><small>Transfer <b class="mono" id="t_reserve">32%</b> of every private dollar into a separate account the day it lands. Never spend from it. Your first full year of private income arrives with no PAYG withheld and the bill lands months later.</small></p></div>
+      <div class="card"><div class="eyebrow">Rule 2</div><h4>Expect the double-up year</h4><p style="margin-top:6px"><small>The year the ATO puts you on PAYG instalments you may pay last year's tax and this year's instalments in the same twelve months. Budget for it or it will feel like a disaster.</small></p></div>
+      <div class="card"><div class="eyebrow">Rule 3</div><h4>Insurance is not optional</h4><p style="margin-top:6px"><small>Professional indemnity is mandatory for registration. Add income protection &mdash; premiums are deductible &mdash; before you reduce salaried days. As a contractor, nobody pays you when you are sick.</small></p></div>
+    </div>
+  </section>
+</section>
+<section class="panel" id="p_baby">
+  <div class="eyebrow">Phase 6 &mdash; the 2027 constraint</div>
+  <h2>A baby is a financial event. Plan it like one.</h2>
+  <p class="lede">Conception around December 2026 puts a birth around September 2027 &mdash; roughly nine months after general registration. That single fact reorders your entire first three years, and it is the reason the aggressive "go full private now" answer is wrong.</p>
+
+  <div class="grid g3" style="margin-top:20px">
+    <div class="tile hero"><div class="k">Government Parental Leave Pay</div><div class="v mono" id="pl_total">&mdash;</div><div class="s">26 weeks × $1,004.70/wk, before tax, plus 12% super</div></div>
+    <div class="tile"><div class="k">If you stay salaried</div><div class="v mono" id="pl_emp">&mdash;</div><div class="s">leave-year income, incl. any employer scheme</div></div>
+    <div class="tile"><div class="k">If you go full contractor first</div><div class="v mono" id="pl_con">&mdash;</div><div class="s">leave-year income, government scheme only</div></div>
+  </div>
+  <div class="note" style="margin-top:14px" id="pl_verdict"></div>
+
+  <section class="blk">
+    <h3>What you keep, and what you give up, by staying employed</h3>
+    <div class="tw" style="margin-top:12px"><table>
+      <thead><tr><th>Entitlement</th><th>Employee</th><th>Contractor / sole trader</th><th>Worth</th></tr></thead>
+      <tbody>
+        <tr><td><b>Government Parental Leave Pay</b></td><td><span class="pill g">Yes</span> 26 weeks @ $1,004.70 + 12% super</td><td><span class="pill g">Yes</span> &mdash; self-employed people are eligible, paid direct by Services Australia</td><td class="num">~$26,100 + super</td></tr>
+        <tr><td><b>Employer paid parental leave</b></td><td><span class="pill g">Usually</span> &mdash; commonly 12&ndash;18 weeks at full pay in mid-size employers</td><td><span class="pill r">None</span></td><td class="num">$0&ndash;35,000</td></tr>
+        <tr><td><b>Unpaid parental leave &amp; return rights</b></td><td><span class="pill g">Yes</span> after 12 months' continuous service &mdash; 12 months, extendable, return to the same or a comparable job</td><td><span class="pill r">None</span> &mdash; only what your contract says</td><td>Very high</td></tr>
+        <tr><td><b>Paid sick and annual leave</b></td><td><span class="pill g">Yes</span></td><td><span class="pill r">None</span></td><td class="num">~10&ndash;12% of pay</td></tr>
+        <tr><td><b>Employer super (12%)</b></td><td><span class="pill g">Automatic</span></td><td><span class="pill w">Only if you pay it yourself</span></td><td class="num">~$10,700/yr</td></tr>
+        <tr><td><b>Income ceiling</b></td><td><span class="pill r">Capped</span> &mdash; roughly $145k&ndash;160k senior</td><td><span class="pill g">Uncapped</span></td><td>The whole point of leaving &mdash; later</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note" style="margin-top:12px"><b>Two eligibility conditions to protect between now and the birth.</b> The <b>work test</b>: at least 330 hours across 10 of the 13 months before the birth &mdash; roughly a day a week &mdash; which you comfortably meet either way, but which a long unplanned gap could break. The <b>income test</b>: individual income at or under $180,007 for the relevant financial year (or a family limit of $373,094). Nothing in this plan puts you near that in 2027; it becomes relevant much later. <span class="src">Thresholds indexed &mdash; confirm the figure for your claim year with Services Australia.</span></div>
+  </section>
+
+  <section class="blk">
+    <h3>The caseload question nobody warns you about</h3>
+    <div class="grid g2" style="margin-top:12px">
+      <div class="card"><div class="eyebrow">What happens to private clients</div>
+        <ul class="list">
+          <li>A therapy caseload does not survive a six-month absence. Clients need continuity; they will find someone else and stay with them.</li>
+          <li>Referrers behave the same way. A GP who sends you three referrals and hears you are away for six months routes the next thirty elsewhere &mdash; and habits are sticky.</li>
+          <li>Under a room-rent model, rent keeps running while you are away unless the contract says otherwise. Under a split, an empty calendar costs you nothing.</li>
+        </ul>
+      </div>
+      <div class="card"><div class="eyebrow">What to do about it</div>
+        <ul class="list">
+          <li><b>Stay on the split through 2027.</b> Zero fixed cost during leave is worth more than the few thousand a rent model saves you that year.</li>
+          <li><b>Negotiate a pause-and-return clause now</b> &mdash; up to 12 months, same days, same room. Ask while they are courting you.</li>
+          <li><b>Warm handover, not disappearance.</b> Tell clients eight weeks out. Refer within the practice so the referrer relationship stays with the building, and with you.</li>
+          <li><b>Restart on telehealth from home first.</b> Two to four hours a day, no commute, no room cost, nap-schedule compatible. This is the single most practical return-to-work structure in psychology.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <h3>The 2026&ndash;2029 sequence</h3>
+    <div class="tw" style="margin-top:12px"><table>
+      <thead><tr><th>When</th><th>Do</th><th>Because</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">Sep&ndash;Nov 2026</td><td>Read the EAP contract. Find and save the employer's parental leave policy. Confirm your service start date.</td><td>Employer schemes usually require 12 months' service at the birth date. Yours may already be close &mdash; or may not be.</td></tr>
+        <tr><td class="mono">Dec 2026</td><td>General registration. Medicare provider number. Start one private day on the 70/30. Set up the home telehealth room.</td><td>Nine months to build something that survives a pause &mdash; and to learn private practice while a salary is still paying the bills.</td></tr>
+        <tr><td class="mono">Jan&ndash;Jun 2027</td><td>Push savings hard. Get income protection and life cover in place while healthy and pre-pregnancy.</td><td>Insurance is materially harder and dearer to obtain during and after pregnancy. This is a time-limited window.</td></tr>
+        <tr><td class="mono">Jul&ndash;Aug 2027</td><td>Claim Parental Leave Pay (claims can be lodged before the birth). Brief clients. Arrange handovers. Pause, don't terminate, the room arrangement.</td><td>Early lodgement avoids a payment gap. A pause preserves the door back in.</td></tr>
+        <tr><td class="mono">Sep 2027&ndash;Mar 2028</td><td>Leave. Keep registration current &mdash; CPD and renewal do not pause.</td><td>Letting registration lapse is expensive and slow to undo.</td></tr>
+        <tr><td class="mono">Apr&ndash;Dec 2028</td><td>Return: 2 days salaried + 4&ndash;8 telehealth hours a week from home. Rebuild referrers before rebuilding hours.</td><td>Low fixed cost, high flexibility, and it re-establishes the referral flow that actually drives income.</td></tr>
+        <tr><td class="mono">2029</td><td>Decide: registrar program, second child, or the shift to majority-private. Not all three at once.</td><td>Three simultaneous step-changes is how people burn out at 30.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+</section>
+
+<section class="panel" id="p_endorse">
+  <div class="eyebrow">Phase 7 &mdash; the highest-value question on this page</div>
+  <h2>Clinical endorsement: worth it, if it is open to you</h2>
+  <p class="lede">Endorsement in clinical psychology lets you bill Medicare item 80010 instead of 80110. The client's rebate rises by about $50 a session at no extra cost to them &mdash; which converts directly into roughly $50 more per session that you can charge, or a fuller calendar at the same price.</p>
+
+  <div class="grid g4" style="margin-top:20px">
+    <div class="tile"><div class="k">Item 80110 &mdash; you now</div><div class="v mono">$98.95</div><div class="s">registered psychologist, 50+ min</div></div>
+    <div class="tile"><div class="k">Item 80010 &mdash; endorsed</div><div class="v mono">$149.05</div><div class="s">clinical psychologist, 50+ min</div></div>
+    <div class="tile hero"><div class="k">Gap per session</div><div class="v mono">$50.10</div><div class="s">pure pricing power, same client cost</div></div>
+    <div class="tile"><div class="k">At your volume</div><div class="v mono" id="e_annual">&mdash;</div><div class="s" id="e_annual_s">extra gross per year</div></div>
+  </div>
+
+  <div class="note w" style="margin-top:14px"><b>The eligibility question comes first.</b> The registrar program requires a Board-approved higher degree in the relevant area of practice. Whether your Master of Clinical Psychology satisfies that &mdash; given your qualifications span more than one country &mdash; is a question only Ahpra can answer, and the answer changes which of the two paths below applies. Get it in writing before spending anything.</div>
+
+  <section class="blk">
+    <h3>Path 1 &mdash; your Masters is accepted</h3>
+    <div class="tw" style="margin-top:12px"><table>
+      <thead><tr><th>Item</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td><b>What's required</b></td><td>A Board-approved registrar program: 3,000 hours of psychological practice over a minimum of 88 weeks, and 80 hours of supervision, with at least 40 hours per full-time-equivalent year. Part-time is allowed and stretches the calendar.</td></tr>
+        <tr><td><b>Time</b></td><td>Minimum ~2 years full-time. At 3 days a week &mdash; realistic with a small child &mdash; expect 3&ndash;4 years.</td></tr>
+        <tr><td><b>Cash cost</b></td><td class="num">~$14,000&ndash;22,000 in supervision fees across the program <span class="src">(estimate: 80 hrs at $175&ndash;275/hr)</span>, plus Ahpra fees. No tuition.</td></tr>
+        <tr><td><b>Opportunity cost</b></td><td>Low. You practise and earn throughout &mdash; you are not out of the workforce. The main drag is supervision hours and slightly restricted job choice.</td></tr>
+        <tr><td><b>Payback</b></td><td class="num" id="e_payback1">&mdash;</td></tr>
+        <tr><td><b>Verdict</b></td><td><span class="pill g">Do it, and start immediately</span> The 88-week clock is a minimum, not an average, and part-time stretches it. Every month of delay pushes a permanent income step further out.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="blk">
+    <h3>Path 2 &mdash; your Masters is not accepted for endorsement</h3>
+    <p><small>Then you have three real options. This is where "don't automatically recommend more study" gets tested against actual numbers.</small></p>
+    <div class="tw" style="margin-top:12px"><table>
+      <thead><tr><th>Option</th><th class="num">Cost</th><th class="num">Opportunity cost</th><th class="num">Income gain</th><th class="num">Payback</th><th>ROI</th><th>Verdict</th></tr></thead>
+      <tbody id="e_path2"></tbody>
+    </table></div>
+    <div class="note" style="margin-top:12px"><b>The honest comparison.</b> An accredited Australian clinical Masters is two years of fees plus two years of reduced earnings. It is a genuinely large investment. It is also the only door to a permanent, inflation-linked <span class="mono">$50</span>-per-session premium across a 40-year career, plus access to roles and rates that are closed to general registration. At 27 with a 40-year horizon the arithmetic favours it strongly. At 40 it would not. The reason to hesitate is not the money &mdash; it is that studying full-time with a one-year-old is brutal, which argues for starting in 2029&ndash;2030 part-time rather than never.</div>
+  </section>
+
+  <section class="blk">
+    <h3>Other endorsements, honestly compared</h3>
+    <div class="tw" style="margin-top:12px"><table>
+      <thead><tr><th>Endorsement</th><th class="num">Extra time</th><th class="num">Extra cost</th><th>Income effect</th><th>Ceiling</th><th>Fit for you</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td><b>Clinical</b></td><td class="num">2&ndash;4 yrs</td><td class="num">$14k&ndash;22k, or $60k+ with a degree</td><td>Highest &mdash; the only endorsement with a direct Medicare rebate premium</td><td class="num">$250k&ndash;400k solo</td><td>Matches your stated interests (anxiety/depression, trauma)</td><td><span class="pill g">First choice</span></td></tr>
+        <tr><td><b>Organisational</b></td><td class="num">2&ndash;4 yrs + degree</td><td class="num">$50k&ndash;80k</td><td>No Medicare, but day rates of $1,500&ndash;3,000 in corporate work <span class="src">(estimate)</span></td><td class="num">$300k&ndash;500k+</td><td>You have no stated interest and no corporate network</td><td><span class="pill w">Only via a corporate route</span></td></tr>
+        <tr><td><b>Neuropsychology</b></td><td class="num">3&ndash;5 yrs</td><td class="num">$60k&ndash;100k</td><td>Strong &mdash; scarce, high assessment fees, hospital and medico-legal demand</td><td class="num">$250k&ndash;400k</td><td>Long, competitive entry; poor fit with a newborn</td><td><span class="pill r">Not this decade</span></td></tr>
+        <tr><td><b>Forensic</b></td><td class="num">2&ndash;4 yrs</td><td class="num">$50k&ndash;80k</td><td>High report rates; court work</td><td class="num">$250k&ndash;450k</td><td>Adversarial, deadline-driven, cross-examination</td><td><span class="pill r">No</span></td></tr>
+        <tr><td><b>Counselling / Health / Ed&amp;Dev / Community</b></td><td class="num">2&ndash;4 yrs</td><td class="num">$50k&ndash;80k</td><td>Minimal fee premium over general registration in private practice</td><td class="num">$160k&ndash;230k</td><td>&mdash;</td><td><span class="pill r">Poor ROI</span></td></tr>
+        <tr><td><b>No endorsement + assessment niche</b></td><td class="num">6&ndash;12 mths</td><td class="num">$4k&ndash;9k in training and test kits</td><td>Meaningful &mdash; $180&ndash;280 effective hourly, no rebate dependence</td><td class="num">$180k&ndash;260k</td><td>Fastest payback of anything here</td><td><span class="pill g">Do this regardless</span></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+</section>
+<section class="panel" id="p_ladder">
+  <div class="eyebrow">Phase 8 &mdash; leverage</div>
+  <h2>The income ladder, with the rungs that break</h2>
+  <p class="lede">Ten levels, priced honestly. Levels 1&ndash;4 are the ones that reliably work. Levels 5&ndash;7 are where most psychologists lose money while looking successful. Levels 8&ndash;10 are where the wealth actually is, and only two of the three are realistic for a clinician.</p>
+
+  <div class="tw" style="margin-top:20px"><table>
+    <thead><tr><th>Lvl</th><th>Model</th><th class="num">Revenue</th><th class="num">Your income</th><th class="num">Capital</th><th>Effort</th><th>Risk</th><th>Scalable</th><th>Exit value</th><th>Move up when&hellip;</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td><b>Salaried employee</b><br><small>EAP, government, hospital</small></td><td class="num">&mdash;</td><td class="num">$85k&ndash;160k</td><td class="num">$0</td><td>Low</td><td><span class="pill g">Very low</span></td><td>No</td><td class="num">$0</td><td>You have registration + a private day available</td></tr>
+      <tr><td class="num">2</td><td><b>Salary + 1&ndash;2 private days</b><br><small>Where you should be in 2027</small></td><td class="num">$60k&ndash;120k</td><td class="num">$120k&ndash;180k</td><td class="num">&lt;$3k</td><td>Med</td><td><span class="pill g">Low</span></td><td>No</td><td class="num">$0</td><td>Private days are 75%+ full for 3 months running</td></tr>
+      <tr><td class="num">3</td><td><b>Full solo private</b></td><td class="num">$180k&ndash;300k</td><td class="num">$130k&ndash;220k</td><td class="num">$5k&ndash;15k</td><td>Med</td><td><span class="pill w">Moderate</span></td><td>No</td><td class="num">$0&ndash;30k</td><td>You are booked out and turning people away</td></tr>
+      <tr><td class="num">4</td><td><b>Premium niche practice</b><br><small>Assessment, trauma, endorsed</small></td><td class="num">$250k&ndash;400k</td><td class="num">$180k&ndash;300k</td><td class="num">$10k&ndash;25k</td><td>Med</td><td><span class="pill w">Moderate</span></td><td>Partly</td><td class="num">$20k&ndash;80k</td><td>Waitlist &gt; 6 weeks at a premium fee</td></tr>
+      <tr><td class="num">5</td><td><b>Own rooms, still solo</b></td><td class="num">$250k&ndash;400k</td><td class="num">$170k&ndash;280k</td><td class="num">$25k&ndash;70k</td><td>High</td><td><span class="pill r">Higher</span></td><td>Enables 6&ndash;7</td><td class="num">$30k&ndash;100k</td><td>Only as a step to level 6 &mdash; never for its own sake</td></tr>
+      <tr><td class="num">6</td><td><b>Group practice, 3&ndash;6 clinicians</b></td><td class="num">$600k&ndash;1.4m</td><td class="num">$200k&ndash;350k</td><td class="num">$60k&ndash;150k</td><td>High</td><td><span class="pill r">High</span></td><td>Yes</td><td class="num">$150k&ndash;500k</td><td>You can fill a second clinician's calendar from your own overflow</td></tr>
+      <tr><td class="num">7</td><td><b>Employing / contracting 7&ndash;15</b></td><td class="num">$1.5m&ndash;4m</td><td class="num">$250k&ndash;600k</td><td class="num">$150k&ndash;400k</td><td>Very high</td><td><span class="pill r">High</span></td><td>Yes</td><td class="num">$400k&ndash;1.5m</td><td>You have a practice manager and systems, not just clinicians</td></tr>
+      <tr><td class="num">8</td><td><b>Corporate contracts &amp; consulting</b></td><td class="num">$300k&ndash;1.5m</td><td class="num">$250k&ndash;600k</td><td class="num">$10k&ndash;50k</td><td>Med</td><td><span class="pill w">Moderate</span></td><td>Yes</td><td class="num">$100k&ndash;600k</td><td>You have one anchor corporate client and a delivery team</td></tr>
+      <tr><td class="num">9</td><td><b>Training, supervision &amp; products</b></td><td class="num">$50k&ndash;500k</td><td class="num">$40k&ndash;350k</td><td class="num">$5k&ndash;60k</td><td>Med</td><td><span class="pill r">High variance</span></td><td>Very</td><td class="num">$50k&ndash;800k</td><td>You have a distinctive method and people already ask you to teach it</td></tr>
+      <tr><td class="num">10</td><td><b>Business equity + investment portfolio</b></td><td class="num">&mdash;</td><td class="num">Passive</td><td class="num">Accumulated</td><td>Low</td><td><span class="pill w">Market</span></td><td>Fully</td><td class="num">The whole point</td><td>Always &mdash; run it in parallel from 2027, not after</td></tr>
+    </tbody>
+  </table></div>
+
+  <section class="blk">
+    <h3>Where the ladder actually breaks</h3>
+    <div class="grid g3" style="margin-top:12px">
+      <div class="node no"><h4>Level 5 is a trap</h4><p>Own rooms while still solo adds $25k&ndash;60k of fixed annual cost and buys you nothing a rented room doesn't, unless you are about to put other clinicians in them. Plenty of psychologists sign a five-year commercial lease, work harder, and earn less. Skip 5 unless it is a deliberate run-up to 6.</p></div>
+      <div class="node no"><h4>Level 6 margins are thinner than people think</h4><p>The arithmetic: a contractor bills $200k, keeps 65%, so $70k gross margin to you. Take out their room, software, admin share, marketing and your management time and $25k&ndash;40k is a realistic net per clinician. Three contractors is roughly $90k of extra income for a second, unpaid, job. It only pays at scale &mdash; six or more &mdash; or with employed clinicians on salary where the margin is larger and the risk higher.</p></div>
+      <div class="node act"><h4>Level 8 is the underrated one</h4><p>Corporate mental-health work &mdash; training, critical incident response, wellbeing program design, EAP subcontracting &mdash; carries day rates several times your clinical hourly, needs almost no capital, and scales by adding associates rather than rooms. Your current EAP employment is the free apprenticeship for it. Most clinicians never notice they're being trained in the exact thing they could later sell.</p></div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <h3>Own-practice economics, live</h3>
+    <p><small>What each additional contractor clinician is actually worth to you, at the settings on the left.</small></p>
+    <div class="tw" style="margin-top:12px"><table>
+      <thead><tr><th class="num">Clinicians</th><th class="num">Practice revenue</th><th class="num">Gross margin</th><th class="num">Practice overheads</th><th class="num">Net to you (from them)</th><th class="num">+ your own clinical</th><th class="num">Total pre-tax</th><th>Management load</th></tr></thead>
+      <tbody id="l_practice"></tbody>
+    </table></div>
+    <p style="margin-top:10px"><small>Assumes each contractor bills at your fee and utilisation, keeps 65%, and costs the practice a room, software, admin and marketing. Practice overheads step up with headcount &mdash; a practice manager becomes unavoidable at around five clinicians.</small></p>
+  </section>
+</section>
+
+<section class="panel" id="p_cities">
+  <div class="eyebrow">Phase 9 &mdash; geography</div>
+  <h2>Perth, Melbourne, or neither in particular</h2>
+  <p class="lede">You've framed this partly as a property play &mdash; move to Melbourne's north or west expecting prices to soften until rate cuts late next year. That thesis deserves a direct answer, because it is the part of your plan where the reasoning has the most holes.</p>
+
+  <div class="note r" style="margin-top:16px"><b>The problem with "wait for the rate cuts".</b> Rate cuts are the trigger for the recovery, not a window that stays open after it. When the market prices in cuts, buyer borrowing capacity rises and competition returns before the cuts land &mdash; so "buy just before the cuts arrive" is a plan to buy into a rally you have announced in advance. If you genuinely believe Melbourne's north and west are soft, the logically consistent move is to buy <em>while it is soft and everyone else is waiting</em>, not to wait for the signal that ends the softness. Currently the data supports your read on direction &mdash; Melbourne dwelling values fell about 1.2% in July 2026 and 3.4% over that quarter <span class="src">(CoreLogic-derived, reported Aug 2026)</span> &mdash; but "prices are falling" and "I can time the bottom" are different claims, and only the second one is a plan.</div>
+
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><div class="eyebrow">Three more holes worth naming</div>
+      <ul class="list">
+        <li><b>The corridors you named are structurally supply-rich.</b> Melton was Australia's fastest-growing council two years running and Wyndham and Melton are each projected to add well over 150,000 people to 2036. Population growth sounds bullish; combined with unlimited greenfield land release it usually is not. Land supply that expands to meet demand caps capital growth &mdash; which is exactly why these corridors have lagged Melbourne's median for a decade. You would be buying affordability, not growth.</li>
+        <li><b>Your income is the bigger asset than the house.</b> Moving cities in 2028&ndash;29 resets your referral network to zero. That is a real cost of roughly one to two years of private-practice income &mdash; six figures &mdash; against a speculative property gain. Never move a practice for a property trade. Move for a life reason, and buy where you land.</li>
+        <li><b>The binding constraint is the deposit, not the timing.</b> With savings in the $10k&ndash;30k band, "when to buy" is not yet your decision. "How fast can we assemble a deposit and what is our joint borrowing capacity with a baby in 2027" is.</li>
+      </ul>
+    </div>
+    <div class="card"><div class="eyebrow">The genuinely useful finding</div>
+      <ul class="list">
+        <li>Since 1 October 2025 the Australian Government 5% Deposit Scheme has <b>no income caps and no annual place limits</b>. Eligible first home buyers can buy with a 5% deposit and no lenders mortgage insurance.</li>
+        <li>Property price caps: <b>$950,000</b> Melbourne and Geelong, <b>$850,000</b> Perth.</li>
+        <li>Victoria: first home buyers pay <b>no stamp duty up to $600,000</b>, with a sliding concession to $750,000.</li>
+        <li>WA: no duty up to <b>$500,000</b> with concession to $700,000 metro; the May 2026 state budget proposed lifting these to $600,000 and $800,000, <span class="src">subject to parliament &mdash; confirm with RevenueWA before relying on it</span>.</li>
+        <li><b>What this means:</b> a $600k purchase in Melbourne's west is roughly $30k deposit, no LMI, no stamp duty. That is inside your reach far sooner than you assumed &mdash; which makes the real question serviceability during a 2027 parental leave, not market timing.</li>
+      </ul>
+      <div class="note w" style="margin-top:10px"><b>But:</b> a 95% loan on a market you expect to fall is negative equity by design. If you use the scheme, treat it as a home you will hold for a decade, not a trade &mdash; and get pre-approval before, not during, parental leave, because lenders assess on current and evidenced future income.</div>
+    </div>
+  </div>
+
+  <section class="blk">
+    <h3>Career-side comparison</h3>
+    <div class="tw" style="margin-top:12px"><table>
+      <thead><tr><th>Factor</th><th>Perth</th><th>Melbourne</th><th>Hybrid / national telehealth</th></tr></thead>
+      <tbody>
+        <tr><td><b>Competition</b></td><td><span class="pill g">Lower</span> Thinner practitioner supply outside the inner suburbs; easier to fill a calendar</td><td><span class="pill r">Highest in the country</span> Dense in the inner north and east; harder to stand out</td><td>Irrelevant &mdash; you compete on niche and availability, not postcode</td></tr>
+        <tr><td><b>Time to a full caseload</b></td><td class="num">3&ndash;6 months</td><td class="num">6&ndash;12 months</td><td class="num">6&ndash;18 months</td></tr>
+        <tr><td><b>Achievable private fee</b></td><td class="num">$190&ndash;250</td><td class="num">$200&ndash;280 <small>(higher ceiling, harder to hold)</small></td><td class="num">$180&ndash;260</td></tr>
+        <tr><td><b>Corporate / EAP work</b></td><td>Resources sector, FIFO mental health, government &mdash; a genuine and well-paid niche</td><td><span class="pill g">Deeper</span> Head offices, more EAP providers, more org psychology</td><td>Winnable remotely once you have a track record</td></tr>
+        <tr><td><b>Assessment &amp; medico-legal</b></td><td>Good; fewer providers, long waitlists</td><td>Bigger market, more competition, more insurers and firms</td><td>Limited &mdash; most assessment work is in person</td></tr>
+        <tr><td><b>Room cost</b></td><td class="num">$100&ndash;150/day typical</td><td class="num">$120&ndash;220/day inner, less outer</td><td class="num">$0</td></tr>
+        <tr><td><b>Cost of living</b></td><td>Lower housing, higher groceries and travel</td><td>Housing currently softer; higher land tax and transport costs</td><td>Your choice</td></tr>
+        <tr><td><b>Family support</b></td><td colspan="3"><b>The variable that should probably decide this.</b> With a baby in 2027 and a husband doing your admin, proximity to family is worth more in real dollars &mdash; in childcare not paid for and hours you can actually work &mdash; than any fee differential on this table. If family is in one city, that city wins on the numbers, not just on sentiment.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="blk">
+    <h3>Decision tree &mdash; where to be based</h3>
+    <div class="tree" style="margin-top:12px"><b>WHERE DO YOU PRACTISE?</b>
+│
+├─ <b>2026&ndash;2028 &mdash; Perth. Not a decision, a default.</b>
+│    You have a live offer, a shorter runway to a full calendar, cheaper rooms,
+│    and a birth in 2027. Moving cities inside that window is strictly negative.
+│
+├─ <b>2028&ndash;2029 &mdash; the actual decision point</b>
+│    ├─ Is the reason to move <b>family, partner's career, or lifestyle</b>?
+│    │     ─→ <span class="a">Move. Buy where you land. Accept ~12&ndash;18 months of rebuild.</span>
+│    ├─ Is the reason to move <b>property prices</b>?
+│    │     ─→ <span class="r">Don't.</span> Buy an investment property in Melbourne without living in it,
+│    │        or buy in Perth and keep the income you already built.
+│    └─ Is the reason to move <b>career ceiling</b> (corporate, forensic, academic)?
+│          ─→ <span class="w">Only if you have a named opportunity</span>, not a general sense that
+│             Melbourne is bigger. Test it with a Melbourne telehealth caseload first.
+│
+├─ <b>The hedge that costs nothing</b>
+│    <span class="a">Registration is national.</span> Build a telehealth caseload with Melbourne-based
+│    clients from Perth in 2028. If it fills easily, the move is de-risked and you
+│    arrive with income. If it doesn't, you have your answer for free.
+│
+└─ <b>2030+ &mdash; if income exceeds roughly <span class="mono">$220k</span> in either city</b>
+     Geography stops mattering to your income and starts mattering only to your life.
+     At that point choose on family, schools and climate, and stop optimising.
+</div>
+  </section>
+</section>
+<section class="panel" id="p_fifty">
+  <div class="eyebrow">Phase 10 &mdash; the long horizon</div>
+  <h2>Fifty years, treated as a portfolio</h2>
+  <p class="lede">Six career strategies, run year by year from age 27 to 77, in today's dollars. Income is taxed at FY2026&ndash;27 rates, the leftover is saved at the rate on the left and compounded at your chosen real return. Career-break years are modelled, because ignoring them is how these projections lie.</p>
+  <div class="note w" style="margin-top:14px"><b>Read this as a ranking, not a forecast.</b> Fifty-year projections are precise and wrong. Medicare's Better Access structure, the endorsement system, the price of a psychology hour and the tax code will all change more than once. What survives is the <em>ordering</em> of the strategies and the approximate size of the gaps &mdash; that is what this chart is for.</p></div>
+
+  <section class="blk">
+    <h3>Personal income by year</h3>
+    <figure style="margin-top:12px"><div id="f_income"></div><figcaption>Pre-tax personal income in 2026 dollars, shown to 2062. Dips are modelled parental-leave and reduced-capacity years; the wind-down after age 57 continues past the right edge.</figcaption></figure>
+  </section>
+
+  <section class="blk">
+    <h3>Net wealth &mdash; investments plus superannuation</h3>
+    <figure style="margin-top:12px"><div id="f_wealth"></div><figcaption>Accumulated savings and super, in 2026 dollars, at the savings rate and real return on the left. Excludes any property equity.</figcaption></figure>
+  </section>
+
+  <section class="blk">
+    <h3>Strategy scoreboard</h3>
+    <div class="tw" style="margin-top:12px"><table>
+      <thead><tr><th>Strategy</th><th class="num">Peak income</th><th class="num">10-yr earnings</th><th class="num">20-yr earnings</th><th class="num">Lifetime earnings</th><th class="num">Wealth at 60</th><th class="num">Setup cost</th><th>Risk</th><th class="num">Risk-adj. rank</th></tr></thead>
+      <tbody id="f_score"></tbody>
+    </table></div>
+    <p style="margin-top:10px"><small>Risk-adjusted rank discounts each strategy's lifetime earnings by its probability of not working out &mdash; roughly 5% for salaried, 15% for solo private, 40% for a group practice, 55% for products and training. Those discounts are judgement, not data, and they are the assumption most worth arguing with.</small></p>
+  </section>
+
+  <section class="blk">
+    <h3>The eras</h3>
+    <div class="stack" style="margin-top:12px">
+      <div class="node act"><div class="rowsplit"><span class="pill n">2026&ndash;2030</span><span class="eyebrow">Age 27&ndash;31 &middot; Foundation</span></div><h4 style="margin-top:6px">Get registered, get a baby, get a niche &mdash; in that order</h4><p>Registration, one to two private days on the split, a home telehealth room, the endorsement question resolved, one child, one specialisation started. Do <em>not</em> also try to buy a practice, move states and launch a course. Target: <b class="mono">$120k&ndash;180k</b> personal income by 2030, <b class="mono">$150k&ndash;250k</b> net worth including super.<br><b>The one thing that must happen:</b> the endorsement eligibility answer, in writing, in 2026.</p></div>
+      <div class="node act"><div class="rowsplit"><span class="pill n">2030&ndash;2040</span><span class="eyebrow">Age 31&ndash;41 &middot; Compounding</span></div><h4 style="margin-top:6px">Trade volume for price, then trade hours for leverage</h4><p>Majority private. Fee at or near the APS suggested rate. Assessment stream running at 25&ndash;30% of hours. Supervision from around year 5. First contractor only if you are genuinely turning work away. Second child, if wanted, lands here. Target: <b class="mono">$200k&ndash;320k</b> personal, <b class="mono">$800k&ndash;1.6m</b> net worth by 2040.<br><b>The trap:</b> adding clinicians before adding systems. Hire a practice manager before the third clinician, not after the fifth.</p></div>
+      <div class="node act"><div class="rowsplit"><span class="pill n">2040&ndash;2055</span><span class="eyebrow">Age 41&ndash;56 &middot; Peak</span></div><h4 style="margin-top:6px">Own the practice, sell the expertise, feed the portfolio</h4><p>Peak earning years. Clinical hours down to 10&ndash;15 a week by choice. Income from practice margin, supervision, medico-legal, corporate contracts and training. Maximise concessional super every year; use carry-forward caps in high-income years. Target: <b class="mono">$300k&ndash;500k</b> personal, <b class="mono">$3m&ndash;5m</b> net worth by 2055.<br><b>The decision:</b> whether the practice is a job you own or an asset you can sell. Build it as the second and you keep the option on the first.</p></div>
+      <div class="node yes"><div class="rowsplit"><span class="pill n">2055&ndash;2076</span><span class="eyebrow">Age 56&ndash;77 &middot; Optional</span></div><h4 style="margin-top:6px">Work because you want to</h4><p>You said financial independence as soon as possible, then optional work. On the modelled path that arrives in your early-to-mid fifties &mdash; sooner if the savings rate is higher than your instinct suggests. Sell or wind down practice equity; move super to pension phase at preservation age; keep a small clinical or supervision load because clinicians who stop entirely tend to regret it. Psychology is one of the few professions where a two-day week at 70 is genuinely available.</p></div>
+    </div>
+  </section>
+</section>
+
+<section class="panel" id="p_now">
+  <div class="eyebrow">Phase 11 &mdash; execution</div>
+  <h2>The next 90 days</h2>
+  <p class="lede">Sequenced so that the cheap, high-information actions come first. Nothing here costs more than a few hundred dollars until day 60.</p>
+
+  <div class="grid g3" style="margin-top:20px">
+    <div class="card"><div class="rowsplit"><span class="pill g">Days 1&ndash;30</span><span class="eyebrow">Information</span></div>
+      <ol class="list" style="margin-top:10px">
+        <li><b>Email Ahpra</b> about registrar eligibility for your qualification. Save the reply.</li>
+        <li><b>Read your EAP contract.</b> Outside work, restraint, non-solicitation, IP. Note the clauses verbatim.</li>
+        <li><b>Get the employer parental leave policy</b> and confirm your continuous service date.</li>
+        <li><b>Ask the GP practice the three questions:</b> how many GPs, how many mental health treatment plans a month, and can you speak to a psychologist already working there.</li>
+        <li><b>Ask for the room rent number</b> in writing, and whether it is plus GST, and what it includes.</li>
+        <li><b>Book a tax agent</b> with allied-health clients. One hour. Ask specifically about personal services income.</li>
+        <li><b>Open a separate tax savings account.</b> Today, before there is anything to put in it.</li>
+      </ol>
+    </div>
+    <div class="card"><div class="rowsplit"><span class="pill w">Days 31&ndash;60</span><span class="eyebrow">Set up</span></div>
+      <ol class="list" style="margin-top:10px">
+        <li><b>Professional indemnity and public liability</b> quotes for private practice. Compare two insurers.</li>
+        <li><b>Income protection and life cover</b> &mdash; apply now, pre-pregnancy. This window closes.</li>
+        <li><b>Medicare provider number application</b> ready to lodge the day general registration lands.</li>
+        <li><b>Choose practice software</b> only if you will bill independently. If the practice bills for you, skip it.</li>
+        <li><b>Draft your contract asks</b> from the terms table &mdash; client ownership, restraint, split cap, parental pause. Send them as a friendly list, not a legal letter.</li>
+        <li><b>Set your fee.</b> Start at $200&ndash;220 with a small number of reduced-fee places. Do not bulk bill a full caseload &mdash; see below.</li>
+        <li><b>Build the home telehealth room.</b> Door that locks, good light, wired internet, a decent microphone.</li>
+      </ol>
+    </div>
+    <div class="card"><div class="rowsplit"><span class="pill n">Days 61&ndash;90</span><span class="eyebrow">Demand</span></div>
+      <ol class="list" style="margin-top:10px">
+        <li><b>Introduce yourself to 15 GPs</b> in the practice's catchment. A one-page profile: who you see, your waiting time, how to refer, and your direct contact. Waiting time is the single most persuasive line on the page.</li>
+        <li><b>List on the directories</b> that actually generate referrals in WA, and complete every profile field.</li>
+        <li><b>Write three referral-source letters</b> a week and follow up the ones that refer.</li>
+        <li><b>Track four numbers weekly:</b> referrals in, sessions delivered, attendance rate, average fee received.</li>
+        <li><b>Book the trauma training</b> you actually want &mdash; it is the cheapest increase in fee power available to you.</li>
+        <li><b>Set the review date.</b> Six months in, revisit the split-versus-rent number with real data.</li>
+      </ol>
+    </div>
+  </div>
+
+  <section class="blk">
+    <h3>Your fee &mdash; the answer to "bulk bill or $200?"</h3>
+    <div class="card" style="margin-top:12px">
+      <p><b>Neither, quite.</b> Bulk billing under Better Access pays you the rebate and nothing more &mdash; <span class="mono">$98.95</span> a session. After a 30% split that is <span class="mono">$69</span>, which is below the cost of delivering the hour once you count notes, no-shows and overheads. A full bulk-billed caseload is not a business; it is a subsidy you personally fund. It also anchors your clients &mdash; and your referrers &mdash; at a price you can never move away from.</p>
+      <p style="margin-top:10px"><b>Do this instead:</b> set your standard fee at <b class="mono">$200&ndash;220</b> from day one, keep two to four genuinely reduced-fee places for people who need them, and raise the standard fee by $10&ndash;20 every July. The APS suggested fee for 2026&ndash;27 is <b class="mono">$330</b>; almost nobody charges it in general practice settings, but it tells you the ceiling is far above where you were considering starting. Starting low and raising later is much harder than starting mid and holding.</p>
+      <div class="grid g4" style="margin-top:14px" id="n_feegrid"></div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <h3>Do now &middot; Do later &middot; Avoid</h3>
+    <div class="grid g3" style="margin-top:12px">
+      <div class="node yes"><div class="eyebrow" style="color:var(--good)">Do now &mdash; 2026&ndash;27</div><ul class="list" style="margin-top:8px"><li>Ahpra endorsement eligibility question</li><li>Read the EAP contract; secure a carve-out</li><li>One private day on the 70/30 &mdash; no fixed cost</li><li>Negotiate client ownership, restraint, split cap, parental pause</li><li>Income protection before pregnancy</li><li>Home telehealth room</li><li>Separate tax account, 32% of every private dollar</li><li>Fee at $200&ndash;220, not bulk-billed</li></ul></div>
+      <div class="node act"><div class="eyebrow" style="color:var(--warn)">Do later &mdash; 2029 onward</div><ul class="list" style="margin-top:8px"><li>Registrar program or accredited clinical Masters</li><li>Assessment stream (ADHD, autism, cognitive)</li><li>Switch to fixed room rent once past break-even</li><li>Board-approved supervisor training</li><li>Medico-legal and insurer report work</li><li>Company structure &mdash; only when income is not purely your own hours</li><li>First contractor clinician</li><li>The Melbourne question, decided on family not property</li></ul></div>
+      <div class="node no"><div class="eyebrow" style="color:var(--bad)">Avoid</div><ul class="list" style="margin-top:8px"><li>Resigning the salaried job before the 2027 birth</li><li>Own rooms while still solo</li><li>A company set up "for the 25% tax rate"</li><li>Paying your husband for admin as a tax deduction while personal services income rules apply</li><li>A full bulk-billed caseload</li><li>Fixed room rent while your calendar is under 60% full</li><li>Building an online course before 2032</li><li>Moving cities for a property trade</li><li>Any restraint clause you have not read twice</li></ul></div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <h3>The single recommendation</h3>
+    <div class="card" style="border-left:4px solid var(--accent)">
+      <h4 style="font-size:1.25rem">Stay salaried through the 2027 birth. Add one private day on the 70/30 from general registration. Spend this month establishing whether clinical endorsement is open to you &mdash; and if it is, start the registrar program the week you are generally registered.</h4>
+      <p style="margin-top:10px">Everything else on this page is a consequence of that sentence. The 70/30-versus-rent question is worth roughly <b class="mono" id="n_dealworth">&mdash;</b> a year at your projected volume. The endorsement question is worth roughly <b class="mono" id="n_endworth">&mdash;</b> a year, every year, for the next thirty-five. You have been giving them equal attention. They are not equal.</p>
+      <p style="margin-top:10px">The second-order point: your stated goal is financial independence as soon as possible, and the fastest route there for a 27-year-old psychologist is not maximising 2027 income. It is protecting your earning capacity through the family-formation years, buying permanent pricing power while you are young enough to amortise it, and starting to invest the surplus in 2027 rather than 2032. On the modelled path, the difference between starting to invest now and starting at 35 is larger than the difference between any two career strategies on the chart.</p>
+    </div>
+  </section>
+</section>
+<section class="panel" id="p_sources">
+  <div class="eyebrow">Phase 12 &mdash; provenance</div>
+  <h2>Every number, and how much to trust it</h2>
+  <p class="lede">You asked for verifiable data. Here is each figure used in the model, its status, and where to check it. Anything marked <span class="pill w">Estimate</span> or <span class="pill n">Assumption</span> is my judgement, not a published figure &mdash; treat those as inputs to argue with, and change them on the left.</p>
+
+  <div class="tw" style="margin-top:18px"><table>
+    <thead><tr><th>Figure</th><th class="num">Value used</th><th>Status</th><th>Source / how to verify</th></tr></thead>
+    <tbody>
+      <tr><td>MBS item 80110 rebate &mdash; registered psychologist, 50+ min</td><td class="num">$98.95</td><td><span class="pill g">Confirmed</span></td><td>MBS Online item 80110, from 1 July 2026 (indexation added ~$2.60). Verify at <span class="mono">mbsonline.gov.au</span>.</td></tr>
+      <tr><td>MBS item 80010 rebate &mdash; clinical psychologist</td><td class="num">$149.05</td><td><span class="pill w">Confirmed, sources conflict</span></td><td>Reported as $149.05 for 2026&ndash;27; some sites still publish the 2025&ndash;26 figure of $145.25. Check MBS Online before quoting it to a client.</td></tr>
+      <tr><td>Better Access sessions per calendar year</td><td class="num">10</td><td><span class="pill g">Confirmed</span></td><td>Services Australia / Department of Health. The temporary COVID-era extension to 20 ended.</td></tr>
+      <tr><td>APS suggested fee 2026&ndash;27, 46&ndash;60 min</td><td class="num">$330</td><td><span class="pill g">Confirmed</span></td><td>APS National Schedule of Suggested Fees 2026&ndash;27 (2025&ndash;26 was $318). A recommendation only &mdash; setting your own fee is your decision, and price-fixing rules mean it can never be more than a suggestion.</td></tr>
+      <tr><td>NDIS psychology price limit</td><td class="num">$252.99/hr</td><td><span class="pill g">Confirmed</span></td><td>NDIS Pricing Arrangements and Price Limits 2026&ndash;27, from 1 July 2026 (up from $232.99). Remote $354.19, very remote $379.49. Provider travel $126.50/hr.</td></tr>
+      <tr><td>Income tax rates 2026&ndash;27</td><td class="num">0 / 15 / 30 / 37 / 45%</td><td><span class="pill g">Confirmed</span></td><td>Thresholds $18,200 / $45,000 / $135,000 / $190,000. The lowest bracket dropped from 16% to 15% on 1 July 2026. ATO.</td></tr>
+      <tr><td>Medicare levy</td><td class="num">2%</td><td><span class="pill g">Confirmed</span></td><td>ATO. Low-income reductions apply below roughly $28k and are ignored in this model.</td></tr>
+      <tr><td>Superannuation guarantee</td><td class="num">12%</td><td><span class="pill g">Confirmed</span></td><td>ATO. Rate reached 12% on 1 July 2025.</td></tr>
+      <tr><td>Concessional super cap</td><td class="num">$30,000</td><td><span class="pill w">Verify</span></td><td>ATO. Indexed; carry-forward of unused cap is available where your total super balance was under $500,000 &mdash; which almost certainly applies to you, and is worth real money in a high-income year.</td></tr>
+      <tr><td>Parental Leave Pay rate</td><td class="num">$1,004.70/wk</td><td><span class="pill g">Confirmed</span></td><td>Services Australia, 2026&ndash;27. 26 weeks from July 2026, plus 12% superannuation paid by the ATO after year end.</td></tr>
+      <tr><td>PPL work test / income test</td><td class="num">330 hrs; $180,007</td><td><span class="pill g">Confirmed</span></td><td>330 hours across 10 of the 13 months before the birth; individual income limit $180,007 or family $373,094 for the relevant year. Self-employed people are eligible. Services Australia.</td></tr>
+      <tr><td>Registrar program requirements</td><td class="num">3,000 hrs / 88 wks / 80 hrs supervision</td><td><span class="pill g">Confirmed</span></td><td>Psychology Board of Australia, registrar program. Minimum 40 supervision hours per FTE year.</td></tr>
+      <tr><td>Perth consulting room rent</td><td class="num">$100&ndash;150/day</td><td><span class="pill g">Confirmed range</span></td><td>Current Perth listings: $100+GST/day (Fremantle, Brentwood), $110+GST weekdays with $500+GST for a five-day week; premium medical-centre rooms run far higher. Ask what is included.</td></tr>
+      <tr><td>Victorian first home buyer duty</td><td class="num">Nil to $600k</td><td><span class="pill g">Confirmed</span></td><td>State Revenue Office Victoria; sliding concession to $750,000.</td></tr>
+      <tr><td>WA first home buyer duty</td><td class="num">Nil to $500k</td><td><span class="pill w">Changing</span></td><td>Current: nil to $500,000, concession to $700,000 metro. May 2026 WA budget proposed $600,000 / $800,000 &mdash; not law at time of writing. Confirm with RevenueWA.</td></tr>
+      <tr><td>5% Deposit Scheme caps</td><td class="num">$950k Melb / $850k Perth</td><td><span class="pill g">Confirmed</span></td><td>Housing Australia. No income caps and no place limits since 1 October 2025.</td></tr>
+      <tr><td>Melbourne dwelling values</td><td class="num">&minus;1.2% July 2026</td><td><span class="pill g">Confirmed</span></td><td>Reported market data, &minus;3.4% over the quarter. A single quarter is not a trend &mdash; check the current CoreLogic Home Value Index before acting.</td></tr>
+      <tr><td>Registered psychologist salary range</td><td class="num">$100k&ndash;115k avg</td><td><span class="pill w">Estimate</span></td><td>Aggregated from SEEK and industry salary reporting, 2026. Wide dispersion; treat as a midpoint not a benchmark.</td></tr>
+      <tr><td>ADHD / autism assessment fees</td><td class="num">$540&ndash;2,500</td><td><span class="pill g">Confirmed range</span></td><td>Published 2026 provider fees. Average total assessment cost reported near $1,400. Not rebatable under Better Access &mdash; that is the reason the effective hourly is high.</td></tr>
+      <tr><td>Medico-legal / insurer report rates</td><td class="num">$400&ndash;800/hr</td><td><span class="pill w">Estimate</span></td><td>No public schedule. Negotiated per instructing party. Verify by asking two firms directly.</td></tr>
+      <tr><td>Supervision rates</td><td class="num">$150&ndash;250/hr</td><td><span class="pill w">Estimate</span></td><td>No public schedule; varies by supervisor seniority and endorsement.</td></tr>
+      <tr><td>Corporate / organisational day rates</td><td class="num">$1,500&ndash;3,000/day</td><td><span class="pill w">Estimate</span></td><td>Highly variable and relationship-dependent. Treat as a ceiling you have to earn, not a market rate.</td></tr>
+      <tr><td>Contractor split norms</td><td class="num">60/40 to 70/30</td><td><span class="pill g">Confirmed range</span></td><td>Australian group-practice job listings, 2026. 70/30 is at the favourable end of the market &mdash; the offer is reasonable on its face.</td></tr>
+      <tr><td>Real investment return</td><td class="num">Your setting</td><td><span class="pill n">Assumption</span></td><td>Default 5% real. Long-run Australian diversified growth portfolios have delivered roughly 5&ndash;6% above inflation over multi-decade periods, with large decade-to-decade variation. Nobody can promise this.</td></tr>
+      <tr><td>Group practice margin per contractor</td><td class="num">$25k&ndash;40k net</td><td><span class="pill n">Assumption</span></td><td>Derived from a 35% practice share less room, software, admin and marketing. Your actual margin depends entirely on utilisation and overheads.</td></tr>
+      <tr><td>Career-strategy failure probabilities</td><td class="num">5&ndash;55%</td><td><span class="pill n">Assumption</span></td><td>Pure judgement, used only to rank risk-adjusted returns. The ranking is more defensible than the numbers.</td></tr>
+    </tbody>
+  </table></div>
+
+  <section class="blk">
+    <h3>What I still need from you</h3>
+    <p><small>These would materially change the model. Answer in a line each.</small></p>
+    <div class="tw" style="margin-top:12px"><table>
+      <thead><tr><th>#</th><th>Question</th><th>Why it changes the answer</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td><b>Where was your Master of Clinical Psychology awarded, and was the program APAC-accredited?</b></td><td>Decides the entire endorsement branch &mdash; the largest single number on this page.</td></tr>
+        <tr><td class="num">2</td><td><b>Which pathway got you to provisional registration &mdash; higher degree, 5+1 internship, or overseas qualifications assessment?</b></td><td>Determines what supervision and hours you already hold, and what a registrar program would add.</td></tr>
+        <tr><td class="num">3</td><td><b>How long have you been with the current EAP employer?</b></td><td>Employer paid parental leave and unpaid-leave return rights usually need 12 months' continuous service at the birth date.</td></tr>
+        <tr><td class="num">4</td><td><b>Does your EAP contract restrict outside private work?</b></td><td>If it does, the entire 2027 plan changes shape.</td></tr>
+        <tr><td class="num">5</td><td><b>What is your household's monthly spend, and what does your husband earn?</b></td><td>Financial independence is a function of spending far more than of income. Without it the wealth chart is guesswork.</td></tr>
+        <tr><td class="num">6</td><td><b>What room rent has the GP actually quoted, plus or including GST, and what does it include?</b></td><td>The break-even is entirely driven by this number.</td></tr>
+        <tr><td class="num">7</td><td><b>How many GPs are on site and how many mental health treatment plans do they write a month?</b></td><td>Decides whether 30% is a fair acquisition cost or an overpayment.</td></tr>
+        <tr><td class="num">8</td><td><b>Do you and your husband have permanent residency or citizenship?</b></td><td>Affects Parental Leave Pay residency rules, first home buyer schemes and some government roles.</td></tr>
+        <tr><td class="num">9</td><td><b>Is family support in Perth, Melbourne, or neither?</b></td><td>On the numbers this is probably the deciding factor in the city question, and it isn't close.</td></tr>
+        <tr><td class="num">10</td><td><b>Do you already have income protection and life insurance?</b></td><td>If not, this is time-critical &mdash; the window closes when you conceive.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="blk">
+    <h3>Scope</h3>
+    <p style="margin-top:8px"><small>This is a strategic and financial analysis, not personal financial product advice, tax advice or legal advice. Registration, supervision and endorsement requirements are set by the Psychology Board of Australia and Ahpra and change; Medicare items and rebates are set by the Department of Health and change annually; tax outcomes depend on facts specific to you. Before acting on the structure, tax and contract sections, get advice from a registered tax agent and, for the contract, a lawyer who works in allied health. Nothing here recommends any conduct inconsistent with the Psychology Board's Code of Conduct or the APS Code of Ethics &mdash; in particular, fee-setting, advertising and the use of the title "clinical psychologist" are regulated, and the endorsement analysis above assumes you would only use that title once endorsed.</small></p>
+  </section>
+</section>
+</main>
+</div>
+<script>
+(function(){
+"use strict";
+
+/* ---------- constants (FY2026-27) ---------- */
+var MBS_GEN=98.95, MBS_CLIN=149.05, GAP=MBS_CLIN-MBS_GEN;
+var NDIS_RATE=252.99, NDIS_ADJ=0.92;
+var SG=0.12, CAP_CONC=30000, PPL_WK=1004.70, PPL_WEEKS=26;
+var BRACKETS=[[18200,0],[45000,0.15],[135000,0.30],[190000,0.37],[Infinity,0.45]];
+
+function incomeTax(ti){
+  if(ti<=0) return 0;
+  var t=0, prev=0;
+  for(var i=0;i<BRACKETS.length;i++){
+    var top=BRACKETS[i][0], rate=BRACKETS[i][1];
+    if(ti>top){ t+=(top-prev)*rate; prev=top; } else { t+=(ti-prev)*rate; break; }
+  }
+  return t;
+}
+function lito(ti){
+  if(ti<=37500) return 700;
+  if(ti<=45000) return 700-(ti-37500)*0.05;
+  if(ti<=66667) return 325-(ti-45000)*0.015;
+  return 0;
+}
+function totalTax(ti){
+  if(ti<=0) return 0;
+  var base=Math.max(0, incomeTax(ti)-lito(ti));
+  var levy = ti>32500 ? ti*0.02 : (ti>26000 ? (ti-26000)*0.10 : 0);
+  return base+levy;
+}
+function marginalRate(ti){
+  var d=100; return (totalTax(ti+d)-totalTax(ti))/d;
+}
+var fmt0=new Intl.NumberFormat('en-AU',{style:'currency',currency:'AUD',maximumFractionDigits:0});
+var fmt2=new Intl.NumberFormat('en-AU',{style:'currency',currency:'AUD',maximumFractionDigits:2});
+function $(id){return document.getElementById(id);}
+function money(n){return fmt0.format(Math.round(n));}
+function money2(n){return fmt2.format(n);}
+function compact(n){
+  var a=Math.abs(n);
+  if(a>=1e6) return '$'+(n/1e6).toFixed(a>=1e7?1:2)+'m';
+  if(a>=1000) return '$'+Math.round(n/1000)+'k';
+  return '$'+Math.round(n);
+}
+function pct(n){return Math.round(n)+'%';}
+function esc(s){return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+
+/* ---------- state ---------- */
+var PRESETS={
+  safe:{pkg:100000,empdays:5,raise:3,fee:200,spd:4,pdays:1,fill:70,weeks:44,model:'split',split:30,rent:120,rentwk:48,sourced:70,ownwk:800,ndis:0,assess:5,assessrate:240,endorse:0,oh:5000,admin:6000,super:3000,ded:2500,baby:2027,off:12,kids:2,save:25,ret:4.5,start:20000,city:'perth'},
+  rec:{pkg:100000,empdays:4,raise:3,fee:210,spd:5,pdays:1,fill:78,weeks:44,model:'split',split:30,rent:120,rentwk:48,sourced:60,ownwk:800,ndis:0,assess:10,assessrate:250,endorse:0,oh:6000,admin:6000,super:5000,ded:3000,baby:2027,off:9,kids:2,save:30,ret:5,start:20000,city:'perth'},
+  bold:{pkg:100000,empdays:0,raise:3,fee:240,spd:6,pdays:4,fill:85,weeks:44,model:'rent',split:30,rent:130,rentwk:50,sourced:40,ownwk:900,ndis:20,assess:25,assessrate:300,endorse:1,oh:9000,admin:9000,super:15000,ded:4500,baby:2027,off:6,kids:1,save:40,ret:5.5,start:20000,city:'perth'}
+};
+var S=Object.assign({},PRESETS.rec);
+var SHOW={A:true,B:true,C:true,D:true,E:true,F:false};
+var W={w1:6,w2:8,w3:9,w4:3};
+
+var RANGES=['pkg','empdays','raise','fee','spd','pdays','fill','weeks','split','rent','rentwk','sourced','ownwk','ndis','assess','assessrate','oh','admin','super','ded','baby','off','kids','save','ret','start'];
+var LABELFN={
+  pkg:money, fee:money, rent:function(v){return money(v)+'/day';}, ownwk:function(v){return money(v)+'/wk';},
+  assessrate:money, oh:money, admin:money, super:money, ded:money, start:money,
+  empdays:function(v){return v+' day'+(v===1?'':'s');}, pdays:function(v){return v+' day'+(v===1?'':'s');},
+  spd:function(v){return v+'/day';}, fill:pct, raise:function(v){return '+'+v+'%';},
+  weeks:function(v){return v+' wks';}, split:pct, rentwk:function(v){return v+' wks';}, sourced:pct,
+  ndis:pct, assess:pct, save:pct, ret:function(v){return v+'% real';}, baby:function(v){return String(v);},
+  off:function(v){return v+' mths';}, kids:function(v){return v===0?'none':v;}
+};
+
+/* ---------- core model ---------- */
+function calc(o){
+  var s=Object.assign({},S,o||{});
+  var therapyShare=Math.max(0,(100-s.ndis-s.assess))/100;
+  var therapyFee=s.fee+(s.endorse?GAP:0);
+  var effFee=therapyFee*therapyShare + NDIS_RATE*NDIS_ADJ*(s.ndis/100) + s.assessrate*(s.assess/100);
+  var slots=s.spd*s.pdays*s.weeks;
+  var sessions=slots*(s.fill/100);
+  var gross=sessions*effFee;
+  var practiceCut=0, roomCost=0, adminExtra=0;
+  if(s.model==='split'){ practiceCut=gross*(s.split/100); }
+  else if(s.model==='rent'){ roomCost=s.rent*s.pdays*s.rentwk; adminExtra=s.admin; }
+  else { roomCost=s.ownwk*s.rentwk; adminExtra=s.admin; }
+  var overheads = s.pdays>0 ? s.oh : 0;
+  var bizNet=gross-practiceCut-roomCost-adminExtra-overheads;
+  var pkgAdj=s.pkg*(1+s.raise/100);
+  var empBase=pkgAdj/(1+SG)*(s.empdays/5);
+  var empSuper=empBase*SG;
+  var personalSuper=Math.min(s.super, Math.max(0,CAP_CONC-empSuper));
+  var taxable=Math.max(0, empBase+bizNet-personalSuper-s.ded);
+  var tax=totalTax(taxable);
+  return {s:s,effFee:effFee,slots:slots,sessions:sessions,gross:gross,practiceCut:practiceCut,
+    roomCost:roomCost,adminExtra:adminExtra,overheads:overheads,bizNet:bizNet,empBase:empBase,
+    empSuper:empSuper,personalSuper:personalSuper,superTotal:empSuper+personalSuper,
+    taxable:taxable,tax:tax,takehome:taxable-tax,pretax:empBase+bizNet,
+    marg:marginalRate(taxable)};
+}
+
+/* ---------- SVG line chart ---------- */
+function lineChart(host, series, opt){
+  opt=opt||{};
+  var W0=920,H0=opt.h||360,ml=66,mr=opt.mr||140,mt=16,mb=36;
+  var xs=[],ys=[];
+  series.forEach(function(s){ s.values.forEach(function(p){ xs.push(p.x); ys.push(p.y); }); });
+  if(!xs.length){ host.innerHTML=''; return; }
+  var x0=Math.min.apply(null,xs), x1=Math.max.apply(null,xs);
+  var y1=Math.max.apply(null,ys); var y0=opt.yZero===false?Math.min.apply(null,ys):0;
+  var step=Math.pow(10,Math.floor(Math.log10(Math.max(y1-y0,1))));
+  var nice=step; while((y1-y0)/nice>6) nice*=2; while((y1-y0)/nice<4) nice/=2;
+  var top=Math.ceil(y1/nice)*nice; var bot=Math.floor(y0/nice)*nice;
+  var X=function(v){return ml+(v-x0)/((x1-x0)||1)*(W0-ml-mr);};
+  var Y=function(v){return mt+(1-(v-bot)/((top-bot)||1))*(H0-mt-mb);};
+  var g='';
+  for(var t=bot;t<=top+1e-6;t+=nice){
+    var yy=Y(t);
+    g+='<line x1="'+ml+'" y1="'+yy.toFixed(1)+'" x2="'+(W0-mr)+'" y2="'+yy.toFixed(1)+'" stroke="var(--line)" stroke-width="1"/>';
+    g+='<text x="'+(ml-9)+'" y="'+(yy+4).toFixed(1)+'" text-anchor="end" font-size="11" font-family="IBM Plex Mono, monospace" fill="var(--muted)">'+(opt.fmt?opt.fmt(t):compact(t))+'</text>';
+  }
+  var tickStep=opt.xStep||10;
+  for(var xv=Math.ceil(x0/tickStep)*tickStep; xv<=x1; xv+=tickStep){
+    g+='<text x="'+X(xv).toFixed(1)+'" y="'+(H0-12)+'" text-anchor="middle" font-size="11" font-family="IBM Plex Mono, monospace" fill="var(--muted)">'+(opt.xfmt?opt.xfmt(xv):xv)+'</text>';
+  }
+  series.forEach(function(s){
+    var d=s.values.map(function(p,i){return (i?'L':'M')+X(p.x).toFixed(1)+' '+Y(p.y).toFixed(1);}).join(' ');
+    g+='<path d="'+d+'" fill="none" stroke="'+s.color+'" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
+  });
+  var last=series.map(function(s){ var p=s.values[s.values.length-1]; return {s:s,y:Y(p.y),x:X(p.x),v:p.y}; })
+    .sort(function(a,b){return a.y-b.y;});
+  for(var i=1;i<last.length;i++){ if(last[i].y-last[i-1].y<26) last[i].y=last[i-1].y+26; }
+  last.forEach(function(L){
+    g+='<circle cx="'+L.x.toFixed(1)+'" cy="'+Y(L.v).toFixed(1)+'" r="3.2" fill="'+L.s.color+'" stroke="var(--surface)" stroke-width="1.6"/>';
+    g+='<line x1="'+(L.x+4).toFixed(1)+'" y1="'+Y(L.v).toFixed(1)+'" x2="'+(W0-mr+10)+'" y2="'+L.y.toFixed(1)+'" stroke="'+L.s.color+'" stroke-width="1" opacity="0.45"/>';
+    g+='<text x="'+(W0-mr+14)+'" y="'+(L.y+3.5).toFixed(1)+'" font-size="11.5" font-family="Public Sans, sans-serif" font-weight="600" fill="'+L.s.color+'">'+esc(L.s.label)+'</text>';
+    g+='<text x="'+(W0-mr+14)+'" y="'+(L.y+16).toFixed(1)+'" font-size="10.5" font-family="IBM Plex Mono, monospace" fill="var(--muted)">'+compact(L.v)+'</text>';
+  });
+  host.innerHTML='<svg viewBox="0 0 '+W0+' '+H0+'" width="100%" role="img" aria-label="'+esc(opt.aria||'chart')+'">'+g+'</svg>';
+}
+/* ---------- break-even helpers ---------- */
+function breakEven(){
+  var r=calc();
+  var s=S;
+  if(s.split<=0||s.pdays<=0||s.weeks<=0) return null;
+  var rentPerWorkDay = s.rent*(s.rentwk/s.weeks);
+  var adminPerDay = s.admin/(s.pdays*s.weeks);
+  var dailyBillings = (rentPerWorkDay+adminPerDay)/(s.split/100);
+  return {daily:dailyBillings, sessions:dailyBillings/r.effFee, rentPerWorkDay:rentPerWorkDay, adminPerDay:adminPerDay};
+}
+function keepUnder(model, fill){
+  var r=calc({model:model, fill:fill});
+  return r.gross-r.practiceCut-r.roomCost-r.adminExtra;
+}
+
+/* ---------- renderers ---------- */
+function renderDecide(){
+  var be=breakEven(), r=calc();
+  var endAnnual=r.sessions*GAP*(S.model==='split'?(1-S.split/100):1);
+  $('d_endval').textContent=compact(Math.max(endAnnual, 900*GAP*0.7));
+  var bev = be? money(be.daily) : 'n/a';
+  $('d_be1').textContent=bev; $('d_be2').textContent=bev;
+  $('d_be3').textContent= be? be.sessions.toFixed(1) : '—';
+  $('d_cap').textContent= money(Math.round((r.effFee*Math.max(3,S.spd-1))/50)*50);
+}
+
+function renderModel(){
+  var r=calc();
+  $('m_takehome').textContent=money(r.takehome);
+  $('m_takehome_s').textContent=money(r.takehome/12)+' a month, after tax';
+  $('m_pretax').textContent=money(r.pretax);
+  $('m_pretax_s').textContent=money(r.empBase)+' salary + '+money(r.bizNet)+' private (net of practice costs)';
+  $('m_tax').textContent=money(r.tax);
+  $('m_tax_s').textContent=Math.round(r.tax/Math.max(r.taxable,1)*100)+'% average · '+Math.round(r.marg*100)+'% marginal';
+  $('m_super').textContent=money(r.superTotal);
+  $('m_super_s').textContent=money(r.empSuper)+' employer + '+money(r.personalSuper)+' personal';
+
+  var wf=[['Gross billings',r.gross,'var(--s1)'],
+    ['Practice share',-r.practiceCut,'var(--s2)'],
+    ['Room / lease',-r.roomCost,'var(--s2)'],
+    ['Self-managed admin',-r.adminExtra,'var(--s2)'],
+    ['Insurance, CPD, registration, accounting',-r.overheads,'var(--s2)'],
+    ['Your private income before tax',r.bizNet,'var(--s1)']];
+  var mx=Math.max(r.gross,1);
+  $('m_waterfall').innerHTML=wf.filter(function(w){return w[1]!==0||w[0].indexOf('Gross')===0;}).map(function(w){
+    var v=Math.abs(w[1]);
+    return '<div style="margin-bottom:9px"><div class="kv" style="border:0;padding:2px 0"><span>'+w[0]+'</span><b>'+(w[1]<0?'−':'')+money(v)+'</b></div><div class="bar"><i style="width:'+Math.min(100,v/mx*100).toFixed(1)+'%;background:'+w[2]+'"></i></div></div>';
+  }).join('');
+
+  var lines=[['Available session slots',Math.round(r.slots)],['Sessions actually delivered',Math.round(r.sessions)],
+    ['Blended fee per session',money2(r.effFee)],['Gross private billings',money(r.gross)],
+    ['Practice keeps',money(r.practiceCut)],['Room / lease cost',money(r.roomCost)],
+    ['Your overheads + admin',money(r.overheads+r.adminExtra)],['Private income before tax',money(r.bizNet)],
+    ['Salary (excl. super)',money(r.empBase)],['Deductible super + expenses',money(r.personalSuper+S.ded)],
+    ['Taxable income',money(r.taxable)],['Tax + Medicare levy',money(r.tax)],
+    ['Take-home',money(r.takehome)],['Super added this year',money(r.superTotal)],
+    ['Take-home + super',money(r.takehome+r.superTotal)]];
+  $('m_lines').innerHTML=lines.map(function(l){return '<div class="kv"><span>'+l[0]+'</span><b>'+l[1]+'</b></div>';}).join('');
+
+  var base=r.takehome;
+  function sw(o){ return calc(o).takehome-base; }
+  var rows=[
+    ['Fee per session',money(Math.max(0,S.fee-30)),money(S.fee),money(S.fee+30),sw({fee:S.fee+30})-sw({fee:Math.max(0,S.fee-30)}),'High — you set it'],
+    ['Attendance rate',pct(Math.max(35,S.fill-12)),pct(S.fill),pct(Math.min(100,S.fill+12)),sw({fill:Math.min(100,S.fill+12)})-sw({fill:Math.max(35,S.fill-12)}),'Medium — reminders, deposits, cancellation policy'],
+    ['Private days a week',Math.max(0,S.pdays-1),S.pdays,Math.min(5,S.pdays+1),sw({pdays:Math.min(5,S.pdays+1)})-sw({pdays:Math.max(0,S.pdays-1)}),'High — but it costs salaried days'],
+    ['Sessions a day',Math.max(1,S.spd-2),S.spd,Math.min(8,S.spd+2),sw({spd:Math.min(8,S.spd+2)})-sw({spd:Math.max(1,S.spd-2)}),'Medium — capped by stamina, not demand'],
+    ['Practice share',pct(20),pct(S.split),pct(40),sw({model:'split',split:20})-sw({model:'split',split:40}),'Negotiable once, at signing'],
+    ['Clinical endorsement',"General","—","Endorsed",sw({endorse:1})-sw({endorse:0}),'Only if eligible — the biggest single line here']
+  ];
+  $('m_sens').innerHTML=rows.map(function(x){
+    var sev=Math.abs(x[4])>25000?'r':(Math.abs(x[4])>10000?'w':'n');
+    return '<tr><td><b>'+x[0]+'</b></td><td class="num">'+x[1]+'</td><td class="num">'+x[2]+'</td><td class="num">'+x[3]+'</td><td class="num"><span class="pill '+sev+'">'+money(Math.abs(x[4]))+'</span></td><td><small>'+x[5]+'</small></td></tr>';
+  }).join('');
+
+  var ceilSessions=25*44*0.85;
+  $('m_ceiling').innerHTML=[200,250,330].map(function(f){
+    var g=ceilSessions*f, keep=g*(S.model==='split'?(1-S.split/100):1)-(S.model==='split'?0:(S.rent*5*S.rentwk))-S.oh;
+    return '<div class="kv"><span>At '+money(f)+' a session</span><b>'+money(g)+' billed → '+money(keep)+' to you</b></div>';
+  }).join('');
+
+  var perDay=calc({spd:Math.max(1,S.spd-1)});
+  $('m_burncost').textContent=money(Math.max(0,r.takehome-perDay.takehome));
+}
+
+function renderDeal(){
+  var be=breakEven(), r=calc();
+  if(!be){ $('b_daily').textContent='n/a'; return; }
+  $('b_daily').textContent=money(be.daily);
+  $('b_sess').textContent=be.sessions.toFixed(1);
+  $('b_sess_s').textContent='sessions a day at '+money2(r.effFee)+' blended';
+  var ksplit=keepUnder('split',S.fill), krent=keepUnder('rent',S.fill);
+  var d=krent-ksplit;
+  $('b_delta').textContent=(d>=0?'+':'−')+money(Math.abs(d));
+  $('b_delta_s').textContent=(d>=0?'rent is ahead':'the split is ahead')+' at '+pct(S.fill)+' attendance';
+  $('b_verdict').innerHTML= d>=0
+    ? '<b>At your current settings, fixed rent wins by '+money(d)+' a year.</b> You are billing about '+money(r.gross/(S.pdays*S.weeks||1))+' a day against a break-even of '+money(be.daily)+'. But read the switching-cost box below before acting: if the practice is generating your referrals, the '+pct(S.split)+' is buying clients, not carpet — and losing them costs more than the saving.'
+    : '<b>At your current settings, the 70/30 split wins by '+money(-d)+' a year.</b> Your daily billings of about '+money(r.gross/(S.pdays*S.weeks||1))+' sit below the '+money(be.daily)+' break-even. Stay on the split, and negotiate a fixed-rent election you can exercise later without renegotiating the whole agreement.';
+  $('b_roomcost').textContent=money(S.rent*S.pdays*S.rentwk);
+  $('b_srcpct').textContent=pct(S.sourced);
+
+  var fills=[40,50,60,70,80,90,100];
+  var sp=fills.map(function(f){return {x:f,y:keepUnder('split',f)};});
+  var rt=fills.map(function(f){return {x:f,y:keepUnder('rent',f)};});
+  lineChart($('b_chart'),[
+    {label:'70/30 split',color:'var(--s1)',values:sp},
+    {label:'Room rent',color:'var(--s4)',values:rt}
+  ],{h:290,xStep:10,xfmt:function(v){return v+'%';},aria:'Annual income under split versus room rent by utilisation',mr:150});
+  $('b_chartcap').textContent='Crossover near '+ (function(){
+    for(var i=1;i<fills.length;i++){ if((rt[i].y-sp[i].y)*(rt[i-1].y-sp[i-1].y)<=0) return fills[i-1]+'–'+fills[i]+'% attendance'; }
+    return rt[0].y>sp[0].y?'below 40% attendance — rent wins throughout':'above 100% — the split wins throughout';
+  })()+', at '+money(S.fee)+' a session, '+S.spd+' sessions a day, '+S.pdays+' day'+(S.pdays===1?'':'s')+' a week.';
+
+  $('b_table').innerHTML=fills.map(function(f){
+    var a=keepUnder('split',f), b=keepUnder('rent',f), diff=b-a;
+    return '<tr><td><b>'+f+'%</b></td><td class="num">'+(S.spd*f/100).toFixed(1)+'</td><td class="num">'+money(calc({fill:f}).gross)+'</td><td class="num">'+money(a)+'</td><td class="num">'+money(b)+'</td><td class="num">'+(diff>=0?'+':'−')+money(Math.abs(diff))+'</td><td><span class="pill '+(diff>=0?'g':'w')+'">'+(diff>=0?'Rent':'Split')+'</span></td></tr>';
+  }).join('');
+
+  var capFig=Math.round((r.effFee*Math.max(3,S.spd-1))/50)*50;
+  $('b_capfig').textContent=money(capFig);
+  var capped=(function(){
+    var daily=r.gross/(S.pdays*S.weeks||1);
+    var over=Math.max(0,daily-capFig);
+    return over*0.20*(S.pdays*S.weeks);
+  })();
+  $('b_capval').textContent=money(capped);
+
+  var gain=Math.max(0,d);
+  var loss=calc().bizNet*(S.sourced/100)*0.6;
+  $('b_gain').textContent=money(gain);
+  $('b_loss').textContent=money(loss);
+  $('b_payback').textContent= gain>0 ? (loss/gain).toFixed(1)+' yrs' : 'never at this volume';
+}
+/* ---------- domains ---------- */
+var DOMAINS=[
+ {n:'Medico-legal &amp; insurer independent assessment',r:600,load:0.9,bar:9,ramp:24,burn:6,scale:5,tag:'later',note:'Top of the table per hour. Deadline-driven, adversarial, and you must be able to defend a report. Not before 5 years post-registration.',src:'est'},
+ {n:'Organisational consulting &amp; corporate training',r:375,load:0.6,bar:8,ramp:24,burn:4,scale:8,tag:'later',note:'Day rates several times clinical. Needs a network you do not have yet — but your EAP job is the free apprenticeship.',src:'est'},
+ {n:'Supervision of provisional psychologists',r:200,load:0.15,bar:6,ramp:12,burn:2,scale:7,tag:'later',note:'Lowest emotional load per dollar in the profession, and the on-ramp to employing juniors. Needs post-general experience and Board-approved supervisor training.',src:'est'},
+ {n:'NDIS therapy &amp; assessment',r:252.99,load:0.25,bar:3,ramp:4,burn:6,scale:5,tag:'now',note:'$252.99/hr from 1 July 2026, with reports, non-face-to-face and travel billed as separate items. You said no — the numbers argue for a capped share.',src:'conf'},
+ {n:'ADHD / autism / cognitive assessment',r:250,load:0.45,bar:5,ramp:8,burn:4,scale:6,tag:'later',note:'Not rebatable under Better Access, so the whole fee is yours to set. Report time is the hidden cost — batch it, template it, price it in.',src:'conf'},
+ {n:'Couples therapy (private pay)',r:260,load:0.2,bar:4,ramp:8,burn:6,scale:3,tag:'later',note:'No Medicare rebate, so no rebate anchor on your price. Higher session intensity; longer sessions bill better.',src:'est'},
+ {n:'Trauma-focused individual therapy',r:230,load:0.25,bar:4,ramp:8,burn:7,scale:3,tag:'now',note:'You named it as an interest. Cheapest genuine increase in fee power available — training costs a few thousand, not a degree. Watch the emotional load with a newborn.',src:'est'},
+ {n:'Workers compensation / insurer-funded therapy',r:230,load:0.35,bar:4,ramp:6,burn:7,scale:4,tag:'later',note:'Reliable volume and scheduled rates, heavy reporting, and claims-driven clients are hard work. Good filler, poor core.',src:'est'},
+ {n:'Better Access private therapy — clinical endorsed',r:250,load:0.2,bar:8,ramp:30,burn:5,scale:3,tag:'later',note:'The same hour as below, priced $50 higher because the client gets $50 more back. Gated entirely on endorsement eligibility.',src:'conf'},
+ {n:'Better Access private therapy — general registration',r:210,load:0.2,bar:2,ramp:4,burn:5,scale:3,tag:'now',note:'Your bread and butter from December. Matches your stated interests. Ten rebated sessions per client per calendar year.',src:'conf'},
+ {n:'National telehealth private practice',r:210,load:0.2,bar:2,ramp:10,burn:4,scale:6,tag:'now',note:'Registration is national. Zero room cost, works in two-hour blocks, and it is the only model that survives a newborn intact.',src:'est'},
+ {n:'Child &amp; adolescent therapy',r:210,load:0.3,bar:4,ramp:5,burn:6,scale:3,tag:'later',note:'High demand, long waitlists, more unpaid parent and school liaison than adult work. Price the liaison or avoid it.',src:'est'},
+ {n:'EAP sessions on contract (your own ABN)',r:150,load:0.15,bar:2,ramp:3,burn:6,scale:3,tag:'now',note:'You know this work. Contracting pays roughly double the salaried effective hourly, with none of the leave. A good top-up, a poor foundation.',src:'est'},
+ {n:'Group practice margin from other clinicians',r:120,load:0.5,bar:9,ramp:36,burn:5,scale:9,tag:'later',note:'The only real path past the solo ceiling. Thinner margins than people expect until roughly six clinicians.',src:'est'},
+ {n:'Training, workshops &amp; digital products',r:90,load:2.0,bar:8,ramp:36,burn:3,scale:10,tag:'avoid',note:'Enormous variance. Works with an existing audience or an institutional channel; otherwise it is 300 unpaid hours for $15k.',src:'est'},
+ {n:'EAP salaried employment (your current role)',r:55,load:0,bar:1,ramp:0,burn:6,scale:1,tag:'now',note:'Lowest hourly rate on the table — and in 2027 the most valuable line on it, because of parental leave, sick leave and super. Rate is not the same as value.',src:'est'}
+];
+function renderDomains(){
+  var tw=W.w1+W.w2+W.w3+W.w4||1;
+  var rows=DOMAINS.map(function(d){
+    var eff=d.r/(1+d.load);
+    var rateScore=Math.min(10,eff/45);
+    var burnScore=10-d.burn;
+    var easeScore=Math.max(0,10-(d.bar*0.6+Math.min(10,d.ramp/4)*0.4));
+    var score=(W.w1*rateScore+W.w2*burnScore+W.w3*easeScore+W.w4*d.scale)/tw;
+    return Object.assign({},d,{eff:eff,score:score});
+  }).sort(function(a,b){return b.score-a.score;});
+  var tagPill={now:'g',later:'w',avoid:'r'}, tagTxt={now:'Add now',later:'2–4 yrs',avoid:'Not yet'};
+  $('dm_table').innerHTML=rows.map(function(d,i){
+    return '<tr><td class="num">'+(i+1)+'</td>'+
+      '<td><b>'+d.n+'</b> <span class="pill '+tagPill[d.tag]+'">'+tagTxt[d.tag]+'</span>'+(d.src==='est'?' <span class="src">est.</span>':'')+'<br><small>'+d.note+'</small></td>'+
+      '<td class="num">'+money(d.r)+'</td><td class="num">+'+Math.round(d.load*100)+'%</td>'+
+      '<td class="num"><b>'+money(d.eff)+'</b></td><td>'+bars(d.bar)+'</td><td class="num">'+d.ramp+' mth</td>'+
+      '<td>'+bars(d.burn)+'</td><td>'+bars(d.scale)+'</td>'+
+      '<td class="num"><b>'+(d.score*10).toFixed(0)+'</b></td></tr>';
+  }).join('');
+}
+function bars(v){
+  var c = v>=7?'var(--bad)': v>=4?'var(--warn)':'var(--good)';
+  return '<span class="bar" style="display:inline-block;width:52px;vertical-align:middle"><i style="width:'+(v*10)+'%;background:'+c+'"></i></span>';
+}
+
+/* ---------- tax ---------- */
+function renderTax(){
+  var r=calc(), m=r.marg;
+  $('t_marg').textContent=Math.round(m*100)+'%';
+  $('t_avg').textContent=Math.round(r.tax/Math.max(r.taxable,1)*100)+'%';
+  var superSave=Math.max(0,(m-0.15))*r.personalSuper;
+  $('t_supersave').textContent=money(superSave);
+  $('t_supersave_s').textContent=money(r.personalSuper)+' contributed · taxed at 15% inside super instead of '+Math.round(m*100)+'%';
+  $('t_dedsave').textContent=money(m*S.ded);
+  $('t_dedsave_s').textContent=money(S.ded)+' of deductions at your marginal rate';
+  $('t_reserve').textContent=Math.max(25,Math.round(m*100)+2)+'%';
+
+  var headroom=Math.max(0,CAP_CONC-r.superTotal);
+  var levers=[
+   ['Concessional super to the $30,000 cap', Math.max(0,(m-0.15))*headroom, 'You have <b class="mono">'+money(headroom)+'</b> of cap left this year. Every dollar in is taxed at 15% instead of '+Math.round(m*100)+'%. If your total super balance is under $500,000 you can also carry forward unused caps from the last five years — which for you, early in a career, is a large unused allowance sitting there.', '<span class="pill g">Yes — first</span>'],
+   ['Claim every legitimate deduction', m*S.ded, 'Professional indemnity, Ahpra registration, APS or AAPi membership, supervision, CPD and conferences, test kits and manuals, practice software, phone and internet share, home office at the ATO fixed rate of 70c per hour, travel between two work sites, income protection premiums.', '<span class="pill g">Yes</span>'],
+   ['Time your income and expenses across 30 June', m*1500, 'Bring deductible purchases forward into a high-income year; delay invoicing where you legitimately can. Small money each year, free to do.', '<span class="pill g">Yes</span>'],
+   ['Set aside tax weekly in a separate account', 0, 'Saves no tax. Prevents the single most common financial disaster in year one of private practice — spending the ATO’s money and then owing it.', '<span class="pill g">Yes — non-negotiable</span>'],
+   ['Register a company for the 25% rate', 0, 'Does not work while your income is personal services income and you fail the personal services business tests. Costs $2,500–4,000 a year to achieve nothing. Revisit when you earn from other clinicians or from products.', '<span class="pill r">No — not yet</span>'],
+   ['Pay your husband for admin work', 0, 'Under the personal services income rules a payment to an associate for non-principal work — admin, bookkeeping, reception — is not deductible. He can absolutely do the work; you just cannot deduct paying him for it while PSI applies. Get this checked on your facts before relying on either answer.', '<span class="pill r">No — check first</span>'],
+   ['Discretionary trust for income splitting', 0, 'Same problem, plus $3,000–5,000 a year in compliance. Correct structure for a multi-clinician practice; wrong structure for one psychologist’s clinical fees.', '<span class="pill r">No — not yet</span>'],
+   ['GST registration', 0, 'Your therapy income is GST-free, so registration is not required for it. Only register when taxable services — reports, corporate work, supervision, courses — pass $75,000. Registering early lets you claim GST credits on rent and equipment, but adds quarterly BAS.', '<span class="pill w">Only when required</span>']
+  ];
+  $('t_levers').innerHTML=levers.map(function(l,i){
+    return '<tr><td class="num">'+(i+1)+'</td><td><b>'+l[0]+'</b></td><td class="num">'+(l[1]>0?money(l[1]):'—')+'</td><td><small>'+l[2]+'</small></td><td>'+l[3]+'</td></tr>';
+  }).join('');
+}
+
+/* ---------- baby ---------- */
+function renderBaby(){
+  var r=calc();
+  var pplTotal=PPL_WK*PPL_WEEKS;
+  $('pl_total').textContent=money(pplTotal);
+  var empWeekly=r.empBase/52;
+  var empPPL=14*empWeekly;
+  var empLeaveYear=empPPL+pplTotal+r.bizNet*0.25;
+  var full=calc({empdays:0,pdays:4});
+  var conLeaveYear=pplTotal+full.bizNet*0.25;
+  $('pl_emp').textContent=money(empLeaveYear);
+  $('pl_con').textContent=money(conLeaveYear);
+  var diff=empLeaveYear-conLeaveYear;
+  $('pl_verdict').innerHTML= diff>0
+   ? '<b>Staying salaried is worth about '+money(diff)+' in the leave year alone</b> — and that assumes your employer offers 14 weeks of paid parental leave, which you have not yet checked. Add sick leave, annual leave, employer super and the right to return to the same job, and the gap is larger still. The contractor path earns more <em>every other year</em>; it earns dramatically less in this one. Do not make a 30-year decision in the one year the numbers invert.'
+   : '<b>At these settings the contractor path is already ahead even in the leave year.</b> That is an unusual result and it depends on your private practice being close to full before the birth. Check the assumption before acting on it: a nine-month-old caseload does not usually reach that level, and if it does not, the salaried option wins comfortably.';
+}
+
+/* ---------- endorsement ---------- */
+function renderEndorse(){
+  var r=calc();
+  var keepFactor=(S.model==='split'?(1-S.split/100):1);
+  var annual=r.sessions*GAP*keepFactor;
+  var fullTime=calc({empdays:0,pdays:4});
+  var annualFull=fullTime.sessions*GAP*keepFactor;
+  $('e_annual').textContent=money(annual);
+  $('e_annual_s').textContent='at your settings · '+money(annualFull)+' at four private days';
+  var supCost=18000;
+  $('e_payback1').textContent=annualFull>0?(supCost/annualFull*12).toFixed(1)+' months of full-time practice once endorsed':'—';
+
+  var years=35;
+  function npv(annualGain, cost, oppCost, delayYrs){
+    var pv=0, disc=1.03;
+    for(var i=delayYrs;i<years;i++) pv+=annualGain/Math.pow(disc,i);
+    return pv-cost-oppCost;
+  }
+  var rows=[
+   ['Accredited clinical Masters, then registrar', 55000, 110000, annualFull, 2, 'Two years of fees plus reduced earnings, then a permanent premium for 35 years. Brutal timing with a toddler; strong arithmetic.', 'g'],
+   ['Stay general + build the assessment stream', 7000, 0, annualFull*0.55, 0, 'No degree, no gatekeeping. Captures roughly half the endorsement premium through fees you set yourself rather than rebates.', 'g'],
+   ['Stay general + medico-legal from year 5', 4000, 0, annualFull*0.7, 4, 'Highest hourly rate available without further study. Requires clinical maturity and tolerance for adversarial work.', 'w'],
+   ['Do nothing further', 0, 0, 0, 0, 'Perfectly viable. Caps you around $160k–200k solo, which is a good living and a poor answer to "financial independence as soon as possible".', 'w']
+  ];
+  $('e_path2').innerHTML=rows.map(function(x){
+    var gain=x[3], cost=x[1], opp=x[2], delay=x[4];
+    var pay = gain>0 ? ((cost+opp)/gain+delay).toFixed(1)+' yrs' : '—';
+    var val = gain>0 ? npv(gain,cost,opp,delay) : 0;
+    var roi = (cost+opp)>0 ? Math.round(val/(cost+opp)*100)+'%' : '—';
+    return '<tr><td><b>'+x[0]+'</b><br><small>'+x[5]+'</small></td><td class="num">'+money(cost)+'</td><td class="num">'+money(opp)+'</td><td class="num">'+money(gain)+'/yr</td><td class="num">'+pay+'</td><td class="num">'+roi+'</td><td><span class="pill '+x[6]+'">'+(val>200000?'Strong':val>0?'Positive':'Neutral')+'</span></td></tr>';
+  }).join('');
+}
+
+/* ---------- ladder ---------- */
+function renderLadder(){
+  var r=calc();
+  var perClinSessions=22*S.weeks*(S.fill/100);
+  var perClinGross=perClinSessions*r.effFee;
+  var practiceShare=0.35;
+  var costPerClin=12000+1500+6000+2000;
+  var out='';
+  for(var n=1;n<=6;n++){
+    var rev=perClinGross*n;
+    var gm=rev*practiceShare;
+    var oh=costPerClin*n + (n>=5?85000:(n>=3?45000:0));
+    var net=gm-oh;
+    var own=calc({empdays:0,pdays:Math.max(2,4-Math.floor(n/2))}).bizNet;
+    var load=n<=2?'Low — a few hours a week':(n<=4?'Real — a day a week of management':'A second job — hire a practice manager');
+    out+='<tr><td class="num"><b>'+n+'</b></td><td class="num">'+money(rev)+'</td><td class="num">'+money(gm)+'</td><td class="num">'+money(oh)+'</td><td class="num"><b>'+money(net)+'</b></td><td class="num">'+money(own)+'</td><td class="num"><b>'+money(net+own)+'</b></td><td><small>'+load+'</small></td></tr>';
+  }
+  $('l_practice').innerHTML=out;
+}
+/* ---------- 50-year projection ---------- */
+function taper(age){
+  if(age<=57) return 1;
+  if(age<=65) return Math.max(0,1-(age-57)*0.05);
+  if(age<=72) return Math.max(0,0.6-(age-65)*0.075);
+  return 0.075;
+}
+function capacityArray(){
+  var cap=[]; for(var i=0;i<=50;i++) cap[i]=1;
+  var sev=Math.min(1.4,S.off/12);
+  var b=S.baby-2026;
+  for(var k=0;k<S.kids;k++){
+    var y=b+k*3;
+    if(y>=0&&y<=50) cap[y]=Math.min(cap[y],1-0.55*sev);
+    if(y+1<=50) cap[y+1]=Math.min(cap[y+1],1-0.33*sev);
+    if(y+2<=50) cap[y+2]=Math.min(cap[y+2],1-0.14*sev);
+  }
+  for(var j=0;j<=50;j++) cap[j]=Math.max(0.1,cap[j]);
+  return cap;
+}
+function projection(){
+  var base=calc(), full=calc({empdays:0,pdays:4});
+  var endorsed=calc({empdays:0,pdays:4,endorse:1});
+  var assessS=calc({empdays:0,pdays:4,assess:55,assessrate:Math.max(S.assessrate,300)});
+  var salaryBase=S.pkg/(1+SG);
+  var cap=capacityArray();
+  var perClinNet=(function(){
+    var sess=22*S.weeks*(S.fill/100);
+    return Math.max(0, sess*base.effFee*0.35 - 21500);
+  })();
+  function series(fn,riskFactor,label,color,key){
+    var inc=[],wl=[],w=S.start,sup=15000,r=S.ret/100;
+    for(var i=0;i<=50;i++){
+      var age=27+i;
+      var raw=fn(i)*cap[i]*taper(age);
+      if(i===S.baby-2026) raw+=PPL_WK*PPL_WEEKS;
+      var th=Math.max(0,raw-totalTax(raw));
+      var sv=th*(S.save/100);
+      var sc=Math.min(CAP_CONC, raw*0.12);
+      w=w*(1+r)+sv; sup=sup*(1+r)+sc*0.85;
+      if(age>=60){ var draw=Math.max(0,(45000-th)); w=Math.max(0,w-draw*0.5); sup=Math.max(0,sup-draw*0.5); }
+      inc.push({x:2026+i,y:Math.round(raw)});
+      wl.push({x:2026+i,y:Math.round(w+sup)});
+    }
+    return {key:key,label:label,color:color,inc:inc,wealth:wl,risk:riskFactor};
+  }
+  function grow(v,rate,capMult,i){ return v*Math.min(capMult,Math.pow(1+rate,i)); }
+  var out=[];
+  out.push(series(function(i){ return grow(salaryBase,0.028,1.62,i); },0.95,'A · Salaried only','var(--s3)','A'));
+  out.push(series(function(i){ var ramp=i===0?0.7:(i===1?0.9:1); return grow(base.pretax*ramp,0.024,1.55,i); },0.92,'B · Salary + private','var(--s1)','B'));
+  out.push(series(function(i){ var ramp=i===0?0.45:(i===1?0.72:(i===2?0.9:1)); return grow(full.pretax*ramp,0.021,1.6,i); },0.85,'C · Full solo private','var(--s4)','C'));
+  out.push(series(function(i){ var ramp=i===0?0.45:(i===1?0.7:(i===2?0.88:1)); var v=i<4?full.pretax*ramp-(i>=1&&i<=3?9000:0):endorsed.pretax; return Math.max(0,grow(v,0.021,1.62,i)); },0.80,'D · Endorsed premium','var(--s5)','D'));
+  out.push(series(function(i){ var ramp=i===0?0.45:(i===1?0.72:(i===2?0.9:1)); var own=grow(full.pretax*ramp,0.018,1.4,i); var n=Math.max(0,Math.min(6,i-5)); return own*(n>0?0.8:1)+perClinNet*n; },0.60,'E · Group practice','var(--s2)','E'));
+  out.push(series(function(i){ var ramp=i===0?0.4:(i===1?0.65:(i===2?0.85:1)); return grow(assessS.pretax*ramp,0.022,1.6,i); },0.70,'F · Assessment / medico-legal','var(--s6)','F'));
+  return out;
+}
+function renderFifty(){
+  var P=projection();
+  var vis=P.filter(function(p){return SHOW[p.key];});
+  lineChart($('f_income'), vis.map(function(p){return {label:p.label,color:p.color,values:p.inc.slice(0,37)};}),
+    {h:360,xStep:10,aria:'Personal income by year for each career strategy'});
+  lineChart($('f_wealth'), vis.map(function(p){return {label:p.label,color:p.color,values:p.wealth};}),
+    {h:360,xStep:10,aria:'Net wealth by year for each career strategy'});
+  var setup={A:0,B:3000,C:12000,D:70000,E:120000,F:9000};
+  var riskTxt={A:'Very low',B:'Low',C:'Moderate',D:'Moderate',E:'High',F:'Moderate'};
+  var scored=P.map(function(p){
+    var sum=function(n){var t=0;for(var i=0;i<n;i++)t+=p.inc[i].y;return t;};
+    var life=sum(51), peak=Math.max.apply(null,p.inc.map(function(d){return d.y;}));
+    return {p:p,peak:peak,d10:sum(10),d20:sum(20),life:life,w60:p.wealth[33].y,adj:life*p.risk};
+  }).sort(function(a,b){return b.adj-a.adj;});
+  var ranked=scored.slice().sort(function(a,b){return b.adj-a.adj;});
+  $('f_score').innerHTML=scored.map(function(x){
+    var rank=ranked.indexOf(x)+1;
+    return '<tr><td><span class="swatch" style="display:inline-block;background:'+x.p.color+'"></span> <b>'+x.p.label+'</b></td>'+
+     '<td class="num">'+money(x.peak)+'</td><td class="num">'+compact(x.d10)+'</td><td class="num">'+compact(x.d20)+'</td>'+
+     '<td class="num">'+compact(x.life)+'</td><td class="num">'+compact(x.w60)+'</td><td class="num">'+money(setup[x.p.key])+'</td>'+
+     '<td>'+riskTxt[x.p.key]+'</td><td class="num"><span class="pill '+(rank===1?'g':rank<=3?'w':'n')+'">#'+rank+'</span></td></tr>';
+  }).join('');
+}
+
+/* ---------- now panel ---------- */
+function renderNow(){
+  var r=calc();
+  var ksplit=keepUnder('split',S.fill), krent=keepUnder('rent',S.fill);
+  $('n_dealworth').textContent=money(Math.abs(krent-ksplit));
+  var fullTime=calc({empdays:0,pdays:4});
+  $('n_endworth').textContent=money(fullTime.sessions*GAP*(S.model==='split'?(1-S.split/100):1));
+  var keepF=(S.model==='split'?(1-S.split/100):1);
+  $('n_feegrid').innerHTML=[['Bulk billed',MBS_GEN],['$200',200],['$250',250],['APS $330',330]].map(function(f){
+    var oop=Math.max(0,f[1]-MBS_GEN);
+    var yr=r.sessions*f[1]*keepF;
+    return '<div class="tile"><div class="k">'+f[0]+'</div><div class="v mono">'+money(f[1]*keepF)+'</div><div class="s">you keep per session<br>client pays '+money(oop)+' out of pocket<br><b>'+money(yr)+'</b> a year at your volume</div></div>';
+  }).join('');
+}
+
+/* ---------- wiring ---------- */
+function syncControls(){
+  RANGES.forEach(function(k){
+    var el=$('i_'+k); if(!el) return;
+    el.value=S[k];
+    var lab=$('v_'+k); if(lab) lab.textContent=(LABELFN[k]||String)(S[k]);
+  });
+  setSeg('seg_model',S.model); setSeg('seg_city',S.city); setSeg('seg_endorse',String(S.endorse));
+  var ev=$('v_endorse'); if(ev) ev.textContent=S.endorse?'80010':'80110';
+  ['w1','w2','w3','w4'].forEach(function(k){ var e=$('i_'+k); if(e){e.value=W[k]; $('v_'+k).textContent=W[k];} });
+}
+function setSeg(id,v){
+  var g=$(id); if(!g) return;
+  Array.prototype.forEach.call(g.querySelectorAll('button'),function(b){ b.setAttribute('aria-pressed', b.dataset.v===String(v)?'true':'false'); });
+}
+function renderAll(){
+  renderDecide(); renderModel(); renderDeal(); renderDomains(); renderTax();
+  renderBaby(); renderEndorse(); renderLadder(); renderFifty(); renderNow();
+  var st=$('railstamp'); if(st) st.textContent=S.model==='split'?pct(100-S.split)+' to you':(S.model==='rent'?'room rent':'own rooms');
+}
+RANGES.forEach(function(k){
+  var el=$('i_'+k); if(!el) return;
+  el.addEventListener('input',function(){
+    S[k]=parseFloat(el.value);
+    var lab=$('v_'+k); if(lab) lab.textContent=(LABELFN[k]||String)(S[k]);
+    renderAll();
+  });
+});
+['w1','w2','w3','w4'].forEach(function(k){
+  var el=$('i_'+k); if(!el) return;
+  el.addEventListener('input',function(){ W[k]=parseFloat(el.value); $('v_'+k).textContent=W[k]; renderDomains(); });
+});
+function bindSeg(id,key,parse){
+  var g=$(id); if(!g) return;
+  g.addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    S[key]=parse?parse(b.dataset.v):b.dataset.v; setSeg(id,b.dataset.v);
+    if(key==='endorse') $('v_endorse').textContent=S.endorse?'80010':'80110';
+    renderAll();
+  });
+}
+bindSeg('seg_model','model'); bindSeg('seg_city','city'); bindSeg('seg_endorse','endorse',Number);
+var WPRE={now:{w1:6,w2:8,w3:9,w4:3},build:{w1:8,w2:6,w3:5,w4:6},scale:{w1:7,w2:5,w3:3,w4:10}};
+(function(){
+  var g=$('seg_wpre'); if(!g) return;
+  g.addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    setSeg('seg_wpre',b.dataset.v); W=Object.assign({},WPRE[b.dataset.v]);
+    ['w1','w2','w3','w4'].forEach(function(k){ $('i_'+k).value=W[k]; $('v_'+k).textContent=W[k]; });
+    renderDomains();
+  });
+})();
+document.querySelectorAll('[data-preset]').forEach(function(b){
+  b.addEventListener('click',function(){ S=Object.assign({},PRESETS[b.dataset.preset]); syncControls(); renderAll(); });
+});
+document.querySelectorAll('[data-sc]').forEach(function(c){
+  c.addEventListener('change',function(){ SHOW[c.dataset.sc]=c.checked; renderFifty(); });
+});
+$('tabs').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b) return;
+  Array.prototype.forEach.call(this.querySelectorAll('button'),function(x){x.setAttribute('aria-selected',x===b?'true':'false');});
+  document.querySelectorAll('.panel').forEach(function(p){ p.classList.toggle('on', p.id==='p_'+b.dataset.p); });
+  window.scrollTo({top:0,behavior:'instant'});
+});
+$('themebtn').addEventListener('click',function(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  var next = cur==='dark' ? 'light' : (cur==='light' ? null : 'dark');
+  if(next) document.documentElement.setAttribute('data-theme',next);
+  else document.documentElement.removeAttribute('data-theme');
+  renderAll();
+});
+window.addEventListener('resize',function(){ renderFifty(); renderDeal(); });
+syncControls(); renderAll();
+})();
+</script>
