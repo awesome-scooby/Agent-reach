@@ -205,13 +205,15 @@ svg{display:block;max-width:100%}
     <button role="tab" aria-selected="false" data-p="money">7 &middot; Money map</button>
     <button role="tab" aria-selected="false" data-p="prop">8 &middot; Property</button>
     <button role="tab" aria-selected="false" data-p="kids">9 &middot; Baby, visa &amp; childcare</button>
-    <button role="tab" aria-selected="false" data-p="gulf">10 &middot; Gulf</button>
-    <button role="tab" aria-selected="false" data-p="tax">11 &middot; Tax &amp; structure</button>
-    <button role="tab" aria-selected="false" data-p="ladder">12 &middot; Ladder &amp; exit</button>
-    <button role="tab" aria-selected="false" data-p="cities">13 &middot; Perth vs Melbourne</button>
-    <button role="tab" aria-selected="false" data-p="fifty">14 &middot; 50 years</button>
-    <button role="tab" aria-selected="false" data-p="now">15 &middot; Next 90 days</button>
-    <button role="tab" aria-selected="false" data-p="sources">16 &middot; Sources</button>
+    <button role="tab" aria-selected="false" data-p="visa">10 &middot; Visa &amp; citizenship</button>
+    <button role="tab" aria-selected="false" data-p="protect">11 &middot; Protect</button>
+    <button role="tab" aria-selected="false" data-p="gulf">12 &middot; Gulf</button>
+    <button role="tab" aria-selected="false" data-p="tax">13 &middot; Tax &amp; structure</button>
+    <button role="tab" aria-selected="false" data-p="ladder">14 &middot; Ladder &amp; exit</button>
+    <button role="tab" aria-selected="false" data-p="cities">15 &middot; Perth vs Melbourne</button>
+    <button role="tab" aria-selected="false" data-p="fifty">16 &middot; 50 years</button>
+    <button role="tab" aria-selected="false" data-p="now">17 &middot; Action plan</button>
+    <button role="tab" aria-selected="false" data-p="sources">18 &middot; Sources</button>
   </nav>
 </header>
 
@@ -283,7 +285,17 @@ svg{display:block;max-width:100%}
     <div class="ctl"><label>First baby &mdash; birth year <span class="val" id="v_baby"></span></label><input type="range" id="i_baby" min="2027" max="2033" step="1"></div>
     <div class="ctl"><label>Months at reduced capacity <span class="val" id="v_off"></span></label><input type="range" id="i_off" min="0" max="36" step="3"></div>
     <div class="ctl"><label>Children planned <span class="val" id="v_kids"></span></label><input type="range" id="i_kids" min="0" max="3" step="1"></div>
-    <div class="ctl"><label>Months you've been resident in AU <span class="val" id="v_resmths"></span></label><input type="range" id="i_resmths" min="0" max="72" step="1"></div>
+    <div class="ctl"><label>Months since you arrived in AU <span class="val" id="v_resmths"></span></label><input type="range" id="i_resmths" min="0" max="96" step="1"></div>
+    <div class="ctl"><label>Weeks spent overseas since <span class="val" id="v_absweeks"></span></label><input type="range" id="i_absweeks" min="0" max="104" step="1"></div>
+    <div class="ctl"><label>Permanent visa (100) expected <span class="val" id="v_pryr"></span></label><input type="range" id="i_pryr" min="2026" max="2032" step="1"></div>
+    <div class="ctl"><label>Years between children <span class="val" id="v_gap2"></span></label><input type="range" id="i_gap2" min="1" max="6" step="1"></div>
+    <div class="ctl"><label>Private hospital cover</label>
+      <div class="seg" id="seg_phi">
+        <button type="button" data-v="0" aria-pressed="true">None</button>
+        <button type="button" data-v="1" aria-pressed="false">Held</button>
+      </div>
+    </div>
+    <div class="ctl"><label>Hospital cover premium / yr <span class="val" id="v_phicost"></span></label><input type="range" id="i_phicost" min="1200" max="6000" step="100"></div>
     <div class="ctl"><label>Childcare fee per day <span class="val" id="v_ccfee"></span></label><input type="range" id="i_ccfee" min="100" max="230" step="5"></div>
     <div class="ctl"><label>Childcare days per week <span class="val" id="v_ccdays"></span></label><input type="range" id="i_ccdays" min="0" max="5" step="1"></div>
   </details>
@@ -642,14 +654,8 @@ svg{display:block;max-width:100%}
   </section>
 
   <section class="blk">
-    <h3>Protect the plan &mdash; insurance, sized to your numbers</h3>
-    <p><small>Every projection here assumes two healthy earners for forty years. Insurance is what you buy so that one bad year does not delete the plan. Amounts are indicative; a licensed adviser or broker sets the real ones.</small></p>
-    <div class="tw" style="margin-top:12px"><table>
-      <thead><tr><th>Cover</th><th class="num">Indicative sum</th><th class="num">Rough cost</th><th>Why, in your situation</th><th>When</th></tr></thead>
-      <tbody id="fi_ins"></tbody>
-    </table></div>
-    <div class="note w" style="margin-top:12px"><b>Time-critical.</b> Income protection and life cover are medically underwritten. Applying while pregnant typically results in exclusions, loadings or deferral, and some conditions arising in pregnancy become permanent exclusions afterwards. If you intend to conceive in December 2026, the application window is <b>now</b> &mdash; not January. This is the one item on this page where a three-month delay can cost you the product entirely.</div>
-    <div class="note" style="margin-top:10px"><b>On Sharia compliance:</b> conventional insurance is treated as impermissible by many scholars because of <em>gharar</em> and <em>riba</em>, and takaful alternatives are effectively unavailable in the Australian retail market. Most Australian Muslim households resolve this by holding conventional cover as a necessity while the family is financially exposed, and reducing it as assets grow. That is a decision for you and whoever you take religious guidance from &mdash; but going uninsured with a newborn and one provisional-visa income is a materially larger risk than most people appreciate.</div>
+    <h3>Protecting all this</h3>
+    <p style="margin-top:8px">Insurance, wills, guardianship and superannuation death benefit nominations now live on the <b>Protect</b> tab. Everything on this page assumes two healthy earners for forty years; that tab is what you buy so one bad year does not delete the plan.</p>
   </section>
 </section>
 
@@ -814,6 +820,35 @@ svg{display:block;max-width:100%}
   </section>
 
   <section class="blk">
+    <h3>Second child &mdash; the timing trap</h3>
+    <p><small>Most people assume Parental Leave Pay is automatic for a second child. It is not. The work test applies again, and a long gap between working days can break it.</small></p>
+    <div class="grid g3" style="margin-top:12px">
+      <div class="tile"><div class="k">Second birth</div><div class="v mono" id="k2_year">&mdash;</div><div class="s" id="k2_year_s">&mdash;</div></div>
+      <div class="tile" id="k2_tile"><div class="k">PPL for child two</div><div class="v mono" id="k2_ppl">&mdash;</div><div class="s" id="k2_ppl_s">&mdash;</div></div>
+      <div class="tile"><div class="k">Peak childcare year</div><div class="v mono" id="k2_peak">&mdash;</div><div class="s" id="k2_peak_s">&mdash;</div></div>
+    </div>
+    <div class="note" style="margin-top:12px" id="k2_note"></div>
+    <div class="tw" style="margin-top:14px"><table>
+      <thead><tr><th>Spacing</th><th class="num">Second birth</th><th>Work test for child two</th><th class="num">Years with two in care</th><th class="num">Peak childcare cost</th><th>Verdict</th></tr></thead>
+      <tbody id="k2_tab"></tbody>
+    </table></div>
+    <div class="grid g2" style="margin-top:14px">
+      <div class="card"><div class="eyebrow">The rules that decide it</div><ul class="list">
+        <li>The work test looks at the <b>13 months before the birth</b>: 330 hours across 10 of those months.</li>
+        <li>A gap of more than <b>84 consecutive days</b> between two qualifying work days breaks the test unless an exception applies.</li>
+        <li><b>Days you were paid PPL for a previous child count as qualifying work.</b> This is the provision that rescues most closely-spaced second children &mdash; and almost nobody knows it exists.</li>
+        <li>Exceptions exist for medical reasons and other circumstances, with evidence. <span class="flag">VERIFY with Services Australia</span></li>
+      </ul></div>
+      <div class="card"><div class="eyebrow">What this means practically</div><ul class="list">
+        <li><b>Return to some paid work within 12 weeks</b> of your last qualifying day after the first birth &mdash; even one telehealth day a week. It keeps the chain unbroken and costs you very little.</li>
+        <li>That single habit makes almost any spacing work, and it is far cheaper than timing a pregnancy around a payment.</li>
+        <li>The other cost of spacing is childcare overlap: two children in care simultaneously is the most expensive period of your working life. Three years apart means the first starts school as the second starts care.</li>
+        <li>Do not let a payment schedule drive a family decision. Know the rule, arrange the one working day, then choose the timing you actually want.</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section class="blk">
     <h3>2026&ndash;2029 sequence</h3>
     <div class="tw" style="margin-top:12px"><table>
       <thead><tr><th>When</th><th>Do</th><th>Because</th></tr></thead>
@@ -828,6 +863,102 @@ svg{display:block;max-width:100%}
     </table></div>
   </section>
 </section>
+<section class="panel" id="p_visa">
+  <div class="eyebrow">Module 2</div>
+  <h2>Visa, permanent residency and citizenship</h2>
+  <p class="lede">You arrived in June 2025 on a subclass 309. Three separate clocks are now running, they interact, and one of them quietly decides whether the Gulf plan is possible at all.</p>
+
+  <div class="grid g4" style="margin-top:20px">
+    <div class="tile"><div class="k">Residence served</div><div class="v mono" id="vz_served">&mdash;</div><div class="s" id="vz_served_s">&mdash;</div></div>
+    <div class="tile" id="vz_ppltile"><div class="k">104-week PPL clock</div><div class="v mono" id="vz_ppl">&mdash;</div><div class="s" id="vz_ppl_s">&mdash;</div></div>
+    <div class="tile"><div class="k">Citizenship eligible</div><div class="v mono" id="vz_cit">&mdash;</div><div class="s" id="vz_cit_s">&mdash;</div></div>
+    <div class="tile hero"><div class="k">Earliest safe departure</div><div class="v mono" id="vz_leave">&mdash;</div><div class="s">before this, leaving risks the status the whole plan assumes</div></div>
+  </div>
+
+  <div class="gate" id="vz_gate"><h4>The constraint nobody mentions</h4><p id="vz_gate_t">&mdash;</p></div>
+
+  <section class="blk">
+    <h3>The three clocks</h3>
+    <div class="tw" style="margin-top:12px"><table>
+      <thead><tr><th>Clock</th><th>The rule</th><th class="num">Starts</th><th class="num">Completes</th><th>What it unlocks</th></tr></thead>
+      <tbody id="vz_clocks"></tbody>
+    </table></div>
+    <p style="margin-top:10px"><small>The citizenship rule is the "4-1-90": four years of lawful residence immediately before applying, the last twelve months of it as a permanent resident, with total absences of no more than twelve months across the four years and no more than <b>90 days in the final twelve months</b> before you apply. <span class="flag">VERIFY with Home Affairs</span></small></p>
+  </section>
+
+  <section class="blk">
+    <h3>What each stage gates</h3>
+    <div class="tw" style="margin-top:12px"><table>
+      <thead><tr><th>Thing you want</th><th>Needs</th><th>Available from</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td><b>Parental Leave Pay</b></td><td>104 weeks of residence served, plus work and income tests</td><td class="num" id="vz_g1">&mdash;</td><td>Time overseas does not count toward the 104 weeks. Your four weeks in January 2026 pushed this out by about a month.</td></tr>
+        <tr><td><b>5% Deposit Scheme (First Home Guarantee)</b></td><td>Australian citizen or permanent resident &mdash; every applicant</td><td class="num" id="vz_g2">&mdash;</td><td>A 309 is a temporary visa. Your husband being a citizen does not carry a joint application. Wait for the 100.</td></tr>
+        <tr><td><b>First home buyer stamp duty concession</b></td><td>At least one purchaser a citizen or PR</td><td class="num">Now</td><td>Your husband satisfies this in both WA and Victoria.</td></tr>
+        <tr><td><b>An extended period living overseas</b></td><td>Citizenship &mdash; not just PR</td><td class="num" id="vz_g3">&mdash;</td><td>See the box below. This is the binding constraint on the Gulf plan.</td></tr>
+        <tr><td><b>Children born overseas being Australian</b></td><td>At least one parent an Australian <em>citizen</em> at the birth</td><td class="num">Now</td><td>Your husband is a citizen, so a child born in the Gulf could be registered as a citizen by descent. Two permanent residents could not do this &mdash; which is exactly the trap this saves you from.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="blk">
+    <h3>Why permanent residency is not permanent</h3>
+    <div class="grid g2" style="margin-top:12px">
+      <div class="node no"><h4>What happens if you leave as a PR</h4><ul class="list">
+        <li>A permanent visa carries a <b>five-year travel facility</b>. After it expires you need a Resident Return Visa to re-enter as a resident, and the straightforward RRV generally requires <b>two years of residence in Australia within the preceding five</b>.</li>
+        <li>Ten years in the Gulf on PR means arriving back without an automatic right to return. There are discretionary pathways based on substantial ties, but they are discretionary.</li>
+        <li>Citizenship also requires <b>no more than 90 days overseas in the twelve months before you apply</b>, and no more than twelve months' absence across the four years. A Gulf move before you apply resets that entirely.</li>
+      </ul></div>
+      <div class="node yes"><h4>The sequence that avoids all of it</h4><ul class="list">
+        <li><b>1. Permanent visa (100).</b> Assessed roughly two years after the original application; around half are finalised within nine months of eligibility. <span class="flag">EST</span></li>
+        <li><b>2. Citizenship application</b> from about <b id="vz_seq1">2029</b>, then processing.</li>
+        <li><b>3. Citizenship granted</b> around <b id="vz_seq2">2030</b>. From that point an Australian passport makes leaving and returning a non-issue, permanently.</li>
+        <li><b>4. Then the Gulf</b>, if the numbers still work.</li>
+        <li>The cost of this sequence is that a Gulf move before roughly <b id="vz_seq3">2030</b> is not really available to you. The benefit is that you never have to ask permission to come home.</li>
+      </ul></div>
+    </div>
+    <div class="note w" style="margin-top:12px"><b>Keep your absences low between now and citizenship.</b> Trips home to Pakistan are absences. Four weeks in January 2026 already cost you about a month on the parental leave clock. Before applying for citizenship you need under 90 days overseas in the preceding year &mdash; so a long visit in 2028 or 2029 could delay the application by a full year, and delay everything downstream of it.</div>
+    <div class="note" style="margin-top:10px"><b>One more, and it is unpleasant but worth knowing.</b> Your permanent visa depends on the relationship continuing until it is decided. If your husband died before the 100 was granted, there are provisions that can still allow the permanent visa &mdash; they are not automatic and they require evidence. It is another reason to treat the permanent visa as urgent rather than administrative, and to have wills and documentation in order before the baby arrives. Get migration advice on your specific case; nothing here is a substitute for it.</div>
+  </section>
+</section>
+
+<section class="panel" id="p_protect">
+  <div class="eyebrow">Modules 1 &amp; 9</div>
+  <h2>Protect</h2>
+  <p class="lede">Every projection on this page assumes two healthy earners for forty years. This tab is what you buy so that one bad year does not delete the plan &mdash; and it contains the single largest unaddressed risk in your situation, which is not insurance.</p>
+
+  <div class="gate"><h4>The gap</h4><p>You are about to have a child. You are on a temporary visa. You have no will, no appointed guardian, and almost certainly no binding death benefit nomination on your superannuation. <b>Superannuation does not automatically pass under a will</b>, and a will is the only document that can nominate who raises your child if both parents die. With no family in Australia, that last point is not theoretical &mdash; without a nomination the decision goes to a court. All of it costs about $1,000 to fix and takes an afternoon.</p></div>
+
+  <section class="blk">
+    <h3>Estate documents, in priority order</h3>
+    <div class="stack" style="margin-top:12px">
+      <div class="step"><div class="n">1</div><div><h4>Wills &mdash; one each</h4><p>Without a will you die intestate and a statutory formula divides your estate. Contrary to what most people assume, a surviving spouse does not automatically receive everything when there are children &mdash; the formula splits it, and a minor child's share is held in trust. Cost: roughly <b>$500&ndash;1,500 for a couple</b> through a solicitor. Will kits are a false economy where there are overseas assets, a temporary visa or a young child.</p></div></div>
+      <div class="step"><div class="n">2</div><div><h4>Testamentary guardian for your child</h4><p>A clause in your will nominating who raises your child if you both die. You have no family in Australia and a cousin in Melbourne. If you want a specific person &mdash; here or in Pakistan &mdash; <b>the will is the only place to say so</b>, and a nomination from overseas raises practical questions a solicitor should walk you through before you name someone.</p></div></div>
+      <div class="step"><div class="n">3</div><div><h4>Binding death benefit nomination on every super account</h4><p>Superannuation is not an estate asset. Without a valid binding nomination, your fund's trustee decides who receives it &mdash; and it can take months. Nominate your spouse, or your legal personal representative so it flows through your will. Nominations are commonly <b>lapsing after three years</b>, so diarise the renewal. Any life insurance held inside super follows this nomination, not your will.</p></div></div>
+      <div class="step"><div class="n">4</div><div><h4>Understand who is taxed on your super</h4><p>A spouse and a minor child are death benefit dependants and receive super <b>tax-free</b>. A parent, sibling or adult child generally is not, and the taxable component is taxed at 15% plus Medicare. If your instinct is to nominate a parent overseas, run it past an adviser first &mdash; it can cost tens of thousands in tax and complicate the payment.</p></div></div>
+      <div class="step"><div class="n">5</div><div><h4>Enduring power of attorney and enduring guardianship</h4><p>Two different documents: one lets someone manage your money if you cannot, the other lets someone make medical and lifestyle decisions. Both matter most in the situation nobody plans for &mdash; a serious accident, not death. Prepared alongside the wills at little extra cost.</p></div></div>
+      <div class="step"><div class="n">6</div><div><h4>Assets in Pakistan</h4><p>If either of you holds property or accounts overseas, an Australian will may not deal with them effectively, and a second will drafted abroad can accidentally revoke the Australian one. Tell your solicitor about every overseas asset before drafting. <span class="flag">VERIFY with a solicitor</span></p></div></div>
+      <div class="step"><div class="n">7</div><div><h4>Revisit after the permanent visa and after each child</h4><p>Marriage, children and a change of visa status are all triggers to update. Put a reminder in the 2028 calendar.</p></div></div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <h3>Insurance, sized to your numbers</h3>
+    <p><small>Indicative sums and costs. A licensed adviser or broker sets the real ones, and premiums vary enormously by health, occupation and structure.</small></p>
+    <div class="tw" style="margin-top:12px"><table>
+      <thead><tr><th>Cover</th><th class="num">Indicative sum</th><th class="num">Rough cost</th><th>Why, in your situation</th><th>When</th></tr></thead>
+      <tbody id="pt_ins"></tbody>
+    </table></div>
+    <div class="note w" style="margin-top:12px"><b>Time-critical, and the window is closing.</b> Income protection and life cover are medically underwritten. Applying while pregnant typically means exclusions, loadings or deferral, and some pregnancy-related conditions become permanent exclusions afterwards. If you intend to conceive in December 2026, the application window is <b>now</b>. This is the only item on this page where a three-month delay can cost you the product entirely rather than just some money.</div>
+    <div class="note" style="margin-top:10px"><b>On Sharia compliance.</b> Conventional insurance is treated as impermissible by many scholars because of <em>gharar</em> and <em>riba</em>, and takaful alternatives are effectively unavailable in the Australian retail market. Most Australian Muslim households resolve this pragmatically &mdash; holding cover while the family is financially exposed and reducing it as assets grow. That is a decision for you and whoever you take religious guidance from. What I will say plainly is that going uninsured with a newborn, a mortgage and a provisional visa is a materially larger risk than most people appreciate, and the exposure shrinks quickly as the FI number gets closer.</div>
+  </section>
+
+  <section class="blk">
+    <h3>What it costs to fix all of it</h3>
+    <div class="grid g4" style="margin-top:12px" id="pt_cost"></div>
+    <p style="margin-top:10px"><small>Against a household net worth heading past a million dollars in the next decade, this is a rounding error. It is also the only part of the plan that pays off precisely when everything else has gone wrong.</small></p>
+  </section>
+</section>
+
 <section class="panel" id="p_gulf">
   <div class="eyebrow">Module 3</div>
   <h2>The Gulf years</h2>
@@ -906,7 +1037,41 @@ svg{display:block;max-width:100%}
     <div class="tile"><div class="k">Household average rate</div><div class="v mono" id="t_avg">&mdash;</div><div class="s">both incomes combined</div></div>
     <div class="tile hero"><div class="k">Saved by super contribution</div><div class="v mono" id="t_supersave">&mdash;</div><div class="s" id="t_supersave_s">&mdash;</div></div>
     <div class="tile"><div class="k">Saved by deductions</div><div class="v mono" id="t_dedsave">&mdash;</div><div class="s" id="t_dedsave_s">&mdash;</div></div>
+    <div class="tile" id="t_mlstile"><div class="k">Medicare Levy Surcharge</div><div class="v mono" id="t_mls">&mdash;</div><div class="s" id="t_mls_s">&mdash;</div></div>
   </div>
+
+  <section class="blk">
+    <h3>Your tax and investing plan, year by year</h3>
+    <p><small>The levers below are a menu. This is the sequence &mdash; what to do, in which financial year, and what it is worth.</small></p>
+    <div class="tw" style="margin-top:12px"><table>
+      <thead><tr><th>Year</th><th>Tax moves</th><th>Investing moves</th><th class="num">Worth</th></tr></thead>
+      <tbody id="t_plan"></tbody>
+    </table></div>
+  </section>
+
+  <section class="blk">
+    <h3>Private health cover and the Medicare Levy Surcharge</h3>
+    <div class="grid g3" style="margin-top:12px">
+      <div class="tile"><div class="k">Income for surcharge purposes</div><div class="v mono" id="t_mlsinc">&mdash;</div><div class="s" id="t_mlsinc_s">&mdash;</div></div>
+      <div class="tile"><div class="k">Surcharge if uninsured</div><div class="v mono" id="t_mlscost">&mdash;</div><div class="s" id="t_mlscost_s">&mdash;</div></div>
+      <div class="tile hero"><div class="k">Better option</div><div class="v" style="font-size:1.1rem;font-family:Fraunces,serif" id="t_mlswin">&mdash;</div><div class="s" id="t_mlswin_s">&mdash;</div></div>
+    </div>
+    <div class="note" style="margin-top:12px" id="t_mlsnote"></div>
+    <div class="grid g2" style="margin-top:12px">
+      <div class="card"><div class="eyebrow">The rules, 2026&ndash;27</div><ul class="list">
+        <li>Family thresholds are <b>$210,000</b>, <b>$246,000</b> and <b>$328,000</b>, with surcharge rates of <b>1%</b>, <b>1.25%</b> and <b>1.5%</b>. The family threshold rises by $1,500 for each dependent child after the first.</li>
+        <li>Only <b>hospital</b> cover counts. Extras-only policies do not, and the cover must be held for the whole income year to avoid the surcharge entirely.</li>
+        <li>Income for surcharge purposes is broader than taxable income &mdash; it adds back reportable employer super contributions, reportable fringe benefits and net investment losses. Salary sacrifice therefore does <em>not</em> reduce it.</li>
+        <li>A personal deductible super contribution reduces taxable income and is not a reportable employer contribution. Whether that moves you below the threshold is worth asking your tax agent directly, because at your income it is a genuinely borderline call. <span class="flag">VERIFY</span></li>
+      </ul></div>
+      <div class="card"><div class="eyebrow">Two things that make this urgent</div><ul class="list">
+        <li><b>Pregnancy waiting periods.</b> Hospital policies typically impose a <b>12-month wait</b> for obstetrics. If you want the option of private maternity care for a September 2027 birth, cover needs to start by around September 2026 &mdash; that is now. Even if you intend to use the public system, this is a decision with a deadline rather than a preference.</li>
+        <li><b>Lifetime Health Cover loading.</b> Take out hospital cover after 1 July following your 31st birthday and a 2% loading is added for every year you were uninsured, capped at 70% and payable for ten years. At 27 you have time &mdash; but the free window closes at 31, which is inside this plan's horizon.</li>
+        <li>You are only about <span class="mono" id="t_mlsmargin">&mdash;</span> over the family threshold. Small changes in either income move you across it, so re-check this each June rather than setting and forgetting.</li>
+      </ul></div>
+    </div>
+  </section>
+
   <section class="blk">
     <h3>The levers, ranked</h3>
     <div class="tw" style="margin-top:12px"><table>
@@ -1067,7 +1232,7 @@ svg{display:block;max-width:100%}
 
 <section class="panel" id="p_now">
   <div class="eyebrow">Execution</div>
-  <h2>The next 90 days</h2>
+  <h2>The action plan</h2>
   <p class="lede">Cheap, high-information actions first. Nothing here costs more than a few hundred dollars until day 60, and two items have hard deadlines.</p>
   <div class="grid g3" style="margin-top:20px">
     <div class="card"><div class="rowsplit"><span class="pill r">Days 1&ndash;14</span><span class="eyebrow">Deadline-driven</span></div>
@@ -1100,6 +1265,16 @@ svg{display:block;max-width:100%}
       </ol>
     </div>
   </div>
+  <section class="blk">
+    <h3>The 2026&ndash;2028 calendar</h3>
+    <p><small>Everything with a date attached, in order. Deadlines in red are ones that cannot be recovered if missed.</small></p>
+    <div class="tw" style="margin-top:12px"><table>
+      <thead><tr><th class="num">When</th><th>What</th><th>Why it sits here</th><th>Type</th></tr></thead>
+      <tbody id="n_cal"></tbody>
+    </table></div>
+    <div class="note" style="margin-top:12px"><b>Recurring, once private practice starts:</b> transfer your tax percentage to the separate account on the day each payment lands; reconcile monthly; lodge a BAS quarterly only if you register for GST; pay PAYG instalments quarterly once the ATO puts you on them; renew Ahpra registration by 30 November each year with CPD evidence complete; review your fee every June; renew a lapsing super death benefit nomination every three years.</div>
+  </section>
+
   <section class="blk">
     <h3>Your fee &mdash; bulk bill or $200?</h3>
     <div class="card" style="margin-top:12px">
@@ -1224,14 +1399,14 @@ function pct(n){return Math.round(n)+'%';}
 function esc(s){return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
 
 var PRESETS={
- safe:{pkg:100000,hpkg:150000,spend:4000,rentm:2100,cash:110000,supher:12000,suphim:35000,empdays:5,raise:3,fee:200,spd:4,pdays:1,fill:70,weeks:44,model:'split',split:30,rent:120,rentwk:48,sourced:70,ownwk:800,ndis:0,ndisyr:2031,assess:5,assessrate:240,endorse:0,oh:5000,admin:6000,super:3000,ded:2500,baby:2028,off:15,kids:2,resmths:18,ccfee:145,ccdays:3,buyyr:2029,price:650000,depp:20,lrate:5.8,buystate:'wa',fin:'conv',save:70,eq:55,ret:4.5,fee2:0.5,swr:3.5,halal:1,gulf:0,gyr:2033,glen:5,ghim:200000,gher:75000,gcost:7000,city:'perth'},
- rec:{pkg:100000,hpkg:150000,spend:4000,rentm:2100,cash:110000,supher:12000,suphim:35000,empdays:4,raise:3,fee:210,spd:5,pdays:1,fill:78,weeks:44,model:'split',split:30,rent:120,rentwk:48,sourced:60,ownwk:800,ndis:20,ndisyr:2029,assess:15,assessrate:260,endorse:0,oh:6000,admin:6000,super:5000,ded:3000,baby:2027,off:12,kids:2,resmths:18,ccfee:145,ccdays:3,buyyr:2028,price:700000,depp:20,lrate:5.8,buystate:'wa',fin:'conv',save:80,eq:70,ret:5,fee2:0.35,swr:4,halal:1,gulf:0,gyr:2032,glen:6,ghim:220000,gher:75000,gcost:7000,city:'perth'},
- bold:{pkg:100000,hpkg:170000,spend:4500,rentm:2100,cash:110000,supher:12000,suphim:35000,empdays:0,raise:3,fee:250,spd:6,pdays:4,fill:85,weeks:44,model:'rent',split:30,rent:130,rentwk:50,sourced:40,ownwk:900,ndis:25,ndisyr:2028,assess:30,assessrate:300,endorse:0,oh:9000,admin:9000,super:15000,ded:4500,baby:2027,off:6,kids:1,resmths:18,ccfee:160,ccdays:5,buyyr:2028,price:800000,depp:10,lrate:5.8,buystate:'vic',fin:'conv',save:90,eq:90,ret:5.5,fee2:0.2,swr:4.5,halal:0,gulf:1,gyr:2031,glen:6,ghim:280000,gher:90000,gcost:8000,city:'melb'}
+ safe:{pkg:100000,hpkg:125000,spend:4000,rentm:2100,cash:110000,supher:12000,suphim:35000,empdays:5,raise:3,fee:200,spd:4,pdays:1,fill:70,weeks:44,model:'split',split:30,rent:120,rentwk:48,sourced:70,ownwk:800,ndis:0,ndisyr:2031,assess:5,assessrate:240,endorse:0,oh:5000,admin:6000,super:3000,ded:2500,baby:2028,off:15,kids:2,resmths:15,absweeks:4,pryr:2027,gap2:3,phi:0,phicost:2400,ccfee:145,ccdays:3,buyyr:2029,price:650000,depp:20,lrate:5.8,buystate:'wa',fin:'conv',save:70,eq:55,ret:4.5,fee2:0.5,swr:3.5,halal:1,gulf:0,gyr:2033,glen:5,ghim:200000,gher:75000,gcost:7000,city:'perth'},
+ rec:{pkg:100000,hpkg:125000,spend:4000,rentm:2100,cash:110000,supher:12000,suphim:35000,empdays:4,raise:3,fee:210,spd:5,pdays:1,fill:78,weeks:44,model:'split',split:30,rent:120,rentwk:48,sourced:60,ownwk:800,ndis:20,ndisyr:2029,assess:15,assessrate:260,endorse:0,oh:6000,admin:6000,super:5000,ded:3000,baby:2027,off:12,kids:2,resmths:15,absweeks:4,pryr:2027,gap2:3,phi:0,phicost:2400,ccfee:145,ccdays:3,buyyr:2028,price:700000,depp:20,lrate:5.8,buystate:'wa',fin:'conv',save:80,eq:70,ret:5,fee2:0.35,swr:4,halal:1,gulf:0,gyr:2032,glen:6,ghim:220000,gher:75000,gcost:7000,city:'perth'},
+ bold:{pkg:100000,hpkg:140000,spend:4500,rentm:2100,cash:110000,supher:12000,suphim:35000,empdays:0,raise:3,fee:250,spd:6,pdays:4,fill:85,weeks:44,model:'rent',split:30,rent:130,rentwk:50,sourced:40,ownwk:900,ndis:25,ndisyr:2028,assess:30,assessrate:300,endorse:0,oh:9000,admin:9000,super:15000,ded:4500,baby:2027,off:6,kids:1,resmths:15,absweeks:4,pryr:2027,gap2:2,phi:1,phicost:2400,ccfee:160,ccdays:5,buyyr:2028,price:800000,depp:10,lrate:5.8,buystate:'vic',fin:'conv',save:90,eq:90,ret:5.5,fee2:0.2,swr:4.5,halal:0,gulf:1,gyr:2031,glen:6,ghim:280000,gher:90000,gcost:8000,city:'melb'}
 };
 var S=Object.assign({},PRESETS.rec);
 var SHOW={A:true,B:true,C:true,D:false,E:true,F:true};
 var W={w1:6,w2:8,w3:9,w4:3};
-var RANGES=['pkg','hpkg','spend','rentm','cash','supher','suphim','empdays','raise','fee','spd','pdays','fill','weeks','split','rent','rentwk','sourced','ownwk','ndis','ndisyr','assess','assessrate','oh','admin','super','ded','baby','off','kids','resmths','ccfee','ccdays','buyyr','price','depp','lrate','save','eq','ret','fee2','swr','gyr','glen','ghim','gher','gcost'];
+var RANGES=['pkg','hpkg','spend','rentm','cash','supher','suphim','empdays','raise','fee','spd','pdays','fill','weeks','split','rent','rentwk','sourced','ownwk','ndis','ndisyr','assess','assessrate','oh','admin','super','ded','baby','off','kids','resmths','absweeks','pryr','gap2','phicost','ccfee','ccdays','buyyr','price','depp','lrate','save','eq','ret','fee2','swr','gyr','glen','ghim','gher','gcost'];
 var L={pkg:money,hpkg:money,cash:money,supher:money,suphim:money,fee:money,assessrate:money,oh:money,admin:money,super:money,ded:money,price:money,ghim:money,gher:money,
  spend:function(v){return money(v)+'/m';}, rentm:function(v){return money(v)+'/m';}, gcost:function(v){return money(v)+'/m';},
  rent:function(v){return money(v)+'/day';}, ownwk:function(v){return money(v)+'/wk';}, ccfee:function(v){return money(v)+'/day';},
@@ -1241,7 +1416,7 @@ var L={pkg:money,hpkg:money,cash:money,supher:money,suphim:money,fee:money,asses
  ret:function(v){return v+'% real';}, fee2:function(v){return v.toFixed(2)+'% p.a.';}, swr:function(v){return v.toFixed(1)+'%';},
  lrate:function(v){return v.toFixed(1)+'%';}, baby:String, ndisyr:String, buyyr:String, gyr:String,
  off:function(v){return v+' mths';}, kids:function(v){return v===0?'none':v;}, glen:function(v){return v+' yrs';},
- resmths:function(v){return v+' mths';}};
+ resmths:function(v){return v+' mths';}, absweeks:function(v){return v+' wks';}, pryr:String, gap2:function(v){return v+' yrs';}, phicost:money};
 
 /* ---- career model ---- */
 function calc(o){
@@ -1402,12 +1577,32 @@ function breakEven(){ if(S.split<=0||S.pdays<=0||S.weeks<=0) return null;
 function keepUnder(m,f){ var r=calc({model:m,fill:f}); return r.gross-r.cut-r.room-r.adm; }
 
 /* ---- PPL gate ---- */
-function pplStatus(){
-  var monthsToBirth=(S.baby-NOW_YEAR)*12;
-  var monthsAtBirth=S.resmths+monthsToBirth;
-  var need=Math.ceil(NARWP_WEEKS/4.345);
-  return {ok:monthsAtBirth>=need, monthsAtBirth:monthsAtBirth, need:need,
-    shortMonths:Math.max(0,need-monthsAtBirth), earliestYear:NOW_YEAR+Math.ceil(Math.max(0,need-S.resmths)/12)};
+var NEED_DAYS=NARWP_WEEKS*7;
+function addMonths(m){ var d=new Date(2026,8,1); d.setMonth(d.getMonth()+Math.round(m));
+  return d.toLocaleDateString('en-AU',{month:'short',year:'numeric'}); }
+function servedDays(monthsAhead){ return Math.max(0,(S.resmths+monthsAhead)*30.44 - S.absweeks*7); }
+function monthsUntilServed(){ return Math.max(0,(NEED_DAYS+S.absweeks*7)/30.44 - S.resmths); }
+function pplStatus(birthYear){
+  var by=birthYear||S.baby, m=(by-NOW_YEAR)*12, served=servedDays(m);
+  var u=monthsUntilServed();
+  return {ok:served>=NEED_DAYS, served:served, monthsAtBirth:Math.round(served/30.44),
+    need:Math.round(NEED_DAYS/30.44), shortMonths:Math.max(0,Math.round((NEED_DAYS-served)/30.44)),
+    servedWhen:addMonths(u), servedIn:u, earliestYear:NOW_YEAR+Math.ceil(u/12)};
+}
+function citizenship(){
+  var toFour=Math.max(0,48-S.resmths);
+  var toPR=(S.pryr-NOW_YEAR)*12-3;
+  var elig=Math.max(toFour,toPR+12);
+  return {eligIn:elig, eligWhen:addMonths(elig), grantWhen:addMonths(elig+12), grantIn:elig+12,
+    prWhen:addMonths(Math.max(0,toPR))};
+}
+function mls(){
+  var her=calc(), hisBase=S.hpkg/(1+SG);
+  var inc=Math.max(0,her.taxable)+hisBase;
+  var thr=210000+1500*Math.max(0,S.kids-1);
+  var t1=246000+1500*Math.max(0,S.kids-1), t2=328000+1500*Math.max(0,S.kids-1);
+  var rate = inc<=thr?0 : inc<=t1?0.01 : inc<=t2?0.0125 : 0.015;
+  return {inc:inc, thr:thr, rate:rate, cost:rate*inc, over:inc-thr};
 }
 
 /* ---- renderers ---- */
@@ -1588,7 +1783,8 @@ function renderFI(){
     var y=x.pr.fi?x.pr.fi.year:null;
     return '<tr'+(x.sp===S.spend?' style="background:var(--accent-soft)"':'')+'><td><b>'+money(x.sp)+' a month</b>'+(x.sp===S.spend?' <span class="pill g">You</span>':'')+'</td><td class="num">'+money(x.sp*12)+'</td><td class="num">'+compact(x.pr.target)+'</td><td class="num">'+(y||'not reached')+'</td><td class="num">'+(x.pr.fi?x.pr.fi.age:'—')+'</td><td class="num">'+(y&&best?('+'+(y-best)+' yrs'):'—')+'</td></tr>';}).join('');
   var loan=Math.max(0,S.price*(1-S.depp/100));
-  $('fi_ins').innerHTML=[
+  var insHost=$('fi_ins')||$('pt_ins');
+  if(insHost) insHost.innerHTML=[
    ['Income protection','70% of '+money(H.her.pretax)+' = '+money(H.her.pretax*0.7)+'/yr benefit','$1,800–3,000/yr','As a contractor nobody pays you when you are sick. Premiums are tax deductible. Choose a long benefit period and a 30–90 day wait.','<span class="pill r">Now — before pregnancy</span>'],
    ['Life cover (both)',money(loan+H.spendY*10),'$600–1,400/yr','Enough to clear the mortgage and replace ten years of household spending. Cheapest at your age it will ever be.','<span class="pill r">Now</span>'],
    ['Total &amp; permanent disability',money(loan+H.spendY*8),'$500–1,200/yr','The risk that actually bankrupts young families. Often cheapest held inside super.','<span class="pill w">Within 6 months</span>'],
@@ -1869,6 +2065,148 @@ function renderNow(){
   $('n_feegrid').innerHTML=[['Bulk billed',MBS_GEN],['$200',200],['$250',250],['APS $330',APS_FEE]].map(function(f){
     return '<div class="tile"><div class="k">'+f[0]+'</div><div class="v mono">'+money(f[1]*keepF)+'</div><div class="s">you keep per session<br>client pays '+money(Math.max(0,f[1]-MBS_GEN))+' out of pocket<br><b>'+money(r.sessions*f[1]*keepF)+'</b> a year at your volume</div></div>';}).join('');
 }
+
+function renderVisa(){
+  var g=pplStatus(), c=citizenship();
+  setT('vz_served',Math.round(g.served/30.44)+' mths');
+  setT('vz_served_s',S.resmths+' months since arrival, less '+S.absweeks+' weeks overseas');
+  setT('vz_ppl',g.ok?'Served':g.servedWhen);
+  setT('vz_ppl_s',g.ok?'104 weeks complete — PPL available for a '+S.baby+' birth':'104 weeks complete around '+g.servedWhen+'; a birth before then gets nothing');
+  var pt=$('vz_ppltile'); if(pt) pt.style.background=g.ok?'':'var(--bad-soft)';
+  setT('vz_cit',c.eligWhen);
+  setT('vz_cit_s','apply from then; granted around '+c.grantWhen);
+  setT('vz_leave',c.grantWhen);
+  setT('vz_seq1',c.eligWhen); setT('vz_seq2',c.grantWhen); setT('vz_seq3',c.grantWhen);
+  setT('vz_g1',g.ok?'Now':g.servedWhen); setT('vz_g2',c.prWhen); setT('vz_g3',c.grantWhen);
+  var gate=$('vz_gate');
+  if(gate) gate.className='gate'+(S.gulf&&S.gyr<parseInt(c.grantWhen.slice(-4),10)?'':' warn');
+  setT('vz_gate_t','');
+  var el=$('vz_gate_t');
+  if(el) el.innerHTML='Permanent residency is not permanent if you leave. The travel facility on a permanent visa lasts five years, and a straightforward Resident Return Visa afterwards generally needs two years of residence in Australia within the preceding five. Citizenship also requires no more than 90 days overseas in the twelve months before you apply. '+
+    '<b>On these settings you would be eligible to apply for citizenship around '+c.eligWhen+' and granted around '+c.grantWhen+'.</b> '+
+    (S.gulf ? (S.gyr < parseInt(c.grantWhen.slice(-4),10)
+      ? 'You have the Gulf move set for <b>'+S.gyr+'</b> — before citizenship. That puts your right to return to Australia as a resident at risk, and resets the citizenship residence clock. <b>Move the departure to '+c.grantWhen+' or later.</b>'
+      : 'Your Gulf departure of '+S.gyr+' sits after citizenship, which is the right sequence.')
+    : 'If a Gulf move ever becomes real, this is the date it cannot sensibly precede.');
+  var rows=[
+   ['104-week PPL waiting period','104 weeks of residence, time overseas excluded','Jun 2025',g.ok?'Served':g.servedWhen,'Parental Leave Pay — about '+money(PPL_TOTAL)+' plus super'],
+   ['Permanent visa (subclass 100)','Assessed roughly two years after the original application; about half finalised within nine months of eligibility','Application date',c.prWhen,'First Home Guarantee eligibility, and the start of the 12-month PR clock for citizenship'],
+   ['Citizenship (the 4-1-90 rule)','Four years lawful residence, the last twelve months as a PR, absences under twelve months total and under 90 days in the final year','Jun 2025',c.eligWhen+' to apply',c.grantWhen+' granted — after which leaving and returning is a non-issue']];
+  var host=$('vz_clocks');
+  if(host) host.innerHTML=rows.map(function(x){
+    return '<tr><td><b>'+x[0]+'</b></td><td><small>'+x[1]+'</small></td><td class="num">'+x[2]+'</td><td class="num"><b>'+x[3]+'</b></td><td><small>'+x[4]+'</small></td></tr>';}).join('');
+}
+function renderProtect(){
+  var host=$('pt_cost'); if(!host) return;
+  var H=household();
+  host.innerHTML=[['Wills, both of you','$500–1,500','through a solicitor, including guardianship clauses'],
+   ['Enduring POA & guardianship','$200–600','usually bundled with the wills'],
+   ['Binding death benefit nominations','$0','a form from each super fund, renewed every three years'],
+   ['Total, one afternoon',' $700–2,100','the cheapest risk reduction available to you']].map(function(x,i){
+    return '<div class="tile'+(i===3?' hero':'')+'"><div class="k">'+x[0]+'</div><div class="v mono" style="font-size:1.2rem">'+x[1]+'</div><div class="s">'+x[2]+'</div></div>';}).join('');
+}
+function renderMLS(){
+  var m=mls(), H=household();
+  var net=m.cost-S.phicost;
+  setT('t_mls',S.phi?money(0):money(m.cost));
+  setT('t_mls_s',S.phi?'avoided — you hold hospital cover':(m.rate>0?pct(m.rate*100)+' of '+money(m.inc):'under the family threshold'));
+  var tile=$('t_mlstile'); if(tile) tile.style.background=(!S.phi&&m.cost>0)?'var(--bad-soft)':'';
+  setT('t_mlsinc',money(m.inc));
+  setT('t_mlsinc_s','family threshold '+money(m.thr)+' · you are '+(m.over>0?money(m.over)+' over':money(-m.over)+' under'));
+  setT('t_mlscost',money(m.cost));
+  setT('t_mlscost_s',m.rate>0?pct(m.rate*100)+' surcharge, every year you stay uninsured':'no surcharge at this income');
+  setT('t_mlsmargin',m.over>0?money(m.over):money(-m.over)+' under');
+  var win = m.cost>S.phicost;
+  setT('t_mlswin', m.cost<=0 ? 'Neither — you are under the threshold' : (win?'Take the hospital cover':'The surcharge is cheaper'));
+  setT('t_mlswin_s', m.cost<=0 ? 'buy cover for the maternity option, not for tax' :
+    (win?'cover costs '+money(S.phicost)+' against a '+money(m.cost)+' surcharge — you save '+money(net)+' and get a policy':
+     'cover at '+money(S.phicost)+' costs '+money(-net)+' more than the surcharge — buy it for the maternity cover, not the tax'));
+  var note=$('t_mlsnote');
+  if(note) note.innerHTML = m.cost<=0
+   ? '<b>You are currently under the family threshold of '+money(m.thr)+'</b>, so no surcharge applies. That changes the moment either income rises — and your private income will. Re-check every June.'
+   : '<b>You are paying about '+money(m.cost)+' a year for nothing.</b> Basic hospital cover for a couple costs roughly '+money(S.phicost)+', so taking it is '+(win?'cheaper than the surcharge and you get a policy out of it':'slightly dearer than the surcharge, but you get a policy out of it')+'. The stronger argument is the 12-month obstetrics waiting period: if you want the option of private maternity care for a '+S.baby+' birth, cover has to start about now.';
+  var r=calc(), marginal=r.marg, headroom=Math.max(0,CAP_CONC-r.superTotal);
+  var plan=[
+   ['FY2026–27<br><span class="mini">now to Jun 2027</span>',
+    'Open the separate tax account. Start FHSS contributions — $15,000 each. Book a tax agent and settle the personal services income question in writing. Decide on hospital cover before the pregnancy waiting period bites.',
+    'Emergency fund to six months of spending in cash. Everything else to the house deposit — no market exposure on money you need inside three years.',
+    money((marginal-0.15)*15000+(marg(H.hisBase)-0.15)*15000+(S.phi?0:mls().cost))],
+   ['FY2027–28<br><span class="mini">baby year</span>',
+    'Claim PPL early. Your income drops, so this is the year to claim <em>fewer</em> deductions and contribute less to super — save the deductions for a higher-income year using carry-forward.',
+    'Hold. Do not invest during a leave year; keep the buffer deep. Second FHSS instalment if buying in 2028.',
+    money(3000)],
+   ['FY2028–29<br><span class="mini">house + return to work</span>',
+    'Withdraw FHSS before signing a contract. First full year of PAYG instalments — expect the double-up. Claim the home telehealth room at 70c per hour.',
+    'Deposit out, offset account established. Redirect the old deposit savings into the offset until it holds six months of repayments.',
+    money((marginal-0.15)*headroom+marginal*S.ded)],
+   ['FY2029–31<br><span class="mini">rebuild and specialise</span>',
+    'Concessional super to the full $30,000 cap, using carry-forward from the leave years. Register for GST only once taxable services pass $75,000.',
+    'Offset first while the loan rate exceeds your expected after-tax return. Begin regular investing outside super once the offset holds a year of repayments.',
+    money((marginal-0.15)*CAP_CONC)],
+   ['FY2031–35<br><span class="mini">peak earning</span>',
+    'Revisit the company structure only if you employ or contract other clinicians. Watch the Division 293 threshold at $250,000 as income rises.',
+    'Split between offset and diversified growth assets. Rebalance annually, never in response to a headline.',
+    money((marginal-0.15)*CAP_CONC)],
+   ['FY2036+<br><span class="mini">post-FI</span>',
+    'Manage the gap between stopping work and preservation age. Small business CGT concessions if a practice is ever sold — get advice years ahead, not weeks.',
+    'Shift gradually toward capital preservation as the FI date approaches. Sequence-of-returns risk is at its worst in the five years either side of stopping.',
+    '—']];
+  var ph=$('t_plan');
+  if(ph) ph.innerHTML=plan.map(function(x){
+    return '<tr><td><b>'+x[0]+'</b></td><td><small>'+x[1]+'</small></td><td><small>'+x[2]+'</small></td><td class="num">'+x[3]+'</td></tr>';}).join('');
+}
+function renderSecondChild(){
+  if(!$('k2_tab')) return;
+  var H=household(), b2=S.baby+S.gap2;
+  setT('k2_year',String(b2));
+  setT('k2_year_s',S.gap2+' years after the first');
+  var g2=pplStatus(b2);
+  var workOK=S.gap2>=2||true;
+  setT('k2_ppl',g2.ok?'Likely yes':'Blocked');
+  setT('k2_ppl_s',g2.ok?'residence test served; work test depends on returning to work':'residence waiting period not served');
+  var t=$('k2_tile'); if(t) t.style.background=g2.ok?'':'var(--bad-soft)';
+  var overlapYears=Math.max(0,5-S.gap2);
+  setT('k2_peak',overlapYears>0?String(S.baby+S.gap2+1):'none');
+  setT('k2_peak_s',overlapYears>0?overlapYears+' years with two children in care · '+money(H.cc.annual*2)+' a year':'no overlap — the first starts school as the second starts care');
+  var note=$('k2_note');
+  if(note) note.innerHTML='<b>The rule that decides this is not the one people worry about.</b> Days you were paid Parental Leave Pay for your first child <b>count as qualifying work</b> for a second claim. What breaks the test is a gap of more than 84 consecutive days between qualifying work days. So the thing that protects your second entitlement is not the spacing — it is <b>returning to at least one paid day within twelve weeks</b> of your last qualifying day. One telehealth day a week does it.';
+  var rows=[1,2,3,4].map(function(gap){
+    var by=S.baby+gap, gs=pplStatus(by), ov=Math.max(0,5-gap);
+    var wt = gap<=1 ? 'Tight — relies on PPL days counting and a prompt return' : (gap<=3?'Fine if you return to one day a week within 12 weeks':'Fine');
+    var verdict = gap===1?'<span class="pill w">Cheapest career-wise, dearest in childcare</span>':
+                  gap===2?'<span class="pill g">Good balance</span>':
+                  gap===3?'<span class="pill g">Lowest childcare overlap</span>':'<span class="pill w">Longer career disruption overall</span>';
+    return '<tr'+(gap===S.gap2?' style="background:var(--accent-soft)"':'')+'><td><b>'+gap+' year'+(gap===1?'':'s')+'</b>'+(gap===S.gap2?' <span class="pill g">Yours</span>':'')+'</td><td class="num">'+by+'</td><td><small>'+wt+'</small></td><td class="num">'+ov+'</td><td class="num">'+money(ov>0?H.cc.annual*2:H.cc.annual)+'</td><td>'+verdict+'</td></tr>';
+  });
+  $('k2_tab').innerHTML=rows.join('');
+}
+function renderCalendar(){
+  var host=$('n_cal'); if(!host) return;
+  var g=pplStatus(), c=citizenship();
+  var rows=[
+   ['Sep 2026','Apply for income protection and life cover; both wills, guardianship clauses and super death benefit nominations','Underwriting is far harder once pregnant, and you have no will with a child coming','r'],
+   ['Sep 2026','Decide on private hospital cover','12-month obstetrics waiting period, plus a '+money(mls().cost)+' surcharge if you stay uninsured','r'],
+   ['Sep 2026','Lodge the Ahpra qualification assessment; read the EAP contract; get the employer parental leave policy','Cheap, high-information, and they gate later decisions','w'],
+   ['Oct 2026','Ask the GP the six questions; get the room rate in writing','You cannot price the deal without it','w'],
+   ['Nov 2026','Ahpra registration renewal — CPD evidence complete','Annual, 30 November','n'],
+   ['Dec 2026','General registration; Medicare provider number; first private day; home telehealth room','The whole plan starts here','w'],
+   ['Dec 2026','Start FHSS contributions, both of you','Up to $15,000 each this financial year, at 15% instead of your marginal rates','w'],
+   [(g.ok?'Dec 2026':'From '+g.servedWhen),'Conception window opens',(g.ok?'104-week residence already served — a '+S.baby+' birth qualifies for PPL':'do not conceive before this; a birth before '+g.servedWhen+' forfeits about '+money(PPL_TOTAL)),'r'],
+   ['Jun 2027','First tax return with private income; review your fee','Set the fee rise habit in year one','n'],
+   ['Jul 2027','Lodge the PPL claim — before the birth','Early lodgement avoids a payment gap','r'],
+   ['Jul 2027','Brief clients eight weeks out; pause, do not terminate, the room arrangement','A caseload handled well survives; one abandoned does not','w'],
+   [String(S.baby),'Birth. 26 weeks of PPL','Keep Ahpra registration current throughout','n'],
+   ['+12 weeks','Return to at least one paid day a week','Protects the work test for a second child — a gap over 84 days breaks it','r'],
+   [c.prWhen,'Permanent visa (100) expected','Unlocks First Home Guarantee eligibility and starts the 12-month PR clock','w'],
+   ['2028','Buy the house — after PR, after the birth, after the city decision','Lenders assess on evidenced current income; buying twice is the expensive path','w'],
+   ['2028','First PAYG instalment year — expect to pay two years of tax in one','Budget for it or it feels like a disaster','n'],
+   ['2029','Add NDIS and the assessment stream','After the return to work, once admin capacity exists','n'],
+   [c.eligWhen,'Apply for citizenship','Under 90 days overseas in the preceding twelve months — plan trips home around this','r'],
+   [c.grantWhen,'Citizenship granted','Only from here does an extended period overseas stop putting your status at risk','w']];
+  host.innerHTML=rows.map(function(x){
+    return '<tr><td class="num"><b>'+x[0]+'</b></td><td><b>'+x[1]+'</b></td><td><small>'+x[2]+'</small></td><td><span class="pill '+x[3]+'">'+(x[3]==='r'?'Deadline':x[3]==='w'?'Key':'Routine')+'</span></td></tr>';}).join('');
+}
+
 /* ---- wiring ---- */
 function setSeg(id,v){ var g=$(id); if(!g) return;
   Array.prototype.forEach.call(g.querySelectorAll('button'),function(b){b.setAttribute('aria-pressed',b.dataset.v===String(v)?'true':'false');}); }
@@ -1876,7 +2214,7 @@ function syncControls(){
   RANGES.forEach(function(k){ var el=$('i_'+k); if(!el) return; el.value=S[k];
     var lab=$('v_'+k); if(lab) lab.textContent=(L[k]||String)(S[k]); });
   setSeg('seg_model',S.model); setSeg('seg_city',S.city); setSeg('seg_endorse',String(S.endorse));
-  setSeg('seg_buystate',S.buystate); setSeg('seg_fin',S.fin); setSeg('seg_halal',String(S.halal)); setSeg('seg_gulf',String(S.gulf));
+  setSeg('seg_buystate',S.buystate); setSeg('seg_phi',String(S.phi)); setSeg('seg_fin',S.fin); setSeg('seg_halal',String(S.halal)); setSeg('seg_gulf',String(S.gulf));
   var ev=$('v_endorse'); if(ev) ev.textContent=S.endorse?'item 80010':'item 80110';
   ['w1','w2','w3','w4'].forEach(function(k){var e=$('i_'+k); if(e){e.value=W[k]; $('v_'+k).textContent=W[k];}});
   document.querySelectorAll('[data-sc]').forEach(function(c){c.checked=!!SHOW[c.dataset.sc];});
@@ -1886,6 +2224,7 @@ function renderAll(){
     renderDecide(); renderQuals(); renderModel(); renderDeal(); renderDomains();
     renderFI(); renderMoney(); renderProp(); renderKids(); renderGulf();
     renderTax(); renderLadder(); renderFifty(); renderNow();
+    renderVisa(); renderProtect(); renderMLS(); renderSecondChild(); renderCalendar();
     var st=$('railstamp'); if(st) st.textContent=(S.model==='split'?pct(100-S.split)+' to you':S.model==='rent'?'room rent':'own rooms');
   }catch(e){ if(window.console) console.error(e); }
 }
@@ -1900,7 +2239,7 @@ function bindSeg(id,key,parse){ var g=$(id); if(!g) return;
     if(key==='endorse') $('v_endorse').textContent=S.endorse?'item 80010':'item 80110';
     renderAll(); }); }
 bindSeg('seg_model','model'); bindSeg('seg_city','city'); bindSeg('seg_endorse','endorse',Number);
-bindSeg('seg_buystate','buystate'); bindSeg('seg_fin','fin'); bindSeg('seg_halal','halal',Number); bindSeg('seg_gulf','gulf',Number);
+bindSeg('seg_phi','phi',Number); bindSeg('seg_buystate','buystate'); bindSeg('seg_fin','fin'); bindSeg('seg_halal','halal',Number); bindSeg('seg_gulf','gulf',Number);
 var WPRE={now:{w1:6,w2:8,w3:9,w4:3},build:{w1:8,w2:6,w3:5,w4:6},scale:{w1:7,w2:5,w3:3,w4:10}};
 (function(){ var g=$('seg_wpre'); if(!g) return;
   g.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return;
