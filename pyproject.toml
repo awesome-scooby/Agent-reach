@@ -1,0 +1,22 @@
+[project]
+name = "agent-reach"
+version = "0.1.0"
+description = "Agent-reach tooling, including Scrapling-based web scraping."
+requires-python = ">=3.10"
+dependencies = [
+    # Scrapling core + the browser-backed fetchers (Playwright / Patchright,
+    # curl_cffi, browserforge). Browser binaries are NOT pip-installed --
+    # run `scrapling install` once after installing this project.
+    "scrapling[fetchers]>=0.4.15,<0.5",
+]
+
+[project.optional-dependencies]
+# Interactive shell (`scrapling shell`) and the MCP server (`scrapling mcp`).
+extras = ["scrapling[all]>=0.4.15,<0.5"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = []
