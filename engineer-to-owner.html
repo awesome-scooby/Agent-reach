@@ -1,0 +1,1158 @@
+<title>Engineer to Owner</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --blue:#2049C9; --blue-soft:#e6ecfd;
+  --red:#E03B2F;  --red-soft:#fdeae8;
+  --green:#12A35A;--green-soft:#e2f6ec;
+  --amber:#F5A524;--amber-soft:#fdf1dc;
+  --teal:#0E8F9E; --teal-soft:#e0f4f6;
+  --violet:#7C4DDA;--violet-soft:#efe9fc;
+  --mag:#D6336C;  --mag-soft:#fce8ef;
+
+  --ink:#12161F;
+  --ink-2:#3A4459;
+  --ink-3:#5A6478;
+  --ink-4:#8A93A6;
+  --line:#dbe1ec;
+  --line-2:#eaeef5;
+  --bg:#F2F4F8;
+  --surface:#ffffff;
+  --surface-2:#f8fAfd;
+  --shadow:0 1px 2px rgba(18,22,31,.06),0 8px 24px -12px rgba(18,22,31,.18);
+
+  --f-display:'Archivo','Helvetica Neue',Arial,sans-serif;
+  --f-body:'IBM Plex Sans',system-ui,-apple-system,Segoe UI,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --blue:#7d9bff; --blue-soft:#1a2547;
+    --red:#ff7a6e;  --red-soft:#3d1d1a;
+    --green:#3edb92;--green-soft:#0d3324;
+    --amber:#ffc35c;--amber-soft:#3a2b12;
+    --teal:#4fd3e2; --teal-soft:#0d3138;
+    --violet:#b295ff;--violet-soft:#241a42;
+    --mag:#ff85ab;  --mag-soft:#3d1526;
+    --ink:#EEF1F7; --ink-2:#C2CADB; --ink-3:#98A2B8; --ink-4:#6E7891;
+    --line:#2a3244; --line-2:#1e2534;
+    --bg:#0d1017; --surface:#151a25; --surface-2:#1a2030;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --blue:#7d9bff; --blue-soft:#1a2547;
+  --red:#ff7a6e;  --red-soft:#3d1d1a;
+  --green:#3edb92;--green-soft:#0d3324;
+  --amber:#ffc35c;--amber-soft:#3a2b12;
+  --teal:#4fd3e2; --teal-soft:#0d3138;
+  --violet:#b295ff;--violet-soft:#241a42;
+  --mag:#ff85ab;  --mag-soft:#3d1526;
+  --ink:#EEF1F7; --ink-2:#C2CADB; --ink-3:#98A2B8; --ink-4:#6E7891;
+  --line:#2a3244; --line-2:#1e2534;
+  --bg:#0d1017; --surface:#151a25; --surface-2:#1a2030;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 90px}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;margin:0}
+h2{font-size:clamp(24px,3.4vw,34px);font-weight:800;letter-spacing:-.02em;line-height:1.12}
+h3{font-size:19px;font-weight:700;letter-spacing:-.01em}
+h4{font-size:15px;font-weight:700}
+p{margin:0 0 .8em}
+a{color:var(--blue)}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-family:var(--f-mono);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-4)}
+
+/* ---------- masthead ---------- */
+.mast{background:var(--surface);border-bottom:1px solid var(--line);padding:34px 0 0;margin-bottom:0}
+.mast-in{max-width:1180px;margin:0 auto;padding:0 20px}
+.rail{height:7px;display:flex;border-radius:4px;overflow:hidden;margin-bottom:22px;max-width:1180px}
+.rail i{flex:1}
+h1{font-size:clamp(32px,6vw,58px);font-weight:900;letter-spacing:-.035em;line-height:.98}
+.sub{color:var(--ink-3);max-width:62ch;margin-top:12px;font-size:16.5px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 26px}
+.tag{font-family:var(--f-mono);font-size:11.5px;font-weight:500;padding:5px 10px;border-radius:5px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2)}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:9px 0}
+.nav-in{max-width:1180px;margin:0 auto;padding:0 20px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin}
+.nav a{flex:0 0 auto;font-family:var(--f-mono);font-size:11.5px;font-weight:500;text-decoration:none;color:var(--ink-3);padding:5px 9px;border-radius:5px;white-space:nowrap;border:1px solid transparent}
+.nav a:hover{background:var(--surface-2);color:var(--ink);border-color:var(--line)}
+
+/* ---------- sections ---------- */
+section{padding-top:56px;scroll-margin-top:56px}
+.sec-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.sec-n{font-family:var(--f-mono);font-size:12px;font-weight:600;color:var(--ink-4);border:1px solid var(--line);border-radius:5px;padding:2px 7px}
+.lede{color:var(--ink-2);max-width:68ch;font-size:16.5px;margin-bottom:22px}
+
+/* ---------- cards ---------- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 22px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(238px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(186px,1fr))}
+
+/* verdict tiles */
+.tile{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--c,var(--blue));border-radius:10px;padding:16px 18px;box-shadow:var(--shadow)}
+.tile .k{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-4);font-weight:600}
+.tile .v{font-family:var(--f-display);font-size:clamp(26px,4vw,38px);font-weight:900;letter-spacing:-.03em;line-height:1.05;margin:5px 0 3px;color:var(--c,var(--blue));font-variant-numeric:tabular-nums}
+.tile .d{font-size:13.5px;color:var(--ink-3);line-height:1.45}
+
+/* callouts */
+.call{border-radius:11px;padding:16px 18px;border:1px solid var(--line);background:var(--surface);border-left:5px solid var(--c)}
+.call.hack{--c:var(--green);background:var(--green-soft)}
+.call.warn{--c:var(--red);background:var(--red-soft)}
+.call.note{--c:var(--amber);background:var(--amber-soft)}
+.call.law{--c:var(--blue);background:var(--blue-soft)}
+.call h4{display:flex;align-items:center;gap:8px;margin-bottom:7px;color:var(--ink)}
+.call p:last-child,.call ul:last-child{margin-bottom:0}
+.call ul{margin:0;padding-left:18px}
+.call li{margin-bottom:5px}
+.call li:last-child{margin-bottom:0}
+
+/* badges */
+.b{display:inline-flex;align-items:center;gap:4px;font-family:var(--f-mono);font-size:10.5px;font-weight:600;padding:2px 7px;border-radius:4px;letter-spacing:.03em;white-space:nowrap}
+.b-1{background:var(--green-soft);color:var(--green);border:1px solid color-mix(in srgb,var(--green) 35%,transparent)}
+.b-2{background:var(--blue-soft);color:var(--blue);border:1px solid color-mix(in srgb,var(--blue) 35%,transparent)}
+.b-3{background:var(--amber-soft);color:var(--amber);border:1px solid color-mix(in srgb,var(--amber) 40%,transparent)}
+.b-4{background:var(--surface-2);color:var(--ink-3);border:1px solid var(--line)}
+.b-5{background:var(--red-soft);color:var(--red);border:1px solid color-mix(in srgb,var(--red) 35%,transparent)}
+
+/* tables */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:11px;background:var(--surface);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:760px}
+th{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4);text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);background:var(--surface-2);position:sticky;top:0;font-weight:600;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid var(--line-2);vertical-align:top}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--surface-2)}
+td.n,th.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.occ-name{font-weight:600;color:var(--ink)}
+.cat-dot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:7px;vertical-align:middle}
+
+/* controls */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 22px;box-shadow:var(--shadow)}
+label.fld{display:block}
+label.fld .lab{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-4);font-weight:600;display:flex;justify-content:space-between;gap:8px;margin-bottom:6px}
+label.fld .lab b{color:var(--blue);font-weight:600}
+input[type=range]{width:100%;accent-color:var(--blue);height:22px}
+select,input[type=text]{width:100%;font-family:var(--f-body);font-size:14px;padding:8px 10px;border-radius:7px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:var(--f-mono);font-size:11.5px;font-weight:500;padding:5px 10px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink-3);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.chip:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2.5px solid var(--blue);outline-offset:2px}
+button{font-family:var(--f-body);cursor:pointer}
+.btn{background:var(--ink);color:var(--surface);border:1px solid var(--ink);border-radius:7px;padding:8px 14px;font-size:13.5px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--ink-2);border-color:var(--line)}
+
+/* details */
+details{border:1px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden}
+details+details{margin-top:8px}
+summary{cursor:pointer;padding:13px 16px;font-family:var(--f-display);font-weight:700;font-size:15px;display:flex;align-items:center;gap:10px;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'+';margin-left:auto;font-family:var(--f-mono);color:var(--ink-4);font-size:17px}
+details[open] summary::after{content:'\2212'}
+details[open] summary{border-bottom:1px solid var(--line-2)}
+.det-body{padding:16px}
+.det-body>*:last-child{margin-bottom:0}
+
+/* checklist */
+.chk{display:flex;gap:11px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--surface);margin-bottom:7px}
+.chk input{margin-top:3px;accent-color:var(--green);width:17px;height:17px;flex:0 0 auto}
+.chk.done .chk-t{text-decoration:line-through;color:var(--ink-4)}
+.chk-t{font-size:14.5px}
+.chk-m{font-family:var(--f-mono);font-size:11px;color:var(--ink-4);display:block;margin-top:2px}
+.prog{height:9px;border-radius:5px;background:var(--line-2);overflow:hidden;margin:8px 0 18px}
+.prog i{display:block;height:100%;background:var(--green);transition:width .3s}
+
+/* chart */
+.chartbox{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;box-shadow:var(--shadow)}
+svg.chart{width:100%;height:auto;display:block;overflow:visible}
+.ax{stroke:var(--line);stroke-width:1}
+.gl{stroke:var(--line-2);stroke-width:1}
+.axt{fill:var(--ink-4);font-family:'IBM Plex Mono',monospace;font-size:10.5px}
+.legend{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}
+.lg{display:flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:11.5px;padding:4px 9px;border-radius:6px;border:1px solid var(--line);cursor:pointer;background:var(--surface);color:var(--ink-2)}
+.lg[aria-pressed="false"]{opacity:.35}
+.lg i{width:11px;height:11px;border-radius:2px;flex:0 0 auto}
+
+.small{font-size:13px;color:var(--ink-3)}
+.mb0{margin-bottom:0}
+hr.rule{border:none;border-top:1px solid var(--line);margin:44px 0 0}
+ul.tight{margin:0 0 .8em;padding-left:19px}
+ul.tight li{margin-bottom:5px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:13.5px}
+.kv dt{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-4);padding-top:3px}
+.kv dd{margin:0}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media(max-width:640px){body{font-size:15px}.wrap{padding:0 14px 70px}.nav-in,.mast-in{padding:0 14px}}
+</style>
+
+<div class="mast">
+  <div class="mast-in">
+    <div class="rail"><i style="background:var(--blue)"></i><i style="background:var(--amber)"></i><i style="background:var(--teal)"></i><i style="background:var(--green)"></i><i style="background:var(--violet)"></i><i style="background:var(--mag)"></i><i style="background:var(--red)"></i></div>
+    <div class="eyebrow">Perth, Western Australia &middot; Age 31 &middot; 40-year horizon</div>
+    <h1>Engineer<br>to Owner</h1>
+    <p class="sub">A brutally realistic income strategy for an electrical/project engineer who already earns more than most of the careers he is thinking of switching into. Fifty-six occupations scored, seven pathways modelled, and one answer.</p>
+    <div class="meta">
+      <span class="tag">$115&ndash;145k package</span>
+      <span class="tag">Site-based OK &middot; no FIFO</span>
+      <span class="tag">Renting &middot; no dependents</span>
+      <span class="tag">High-value &gt; high-hours</span>
+      <span class="tag" id="savedTag" hidden>Setup saved</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav"><div class="nav-in">
+  <a href="#verdict">Verdict</a><a href="#setup">Your setup</a><a href="#explorer">56 occupations</a>
+  <a href="#ai">AI impact</a><a href="#surveying">Surveying</a><a href="#medical">Medicine</a>
+  <a href="#roi">Medical ROI</a><a href="#weekend">Weekend income</a><a href="#ladder">$500&rarr;$5k</a>
+  <a href="#house">House building</a><a href="#study">Study ROI</a><a href="#licence">Electrical licence</a>
+  <a href="#paths">7 pathways</a><a href="#aiproof">AI-proof rank</a><a href="#forty">40-year model</a>
+  <a href="#top10">Top 10</a><a href="#plan">The plan</a><a href="#not">Don't do this</a><a href="#final">One page</a>
+</div></div>
+
+<div class="wrap">
+
+<section id="verdict">
+  <div class="sec-h"><span class="sec-n">00</span><h2>The answer, before the 17 parts</h2></div>
+  <p class="lede">You asked seventeen questions. Sixteen of them are downstream of this one finding: <strong>you are already in the highest-paying occupation on your own list that you can reach without a decade of retraining.</strong> The money is not in changing careers. It is in changing <em>how you sell</em> the career you have.</p>
+
+  <div class="grid g4" style="margin-bottom:14px">
+    <div class="tile" style="--c:var(--blue)"><div class="k">Your discipline's Perth ceiling</div><div class="v">$220k</div><div class="d">Electrical Project Manager averages <span class="num">$165k</span> in Perth; senior/commissioning contract roles clear <span class="num">$220k+</span>. You are 2&ndash;4 years away.</div></div>
+    <div class="tile" style="--c:var(--teal)"><div class="k">Quantity surveyor, Perth average</div><div class="v">$80k</div><div class="d">A <strong>pay cut of $40&ndash;60k</strong>. Roughly half the careers in your brief pay less than you earn today.</div></div>
+    <div class="tile" style="--c:var(--mag)"><div class="k">Medicine breaks even at age</div><div class="v">~63</div><div class="d">Cumulative after-tax, against simply staying an engineer. Thirty-two years behind to buy eight years ahead. The maths is in Part 7.</div></div>
+    <div class="tile" style="--c:var(--green)"><div class="k">The actual play</div><div class="v">EC + nominee</div><div class="d">You can <strong>own a licensed electrical contracting business without being an electrician</strong>. WA law permits it explicitly. Nobody told you this.</div></div>
+  </div>
+
+  <div class="call law">
+    <h4>⚡ The single most valuable fact in this document</h4>
+    <p class="mb0">WA's Electricity (Licensing) Regulations 1991, reg. 36, requires that <strong>the applicant, <em>or at least one person in the employ of the applicant</em></strong>, holds a current WA Electrician's Licence. That means the electrician's licence attaches to <em>a person you employ</em> — not to you, the owner. Your engineering degree will never get you an electrician's licence (Part 11 explains why in detail), but it does not need to. You hire the licence. You own the company, the client relationships, the estimating capability and the equity. This is the difference between earning $165k and owning something worth several million.</p>
+  </div>
+</section>
+
+<section id="setup">
+  <div class="sec-h"><span class="sec-n">01</span><h2>Your setup</h2></div>
+  <p class="lede">Everything below re-computes from these. Change them and the rankings, the crossover ages and the 40-year model all move. Your figures are saved to this page.</p>
+  <div class="panel">
+    <div class="grid g3">
+      <label class="fld"><span class="lab">Current package <b><span id="l-pkg" class="num"></span></b></span><input type="range" id="i-pkg" min="90" max="220" step="5" value="130"></label>
+      <label class="fld"><span class="lab">Weekend hours you'll actually do <b><span id="l-hrs" class="num"></span></b></span><input type="range" id="i-hrs" min="0" max="24" step="2" value="7"></label>
+      <label class="fld"><span class="lab">Your billable weekend rate <b><span id="l-rate" class="num"></span></b></span><input type="range" id="i-rate" min="40" max="220" step="10" value="140"></label>
+      <label class="fld"><span class="lab">Savings you can deploy <b><span id="l-cap" class="num"></span></b></span><input type="range" id="i-cap" min="0" max="400" step="10" value="60"></label>
+      <label class="fld"><span class="lab">Annual living cost <b><span id="l-burn" class="num"></span></b></span><input type="range" id="i-burn" min="35" max="120" step="5" value="60"></label>
+      <label class="fld"><span class="lab">Risk appetite <b><span id="l-risk"></span></b></span><input type="range" id="i-risk" min="1" max="3" step="1" value="2"></label>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;align-items:center">
+      <button class="btn" id="save">Save my setup</button>
+      <button class="btn ghost" id="reset">Reset to defaults</button>
+      <span class="small" id="saveMsg"></span>
+    </div>
+  </div>
+
+  <div class="grid g4" style="margin-top:14px">
+    <div class="tile" style="--c:var(--green)"><div class="k">Weekend income at your settings</div><div class="v num" id="o-wk"></div><div class="d" id="o-wk-d"></div></div>
+    <div class="tile" style="--c:var(--blue)"><div class="k">Added per year, after tax</div><div class="v num" id="o-yr"></div><div class="d">On top of your salary, taxed at your marginal rate. This is the number that compounds.</div></div>
+    <div class="tile" style="--c:var(--amber)"><div class="k">Years to a 20% deposit</div><div class="v num" id="o-dep"></div><div class="d" id="o-dep-d"></div></div>
+    <div class="tile" style="--c:var(--violet)"><div class="k">Surplus you can invest yearly</div><div class="v num" id="o-sur"></div><div class="d">Salary + weekend income, less tax and living costs. The engine for everything in Part 9 and Part 15.</div></div>
+  </div>
+</section>
+
+<section id="explorer">
+  <div class="sec-h"><span class="sec-n">02&ndash;04</span><h2>Fifty-six occupations, scored</h2></div>
+  <p class="lede">Every occupation you listed plus the ones your list was missing. Sorted by ROI for <em>you</em> by default. <strong>Fit</strong> weighs your electrical degree, your 3+ years of Australian site and project experience, and how much of it survives the move. Filter, sort, and open any row for the full seventeen-point breakdown.</p>
+
+  <div class="panel" style="margin-bottom:14px">
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+      <label class="fld"><span class="lab">Search</span><input type="text" id="q" placeholder="estimator, commissioning, GP&hellip;"></label>
+      <label class="fld"><span class="lab">Sort by</span><select id="sort">
+        <option value="roi">ROI for you</option><option value="fit">Fit with your background</option>
+        <option value="exp">Experienced income</option><option value="top">Top income</option>
+        <option value="ai">AI resilience</option><option value="biz">Business potential</option>
+        <option value="time">Fastest to benefit</option>
+      </select></label>
+    </div>
+    <div style="margin-top:13px"><span class="lab" style="font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-4);font-weight:600">Category</span>
+      <div class="chips" id="cats" style="margin-top:7px"></div>
+    </div>
+    <div style="margin-top:11px"><span class="lab" style="font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-4);font-weight:600">Verdict</span>
+      <div class="chips" id="recs" style="margin-top:7px"></div>
+    </div>
+    <p class="small" style="margin:12px 0 0" id="count"></p>
+  </div>
+
+  <div class="tw"><table>
+    <thead><tr>
+      <th>Occupation</th><th class="n">Start</th><th class="n">Experienced</th><th class="n">Top</th>
+      <th class="n">Weekend</th><th>Study</th><th class="n">Cost</th><th class="n">Time</th>
+      <th class="n">AI exp.</th><th>Class</th><th class="n">Biz</th><th class="n">Fit</th><th>Verdict</th>
+    </tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+  <p class="small" style="margin-top:10px">Income figures are Perth/WA employee packages including superannuation, in 2026 dollars, drawn from SEEK role data, PayScale and current advertised roles. Contractor and owner figures are separated in each row's detail. <strong>AI exp.</strong> is exposure out of 100 — higher means more of the role's tasks are addressable by current and near-term AI. Exposure is not extinction; see the next section.</p>
+
+  <div class="grid g2" style="margin-top:18px">
+    <div class="call hack"><h4>💰 Money play — the estimating arbitrage</h4><p class="mb0">Electrical estimating pays <span class="num">$130k</span> as a Perth employee, which is barely above where you are. But estimating sold <em>by the tender</em> rather than by the year is a different business. Subcontractors bidding $200k&ndash;$2M electrical packages routinely have no in-house estimator and lose bids on bad take-offs. A competent freelance estimator charges <span class="num">$110&ndash;180/hr</span> or a fixed <span class="num">$1,500&ndash;4,000</span> per tender. You can do this on Saturdays, from home, with the skills you already have and zero new qualifications. It is the highest $/hour thing on this entire page that you can start this month.</p></div>
+    <div class="call warn"><h4>🚫 Reality check — half your list is a demotion</h4><p class="mb0">Quantity Surveyor (<span class="num">~$80k</span>), Survey Assistant (<span class="num">~$60&ndash;85k</span>), Construction Project Coordinator (<span class="num">~$90&ndash;120k</span>), Pharmacist (<span class="num">~$105k</span>), OT and Physio (<span class="num">~$100k</span>), Med Lab Scientist (<span class="num">~$95k</span>) all pay less than you earn now — and most require years of study to get there. Wanting a change is legitimate. Calling it a wealth strategy is not.</p></div>
+  </div>
+</section>
+
+<section id="ai">
+  <div class="sec-h"><span class="sec-n">03</span><h2>What AI actually does to these jobs</h2></div>
+  <p class="lede">Jobs and Skills Australia's Gen AI Capacity Study (August 2025) is the authoritative Australian evidence, and it says something more specific than the headlines: <strong>augmentation outweighs automation, 79% of Australian workers face low or very low automation risk, and there is no evidence to date of broad AI-driven upheaval</strong> — but occupations with high exposure have grown <em>more slowly</em> than others. That is the finding to plan around: not extinction, but a slow squeeze on entry-level headcount in exposed roles.</p>
+
+  <div class="grid g4" style="margin-bottom:16px">
+    <div class="tile" style="--c:var(--green)"><div class="k">JSA: low/very low automation risk</div><div class="v">79%</div><div class="d">Of Australian workers. Automation risk concentrates in routine clerical and administrative work — not site, not liability-bearing, not physical.</div></div>
+    <div class="tile" style="--c:var(--blue)"><div class="k">PwC AU 2026: AI-skill wage premium</div><div class="v">62%</div><div class="d">Up from 57% the prior year. AI-skilled workers show a median <span class="num">$143k</span> against a workforce median near <span class="num">$104k</span>.</div></div>
+    <div class="tile" style="--c:var(--amber)"><div class="k">AI job postings, AU</div><div class="v">2×</div><div class="d">From ~20,000 (2024) to ~41,000 (2025) after four flat years. Demand is for AI <em>users</em>, not just AI builders — 19,300 of the increase.</div></div>
+    <div class="tile" style="--c:var(--red)"><div class="k">Energy &amp; Resources AI premium</div><div class="v">8%</div><div class="d">The lowest of any sector. Your industry pays badly for AI skill <em>as an employee</em> — which is precisely why you should sell it as a service instead.</div></div>
+  </div>
+
+  <div class="call note"><h4>⚠️ The nuance that matters for your decade</h4><p class="mb0">The threat to you is not that AI does your job. It is that AI removes the <em>bottom rungs</em> — the graduate who used to do take-offs, mark up drawings, chase RFIs and compile O&amp;M manuals. Those tasks are genuinely going. What rises in value is the opposite set: <strong>signing off, walking the site, carrying liability, negotiating a variation, deciding what the model got wrong.</strong> Every one of those is an experience-gated, licence-gated, or relationship-gated task. Your strategy should be to move <em>up</em> that stack as fast as possible and to never again compete on tasks a graduate with a good model could do.</p></div>
+
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><h3 style="margin-bottom:10px">Tasks that disappear</h3><ul class="tight mb0">
+      <li>Manual quantity take-offs and BOM transcription from drawings</li>
+      <li>First-pass cable sizing, voltage drop and discrimination checks</li>
+      <li>Drafting and revision markup from redlines (AutoCAD Electrical)</li>
+      <li>Compiling O&amp;M manuals, ITP packs and test-sheet collation</li>
+      <li>Standard specification and scope-of-works writing</li>
+      <li>Programme updates from progress data; routine progress reporting</li>
+      <li>First-draft RFIs, transmittals and document control</li>
+    </ul></div>
+    <div class="card"><h3 style="margin-bottom:10px">Tasks that become more valuable</h3><ul class="tight mb0">
+      <li>Physical commissioning, live testing, HV switching, fault-finding</li>
+      <li>Signing off compliance and carrying the professional liability</li>
+      <li>Variation and extension-of-time negotiation; adjudication</li>
+      <li>Judging what the model, digital twin or BIM clash report got wrong</li>
+      <li>Client relationships, tender strategy and subcontractor selection</li>
+      <li>Supervising licensed trades and owning site safety outcomes</li>
+      <li>Pricing risk — the one thing no model will underwrite for you</li>
+    </ul></div>
+  </div>
+
+  <div class="call hack" style="margin-top:14px"><h4>💰 Money play — sell the productivity, don't donate it</h4><p class="mb0">If AI lets you produce a tender in 3 hours that used to take 12, an employer captures 100% of that gain and your salary does not move — the 8% Energy &amp; Resources premium is the proof. A client paying you a <em>fixed fee per tender</em> captures none of it. Same work, same output, and your effective rate goes from <span class="num">$140/hr</span> to <span class="num">$450/hr</span>. This is the entire economic argument for building a service business rather than chasing an AI-skills pay rise inside your current job.</p></div>
+</section>
+
+<section id="surveying">
+  <div class="sec-h"><span class="sec-n">05</span><h2>"Surveyors make a lot of money"</h2></div>
+  <p class="lede">Investigated seriously, and the claim is mostly false in the form you heard it. It is true for exactly two groups: <strong>licensed cadastral surveyors who own a practice</strong>, and <strong>mine surveyors on FIFO rosters</strong> — which you have ruled out. For everyone else, surveying pays about what construction pays, and the licensed version costs you six years to reach.</p>
+
+  <div class="tw" style="margin-bottom:14px"><table>
+    <thead><tr><th>Discipline</th><th>What they actually do</th><th class="n">Perth start</th><th class="n">Senior</th><th class="n">Contract rate</th><th>Qualification &amp; time from today</th><th class="n">AI exp.</th></tr></thead>
+    <tbody>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--teal)"></span>Cadastral / Licensed Land</td><td>Defines legal boundaries; subdivisions, strata, easements. Statutory monopoly under the Licensed Surveyors Act 1909.</td><td class="n">$75&ndash;95k</td><td class="n">$140&ndash;200k</td><td class="n">$900&ndash;1,400/day</td><td>Curtin BSurv (Hons) <strong>4 yrs full-time</strong> + Professional Training Agreement <strong>2 yrs</strong> + 5 cadastral projects + Survey Law exam + 3 field exams + Board interview. <strong>≈6 years.</strong></td><td class="n">45</td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--teal)"></span>Engineering Surveyor</td><td>Control networks, as-builts, deformation monitoring, setout for civil and structural works.</td><td class="n">$85&ndash;100k</td><td class="n">$130&ndash;170k</td><td class="n">$700&ndash;950/day</td><td>Associate Degree or Diploma (Spatial). 1&ndash;2 yrs part-time. No registration required.</td><td class="n">55</td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--teal)"></span>Construction / Setout</td><td>Sets out building lines, levels, penetrations on site. Total station and GNSS work.</td><td class="n">$90&ndash;105k</td><td class="n">$135&ndash;175k</td><td class="n">$650&ndash;900/day</td><td>Tickets plus on-the-job. Fastest entry, lowest ceiling. No registration required.</td><td class="n">58</td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--teal)"></span>Mine Surveyor (WA)</td><td>Pit design, volumes, stockpiles, statutory mine plans. Highest paid — and almost entirely FIFO.</td><td class="n">$120&ndash;140k</td><td class="n">$180&ndash;240k</td><td class="n">$1,000&ndash;1,400/day</td><td>BSurv + WA Mine Surveyor's Certificate of Competency. ≈5&ndash;6 yrs. <strong>You ruled out FIFO.</strong></td><td class="n">40</td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--green)"></span>Quantity Surveyor</td><td>Measures and prices building work; cost plans, progress claims, variations, final accounts.</td><td class="n">$70&ndash;85k</td><td class="n">$110&ndash;160k</td><td class="n">$700&ndash;1,100/day</td><td>AIQS-accredited Grad Dip / Master. 2 yrs part-time <strong>while working</strong>. Then AIQS membership.</td><td class="n">65</td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--violet)"></span>Building Surveyor</td><td>Certifies building compliance against the NCC; issues certificates of design compliance. Registered with the WA Building Services Board.</td><td class="n">$95&ndash;115k</td><td class="n">$145&ndash;200k</td><td class="n">$800&ndash;1,200/day</td><td>Accredited Diploma/Degree + BSB registration. 2&ndash;3 yrs part-time. <strong>Statutory role — genuinely AI-protected.</strong></td><td class="n">40</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="grid g2">
+    <div class="call warn"><h4>🔴 Should you become a surveyor? No.</h4>
+      <p>Your electrical engineering degree earns you <strong>almost no credit</strong> toward a Bachelor of Surveying — the overlap is first-year maths and a little computing. Curtin runs the only comprehensive surveying honours degree in WA, it is four years, and cadastral registration then requires a further two-year Professional Training Agreement with five submitted survey projects, a Survey Law exam, three practical field exams and a Board interview.</p>
+      <p class="mb0">You would surrender <span class="num">$130k</span> a year to study, re-enter at <span class="num">$85k</span>, and reach licensed-surveyor money around <strong>age 38</strong> — roughly what you would earn as an Electrical Project Manager at 34 with no study at all. The statutory monopoly is real and the practice-ownership ceiling is genuinely high, but you are paying six years and a career reset to buy it. <strong>Do not pursue.</strong></p></div>
+    <div class="call note"><h4>🟡 Is quantity surveying better for you? As a skill, yes. As a career change, no.</h4>
+      <p>QS averages <span class="num">~$80k</span> in Perth. Changing careers into it is a <span class="num">$50k</span> pay cut to learn measurement and contract administration — most of which you would absorb anyway by moving into estimating or contracts administration in your own discipline, at your current salary, with no tuition.</p>
+      <p class="mb0"><strong>But the qualification has one genuinely valuable use</strong>, and it is not a job. See the depreciation play below.</p></div>
+  </div>
+
+  <div class="call hack" style="margin-top:14px"><h4>💰 Money play — the tax depreciation monopoly</h4>
+    <p>This is the single legitimate "surveyors make a lot of money" story, and almost nobody outside the profession knows it. The ATO accepts construction-cost estimates for capital works deductions from a <strong>very short list of qualified professionals — and quantity surveyors are the primary one.</strong> Property investors need a depreciation schedule for essentially every investment property.</p>
+    <p class="mb0">A schedule sells for <span class="num">$600&ndash;900</span>, takes a competent QS <strong>2&ndash;3 hours</strong> once templated, and every investor who buys a property needs one exactly once. The work is repeatable, remote, weekend-compatible, and protected by a professional-body requirement rather than by skill. Ten schedules a month is <span class="num">$72&ndash;108k/year</span> of side revenue. This — not employment as a QS — is the reason to consider an AIQS-accredited Graduate Diploma, and it is the only reason.</p></div>
+
+  <div class="call hack" style="margin-top:14px"><h4>💰 Money play — sell survey services without ever being a surveyor</h4>
+    <p class="mb0">Only <em>cadastral</em> work is legally reserved. Engineering survey, setout, as-builts, volumes, reality capture and scan-to-BIM are <strong>completely unregulated</strong>. A drone plus a terrestrial scanner is a <span class="num">$25&ndash;60k</span> capital purchase that bills <span class="num">$1,200&ndash;2,500/day</span> for as-built capture and progress documentation, and construction clients want it monthly. You can own that business, employ or subcontract the operator, and never sit a Survey Law exam. If surveying attracts you commercially, buy the revenue — do not buy the degree.</p></div>
+</section>
+
+<section id="medical">
+  <div class="sec-h"><span class="sec-n">06</span><h2>Medicine, taken seriously</h2></div>
+  <p class="lede">You asked me not to dismiss medicine for taking a long time, and I won't. I will dismiss it for a different reason: <strong>the WA entry gate is realistically closed to you, and even if it weren't, the money never catches up.</strong> Here is the whole picture, including the healthcare options your list missed that actually suit an engineer.</p>
+
+  <div class="grid g4" style="margin-bottom:16px">
+    <div class="tile" style="--c:var(--mag)"><div class="k">UWA interview cohort, avg GAMSAT</div><div class="v">68.5</div><div class="d">Domestic applicants who secured a 2026-entry interview. UWA also requires GPA ≥ 5.5 and weights selection 60% GPA / 40% GAMSAT.</div></div>
+    <div class="tile" style="--c:var(--mag)"><div class="k">Notre Dame Fremantle minimum</div><div class="v">52</div><div class="d">GAMSAT ≥52 unweighted with no section under 50, GPA ≥5.2, plus Casper. Weighted 30:30:30:10. Your realistic WA door.</div></div>
+    <div class="tile" style="--c:var(--amber)"><div class="k">WA intern salary (PGY1)</div><div class="v">$90.9k</div><div class="d">At age 37, after four years of near-zero income. You earn more than this today, at 31, with no debt.</div></div>
+    <div class="tile" style="--c:var(--green)"><div class="k">WA GP, average</div><div class="v">$283k</div><div class="d">Reached around age 40&ndash;41 on the fastest realistic path. Typically as a contractor retaining 60&ndash;70% of billings.</div></div>
+  </div>
+
+  <div class="call warn"><h4>🔴 The two problems nobody mentions when they say "you could do medicine"</h4>
+    <p><strong>1. Your GPA is the binding constraint, not the GAMSAT.</strong> GEMSAS computes GPA from your most recent three years of full-time-equivalent study, and overseas undergraduate degrees are assessed inconsistently — some schools will not weight a COMSATS bachelor's at all, leaving your La Trobe Master of Engineering Management carrying the entire GPA. If that master's did not finish above a distinction average, UWA's 5.5 threshold is closed and Notre Dame's 5.2 is tight. <strong>Check this before you spend a dollar on GAMSAT prep.</strong> It is a free email to GEMSAS and it determines whether any of this is real.</p>
+    <p class="mb0"><strong>2. Full-fee places are financially catastrophic here.</strong> A CSP defers <span class="num">$13,558/year</span> to HECS-HELP in 2026 — about <span class="num">$54k</span> across the MD, which is fine. A domestic full-fee MD place runs <span class="num">$70&ndash;95k/year</span>, or <span class="num">$300k+</span> total, against a 2026 medicine HELP borrowing cap of <span class="num">$186,544</span>. You would fund the gap in cash while earning nothing. If you cannot secure a CSP, the answer is simply no.</p></div>
+
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><h3 style="margin-bottom:10px">The realistic timeline, if everything goes right</h3>
+      <dl class="kv">
+        <dt>Age 31&ndash;32</dt><dd>GAMSAT prep and sitting (~$600/sitting, often two attempts), GEMSAS application. Still working full-time.</dd>
+        <dt>Age 33&ndash;36</dt><dd>MD, four years full-time. Income near zero; casual work only. Clinical years make employment impossible.</dd>
+        <dt>Age 37</dt><dd>Intern, PGY1, WA: <span class="num">$90,864</span>.</dd>
+        <dt>Age 38</dt><dd>RMO, PGY2: <span class="num">~$100k</span>.</dd>
+        <dt>Age 39&ndash;41</dt><dd>GP registrar, AGPT: <span class="num">$120&ndash;140k</span>.</dd>
+        <dt>Age 41</dt><dd>FRACGP. WA GP average <span class="num">$283k</span>.</dd>
+        <dt>Age 45&ndash;48</dt><dd>Alternative: specialist fellowship. Then <span class="num">$350&ndash;500k+</span>; surgery averages <span class="num">$472k</span> taxable, anaesthetics <span class="num">$447k</span>.</dd>
+      </dl></div>
+    <div class="card"><h3 style="margin-bottom:10px">What your engineering background is actually worth here</h3>
+      <p>Close to nothing for admission — no prerequisite advantage, no credit, no shortened programme. GAMSaT Section III (biological and physical sciences) is the one place your physics and maths genuinely help, and it is a third of one exam.</p>
+      <p class="mb0">It matters later, not earlier: engineers do well in <strong>radiology, radiation oncology, interventional specialties and medical administration</strong>, and an engineering background is a real advantage in health-technology and device work. But none of that changes the ten-year hole in the middle.</p></div>
+  </div>
+
+  <div class="call hack" style="margin-top:14px"><h4>💰 The healthcare options your list missed — and one is genuinely good for you</h4>
+    <ul class="mb0">
+      <li><strong>Radiation Oncology Medical Physicist</strong> — entry is a <em>physics or engineering</em> degree plus a 2-year accredited Master of Medical Physics, then the 3-year ACPSEM TEAP registrar programme, <em>which is paid</em>. Around <span class="num">$150&ndash;200k</span> qualified, highly protected by registration and liability, and your degree is an accepted entry qualification. This is the only clinical career on this page where your existing education is an asset rather than a sunk cost.</li>
+      <li><strong>Medical device technical sales / applications engineering</strong> — <span class="num">$110k</span> to <span class="num">$300k</span> OTE, no further study at all, and it directly monetises an engineering degree plus commissioning experience. Highest income-per-year-of-study of anything in healthcare for you.</li>
+      <li><strong>Clinical / biomedical engineering</strong> — <span class="num">$95&ndash;180k</span>, hospital-based, entry with a graduate certificate or often none. Comfortable but a lateral move financially.</li>
+      <li><strong>Dentistry</strong> — a better financial argument than medicine: four-year graduate DMD, qualified around 36&ndash;37, <span class="num">$150&ndash;200k</span> employed and <span class="num">$300&ndash;500k</span> as a practice owner, with practice ownership available roughly a decade earlier than in medicine. Still not better than the plan in Part 17, but if you insist on a clinical career, dentistry beats medicine on ROI.</li>
+    </ul></div>
+</section>
+
+<section id="roi">
+  <div class="sec-h"><span class="sec-n">07</span><h2>When does medicine overtake engineering?</h2></div>
+  <p class="lede">Cumulative after-tax income, both paths, from today. Australian resident rates for 2026&ndash;27 plus 2% Medicare, HECS repayments and tuition included, all in today's dollars. The answer is the number in red, and it moves with your setup above.</p>
+
+  <div class="grid g4" style="margin-bottom:16px">
+    <div class="tile" style="--c:var(--red)"><div class="k">GP overtakes engineering at age</div><div class="v num" id="x-gp"></div><div class="d">Against you simply staying an engineer and progressing normally to Engineering Manager. Not against the business path.</div></div>
+    <div class="tile" style="--c:var(--red)"><div class="k">Specialist overtakes at age</div><div class="v num" id="x-sp"></div><div class="d">Higher income, but a deeper and longer hole to climb out of first.</div></div>
+    <div class="tile" style="--c:var(--amber)"><div class="k">Peak cash deficit</div><div class="v num" id="x-gap"></div><div class="d">How far behind you fall at the worst point, around age 41. This is the real cost of the decision.</div></div>
+    <div class="tile" style="--c:var(--green)"><div class="k">vs. the recommended path</div><div class="v">Never</div><div class="d">Against the engineer-to-owner path in Part 17, medicine does not catch up within a working lifetime.</div></div>
+  </div>
+
+  <div class="tw" style="margin-bottom:14px"><table>
+    <thead><tr><th>Window</th><th>Medicine (GP)</th><th>Stay in engineering</th><th class="n">Cumulative gap</th></tr></thead>
+    <tbody>
+      <tr><td class="occ-name">Years 0&ndash;5 · age 31&ndash;36</td><td>GAMSAT and application (year 1, still working), then 4 years MD. Tuition <span class="num">$54k</span> HECS on a CSP. Income near zero from year 2.</td><td>Senior Engineer then Electrical Project Manager. <span class="num">$130k → $180k</span>.</td><td class="n" id="g5"></td></tr>
+      <tr><td class="occ-name">Years 5&ndash;10 · age 36&ndash;41</td><td>Intern <span class="num">$90.9k</span> → RMO <span class="num">$100k</span> → GP registrar <span class="num">$120&ndash;140k</span>. HECS repayments begin.</td><td>Engineering/Project Manager <span class="num">$190&ndash;220k</span>, plus weekend estimating income compounding.</td><td class="n" id="g10"></td></tr>
+      <tr><td class="occ-name">Years 10&ndash;20 · age 41&ndash;51</td><td>FRACGP. <span class="num">$283k</span> WA average, contractor basis at 60&ndash;70% of billings.</td><td>Engineering Manager <span class="num">$230&ndash;260k</span>, or business owner well above it.</td><td class="n" id="g20"></td></tr>
+      <tr><td class="occ-name">Years 20&ndash;40 · age 51&ndash;71</td><td><span class="num">$300&ndash;400k</span>, or practice ownership above that. Long career; medicine ages well.</td><td>Director, consultant or owner. Wider spread, higher ceiling, sellable equity.</td><td class="n" id="g40"></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="grid g2">
+    <div class="call warn"><h4>🔴 The financial verdict</h4><p class="mb0">Medicine is a <strong>late-life income annuity bought with your entire thirties</strong>. It wins eventually because doctors earn well for a very long time — but "eventually" lands in your sixties, and only against the passive version of your current career. Against a version of you who becomes an Electrical PM at 34 and owns an electrical contracting business at 38, medicine never catches up at all. As a wealth strategy it is comprehensively dominated.</p></div>
+    <div class="call note"><h4>⚠️ The non-financial factors, honestly</h4><p class="mb0">Medicine offers something engineering does not: near-absolute employment security, geographic mobility across every country in the developed world, unambiguous social standing, and work that is meaningful on the worst day. It also offers night shift into your fifties, a documented burnout problem, and a decade of being the oldest person in the room and the most junior. <strong>If you want to be a doctor, be a doctor — that is a legitimate reason and no spreadsheet overrides it. Just don't tell yourself it is the money.</strong></p></div>
+  </div>
+</section>
+
+<section id="weekend">
+  <div class="sec-h"><span class="sec-n">08</span><h2>Twenty-two weekend income options</h2></div>
+  <p class="lede">You said you would rather charge <span class="num">$150/hr</span> for six hours than <span class="num">$40/hr</span> for twenty. That single preference eliminates about half the list you gave me — labouring, traffic control, delivery, warehouse and event work are all included below and all rated honestly, which means rated poorly. Sorted by effective hourly rate.</p>
+
+  <div class="tw" style="margin-bottom:14px"><table>
+    <thead><tr><th>Option</th><th class="n">Rate</th><th class="n">Per weekend</th><th>Entry requirement</th><th class="n">Start in</th><th>Career value</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--blue)"></span>Freelance electrical estimating</td><td class="n">$110&ndash;180/hr</td><td class="n">$700&ndash;1,400</td><td>None. Your existing skills. A laptop and Bluebeam or Cubit.</td><td class="n">2 wks</td><td>Very high — becomes the business</td><td><span class="b b-1">🥇 START HERE</span></td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--blue)"></span>Switchboard / GA &amp; schedule design</td><td class="n">$100&ndash;160/hr</td><td class="n">$600&ndash;1,200</td><td>AutoCAD Electrical + your switchroom manufacturing experience.</td><td class="n">2 wks</td><td>Very high — feeds panel-build business</td><td><span class="b b-1">🥇 STRONGLY REC</span></td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--red)"></span>AI-assisted tender &amp; submission production</td><td class="n">$120&ndash;200/hr</td><td class="n">$700&ndash;1,600</td><td>None. Domain knowledge plus tooling you already use.</td><td class="n">2 wks</td><td>Very high — productisable</td><td><span class="b b-1">🥇 STRONGLY REC</span></td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--blue)"></span>Weekend commissioning / shutdown support</td><td class="n">$95&ndash;150/hr</td><td class="n">$900&ndash;1,800</td><td>White card, employer conflict check, site inductions.</td><td class="n">4&ndash;8 wks</td><td>Very high — day rates compound</td><td><span class="b b-1">STRONGLY REC</span></td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--green)"></span>Tax depreciation schedules</td><td class="n">$200&ndash;300/hr eff.</td><td class="n">$600&ndash;1,800</td><td>AIQS-accredited Grad Dip (2 yrs part-time) then membership.</td><td class="n">2 yrs</td><td>High — annuity-like, remote</td><td><span class="b b-2">RECOMMEND</span></td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--teal)"></span>Drone / scan-to-BIM as-built capture</td><td class="n">$1,200&ndash;2,500/day</td><td class="n">$1,200&ndash;2,500</td><td>CASA RePL + ReOC (~$3&ndash;5k), scanner $25&ndash;60k.</td><td class="n">3 mths</td><td>High — asset-backed</td><td><span class="b b-2">RECOMMEND</span></td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--blue)"></span>Expert technical documentation &amp; O&amp;M packs</td><td class="n">$90&ndash;140/hr</td><td class="n">$550&ndash;1,100</td><td>None. Your existing documentation experience.</td><td class="n">2 wks</td><td>Medium — AI is eroding this</td><td><span class="b b-2">RECOMMEND</span></td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--red)"></span>Test-equipment hire (Omicron, Megger, thermal)</td><td class="n">$400&ndash;1,500/day</td><td class="n">passive</td><td>$40&ndash;80k capital, calibration, insurance.</td><td class="n">6 mths</td><td>High — true passive income</td><td><span class="b b-2">RECOMMEND</span></td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--amber)"></span>Construction contract / variation consulting</td><td class="n">$120&ndash;250/hr</td><td class="n">$700&ndash;2,000</td><td>WA Security of Payment Act knowledge; reputation.</td><td class="n">6&ndash;12 mths</td><td>Very high</td><td><span class="b b-2">RECOMMEND</span></td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--blue)"></span>PLC / SCADA weekend changeovers</td><td class="n">$110&ndash;170/hr</td><td class="n">$800&ndash;1,500</td><td>Existing PLC/SCADA skills; site access.</td><td class="n">1&ndash;3 mths</td><td>High</td><td><span class="b b-2">RECOMMEND</span></td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--red)"></span>Thermographic switchboard surveys</td><td class="n">$600&ndash;1,200/day</td><td class="n">$600&ndash;1,200</td><td>Level 1 thermography (~$3k), camera ($8&ndash;25k). Non-contact — no electrical licence needed for the survey itself.</td><td class="n">2&ndash;3 mths</td><td>High — recurring annual contracts</td><td><span class="b b-2">RECOMMEND</span></td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--amber)"></span>Owner's-side project management, small builds</td><td class="n">$100&ndash;150/hr</td><td class="n">$600&ndash;1,200</td><td>None formally. Your PM experience.</td><td class="n">1&ndash;3 mths</td><td>Very high — property gateway</td><td><span class="b b-2">RECOMMEND</span></td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--blue)"></span>CAD drafting subcontract</td><td class="n">$65&ndash;110/hr</td><td class="n">$400&ndash;850</td><td>None. AutoCAD Electrical.</td><td class="n">1 wk</td><td>Low — most AI-exposed thing you can sell</td><td><span class="b b-3">CONSIDER</span></td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--amber)"></span>Building inspections (pre-purchase)</td><td class="n">$400&ndash;700/inspection</td><td class="n">$800&ndash;2,100</td><td>Cert IV Building &amp; Construction; PI insurance.</td><td class="n">9&ndash;12 mths</td><td>Medium&ndash;high</td><td><span class="b b-3">CONSIDER</span></td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--teal)"></span>Survey assistant / chainman</td><td class="n">$35&ndash;48/hr</td><td class="n">$280&ndash;480</td><td>White card. That's it.</td><td class="n">1 wk</td><td>Low — you already outrank this</td><td><span class="b b-4">LOW PRIORITY</span></td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--amber)"></span>Construction labourer</td><td class="n">$35&ndash;45/hr</td><td class="n">$280&ndash;450</td><td>White card.</td><td class="n">1 wk</td><td>Low</td><td><span class="b b-4">LOW PRIORITY</span></td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--blue)"></span>Electrical trade assistant</td><td class="n">$32&ndash;45/hr</td><td class="n">$260&ndash;450</td><td>White card. <strong>Cannot lead to a licence</strong> — see Part 11.</td><td class="n">1 wk</td><td>Low — a common and costly misconception</td><td><span class="b b-5">DO NOT</span></td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--amber)"></span>Traffic management</td><td class="n">$35&ndash;50/hr</td><td class="n">$280&ndash;500</td><td>Traffic controller ticket (~$400).</td><td class="n">2 wks</td><td>None</td><td><span class="b b-5">DO NOT</span></td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--violet)"></span>Warehouse / site logistics</td><td class="n">$32&ndash;42/hr</td><td class="n">$260&ndash;420</td><td>Forklift ticket helps.</td><td class="n">1 wk</td><td>None</td><td><span class="b b-5">DO NOT</span></td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--violet)"></span>Delivery driving</td><td class="n">$25&ndash;38/hr</td><td class="n">$200&ndash;380</td><td>Licence and a vehicle.</td><td class="n">3 days</td><td>None — and it costs you your car</td><td><span class="b b-5">DO NOT</span></td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--violet)"></span>Event work</td><td class="n">$30&ndash;45/hr</td><td class="n">$240&ndash;450</td><td>RSA or crowd control card.</td><td class="n">2 wks</td><td>None</td><td><span class="b b-5">DO NOT</span></td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--red)"></span>Rideshare</td><td class="n">$22&ndash;32/hr net</td><td class="n">$180&ndash;320</td><td>Vehicle, F-endorsement.</td><td class="n">2 wks</td><td>Negative — vehicle depreciation</td><td><span class="b b-5">DO NOT</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="call warn"><h4>🚫 The trap in the bottom third of that table</h4><p class="mb0">Trade assistant, labouring, traffic control, delivery and event work all pay <span class="num">$25&ndash;50/hr</span> and are individually harmless. Collectively they are the most expensive thing on this page, because they consume the exact 8&ndash;16 hours a week that the top third of the table needs — and unlike the top third, they never compound, never build a client list, and never become a business. <strong>Selling hours at $40 to fund a life where you sell hours at $40 is how a decade disappears.</strong></p></div>
+</section>
+
+<section id="ladder">
+  <div class="sec-h"><span class="sec-n">14</span><h2>$500 → $1,000 → $2,000 → $5,000+ a week</h2></div>
+  <p class="lede">Each stage is a change in <em>what you sell</em>, not how many hours you work. Hours stay roughly constant at 8&ndash;12 a weekend the whole way up. That constraint is what forces the model to be a business rather than a second job.</p>
+
+  <div class="grid g4">
+    <div class="tile" style="--c:var(--green)"><div class="k">Stage 1 · months 1&ndash;6</div><div class="v">$500</div><div class="d"><strong>Sell your hours.</strong> Freelance estimating and switchboard schedules for 2&ndash;3 electrical subcontractors. 4&ndash;6 hrs at <span class="num">$110&ndash;140/hr</span>. ABN, PI insurance, invoice, done. The only goal is proving someone pays you directly.</div></div>
+    <div class="tile" style="--c:var(--blue)"><div class="k">Stage 2 · months 6&ndash;18</div><div class="v">$1,000</div><div class="d"><strong>Sell the deliverable.</strong> Stop billing hourly. Fixed fee per tender: <span class="num">$1,500&ndash;4,000</span>. Your AI-assisted workflow cuts a 12-hour tender to 4 and you keep 100% of that gain. Same weekend, double the money.</div></div>
+    <div class="tile" style="--c:var(--amber)"><div class="k">Stage 3 · years 2&ndash;4</div><div class="v">$2,000</div><div class="d"><strong>Sell other people's hours.</strong> Subcontract drafting and take-offs to two offshore or junior draftees at <span class="num">$25&ndash;40/hr</span>, you review and sign. Add retainers: <span class="num">$2&ndash;4k/month</span> per contractor for all tender support. Revenue detaches from your weekend.</div></div>
+    <div class="tile" style="--c:var(--red)"><div class="k">Stage 4 · years 3&ndash;7</div><div class="v">$5,000+</div><div class="d"><strong>Sell licensed work at a margin.</strong> Register the EC licence with an employed licensed electrician as nominee. You now bill installed electrical work, not advice — <span class="num">$300k&ndash;3M</span> revenue at 12&ndash;22% net. Plus panel build, plus equipment hire.</div></div>
+  </div>
+
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><h3 style="margin-bottom:10px">What you can personally perform</h3><ul class="tight mb0">
+      <li>Estimating, take-offs, tender preparation and adjudication</li>
+      <li>Electrical design, schematics, GA drawings, cable and panel schedules</li>
+      <li>Specification writing, technical documentation, O&amp;M compilation</li>
+      <li>Project management, programming, procurement, expediting</li>
+      <li>Commissioning management and witness testing (as engineer, not as installer)</li>
+      <li>Thermography, condition monitoring, non-contact inspection</li>
+      <li>Contract administration, variations, EOT claims, adjudication support</li>
+      <li>Owner's-side PM and superintendent representative work</li>
+    </ul></div>
+    <div class="card"><h3 style="margin-bottom:10px">What requires a licensed person you employ or engage</h3><ul class="tight mb0">
+      <li><strong>Any electrical installation work</strong> — WA Electrician's Licence, no exceptions</li>
+      <li><strong>Contracting for electrical work</strong> — EC licence, held by the business, requires a licensed electrician in your employ</li>
+      <li><strong>Disconnect / reconnect</strong> — restricted electrical licence, and it requires a <em>trade</em> qualification you do not have</li>
+      <li><strong>Cadastral boundary surveys</strong> — Licensed Surveyor with a current practising certificate</li>
+      <li><strong>Certificates of design compliance</strong> — registered Building Surveyor</li>
+      <li><strong>Building work over $20,000 requiring a permit</strong> — registered Building Contractor</li>
+      <li><strong>Depreciation schedules for the ATO</strong> — a qualified quantity surveyor</li>
+    </ul></div>
+  </div>
+  <div class="call law" style="margin-top:14px"><h4>⚖️ The structural insight</h4><p class="mb0">Look at the right-hand column again. <strong>Every item on it can be satisfied by someone you employ or engage.</strong> None of them requires the <em>owner</em> to hold the licence. The licences are barriers to entry that protect your margin once you are inside — and the cheapest way inside is to hire the credential rather than spend six years earning it. That is the whole strategy in one sentence.</p></div>
+</section>
+
+<section id="house">
+  <div class="sec-h"><span class="sec-n">09</span><h2>Into house building without burning your career</h2></div>
+  <p class="lede">The map you sketched — engineer, then weekend site exposure, then construction, then builder — has one flaw: <strong>the weekend-labouring rung is unnecessary and costs you two years.</strong> You already have Australian electrical construction and site experience. You do not need to carry materials on Saturdays to prove you understand a build.</p>
+
+  <div class="tw" style="margin-bottom:14px"><table>
+    <thead><tr><th>Rung</th><th>How you enter from here</th><th class="n">Salary</th><th class="n">5 yr</th><th class="n">10 yr</th><th>Property relevance</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr><td class="occ-name">Electrical / Site Engineer</td><td>You are here. Bias new roles toward <em>building</em> construction rather than industrial.</td><td class="n">$130k</td><td class="n">$180k</td><td class="n">$230k</td><td>Medium</td><td><span class="b b-1">CURRENT</span></td></tr>
+      <tr><td class="occ-name">Contracts Administrator</td><td>Direct lateral move, same or better pay. Learn variations, EOTs, progress claims and the Security of Payment Act.</td><td class="n">$130k</td><td class="n">$170k</td><td class="n">$220k</td><td><strong>Very high</strong> — this is where build margin is made or lost</td><td><span class="b b-1">🥇 STRONGLY REC</span></td></tr>
+      <tr><td class="occ-name">Construction Estimator</td><td>Direct move. Also your weekend business.</td><td class="n">$140k</td><td class="n">$180k</td><td class="n">$230k</td><td><strong>Very high</strong> — you learn what a house actually costs</td><td><span class="b b-1">🥇 STRONGLY REC</span></td></tr>
+      <tr><td class="occ-name">Site Supervisor</td><td>Requires a step down in title, rarely in pay. Best done inside a builder, not a subcontractor.</td><td class="n">$155k</td><td class="n">$185k</td><td class="n">$210k</td><td>High — counts toward builder registration</td><td><span class="b b-2">RECOMMEND</span></td></tr>
+      <tr><td class="occ-name">Construction Project Manager</td><td>2&ndash;3 years after moving to a head contractor.</td><td class="n">$180k</td><td class="n">$220k</td><td class="n">$260k</td><td>High</td><td><span class="b b-2">RECOMMEND</span></td></tr>
+      <tr><td class="occ-name">Construction Manager</td><td>Year 8&ndash;12.</td><td class="n">$230k</td><td class="n">&mdash;</td><td class="n">$300k</td><td>High</td><td><span class="b b-2">RECOMMEND</span></td></tr>
+      <tr><td class="occ-name">Registered Builder</td><td>CPC50220 Diploma of Building &amp; Construction (or RPL / Board exams) <strong>plus 5&ndash;7 years supervisory experience</strong>, then BP00 practitioner and BC00 contractor registration with the WA Building Services Board.</td><td class="n">owner draw $150k</td><td class="n">$250k</td><td class="n">$400k+</td><td><strong>Maximum</strong> — you become the margin</td><td><span class="b b-3">CONSIDER — year 5+</span></td></tr>
+      <tr><td class="occ-name">Property Developer</td><td>Needs capital before it needs qualifications. You are renting; this is a year-5 conversation, not a year-1 one.</td><td class="n">variable</td><td class="n">$60&ndash;150k</td><td class="n">$150k&ndash;1M+</td><td><strong>Maximum</strong></td><td><span class="b b-3">CONSIDER — year 5+</span></td></tr>
+      <tr><td class="occ-name">Construction labourer / TA</td><td>Weekend entry, immediately available.</td><td class="n">$40/hr</td><td class="n">&mdash;</td><td class="n">&mdash;</td><td>Low — teaches you almost nothing you don't know</td><td><span class="b b-5">SKIP THIS RUNG</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="grid g2">
+    <div class="call hack"><h4>💰 Money play — the builder registration shortcut</h4><p class="mb0">The WA Building Services Board runs <strong>five</strong> registration pathways, not one. The standard route is the CPC50220 Diploma plus seven years' supervisory experience, but a separate pathway exists for people holding a <strong>relevant degree or membership of a professional building institution with five years' experience</strong>. An accredited engineering degree plus documented construction supervision can qualify you under a shorter pathway than the trade route. Ask the Board directly which pathway your specific degree and experience fit <em>before</em> enrolling in a diploma you may not need. That single phone call is potentially worth two years and $12,000.</p></div>
+    <div class="call note"><h4>⚠️ Owner-builder is not the hack people think</h4><p class="mb0">WA owner-builder approval is restricted to your own property and you can generally only obtain it <strong>once every six years</strong>. It is a way to save margin on a single home. It is not a business, it is not repeatable, and it does not build toward registration. Use it once, deliberately, on your own place — not as a strategy.</p></div>
+  </div>
+</section>
+
+<section id="licence">
+  <div class="sec-h"><span class="sec-n">11</span><h2>WA electrical licensing — what you can and can't do</h2></div>
+  <p class="lede">This is the part of your brief with the most widely believed misinformation, so I'll be blunt: <strong>there is no accelerated, RPL, or degree-recognition pathway from an electrical engineering degree to a WA electrician's licence. None. Your degree is worth zero here.</strong> And it does not matter, for the reason in the green box.</p>
+
+  <div class="grid g2" style="margin-bottom:14px">
+    <div class="card" style="border-left:5px solid var(--green)"><h3 style="margin-bottom:10px">What you can legally do today</h3><ul class="tight mb0">
+      <li>Design electrical installations, systems and switchboards</li>
+      <li>Specify, estimate, procure and project-manage electrical work</li>
+      <li>Supervise and direct licensed electricians on a project basis</li>
+      <li><strong>Witness and manage testing and commissioning</strong> — the licensed person performs the work</li>
+      <li>Non-contact inspection: thermography, condition monitoring, audits</li>
+      <li>Extra-low-voltage work (below 50 V AC / 120 V DC) — controls, instrumentation, comms</li>
+      <li><strong>Own and direct an EC-licensed electrical contracting business</strong></li>
+    </ul></div>
+    <div class="card" style="border-left:5px solid var(--red)"><h3 style="margin-bottom:10px">What you cannot do</h3><ul class="tight mb0">
+      <li>Any electrical installation work on low-voltage installations — full stop</li>
+      <li>Disconnect or reconnect fixed wiring, including "just" an isolator</li>
+      <li>Test-and-tag or issue an electrical safety certificate in your own name</li>
+      <li>Advertise or contract for electrical work without an EC licence</li>
+      <li>Obtain a <strong>restricted electrical licence</strong> — the REL requires a <em>trade</em> qualification (plumber, refrigeration mechanic, fitter). An engineering degree does not qualify. This door is closed.</li>
+    </ul></div>
+  </div>
+
+  <div class="call warn"><h4>🔴 The apprenticeship reality, so you can stop wondering</h4><p class="mb0">A WA electrician's licence requires a <strong>four-year apprenticeship with a licensed employer</strong>, a Certificate III in Electrotechnology Electrician (UEE30820), and a Capstone Assessment. There is no mature-age fast track and no degree credit. As an apprentice you would earn roughly <span class="num">$25&ndash;55k</span> a year for four years — a cumulative income loss of well over <span class="num">$350,000</span> against your current salary — to obtain a licence whose ceiling as a working electrician is below what you already earn. The Electrician's Training Licence and worker permits you may have read about exist for apprentices and for overseas-qualified <em>tradespeople</em> completing gap training, not for engineers. <strong>Do not do this.</strong></p></div>
+
+  <div class="call hack" style="margin-top:14px"><h4>💰 Money play — hire the licence, own the company</h4>
+    <p>WA's Electricity (Licensing) Regulations, reg. 36, requires that the EC licence applicant <strong>or at least one person in the applicant's employ</strong> holds a current WA Electrician's Licence, and that this person has completed the Electrical Contractor's Training Programme modules covering Operation (Electrical) Legislative Requirements and Electrical Requirements. The nominee can be an employee. You, the owner, need no electrical licence at all.</p>
+    <p class="mb0"><strong>The practical shape:</strong> you hold the client relationships, do the estimating and tendering (your genuine edge), run the projects and own 100% of the equity. Your nominated licensed electrician — a good A-grade sparky costs <span class="num">$120&ndash;150k</span> plus a package — carries the technical licence and signs the compliance certificates. Cost to establish: EC licence application, the nominee's ECTP modules, PI and public liability insurance, and working capital. <strong>Total under <span class="num">$40k</span> against a four-year apprenticeship costing you $350k+ in foregone income.</strong> This is the arbitrage. Verify the current requirements with Building and Energy before you commit, and never perform or direct unlicensed electrical work — the whole point of this structure is that it is legitimate.</p></div>
+</section>
+
+<section id="study">
+  <div class="sec-h"><span class="sec-n">10</span><h2>Should you study anything at all?</h2></div>
+  <p class="lede">Mostly no. You already hold a bachelor's and a master's, and the binding constraint on your income is not credentials — it is that you sell your time to one employer. Almost every qualification below buys less than <strong>one good conversation with a recruiter</strong> would. Three are worth doing.</p>
+
+  <div class="tw" style="margin-bottom:14px"><table>
+    <thead><tr><th>Option</th><th class="n">Cost</th><th class="n">Time</th><th class="n">Lost income</th><th class="n">Income effect</th><th>ROI</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr><td class="occ-name">Nothing — change employer &amp; sector instead</td><td class="n">$0</td><td class="n">3 mths</td><td class="n">$0</td><td class="n">+$20&ndash;45k</td><td>Infinite</td><td><span class="b b-1">🥇 DO THIS FIRST</span></td></tr>
+      <tr><td class="occ-name">Construction tickets (White Card, HV switching, confined space, working at heights, LV rescue, EWP)</td><td class="n">$1.5&ndash;3k</td><td class="n">2&ndash;6 wks</td><td class="n">$0</td><td class="n">+$15&ndash;40k</td><td>Exceptional</td><td><span class="b b-1">🥇 STUDY THIS</span></td></tr>
+      <tr><td class="occ-name">Business setup: ABN, PI/PL insurance, Xero, contracts</td><td class="n">$2&ndash;4k/yr</td><td class="n">2 wks</td><td class="n">$0</td><td class="n">+$25&ndash;70k</td><td>Exceptional</td><td><span class="b b-1">🥇 DO THIS</span></td></tr>
+      <tr><td class="occ-name">Estimating software: Cubit, Bluebeam Revu, Simpro</td><td class="n">$1&ndash;3k</td><td class="n">4&ndash;8 wks</td><td class="n">$0</td><td class="n">enables the business</td><td>Exceptional</td><td><span class="b b-1">🥇 STUDY THIS</span></td></tr>
+      <tr><td class="occ-name">Engineers Australia CPEng / NER registration</td><td class="n">$1.5&ndash;3k</td><td class="n">3&ndash;6 mths</td><td class="n">$0</td><td class="n">+$10&ndash;25k</td><td>Strong — and increasingly a tender requirement</td><td><span class="b b-1">STUDY THIS</span></td></tr>
+      <tr><td class="occ-name">Primavera P6 / planning certification</td><td class="n">$2&ndash;4k</td><td class="n">6&ndash;10 wks</td><td class="n">$0</td><td class="n">+$10&ndash;20k</td><td>Good</td><td><span class="b b-2">MAYBE</span></td></tr>
+      <tr><td class="occ-name">CASA RePL + ReOC (drone)</td><td class="n">$3&ndash;5k</td><td class="n">2&ndash;4 wks</td><td class="n">$0</td><td class="n">service revenue</td><td>Good, if you pursue reality capture</td><td><span class="b b-2">MAYBE</span></td></tr>
+      <tr><td class="occ-name">AIQS-accredited Grad Dip Quantity Surveying</td><td class="n">$22&ndash;35k</td><td class="n">2 yrs PT</td><td class="n">$0 (work while studying)</td><td class="n">depreciation revenue only</td><td>Good <em>only</em> for the depreciation business; poor as a career change</td><td><span class="b b-2">MAYBE</span></td></tr>
+      <tr><td class="occ-name">CPC50220 Diploma of Building &amp; Construction</td><td class="n">$8&ndash;14k</td><td class="n">1&ndash;2 yrs PT</td><td class="n">$0</td><td class="n">path to builder registration</td><td>Good — but confirm which BSB pathway you need first</td><td><span class="b b-2">MAYBE — year 3+</span></td></tr>
+      <tr><td class="occ-name">MBA</td><td class="n">$60&ndash;120k</td><td class="n">2&ndash;4 yrs PT</td><td class="n">$0</td><td class="n">+$0&ndash;15k in this industry</td><td>Poor — WA construction and resources do not price it</td><td><span class="b b-4">DO NOT</span></td></tr>
+      <tr><td class="occ-name">Another master's in engineering</td><td class="n">$40&ndash;70k</td><td class="n">2&ndash;3 yrs</td><td class="n">$0</td><td class="n">+$0&ndash;5k</td><td>Negative — you already have one and it isn't the constraint</td><td><span class="b b-5">DO NOT</span></td></tr>
+      <tr><td class="occ-name">Bachelor of Surveying (Curtin)</td><td class="n">$38&ndash;50k</td><td class="n">4 yrs FT</td><td class="n">$450k+</td><td class="n">&minus;$45k on re-entry</td><td>Severely negative</td><td><span class="b b-5">DO NOT</span></td></tr>
+      <tr><td class="occ-name">Electrical apprenticeship</td><td class="n">$3&ndash;6k</td><td class="n">4 yrs</td><td class="n">$350k+</td><td class="n">&minus;$40k on completion</td><td>Severely negative</td><td><span class="b b-5">DO NOT</span></td></tr>
+      <tr><td class="occ-name">Doctor of Medicine (CSP)</td><td class="n">$54k HECS</td><td class="n">4 yrs + 4&ndash;8 training</td><td class="n">$700k+</td><td class="n">breaks even ~age 62</td><td>Negative on a 40-year horizon</td><td><span class="b b-5">DO NOT (for money)</span></td></tr>
+      <tr><td class="occ-name">Doctor of Medicine (full fee)</td><td class="n">$300k+</td><td class="n">4 yrs + 4&ndash;8 training</td><td class="n">$700k+</td><td class="n">may never break even</td><td>Severely negative</td><td><span class="b b-5">DO NOT</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="call note"><h4>⚠️ The uncomfortable pattern</h4><p class="mb0">Every item in the top five costs under <span class="num">$5,000</span>, takes under three months, and requires you to <em>act</em>. Every item in the bottom five costs years and requires you only to <em>enrol</em>. Enrolling feels like progress and defers the harder thing, which is picking up the phone and asking a stranger to pay you. Notice which of these you find more appealing — that reaction is the actual finding.</p></div>
+</section>
+
+<section id="paths">
+  <div class="sec-h"><span class="sec-n">12</span><h2>Seven pathways, year by year</h2></div>
+  <p class="lede">All seven modelled from today at age 31. Income is total package in 2026 dollars. Open each for the qualifications, capital, risk and lifestyle detail.</p>
+
+  <div class="tw" style="margin-bottom:14px"><table>
+    <thead><tr><th>Pathway</th><th class="n">Yr 0</th><th class="n">Yr 1</th><th class="n">Yr 2</th><th class="n">Yr 3</th><th class="n">Yr 5</th><th class="n">Yr 10</th><th class="n">Yr 20</th><th class="n">Risk</th><th class="n">Capital</th></tr></thead>
+    <tbody>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--blue)"></span>1 · High-income engineer</td><td class="n">$130k</td><td class="n">$150k</td><td class="n">$165k</td><td class="n">$180k</td><td class="n">$200k</td><td class="n">$235k</td><td class="n">$260k</td><td class="n">Low</td><td class="n">$0</td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--amber)"></span>2 · Construction management</td><td class="n">$130k</td><td class="n">$145k</td><td class="n">$165k</td><td class="n">$185k</td><td class="n">$215k</td><td class="n">$260k</td><td class="n">$300k</td><td class="n">Low</td><td class="n">$0</td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--teal)"></span>3 · Surveying</td><td class="n">$55k</td><td class="n">$25k</td><td class="n">$25k</td><td class="n">$25k</td><td class="n">$95k</td><td class="n">$165k</td><td class="n">$240k</td><td class="n">High</td><td class="n">$50k</td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--green)"></span>4 · Quantity surveying</td><td class="n">$130k</td><td class="n">$130k</td><td class="n">$110k</td><td class="n">$130k</td><td class="n">$160k</td><td class="n">$215k</td><td class="n">$270k</td><td class="n">Medium</td><td class="n">$30k</td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--violet)"></span>5 · Property developer</td><td class="n">$130k</td><td class="n">$150k</td><td class="n">$170k</td><td class="n">$185k</td><td class="n">$240k</td><td class="n">$350k</td><td class="n">$600k+</td><td class="n">Very high</td><td class="n">$250k+</td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--amber)"></span>6 · Registered builder</td><td class="n">$130k</td><td class="n">$150k</td><td class="n">$170k</td><td class="n">$190k</td><td class="n">$220k</td><td class="n">$330k</td><td class="n">$500k+</td><td class="n">High</td><td class="n">$150k</td></tr>
+      <tr><td class="occ-name"><span class="cat-dot" style="background:var(--mag)"></span>7 · Medicine</td><td class="n">$130k</td><td class="n">$15k</td><td class="n">$15k</td><td class="n">$15k</td><td class="n">$91k</td><td class="n">$283k</td><td class="n">$340k</td><td class="n">Medium</td><td class="n">$54k+</td></tr>
+      <tr style="background:var(--green-soft)"><td class="occ-name"><span class="cat-dot" style="background:var(--red)"></span><strong>8 · Engineer to owner (recommended)</strong></td><td class="n">$130k</td><td class="n">$155k</td><td class="n">$185k</td><td class="n">$215k</td><td class="n">$280k</td><td class="n">$450k</td><td class="n">$700k+</td><td class="n">Medium</td><td class="n">$40k</td></tr>
+    </tbody>
+  </table></div>
+
+  <details open><summary><span class="b b-1">🥇</span> Path 8 — Engineer to owner (the one I actually recommend)</summary><div class="det-body">
+    <p><strong>The shape:</strong> keep the salary the entire time. Build the client base on weekends at high margin. Convert it to a licensed entity around year 3&ndash;4, hire the credential rather than earn it, and let the salary de-risk the business until the business outgrows the salary.</p>
+    <dl class="kv">
+      <dt>Year 0&ndash;1</dt><dd>Move to an Electrical PM or estimating role at a contractor or head contractor (<span class="num">$150&ndash;165k</span>). Register an ABN, take PI and public liability cover, land your first three freelance estimating clients. Weekend income <span class="num">$500&ndash;800</span>.</dd>
+      <dt>Year 1&ndash;2</dt><dd>Switch from hourly to fixed-fee per tender. Build the AI-assisted tender workflow. Add switchboard schedule and GA design work. Weekend <span class="num">$1,000&ndash;1,400</span>. Bank essentially all of it.</dd>
+      <dt>Year 2&ndash;3</dt><dd>Add retainers with 2&ndash;4 electrical subcontractors. Subcontract take-offs and drafting; you review and sign. Consider CPEng/NER. Side revenue <span class="num">$80&ndash;120k/yr</span>.</dd>
+      <dt>Year 3&ndash;5</dt><dd>Recruit a licensed A-grade electrician as nominee, apply for the EC licence, take on small installed works and panel builds. First hire. Owner income <span class="num">$250&ndash;300k</span>. Buy your first property with the accumulated deposit.</dd>
+      <dt>Year 5&ndash;10</dt><dd>4&ndash;12 staff, <span class="num">$1.5&ndash;5M</span> revenue at 12&ndash;22% net. Add test-equipment hire and thermography contracts. Owner income <span class="num">$400&ndash;500k</span>. Begin small residential development using the trade relationships you now control.</dd>
+      <dt>Year 10&ndash;20</dt><dd>Business with genuine enterprise value (electrical contractors trade at roughly 3&ndash;5× EBITDA), a property portfolio built at cost rather than retail, and the optionality to sell, semi-retire, or keep going. <strong>This is the only pathway here that produces a sellable asset.</strong></dd>
+    </dl>
+    <p class="mb0 small" style="margin-top:10px"><strong>Risk:</strong> real but bounded — you keep the salary until year 4, and the worst case is you return to a job you were always qualified for, having learnt to sell. <strong>Capital:</strong> ~$40k, funded from weekend income, not savings. <strong>Lifestyle:</strong> hard years 1&ndash;4, then progressively better. <strong>AI:</strong> you own the productivity gain instead of donating it.</p>
+  </div></details>
+
+  <details><summary><span class="b b-2">1</span> High-income engineer — the safe baseline</summary><div class="det-body"><p>Senior Engineer → Electrical Project Manager (<span class="num">$165k</span> Perth average) → Engineering/Project Manager → Engineering Manager (<span class="num">$220&ndash;300k</span>) → principal consultant or contractor. Zero study beyond tickets and CPEng. Zero capital. Very low risk.</p><p class="mb0">Accelerate it by moving into a <strong>constrained speciality</strong>: HV protection and control, BESS and grid connection, or data centre electrical. WA has a structural shortage in all three and they pay <span class="num">$20&ndash;50k</span> above generalist project engineering. <strong>This is your floor, and it is a good floor — but it plateaus around $260k and produces nothing you can sell.</strong></p></div></details>
+
+  <details><summary><span class="b b-2">2</span> Construction management</summary><div class="det-body"><p class="mb0">Move to a head contractor as Site Engineer or Contracts Administrator, then Construction PM (<span class="num">$180&ndash;240k</span>), then Construction Manager (<span class="num">$230&ndash;300k</span>). No study required. Slightly higher ceiling than pure engineering, more commercial exposure, and it feeds directly into Paths 5 and 6. Strong second choice, and it combines well with Path 8.</p></div></details>
+
+  <details><summary><span class="b b-5">3</span> Surveying — modelled for completeness, not recommendation</summary><div class="det-body"><p class="mb0">Four years at Curtin (income collapses to casual), two-year Professional Training Agreement, five cadastral projects, Survey Law exam, three field exams, Board interview. Licensed around age 38&ndash;39 at <span class="num">$140k</span> — below where Path 1 puts you at the same age with no study and no lost income. Practice ownership eventually reaches <span class="num">$250&ndash;400k</span>. <strong>You can reach that income faster and more safely through Path 8.</strong></p></div></details>
+
+  <details><summary><span class="b b-3">4</span> Quantity surveying</summary><div class="det-body"><p class="mb0">Grad Dip part-time while working (no lost income), then a <span class="num">$20k</span> pay cut to enter as a QS, recovering by year 4&ndash;5, then Senior QS and Commercial Manager (<span class="num">$200&ndash;270k</span>). Respectable but strictly slower than Path 2 to the same destination. <strong>Take the qualification for the depreciation business; skip the job.</strong></p></div></details>
+
+  <details><summary><span class="b b-3">5</span> Property developer</summary><div class="det-body"><p>You are renting with no equity, so this cannot start now — and anyone telling you otherwise is selling a course. Sequence: income first, then deposit, then a first owner-occupier purchase, then equity, then a first small development around year 5&ndash;7.</p><p class="mb0">Your edge when you get there is real: with construction and estimating capability you project-manage your own builds and capture the <strong>15&ndash;22% builder's margin</strong> other developers pay away. Focus on Perth middle-ring subdivision and duplex sites in R30&ndash;R60 zones near Metronet corridors. Very high risk, very high reward, and it should be funded by Path 8, not attempted instead of it.</p></div></details>
+
+  <details><summary><span class="b b-3">6</span> Registered builder</summary><div class="det-body"><p class="mb0">CPC50220 (or an alternative BSB pathway your degree may satisfy) plus 5&ndash;7 years documented supervisory experience, then BP00 and BC00 registration. Realistically year 6&ndash;8 from today. Building companies are capital-hungry, cash-flow-brutal and insolvency-prone — WA has watched a lot of them fail. <strong>Worth holding as an option once Path 8 is running, because an electrical contracting business teaches you the trade-management skills a builder needs, at far lower risk.</strong></p></div></details>
+
+  <details><summary><span class="b b-5">7</span> Medicine</summary><div class="det-body"><p class="mb0">Covered fully in Parts 6 and 7. Entry gate realistically closed at UWA (68.5 average GAMSAT for interview), tight at Notre Dame, GPA dependent on how GEMSAS treats your overseas bachelor's. Financial break-even around age 62 against Path 1 and never against Path 8. <strong>Pursue only as a vocation.</strong></p></div></details>
+</section>
+
+<section id="aiproof">
+  <div class="sec-h"><span class="sec-n">13</span><h2>The AI-proof ranking</h2></div>
+  <p class="lede">Scored on your ten criteria: income, AI resilience, human judgement, licensing barriers, physical-world requirement, regulatory protection, scarcity, business potential, property opportunity and international mobility. The pattern is stark — <strong>everything at the top either carries a licence, carries liability, or has to be done with a body on a site.</strong></p>
+  <div class="tw"><table>
+    <thead><tr><th class="n">#</th><th>Strategy</th><th class="n">Score</th><th>Why it survives</th></tr></thead>
+    <tbody id="aiRank"></tbody>
+  </table></div>
+</section>
+
+<section id="forty">
+  <div class="sec-h"><span class="sec-n">15</span><h2>Forty years, ten strategies</h2></div>
+  <p class="lede">Cumulative after-tax income net of tuition, lost earnings and HECS, in today's dollars, from age 31 to 71. Toggle any line. Switch between conservative and high-performance assumptions. These are modelled estimates, not forecasts — the <em>shape</em> and the <em>ordering</em> are the point, not the third digit.</p>
+
+  <div class="panel" style="margin-bottom:14px">
+    <div class="chips" style="margin-bottom:6px">
+      <button class="chip" id="sc-cons" aria-pressed="true">Conservative</button>
+      <button class="chip" id="sc-high" aria-pressed="false">High performance</button>
+    </div>
+    <p class="small mb0" id="scNote"></p>
+  </div>
+
+  <div class="chartbox">
+    <svg class="chart" id="chart" viewBox="0 0 960 440" role="img" aria-label="Cumulative after-tax income by strategy, ages 31 to 71"></svg>
+    <div class="legend" id="legend"></div>
+  </div>
+
+  <div class="grid g4" style="margin-top:14px">
+    <div class="tile" style="--c:var(--green)"><div class="k">Lifetime leader</div><div class="v" style="font-size:20px" id="f-win"></div><div class="d" id="f-win-d"></div></div>
+    <div class="tile" style="--c:var(--blue)"><div class="k">At age 45, ahead by</div><div class="v num" id="f-45"></div><div class="d">Engineer-to-owner versus staying a salaried engineer. The gap opens early and never closes.</div></div>
+    <div class="tile" style="--c:var(--red)"><div class="k">Worst lifetime outcome</div><div class="v" style="font-size:20px" id="f-lose"></div><div class="d" id="f-lose-d"></div></div>
+    <div class="tile" style="--c:var(--amber)"><div class="k">Not shown on this chart</div><div class="v" style="font-size:20px">Equity</div><div class="d">Only Paths 5, 6 and 8 produce a <em>sellable asset</em>. A business at 3&ndash;5× EBITDA can add seven figures the income lines above do not capture.</div></div>
+  </div>
+  <p class="small" style="margin-top:10px">Assumptions: 2026&ndash;27 resident tax rates plus 2% Medicare; no indexation (today's dollars); superannuation excluded; business income taken as owner's drawings, not revenue; HECS repaid on standard thresholds. Business and development lines carry materially higher variance than salaried lines — the conservative scenario already discounts them heavily for failure risk.</p>
+</section>
+
+<section id="top10">
+  <div class="sec-h"><span class="sec-n">16</span><h2>Your top ten, scored</h2></div>
+  <p class="lede">Every strategy scored out of 100 across your eleven criteria, weighted for your actual situation: no dependents, renting, site-based but not FIFO, and a stated preference for value over hours.</p>
+  <div class="tw"><table>
+    <thead><tr><th class="n">#</th><th>Strategy</th><th class="n">Income</th><th class="n">ROI</th><th class="n">AI</th><th class="n">Qual. edge</th><th class="n">Speed</th><th class="n">Study load</th><th class="n">Weekend</th><th class="n">Business</th><th class="n">Property</th><th class="n">Wealth</th><th class="n">Life</th><th class="n">Total</th></tr></thead>
+    <tbody id="top10"></tbody>
+  </table></div>
+</section>
+
+<section id="plan">
+  <div class="sec-h"><span class="sec-n">17</span><h2>If I were you, this is exactly what I'd do</h2></div>
+  <p class="lede">Thirty-one, renting, no dependents, $130k, in the best resources-and-infrastructure economy in the country, with a technical degree and site credibility. That is an unusually strong starting hand and you are treating it like a problem to escape. <strong>Don't escape it. Monetise it.</strong> Tick these off as you go — your progress saves to this page.</p>
+  <div class="prog"><i id="progBar" style="width:0%"></i></div>
+  <p class="small" id="progTxt" style="margin-top:-10px;margin-bottom:18px"></p>
+  <div id="plan"></div>
+</section>
+
+<section id="not">
+  <div class="sec-h"><span class="sec-n">17b</span><h2>The ten things I would not do</h2></div>
+  <p class="lede">Directly, as asked.</p>
+  <div class="grid g2" id="notList"></div>
+
+  <div class="call warn" style="margin-top:16px"><h4>🔴 And one more, about this document</h4><p class="mb0">This repository already contains a weekend income comparison and a passive income plan, and now a third strategy document. <strong>That is a pattern, and the pattern is the real problem.</strong> Researching options is not progress; it feels like progress because it is comfortable, unlimited, and cannot fail. Nothing in this document earns you a dollar. The first invoice does. If you find yourself, in three months, commissioning a fourth analysis rather than having sent three emails to electrical subcontractors, then the constraint was never information and no further document will fix it.</p></div>
+</section>
+
+<section id="final">
+  <div class="sec-h"><span class="sec-n">&mdash;</span><h2>The one-page answer</h2></div>
+  <div class="grid g2" id="finals"></div>
+
+  <div class="card" style="margin-top:18px;border-left:5px solid var(--green)">
+    <h3 style="margin-bottom:10px">"What exact path should I take?"</h3>
+    <p><strong>Stay an electrical engineer, and change three things about how you sell it.</strong></p>
+    <p><strong>One — move the salary.</strong> Within six months, take an Electrical Project Manager or estimating role at a contractor or head contractor, ideally in a constrained speciality: HV protection and control, BESS and grid connection, or data centres. That is <span class="num">$165&ndash;185k</span> without a dollar of tuition, and it is the single highest-ROI action available to you. Everything else is funded by it.</p>
+    <p><strong>Two — sell the same skill directly on weekends.</strong> Freelance electrical estimating and switchboard design, starting within a month, at <span class="num">$110&ndash;180/hr</span>, moving to fixed fee per tender by month six. Six to eight hours a Saturday. This satisfies your value-over-hours preference exactly, and unlike a second job it accumulates clients, reputation and pricing power.</p>
+    <p><strong>Three — convert it into a licensed entity around year three.</strong> Employ a licensed A-grade electrician as your EC nominee. You never need an electrician's licence, an apprenticeship, a surveying degree, a QS qualification or a medical degree. You need one good sparky on the payroll and the estimating capability you already have. From there the business funds the property, the property funds itself, and by year ten you own something you can sell.</p>
+    <p class="mb0"><strong>Do not</strong> study surveying. <strong>Do not</strong> retrain as a QS to work as one. <strong>Do not</strong> start an apprenticeship. <strong>Do not</strong> do medicine unless you want to be a doctor for its own sake — and if you genuinely do, email GEMSAS about your GPA before anything else, because that one answer determines whether the question is even live.</p>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3 style="margin-bottom:10px">Sources</h3>
+    <p class="small">Salary data: SEEK role salary pages for Perth (Electrical Project Manager, Electrical Estimator, Quantity Surveyor, Estimator, Construction Administrator, Site Manager), PayScale Perth, Glassdoor Perth, current advertised roles, September 2026.</p>
+    <p class="small">Licensing and registration: <a href="https://www.wa.gov.au/organisation/service-delivery/electrical-licensing">Building and Energy WA — electrical licensing</a>; <a href="https://www.wa.gov.au/government/multi-step-guides/electrical-contractor-licensing/apply-electrical-contractors-licence">WA electrical contractor's licence (reg. 36)</a>; <a href="https://www.wa.gov.au/government/multi-step-guides/restricted-electrical-licence">WA restricted electrical licence</a>; <a href="https://www.lslb.wa.gov.au/for-graduates/">Land Surveyors Licensing Board of WA</a>; <a href="https://www.wa.gov.au/government/multi-step-guides/builders-registration">WA builders' registration</a>; <a href="https://www.aiqs.com.au/accredited-university-courses">AIQS accredited programs</a>.</p>
+    <p class="small">Medicine: <a href="https://gemsas.edu.au/schools/uwa">GEMSAS — UWA</a>; <a href="https://gemsas.edu.au/schools/notredame-fremantle">GEMSAS — Notre Dame Fremantle</a>; <a href="https://gamsat.acer.org/university-admission-australia">ACER GAMSAT</a>; <a href="https://www.studyassist.gov.au/financial-and-study-support/commonwealth-supported-places-csps">Study Assist CSP</a>; WA intern and consultant pay schedules.</p>
+    <p class="small mb0">AI and labour market: <a href="https://www.jobsandskills.gov.au/publications/generative-ai-capacity-study-report">Jobs and Skills Australia, <em>Our Gen AI Transition: Implications for Work and Skills</em> (August 2025)</a>; <a href="https://www.jobsandskills.gov.au/studies/generative-artificial-intelligence-capacity-study/occupation-data-on-ai-exposure">JSA occupational AI exposure data</a>; <a href="https://www.pwc.com.au/media/2026/2026-AI-Jobs-Barometer.html">PwC Australia 2026 AI Jobs Barometer</a>.</p>
+  </div>
+
+  <p class="small" style="margin-top:20px;padding-top:16px;border-top:1px solid var(--line)">Income figures are estimates drawn from published 2026 Australian sources and current advertised roles; they are not guarantees and individual outcomes vary widely, particularly for business and development pathways. Licensing and admission requirements change — verify current requirements directly with Building and Energy WA, the Building Services Board, the Land Surveyors Licensing Board, AIQS and GEMSAS before making any irreversible decision. This is general information, not financial, legal, tax or migration advice.</p>
+</section>
+</div>
+
+<script>
+"use strict";
+const CATS={
+ elec:{n:"Electrical / Engineering",c:"var(--blue)"},
+ cons:{n:"Construction",c:"var(--amber)"},
+ surv:{n:"Surveying / Commercial",c:"var(--teal)"},
+ prop:{n:"Property / Building",c:"var(--violet)"},
+ med:{n:"Medical / Health",c:"var(--mag)"},
+ biz:{n:"Business / AI",c:"var(--red)"}
+};
+const RECS={1:["🥇 STRONGLY RECOMMEND","b-1"],2:["🟢 RECOMMEND","b-2"],3:["🟡 CONSIDER","b-3"],4:["🟠 LOW PRIORITY","b-4"],5:["🔴 DO NOT PURSUE","b-5"]};
+const CLS={1:["🟢 Resilient","b-1"],2:["🟡 Augmented","b-2"],3:["🟠 Disrupted","b-3"],4:["🔴 High risk","b-5"]};
+
+// n=name c=cat s/e/t=start/experienced/top ($k pkg) w=weekend st=study co=cost ti=time-to-benefit
+// ai=exposure/100 cl=class bz=business/100 f=fit/100 r=recommendation d=rationale
+const OCC=[
+{n:"Electrical Project Manager",c:"elec",s:130,e:165,t:220,w:"$120–180/hr consulting",st:"None — experience only",co:"$0",ti:"1–2 yr",ai:35,cl:2,bz:70,f:94,r:1,d:"Perth average $165k, top quartile $220k. Your degree, site experience, procurement and commissioning background map onto this exactly. No study, no RPL question, no lost income — you are 1–2 promotions away. Employee $130–220k; contractor $1,100–1,500/day; as a business owner this is the role you'd hold in your own EC company. Property relevance is moderate; international mobility is strong (NZ, Canada, Middle East all recognise Australian project experience). <b>Highest ROI move available to you and it costs nothing.</b>"},
+{n:"Testing & Commissioning Engineer (HV / P&C)",c:"elec",s:115,e:175,t:260,w:"$95–150/hr weekend & shutdown",st:"HV switching, LV rescue, protection settings tickets",co:"$2–5k",ti:"6–12 mth",ai:22,cl:1,bz:75,f:88,r:1,d:"The most AI-resilient thing in your discipline: physical, live, liability-bearing, and impossible to do from a laptop. WA demand is structural — every BESS, substation, mine expansion and data centre needs it. Contractor rates $1,000–1,600/day; shutdown seasons at Alcoa, Worsley, Kwinana and Collie pay penalty rates for 2–3 week blitzes, which is exactly your site-based-not-FIFO constraint. Business potential is high (test equipment hire, thermography contracts). <b>The best defensive and offensive move simultaneously.</b>"},
+{n:"Electrical Estimator",c:"elec",s:95,e:130,t:170,w:"$110–180/hr freelance",st:"Cubit / Bluebeam self-taught",co:"$1–3k",ti:"1–3 mth",ai:58,cl:2,bz:95,f:92,r:1,d:"As an employee it's only $130k — barely a move. As a <b>freelance service</b> it's the highest-value weekend work available to you and the foundation of the whole business plan. Subcontractors bidding $200k–2M packages often have no estimator. Fixed fee $1,500–4,000/tender. AI exposure is genuinely high for the task, which is exactly why you should own the output rather than sell the hours. <b>Start this month.</b>"},
+{n:"Electrical Contractor — business owner (EC + nominee)",c:"elec",s:150,e:300,t:800,w:"n/a — it is the business",st:"None for you; nominee holds the licence",co:"$25–40k setup",ti:"3–4 yr",ai:18,cl:1,bz:100,f:75,r:1,d:"The destination. WA reg. 36 lets the electrician's licence sit with <i>an employee</i>, so you own the entity without a trade qualification. Owner drawings $150k early, $300–500k at 4–12 staff, higher with scale. Creates genuine enterprise value — electrical contractors trade around 3–5× EBITDA. Property relevance is maximum: you control trades, pricing and programme for your own developments. <b>The only option on this page that produces a sellable asset.</b>"},
+{n:"BESS / Renewables Electrical Engineer",c:"elec",s:115,e:170,t:240,w:"$100–160/hr",st:"Grid connection & AS/NZS 4777, self-directed",co:"$0–3k",ti:"6–12 mth",ai:28,cl:1,bz:70,f:85,r:1,d:"WA's SWIS transition, Collie BESS and the whole grid-scale storage pipeline are creating a shortage that pays $20–50k above generalist project engineering. Your PLC/SCADA, switchboard and commissioning background is directly transferable. Strong international mobility. Very low retraining cost for a large, fast salary step."},
+{n:"Data Centre Electrical Engineer",c:"elec",s:120,e:180,t:250,w:"$110–170/hr",st:"None — sector move",co:"$0",ti:"6–12 mth",ai:25,cl:1,bz:65,f:82,r:1,d:"Perth's data centre build-out plus AI-driven capacity demand. Critical power, UPS, generation, redundancy — all core electrical engineering. Pays a premium for commissioning discipline, which you have. Zero study; it is purely a sector switch. Excellent global mobility."},
+{n:"HV / Protection & Control Engineer",c:"elec",s:120,e:180,t:260,w:"$120–190/hr",st:"Protection settings, Omicron testing",co:"$3–8k",ti:"1–2 yr",ai:20,cl:1,bz:80,f:80,r:1,d:"Among the most protected engineering niches in Australia: scarce, safety-critical, regulator-adjacent, and physically bound to substations. Western Power, mining and renewables all compete for the same small pool. Contractor rates $1,200–1,600/day. Requires genuine upskilling but from a base you already have."},
+{n:"Commissioning Engineer",c:"elec",s:110,e:160,t:230,w:"$95–150/hr",st:"Site tickets",co:"$1.5–3k",ti:"3–6 mth",ai:25,cl:1,bz:75,f:90,r:1,d:"You already do testing and commissioning; formalising into a dedicated commissioning role lifts you $20–40k and puts you on day rates. Shutdown and weekend work is abundant and compatible with your no-FIFO constraint. Direct route into your own commissioning consultancy."},
+{n:"Electrical / Project Engineer (current)",c:"elec",s:95,e:136,t:175,w:"$110–160/hr consulting",st:"None",co:"$0",ti:"now",ai:42,cl:2,bz:60,f:98,r:2,d:"Perth average $136k; you are at market. The role itself is fine — the problem is it plateaus around $175k and every year you stay generalist is a year not spent building either a speciality or a business. Keep it as the funding base, don't keep it as the plan."},
+{n:"Controls / Automation Engineer",c:"elec",s:105,e:150,t:200,w:"$110–170/hr weekend changeovers",st:"None — you have PLC/SCADA",co:"$0–4k",ti:"6 mth",ai:48,cl:2,bz:75,f:88,r:2,d:"Directly leverages your PLC/SCADA experience. Weekend and shutdown changeover work is well paid and plentiful. Moderate AI exposure on code generation, low on physical integration and commissioning. Good business potential as a systems integrator."},
+{n:"Electrical Site Engineer",c:"elec",s:100,e:140,t:170,w:"$90–140/hr",st:"None",co:"$0",ti:"now",ai:30,cl:1,bz:55,f:95,r:2,d:"Physical, site-bound, low AI exposure. Useful if you want deeper construction exposure before moving toward building work, but the ceiling is lower than Electrical PM. A stepping stone, not a destination."},
+{n:"Electrical Design Engineer",c:"elec",s:95,e:140,t:180,w:"$90–140/hr",st:"None",co:"$0",ti:"now",ai:62,cl:3,bz:60,f:90,r:3,d:"Perfect fit with your degree and AutoCAD Electrical skills, but among the most AI-exposed roles in your discipline — schematics, schedules, cable sizing and compliance checking are all being automated fast. Valuable as a <i>service you sell</i> and as a feed into panel building; risky as a career you sit in for twenty years."},
+{n:"Engineering Manager",c:"elec",s:180,e:220,t:300,w:"limited",st:"None; CPEng helps",co:"$1.5–3k",ti:"8–10 yr",ai:30,cl:1,bz:65,f:70,r:2,d:"The top of the employed engineering ladder at $220–300k. Reached around year 8–12. Secure, well paid, and permanently capped — you are still selling your time, just at a higher rate, and you own nothing at the end."},
+{n:"Electrical Supervisor",c:"elec",s:120,e:155,t:190,w:"n/a",st:"Almost always requires an electrician's licence",co:"4-yr apprenticeship",ti:"4+ yr",ai:22,cl:1,bz:60,f:45,r:5,d:"Low AI risk and decent pay, but the role is generally gated behind a WA electrician's licence you cannot obtain without a four-year apprenticeship costing $350k+ in foregone income, for a ceiling below your current trajectory. <b>Do not pursue.</b>"},
+{n:"Contracts Administrator",c:"cons",s:100,e:130,t:180,w:"$120–250/hr claims consulting",st:"None; SOP Act knowledge",co:"$0–2k",ti:"3–6 mth",ai:52,cl:2,bz:80,f:82,r:1,d:"The most underrated move in your brief. Variations, EOTs and progress claims are where construction margin is actually made and lost, and understanding the WA Building and Construction Industry (Security of Payment) Act 2021 is directly monetisable as consulting. It is the gateway to Commercial Manager ($220–300k) and it teaches you the exact commercial skills your own business will need. Sideways in pay, enormous in optionality."},
+{n:"Construction Estimator",c:"cons",s:100,e:140,t:190,w:"$100–170/hr freelance",st:"Cubit / Buildsoft",co:"$1–3k",ti:"3–6 mth",ai:58,cl:2,bz:90,f:85,r:1,d:"Same logic as electrical estimating, broader market. Teaches you what a house actually costs to build — the single most valuable knowledge for eventual property development. Highly freelanceable. High AI exposure at task level, which again argues for owning the output."},
+{n:"Construction Project Manager",c:"cons",s:140,e:180,t:240,w:"$100–150/hr owner's-side PM",st:"None",co:"$0",ti:"2–3 yr",ai:30,cl:1,bz:80,f:80,r:2,d:"Higher ceiling than electrical PM and directly relevant to property development. Requires moving to a head contractor and accepting a broader remit. Owner's-side PM for small builds is excellent weekend work and a genuine property gateway."},
+{n:"Commercial Manager",c:"cons",s:180,e:220,t:300,w:"$150–300/hr consulting",st:"None; QS or CA background typical",co:"$0",ti:"8–10 yr",ai:38,cl:1,bz:85,f:60,r:1,d:"The highest-paid non-licensed role in construction and the natural destination from Contracts Administrator. Owns commercial risk, procurement strategy and margin across a portfolio. Very strong business and consulting potential. Reachable by year 8–10 via the CA route with zero tuition."},
+{n:"Construction Manager",c:"cons",s:180,e:230,t:300,w:"limited",st:"None",co:"$0",ti:"8–12 yr",ai:28,cl:1,bz:80,f:65,r:2,d:"Runs delivery across multiple projects. Excellent preparation for builder registration and development. Long runway, no study, high ceiling — but like Engineering Manager, you still own nothing."},
+{n:"Site Supervisor / Construction Supervisor",c:"cons",s:120,e:160,t:205,w:"$70–110/hr",st:"White card, supervisor tickets",co:"$1–2k",ti:"1–2 yr",ai:20,cl:1,bz:60,f:70,r:2,d:"Very low AI exposure — you cannot supervise a site remotely. Counts toward WA builder registration experience requirements, which matters if Path 6 interests you. Slight title step down from engineer; pay is comparable."},
+{n:"Construction Planner (P6)",c:"cons",s:110,e:155,t:200,w:"$90–140/hr",st:"Primavera P6 certification",co:"$2–4k",ti:"6–9 mth",ai:60,cl:3,bz:55,f:80,r:3,d:"Well paid and in demand on major WA infrastructure, but scheduling is squarely in AI's path — programme generation and progress-based updating are already partly automated. Take the P6 skill; don't build the career on it alone."},
+{n:"Construction Scheduler",c:"cons",s:105,e:145,t:185,w:"$80–120/hr",st:"P6",co:"$2–4k",ti:"6 mth",ai:68,cl:3,bz:45,f:78,r:4,d:"More exposed than planning and with a lower ceiling. The judgement-light end of programming is the part AI does best. Low priority."},
+{n:"Site Engineer (civil / building)",c:"cons",s:100,e:135,t:165,w:"$80–130/hr",st:"None",co:"$0",ti:"now",ai:32,cl:1,bz:55,f:85,r:2,d:"Easy lateral into building construction if you want that exposure. Pay is comparable to where you are. Useful bridge to construction management; not a destination."},
+{n:"Construction Project Coordinator",c:"cons",s:90,e:120,t:145,w:"$70–110/hr",st:"None",co:"$0",ti:"now",ai:55,cl:3,bz:40,f:88,r:4,d:"Excellent fit with your experience and a <b>$15–40k pay cut</b>. Coordination is exactly the kind of routine administrative work JSA identifies as most automation-exposed. Moving into this would be a step backwards on both income and resilience."},
+{n:"Quantity Surveyor",c:"surv",s:75,e:110,t:160,w:"$200–300/hr depreciation schedules",st:"AIQS-accredited Grad Dip / Master",co:"$22–35k",ti:"2–4 yr",ai:65,cl:3,bz:80,f:75,r:3,d:"Perth average around $80k — a $50k pay cut to change into it. High AI exposure: measurement and take-off are precisely what models do well. <b>But the qualification unlocks the ATO tax depreciation schedule monopoly</b> ($600–900 per report, 2–3 hours' work), which is genuinely excellent weekend income. Study part-time while working, take the credential, skip the job."},
+{n:"Tax Depreciation QS (own practice)",c:"surv",s:85,e:130,t:220,w:"$600–900/report",st:"AIQS membership",co:"$22–35k",ti:"2–3 yr",ai:70,cl:3,bz:90,f:70,r:3,d:"Protected by professional-body requirement rather than by skill, which is the ideal kind of moat. Remote, repeatable, weekend-compatible, annuity-like. Ten schedules a month is $72–108k/yr. The AI exposure score is high but largely irrelevant because the ATO requirement is for a <i>qualified person</i>, not a good estimate. The single best reason to study QS."},
+{n:"Building Surveyor (registered)",c:"surv",s:95,e:145,t:200,w:"$800–1,200/day",st:"Accredited qualification + WA BSB registration",co:"$15–25k",ti:"2–3 yr",ai:40,cl:2,bz:80,f:50,r:3,d:"Statutory certifier under the Building Act — issues certificates of design compliance. Genuinely regulation-protected and hard to automate because someone must carry legal liability. Your electrical degree gives limited credit; you'd need an accredited building qualification. Solid consulting business potential. Worth considering if the compliance side appeals."},
+{n:"Cost Consultant / Cost Manager",c:"surv",s:100,e:150,t:200,w:"$120–200/hr",st:"QS or estimating background",co:"$0–30k",ti:"2–3 yr",ai:62,cl:3,bz:75,f:72,r:3,d:"Better paid than QS proper and closer to commercial management. Reachable from estimating without a QS degree. Moderate-to-high AI exposure on the analytical tasks; the client-facing and risk-judgement parts hold up."},
+{n:"Mine Surveyor (WA)",c:"surv",s:120,e:180,t:240,w:"$1,000–1,400/day",st:"BSurv + WA Mine Surveyor's Certificate",co:"$40–50k",ti:"5–6 yr",ai:40,cl:2,bz:60,f:30,r:4,d:"The genuinely high-paying surveying discipline — and almost entirely FIFO, which you ruled out. Requires the full four-year surveying degree plus a statutory certificate of competency. Six years and a career reset for a residential-Perth outcome you cannot access."},
+{n:"Engineering Surveyor",c:"surv",s:85,e:130,t:170,w:"$700–950/day",st:"Associate Degree / Diploma (Spatial)",co:"$15–25k",ti:"2–3 yr",ai:55,cl:3,bz:65,f:55,r:4,d:"No registration required, so no statutory moat, and GNSS plus machine control plus scanning is automating the field work steadily. Pay is comparable to what you already earn after 2–3 years of study. Poor trade."},
+{n:"Construction / Setout Surveyor",c:"surv",s:90,e:135,t:175,w:"$650–900/day",st:"Tickets + on-the-job",co:"$3–8k",ti:"1–2 yr",ai:58,cl:3,bz:60,f:55,r:4,d:"Fastest surveying entry, lowest ceiling, and the most exposed to robotic total stations and machine guidance. Better as a service business you own than a job you hold."},
+{n:"Land / Cadastral Surveyor (licensed)",c:"surv",s:75,e:140,t:200,w:"$900–1,400/day",st:"Curtin BSurv (Hons) 4 yr FT + 2 yr PTA",co:"$38–50k + $450k lost income",ti:"6 yr",ai:45,cl:2,bz:90,f:25,r:5,d:"A real statutory monopoly under the Licensed Surveyors Act 1909 and a high practice-ownership ceiling — behind six years, a full-time degree, a two-year Professional Training Agreement, five cadastral projects, a Survey Law exam, three field exams and a Board interview. Your engineering degree earns almost no credit. You'd reach $140k at 38, which Path 1 gives you at 34 for free. <b>Do not pursue.</b>"},
+{n:"Survey Assistant / Technician",c:"surv",s:60,e:85,t:105,w:"$35–48/hr",st:"White card",co:"$150",ti:"1 wk",ai:70,cl:3,bz:20,f:40,r:5,d:"Available next weekend and pays less than half your effective rate. It does not lead anywhere without the degree, and it consumes the hours that estimating work would pay four times as much for. <b>Do not pursue.</b>"},
+{n:"Property Development Project Manager",c:"prop",s:130,e:180,t:260,w:"$100–150/hr owner's-side",st:"None",co:"$0",ti:"2–4 yr",ai:35,cl:1,bz:90,f:70,r:2,d:"Learn development with someone else's capital at risk. Directly relevant to eventually developing your own sites, and it builds the consultant, planner, builder and finance relationships you'd otherwise pay for. Excellent bridge role."},
+{n:"Registered Builder (WA)",c:"prop",s:150,e:250,t:500,w:"n/a",st:"CPC50220 or alternative BSB pathway + 5–7 yr supervisory",co:"$8–14k",ti:"6–8 yr",ai:22,cl:1,bz:95,f:60,r:3,d:"Very high ceiling, very low AI exposure, maximum property relevance — you become the margin others pay away. But building companies are cash-flow brutal and WA has a long insolvency record. Check the alternative BSB pathways: a relevant degree plus five years' experience may shortcut the diploma. Hold as an option once the electrical business is running."},
+{n:"Property Developer",c:"prop",s:0,e:150,t:1000,w:"n/a",st:"None formally",co:"$250k+ capital",ti:"5–7 yr",ai:25,cl:1,bz:100,f:55,r:3,d:"Highest ceiling on the page and highest variance. You are renting with no equity, so this is a year-5 conversation. Your edge when you arrive is genuine: construction and estimating capability lets you capture the 15–22% builder's margin. Perth middle-ring R30–R60 subdivision near Metronet corridors is the obvious hunting ground. Fund it from the business; do not attempt it instead of the business."},
+{n:"Construction Consultant / Expert Witness",c:"prop",s:150,e:250,t:400,w:"$200–400/hr",st:"Experience + reputation",co:"$0–5k",ti:"10–15 yr",ai:30,cl:1,bz:85,f:50,r:3,d:"Excellent late-career monetisation of everything above. Delay claims, quantum, defect disputes — all require a credentialed human who will stand behind an opinion. Nothing to do now except accumulate the experience and the CPEng registration that makes it credible later."},
+{n:"Building Consultant",c:"prop",s:90,e:140,t:200,w:"$400–700/inspection",st:"Cert IV Building & Construction",co:"$4–8k",ti:"1 yr",ai:38,cl:1,bz:80,f:55,r:3,d:"Pre-purchase and defect inspections are physical, liability-bearing and weekend-compatible at $400–700 a pop. Requires PI insurance and a building qualification. Reasonable side business, modest ceiling."},
+{n:"Building Inspector",c:"prop",s:85,e:120,t:160,w:"$400–700/inspection",st:"Cert IV / Diploma",co:"$4–8k",ti:"1 yr",ai:35,cl:1,bz:70,f:55,r:4,d:"Same skills as building consultant, lower pay as an employee. Only worth it as your own practice."},
+{n:"Medical Device Technical Sales / Applications Engineer",c:"med",s:110,e:180,t:300,w:"limited",st:"None",co:"$0",ti:"3–6 mth",ai:35,cl:1,bz:75,f:80,r:2,d:"The highest income-per-year-of-study in healthcare for you, by a wide margin. Directly monetises an engineering degree plus commissioning and client-facing experience. $110k base to $300k OTE. No tuition, no exam, no decade. If healthcare genuinely attracts you, start here before you consider anything requiring a degree."},
+{n:"Radiation Oncology Medical Physicist",c:"med",s:95,e:150,t:200,w:"limited",st:"Accredited MSc Medical Physics + 3-yr ACPSEM TEAP",co:"$35–50k",ti:"5 yr",ai:45,cl:2,bz:40,f:65,r:3,d:"<b>The one clinical career where your degree is an accepted entry qualification rather than a sunk cost.</b> Physics or engineering bachelor's gets you into the accredited master's; the three-year TEAP registrar programme is paid. Registration-protected, liability-bearing, intellectually serious. Ceiling around $200k — lower than the business path, but if you want healthcare with meaning and security, this beats medicine on every dimension except income."},
+{n:"Clinical / Biomedical Engineer",c:"med",s:95,e:135,t:180,w:"limited",st:"Graduate certificate or none",co:"$0–12k",ti:"6–12 mth",ai:40,cl:2,bz:50,f:80,r:3,d:"Hospital-based equipment engineering. Very easy transition from your background, genuinely useful work, and financially a lateral move at best. Consider only if the healthcare setting itself is the draw."},
+{n:"Dentist",c:"med",s:130,e:200,t:350,w:"weekend clinics common",st:"Graduate-entry DMD, 4 yr FT",co:"$60–90k CSP / $350k+ full fee",ti:"6–7 yr",ai:35,cl:1,bz:90,f:25,r:4,d:"A better financial argument than medicine: qualified at 36–37, practice ownership available roughly a decade earlier than in medicine, owner income $300–500k. Manual, liability-bearing, AI-resilient. Still requires abandoning a $130k income for four years and your engineering background is irrelevant to admission. If you insist on a clinical career, this is the one that pays."},
+{n:"General Practitioner",c:"med",s:91,e:283,t:400,w:"after-hours & weekend clinics well paid",st:"MD 4 yr + 3–4 yr AGPT",co:"$54k CSP / $300k+ full fee",ti:"10 yr",ai:25,cl:1,bz:85,f:20,r:5,d:"WA average $283k, reached around age 41. Excellent long-term income, near-absolute security, global mobility, and real meaning. Also a peak cumulative deficit well past $650k and a financial break-even in your sixties — and never at all against the business path. UWA's interview cohort averaged 68.5 GAMSAT; Notre Dame Fremantle at GPA 5.2 / GAMSAT 52 is your realistic door, and your GEMSAS GPA treatment is the unresolved question. <b>Pursue only as a vocation.</b>"},
+{n:"Medical Specialist",c:"med",s:130,e:400,t:700,w:"private lists, on-call",st:"MD + 6–8 yr college training",co:"$54k+ CSP",ti:"14–16 yr",ai:22,cl:1,bz:90,f:15,r:5,d:"Surgeons average $472k taxable, anaesthetists $447k. Fellowship around age 45–47. The deepest hole and the highest eventual peak; because specialist income so far exceeds an engineering salary, break-even actually arrives earlier than for a GP — around your mid-fifties. Competitive entry to training is a second lottery after the medical school lottery. <b>Not a wealth strategy at 31.</b>"},
+{n:"Sonographer",c:"med",s:95,e:135,t:175,w:"weekend shifts available",st:"Health degree + Graduate Diploma of Medical Sonography",co:"$30–45k",ti:"4–5 yr",ai:55,cl:2,bz:50,f:25,r:4,d:"Genuine shortage occupation with good pay for the training length, but entry requires a prior health-science degree you don't have, adding years. Image interpretation is moderately AI-exposed; probe handling is not."},
+{n:"Medical Imaging / Radiographer",c:"med",s:80,e:115,t:150,w:"weekend shifts",st:"BSc/MSc Medical Imaging, 3–4 yr",co:"$30–45k",ti:"4 yr",ai:72,cl:3,bz:40,f:30,r:5,d:"Four years of study to earn less than you do now, in the single most AI-exposed clinical discipline. Image acquisition survives; interpretation support is being automated fastest of anything in medicine. <b>Do not pursue.</b>"},
+{n:"Pharmacist",c:"med",s:75,e:105,t:140,w:"weekend shifts common",st:"BPharm/MPharm 4 yr + internship",co:"$40–55k",ti:"5 yr",ai:68,cl:3,bz:75,f:15,r:5,d:"Five years to reach $105k. Dispensing is highly automatable and retail pharmacy margins are under sustained pressure. Ownership is the only good outcome and requires capital plus the degree. <b>Do not pursue.</b>"},
+{n:"Physiotherapist",c:"med",s:75,e:100,t:130,w:"weekend clinics",st:"4 yr Bachelor or 2 yr Master (prereqs needed)",co:"$30–60k",ti:"3–4 yr",ai:30,cl:1,bz:70,f:15,r:5,d:"AI-resilient — hands-on, physical, relational — and it pays $100k. You would study 2–4 years to take a $30k pay cut. Practice ownership reaches $180k+. Fine career, bad trade from where you stand."},
+{n:"Occupational Therapist",c:"med",s:75,e:100,t:125,w:"NDIS weekend work",st:"4 yr Bachelor or 2 yr Master",co:"$30–60k",ti:"3–4 yr",ai:32,cl:1,bz:65,f:12,r:5,d:"Same structure as physiotherapy with a slightly lower ceiling. NDIS-driven demand is real and private practice is viable, but it is a pay cut reached through years of study with zero credit for your background."},
+{n:"Medical Laboratory Scientist",c:"med",s:70,e:95,t:120,w:"shift work",st:"BSc Lab Medicine 3–4 yr",co:"$30–45k",ti:"4 yr",ai:75,cl:4,bz:30,f:20,r:5,d:"The most automatable role in this document — lab analysis is already heavily instrumented and AI-assisted, and the pay tops out below your current salary. <b>Do not pursue.</b>"},
+{n:"Freelance Electrical Estimating Business",c:"biz",s:40,e:120,t:250,w:"$110–180/hr → fixed fee",st:"None",co:"$3–5k",ti:"1 mth",ai:55,cl:2,bz:95,f:95,r:1,d:"Zero qualification barrier, immediate start, uses skills you already have, and satisfies your value-over-hours preference precisely. Progresses from hourly to fixed fee to retainers to subcontracted delivery. <b>This is step one of the whole plan and you can begin it within a fortnight.</b>"},
+{n:"Switchboard / Panel Build Business",c:"biz",s:80,e:200,t:800,w:"n/a",st:"None to manufacture; EC needed for install",co:"$80–200k",ti:"3–5 yr",ai:25,cl:1,bz:100,f:80,r:1,d:"Your switchroom manufacturing experience is directly monetisable. Panel assembly itself is not licensed work — installation is. Combines naturally with the EC entity: design, build and install under one roof at three margins instead of one. Capital-hungry but genuinely scalable, and it produces a business with hard assets and enterprise value."},
+{n:"AI-Assisted Tender & Documentation Service",c:"biz",s:30,e:120,t:300,w:"$120–200/hr",st:"None",co:"$1–3k",ti:"1 mth",ai:30,cl:1,bz:90,f:88,r:2,d:"You are on the right side of the automation here rather than the wrong one. Domain expertise plus tooling produces tenders, submissions, O&M packs and compliance documentation at a fraction of the labour. Sell fixed-fee so you keep the productivity gain — the 8% AI premium in Energy & Resources shows exactly what an employer would pay you for the same capability."},
+{n:"Test Equipment & Thermography Hire",c:"biz",s:20,e:80,t:200,w:"largely passive",st:"Level 1 thermography for the survey work",co:"$40–80k",ti:"6–12 mth",ai:15,cl:1,bz:85,f:70,r:2,d:"Omicron, Megger and thermal cameras hire at $400–1,500/day against a $40–80k asset. Thermographic switchboard surveys are non-contact, so no electrical licence is required for the survey itself, and they sell as recurring annual contracts to facilities managers. Genuine asset income with near-zero AI exposure."},
+{n:"Reality Capture / Scan-to-BIM Service",c:"biz",s:30,e:110,t:250,w:"$1,200–2,500/day",st:"CASA RePL + ReOC",co:"$28–65k",ti:"3–6 mth",ai:45,cl:2,bz:85,f:70,r:3,d:"Unregulated — only cadastral survey is reserved — so you can own this without any surveying qualification. Construction clients want monthly as-built and progress capture. Capital-intensive and increasingly competitive, but a legitimate way to sell 'surveying' revenue without a Survey Law exam."}
+];
+
+/* ---------- state + persistence ---------- */
+const DEF={pkg:130,hrs:7,rate:140,cap:60,burn:60,risk:2,ticks:{},scen:"cons"};
+let S=Object.assign({},DEF);
+let DB=null;
+const LS="e2o.v1";
+
+function loadLocal(){try{const r=localStorage.getItem(LS);if(r)S=Object.assign({},DEF,JSON.parse(r));}catch(e){}}
+function saveLocal(){try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){}}
+let dbT=null;
+function saveRemote(){ if(!DB)return; clearTimeout(dbT); dbT=setTimeout(()=>{ DB.doc("settings/profile").set(S).catch(()=>{}); },700); }
+function persist(){ saveLocal(); saveRemote(); }
+
+/* ---------- money ---------- */
+function tax(g){ // 2026-27 resident rates + 2% Medicare, in dollars
+  let t=0;
+  if(g>18200) t+=(Math.min(g,45000)-18200)*0.16;
+  if(g>45000) t+=(Math.min(g,135000)-45000)*0.30;
+  if(g>135000)t+=(Math.min(g,190000)-135000)*0.37;
+  if(g>190000)t+=(g-190000)*0.45;
+  if(g>27222) t+=g*0.02;
+  return t;
+}
+const net=g=>g-tax(g);
+const fmtK=v=>"$"+Math.round(v).toLocaleString()+"k";
+const fmtD=v=>"$"+Math.round(v).toLocaleString();
+const fmtM=v=>v>=1000000?"$"+(v/1000000).toFixed(2)+"M":"$"+Math.round(v/1000)+"k";
+const $=id=>document.getElementById(id);
+
+/* ---------- setup panel ---------- */
+const RISKL={1:"Cautious",2:"Balanced",3:"Aggressive"};
+function renderSetup(){
+  $("i-pkg").value=S.pkg; $("i-hrs").value=S.hrs; $("i-rate").value=S.rate;
+  $("i-cap").value=S.cap; $("i-burn").value=S.burn; $("i-risk").value=S.risk;
+  $("l-pkg").textContent=fmtK(S.pkg); $("l-hrs").textContent=S.hrs+" hrs";
+  $("l-rate").textContent="$"+S.rate+"/hr"; $("l-cap").textContent=fmtK(S.cap);
+  $("l-burn").textContent=fmtK(S.burn); $("l-risk").textContent=RISKL[S.risk];
+
+  const wk=S.hrs*S.rate;
+  const gross=S.pkg*1000;
+  const side=wk*46; // 46 working weekends
+  const marg = gross>190000?0.47: gross>135000?0.39: gross>45000?0.32:0.18;
+  const sideNet=side*(1-marg);
+  const surplus=net(gross)+sideNet-S.burn*1000;
+
+  $("o-wk").textContent=fmtD(wk);
+  $("o-wk-d").textContent=S.hrs===0?"Set weekend hours above to model side income.":S.hrs+" hrs at $"+S.rate+"/hr. About "+fmtD(side)+" a year before tax.";
+  $("o-yr").textContent=fmtD(sideNet);
+  $("o-sur").textContent=fmtD(Math.max(0,surplus));
+
+  const dep=140000; // 20% on a ~$700k Perth median
+  const yrs=surplus>0?(dep-S.cap*1000)/surplus:99;
+  $("o-dep").textContent= S.cap*1000>=dep?"Now":(yrs>25?"25+":Math.max(0,yrs).toFixed(1));
+  $("o-dep-d").textContent="To a "+fmtD(dep)+" deposit (20% of a ~$700k Perth median), from "+fmtK(S.cap)+" saved plus your surplus.";
+  drawChart();
+}
+["pkg","hrs","rate","cap","burn","risk"].forEach(k=>{
+  const el=$("i-"+k);
+  el.addEventListener("input",()=>{S[k]=+el.value;renderSetup();});
+  el.addEventListener("change",persist);
+});
+$("save").addEventListener("click",()=>{persist();$("saveMsg").textContent="Saved.";$("savedTag").hidden=false;setTimeout(()=>$("saveMsg").textContent="",2500);});
+$("reset").addEventListener("click",()=>{S=Object.assign({},DEF,{ticks:S.ticks});renderSetup();renderPlan();persist();});
+
+/* ---------- occupation explorer ---------- */
+let flt={q:"",cats:new Set(Object.keys(CATS)),recs:new Set([1,2,3,4,5]),sort:"roi"};
+function roiScore(o){
+  const inc=(o.e-S.pkg)/Math.max(1,S.pkg);          // income lift vs current
+  const speed={ "now":1,"1 wk":1,"1 mth":.97,"2 wks":.97,"3–6 mth":.9,"6 mth":.87,"3 mth":.92,"6–9 mth":.85,"6–12 mth":.83,"1 yr":.78,"1–2 yr":.7,"1–3 mth":.95,"2–3 yr":.55,"2–4 yr":.5,"3–4 yr":.42,"3–5 yr":.45,"3–6 mth ":.9,"4 yr":.3,"4–5 yr":.28,"5 yr":.25,"5–6 yr":.2,"5–7 yr":.3,"6 yr":.16,"6–7 yr":.15,"6–8 yr":.2,"8–10 yr":.3,"8–12 yr":.28,"10 yr":.1,"10–15 yr":.2,"14–16 yr":.05,"4+ yr":.2,"2–3 mth":.93,"1–2 mth":.95 }[o.ti] ?? .5;
+  return Math.round( (inc*26) + (o.f*.30) + ((100-o.ai)*.20) + (o.bz*.22) + (speed*30) + ((6-o.r)*6) );
+}
+function renderChips(){
+  $("cats").innerHTML=Object.entries(CATS).map(([k,v])=>
+    `<button class="chip" data-c="${k}" aria-pressed="${flt.cats.has(k)}"><span class="cat-dot" style="background:${v.c}"></span>${v.n}</button>`).join("");
+  $("recs").innerHTML=Object.entries(RECS).map(([k,v])=>
+    `<button class="chip" data-r="${k}" aria-pressed="${flt.recs.has(+k)}">${v[0]}</button>`).join("");
+  $("cats").querySelectorAll("button").forEach(b=>b.onclick=()=>{const k=b.dataset.c;flt.cats.has(k)?flt.cats.delete(k):flt.cats.add(k);renderChips();renderRows();});
+  $("recs").querySelectorAll("button").forEach(b=>b.onclick=()=>{const k=+b.dataset.r;flt.recs.has(k)?flt.recs.delete(k):flt.recs.add(k);renderChips();renderRows();});
+}
+function renderRows(){
+  let list=OCC.filter(o=>flt.cats.has(o.c)&&flt.recs.has(o.r)&&
+    (flt.q===""||(o.n+" "+o.d+" "+CATS[o.c].n).toLowerCase().includes(flt.q)));
+  const S_={roi:(a,b)=>roiScore(b)-roiScore(a),fit:(a,b)=>b.f-a.f,exp:(a,b)=>b.e-a.e,
+    top:(a,b)=>b.t-a.t,ai:(a,b)=>a.ai-b.ai,biz:(a,b)=>b.bz-a.bz,
+    time:(a,b)=>roiScore(b)-roiScore(a)};
+  list.sort(S_[flt.sort]);
+  $("rows").innerHTML=list.map((o,i)=>{
+    const R=RECS[o.r],C=CLS[o.cl];
+    return `<tr class="orow" data-i="${i}" tabindex="0" style="cursor:pointer">
+      <td><span class="cat-dot" style="background:${CATS[o.c].c}"></span><span class="occ-name">${o.n}</span></td>
+      <td class="n">$${o.s}k</td><td class="n">$${o.e}k</td><td class="n">$${o.t}k</td>
+      <td class="n">${o.w}</td><td>${o.st}</td><td class="n">${o.co}</td><td class="n">${o.ti}</td>
+      <td class="n">${o.ai}</td><td><span class="b ${C[1]}">${C[0]}</span></td>
+      <td class="n">${o.bz}</td><td class="n">${o.f}</td><td><span class="b ${R[1]}">${R[0]}</span></td></tr>
+      <tr class="odet" hidden><td colspan="13" style="background:var(--surface-2);padding:16px 18px">
+        <div style="max-width:80ch"><b style="font-family:var(--f-display)">Why this verdict.</b> ${o.d}</div></td></tr>`;
+  }).join("");
+  $("count").textContent=list.length+" of "+OCC.length+" occupations shown. Click any row for the full rationale.";
+  $("rows").querySelectorAll(".orow").forEach(tr=>{
+    const go=()=>{const d=tr.nextElementSibling;d.hidden=!d.hidden;};
+    tr.onclick=go; tr.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go();}};
+  });
+}
+$("q").addEventListener("input",e=>{flt.q=e.target.value.toLowerCase().trim();renderRows();});
+$("sort").addEventListener("change",e=>{flt.sort=e.target.value;renderRows();});
+
+/* ---------- 40-year model ---------- */
+// each path: fn(year 0..40) -> gross package $k ; plus upfront cost $k applied in given years
+const PATHS=[
+ {k:"eng", sn:"Stay engineer", n:"Stay electrical/project engineer", c:"var(--blue)",   cost:0,
+  cons:y=>Math.min(255, S.pkg+ y*9 - Math.max(0,y-14)*7), high:y=>Math.min(320, S.pkg+y*13-Math.max(0,y-13)*9)},
+ {k:"cons",sn:"Construction mgmt", n:"Construction management",          c:"var(--amber)",  cost:0,
+  cons:y=>Math.min(295, S.pkg+ y*11-Math.max(0,y-15)*8), high:y=>Math.min(380, S.pkg+y*16-Math.max(0,y-14)*11)},
+ {k:"surv",sn:"Surveying", n:"Surveying (cadastral)",            c:"var(--teal)",   cost:45,
+  cons:y=>y<1?S.pkg*0.45:y<4?22:y<6?95:Math.min(215,95+(y-6)*12),
+  high:y=>y<1?S.pkg*0.45:y<4?22:y<6?105:Math.min(340,105+(y-6)*18)},
+ {k:"qs",  sn:"Quantity surveying", n:"Quantity surveying",               c:"var(--green)",  cost:30,
+  cons:y=>y<2?S.pkg:y<3?S.pkg-20:Math.min(265,S.pkg-20+(y-3)*13),
+  high:y=>y<2?S.pkg:y<3?S.pkg-20:Math.min(340,S.pkg-20+(y-3)*19)},
+ {k:"prop",sn:"Property developer", n:"Property developer",               c:"var(--violet)", cost:0,
+  cons:y=>y<5?S.pkg+y*10:Math.min(520,180+(y-5)*22), high:y=>y<5?S.pkg+y*12:Math.min(1100,200+(y-5)*48)},
+ {k:"bld", sn:"Builder", n:"Registered builder",               c:"#c2703a",       cost:12,
+  cons:y=>y<6?S.pkg+y*11:Math.min(430,190+(y-6)*20), high:y=>y<6?S.pkg+y*13:Math.min(820,210+(y-6)*40)},
+ {k:"gp",  sn:"Doctor / GP", n:"Doctor / GP",                      c:"var(--mag)",    cost:54,
+  cons:y=>y<1?S.pkg:y<5?15:y===5?91:y===6?100:y<9?130:y<10?170:Math.min(330,283+(y-10)*2.2),
+  high:y=>y<1?S.pkg:y<5?15:y===5?91:y===6?100:y<9?140:y<10?190:Math.min(430,300+(y-10)*5)},
+ {k:"sp",  sn:"Specialist", n:"Medical specialist",               c:"#9b2c5e",       cost:54,
+  cons:y=>y<1?S.pkg:y<5?15:y<7?95:y<14?140:Math.min(470,400+(y-14)*4),
+  high:y=>y<1?S.pkg:y<5?15:y<7?95:y<14?155:Math.min(720,480+(y-14)*10)},
+ {k:"den", sn:"Dentist", n:"Dentist",                          c:"#c04a7a",       cost:70,
+  cons:y=>y<1?S.pkg:y<5?15:y<7?140:Math.min(330,180+(y-7)*11),
+  high:y=>y<1?S.pkg:y<5?15:y<7?150:Math.min(560,200+(y-7)*24)},
+ {k:"own", sn:"Engineer to owner", n:"Engineer to owner (recommended)",  c:"var(--red)",    cost:40,
+  cons:y=>{const side=(S.hrs*S.rate*46)/1000;
+    return y===0?S.pkg: y<3? S.pkg+18*y+side*Math.min(1,y*0.7) : y<5? 210+side+ (y-3)*35 : Math.min(620, 300+(y-5)*26);},
+  high:y=>{const side=(S.hrs*S.rate*46)/1000;
+    return y===0?S.pkg: y<3? S.pkg+24*y+side*Math.min(1.3,y*0.9) : y<5? 240+side*1.3+(y-3)*55 : Math.min(1250, 380+(y-5)*52);}}
+];
+let hidden=new Set(["surv","qs","sp","den","bld"]);
+function series(p){
+  const out=[];let cum=0;
+  for(let y=0;y<=40;y++){
+    const g=Math.max(0,p[S.scen](y))*1000;
+    cum+=net(g);
+    if(p.cost){ // tuition spread over the study years (first 4, or 1 for short courses)
+      const span=p.cost>40?4:2;
+      if(y>=1&&y<=span) cum-=p.cost*1000/span;
+    }
+    out.push(cum);
+  }
+  return out;
+}
+function drawChart(){
+  const W=960,H=440,L=68,R=214,T=16,B=40;
+  const vis=PATHS.filter(p=>!hidden.has(p.k));
+  const all=vis.map(p=>({p,s:series(p)}));
+  const max=Math.max(1,...all.flatMap(a=>a.s));
+  const x=y=>L+(y/40)*(W-L-R), yy=v=>H-B-(v/max)*(H-B-T);
+  let g="";
+  const step=max>8000000?2000000:max>4000000?1000000:500000;
+  for(let v=0;v<=max;v+=step){
+    g+=`<line class="gl" x1="${L}" y1="${yy(v).toFixed(1)}" x2="${W-R}" y2="${yy(v).toFixed(1)}"/>`+
+       `<text class="axt" x="${L-8}" y="${(yy(v)+3.5).toFixed(1)}" text-anchor="end">${fmtM(v)}</text>`;
+  }
+  for(let y=0;y<=40;y+=5){
+    g+=`<text class="axt" x="${x(y).toFixed(1)}" y="${H-B+18}" text-anchor="middle">${31+y}</text>`;
+  }
+  g+=`<line class="ax" x1="${L}" y1="${T}" x2="${L}" y2="${H-B}"/><line class="ax" x1="${L}" y1="${H-B}" x2="${W-R}" y2="${H-B}"/>`;
+  g+=`<text class="axt" x="${x(20).toFixed(1)}" y="${H-4}" text-anchor="middle">Age</text>`;
+  all.forEach(({p,s})=>{
+    const d=s.map((v,i)=>(i?"L":"M")+x(i).toFixed(1)+" "+yy(v).toFixed(1)).join(" ");
+    g+=`<path d="${d}" fill="none" stroke="${p.c}" stroke-width="${p.k==="own"?3.4:2}" stroke-linejoin="round"/>`;
+    g+=`<circle cx="${x(40).toFixed(1)}" cy="${yy(s[40]).toFixed(1)}" r="3.4" fill="${p.c}"/>`;
+  });
+  // dodge end labels so they never overlap
+  const labs=all.map(({p,s})=>({p,v:s[40],y:yy(s[40])})).sort((a,b)=>a.y-b.y);
+  for(let i=1;i<labs.length;i++) if(labs[i].y-labs[i-1].y<13) labs[i].y=labs[i-1].y+13;
+  const over=labs.length?labs[labs.length-1].y-(H-B):0;
+  if(over>0) labs.forEach(l=>l.y-=over);
+  labs.forEach(l=>{
+    const ly=yy(l.v);
+    if(Math.abs(ly-l.y)>2) g+=`<line x1="${(W-R+3).toFixed(1)}" y1="${ly.toFixed(1)}" x2="${(W-R+8).toFixed(1)}" y2="${l.y.toFixed(1)}" stroke="${l.p.c}" stroke-width="1" opacity=".55"/>`;
+    g+=`<text class="axt" x="${W-R+11}" y="${(l.y+3.5).toFixed(1)}" fill="${l.p.c}" style="font-weight:600">${fmtM(l.v)} · ${l.p.sn}</text>`;
+  });
+  $("chart").innerHTML=g;
+  $("legend").innerHTML=PATHS.map(p=>`<button class="lg" data-k="${p.k}" aria-pressed="${!hidden.has(p.k)}"><i style="background:${p.c}"></i>${p.n}</button>`).join("");
+  $("legend").querySelectorAll("button").forEach(b=>b.onclick=()=>{const k=b.dataset.k;hidden.has(k)?hidden.delete(k):hidden.add(k);drawChart();});
+
+  // summary tiles
+  const rank=PATHS.map(p=>({p,v:series(p)[40]})).sort((a,b)=>b.v-a.v);
+  $("f-win").textContent=rank[0].p.n; $("f-win-d").textContent=fmtM(rank[0].v)+" cumulative after tax by age 71.";
+  $("f-lose").textContent=rank[rank.length-1].p.n; $("f-lose-d").textContent=fmtM(rank[rank.length-1].v)+" — "+fmtM(rank[0].v-rank[rank.length-1].v)+" behind the leader.";
+  const own=series(PATHS.find(p=>p.k==="own")),eng=series(PATHS.find(p=>p.k==="eng"));
+  $("f-45").textContent=fmtM(own[14]-eng[14]);
+
+  // medical crossover
+  const gp=series(PATHS.find(p=>p.k==="gp")),sp=series(PATHS.find(p=>p.k==="sp"));
+  const cross=a=>{for(let y=2;y<=40;y++) if(a[y]>=eng[y]) return 31+y; return null;};
+  const cg=cross(gp),cs=cross(sp);
+  $("x-gp").textContent=cg?cg:"never"; $("x-sp").textContent=cs?cs:"never";
+  let worst=0; for(let y=0;y<=40;y++) worst=Math.max(worst,eng[y]-gp[y]);
+  $("x-gap").textContent=fmtM(worst);
+  [[5,"g5"],[10,"g10"],[20,"g20"],[40,"g40"]].forEach(([y,id])=>{
+    const d=gp[y]-eng[y];
+    const el=$(id); if(el){el.textContent=(d<0?"−":"+")+fmtM(Math.abs(d)); el.style.color=d<0?"var(--red)":"var(--green)";}
+  });
+  $("scNote").textContent = S.scen==="cons"
+    ? "Conservative: normal promotion pace, business lines heavily discounted for failure risk, no property leverage. This is the scenario to plan on."
+    : "High performance: top-quartile progression, business scales successfully, development leverage works. Treat as an upside case, not an expectation.";
+}
+$("sc-cons").onclick=()=>{S.scen="cons";$("sc-cons").setAttribute("aria-pressed","true");$("sc-high").setAttribute("aria-pressed","false");drawChart();persist();};
+$("sc-high").onclick=()=>{S.scen="high";$("sc-high").setAttribute("aria-pressed","true");$("sc-cons").setAttribute("aria-pressed","false");drawChart();persist();};
+
+/* ---------- AI-proof ranking ---------- */
+const AIRANK=[
+["Electrical contracting business owner (EC + nominee)",96,"Licence barrier you satisfy by hiring. Physical installation work. Regulatory protection, scarce trades, sellable equity, and direct property leverage. Wins on nine of your ten criteria."],
+["Testing & commissioning / HV protection engineer",93,"Live plant, physical presence, safety liability and statutory switching authority. Cannot be done remotely or by a model. Severe WA shortage. Internationally portable."],
+["Registered builder",90,"Statutory registration, liability-bearing, physical, and the maximum property-development ceiling. Held back only by capital intensity and insolvency risk."],
+["Commercial manager / contracts specialist",86,"Negotiation, risk pricing and relationship capital. AI drafts the claim; a human owns the argument and signs the settlement. Highest non-licensed construction income."],
+["Property developer",85,"Physical assets, planning judgement, finance relationships and capital. Zero automation risk; substantial market and interest-rate risk instead."],
+["Building surveyor (registered)",83,"A statutory certifier must exist and must carry personal liability. Regulation is the moat, and regulation is not going away."],
+["Construction manager",81,"Site-bound, people-bound, safety-accountable. Strong income, no equity."],
+["Electrical project manager",78,"Judgement, client relationships and site accountability protect it; documentation and reporting tasks within it are being automated. Excellent income, capped."],
+["Medical specialist / GP",77,"Near-total regulatory protection and global mobility — ranked down only for the decade of income you'd surrender to reach it, not for AI risk."],
+["Dentist",76,"Manual, liability-bearing, ownership-friendly. Same objection as medicine, one decade shorter."],
+["Test equipment hire & thermography",74,"Asset income with essentially no automation exposure. Modest ceiling, excellent margin, near-passive."],
+["Radiation oncology medical physicist",70,"Registration-protected and safety-critical, and your engineering degree is an accepted entry qualification. Ceiling around $200k."],
+["Tax depreciation QS practice",67,"The ATO requires a qualified person, not an accurate number. A pure credential moat — which is exactly why it works despite high task-level AI exposure."],
+["Licensed cadastral surveyor",64,"A genuine statutory monopoly and a strong practice ceiling, dragged down for you by a six-year entry with almost no credit for your degree."],
+["Freelance estimating & tender service",61,"Highest immediate ROI on this page and the seed of everything above it — but on its own it is a services business with a real automation clock. Convert it to a licensed entity before that clock runs out."]
+];
+$("aiRank").innerHTML=AIRANK.map((r,i)=>`<tr><td class="n" style="font-weight:700;color:var(--ink-4)">${i+1}</td><td class="occ-name">${r[0]}</td><td class="n" style="font-weight:700;color:${r[1]>=85?"var(--green)":r[1]>=75?"var(--blue)":"var(--amber)"}">${r[1]}</td><td>${r[2]}</td></tr>`).join("");
+
+/* ---------- top 10 ---------- */
+const TOP=[
+["Build the electrical contracting business (EC + nominee)",[95,96,94,88,62,95,80,100,92,97,72]],
+["Move to Electrical PM in a constrained speciality",[82,99,86,98,96,99,70,62,55,74,88]],
+["Freelance estimating & tender service on weekends",[68,97,68,96,98,97,100,93,60,72,78]],
+["Contracts Administrator → Commercial Manager",[86,88,80,84,74,97,72,84,78,80,82]],
+["Testing & commissioning / HV specialisation",[85,91,96,90,84,92,86,78,50,76,68]],
+["Construction management track",[84,84,86,82,76,98,62,80,86,79,74]],
+["Property development (from year 5)",[93,72,92,70,38,96,55,95,100,94,60]],
+["Registered builder (from year 6)",[91,66,93,62,32,80,45,96,98,90,52]],
+["Tax depreciation QS side practice",[58,70,62,44,48,68,92,80,72,60,84]],
+["Graduate-entry medicine",[88,28,95,18,10,22,40,74,44,66,38]]
+];
+$("top10").innerHTML=TOP.map((r,i)=>{
+  const tot=Math.round(r[1].reduce((a,b)=>a+b,0)/r[1].length);
+  const col=tot>=85?"var(--green)":tot>=70?"var(--blue)":tot>=55?"var(--amber)":"var(--red)";
+  return `<tr><td class="n" style="font-weight:700;color:var(--ink-4)">${i+1}</td><td class="occ-name">${r[0]}</td>`+
+    r[1].map(v=>`<td class="n" style="color:${v>=85?"var(--green)":v>=60?"var(--ink-2)":"var(--red)"}">${v}</td>`).join("")+
+    `<td class="n" style="font-weight:800;color:${col};font-size:15px">${tot}</td></tr>`;
+}).join("");
+
+/* ---------- action plan ---------- */
+const PLAN=[
+ ["30 days","var(--green)",[
+ ["Email GEMSAS and ask exactly how your COMSATS bachelor's and La Trobe master's will be treated for GPA.","Free · 20 min · settles whether medicine is even a live question"],
+ ["Register an ABN, get professional indemnity and public liability cover, open a business account and set up Xero.","~$2–4k/yr · one afternoon"],
+ ["Write a one-page capability note: electrical estimating, switchboard design, tender support. Send it to 20 Perth electrical subcontractors on LinkedIn.","Free · the single highest-value hour on this list"],
+ ["Update your CV and profile targeting Electrical Project Manager and estimating roles in BESS, data centres and HV.","Free · $20–45k on the table"],
+ ["Book your White Card refresh plus HV switching and LV rescue if you don't hold them.","~$1.5–3k"]]],
+ ["3 months","var(--blue)",[
+ ["Land your first three paying estimating clients. Bill hourly at $110–140 while you build speed.","Target: $500/weekend"],
+ ["Learn Cubit or Bluebeam Revu properly and build your own take-off templates and rate library.","$1–3k · this is the asset, not the software"],
+ ["Interview for at least four Electrical PM / senior estimating roles even if you don't intend to move — you need current market pricing on yourself.","Free"],
+ ["Build the AI-assisted tender workflow: scope extraction, BOM generation, submission drafting. Time yourself before and after.","Free–$1k"]]],
+ ["6 months","var(--amber)",[
+ ["Switch every client from hourly to fixed fee per tender. Do not explain the productivity gain.","Effective rate roughly doubles"],
+ ["Accept the Electrical PM offer. Target $165–185k in a constrained speciality.","+$25–50k"],
+ ["Start Engineers Australia CPEng / NER application.","$1.5–3k · tender credibility later"],
+ ["Bank 100% of side income. Do not increase your living costs.","This is the EC business capital"]]],
+ ["Year 1","var(--violet)",[
+ ["Two retainer clients at $2–4k/month for all tender support.","Target: $1,000+/weekend"],
+ ["Decide QS: enrol in an AIQS-accredited Grad Dip part-time only if you intend to run the depreciation practice.","$22–35k over 2 yrs, or skip"],
+ ["Have coffee with three A-grade electricians who might one day be your nominee. Start the relationship two years early.","Free · the most important thing in year 1"],
+ ["First $100k saved across offset and business account.","Deposit + capital"]]],
+ ["Year 2","var(--teal)",[
+ ["Subcontract take-offs and drafting to a junior or offshore draftee. You review and sign only.","Revenue detaches from your hours"],
+ ["Buy your first property — owner-occupier, Perth middle ring, subdividable lot if you can find one.","Uses your accumulated deposit"],
+ ["Move into Contracts Administration or estimating inside a head contractor if the commercial track appeals more than the technical one.","Lateral pay, better optionality"]]],
+ ["Year 3","var(--red)",[
+ ["Recruit your licensed electrician nominee. Apply for the EC licence. Ensure they complete the ECTP modules.","~$25–40k all-in"],
+ ["Take your first small installed works and panel build jobs. Keep the salary until the business covers your living costs twice over.","Owner income $200k+"],
+ ["Add thermography Level 1 and buy a thermal camera. Sell annual switchboard survey contracts to facilities managers.","$600–1,200/day recurring"]]],
+ ["Year 5","#c2703a",[
+ ["4–8 staff, $1.5–3M revenue, 12–22% net. Resign the salary.","Owner income $280–400k"],
+ ["First small development — subdivision or duplex — project-managed by you, built with your own trade relationships.","Captures the 15–22% builder's margin"],
+ ["Consider CPC50220 and builder registration only if development is genuinely where you want to spend the next decade.","$8–14k"]]],
+ ["Year 10","var(--green)",[
+ ["$3–6M revenue business with real enterprise value at 3–5× EBITDA, plus 2–4 properties acquired at cost rather than retail.","Owner income $450k+"],
+ ["Decide: scale, sell, or hold and semi-retire into consulting and expert witness work.","Optionality is the whole point"]]]
+];
+function renderPlan(){
+  $("plan").innerHTML=PLAN.map((ph,pi)=>`<details ${pi<2?"open":""}><summary><span class="cat-dot" style="background:${ph[1]};width:11px;height:11px"></span>${ph[0]}</summary><div class="det-body">${
+    ph[2].map((it,ii)=>{const id="t"+pi+"_"+ii;const on=!!S.ticks[id];
+      return `<div class="chk ${on?"done":""}"><input type="checkbox" id="${id}" ${on?"checked":""}><label for="${id}" class="chk-t">${it[0]}<span class="chk-m">${it[1]}</span></label></div>`;}).join("")
+  }</div></details>`).join("");
+  $("plan").querySelectorAll("input[type=checkbox]").forEach(cb=>cb.onchange=()=>{
+    S.ticks[cb.id]=cb.checked; cb.closest(".chk").classList.toggle("done",cb.checked); persist(); prog();});
+  prog();
+}
+function prog(){
+  const tot=PLAN.reduce((a,p)=>a+p[2].length,0), done=Object.values(S.ticks).filter(Boolean).length;
+  $("progBar").style.width=(done/tot*100)+"%";
+  $("progTxt").textContent=done+" of "+tot+" actions complete"+(done===0?" — start with the first three, they cost nothing.":done===tot?" — everything on the plan is done.":".");
+}
+
+/* ---------- don't do ---------- */
+const NOT=[
+["Start an electrical apprenticeship","Four years, $350k+ in foregone income, for a licence whose working ceiling is below your current salary. Hire the licence instead."],
+["Enrol in a Bachelor of Surveying","Six years to licensed cadastral registration, almost no credit for your degree, and a re-entry salary of $85k. Path 1 gets you further, faster, for free."],
+["Change careers to work as a quantity surveyor","Perth average $80k. Take the qualification for the depreciation practice if you want it; do not take the job."],
+["Do medicine because doctors earn more","Break-even around age 63 against staying an engineer, and never against the business path. Do it if you want to be a doctor. That is a different sentence."],
+["Take a weekend labouring, TA, traffic control or delivery job","$35–45/hr consuming the exact hours that estimating pays $140/hr for, with zero compounding. The most expensive cheap decision available to you."],
+["Do an MBA","WA construction and resources do not price it. $60–120k and three years for a rounding error on your salary."],
+["Buy a property development course","You are renting with no equity. The constraint is capital, not knowledge, and the course sells you the reverse."],
+["Wait until you 'feel ready' to send the first invoice","You have three years of Australian experience and a master's. You have been ready for eighteen months. Readiness is not the missing input."],
+["Try to do estimating, QS study, medicine prep and property research simultaneously","Four half-started paths beat zero paths only in theory. Pick the estimating business, run it for twelve months, then reassess."],
+["Commission a fourth strategy document","This repo already holds a weekend income register and a passive income plan. Analysis is the comfortable substitute for the uncomfortable first phone call."]
+];
+$("notList").innerHTML=NOT.map((n,i)=>`<div class="call warn"><h4><span class="num" style="color:var(--red)">${String(i+1).padStart(2,"0")}</span> ${n[0]}</h4><p class="mb0">${n[1]}</p></div>`).join("");
+
+/* ---------- final one-pager ---------- */
+const FIN=[
+["🥇 Best current career","Electrical Project Manager in a constrained WA speciality — HV protection and control, BESS and grid connection, or data centre power. $165–185k, no study, available within six months.","var(--blue)"],
+["🥇 Best weekend job","Freelance electrical estimating and switchboard design. $110–180/hr moving to fixed fee per tender. Start within a fortnight, no qualification required.","var(--green)"],
+["🥇 Best construction path","Contracts Administrator inside a head contractor, then Commercial Manager. Sideways in pay, enormous in optionality, and it teaches you exactly where construction margin lives.","var(--amber)"],
+["🥇 Best surveying path","None — buy survey services, don't become a surveyor. If you want the revenue, own an unregulated reality-capture and scan-to-BIM service. Only cadastral work is legally reserved.","var(--teal)"],
+["🥇 Best quantity surveying path","An AIQS-accredited Graduate Diploma part-time, used solely to run a tax depreciation schedule practice. $600–900 per report, 2–3 hours each. Never take the QS job.","var(--green)"],
+["🥇 Best medical path","If it must be clinical: Radiation Oncology Medical Physicist — your engineering degree is an accepted entry qualification and the registrar programme is paid. If it must be medicine: Notre Dame Fremantle, CSP only, and check your GEMSAS GPA first.","var(--mag)"],
+["🥇 Best additional qualification","Construction tickets plus estimating software plus CPEng — under $6,000 and three months, total. Everything more expensive than that is worse.","var(--blue)"],
+["🥇 Best business opportunity","An EC-licensed electrical contracting business with an employed licensed nominee, fed by your own estimating capability. Under $40k to establish and the only option here that builds sellable equity.","var(--red)"],
+["🥇 Most AI-resilient option","Testing and commissioning, HV protection, and licensed contracting. Physical, live, liability-bearing and regulator-gated — the four properties AI does not touch.","var(--green)"],
+["🥇 Highest long-term income","Property development funded by the contracting business. Highest ceiling and highest variance; it needs the business first, not instead.","var(--violet)"],
+["🥇 Best risk/reward","Keep the salary, build the estimating business on weekends, convert to a licensed entity at year three. You risk your Saturdays, not your income, and the downside is that you learn to sell.","var(--red)"]
+];
+$("finals").innerHTML=FIN.map(f=>`<div class="tile" style="--c:${f[2]}"><div class="k">${f[0]}</div><div style="font-family:var(--f-display);font-weight:700;font-size:16px;margin:6px 0 6px;color:var(--ink);line-height:1.3">${f[1].split(".")[0]}.</div><div class="d">${f[1].split(".").slice(1).join(".").trim()}</div></div>`).join("");
+
+/* ---------- boot ---------- */
+loadLocal();
+renderChips(); renderRows(); renderSetup(); renderPlan();
+if(S.scen==="high"){$("sc-high").setAttribute("aria-pressed","true");$("sc-cons").setAttribute("aria-pressed","false");}
+drawChart();
+
+(async()=>{
+  try{
+    if(!window.claude||!window.claude.use)return;
+    const db=await window.claude.use("db");
+    if(!db)return;
+    DB=db;
+    const snap=await db.doc("settings/profile").get();
+    if(snap&&snap.data){
+      S=Object.assign({},DEF,snap.data);
+      renderSetup(); renderPlan(); renderRows();
+      if(S.scen==="high"){$("sc-high").setAttribute("aria-pressed","true");$("sc-cons").setAttribute("aria-pressed","false");}
+      else {$("sc-cons").setAttribute("aria-pressed","true");$("sc-high").setAttribute("aria-pressed","false");}
+      drawChart(); saveLocal();
+      $("savedTag").hidden=false;
+    }
+  }catch(e){}
+})();
+</script>
