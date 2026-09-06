@@ -1,0 +1,813 @@
+<title>Kwinana Tap Water Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+  :root {
+    --ground: #FAFAF7;
+    --surface: #FFFFFF;
+    --surface-sunk: #F2F4F1;
+    --ink: #141A18;
+    --ink-2: #3C4744;
+    --muted: #6A7573;
+    --rule: #E0E5E1;
+    --rule-strong: #C6CFC9;
+    --accent: #00706A;
+    --accent-soft: #E3F1EE;
+    --series-a: #00A08F;
+    --series-b: #A8701C;
+    --flag-do: #00706A;
+    --flag-do-bg: #E3F1EE;
+    --flag-maybe: #8A5A10;
+    --flag-maybe-bg: #F6EEDF;
+    --flag-no: #5C6663;
+    --flag-no-bg: #ECEFEC;
+    --shadow: 0 1px 2px rgba(20,26,24,.05), 0 8px 24px -16px rgba(20,26,24,.22);
+    --measure: 68ch;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #101413;
+      --surface: #171C1A;
+      --surface-sunk: #1D2321;
+      --ink: #EDF1EE;
+      --ink-2: #C2CBC7;
+      --muted: #929D99;
+      --rule: #28302D;
+      --rule-strong: #3A4340;
+      --accent: #4FC7B6;
+      --accent-soft: #12302C;
+      --series-a: #00A08F;
+      --series-b: #A8701C;
+      --flag-do: #6ED2C1;
+      --flag-do-bg: #12302C;
+      --flag-maybe: #D9A652;
+      --flag-maybe-bg: #302716;
+      --flag-no: #9AA5A1;
+      --flag-no-bg: #232927;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #101413;
+    --surface: #171C1A;
+    --surface-sunk: #1D2321;
+    --ink: #EDF1EE;
+    --ink-2: #C2CBC7;
+    --muted: #929D99;
+    --rule: #28302D;
+    --rule-strong: #3A4340;
+    --accent: #4FC7B6;
+    --accent-soft: #12302C;
+    --series-a: #00A08F;
+    --series-b: #A8701C;
+    --flag-do: #6ED2C1;
+    --flag-do-bg: #12302C;
+    --flag-maybe: #D9A652;
+    --flag-maybe-bg: #302716;
+    --flag-no: #9AA5A1;
+    --flag-no-bg: #232927;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 1120px; margin: 0 auto; padding: 0 24px 96px; }
+  .col { max-width: var(--measure); }
+
+  h1, h2, h3, .ui, th, .eyebrow, .chip, .btn {
+    font-family: Archivo, "Helvetica Neue", Arial, sans-serif;
+  }
+  h1 {
+    font-size: clamp(2.1rem, 5vw, 3.1rem);
+    line-height: 1.04;
+    letter-spacing: -.022em;
+    font-weight: 700;
+    margin: 0 0 .5rem;
+    text-wrap: balance;
+  }
+  h2 {
+    font-size: clamp(1.35rem, 2.6vw, 1.72rem);
+    line-height: 1.16;
+    letter-spacing: -.014em;
+    font-weight: 700;
+    margin: 0 0 .35rem;
+    text-wrap: balance;
+  }
+  h3 {
+    font-size: 1.02rem;
+    letter-spacing: -.006em;
+    font-weight: 600;
+    margin: 0 0 .3rem;
+  }
+  p { margin: 0 0 1rem; }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+  strong { font-weight: 600; }
+  .num { font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+
+  .eyebrow {
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .13em;
+    font-weight: 600;
+    color: var(--muted);
+    margin: 0 0 .55rem;
+  }
+
+  /* ---- masthead ---- */
+  header.masthead { padding: 56px 0 0; }
+  .masthead .meta {
+    display: flex; flex-wrap: wrap; gap: 8px 18px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .74rem; color: var(--muted);
+    padding-top: 18px; margin-top: 22px;
+    border-top: 1px solid var(--rule);
+  }
+  .standfirst {
+    font-size: 1.16rem; line-height: 1.55; color: var(--ink-2);
+    max-width: var(--measure); margin: 0;
+  }
+
+  section { padding-top: 56px; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 20px; }
+  .sec-head .rule { flex: 1; height: 1px; background: var(--rule); }
+  .sec-num {
+    font-family: "IBM Plex Mono", monospace; font-size: .74rem;
+    color: var(--muted); letter-spacing: .04em;
+  }
+
+  /* ---- verdict ---- */
+  .verdict {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    border-radius: 2px;
+    padding: 26px 28px;
+    box-shadow: var(--shadow);
+    margin-top: 28px;
+  }
+  .verdict .pick {
+    font-family: Archivo, sans-serif; font-weight: 700;
+    font-size: 1.42rem; letter-spacing: -.014em; line-height: 1.2;
+    margin: 0 0 .5rem;
+  }
+  .verdict p:last-child { margin-bottom: 0; }
+  .pricetag {
+    font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums;
+    font-size: .82rem; color: var(--accent); font-weight: 600;
+    letter-spacing: .01em;
+  }
+
+  /* ---- tables ---- */
+  .tablewrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 2px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: .88rem; }
+  thead th {
+    text-align: left; font-size: .7rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .09em; color: var(--muted);
+    padding: 12px 14px; border-bottom: 1px solid var(--rule-strong);
+    background: var(--surface-sunk); white-space: nowrap;
+    vertical-align: bottom;
+  }
+  tbody td { padding: 13px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; line-height: 1.45; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody th {
+    text-align: left; padding: 13px 14px; border-bottom: 1px solid var(--rule);
+    font-weight: 600; font-size: .88rem; vertical-align: top;
+    font-family: Archivo, sans-serif; line-height: 1.4;
+  }
+  tbody tr:last-child th { border-bottom: none; }
+  td.n, th.n { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  .chip {
+    display: inline-block; font-size: .68rem; font-weight: 600;
+    letter-spacing: .05em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 2px; white-space: nowrap;
+  }
+  .chip.do { color: var(--flag-do); background: var(--flag-do-bg); }
+  .chip.maybe { color: var(--flag-maybe); background: var(--flag-maybe-bg); }
+  .chip.no { color: var(--flag-no); background: var(--flag-no-bg); }
+
+  /* ---- chart ---- */
+  .chart { margin-top: 8px; }
+  .legend { display: flex; gap: 20px; align-items: center; margin-bottom: 20px; font-size: .8rem; font-family: Archivo, sans-serif; color: var(--ink-2); }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-right: 7px; vertical-align: -1px; }
+  .chartbody { position: relative; }
+  .barrow, .gridoverlay, .axis {
+    display: grid;
+    grid-template-columns: minmax(120px, 210px) 1fr;
+    gap: 14px;
+  }
+  .barrow { align-items: center; margin-bottom: 9px; position: relative; z-index: 1; }
+  .barlabel { font-family: Archivo, sans-serif; font-size: .8rem; line-height: 1.25; text-align: right; color: var(--ink-2); }
+  .barlabel .best { color: var(--accent); font-weight: 600; }
+  .bartrack { display: grid; grid-template-columns: 1fr 76px; align-items: center; }
+  .bars { display: flex; align-items: center; gap: 2px; height: 26px; }
+  .seg { height: 26px; flex: none; transition: filter .12s; }
+  .seg:first-child { border-radius: 2px 0 0 2px; }
+  .seg.end { border-radius: 0 4px 4px 0; }
+  .seg:hover { filter: brightness(1.14); }
+  .a { background: var(--series-a); }
+  .b { background: var(--series-b); }
+  .bartotal { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; font-size: .8rem; color: var(--ink); text-align: right; white-space: nowrap; font-weight: 500; }
+  .gridoverlay { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+  .plotarea { position: relative; margin-right: 76px; }
+  .vline { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--rule); }
+  .axis { margin-top: 6px; }
+  .axisticks { position: relative; height: 22px; margin-right: 76px; font-family: "IBM Plex Mono", monospace; font-size: .68rem; color: var(--muted); }
+  .axisticks span { position: absolute; top: 3px; transform: translateX(-50%); }
+  #tip {
+    position: fixed; z-index: 50; pointer-events: none; opacity: 0;
+    background: var(--surface); color: var(--ink);
+    border: 1px solid var(--rule-strong); border-radius: 3px;
+    padding: 8px 11px; font-family: Archivo, sans-serif; font-size: .78rem;
+    box-shadow: var(--shadow); transition: opacity .1s; max-width: 250px; line-height: 1.4;
+  }
+  #tip .tv { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
+
+  /* ---- product list ---- */
+  .products { display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--rule-strong); }
+  .product { border-bottom: 1px solid var(--rule); padding: 22px 0; display: grid; grid-template-columns: 1fr; gap: 14px; }
+  @media (min-width: 820px) { .product { grid-template-columns: 1.15fr 1fr; gap: 32px; } }
+  .product.hero { background: linear-gradient(90deg, var(--accent-soft), transparent 62%); padding-left: 18px; margin-left: -18px; border-left: 3px solid var(--accent); }
+  .prank { font-family: "IBM Plex Mono", monospace; font-size: .7rem; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 6px; }
+  .product h3 { font-size: 1.1rem; }
+  .pmodel { font-family: "IBM Plex Mono", monospace; font-size: .74rem; color: var(--muted); margin: 0 0 .6rem; }
+  .product p { font-size: .93rem; margin-bottom: .6rem; }
+  .specs { display: grid; grid-template-columns: max-content 1fr; gap: 5px 16px; font-size: .82rem; align-content: start; }
+  .specs dt { font-family: Archivo, sans-serif; font-size: .68rem; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); padding-top: 3px; }
+  .specs dd { margin: 0; color: var(--ink-2); }
+  .specs dd .num { font-size: .84rem; }
+
+  /* ---- ranking ---- */
+  .ranks { display: grid; gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 2px; overflow: hidden; }
+  @media (min-width: 720px) { .ranks { grid-template-columns: 1fr 1fr; } }
+  .rank { background: var(--surface); padding: 18px 20px; }
+  .rank .cat { font-family: Archivo, sans-serif; font-size: .68rem; text-transform: uppercase; letter-spacing: .09em; color: var(--muted); margin-bottom: 6px; }
+  .rank .who { font-family: Archivo, sans-serif; font-weight: 600; font-size: .98rem; line-height: 1.3; margin-bottom: 5px; }
+  .rank .why { font-size: .86rem; color: var(--ink-2); margin: 0; line-height: 1.5; }
+  .rank .money { font-family: "IBM Plex Mono", monospace; font-size: .78rem; color: var(--accent); font-weight: 600; }
+
+  /* ---- notes / callouts ---- */
+  .note {
+    background: var(--surface-sunk); border: 1px solid var(--rule);
+    border-radius: 2px; padding: 18px 20px; font-size: .9rem; color: var(--ink-2);
+  }
+  .note p:last-child { margin-bottom: 0; }
+  .note strong { color: var(--ink); }
+  ul.tight { padding-left: 1.15em; margin: 0 0 1rem; }
+  ul.tight li { margin-bottom: .45rem; }
+  .caption { font-size: .78rem; color: var(--muted); margin-top: 12px; line-height: 1.5; }
+
+  details.src { border-top: 1px solid var(--rule); padding: 14px 0; }
+  details.src summary { cursor: pointer; font-family: Archivo, sans-serif; font-weight: 600; font-size: .92rem; }
+  details.src ol { font-size: .84rem; color: var(--ink-2); padding-left: 1.3em; margin: 14px 0 0; }
+  details.src li { margin-bottom: .5rem; word-break: break-word; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<div class="page">
+
+<header class="masthead">
+  <p class="eyebrow">Independent buying brief · Drinking water</p>
+  <h1>Kwinana Tap Water Brief</h1>
+  <p class="standfirst">What is actually in the mains water at a rented house in Kwinana, WA — and the smallest, cheapest thing that fixes the parts worth fixing. Scoped to a no-drilling rental, drinking and cooking only, one to two people.</p>
+  <div class="meta">
+    <span>Compiled September 2026</span>
+    <span>Supply: Perth IWSS / Kwinana desalination blend</span>
+    <span>Budget brief: under $300 upfront</span>
+  </div>
+</header>
+
+<section>
+  <div class="verdict">
+    <p class="eyebrow" style="margin-bottom:.35rem">The short answer</p>
+    <p class="pick">Buy a twin benchtop carbon-block filter with a tap diverter. Roughly $150–$250. Skip reverse osmosis.</p>
+    <p>Perth scheme water is fully compliant with the Australian Drinking Water Guidelines and is genuinely good water. There is <strong>no health emergency in your tap</strong>, and anyone selling you a $700 reverse-osmosis unit for Kwinana is selling you a solution to a problem you don't have.</p>
+    <p>There is one real, evidence-backed thing worth removing: <strong>disinfection by-products</strong>. Perth's water is unusually bromide-rich, so its trihalomethanes are ~98% brominated, and a peer-reviewed survey of 21 Perth distribution zones found a median total THM of <span class="num">72 µg/L</span> and a maximum of <span class="num">157 µg/L</span>. That is comfortably inside Australia's <span class="num">250 µg/L</span> guideline — but above what the US (<span class="num">80</span>) and EU (<span class="num">100</span>) permit. A decent carbon block removes most of it, along with the chlorine taste. That is the whole case for filtering here, and it's a good enough one for $200.</p>
+    <p class="pricetag">Est. 5-year total cost of ownership: $435–$700</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="sec-num">01</span>
+    <h2>What's actually in the water</h2>
+    <span class="rule"></span>
+  </div>
+  <div class="col">
+    <p>Kwinana sits next to the Perth Seawater Desalination Plant, so your supply carries a higher share of desalinated seawater than the northern suburbs — which means <em>softer, lower-TDS water than most of Perth</em>. Kwinana is one of the better-served parts of the metro area for water quality, not one of the worse.</p>
+    <p>Below, every contaminant you asked about, with a verdict. "Filter it" means there's a defensible reason. "Leave it" means removing it buys you nothing, or costs you something.</p>
+  </div>
+
+  <div class="tablewrap" style="margin-top:24px">
+    <table>
+      <thead>
+        <tr>
+          <th style="min-width:150px">Contaminant</th>
+          <th style="min-width:150px">In Kwinana / Perth supply</th>
+          <th style="min-width:110px">Verdict</th>
+          <th style="min-width:230px">Why</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Disinfection by-products (THMs)</th>
+          <td>Median <span class="num">72 µg/L</span>, range <span class="num">0–157</span>; ~98% brominated. Guideline <span class="num">250</span>.</td>
+          <td><span class="chip do">Filter it</span></td>
+          <td>The single best reason to own a filter here. Compliant with the Australian guideline, but high by international standards, and higher in spring/summer. Carbon removes it well.</td>
+        </tr>
+        <tr>
+          <th>Chlorine</th>
+          <td>Typically <span class="num">0.2–0.6 mg/L</span> free chlorine at the tap.</td>
+          <td><span class="chip do">Filter it</span></td>
+          <td>Not a health problem at these levels — it's what keeps the water safe from the plant to your kitchen. It <em>is</em> the taste and smell you dislike, and it's the precursor to the THMs above. Carbon strips it in one pass.</td>
+        </tr>
+        <tr>
+          <th>Chloramine</th>
+          <td>Perth metro is predominantly free chlorine. Chloramine is used mainly in Water Corporation's longer regional and "Greater Areas" schemes.</td>
+          <td><span class="chip maybe">Covered anyway</span></td>
+          <td>If any chloraminated water reaches your zone, a proper carbon block handles it — it just needs contact time. This is an argument for a benchtop cartridge over a jug, not for RO.</td>
+        </tr>
+        <tr>
+          <th>Fluoride</th>
+          <td>Deliberately dosed to roughly <span class="num">0.6–0.9 mg/L</span> (NHMRC range <span class="num">0.6–1.1</span>).</td>
+          <td><span class="chip no">Leave it</span></td>
+          <td>This is a public-health additive, not a contaminant, and it's at a fraction of the <span class="num">1.5 mg/L</span> safety limit. Removing it requires RO or a bone-char cartridge and has a measurable dental downside. If you want it gone that's your call, but it's a values decision, not a water-quality one — don't let a salesperson frame it as contamination.</td>
+        </tr>
+        <tr>
+          <th>Hardness (scale)</th>
+          <td>Perth city-wide averages around <span class="num">96 mg/L</span> CaCO₃; groundwater-fed suburbs run higher. Kwinana's desal blend is <strong>softer than the Perth average</strong>.</td>
+          <td><span class="chip no">Leave it</span></td>
+          <td>Purely aesthetic and appliance-related — kettle scale, spotty glasses. No health effect; the ADWG limit is aesthetic. Softening means a whole-house ion-exchange unit with salt refills: wrong purchase for a rental, and you'd be softening water for a landlord's pipes.</td>
+        </tr>
+        <tr>
+          <th>PFAS</th>
+          <td>Water Corporation reports all scheme water compliant with the 2025 NHMRC values (PFOS <span class="num">8 ng/L</span>, PFOA <span class="num">200</span>, PFHxS <span class="num">30</span>, PFBS <span class="num">1000</span>). Detections exist in some raw source waters, below guideline.</td>
+          <td><span class="chip maybe">Bonus, not a driver</span></td>
+          <td>Real but currently well-managed. A quality carbon block gives you roughly 70–90% reduction of long-chain PFAS for free as a side effect. Don't buy RO <em>for</em> PFAS on a compliant supply — but don't buy a filter with no PFAS data either.</td>
+        </tr>
+        <tr>
+          <th>Lead &amp; heavy metals</th>
+          <td>Not a mains issue. The realistic source is brass fittings in <em>your rental's own</em> tapware, in first-draw water that has sat overnight.</td>
+          <td><span class="chip maybe">Cheap insurance</span></td>
+          <td>Mostly free to fix: run the kitchen tap 10–20 seconds before drinking after it's been standing. Beyond that, any NSF/ANSI 53-certified carbon block covers lead. Note Australia's lead-free plumbing rules only fully bite from 1 May 2026, so an older rental's fittings predate them.</td>
+        </tr>
+        <tr>
+          <th>Microplastics</th>
+          <td>One study puts Australian tap water at roughly <span class="num">50 particles/L</span> — notably <em>lower</em> than Australian bottled water at ~<span class="num">72</span>.</td>
+          <td><span class="chip maybe">Bonus, not a driver</span></td>
+          <td>Health significance is genuinely unresolved; the science does not yet support alarm. A 0.5 micron carbon block or ceramic catches the great majority of what's measurable. Switching from bottled water to filtered tap water reduces your exposure.</td>
+        </tr>
+        <tr>
+          <th>Bacteria &amp; pathogens</th>
+          <td>Chlorinated network, ~70,000 samples a year, full microbiological compliance. No boil-water notices in the Perth metro supply.</td>
+          <td><span class="chip no">Leave it</span></td>
+          <td>Buying UV or a silver-impregnated ceramic to disinfect Perth mains water is solving a problem the Water Corporation already solved. Relevant for rainwater tanks and bores — not for you.</td>
+        </tr>
+        <tr>
+          <th>Sediment / turbidity</th>
+          <td>Low and stable, with occasional discolouration after mains work or a hydrant flush.</td>
+          <td><span class="chip maybe">Cheap insurance</span></td>
+          <td>A sediment pre-filter costs about $15 a year and its real job is protecting your expensive carbon cartridge from clogging early. That's why "twin" benchtops exist.</td>
+        </tr>
+        <tr>
+          <th>VOCs, pesticides, solvents</th>
+          <td>No meaningful detections in compliant scheme water. Kwinana's industrial area is a <em>groundwater</em> and air issue, not a scheme-water one — your tap is not fed from local industrial bores.</td>
+          <td><span class="chip no">Leave it</span></td>
+          <td>Don't let "you live in Kwinana, next to a refinery" be used as a sales argument about your drinking water. It's a different water body. Carbon covers this class regardless.</td>
+        </tr>
+        <tr>
+          <th>Taste &amp; odour</th>
+          <td>Chlorine, plus a faint earthy or "swimming pool" note that varies seasonally with source blend.</td>
+          <td><span class="chip do">Filter it</span></td>
+          <td>Honestly, this is the benefit you will actually notice every day. It is worth $200 on its own.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="caption">Verdicts are mine. Figures are the best available published values; Water Corporation's own site was not directly reachable from this session, so scheme-level numbers come from its annual-report data as reported by third parties and from the peer-reviewed Perth THM survey. Suburb-by-suburb hardness tables circulating online are produced by filter retailers, not by Water Corporation — treat them as marketing.</p>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="sec-num">02</span>
+    <h2>Which technology, and which are overkill</h2>
+    <span class="rule"></span>
+  </div>
+  <div class="col">
+    <p>The honest summary: for Kwinana, <strong>carbon block does about 90% of the useful work for about 20% of the money</strong>. Everything else on this list is either redundant here or solves a problem you don't have.</p>
+  </div>
+  <div class="tablewrap" style="margin-top:24px">
+    <table>
+      <thead>
+        <tr>
+          <th style="min-width:140px">Technology</th>
+          <th style="min-width:190px">Removes</th>
+          <th style="min-width:180px">Does not remove</th>
+          <th style="min-width:150px">Waste / flow</th>
+          <th style="min-width:130px">Needed here?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Activated carbon (granular / jug)</th>
+          <td>Chlorine, some taste/odour compounds, some THMs.</td>
+          <td>Dissolved minerals, fluoride, most cysts; channels as it ages, so performance drops fast.</td>
+          <td>None. No pressure effect.</td>
+          <td><span class="chip maybe">Entry level</span></td>
+        </tr>
+        <tr>
+          <th>Carbon block (0.5–1 µm)</th>
+          <td>Chlorine, chloramine (with contact time), THMs, VOCs, pesticides, lead, cysts, most microplastics, 70–90% of long-chain PFAS.</td>
+          <td>Fluoride, hardness, nitrate, sodium — i.e. dissolved salts.</td>
+          <td>None. Slight flow reduction; irrelevant on a benchtop.</td>
+          <td><span class="chip do">Yes — this is the one</span></td>
+        </tr>
+        <tr>
+          <th>Reverse osmosis</th>
+          <td>Essentially everything, including fluoride, hardness, nitrate, 90–99% of all PFAS chain lengths.</td>
+          <td>Also removes beneficial minerals; needs remineralisation to taste right.</td>
+          <td>Wastes 1–4 L per litre produced. Slow (needs a tank or a pump). Countertop units need a power point.</td>
+          <td><span class="chip no">Overkill in Kwinana</span></td>
+        </tr>
+        <tr>
+          <th>Ultrafiltration (0.01–0.1 µm)</th>
+          <td>Bacteria, cysts, particulates, some larger organics.</td>
+          <td>Chlorine, THMs, PFAS, dissolved anything — the things that actually matter here.</td>
+          <td>No waste water; some flow loss.</td>
+          <td><span class="chip no">Wrong target</span></td>
+        </tr>
+        <tr>
+          <th>UV</th>
+          <td>Inactivates bacteria, viruses, protozoa.</td>
+          <td>Every chemical. Zero effect on taste, chlorine, THMs, PFAS.</td>
+          <td>No waste; needs power permanently.</td>
+          <td><span class="chip no">Redundant on chlorinated mains</span></td>
+        </tr>
+        <tr>
+          <th>Ion exchange</th>
+          <td>Hardness (softeners), or specific ions; fluoride via specialty resin/bone char.</td>
+          <td>Chlorine, THMs, organics. Softeners <em>add</em> sodium.</td>
+          <td>Regeneration wastes water and needs salt refills.</td>
+          <td><span class="chip no">Not for a rental</span></td>
+        </tr>
+        <tr>
+          <th>Ceramic (Sterasyl / Ultracarb)</th>
+          <td>Sub-micron particulates, bacteria, cysts, turbidity. Ultracarb adds a carbon block core for chemicals.</td>
+          <td>Plain ceramic alone removes no chemicals — the carbon core does that work.</td>
+          <td>No waste. Flow drops as the surface loads; you scrub it clean.</td>
+          <td><span class="chip maybe">Good, if it has the carbon core</span></td>
+        </tr>
+        <tr>
+          <th>Multi-stage (sediment + carbon block)</th>
+          <td>The union of its stages. The sediment stage exists to extend the carbon stage's life.</td>
+          <td>Same blind spots as carbon block.</td>
+          <td>None.</td>
+          <td><span class="chip do">The correct build</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note col" style="margin-top:22px">
+    <p><strong>On "alkaline" and "remineralising" stages:</strong> skip them. They add cost and a cartridge to replace in exchange for a claim with no credible clinical support. They only make sense downstream of RO, to put back minerals RO stripped out — which is an argument against RO, not for alkaline.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="sec-num">03</span>
+    <h2>Five-year cost, which is the number that matters</h2>
+    <span class="rule"></span>
+  </div>
+  <div class="col">
+    <p>Upfront price is the least interesting number in this category. Cartridges are where these systems make their money, and the cheapest box on the shelf is frequently the most expensive thing to own. Modelled at <strong>6 L/day of filtered water</strong> (~2,200 L/year) for one to two people.</p>
+  </div>
+
+  <div class="chart" style="margin-top:28px">
+    <div class="legend">
+      <span><i style="background:var(--series-a)"></i>Upfront, incl. first cartridges</span>
+      <span><i style="background:var(--series-b)"></i>Replacement cartridges, years 2–5</span>
+    </div>
+    <div class="chartbody" id="chartbody"></div>
+    <div class="axis">
+      <span></span>
+      <div class="axisticks" id="axisticks"></div>
+    </div>
+    <p class="caption">Estimated total cost of ownership over five years. ZeroWater is excluded from the chart because it would be four times the width of the widest bar — see the note below. Prices are September 2026 Australian retail as reported by search results; they were not verifiable directly on retailer pages from this session, so treat them as ±15% and confirm before buying.</p>
+  </div>
+
+  <div class="note col" style="margin-top:26px">
+    <p><strong>The ZeroWater trap.</strong> ZeroWater jugs are heavily marketed on their TDS meter and genuinely do strip dissolved solids. But a cartridge is around <span class="num">$39</span> and lasts roughly <span class="num">70 L</span> on moderately mineralised water. Perth is moderately mineralised. At 2,200 L/year that is about 31 cartridges — on the order of <span class="num">$1,200 a year</span>, or <span class="num">$6,000</span> over five years, to remove minerals that were never the problem. Do not buy this for Perth water.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="sec-num">04</span>
+    <h2>The shortlist</h2>
+    <span class="rule"></span>
+  </div>
+  <div class="col">
+    <p>Filtered to what a Kwinana renter can actually install and remove without a mark on the property. Everything here connects to the kitchen mixer with a diverter valve or sits on the bench unconnected.</p>
+  </div>
+
+  <div class="products" style="margin-top:26px">
+
+    <article class="product hero">
+      <div>
+        <p class="prank">🥇 Best overall — what I'd buy</p>
+        <h3>Twin benchtop system with a certified carbon block</h3>
+        <p class="pmodel">e.g. PSI Water Filters PSI-D004P (MatriKX Pb1) · Clarence Water Filters twin benchtop · Filter Systems Australia HPF twin</p>
+        <p>Two 10-inch housings on the bench, a 3/8" diverter on the tap. Stage one is sediment, stage two is a carbon block. Fits your no-drilling constraint exactly, takes ten minutes to install, ten minutes to remove, and comes with you when you move.</p>
+        <p>The important detail is <strong>which cartridge you put in it</strong>: insist on a carbon block with NSF/ANSI 42 and 53 certification, such as a MatriKX Pb1 or a Doulton Ultracarb. Generic unbranded carbon in the same housing is the difference between a real filter and a taste improver.</p>
+      </div>
+      <dl class="specs">
+        <dt>Price</dt><dd><span class="num">$135–$230</span> depending on retailer and cartridge</dd>
+        <dt>Stages</dt><dd>2 — sediment pre-filter, then carbon block</dd>
+        <dt>Certification</dt><dd>Cartridge-dependent. MatriKX Pb1 and Doulton Ultracarb carry NSF/ANSI 42 &amp; 53</dd>
+        <dt>Filter life</dt><dd>~12 months, or <span class="num">4,000 L</span> for Ultracarb — you'll hit the date, not the volume</dd>
+        <dt>Replacements</dt><dd><span class="num">$60–$110/yr</span> for the pair</dd>
+        <dt>Flow</dt><dd>Roughly <span class="num">2–4 L/min</span>; you fill a jug, not a bath</dd>
+        <dt>Waste</dt><dd>None</dd>
+        <dt>Install</dt><dd>Unscrew tap aerator, fit diverter. No tools beyond a shifter</dd>
+        <dt>Rental</dt><dd>Fully reversible. Nothing drilled, nothing cut</dd>
+        <dt>5-year cost</dt><dd><span class="num">~$435</span></dd>
+      </dl>
+    </article>
+
+    <article class="product">
+      <div>
+        <p class="prank">🥈 Best premium that still suits a rental</p>
+        <h3>Doulton BioTect Ultra countertop</h3>
+        <p class="pmodel">Doulton DCP+BTU2501 · Awesome Water Filters, ~$419.99 (listed down from $499.99)</p>
+        <p>The properly certified version of the same idea: a ceramic shell for sub-micron particulates and bacteria over a carbon block core for chemicals, in a single countertop housing, NSF-tested to ANSI 42, 53 and 401. Standard 401 is the emerging-contaminants one — pharmaceuticals and the like — and very few units at any price carry it.</p>
+        <p>It is a better filter than the pick above. It is not <em>three hundred dollars better</em> for Kwinana water, which is why it is second.</p>
+      </div>
+      <dl class="specs">
+        <dt>Price</dt><dd><span class="num">~$420</span></dd>
+        <dt>Stages</dt><dd>2-in-1 — ceramic + carbon block, one cartridge</dd>
+        <dt>Certification</dt><dd>NSF/ANSI 42, 53 and 401</dd>
+        <dt>Filter life</dt><dd>~12 months</dd>
+        <dt>Replacements</dt><dd><span class="num">~$130–$160/yr</span></dd>
+        <dt>Waste</dt><dd>None</dd>
+        <dt>Install</dt><dd>Diverter to tap. No plumbing</dd>
+        <dt>Rental</dt><dd>Excellent — portable, self-installed</dd>
+        <dt>5-year cost</dt><dd><span class="num">~$1,000</span></dd>
+      </dl>
+    </article>
+
+    <article class="product">
+      <div>
+        <p class="prank">🥉 Best budget</p>
+        <h3>BRITA Marella XL jug + Maxtra Pro Pure Performance</h3>
+        <p class="pmodel">Available at Bunnings, Woolworths, Amazon AU · jug bundles from ~$45</p>
+        <p>The floor of respectable. Carbon plus ion-exchange beads: it fixes chlorine taste, reduces limescale, and BRITA publishes a >99% total PFAS reduction claim on the Pure Performance cartridge. It does <em>not</em> match a carbon block on THMs or contact time, and the 4-week replacement interval is a discipline problem — a lapsed jug filter is worse than no filter.</p>
+        <p>Buy this if you want the taste fixed for under $50 today. Note it stops being the cheap option around year two.</p>
+      </div>
+      <dl class="specs">
+        <dt>Price</dt><dd><span class="num">$45–$60</span> for jug + starter cartridges</dd>
+        <dt>Stages</dt><dd>1 — coconut carbon + ion-exchange resin</dd>
+        <dt>Certification</dt><dd>Manufacturer testing; not NSF-certified in the AU range</dd>
+        <dt>Filter life</dt><dd><span class="num">4 weeks</span> or <span class="num">150 L</span></dd>
+        <dt>Replacements</dt><dd>~<span class="num">$7.50</span> each; ~<span class="num">$98/yr</span> at your usage</dd>
+        <dt>Install</dt><dd>None. It's a jug</dd>
+        <dt>Rental</dt><dd>Perfect. Zero contact with the property</dd>
+        <dt>5-year cost</dt><dd><span class="num">~$530</span></dd>
+      </dl>
+    </article>
+
+    <article class="product">
+      <div>
+        <p class="prank">Also considered — bench space is tight</p>
+        <h3>TAPP Water EcoPro / EcoPro Compact</h3>
+        <p class="pmodel">tappwater.com.au · ~$229.99 first-year pack, or ~$179.99/yr subscription</p>
+        <p>Mounts directly on the tap spout, takes up no bench at all, and the refills are independently lab-tested for >95% PFAS reduction plus 100+ contaminants. Genuinely good for a small kitchen. The catch is the model: you are renting the filter. At $180/year forever it becomes the second-most expensive thing on this page by year five, for less filtration than a $200 benchtop.</p>
+      </div>
+      <dl class="specs">
+        <dt>Price</dt><dd><span class="num">~$230</span> year one</dd>
+        <dt>Stages</dt><dd>1 — compressed carbon block cartridge</dd>
+        <dt>Certification</dt><dd>Independent lab testing to NSF methods; not a listed NSF certification</dd>
+        <dt>Filter life</dt><dd>2–3 months per refill</dd>
+        <dt>Replacements</dt><dd><span class="num">~$180/yr</span></dd>
+        <dt>Install</dt><dd>Screws onto the aerator thread</dd>
+        <dt>Rental</dt><dd>Excellent — smallest footprint here</dd>
+        <dt>5-year cost</dt><dd><span class="num">~$950</span></dd>
+      </dl>
+    </article>
+
+    <article class="product">
+      <div>
+        <p class="prank">🏆 If money genuinely were no object</p>
+        <h3>AquaTru Classic countertop RO — and why I'd still say no</h3>
+        <p class="pmodel">~$650 upfront, ~$120/yr consumables · also PWS EcoHero 5-Stage, ~$695, WaterMark AS3497</p>
+        <p>This is the best <em>filtration</em> you can put in a rental without touching the plumbing: NSF/ANSI 58 and P473 certified, four stages, no installation, removes fluoride, hardness, nitrate and 90–99% of all PFAS chain lengths.</p>
+        <p>For Kwinana it is the wrong purchase. It costs roughly <span class="num">$1,250</span> over five years to remove fluoride you probably want, minerals you don't need removed, and PFAS that are already under guideline — while wasting water in a drying climate, occupying a large slab of bench, and needing a power point. The Australian-made EcoHero at least halves the waste ratio to about 1:1. If you want RO anyway, buy the EcoHero for the WaterMark certification and the better recovery rate. But understand you're buying it for reassurance, not measured benefit.</p>
+      </div>
+      <dl class="specs">
+        <dt>Price</dt><dd><span class="num">$650–$695</span></dd>
+        <dt>Stages</dt><dd>4–5, incl. RO membrane</dd>
+        <dt>Certification</dt><dd>AquaTru: NSF/ANSI 58 + P473. EcoHero: WaterMark AS3497</dd>
+        <dt>Waste</dt><dd>~1 L brine per 1 L (EcoHero) to 3–4 L per 1 L (typical RO)</dd>
+        <dt>Replacements</dt><dd><span class="num">~$120/yr</span></dd>
+        <dt>Install</dt><dd>None, but requires a power point and ~30cm of bench</dd>
+        <dt>Rental</dt><dd>Fine — but oversized for the water</dd>
+        <dt>5-year cost</dt><dd><span class="num">~$1,250</span></dd>
+      </dl>
+    </article>
+
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="sec-num">05</span>
+    <h2>Rental mechanics — the bits that cause actual grief</h2>
+    <span class="rule"></span>
+  </div>
+  <div class="col">
+    <ul class="tight">
+      <li><strong>Check your tap thread before you order.</strong> This is the single most common reason a benchtop filter ends up in a cupboard. Older Australian spouts take a <span class="num">21 mm</span> diverter thread; most modern flick mixers are <span class="num">22–24 mm</span> once the aerator is out. Adapters exist (commonly sold as part 899 or 905) and cost a few dollars — but unscrew your aerator and measure it first.</li>
+      <li><strong>Pull-out spray mixers usually can't take a diverter at all.</strong> If your kitchen tap has a pull-out hose head, a benchtop diverter will not fit and no adapter fixes it. In that case the honest options are a jug, or a system with its own inline connection. Check this before anything else.</li>
+      <li><strong>Leak risk is your real exposure, not the landlord's.</strong> A benchtop unit sits above the bench, so a failure is a puddle, not a flooded cabinet — this is a genuine advantage over under-sink in a rental. Hand-tighten, don't over-torque plastic housings, and turn the diverter off at the tap when you're away for more than a few days.</li>
+      <li><strong>Under-sink is off the table under your constraint.</strong> Every under-sink system needs a tee into the cold water line, and most need a benchtop hole for a dedicated faucet. That's a permanent modification requiring landlord consent and, in WA, licensed plumbing work. Cost would be $240–$325 for the kit plus $150–$350 for a plumber — and you'd likely leave the tee behind.</li>
+      <li><strong>Whole-house is definitively not worth it here.</strong> $1,300–$5,000 installed, mains-side plumbing work, permanent, and it improves water you mostly flush down a drain. You are treating 6 litres a day, not 400.</li>
+      <li><strong>WaterMark certification is a red herring for you.</strong> It's legally required for permanently plumbed products. A countertop unit on a removable diverter doesn't need it, so its absence isn't a quality signal — NSF/ANSI 42 and 53 on the <em>cartridge</em> is the signal that matters.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="sec-num">06</span>
+    <h2>The ranking</h2>
+    <span class="rule"></span>
+  </div>
+  <div class="ranks">
+    <div class="rank">
+      <p class="cat">🥇 Best overall for your situation</p>
+      <p class="who">Twin benchtop + NSF-certified carbon block <span class="money">~$150–230</span></p>
+      <p class="why">Right technology, right scale, reversible, portable, and the cheapest five-year cost on the list. Nothing above it delivers enough extra to justify the money on Kwinana water.</p>
+    </div>
+    <div class="rank">
+      <p class="cat">🥈 Best premium</p>
+      <p class="who">Doulton DCP+BTU2501 BioTect Ultra <span class="money">~$420</span></p>
+      <p class="why">The best independently certified filtration you can get without plumbing or RO. NSF 42/53/401. Buy it if certification and simplicity matter more than $250.</p>
+    </div>
+    <div class="rank">
+      <p class="cat">🥉 Best budget</p>
+      <p class="who">BRITA Marella XL + Maxtra Pro <span class="money">~$45–60</span></p>
+      <p class="why">Fixes the taste tonight for the price of a takeaway. Weakest filtration here and the running cost overtakes a benchtop by about month twenty.</p>
+    </div>
+    <div class="rank">
+      <p class="cat">🏠 Best rental-friendly</p>
+      <p class="who">Same as the overall pick — or TAPP EcoPro if bench space is the constraint</p>
+      <p class="why">Both install and uninstall in minutes with no marks, no consent, and no plumber. The benchtop filters better; the TAPP takes no bench.</p>
+    </div>
+    <div class="rank">
+      <p class="cat">🚰 Best drinking-water-only</p>
+      <p class="who">The overall pick, again</p>
+      <p class="why">Drinking-water-only <em>is</em> the correct scope in Kwinana. Point-of-use treats the ~2% of household water you actually ingest, at ~1% of the cost of treating all of it.</p>
+    </div>
+    <div class="rank">
+      <p class="cat">💧 Best whole-house</p>
+      <p class="who">None — don't buy one <span class="money">$1,300–$5,000</span></p>
+      <p class="why">If you ever own a home on bore water, revisit it. In a rented Kwinana house on compliant scheme water, a whole-house system is a permanent modification you can't take with you, solving problems your water doesn't have.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="sec-num">07</span>
+    <h2>What I'd actually buy</h2>
+    <span class="rule"></span>
+  </div>
+  <div class="col">
+    <p>A twin benchtop housing from an Australian supplier — <strong>PSI Water Filters, Clarence Water Filters, or a Perth-local like WA Water Filters or My Water Filter in Malaga</strong> — fitted with a sediment pre-filter and a <strong>MatriKX Pb1 or Doulton Ultracarb carbon block</strong>. Around $150–$230 delivered, roughly $70–$110 a year after that.</p>
+    <p>The reasoning is short. Perth water is compliant and Kwinana's desal-heavy blend is among the better supplies in the metro area. There is exactly one contaminant class with a real, published argument behind it — the brominated disinfection by-products — and carbon block is the technology that removes them. Chlorine taste comes off in the same pass, which is the benefit you'll actually notice. Lead from your own tapware, microplastics and long-chain PFAS all come along free. Nothing about your water justifies reverse osmosis, and RO would strip fluoride you have no good reason to remove.</p>
+    <p>Three things before you order. Unscrew the aerator on your kitchen tap and measure the thread, and confirm it isn't a pull-out spray head. Buy the cartridge on its certification, not the housing on its looks — the housing is a plastic tube, the cartridge is the product. And put a recurring reminder in your phone for the replacement date, because an expired carbon block is the one way this purchase actually makes your water worse.</p>
+    <p>Then, for free: run the kitchen tap for ten seconds before the first glass of the day.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="sec-num">08</span>
+    <h2>Sources &amp; confidence</h2>
+    <span class="rule"></span>
+  </div>
+  <div class="col">
+    <div class="note" style="margin-bottom:20px">
+      <p><strong>Read this before you spend money.</strong> Water Corporation's own website and the NHMRC guidelines site were both unreachable from the environment this brief was compiled in, so scheme-level figures are taken from the peer-reviewed literature where possible and otherwise from third-party reporting of Water Corporation's annual data. Product prices come from search-result snippets and could not be confirmed on the retailers' own pages — verify every price before purchase. Where a claim rests only on a manufacturer or a filter retailer, it says so above.</p>
+    </div>
+  </div>
+  <details class="src">
+    <summary>Water quality</summary>
+    <ol>
+      <li>Charrois et al. / Hinwood et al., <em>Spatial and Temporal Variability in Trihalomethane Concentrations in the Bromine-Rich Public Waters of Perth, Australia</em> — 250 samples, 21 distribution zones; median total THM 72 µg/L, range 0–157, 97.59% brominated. <a href="https://pubmed.ncbi.nlm.nih.gov/33028020/">pubmed.ncbi.nlm.nih.gov/33028020</a></li>
+      <li>NHMRC, Australian Drinking Water Guidelines — THMs 250 µg/L; PFAS values adopted 2025 (PFOS 8 ng/L, PFOA 200, PFHxS 30, PFBS 1000). <a href="https://www.nhmrc.gov.au/about-us/news-centre/updated-australian-drinking-water-guidelines">nhmrc.gov.au</a></li>
+      <li>Water Corporation, <em>Drinking Water Quality Annual Report Data 01/07/2024–30/06/2025, Perth Region</em> (aesthetic tables) and preceding annual reports. <a href="https://www.watercorporation.com.au/about-us/our-performance/drinking-water-quality">watercorporation.com.au</a></li>
+      <li>ABCB, <em>Lead in plumbing products</em> — 0.25% weighted-average lead limit and Lead Free WaterMark mandatory from 1 May 2026. <a href="https://www.abcb.gov.au/news/2023/update-advice-new-lead-requirements">abcb.gov.au</a></li>
+      <li>Samandra et al., microplastics in Australian tap vs bottled water (~49.7 vs ~72.3 items/L). <a href="https://www.sciencedirect.com/science/article/abs/pii/S0048969722024226">sciencedirect.com</a></li>
+      <li>NSF, <em>Forever Chemicals and the Advancement of Filtration Standards</em> — P473 folded into NSF/ANSI 53 and 58. <a href="https://www.nsf.org/knowledge-library/forever-chemicals-advancement-filtration-standards">nsf.org</a></li>
+    </ol>
+  </details>
+  <details class="src">
+    <summary>Products &amp; pricing</summary>
+    <ol>
+      <li>PSI Water Filters — dual countertop systems incl. PSI-D004P with MatriKX Pb1. <a href="https://psifilters.com.au/collections/countertop-systems-dual">psifilters.com.au</a></li>
+      <li>Clarence Water Filters — twin benchtop systems, $150–$230; diverter valves and 24 mm→21 mm adapters. <a href="https://www.clarencewaterfilters.com.au/product/twin-bench-top-water-filter-systems-2/">clarencewaterfilters.com.au</a></li>
+      <li>Awesome Water Filters — Doulton DCP+BTU2501 BioTect Ultra, listed $419.99. <a href="https://www.awesomewaterfilters.com.au/products/kitchen-single-stainless-countertop-water-filter">awesomewaterfilters.com.au</a></li>
+      <li>Doulton Ultracarb cartridge, ~4,000 L / 12 months; Australian retail ~$99–$150. <a href="https://mywaterfilter.com.au/collections/doulton-water-filters">mywaterfilter.com.au</a> · <a href="https://www.wawaterfilters.com.au/product/doulton-ultracarb-ceramic-filter-cartridge/">wawaterfilters.com.au</a></li>
+      <li>TAPP Water Australia — EcoPro annual pack $229.99 / subscription $179.99 per year. <a href="https://tappwater.com.au/products/tap-water-filter">tappwater.com.au</a></li>
+      <li>BRITA Australia — Maxtra Pro Pure Performance, 150 L / 4 weeks; 10-pack ~$75 via Amazon AU. <a href="https://www.brita.com.au/water-filter-system/water-filter-cartridges/maxtra-pro-pure-performance">brita.com.au</a></li>
+      <li>ZeroWater replacement filters ~$39 on Amazon AU; ~70 L per cartridge on mineralised water. <a href="https://www.amazon.com.au/zerowater/s?k=zerowater">amazon.com.au</a></li>
+      <li>AquaTru and PWS EcoHero countertop RO pricing and waste ratios (retailer-published; treat with caution). <a href="https://cleanandnative.com.au/water-filters/reverse-osmosis-filter-australia/">cleanandnative.com.au</a></li>
+    </ol>
+  </details>
+</section>
+
+</div>
+
+<div id="tip" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  var data = [
+    { name: "Twin benchtop + carbon block", up: 190, rep: 245, best: true },
+    { name: "BRITA Marella jug", up: 50, rep: 480 },
+    { name: "Doulton Ultracarb benchtop", up: 260, rep: 440 },
+    { name: "Doulton twin benchtop", up: 330, rep: 560 },
+    { name: "TAPP Water EcoPro", up: 230, rep: 720 },
+    { name: "Doulton BioTect Ultra DCP+BTU2501", up: 420, rep: 580 },
+    { name: "AquaTru countertop RO", up: 650, rep: 480 }
+  ];
+  data.forEach(function (d) { d.total = d.up + d.rep; });
+  data.sort(function (a, b) { return a.total - b.total; });
+
+  var max = 1400;
+  var ticks = [0, 350, 700, 1050, 1400];
+  var money = function (v) { return "$" + v.toLocaleString("en-AU"); };
+
+  var body = document.getElementById("chartbody");
+  var rows = "";
+
+  data.forEach(function (d) {
+    var upPct = (d.up / max) * 100;
+    var repPct = (d.rep / max) * 100;
+    rows +=
+      '<div class="barrow">' +
+        '<div class="barlabel' + (d.best ? ' ' : '') + '">' +
+          (d.best ? '<span class="best">' + d.name + '</span>' : d.name) +
+        '</div>' +
+        '<div class="bartrack">' +
+          '<div class="bars">' +
+            '<div class="seg a" style="width:' + upPct.toFixed(2) + '%" ' +
+              'data-t="' + d.name + '" data-k="Upfront, incl. first cartridges" data-v="' + money(d.up) + '"></div>' +
+            '<div class="seg b end" style="width:' + repPct.toFixed(2) + '%" ' +
+              'data-t="' + d.name + '" data-k="Replacement cartridges, years 2–5" data-v="' + money(d.rep) + '"></div>' +
+          '</div>' +
+          '<span class="bartotal">' + money(d.total) + '</span>' +
+        '</div>' +
+      '</div>';
+  });
+
+  var grid = '<div class="gridoverlay" aria-hidden="true"><span></span><div class="plotarea">';
+  ticks.forEach(function (t) {
+    if (t === 0) return;
+    grid += '<span class="vline" style="left:' + ((t / max) * 100).toFixed(2) + '%"></span>';
+  });
+  grid += '</div></div>';
+
+  body.innerHTML = grid + rows;
+
+  var axis = document.getElementById("axisticks");
+  var ax = "";
+  ticks.forEach(function (t) {
+    ax += '<span style="left:' + ((t / max) * 100).toFixed(2) + '%">' + money(t) + '</span>';
+  });
+  axis.innerHTML = ax;
+
+  var tip = document.getElementById("tip");
+  body.addEventListener("mousemove", function (e) {
+    var seg = e.target.closest(".seg");
+    if (!seg) { tip.style.opacity = 0; return; }
+    tip.innerHTML = "<strong>" + seg.dataset.t + "</strong><br>" +
+      seg.dataset.k + ": <span class='tv'>" + seg.dataset.v + "</span>";
+    tip.style.opacity = 1;
+    var x = Math.min(e.clientX + 14, window.innerWidth - 262);
+    tip.style.left = x + "px";
+    tip.style.top = (e.clientY + 16) + "px";
+  });
+  body.addEventListener("mouseleave", function () { tip.style.opacity = 0; });
+})();
+</script>
