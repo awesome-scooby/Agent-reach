@@ -1,0 +1,980 @@
+<title>Heel Load Reset</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+:root{
+  --bg:#FBF9F7; --surface:#FFFFFF; --surface-2:#F4F1ED;
+  --ink:#1E2321; --ink-2:#4A524E; --ink-3:#7C837E;
+  --line:#E2DDD6; --line-strong:#CFC8BF;
+  --accent:#14595C; --accent-soft:#E3EFEE;
+  --data:#C8642F; --data-soft:#F7E6DA;
+  --ok:#2C6E49; --ok-soft:#E4F0E8;
+  --warn:#8F5A00; --warn-soft:#F8EEDA;
+  --stop:#A62B24; --stop-soft:#F8E4E2;
+  --shadow:0 1px 2px rgba(30,35,33,.05), 0 8px 24px -12px rgba(30,35,33,.14);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#14181A; --surface:#1C2124; --surface-2:#242A2D;
+    --ink:#E9E7E2; --ink-2:#B4BAB6; --ink-3:#868D89;
+    --line:#2E3538; --line-strong:#414A4D;
+    --accent:#5CBDB4; --accent-soft:#17322F;
+    --data:#E4884C; --data-soft:#3A2718;
+    --ok:#6BC08C; --ok-soft:#16301F;
+    --warn:#E0AE55; --warn-soft:#33260F;
+    --stop:#E8837A; --stop-soft:#351C1A;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14181A; --surface:#1C2124; --surface-2:#242A2D;
+  --ink:#E9E7E2; --ink-2:#B4BAB6; --ink-3:#868D89;
+  --line:#2E3538; --line-strong:#414A4D;
+  --accent:#5CBDB4; --accent-soft:#17322F;
+  --data:#E4884C; --data-soft:#3A2718;
+  --ok:#6BC08C; --ok-soft:#16301F;
+  --warn:#E0AE55; --warn-soft:#33260F;
+  --stop:#E8837A; --stop-soft:#351C1A;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:"Source Serif 4", Georgia, serif;
+  font-size:17px; line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1040px; margin:0 auto; padding:0 24px 96px}
+@media(max-width:640px){ .wrap{padding:0 16px 72px} body{font-size:16px} }
+
+/* ---- type ---- */
+h1,h2,h3,h4,.eyebrow,.ui{font-family:Archivo, "Helvetica Neue", Arial, sans-serif}
+h1{font-size:clamp(2.1rem,5.6vw,3.3rem); line-height:1.04; font-weight:700; letter-spacing:-.024em; margin:0; text-wrap:balance}
+h2{font-size:clamp(1.45rem,3.2vw,1.95rem); line-height:1.16; font-weight:700; letter-spacing:-.018em; margin:0; text-wrap:balance}
+h3{font-size:1.11rem; line-height:1.3; font-weight:600; letter-spacing:-.008em; margin:0; text-wrap:balance}
+h4{font-size:.83rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; margin:0; color:var(--ink-3)}
+p{margin:0}
+.lede{font-size:1.14rem; color:var(--ink-2); line-height:1.55}
+.prose{max-width:66ch}
+.prose p + p{margin-top:.85em}
+strong{font-weight:600; color:var(--ink)}
+em{font-style:italic}
+a{color:var(--accent)}
+.mono{font-family:"IBM Plex Mono", ui-monospace, monospace; font-variant-numeric:tabular-nums}
+.eyebrow{
+  font-size:.72rem; font-weight:600; letter-spacing:.15em; text-transform:uppercase;
+  color:var(--accent); display:flex; align-items:center; gap:10px;
+}
+.eyebrow::after{content:""; flex:1; height:1px; background:var(--line)}
+
+/* ---- rhythm ---- */
+section{margin-top:64px}
+.stack{display:flex; flex-direction:column; gap:18px}
+.stack-sm{display:flex; flex-direction:column; gap:10px}
+.stack-lg{display:flex; flex-direction:column; gap:30px}
+hr.rule{border:0; height:1px; background:var(--line); margin:0}
+
+/* ---- header ---- */
+header.hero{padding:56px 0 0}
+.kicker{
+  font-family:"IBM Plex Mono",monospace; font-size:.74rem; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--ink-3); margin-bottom:20px;
+}
+.hero .lede{margin-top:20px; max-width:64ch}
+.vitals{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(148px,1fr));
+  gap:1px; background:var(--line); border:1px solid var(--line);
+  margin-top:34px; border-radius:3px; overflow:hidden;
+}
+.vital{background:var(--surface); padding:15px 16px 16px}
+.vital .k{font-family:Archivo,sans-serif; font-size:.68rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3)}
+.vital .v{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; font-size:1.42rem; font-weight:500; letter-spacing:-.02em; margin-top:5px; line-height:1}
+.vital .n{font-size:.79rem; color:var(--ink-3); margin-top:6px; line-height:1.35; font-family:Archivo,sans-serif}
+.v-up{color:var(--data)} .v-warn{color:var(--warn)}
+
+/* ---- panels ---- */
+.panel{background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:24px}
+@media(max-width:640px){ .panel{padding:18px} }
+.panel-quiet{background:var(--surface-2); border:1px solid var(--line); border-radius:4px; padding:22px}
+
+/* ---- chart ---- */
+.chart-shell{overflow-x:auto; -webkit-overflow-scrolling:touch}
+.chart-shell svg{display:block; width:100%; min-width:660px; height:auto}
+.legend{display:flex; flex-wrap:wrap; gap:8px 22px; margin-top:14px; font-family:Archivo,sans-serif; font-size:.79rem; color:var(--ink-2)}
+.legend span{display:inline-flex; align-items:center; gap:7px}
+.sw{width:11px; height:11px; border-radius:2px; flex:none}
+.sw-line{width:16px; height:0; border-top:2px dashed currentColor; border-radius:0}
+
+/* ---- findings ---- */
+.findings{display:grid; gap:14px}
+.finding{
+  display:grid; grid-template-columns:auto 1fr; gap:16px;
+  background:var(--surface); border:1px solid var(--line);
+  border-left:3px solid var(--data); border-radius:3px; padding:18px 20px;
+}
+.finding .num{font-family:"IBM Plex Mono",monospace; font-size:.78rem; font-weight:600; color:var(--data); padding-top:3px}
+.finding h3{margin-bottom:6px}
+.finding p{font-size:.95rem; color:var(--ink-2); line-height:1.55}
+
+/* ---- tables ---- */
+.tbl-shell{overflow-x:auto; border:1px solid var(--line); border-radius:4px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; min-width:600px; font-size:.9rem}
+th,td{text-align:left; padding:11px 14px; border-bottom:1px solid var(--line); vertical-align:top}
+thead th{
+  font-family:Archivo,sans-serif; font-size:.68rem; font-weight:600; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--ink-3); background:var(--surface-2); white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:0}
+td.num,th.num{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; white-space:nowrap}
+.wk{font-family:"IBM Plex Mono",monospace; font-weight:600; color:var(--accent)}
+tr.now td{background:var(--accent-soft)}
+
+/* ---- likelihood bands ---- */
+.bands{display:grid; gap:12px}
+.band{border:1px solid var(--line); border-radius:3px; background:var(--surface); padding:16px 18px}
+.band .top{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:7px}
+.band h3{font-size:1.02rem}
+.chip{
+  font-family:Archivo,sans-serif; font-size:.67rem; font-weight:600; letter-spacing:.08em;
+  text-transform:uppercase; padding:3px 8px; border-radius:2px; white-space:nowrap;
+}
+.c-fit{background:var(--ok-soft); color:var(--ok)}
+.c-part{background:var(--warn-soft); color:var(--warn)}
+.c-rule{background:var(--stop-soft); color:var(--stop)}
+.band p{font-size:.93rem; color:var(--ink-2); line-height:1.55}
+
+/* ---- test grid ---- */
+.tests{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:3px; overflow:hidden}
+.test{background:var(--surface); padding:18px}
+.test.flag{background:var(--stop-soft)}
+.test .lbl{font-family:"IBM Plex Mono",monospace; font-size:.75rem; font-weight:600; color:var(--accent); margin-bottom:8px}
+.test.flag .lbl{color:var(--stop)}
+.test h3{font-size:.97rem; margin-bottom:6px}
+.test p{font-size:.87rem; color:var(--ink-2); line-height:1.5}
+.test .verdict{margin-top:9px; font-family:Archivo,sans-serif; font-size:.82rem; font-weight:600}
+
+/* ---- footwear ---- */
+.shoe-rows{display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:4px; overflow:hidden}
+.shoe{background:var(--surface); padding:20px; display:grid; grid-template-columns:170px 1fr; gap:20px}
+@media(max-width:700px){ .shoe{grid-template-columns:1fr; gap:10px} }
+.shoe .where h3{font-size:1.02rem}
+.shoe .where .hrs{font-family:"IBM Plex Mono",monospace; font-size:.76rem; color:var(--ink-3); margin-top:4px}
+.verdict-line{display:flex; align-items:center; gap:10px; margin-bottom:8px; flex-wrap:wrap}
+.vtag{font-family:Archivo,sans-serif; font-weight:700; font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; padding:4px 9px; border-radius:2px}
+.v-yes{background:var(--ok-soft); color:var(--ok)}
+.v-no{background:var(--stop-soft); color:var(--stop)}
+.v-later{background:var(--warn-soft); color:var(--warn)}
+.shoe p{font-size:.93rem; color:var(--ink-2); line-height:1.55}
+
+.specs{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px}
+.spec{border-left:2px solid var(--accent); padding:2px 0 2px 14px}
+.spec .st{font-family:Archivo,sans-serif; font-weight:600; font-size:.92rem}
+.spec .sd{font-size:.87rem; color:var(--ink-2); line-height:1.5; margin-top:3px}
+.spec .sd code{font-family:"IBM Plex Mono",monospace; font-size:.85em; background:var(--surface-2); padding:1px 5px; border-radius:2px}
+
+/* ---- routines ---- */
+.routines{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px}
+.routine{background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:20px; display:flex; flex-direction:column; gap:12px}
+.routine header{display:flex; align-items:baseline; justify-content:space-between; gap:10px; padding-bottom:11px; border-bottom:1px solid var(--line)}
+.routine header h3{font-size:1.05rem}
+.routine .dur{font-family:"IBM Plex Mono",monospace; font-size:.76rem; color:var(--ink-3); white-space:nowrap}
+ol.ex,ul.ex{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:11px}
+ol.ex li,ul.ex li{display:grid; grid-template-columns:auto 1fr; gap:11px; font-size:.91rem; line-height:1.48}
+ol.ex li .i{font-family:"IBM Plex Mono",monospace; font-size:.76rem; color:var(--ink-3); padding-top:2px}
+.dose{display:inline-block; font-family:"IBM Plex Mono",monospace; font-size:.79rem; font-weight:500; color:var(--accent); background:var(--accent-soft); padding:1px 7px; border-radius:2px; margin-top:3px; white-space:nowrap}
+.exdesc{color:var(--ink-2); font-size:.88rem; display:block; margin-top:2px}
+
+/* ---- traffic ---- */
+.lights{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:14px}
+.light{border-radius:4px; padding:20px; border:1px solid var(--line); display:flex; flex-direction:column; gap:12px}
+.l-go{background:var(--ok-soft); border-color:color-mix(in srgb, var(--ok) 28%, transparent)}
+.l-hold{background:var(--warn-soft); border-color:color-mix(in srgb, var(--warn) 28%, transparent)}
+.l-stop{background:var(--stop-soft); border-color:color-mix(in srgb, var(--stop) 30%, transparent)}
+.light .lh{display:flex; align-items:center; gap:10px}
+.dot{width:14px; height:14px; border-radius:50%; flex:none}
+.light h3{font-size:1.05rem}
+.l-go h3,.l-go .act{color:var(--ok)} .l-hold h3,.l-hold .act{color:var(--warn)} .l-stop h3,.l-stop .act{color:var(--stop)}
+.light ul{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:.9rem; line-height:1.45; color:var(--ink-2)}
+.light ul li{padding-left:15px; position:relative}
+.light ul li::before{content:""; position:absolute; left:0; top:.62em; width:6px; height:1.5px; background:currentColor; opacity:.55}
+.light .act{font-family:Archivo,sans-serif; font-weight:600; font-size:.88rem; padding-top:11px; border-top:1px solid color-mix(in srgb, currentColor 25%, transparent); margin-top:auto}
+
+/* ---- morning log ---- */
+.log-grid{display:flex; flex-direction:column; gap:6px}
+.log-row{display:grid; grid-template-columns:56px repeat(7,1fr); gap:5px; align-items:center}
+.log-row .rl{font-family:"IBM Plex Mono",monospace; font-size:.72rem; color:var(--ink-3); font-weight:500}
+.log-head .hd{font-family:Archivo,sans-serif; font-size:.66rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-3); text-align:center}
+.cell{
+  font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums;
+  aspect-ratio:1/1; min-height:30px; border:1px solid var(--line-strong); background:var(--surface);
+  border-radius:3px; color:var(--ink-3); font-size:.85rem; font-weight:500; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; padding:0; transition:transform .1s ease;
+}
+.cell:hover{border-color:var(--accent)}
+.cell:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.cell[data-band="go"]{background:var(--ok-soft); border-color:var(--ok); color:var(--ok)}
+.cell[data-band="hold"]{background:var(--warn-soft); border-color:var(--warn); color:var(--warn)}
+.cell[data-band="stop"]{background:var(--stop-soft); border-color:var(--stop); color:var(--stop)}
+.cell.sel{transform:scale(1.06); box-shadow:0 0 0 2px var(--accent)}
+.picker{display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-top:16px; padding-top:16px; border-top:1px solid var(--line)}
+.picker .pl{font-family:Archivo,sans-serif; font-size:.8rem; color:var(--ink-2); margin-right:6px}
+.pbtn{
+  font-family:"IBM Plex Mono",monospace; font-size:.83rem; font-weight:500;
+  min-width:33px; height:33px; border-radius:3px; border:1px solid var(--line-strong);
+  background:var(--surface); color:var(--ink); cursor:pointer; padding:0 6px;
+}
+.pbtn:hover{border-color:var(--accent); color:var(--accent)}
+.pbtn:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.pbtn.clr{color:var(--ink-3)}
+.picker[hidden]{display:none}
+
+/* ---- checklist ---- */
+.check{display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:4px; overflow:hidden}
+.citem{background:var(--surface); display:grid; grid-template-columns:auto auto 1fr; gap:14px; padding:16px 18px; align-items:start; cursor:pointer}
+.citem:hover{background:var(--surface-2)}
+.citem input{width:19px; height:19px; margin:2px 0 0; accent-color:var(--accent); cursor:pointer; flex:none}
+.citem .cn{font-family:"IBM Plex Mono",monospace; font-size:.75rem; color:var(--ink-3); padding-top:3px}
+.citem .ct{font-size:.95rem; line-height:1.5}
+.citem .ct b{font-family:Archivo,sans-serif; font-weight:600; font-size:.95rem}
+.citem input:checked ~ .ct{color:var(--ink-3); text-decoration:line-through; text-decoration-thickness:1px}
+
+/* ---- callout ---- */
+.callout{border:1px solid var(--line); border-left:3px solid var(--accent); background:var(--accent-soft); border-radius:3px; padding:18px 20px}
+.callout.alarm{border-left-color:var(--stop); background:var(--stop-soft)}
+.callout h3{margin-bottom:7px; font-size:1rem}
+.callout p, .callout li{font-size:.93rem; line-height:1.55; color:var(--ink-2)}
+.callout ul{margin:8px 0 0; padding-left:18px; display:flex; flex-direction:column; gap:6px}
+
+.two{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+@media(max-width:700px){ .two{grid-template-columns:1fr} }
+
+footer.end{margin-top:72px; padding-top:24px; border-top:1px solid var(--line); font-size:.85rem; color:var(--ink-3); line-height:1.6; max-width:70ch; font-family:Archivo,sans-serif}
+
+@media (prefers-reduced-motion: reduce){ *{transition:none !important; animation:none !important} }
+</style>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="kicker">Foot &amp; walking plan · 33M · 61 kg · prepared 7 Sep 2026</div>
+  <h1>Heel Load Reset</h1>
+  <p class="lede">Your steps didn't creep up. They <strong>doubled in three weeks</strong>, with two Saturdays at nearly triple your normal day. Apple called the trend "None." It isn't. Here's the read, the six-week rebuild, and exactly what goes on your feet.</p>
+
+  <div class="vitals">
+    <div class="vital"><div class="k">28-day average</div><div class="v">6,056</div><div class="n">steps/day · 8 Aug – 7 Sep</div></div>
+    <div class="vital"><div class="k">Week 1 → Week 3</div><div class="v v-up">+94%</div><div class="n">4,200 → 8,157 daily avg</div></div>
+    <div class="vital"><div class="k">Peak day</div><div class="v v-up">14,700</div><div class="n">Sat 22 Aug · 3.5× that week's floor</div></div>
+    <div class="vital"><div class="k">True rest days</div><div class="v v-warn">0</div><div class="n">in 31 days, under 3,500 steps</div></div>
+    <div class="vital"><div class="k">Reported pain</div><div class="v">6–7<span style="font-size:.6em;color:var(--ink-3)">/10</span></div><div class="n">both heels, left worse, evenings</div></div>
+  </div>
+</header>
+
+<!-- ============ 1. THE CHART ============ -->
+<section>
+  <div class="stack-lg">
+    <div class="stack-sm">
+      <div class="eyebrow">01 · What the chart actually shows</div>
+      <h2>The ramp Apple hid from you</h2>
+    </div>
+
+    <p class="prose lede" style="font-size:1.03rem">Apple's <span class="mono">Trend: None</span> compares you against a 90-day baseline with a wide tolerance. It is not a training-load tool and it will not flag a three-week doubling. Reading your bars week by week tells a completely different story.</p>
+
+    <div class="panel">
+      <div class="chart-shell">
+        <svg viewBox="0 0 800 320" role="img" aria-label="Daily steps 8 August to 7 September 2026, with weekly average overlay showing a rise from 4,200 to 8,157 steps per day">
+          <!-- gridlines -->
+          <g stroke="var(--line)" stroke-width="1">
+            <line x1="52" y1="250" x2="768" y2="250"></line>
+            <line x1="52" y1="173.3" x2="768" y2="173.3" stroke-dasharray="2 4"></line>
+            <line x1="52" y1="96.7" x2="768" y2="96.7" stroke-dasharray="2 4"></line>
+            <line x1="52" y1="20" x2="768" y2="20" stroke-dasharray="2 4"></line>
+          </g>
+          <g fill="var(--ink-3)" font-family="IBM Plex Mono, monospace" font-size="10.5" text-anchor="end">
+            <text x="45" y="254">0</text>
+            <text x="45" y="177">5,000</text>
+            <text x="45" y="100">10,000</text>
+            <text x="45" y="24">15,000</text>
+          </g>
+
+          <!-- bars -->
+          <g fill="var(--data)" opacity="0.85">
+            <rect x="55" y="185.6" width="17" height="64.4" rx="1.5"></rect>
+            <rect x="78" y="237.7" width="17" height="12.3" rx="1.5"></rect>
+            <rect x="101" y="173.3" width="17" height="76.7" rx="1.5"></rect>
+            <rect x="124" y="158.0" width="17" height="92.0" rx="1.5"></rect>
+            <rect x="147" y="176.4" width="17" height="73.6" rx="1.5"></rect>
+            <rect x="170" y="177.9" width="17" height="72.1" rx="1.5"></rect>
+            <rect x="193" y="190.2" width="17" height="59.8" rx="1.5"></rect>
+            <rect x="216" y="136.5" width="17" height="113.5" rx="1.5"></rect>
+            <rect x="239" y="197.9" width="17" height="52.1" rx="1.5"></rect>
+            <rect x="262" y="188.7" width="17" height="61.3" rx="1.5"></rect>
+            <rect x="285" y="187.1" width="17" height="62.9" rx="1.5"></rect>
+            <rect x="308" y="131.9" width="17" height="118.1" rx="1.5"></rect>
+            <rect x="331" y="153.4" width="17" height="96.6" rx="1.5"></rect>
+            <rect x="354" y="154.9" width="17" height="95.1" rx="1.5"></rect>
+            <rect x="400" y="141.1" width="17" height="108.9" rx="1.5"></rect>
+            <rect x="423" y="162.6" width="17" height="87.4" rx="1.5"></rect>
+            <rect x="446" y="128.9" width="17" height="121.1" rx="1.5"></rect>
+            <rect x="469" y="188.7" width="17" height="61.3" rx="1.5"></rect>
+            <rect x="492" y="125.8" width="17" height="124.2" rx="1.5"></rect>
+            <rect x="515" y="102.8" width="17" height="147.2" rx="1.5"></rect>
+            <rect x="561" y="205.5" width="17" height="44.5" rx="1.5"></rect>
+            <rect x="584" y="127.3" width="17" height="122.7" rx="1.5"></rect>
+            <rect x="607" y="104.3" width="17" height="145.7" rx="1.5"></rect>
+            <rect x="630" y="148.8" width="17" height="101.2" rx="1.5"></rect>
+            <rect x="653" y="181.0" width="17" height="69.0" rx="1.5"></rect>
+            <rect x="676" y="138.1" width="17" height="111.9" rx="1.5"></rect>
+            <rect x="699" y="170.3" width="17" height="79.7" rx="1.5"></rect>
+            <rect x="722" y="187.1" width="17" height="62.9" rx="1.5"></rect>
+            <rect x="745" y="209.4" width="17" height="40.6" rx="1.5"></rect>
+          </g>
+          <!-- spike bars, emphasised -->
+          <g fill="var(--data)">
+            <rect x="377" y="24.6" width="17" height="225.4" rx="1.5"></rect>
+            <rect x="538" y="30.7" width="17" height="219.3" rx="1.5"></rect>
+          </g>
+          <g stroke="var(--stop)" stroke-width="1.6" fill="none">
+            <rect x="375.4" y="23" width="20.2" height="228.6" rx="2.5"></rect>
+            <rect x="536.4" y="29.1" width="20.2" height="222.5" rx="2.5"></rect>
+          </g>
+          <text x="386" y="16" fill="var(--stop)" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" text-anchor="middle">SAT</text>
+          <text x="547" y="22" fill="var(--stop)" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" text-anchor="middle">SAT</text>
+
+          <!-- weekly mean step line -->
+          <g stroke="var(--accent)" stroke-width="2.4" fill="none" stroke-linecap="round">
+            <line x1="55" y1="185.6" x2="210" y2="185.6"></line>
+            <line x1="216" y1="164.3" x2="371" y2="164.3"></line>
+            <line x1="377" y1="124.9" x2="532" y2="124.9"></line>
+            <line x1="538" y1="133.7" x2="693" y2="133.7"></line>
+            <line x1="699" y1="188.9" x2="762" y2="188.9"></line>
+          </g>
+          <g stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="3 3" opacity=".65">
+            <line x1="213" y1="185.6" x2="213" y2="164.3"></line>
+            <line x1="374" y1="164.3" x2="374" y2="124.9"></line>
+            <line x1="535" y1="124.9" x2="535" y2="133.7"></line>
+            <line x1="696" y1="133.7" x2="696" y2="188.9"></line>
+          </g>
+          <g fill="var(--accent)" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600" text-anchor="middle"
+             stroke="var(--surface)" stroke-width="3.5" stroke-linejoin="round" paint-order="stroke fill">
+            <text x="132" y="175">4,200</text>
+            <text x="293" y="153">5,586</text>
+            <text x="454" y="114">8,157</text>
+            <text x="615" y="123">7,586</text>
+            <text x="730" y="178">3,983</text>
+          </g>
+
+          <!-- week separators -->
+          <g stroke="var(--line-strong)" stroke-width="1" stroke-dasharray="3 5" opacity=".8">
+            <line x1="213" y1="20" x2="213" y2="258"></line>
+            <line x1="374" y1="20" x2="374" y2="258"></line>
+            <line x1="535" y1="20" x2="535" y2="258"></line>
+            <line x1="696" y1="20" x2="696" y2="258"></line>
+          </g>
+
+          <!-- x labels -->
+          <g fill="var(--ink-3)" font-family="IBM Plex Mono, monospace" font-size="10.5" text-anchor="middle">
+            <text x="63" y="270">8 Aug</text>
+            <text x="224" y="270">15</text>
+            <text x="385" y="270">22</text>
+            <text x="546" y="270">29</text>
+            <text x="707" y="270">5 Sep</text>
+          </g>
+          <g fill="var(--ink-3)" font-family="Archivo, sans-serif" font-size="9.5" font-weight="600" letter-spacing="1" text-anchor="middle">
+            <text x="132" y="288">WEEK 1</text>
+            <text x="293" y="288">WEEK 2</text>
+            <text x="454" y="288">WEEK 3</text>
+            <text x="615" y="288">WEEK 4</text>
+            <text x="730" y="288">PARTIAL</text>
+          </g>
+          <text x="52" y="308" fill="var(--ink-3)" font-family="Archivo, sans-serif" font-size="10">Bars read from your Apple Health screenshot (±3%). Reconstructed 31-day mean 6,150 vs Apple’s stated 6,056.</text>
+        </svg>
+      </div>
+      <div class="legend">
+        <span><span class="sw" style="background:var(--data)"></span>Daily steps</span>
+        <span style="color:var(--accent)"><span class="sw sw-line" style="border-top-style:solid"></span>Weekly average</span>
+        <span style="color:var(--stop)"><span class="sw" style="background:transparent;border:1.5px solid var(--stop)"></span>Saturday spike days</span>
+      </div>
+    </div>
+
+    <div class="findings">
+      <div class="finding">
+        <div class="num">F1</div>
+        <div>
+          <h3>You added load about four times faster than tissue adapts</h3>
+          <p>Week 1 → 2 was <strong>+33%</strong>. Week 2 → 3 was <strong>+46%</strong>. Two consecutive weeks at roughly four times the conventional ~10%-per-week ceiling. Your acute:chronic load ratio peaked near <strong>1.67</strong> in the week of 22 August — anything sustained above about 1.3 is where overload injuries cluster. This lines up exactly with the "extra 2–2.5 km started in the last 3 weeks" you described. It's the single clearest thing in your data.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="num">F2</div>
+        <div>
+          <h3>Both of your spike days are Saturdays</h3>
+          <p>22 Aug (14,700) and 29 Aug (14,300) are both Saturdays, and both are roughly <strong>2.4× your weekday average</strong> at the time. The Sunday after the second one crashed to 2,900 — your foot was telling you something. A weekend big-day pattern loads the heel far harder than the weekly total suggests, because damage tracks peak days, not averages.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="num">F3</div>
+        <div>
+          <h3>You have no rest days — you have slightly-less-walking days</h3>
+          <p>Across 31 days your <em>lowest</em> days are mostly 4,000–5,000 steps. Only three days fall under 3,500. On a "rest" day your heel is still taking several thousand ground contacts. Genuine unloading is part of the stimulus, and you're not getting any. This matters more than usual because your pain is <strong>worst in the evening</strong> — a cumulative-through-the-day pattern.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tbl-shell">
+      <table>
+        <thead><tr><th>Block</th><th class="num">Daily avg</th><th class="num">Change</th><th class="num">Peak day</th><th class="num">Low day</th><th>Read</th></tr></thead>
+        <tbody>
+          <tr><td class="wk">Week 1</td><td class="num">4,200</td><td class="num">—</td><td class="num">6,000</td><td class="num">800</td><td>Baseline. Steady, unremarkable.</td></tr>
+          <tr><td class="wk">Week 2</td><td class="num">5,586</td><td class="num" style="color:var(--warn)">+33%</td><td class="num">7,700</td><td class="num">3,400</td><td>First jump. Above the safe ramp.</td></tr>
+          <tr><td class="wk">Week 3</td><td class="num">8,157</td><td class="num" style="color:var(--stop)">+46%</td><td class="num">14,700</td><td class="num">4,000</td><td>The overload week. ACWR ≈ 1.67.</td></tr>
+          <tr><td class="wk">Week 4</td><td class="num">7,586</td><td class="num">−7%</td><td class="num">14,300</td><td class="num">2,900</td><td>Held high, second spike day.</td></tr>
+          <tr class="now"><td class="wk">5–7 Sep</td><td class="num">3,983</td><td class="num" style="color:var(--ok)">−47%</td><td class="num">5,200</td><td class="num">2,648</td><td>Your unplanned deload. Pain persisting.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <h3>Straight answers to your specific questions</h3>
+      <p style="margin-bottom:10px"><strong>Is 2–3 km/day, 5 days/week reasonable?</strong> Yes — as a destination. It was not reasonable as a <em>jump</em>, which is what you did. The volume isn't the problem; the rate of change was.</p>
+      <p style="margin-bottom:10px"><strong>Are rest days sufficient?</strong> No. You have effectively none. That's the second-biggest fixable thing after the ramp rate.</p>
+      <p style="margin-bottom:10px"><strong>Should you reduce distance or speed?</strong> Distance yes, speed mostly no. Cut distance to roughly 60% for two weeks. Keep pace at a comfortable 4.5–5.5 km/h — walking <em>very</em> slowly lengthens ground-contact time and doesn't meaningfully reduce heel load.</p>
+      <p><strong>Does pain persisting after 2–3 days off mean something is badly wrong?</strong> Not necessarily. Irritated plantar-heel tissue commonly takes 1–3 weeks to settle, not 2–3 days. But it is the reason this plan starts conservative, and the reason the heel-squeeze test below matters before you start.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. WHAT'S LIKELY ============ -->
+<section>
+  <div class="stack-lg">
+    <div class="stack-sm">
+      <div class="eyebrow">02 · What is probably going on</div>
+      <h2>Likely, unknowable, and worth ruling out</h2>
+    </div>
+
+    <p class="prose">I'm not diagnosing you and I can't — that needs hands on your foot. What I <em>can</em> do is tell you which explanations your specific details support and which they argue against, because your presentation has one detail that cuts against the obvious answer.</p>
+
+    <div class="callout" style="max-width:none">
+      <h3>The detail that changes things: your pain is worst in the <em>evening</em></h3>
+      <p>Textbook plantar fasciitis is worst on the <strong>first steps in the morning</strong> and after sitting, and eases as you move. Yours builds through the day and peaks at night. That's a cumulative-load pattern, not a classic fasciitis signature. It doesn't rule fasciitis out — early-stage overload can present this way before the morning pattern develops — but it means I'd weight the possibilities differently than a generic "you have plantar fasciitis" answer would.</p>
+    </div>
+
+    <div class="bands">
+      <div class="band">
+        <div class="top"><h3>Plantar heel load intolerance / early plantar fascia overload</h3><span class="chip c-fit">Fits well</span></div>
+        <p>Bilateral, aching-and-tight, load-proportional, triggered by a documented load doubling, in a 33-year-old with no strength base. This is the most probable bucket. The evening pattern fits an early or load-driven stage rather than an established one.</p>
+      </div>
+      <div class="band">
+        <div class="top"><h3>Heel fat pad irritation</h3><span class="chip c-fit">Fits well</span></div>
+        <p>Strongly supported by your own observation that <strong>it hurts more when you don't wear socks</strong>. That's an interface-pressure signal: a few millimetres of cushioning changing your symptoms points to the heel pad taking direct compressive load. Also fits "worse in the evening" and "both sides."</p>
+      </div>
+      <div class="band">
+        <div class="top"><h3>Insertional Achilles / posterior heel tendinopathy</h3><span class="chip c-part">Possible — depends on exactly where</span></div>
+        <p>You said "back of feet … heel," which is ambiguous. If you mean the <em>rear</em> of the foot as opposed to the forefoot, this is less likely. If you mean the <em>back of the heel bone</em> where the Achilles attaches, this moves up sharply — and it changes your treadmill incline setting. Test C below settles it in 30 seconds.</p>
+      </div>
+      <div class="band">
+        <div class="top"><h3>Calcaneal bone stress reaction</h3><span class="chip c-rule">Rule out before starting</span></div>
+        <p>Less likely bilaterally, but a 94% load increase in three weeks is exactly the mechanism, and bone stress does <em>not</em> settle with a few days off. Test D below is the screen. If it's positive, don't start the walking plan — get imaging.</p>
+      </div>
+      <div class="band">
+        <div class="top"><h3>Inflammatory enthesitis (spondyloarthropathy spectrum)</h3><span class="chip c-rule">Flag, not a prediction</span></div>
+        <p>Bilateral heel pain in a young male is a recognised presentation of inflammatory enthesitis, and it's the one thing here that's a <strong>GP and blood test</strong> question rather than a physio one. Your evening-worst pattern argues <em>against</em> it (inflammatory pain is classically morning-worst with prolonged stiffness and improves with movement). Mention it to a GP only if you also have morning stiffness lasting over 30 minutes, low back or buttock stiffness, or other joints involved. I'm naming it because leaving it out would be dishonest, not because I think it's likely.</p>
+      </div>
+    </div>
+
+    <div class="panel-quiet">
+      <h4 style="margin-bottom:12px">Cannot be determined without an examination</h4>
+      <ul class="ex" style="gap:8px">
+        <li><span class="i">—</span><span>Which specific tissue is generating the pain. Palpation, resisted testing and sometimes ultrasound settle this; a chat cannot.</span></li>
+        <li><span class="i">—</span><span>Your actual calf flexibility. Limited ankle dorsiflexion is one of the more consistently reported associations with plantar heel pain and is measured, not guessed.</span></li>
+        <li><span class="i">—</span><span>How your foot behaves under load. "Normal arch" standing still tells you very little about what happens mid-stance at 5 km/h.</span></li>
+        <li><span class="i">—</span><span>Whether your current insole is helping or actively causing a pressure point. See the shoe audit in section 04.</span></li>
+        <li><span class="i">—</span><span>Whether there's a bone stress component. Only imaging answers that definitively.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. TESTS ============ -->
+<section>
+  <div class="stack-lg">
+    <div class="stack-sm">
+      <div class="eyebrow">03 · Two minutes, tonight</div>
+      <h2>Four tests that narrow <em>where</em></h2>
+    </div>
+    <p class="prose">These localise the problem. They do not diagnose it. Do all four on both feet, sitting down, and note which reproduces your pain most clearly — then tell your podiatrist or physio the letter.</p>
+
+    <div class="tests">
+      <div class="test">
+        <div class="lbl">TEST A</div>
+        <h3>Medial heel press</h3>
+        <p>Press your thumb firmly into the inside-front corner of the heel bone, where the arch meets the heel.</p>
+        <div class="verdict" style="color:var(--accent)">Sharp and pinpoint → plantar fascia attachment region</div>
+      </div>
+      <div class="test">
+        <div class="lbl">TEST B</div>
+        <h3>Central pad press</h3>
+        <p>Press into the middle of the heel pad, straight down where you'd bear weight.</p>
+        <div class="verdict" style="color:var(--accent)">Deep, dull, bruise-like → heel fat pad region</div>
+      </div>
+      <div class="test">
+        <div class="lbl">TEST C</div>
+        <h3>Achilles pinch + 10 heel raises</h3>
+        <p>Pinch the back of the heel where the tendon attaches, then do 10 slow heel raises holding a wall.</p>
+        <div class="verdict" style="color:var(--accent)">Tender at the back, worse with raises or stairs → Achilles insertion region</div>
+      </div>
+      <div class="test flag">
+        <div class="lbl">TEST D · THE ONE THAT MATTERS</div>
+        <h3>Calcaneal squeeze</h3>
+        <p>Squeeze the heel bone firmly from <em>both sides at once</em>, like a vice, not from underneath.</p>
+        <div class="verdict" style="color:var(--stop)">Sharp pain → possible bone stress. Book a podiatrist or physio this week and do NOT start the walking plan.</div>
+      </div>
+    </div>
+
+    <div class="callout alarm">
+      <h3>Get assessed promptly — don't wait six weeks — if any of these apply</h3>
+      <ul>
+        <li>Test D reproduces sharp pain, or the pain is worsening despite reduced walking.</li>
+        <li>Pain at rest or pain that wakes you at night, unrelated to what you did that day.</li>
+        <li>Swelling, redness, warmth over the heel, or any fever.</li>
+        <li>Numbness, pins and needles, or burning into the sole or toes — that's a nerve question (tarsal tunnel, Baxter's nerve, or referred from the lower back), and the strengthening plan is not the right answer for it.</li>
+        <li>Morning stiffness lasting more than 30 minutes, especially alongside low back or buttock stiffness, or other joints.</li>
+        <li>A sudden pop or snap, or you can't bear weight.</li>
+        <li>No meaningful change after six weeks of doing this plan properly.</li>
+      </ul>
+      <p style="margin-top:12px"><strong>Who to see:</strong> a podiatrist or physiotherapist first — they diagnose the tissue and check your footwear and loading. A GP if any of the systemic or nerve flags above apply, or if you need an imaging referral. In Australia, if this becomes persistent, ask your GP about a GP Management Plan — it can attract Medicare rebates for up to five allied-health visits per calendar year.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. FOOTWEAR ============ -->
+<section>
+  <div class="stack-lg">
+    <div class="stack-sm">
+      <div class="eyebrow">04 · Footwear</div>
+      <h2>Yes, this is probably a major factor</h2>
+    </div>
+
+    <div class="two">
+      <div class="panel" style="border-left:3px solid var(--stop)">
+        <h3 style="margin-bottom:8px">Audit your Skechers tonight — two specific checks</h3>
+        <p style="font-size:.94rem;color:var(--ink-2);line-height:1.55"><strong>1. Count the insoles.</strong> Pull out the insert you added. Is there a factory insole underneath it? If you <em>stacked</em> the aftermarket insert on top, you've reduced the shoe's internal depth, raised your heel up out of the heel counter where it's least secure, and quite possibly put an arch bump in the wrong place. Remove the factory one and re-test. This is a genuinely common cause of new heel pain in people who "added support."</p>
+        <p style="font-size:.94rem;color:var(--ink-2);line-height:1.55;margin-top:10px"><strong>2. Press the heel midsole with your thumb.</strong> At roughly a year of 5-days-a-week wear, you're likely 500–900 km into a foam that compresses faster than most. If it feels dense and doesn't spring back, the cushioning is gone — and it went gone right around the time you increased your distance.</p>
+      </div>
+      <div class="panel" style="border-left:3px solid var(--accent)">
+        <h3 style="margin-bottom:8px">Two more contributors sitting in plain sight</h3>
+        <p style="font-size:.94rem;color:var(--ink-2);line-height:1.55"><strong>Road camber.</strong> Footpaths and roads are built with a 1–2% cross-fall for drainage. Walking the same route on the same side, day after day, chronically everts one foot and inverts the other. You report your <strong>left is worse</strong>. That asymmetry deserves a look — and it's one thing a treadmill fixes outright.</p>
+        <p style="font-size:.94rem;color:var(--ink-2);line-height:1.55;margin-top:10px"><strong>Barefoot hours at home.</strong> You walk 2–3 km deliberately, then spend eight or ten hours barefoot on tile or floorboards. That's the larger unmanaged load, and it's the best explanation on the table for why your pain peaks in the evening. Fixing it costs about $45.</p>
+      </div>
+    </div>
+
+    <div class="stack">
+      <h4>What goes on your feet, by situation</h4>
+      <div class="shoe-rows">
+
+        <div class="shoe">
+          <div class="where"><h3>1 · Outdoor walking</h3><div class="hrs">3–5 hrs/week</div></div>
+          <div>
+            <div class="verdict-line"><span class="vtag v-yes">Cushioned running shoe</span><span class="vtag v-no">Not "walking shoes"</span></div>
+            <p>Wear a neutral cushioned <em>running</em> shoe, not a dedicated walking shoe. Running shoes get far better midsole foam per dollar, get updated yearly, and are what the research on footwear and load is actually done on. Always with socks. Choose flat routes and alternate the direction you walk your usual loop so the camber isn't always tilting the same foot.</p>
+          </div>
+        </div>
+
+        <div class="shoe">
+          <div class="where"><h3>2 · Treadmill</h3><div class="hrs">Your primary surface for weeks 1–4</div></div>
+          <div>
+            <div class="verdict-line"><span class="vtag v-yes">Same running shoes</span><span class="vtag v-no">Not barefoot</span><span class="vtag v-no">Not socks only</span></div>
+            <p><strong>Wear your joggers. This one isn't a close call.</strong> A treadmill belt is a thin layer over a hard deck — it is more forgiving than concrete but nowhere near soft. Socks on a moving belt means no rearfoot control, friction blisters, and a real slip risk. And your own symptom report settles it: if <em>losing a sock</em> makes your heel hurt more, removing the shoe as well is the opposite of what your foot is asking for.</p>
+          </div>
+        </div>
+
+        <div class="shoe">
+          <div class="where"><h3>3 · Around the house</h3><div class="hrs">8–10 hrs/day — your biggest load</div></div>
+          <div>
+            <div class="verdict-line"><span class="vtag v-yes">Supportive slide or indoor pair</span><span class="vtag v-no">Not barefoot on tile</span><span class="vtag v-no">Not flat scuffs</span></div>
+            <p>This is the highest-leverage change in this whole document and it takes no effort. Options, cheapest first: a supportive arch-contoured thong (<strong>Archies</strong>, ~$45, Australian, made for exactly this), a recovery slide (<strong>OOFOS</strong> ~$90–110), a slipper with an actual midsole (<strong>Vionic</strong> ~$100–130), or simply keep your <em>previous</em> pair of runners by the door as dedicated indoor shoes for $0. Flat scuff slippers with no midsole do nothing — they're barefoot with fabric on top.</p>
+          </div>
+        </div>
+
+        <div class="shoe">
+          <div class="where"><h3>4 · Longer walks (3 km+)</h3><div class="hrs">From week 5</div></div>
+          <div>
+            <div class="verdict-line"><span class="vtag v-yes">Newest / most cushioned pair</span><span class="vtag v-yes">Rotate two pairs</span></div>
+            <p>Save your freshest pair for the long one. Once you can afford it, running two pairs in rotation is associated with lower injury rates than wearing one pair into the ground — the foam gets time to decompress and the small differences between shoes vary your loading slightly. Not urgent, but it's the reason to keep your old pair rather than bin it.</p>
+          </div>
+        </div>
+
+        <div class="shoe">
+          <div class="where"><h3>Barefoot walking</h3><div class="hrs">Revisit at week 6</div></div>
+          <div>
+            <div class="verdict-line"><span class="vtag v-later">Not now — later, and gradually</span></div>
+            <p>Barefoot and minimalist walking can build intrinsic foot strength, and I'm not against it in principle. But it's wrong for you right now for three concrete reasons: you have <em>zero</em> current strength base, your symptoms are explicitly worse with less cushioning, and rapid minimalist transitions are associated with increased bone stress injury — which is the one thing here worth being careful about given your load spike. <strong>Re-entry protocol from week 6, only if you've been green:</strong> 5 minutes barefoot on carpet or grass, add 2–3 minutes a week, never on concrete, never on the treadmill.</p>
+          </div>
+        </div>
+
+        <div class="shoe">
+          <div class="where"><h3>Insoles</h3><div class="hrs">Worth a trial — but check yours first</div></div>
+          <div>
+            <div class="verdict-line"><span class="vtag v-yes">Prefab, yes</span><span class="vtag v-later">Custom, not yet</span></div>
+            <p>The evidence is modest but real: off-the-shelf foot orthoses give a small short-term reduction in plantar heel pain over about 3 months, and <strong>custom orthoses have not been shown to beat prefabricated ones</strong> for most people. So don't spend $400–600 on customs as a first move. Fix the stacking issue first, try a $40–70 prefab, and give it three weeks. <strong>If Test C was your positive</strong> (back of the heel), a simple 6–10 mm heel raise in both shoes is a cheap, evidence-supported trial that a generic arch support won't replicate.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="stack">
+      <h4>What to look for in a shoe — checked in the shop, in 60 seconds</h4>
+      <div class="specs">
+        <div class="spec"><div class="st">Heel stack, meaningful but not maximal</div><div class="sd">Roughly <code>22–32 mm</code> under the heel. Enough foam to blunt the impact peak; not so much that the platform gets unstable.</div></div>
+        <div class="spec"><div class="st">Heel-to-toe drop of 8–12 mm</div><div class="sd">While your heel is symptomatic, a higher drop reduces the demand on both the plantar fascia and the Achilles. <code>Avoid zero-drop</code> for now.</div></div>
+        <div class="spec"><div class="st">Firm heel counter</div><div class="sd">Squeeze the cup at the back between thumb and finger. It should resist. If it folds flat, your heel isn't being held.</div></div>
+        <div class="spec"><div class="st">Torsional stiffness</div><div class="sd">Hold toe and heel and twist like wringing a towel. It should fight you. A shoe that wrings out easily gives the midfoot nothing.</div></div>
+        <div class="spec"><div class="st">Bends only at the ball of the foot</div><div class="sd">Push the toe up. The crease should form under the toe joints, <code>not</code> through the middle of the arch.</div></div>
+        <div class="spec"><div class="st">Removable factory insole</div><div class="sd">So an insert goes <em>in place of</em> it, never stacked on top. This is the mistake you may already have made.</div></div>
+        <div class="spec"><div class="st">Toe box you can splay in</div><div class="sd">Thumb-width past the longest toe, and enough width that your toes spread rather than press together.</div></div>
+        <div class="spec"><div class="st">Fit late in the day</div><div class="sd">Feet swell. Try them at 5pm, in the socks you'll actually walk in. And replace at <code>600–800 km</code>.</div></div>
+      </div>
+    </div>
+
+    <div class="stack">
+      <h4>Australian options — three tiers, honestly rated</h4>
+      <div class="tbl-shell">
+        <table>
+          <thead><tr><th>Tier</th><th class="num">Typical AU price</th><th>Examples</th><th>Honest read</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="wk">Budget</td><td class="num">$80–140</td>
+              <td>ASICS GEL-Contend / Patriot · New Balance Fresh Foam Arishi · Brooks Launch on run-out</td>
+              <td>Perfectly adequate for 2–4 km walks. Thinner, faster-compressing foam, so expect to replace nearer 500 km. <strong>Skip the $30–50 Kmart/Big W shoes</strong> as your primary walker — the midsole isn't built for five days a week.</td>
+            </tr>
+            <tr class="now">
+              <td class="wk">Mid-range</td><td class="num">$160–230</td>
+              <td>ASICS GT-1000 · Brooks Ghost · New Balance 880 · Saucony Ride</td>
+              <td><strong>This is where I'd spend your money.</strong> Durable midsoles, firm heel counters, wide-fit versions available, and they go on sale constantly. Everything on the checklist above is met. There is no clear outcome benefit to going above this tier.</td>
+            </tr>
+            <tr>
+              <td class="wk">Premium</td><td class="num">$260–330</td>
+              <td>Hoka Bondi · Brooks Glycerin · ASICS Gel-Nimbus</td>
+              <td>Buys you more foam and a nicer upper. <strong>There is no good evidence that a $300 shoe prevents injury better than a $180 one.</strong> The one legitimate argument for a maximal shoe like the Bondi is if Test B was your positive — some people with fat pad pain genuinely prefer that much heel cushioning. That's a comfort argument, and comfort is a reasonable thing to buy. It isn't a clinical one.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="prose" style="font-size:.92rem;color:var(--ink-3)">Where to buy: The Athlete's Foot does a fitting service and is worth it once, even if you buy elsewhere later. Also Rebel, Anaconda, Active Feet, Footwear&amp;Co, Running Warehouse AU. Prices move a lot on run-out models — last season's version of a mid-range shoe at budget pricing is the best value in the whole table. <strong>One more cheap fix:</strong> since bare skin makes it worse, buy cushioned crew socks with a terry-loop heel. About $10 a pair and it directly addresses a symptom you've already identified yourself.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. THE PLAN ============ -->
+<section>
+  <div class="stack-lg">
+    <div class="stack-sm">
+      <div class="eyebrow">05 · The six-week rebuild</div>
+      <h2>Strength is the fix. Stretching is the relief.</h2>
+    </div>
+
+    <p class="prose lede" style="font-size:1.03rem">If you only take one thing from this section: <strong>the loaded calf raise is the exercise that changes your outcome.</strong> The trial evidence on plantar heel pain favours high-load progressive strengthening over stretching alone at three months. Stretching feels better sooner; strengthening is what stops this recurring the next time you increase your walking. Do both — but never skip the strength days to do more stretching.</p>
+
+    <div class="routines">
+      <div class="routine">
+        <header><h3>Morning routine</h3><span class="dur">8 min · daily</span></header>
+        <p style="font-size:.88rem;color:var(--ink-3);line-height:1.45">Do items 1–2 <em>in bed, before your first steps.</em> That single habit is worth more than the rest of the routine combined.</p>
+        <ol class="ex">
+          <li><span class="i">01</span><span><b>Plantar fascia specific stretch</b><span class="exdesc">Cross the ankle over the opposite knee. Pull your toes back toward your shin with your hand until you feel the arch stretch. Feel the tight band with your other hand — that's the target.</span><span class="dose">3 × 30 s each foot</span></span></li>
+          <li><span class="i">02</span><span><b>Calf stretch, knee straight</b><span class="exdesc">Hands on the wall, back leg straight, heel down. Targets gastrocnemius.</span><span class="dose">3 × 30 s each</span></span></li>
+          <li><span class="i">03</span><span><b>Calf stretch, knee bent</b><span class="exdesc">Same position, back knee bent. Targets soleus — the muscle that actually absorbs walking load, and the one most people never stretch.</span><span class="dose">3 × 30 s each</span></span></li>
+          <li><span class="i">04</span><span><b>Ankle circles</b><span class="exdesc">Slow and full-range, both directions.</span><span class="dose">20 each direction</span></span></li>
+          <li><span class="i">05</span><span><b>Toe spread</b><span class="exdesc">Spread all five toes apart, hold 3 s, release.</span><span class="dose">10 slow reps</span></span></li>
+        </ol>
+      </div>
+
+      <div class="routine">
+        <header><h3>Evening routine</h3><span class="dur">7 min · daily</span></header>
+        <p style="font-size:.88rem;color:var(--ink-3);line-height:1.45">Your pain peaks in the evening, so this is when it earns its keep. Do it before the pain builds, not after.</p>
+        <ol class="ex">
+          <li><span class="i">01</span><span><b>Ball or frozen bottle roll</b><span class="exdesc">Under the arch, seated. Firm pressure but never above 3/10. If it hurts, you're pressing too hard.</span><span class="dose">2 min each foot</span></span></li>
+          <li><span class="i">02</span><span><b>Calf stretch, straight then bent</b><span class="exdesc">Same as the morning, shorter.</span><span class="dose">2 × 30 s each, both versions</span></span></li>
+          <li><span class="i">03</span><span><b>Towel scrunch</b><span class="exdesc">Towel flat on the floor, drag it toward you using only your toes.</span><span class="dose">2 × 15 each foot</span></span></li>
+          <li><span class="i">04</span><span><b>Single-leg balance</b><span class="exdesc">Barefoot on carpet is fine here — it's a static hold, not repeated impact. Progress: eyes open → eyes closed → standing on a pillow.</span><span class="dose">3 × 30 s each side</span></span></li>
+          <li><span class="i">05</span><span><b>Slow double-leg calf raise</b><span class="exdesc"><em>Non-strength days only.</em> Keeps blood flow through the tissue without adding real load.</span><span class="dose">2 × 15</span></span></li>
+        </ol>
+      </div>
+
+      <div class="routine" style="border-color:var(--accent); border-width:1.5px">
+        <header><h3>Strength · 3× per week</h3><span class="dur">15 min · Mon / Wed / Fri</span></header>
+        <p style="font-size:.88rem;color:var(--ink-3);line-height:1.45">Non-consecutive days. Four movements. This is the part that actually changes your tissue — protect it above everything else in this plan.</p>
+        <ol class="ex">
+          <li><span class="i">01</span><span><b>Heel raise with toes on a towel</b> <span style="color:var(--accent);font-family:Archivo,sans-serif;font-size:.78rem;font-weight:700">← THE KEY ONE</span><span class="exdesc">Stand on a step. Roll a towel under your toes so they're bent upward. <strong>3 s up · 2 s hold at the top · 3 s down.</strong> Slow is the whole point — speed makes it a different, useless exercise.</span><span class="dose">Wk 1–2: 3 × 12 both legs</span> <span class="dose">Wk 3–4: 3 × 10, up on two / down on one</span> <span class="dose">Wk 5–6: 4 × 8 single leg, add a loaded backpack when 8 gets easy</span></span></li>
+          <li><span class="i">02</span><span><b>Seated bent-knee calf raise</b><span class="exdesc">Seated, weight resting on your knees (a backpack with books works). Heels up slowly. This loads soleus, which takes most of the load in walking and is almost always the weak link.</span><span class="dose">3 × 15</span></span></li>
+          <li><span class="i">03</span><span><b>Short foot / arch doming</b><span class="exdesc">Foot flat on the floor. Draw the ball of your foot toward your heel to raise the arch — <em>without</em> curling your toes. It will feel like nothing is happening for about a week. Hold 5 s.</span><span class="dose">3 × 10 each foot</span></span></li>
+          <li><span class="i">04</span><span><b>Tibialis raise</b><span class="exdesc">Back against a wall, heels about 20 cm out. Lift your toes toward your shins, slowly, all the way. Front-of-shin strength is half of shock absorption and everyone ignores it.</span><span class="dose">3 × 20</span></span></li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="stack">
+      <h4>Walking targets and treadmill settings</h4>
+      <div class="tbl-shell">
+        <table>
+          <thead><tr><th>Week</th><th class="num">Walk</th><th class="num">Days</th><th class="num">Speed</th><th class="num">Incline</th><th class="num">Daily step ceiling</th><th class="num">True rest days</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr class="now"><td class="wk">1</td><td class="num">1.5 km</td><td class="num">4</td><td class="num">4.5–5.0</td><td class="num">1%</td><td class="num">5,000</td><td class="num">3</td><td>Deload. Treadmill only. Max two walking days in a row.</td></tr>
+            <tr><td class="wk">2</td><td class="num">1.7 km</td><td class="num">4</td><td class="num">4.8–5.2</td><td class="num">1–2%</td><td class="num">5,500</td><td class="num">3</td><td>Strength work is now established. Still treadmill.</td></tr>
+            <tr><td class="wk">3</td><td class="num">2.0 km</td><td class="num">5</td><td class="num">5.0–5.5</td><td class="num">1–2%</td><td class="num">6,500</td><td class="num">2</td><td>First outdoor walk allowed, flat route, if all-green.</td></tr>
+            <tr><td class="wk">4</td><td class="num">2.3 km</td><td class="num">5</td><td class="num">5.0–5.5</td><td class="num">2%</td><td class="num">7,500</td><td class="num">2</td><td>Two outdoor, three treadmill. Alternate loop direction.</td></tr>
+            <tr><td class="wk">5</td><td class="num">2.6 km</td><td class="num">5</td><td class="num">5.2–5.7</td><td class="num">1–2%</td><td class="num">8,500</td><td class="num">2</td><td>Back at your pre-flare volume — deliberately, this time.</td></tr>
+            <tr><td class="wk">6</td><td class="num">3.0 km</td><td class="num">5</td><td class="num">5.2–6.0</td><td class="num">1–2%</td><td class="num">9,500</td><td class="num">2</td><td>Add one 4 km walk, replacing a short one — not on top.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:.85rem;color:var(--ink-3);font-family:Archivo,sans-serif">Speed in km/h. "Daily step ceiling" is your <em>total</em> Apple Health count for the day, walk included — not the walk alone. A "true rest day" means under 3,500 total steps; a day where you skip the walk but still hit 6,000 steps is not a rest day.</p>
+
+      <div class="two">
+        <div class="callout">
+          <h3>Incline depends on your test result</h3>
+          <p><strong>If Test A or B was your positive</strong> (under the heel): use <span class="mono">1–2%</span>. A slight incline reduces the braking force at heel strike and shifts load forward off the heel. Most people with plantar heel pain tolerate it better than flat.</p>
+          <p style="margin-top:9px"><strong>If Test C was your positive</strong> (back of the heel, Achilles): keep it at <span class="mono">0–1%</span>. Incline increases ankle dorsiflexion and Achilles demand, and it will aggravate you. Ignore the incline column above and stay flat.</p>
+          <p style="margin-top:9px">Never use a <em>decline</em>. And don't hold the handrails — it changes your gait and unloads the very thing you're trying to train.</p>
+        </div>
+        <div class="callout">
+          <h3>Treadmill vs concrete: treadmill wins, for now</h3>
+          <p>Not because belts are magically soft — they're firmer than most people assume. It wins for four specific reasons: <strong>no camber</strong> (removes the asymmetric loading that may be behind your left foot being worse), <strong>fixed speed</strong> (you can't unconsciously drift faster as you warm up), <strong>a stop button</strong> (you're never 1.5 km from home when it starts hurting), and <strong>exact dosing</strong> (1.5 km means 1.5 km, not "about 1.5 km").</p>
+          <p style="margin-top:9px">Long-term it's neutral — outdoor walking is fine and more enjoyable. Use the treadmill as the controlled environment for weeks 1–2, then reintroduce outdoors deliberately.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="two">
+      <div class="panel" style="border-left:3px solid var(--ok)">
+        <h3 style="margin-bottom:10px">Increase only when <em>all four</em> are true</h3>
+        <ul class="ex" style="gap:9px">
+          <li><span class="i" style="color:var(--ok)">✓</span><span>Your last <strong>five morning scores were 3 or under</strong>.</span></li>
+          <li><span class="i" style="color:var(--ok)">✓</span><span>No morning was worse than the one before it, two days running.</span></li>
+          <li><span class="i" style="color:var(--ok)">✓</span><span>You completed all three strength sessions last week.</span></li>
+          <li><span class="i" style="color:var(--ok)">✓</span><span>No new shoes or insoles in the last three days.</span></li>
+        </ul>
+        <p style="font-size:.9rem;color:var(--ink-2);margin-top:12px;line-height:1.5">If all four hold, move to the next week's row. If they don't, <strong>repeat the week</strong>. Repeating a week is not failure — it's the plan working. Two people doing this properly can finish four weeks apart.</p>
+      </div>
+      <div class="panel" style="border-left:3px solid var(--stop)">
+        <h3 style="margin-bottom:10px">Do <em>not</em> increase if any of these apply</h3>
+        <ul class="ex" style="gap:9px">
+          <li><span class="i" style="color:var(--stop)">✕</span><span>Any yellow or red day in the last three days.</span></li>
+          <li><span class="i" style="color:var(--stop)">✕</span><span>You're unwell, or you've slept under six hours two nights running.</span></li>
+          <li><span class="i" style="color:var(--stop)">✕</span><span>You skipped strength sessions — walking more without the strength work is how you got here.</span></li>
+          <li><span class="i" style="color:var(--stop)">✕</span><span>You've changed footwear in the last three days. Let the new variable settle before adding another.</span></li>
+          <li><span class="i" style="color:var(--stop)">✕</span><span>There's a big walking day coming (an event, a day out). Then you <em>reduce</em> the days either side rather than stacking on top — this is exactly the Saturday pattern that broke you.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. TRAFFIC LIGHT ============ -->
+<section>
+  <div class="stack-lg">
+    <div class="stack-sm">
+      <div class="eyebrow">06 · Pain rules</div>
+      <h2>Judge every walk by tomorrow morning</h2>
+    </div>
+
+    <div class="callout">
+      <h3>The 24-hour rule — the single most useful habit in this document</h3>
+      <p>How a walk feels <em>during and immediately after</em> is mostly noise. Adrenaline, warmth and blood flow all mask what's happening. <strong>The signal is your first 20 steps out of bed the next morning.</strong></p>
+      <p style="margin-top:10px">Score it 0–10 the same way every day: same time, before coffee, before the stretches, first 20 steps. Then compare three numbers — today, yesterday, and your five-day average. A walk that felt fine but leaves tomorrow morning at 7 was too much. A walk that ached at 4 but leaves tomorrow at 2 was fine. <strong>Trust the morning number over your in-the-moment impression every single time.</strong></p>
+      <p style="margin-top:10px">The same test applies to exercises. A new strength exercise that leaves you sore in the <em>muscle belly</em> of the calf is working. One that leaves the <em>heel itself</em> worse the next morning is too much load — halve the reps, don't drop the exercise.</p>
+    </div>
+
+    <div class="lights">
+      <div class="light l-go">
+        <div class="lh"><span class="dot" style="background:var(--ok)"></span><h3>Green — continue</h3></div>
+        <ul>
+          <li>3/10 or less during the walk</li>
+          <li>Settles within 60 minutes of finishing</li>
+          <li>Next morning's first 20 steps score the same or better</li>
+          <li>Both feet behaving similarly</li>
+        </ul>
+        <div class="act">→ Carry on. Progress on schedule once all four increase criteria are met.</div>
+      </div>
+      <div class="light l-hold">
+        <div class="lh"><span class="dot" style="background:var(--warn)"></span><h3>Yellow — reduce and hold</h3></div>
+        <ul>
+          <li>4–5/10 during or after</li>
+          <li>Takes 2–24 hours to settle</li>
+          <li>Next morning stiffer, but eases within 10 minutes of walking</li>
+          <li>One foot clearly worse than the other</li>
+        </ul>
+        <div class="act">→ Halve the walk for two days, then return to your current week's distance. Do <em>not</em> advance a week. <strong>Keep the exercises</strong> — they are not what's aggravating you.</div>
+      </div>
+      <div class="light l-stop">
+        <div class="lh"><span class="dot" style="background:var(--stop)"></span><h3>Red — stop and get assessed</h3></div>
+        <ul>
+          <li>Above 5/10, or you're limping or altering your gait</li>
+          <li>Morning score higher two mornings in a row</li>
+          <li>Pain at rest, or waking you at night</li>
+          <li>Swelling, redness, or heat over the heel</li>
+          <li>Numbness, tingling, or burning into the sole or toes</li>
+          <li>Test D (heel squeeze) sharply positive</li>
+          <li>A sudden pop or snap, or you can't bear weight</li>
+        </ul>
+        <div class="act">→ Stop walking. Book a podiatrist or physio. Keep the gentle stretches; drop the loaded work until you've been seen.</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:6px">
+        <h3>Morning score log — 42 days</h3>
+        <span class="mono" style="font-size:.75rem;color:var(--ink-3)">Saved in this browser only</span>
+      </div>
+      <p style="font-size:.92rem;color:var(--ink-2);line-height:1.5;margin-bottom:18px">Tap a day, then pick your first-20-steps score. Cells colour themselves against the traffic light above, so a bad week becomes visible before you'd otherwise notice it. <strong>Take this to your podiatrist</strong> — six weeks of morning scores is genuinely more useful to them than anything you'll remember in the room.</p>
+      <div class="log-grid" id="log"></div>
+      <div class="picker" id="picker" hidden>
+        <span class="pl" id="pickerLabel">Score for Week 1, Day 1</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. TOMORROW ============ -->
+<section>
+  <div class="stack-lg">
+    <div class="stack-sm">
+      <div class="eyebrow">07 · Start here</div>
+      <h2>What to do tomorrow</h2>
+    </div>
+    <p class="prose">In order. Steps 1 and 2 take ten minutes and could change everything else on this list.</p>
+
+    <div class="check" id="check">
+      <label class="citem"><input type="checkbox" data-k="c1"><span class="cn">01</span><span class="ct"><b>Do the four localisation tests.</b> Two minutes, sitting down. If Test D — the heel squeeze — is sharply positive, stop here, book a podiatrist or physio this week, and don't start the walking plan.</span></label>
+      <label class="citem"><input type="checkbox" data-k="c2"><span class="cn">02</span><span class="ct"><b>Pull the insoles out of your Skechers and count them.</b> If your insert is stacked on top of a factory insole, remove the factory one. Then press your thumb into the heel foam — if it doesn't spring back, those shoes are done and that's your next purchase.</span></label>
+      <label class="citem"><input type="checkbox" data-k="c3"><span class="cn">03</span><span class="ct"><b>Before your first steps out of bed: the plantar fascia stretch and both calf stretches.</b> Then score your first 20 steps 0–10 and log it. That number is your baseline for the whole six weeks.</span></label>
+      <label class="citem"><input type="checkbox" data-k="c4"><span class="cn">04</span><span class="ct"><b>Put something supportive on your feet indoors and leave it on all day.</b> Old runners by the door works today; buy the Archies or a recovery slide this week. No barefoot on tile. This is the cheapest win available to you.</span></label>
+      <label class="citem"><input type="checkbox" data-k="c5"><span class="cn">05</span><span class="ct"><b>Treadmill: 1.5 km, shoes on, socks on, 4.5–5.0 km/h, 1% incline</b> (0% if Test C was your positive). No handrails. Stop at 3/10 — even at 1.2 km. Stopping early is a successful session, not a failed one.</span></label>
+      <label class="citem"><input type="checkbox" data-k="c6"><span class="cn">06</span><span class="ct"><b>Do the first strength session</b> — the four movements, 15 minutes. Week 1 doses: towel heel raise 3×12, seated calf raise 3×15, short foot 3×10, tibialis raise 3×20.</span></label>
+      <label class="citem"><input type="checkbox" data-k="c7"><span class="cn">07</span><span class="ct"><b>Evening routine, 7 minutes, before the pain builds</b> — not at 10pm once it already hurts.</span></label>
+      <label class="citem"><input type="checkbox" data-k="c8"><span class="cn">08</span><span class="ct"><b>The morning after: score your first 20 steps again and compare.</b> That single comparison decides whether you repeat, hold, or progress. Everything in this plan runs off that one number.</span></label>
+    </div>
+  </div>
+</section>
+
+<footer class="end">
+  <p><strong>On the limits of this.</strong> This is a structured, evidence-informed self-management plan built from your step data and your description — not a diagnosis, and no substitute for someone examining your foot. The bar values are read off your screenshot to roughly ±3% (my reconstructed 31-day mean of 6,150 against Apple's stated 6,056 suggests the read is sound, but they are estimates, not exports). If you can export the raw Health data, the weekly numbers get exact.</p>
+  <p style="margin-top:12px">Given the load spike in your data and pain that hasn't settled with three days off, <strong>a single podiatry or physiotherapy appointment is a genuinely good use of $80–120</strong> — it converts the "likely / can't determine" section above into an actual answer, and everything in this plan works better once you know which tissue you're loading. That's a recommendation, not a hedge.</p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var LOG_KEY = "heel-reset-log-v1", CHK_KEY = "heel-reset-check-v1";
+  var DAYS = ["D1","D2","D3","D4","D5","D6","D7"];
+
+  function load(key){
+    try { return JSON.parse(localStorage.getItem(key) || "{}") || {}; }
+    catch(e){ return {}; }
+  }
+  function save(key, val){
+    try { localStorage.setItem(key, JSON.stringify(val)); } catch(e){ /* private mode */ }
+  }
+  function band(n){ return n <= 3 ? "go" : (n <= 5 ? "hold" : "stop"); }
+
+  /* ---------- morning score log ---------- */
+  var scores = load(LOG_KEY);
+  var grid = document.getElementById("log");
+  var picker = document.getElementById("picker");
+  var pickerLabel = document.getElementById("pickerLabel");
+  var active = null;
+
+  var head = document.createElement("div");
+  head.className = "log-row log-head";
+  head.appendChild(document.createElement("div"));
+  DAYS.forEach(function(d){
+    var c = document.createElement("div");
+    c.className = "hd"; c.textContent = d;
+    head.appendChild(c);
+  });
+  grid.appendChild(head);
+
+  function paint(btn, id){
+    var v = scores[id];
+    if (v === undefined || v === null){
+      btn.textContent = "·";
+      btn.removeAttribute("data-band");
+      btn.setAttribute("aria-label", btn.dataset.human + ": not scored");
+    } else {
+      btn.textContent = String(v);
+      btn.setAttribute("data-band", band(v));
+      btn.setAttribute("aria-label", btn.dataset.human + ": " + v + " out of 10");
+    }
+  }
+
+  for (var w = 1; w <= 6; w++){
+    var row = document.createElement("div");
+    row.className = "log-row";
+    var lbl = document.createElement("div");
+    lbl.className = "rl"; lbl.textContent = "Wk " + w;
+    row.appendChild(lbl);
+    for (var d = 1; d <= 7; d++){
+      var id = "w" + w + "d" + d;
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "cell";
+      btn.dataset.id = id;
+      btn.dataset.human = "Week " + w + ", day " + d;
+      paint(btn, id);
+      row.appendChild(btn);
+    }
+    grid.appendChild(row);
+  }
+
+  var pbtns = [];
+  for (var n = 0; n <= 10; n++){
+    (function(val){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "pbtn"; b.textContent = String(val);
+      b.addEventListener("click", function(){ setScore(val); });
+      picker.appendChild(b); pbtns.push(b);
+    })(n);
+  }
+  var clear = document.createElement("button");
+  clear.type = "button"; clear.className = "pbtn clr"; clear.textContent = "clear";
+  clear.style.minWidth = "56px";
+  clear.addEventListener("click", function(){ setScore(null); });
+  picker.appendChild(clear);
+
+  function setScore(val){
+    if (!active) return;
+    var id = active.dataset.id;
+    if (val === null) { delete scores[id]; } else { scores[id] = val; }
+    save(LOG_KEY, scores);
+    paint(active, id);
+    active.classList.remove("sel");
+    active = null;
+    picker.hidden = true;
+  }
+
+  grid.addEventListener("click", function(e){
+    var btn = e.target.closest(".cell");
+    if (!btn) return;
+    if (active) active.classList.remove("sel");
+    if (active === btn){ active = null; picker.hidden = true; return; }
+    active = btn;
+    btn.classList.add("sel");
+    pickerLabel.textContent = "Score for " + btn.dataset.human + ":";
+    picker.hidden = false;
+  });
+
+  /* ---------- tomorrow checklist ---------- */
+  var checks = load(CHK_KEY);
+  var boxes = document.querySelectorAll("#check input[type=checkbox]");
+  Array.prototype.forEach.call(boxes, function(box){
+    if (checks[box.dataset.k]) box.checked = true;
+    box.addEventListener("change", function(){
+      checks[box.dataset.k] = box.checked;
+      save(CHK_KEY, checks);
+    });
+  });
+})();
+</script>
