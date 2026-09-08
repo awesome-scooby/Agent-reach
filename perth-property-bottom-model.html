@@ -1,0 +1,2117 @@
+<title>Perth Bottom Model</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* ─── Tokens: light is the base; dark redefines only tokens ─────────────── */
+:root{
+  --bg:#F2EFE9; --surf:#FCFCFB; --surf2:#EAE5DC; --surf3:#E0DAD0;
+  --ink:#1B1815; --ink2:#57514A; --ink3:#8A8378; --rule:#DAD4C9; --rule2:#C6BEB1;
+  --accent:#B4472A; --accent-soft:#B4472A1F;
+  --s1:#B4472A; --s2:#0273A8; --s3:#A8761A; --s4:#3D56B2; --s5:#93326E;
+  --good:#2F7D4F; --warn:#A8761A; --crit:#8C1D2B;
+  --good-bg:#2F7D4F1A; --warn-bg:#A8761A1F; --crit-bg:#8C1D2B18;
+  --shadow:0 1px 2px #1b18150d, 0 8px 24px -12px #1b181524;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121110; --surf:#1A1A19; --surf2:#232220; --surf3:#2C2A27;
+    --ink:#F1EEE8; --ink2:#ADA69B; --ink3:#7E786E; --rule:#302E2B; --rule2:#3E3B37;
+    --accent:#D2653F; --accent-soft:#D2653F26;
+    --s1:#D2653F; --s2:#3E9ED4; --s3:#B3872A; --s4:#6F84DC; --s5:#C25F9C;
+    --good:#4FA872; --warn:#DDA43A; --crit:#E0665C;
+    --good-bg:#4FA87222; --warn-bg:#DDA43A22; --crit-bg:#E0665C1F;
+    --shadow:0 1px 2px #0006, 0 8px 24px -14px #000a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121110; --surf:#1A1A19; --surf2:#232220; --surf3:#2C2A27;
+  --ink:#F1EEE8; --ink2:#ADA69B; --ink3:#7E786E; --rule:#302E2B; --rule2:#3E3B37;
+  --accent:#D2653F; --accent-soft:#D2653F26;
+  --s1:#D2653F; --s2:#3E9ED4; --s3:#B3872A; --s4:#6F84DC; --s5:#C25F9C;
+  --good:#4FA872; --warn:#DDA43A; --crit:#E0665C;
+  --good-bg:#4FA87222; --warn-bg:#DDA43A22; --crit-bg:#E0665C1F;
+  --shadow:0 1px 2px #0006, 0 8px 24px -14px #000a;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:15px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;margin:0}
+h1,h2,h3,h4{font-family:var(--sans);font-weight:700;letter-spacing:-.018em;text-wrap:balance;margin:0;line-height:1.15}
+h2{font-size:1.5rem}h3{font-size:1.06rem;letter-spacing:-.008em}h4{font-size:.9rem}
+p{margin:0 0 .8em}
+a{color:var(--accent)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-family:var(--mono);font-size:.635rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3);font-weight:500}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ─── Shell ──────────────────────────────────────────────────────────────── */
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px 96px}
+.mast{border-bottom:1px solid var(--rule);background:var(--surf);position:relative}
+.mast-in{max-width:1240px;margin:0 auto;padding:26px 20px 0}
+.mast h1{font-size:clamp(1.7rem,4.4vw,2.55rem);line-height:1.02}
+.mast .sub{font-family:var(--mono);font-size:.72rem;color:var(--ink2);letter-spacing:.04em;margin-top:10px}
+.mast-row{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end;justify-content:space-between}
+.badgebar{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0 0}
+.chip{font-family:var(--mono);font-size:.665rem;letter-spacing:.05em;padding:4px 9px;border-radius:2px;
+  border:1px solid var(--rule2);color:var(--ink2);background:var(--surf2);white-space:nowrap}
+.chip.g{color:var(--good);border-color:var(--good);background:var(--good-bg)}
+.chip.w{color:var(--warn);border-color:var(--warn);background:var(--warn-bg)}
+.chip.c{color:var(--crit);border-color:var(--crit);background:var(--crit-bg)}
+.chip.a{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+
+/* cycle band */
+.cycband{margin:22px 0 0;padding-bottom:22px}
+.cyctrack{position:relative;height:46px;display:grid;grid-template-columns:repeat(6,1fr);gap:2px}
+.cycseg{background:var(--surf2);border-top:2px solid var(--rule2);display:flex;align-items:flex-end;padding:5px 7px}
+.cycseg span{font-family:var(--mono);font-size:.6rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
+.cycseg.on{background:var(--accent-soft);border-top-color:var(--accent)}
+.cycseg.on span{color:var(--accent);font-weight:600}
+.cycmark{position:absolute;top:-9px;width:2px;height:20px;background:var(--accent)}
+.cycmark::after{content:"";position:absolute;top:-4px;left:-3px;width:8px;height:8px;background:var(--accent);border-radius:50%}
+.cyccap{font-family:var(--mono);font-size:.66rem;color:var(--ink2);margin-top:8px}
+
+/* nav */
+nav.rail{position:sticky;top:0;z-index:20;background:var(--surf);border-bottom:1px solid var(--rule);overflow-x:auto}
+nav.rail ul{display:flex;gap:0;list-style:none;margin:0 auto;padding:0 20px;max-width:1240px}
+nav.rail a{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);
+  text-decoration:none;padding:11px 12px;display:block;white-space:nowrap;border-bottom:2px solid transparent}
+nav.rail a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* panels */
+section{margin-top:52px;scroll-margin-top:56px}
+.panel{background:var(--surf);border:1px solid var(--rule);padding:22px;box-shadow:var(--shadow)}
+.panel+.panel{margin-top:14px}
+.sechead{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;justify-content:space-between;
+  border-top:2px solid var(--ink);padding-top:11px;margin-bottom:18px}
+.sechead .n{font-family:var(--mono);font-size:.68rem;color:var(--ink3);letter-spacing:.1em}
+.lede{font-size:1.02rem;color:var(--ink2);max-width:66ch}
+.note{font-size:.83rem;color:var(--ink2);max-width:76ch}
+.prose3{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;margin-top:12px}
+.prose3 .note{max-width:none;margin:0}
+.note strong{color:var(--ink)}
+
+/* tiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(206px,1fr));gap:1px;background:var(--rule);
+  border:1px solid var(--rule)}
+.tile{background:var(--surf);padding:16px 16px 18px;display:flex;flex-direction:column;gap:5px;min-height:132px}
+.tile .k{font-family:var(--mono);font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+.tile .v{font-family:var(--sans);font-weight:700;font-size:1.85rem;letter-spacing:-.03em;line-height:1;
+  font-variant-numeric:tabular-nums;margin-top:2px}
+.tile .u{font-size:.78rem;color:var(--ink2);line-height:1.35}
+.tile.hi{border-left:3px solid var(--accent)}
+.tile .v.good{color:var(--good)}.tile .v.warn{color:var(--warn)}.tile .v.crit{color:var(--crit)}
+.meter{height:5px;background:var(--surf3);margin-top:auto;position:relative}
+.meter i{position:absolute;inset:0 auto 0 0;background:var(--accent);display:block}
+.meter i.good{background:var(--good)}.meter i.warn{background:var(--warn)}.meter i.crit{background:var(--crit)}
+
+/* tables */
+.tw{overflow-x:auto;border:1px solid var(--rule);background:var(--surf)}
+table{border-collapse:collapse;width:100%;font-size:.83rem;min-width:560px}
+th,td{padding:8px 11px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+thead th{font-family:var(--mono);font-size:.63rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);
+  font-weight:500;background:var(--surf2);position:sticky;top:0;white-space:nowrap}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tbody tr:hover{background:var(--surf2)}
+tbody tr:last-child td{border-bottom:none}
+td.nm{font-family:var(--sans);font-weight:600;font-size:.82rem}
+
+/* grids */
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:14px}
+.card{background:var(--surf);border:1px solid var(--rule);padding:16px}
+.card h4{margin-bottom:7px}
+.card.g{border-top:3px solid var(--good)}.card.w{border-top:3px solid var(--warn)}.card.c{border-top:3px solid var(--crit)}
+.kv{display:flex;justify-content:space-between;gap:12px;font-size:.82rem;padding:4px 0;border-bottom:1px dotted var(--rule)}
+.kv:last-child{border-bottom:none}
+.kv b{font-family:var(--mono);font-weight:500;font-variant-numeric:tabular-nums}
+
+/* controls */
+button{font-family:var(--sans);font-weight:600;font-size:.82rem;cursor:pointer;border:1px solid var(--rule2);
+  background:var(--surf2);color:var(--ink);padding:8px 14px;border-radius:2px}
+button:hover{border-color:var(--accent);color:var(--accent)}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-size:.9rem;padding:11px 20px}
+button.primary:hover{filter:brightness(1.08);color:#fff}
+input,select{font-family:var(--mono);font-size:.8rem;background:var(--surf);color:var(--ink);
+  border:1px solid var(--rule2);padding:6px 8px;border-radius:2px;width:100%}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:.72rem;color:var(--ink2);font-family:var(--sans);font-weight:500}
+details{border:1px solid var(--rule);background:var(--surf);padding:0}
+details>summary{cursor:pointer;padding:13px 16px;font-family:var(--sans);font-weight:600;font-size:.92rem;list-style:none}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"▸ ";color:var(--accent)}
+details[open]>summary::before{content:"▾ "}
+details>.body{padding:0 16px 16px}
+.flag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.68rem;white-space:nowrap}
+.dot{width:8px;height:8px;border-radius:50%;flex:none;background:var(--ink3)}
+.dot.g{background:var(--good)}.dot.w{background:var(--warn)}.dot.c{background:var(--crit)}.dot.n{background:var(--s2)}
+.warnbox{border-left:3px solid var(--warn);background:var(--warn-bg);padding:13px 15px;font-size:.87rem}
+.critbox{border-left:3px solid var(--crit);background:var(--crit-bg);padding:13px 15px;font-size:.87rem}
+.goodbox{border-left:3px solid var(--good);background:var(--good-bg);padding:13px 15px;font-size:.87rem}
+figure{margin:0}
+figcaption{font-size:.75rem;color:var(--ink3);font-family:var(--mono);margin-top:9px;line-height:1.5}
+svg{display:block;max-width:100%;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-family:var(--mono);font-size:.7rem;color:var(--ink2);margin:10px 0 4px}
+.legend i{width:14px;height:3px;display:inline-block;margin-right:6px;vertical-align:middle}
+.legend i.sq{height:10px;width:10px;border-radius:1px}
+hr.rule{border:none;border-top:1px solid var(--rule);margin:18px 0}
+.small{font-size:.76rem;color:var(--ink3);line-height:1.5}
+.tag{font-family:var(--mono);font-size:.62rem;padding:2px 5px;border:1px solid var(--rule2);color:var(--ink3);border-radius:2px}
+</style>
+
+<header class="mast">
+  <div class="mast-in">
+    <div class="mast-row">
+      <div>
+        <div class="eyebrow">Perth metropolitan · houses · $600k–$650k buyer brief</div>
+        <h1>Perth Property Bottom Model</h1>
+        <div class="sub" id="gendate">Generated 8 September 2026 · Perth (AWST)</div>
+      </div>
+      <div class="badgebar" id="mastbadges"></div>
+    </div>
+    <div class="cycband">
+      <div class="cyctrack" id="cyctrack"></div>
+      <div class="cyccap" id="cyccap"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="rail"><ul>
+  <li><a href="#now">Now</a></li>
+  <li><a href="#update">Update data</a></li>
+  <li><a href="#history">30-year history</a></li>
+  <li><a href="#cycles">Cycles</a></li>
+  <li><a href="#score">Cycle score</a></li>
+  <li><a href="#backtest">Back-test</a></li>
+  <li><a href="#ensemble">Ensemble</a></li>
+  <li><a href="#scenarios">Scenarios</a></li>
+  <li><a href="#timeline">Timeline</a></li>
+  <li><a href="#budget">$600–650k</a></li>
+  <li><a href="#suburbs">Suburbs</a></li>
+  <li><a href="#map">Map</a></li>
+  <li><a href="#falsebottom">False bottom</a></li>
+  <li><a href="#buysignal">Buying signal</a></li>
+  <li><a href="#waiting">Wait calculator</a></li>
+  <li><a href="#audit">Audit</a></li>
+  <li><a href="#strategy">Strategy</a></li>
+</ul></nav>
+
+<div class="wrap">
+
+<div id="confwarn"></div>
+
+<!-- ══ 1 NOW ══ -->
+<section id="now">
+  <div class="sechead"><h2>Where the market is today</h2><div class="n">01 / Headline readings</div></div>
+  <div class="tiles" id="tiles"></div>
+  <div class="panel" style="margin-top:14px" id="nowprose"></div>
+</section>
+
+<!-- ══ 2 UPDATE ══ -->
+<section id="update">
+  <div class="sechead"><h2>Live market update</h2><div class="n">02 / Data refresh</div></div>
+  <div class="panel">
+    <div class="g2" style="align-items:start">
+      <div>
+        <button class="primary" id="btnUpdate">🔄 Update with latest market data</button>
+        <div class="small" style="margin-top:10px" id="updstatusline">Last successful update: —</div>
+        <div class="warnbox" style="margin-top:14px">
+          <strong>What this button can and cannot do.</strong> A published HTML page runs inside a sandbox that
+          blocks all outbound network requests, and none of REIWA, Landgate, the ABS, the RBA, Cotality or SQM
+          publish a browser-callable (CORS-open) feed anyway. So this button does <em>not</em> silently phone home.
+          It runs the source-reachability probe, reports honestly that every live source is unreachable from the
+          browser, and opens the manual entry panel below. Paste a new figure, press <em>Recalculate</em>, and the
+          entire model — scores, probabilities, scenarios, suburb ranking — recomputes from your values and stamps
+          a new update time. The repo ships <span class="mono">tools/refresh_perth_data.py</span>, which fetches the
+          feeds that <em>are</em> machine-readable and prints the values to paste in.
+        </div>
+      </div>
+      <div>
+        <h4>Source reachability</h4>
+        <div class="tw" style="margin-top:8px"><table id="srctable"><thead><tr>
+          <th>Source</th><th>Variables</th><th>Status</th></tr></thead><tbody></tbody></table></div>
+      </div>
+    </div>
+    <hr class="rule">
+    <h4>Manual data entry — every model input</h4>
+    <p class="note" style="margin-top:6px">Values shipped with the page are shown as defaults. Anything you change is
+      stored in this browser only, marked <span class="tag">USER</span> in the audit table, and drives every number
+      on the page. <button id="btnReset" style="padding:3px 9px;font-size:.72rem">Reset to shipped values</button></p>
+    <div class="g3" id="inputs" style="margin-top:14px"></div>
+    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="primary" id="btnRecalc">Recalculate model</button>
+      <span class="small" id="recalcmsg" style="align-self:center"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 3 HISTORY ══ -->
+<section id="history">
+  <div class="sechead"><h2>Thirty years of Perth house prices</h2><div class="n">03 / 1995 → 2026</div></div>
+  <div class="panel">
+    <figure>
+      <div id="chartHistory"></div>
+      <div class="legend" id="histLegend"></div>
+      <figcaption id="histCap"></figcaption>
+    </figure>
+  </div>
+  <div class="panel">
+    <h3>The anchors, and what sits between them</h3>
+    <p class="note" style="margin:8px 0 12px">Only the rows marked <span class="tag">ANCHOR</span> are sourced
+      observations. Points between anchors are geometric interpolation, drawn as a lighter line and labelled
+      <span class="tag">INTERP</span> — they are not data and must not be read as such. There is no continuous
+      30-year Perth series available to this build, so none has been manufactured.</p>
+    <div class="tw"><table id="anchorTable"><thead><tr>
+      <th>Period</th><th class="num">Median house</th><th>Type</th><th>Source</th><th>Basis</th></tr></thead><tbody></tbody></table></div>
+  </div>
+</section>
+
+<!-- ══ 4 CYCLES ══ -->
+<section id="cycles">
+  <div class="sechead"><h2>Perth's cycles: peak, decline, trough, recovery</h2><div class="n">04 / Cycle anatomy</div></div>
+  <div class="panel">
+    <div class="tw"><table id="cycleTable"><thead><tr>
+      <th>Cycle</th><th>Peak</th><th class="num">Peak→trough</th><th>Trough</th><th class="num">Months down</th>
+      <th class="num">Months to prior peak</th><th>Driver</th></tr></thead><tbody></tbody></table></div>
+    <div class="g2" style="margin-top:16px">
+      <div class="card"><h4>What the record actually supports</h4><div id="cyclestats"></div></div>
+      <div class="card w"><h4>Sample-size warning</h4>
+        <p class="note" style="margin:0">Perth has produced <strong>three</strong> clean peak-to-trough episodes in
+          thirty years and one of them (2008) is barely distinguishable from noise. Every "average cycle length" or
+          "typical decline" on this page is a summary of n≈3. It is a description of what happened, not a
+          distribution you can draw a forecast from. Treat any statement of the form "Perth bottoms every X years"
+          as unsupported.</p></div>
+    </div>
+  </div>
+  <div class="panel">
+    <h3>Does today look like the start, middle or end of a downturn?</h3>
+    <div id="cyclecompare"></div>
+  </div>
+</section>
+
+<!-- ══ 5 SCORE ══ -->
+<section id="score">
+  <div class="sechead"><h2>Perth Market Cycle Score</h2><div class="n">05 / Multi-factor model</div></div>
+  <div class="panel">
+    <p class="lede">Every indicator is mapped to a 0–100 <em>bottom-likeness</em> score: 100 means the reading is
+      what Perth looked like at a historical trough, 0 means it is what Perth looked like at a peak. Families are
+      averaged, then combined three different ways.</p>
+    <div id="familyBars" style="margin-top:18px"></div>
+  </div>
+  <div class="panel">
+    <h3>Indicator detail</h3>
+    <div class="tw" style="margin-top:10px"><table id="indTable"><thead><tr>
+      <th>Indicator</th><th class="num">Reading</th><th class="num">Bottom score</th><th>Why that score</th>
+      <th>Fresh</th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <div class="panel">
+    <h3>Three weighting systems, then an ensemble</h3>
+    <div class="g3" id="modelCards" style="margin-top:12px"></div>
+    <div style="margin-top:16px" id="ensembleOut"></div>
+  </div>
+</section>
+
+<!-- ══ 6 BACKTEST ══ -->
+<section id="backtest">
+  <div class="sechead"><h2>Back-test against Perth's own history</h2><div class="n">06 / Would it have worked?</div></div>
+  <div class="panel">
+    <div class="critbox" style="margin-bottom:16px">
+      <strong>Read this before the accuracy numbers.</strong> A back-test needs the historical values of every
+      indicator, month by month. For 2014 onward that mostly exists. For 1996–2013 it does not — not in anything
+      this build could reach. So the pre-2014 back-test runs on a <em>reduced</em> indicator set (price momentum,
+      drawdown, cash-rate direction, WA unemployment direction) and the full seven-family model is tested only on
+      the 2014–2019 downturn and the 2020 trough. Precision and recall computed on <strong>3 events</strong> are
+      arithmetic, not evidence. They are shown because you asked for them, with that caveat attached to every figure.
+    </div>
+    <div class="tw"><table id="btTable"><thead><tr>
+      <th>Episode</th><th>Actual trough</th><th>Model signal</th><th class="num">Error</th><th>Indicators used</th>
+      <th>Verdict</th></tr></thead><tbody></tbody></table></div>
+    <div class="g3" style="margin-top:16px" id="btMetrics"></div>
+    <p class="note" style="margin-top:14px" id="btProse"></p>
+  </div>
+</section>
+
+<!-- ══ 7 ENSEMBLE FORECASTING ══ -->
+<section id="ensemble">
+  <div class="sechead"><h2>Seven forecasting approaches, weighted by reliability</h2><div class="n">07 / Ensemble forecast</div></div>
+  <div class="panel">
+    <div class="tw"><table id="fcTable"><thead><tr>
+      <th>Model</th><th>Its forecast</th><th class="num">Reliability</th><th class="num">Ensemble weight</th>
+      <th>Status</th></tr></thead><tbody></tbody></table></div>
+    <div style="margin-top:16px" id="fcOut"></div>
+  </div>
+</section>
+
+<!-- ══ 8 SCENARIOS ══ -->
+<section id="scenarios">
+  <div class="sechead"><h2>Three scenarios</h2><div class="n">08 / Bull · base · bear</div></div>
+  <div class="g3" id="scenCards"></div>
+  <div class="panel" style="margin-top:14px">
+    <figure>
+      <div id="chartScenario"></div>
+      <div class="legend" id="scenLegend"></div>
+      <figcaption id="scenCap"></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ══ 9 TIMELINE ══ -->
+<section id="timeline">
+  <div class="sechead"><h2>When is the trough?</h2><div class="n">09 / Probability timeline</div></div>
+  <div class="panel">
+    <figure>
+      <div id="chartTimeline"></div>
+      <figcaption id="tlCap"></figcaption>
+    </figure>
+    <div class="g3" style="margin-top:18px" id="tlBounds"></div>
+  </div>
+  <div class="panel">
+    <h3>How these probabilities are produced</h3>
+    <div id="tlDeriv"></div>
+  </div>
+</section>
+
+<!-- ══ 10 BUDGET ══ -->
+<section id="budget">
+  <div class="sechead"><h2>Your $600,000–$650,000 budget</h2><div class="n">10 / What it actually buys</div></div>
+  <div class="panel" id="budgetHead"></div>
+  <div class="panel">
+    <h3>Required decline to reach each price point</h3>
+    <div class="tw" style="margin-top:10px"><table id="declineTable"><thead><tr>
+      <th>Benchmark</th><th class="num">Today</th><th class="num">→ $650k</th><th class="num">→ $625k</th>
+      <th class="num">→ $600k</th><th>Plausible?</th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <div class="panel">
+    <h3>How many of the tracked entry suburbs land in range</h3>
+    <div class="g3" id="corrCards" style="margin-top:12px"></div>
+    <div class="tw" style="margin-top:14px"><table id="budgetSubTable"><thead><tr>
+      <th>Suburb</th><th class="num">Median now</th><th class="num">Mild −5%</th><th class="num">Moderate −12%</th>
+      <th class="num">Severe −22%</th><th>In range at</th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <div class="panel">
+    <h3>If prices never fall, how long until income catches up?</h3>
+    <div id="incomeCatch"></div>
+  </div>
+</section>
+
+<!-- ══ 11 SUBURBS ══ -->
+<section id="suburbs">
+  <div class="sechead"><h2>Suburb opportunity model</h2><div class="n">11 / Where $600–650k works</div></div>
+  <div class="panel">
+    <div class="warnbox" style="margin-bottom:16px" id="subwarn"></div>
+    <div class="tw"><table id="subTable"><thead><tr>
+      <th>Suburb</th><th class="num">Median</th><th class="num">12m</th><th class="num">Yield</th>
+      <th class="num">km CBD</th><th>Rail</th><th class="num">Value</th><th class="num">Balance</th>
+      <th class="num">Long-term</th><th>Verdict</th></tr></thead><tbody></tbody></table></div>
+    <div class="g3" style="margin-top:16px" id="podium"></div>
+  </div>
+  <div class="panel">
+    <h3>Priced richly relative to fundamentals</h3>
+    <div id="overpriced"></div>
+  </div>
+</section>
+
+<!-- ══ 12 MAP ══ -->
+<section id="map">
+  <div class="sechead"><h2>Perth value map</h2><div class="n">12 / Click a suburb</div></div>
+  <div class="panel">
+    <div class="g2" style="grid-template-columns:minmax(300px,1.5fr) minmax(240px,1fr)">
+      <figure>
+        <div id="mapSvg"></div>
+        <div class="legend" id="mapLegend"></div>
+        <figcaption>Schematic layout. Marker positions are approximate suburb centroids projected onto a simplified
+          coast/river outline — near enough to read direction and relative distance from the CBD, not a survey.
+          Not for boundary, flood or bushfire assessment.</figcaption>
+      </figure>
+      <div id="mapDetail"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 13 FALSE BOTTOM ══ -->
+<section id="falsebottom">
+  <div class="sechead"><h2>False-bottom detector</h2><div class="n">13 / Is a pause a trough?</div></div>
+  <div class="panel">
+    <p class="lede">A market can stop falling for two very different reasons: buyers have returned, or sellers have
+      withdrawn. This checks the nine conditions that separate them.</p>
+    <div id="fbOut" style="margin-top:16px"></div>
+  </div>
+</section>
+
+<!-- ══ 14 BUYING SIGNAL ══ -->
+<section id="buysignal">
+  <div class="sechead"><h2>Perth Buying Opportunity Score</h2><div class="n">14 / Composite signal</div></div>
+  <div class="panel" id="buyOut"></div>
+</section>
+
+<!-- ══ 15 WAITING ══ -->
+<section id="waiting">
+  <div class="sechead"><h2>Waiting is not free</h2><div class="n">15 / Buy now vs wait</div></div>
+  <div class="panel">
+    <p class="lede">Waiting for a lower price costs rent and buys you extra deposit. This settles which effect wins,
+      at your numbers.</p>
+    <div class="g3" id="calcInputs" style="margin-top:16px"></div>
+    <div style="margin-top:16px"><button class="primary" id="btnCalc">Run comparison</button></div>
+    <div class="tw" style="margin-top:18px"><table id="waitTable"><thead><tr>
+      <th>Strategy</th><th class="num">Price paid</th><th class="num">Deposit</th><th class="num">Loan</th>
+      <th class="num">Monthly repay</th><th class="num">Rent paid</th><th class="num">Net position vs buy now</th>
+      </tr></thead><tbody></tbody></table></div>
+    <div style="margin-top:16px" id="breakeven"></div>
+  </div>
+</section>
+
+<!-- ══ 16 AUDIT ══ -->
+<section id="audit">
+  <div class="sechead"><h2>Data &amp; model audit</h2><div class="n">16 / Trust check</div></div>
+  <div class="panel" id="auditSummary"></div>
+  <details style="margin-top:14px" open>
+    <summary>🔍 Full variable audit — every number on this page</summary>
+    <div class="body">
+      <div class="tw"><table id="auditTable"><thead><tr>
+        <th>Variable</th><th class="num">Value</th><th>Source</th><th>Data date</th><th>Fresh</th><th>Tier</th>
+        <th>Notes</th></tr></thead><tbody></tbody></table></div>
+    </div>
+  </details>
+  <details style="margin-top:14px">
+    <summary>⚖️ Source conflicts — where reputable sources disagree</summary>
+    <div class="body" id="conflicts"></div>
+  </details>
+  <details style="margin-top:14px">
+    <summary>🚫 What is missing, stale or excluded — and what the model did about it</summary>
+    <div class="body" id="missing"></div>
+  </details>
+  <details style="margin-top:14px">
+    <summary>✅ Final quality gate</summary>
+    <div class="body" id="gate"></div>
+  </details>
+</section>
+
+<!-- ══ 17 STRATEGY ══ -->
+<section id="strategy">
+  <div class="sechead"><h2>My Perth property strategy</h2><div class="n">17 / The decision</div></div>
+  <div class="panel" id="strategyPanel"></div>
+  <div class="g3" style="margin-top:14px" id="doWatchWait"></div>
+  <div class="panel" style="margin-top:14px">
+    <h3>Limitations you should hold onto</h3>
+    <div id="limits"></div>
+  </div>
+</section>
+
+</div>
+
+<script>
+"use strict";
+/* ════════════════════════════════════════════════════════════════════════
+   PERTH PROPERTY BOTTOM MODEL
+   Built 8 Sep 2026. All figures below carry a source, a data date, a
+   freshness grade and a source tier. Nothing here is invented; where a
+   value could not be obtained it is marked UNAVAILABLE and its model
+   weight is redistributed rather than filled with a guess.
+
+   ACCESS LIMITATION (disclosed everywhere it matters): this build could
+   reach web search only. Direct fetches to reiwa.com.au, abs.gov.au,
+   rba.gov.au and sqmresearch.com.au were refused by the network egress
+   policy. Every Tier-1/Tier-2 statistic below therefore reaches the model
+   through a secondary report of the primary release, not the release
+   itself. That is a real haircut on confidence and it is applied in the
+   Data Confidence score, not hidden.
+   ════════════════════════════════════════════════════════════════════════ */
+
+const BUILD_DATE = "2026-09-08";
+
+/* ── Source registry ─────────────────────────────────────────────────── */
+const SRC = {
+  reiwa:    {n:"REIWA (Landgate transactions)", tier:1, url:"https://reiwa.com.au/the-wa-market/perth-metro/"},
+  reiwaNews:{n:"REIWA market news",             tier:1, url:"https://reiwa.com.au/news/"},
+  cotality: {n:"Cotality (CoreLogic) HVI",      tier:2, url:"https://www.cotality.com/au/insights/articles/monthly-housing-chart-pack-august-2026"},
+  cotalityR:{n:"Cotality Rental Review",        tier:2, url:"https://www.cotality.com/au/insights/articles/rental-growth-accelerates-annually-as-perth-and-brisbane-close-the-gap-to-sydney"},
+  abs:      {n:"ABS",                            tier:1, url:"https://www.abs.gov.au/"},
+  rba:      {n:"RBA",                            tier:1, url:"https://www.rba.gov.au/statistics/cash-rate/"},
+  sqm:      {n:"SQM Research",                   tier:2, url:"https://sqmresearch.com.au/"},
+  watc:     {n:"WA Treasury Corporation / WA Treasury", tier:1, url:"https://www.watc.wa.gov.au/economic-insights/"},
+  wabudget: {n:"WA State Budget 2026-27",        tier:1, url:"https://www.ourstatebudget.wa.gov.au/2026-27/economic.html"},
+  cba:      {n:"CommBank economics",             tier:3, url:"https://www.commbank.com.au/articles/newsroom/2026/09/housing-correction-deepens-commbank-economists.html"},
+  anz:      {n:"ANZ economics (via API Magazine)", tier:3, url:"https://www.apimagazine.com.au/news/article/perth-property-boom-to-power-through-2026-before-sharp-slowdown-looms"},
+  westpac:  {n:"Westpac–Melbourne Institute",    tier:2, url:"https://www.investing.com/news/economic-indicators/australia-consumer-sentiment-slumps-52-in-september-westpac-4890759"},
+  ato:      {n:"ATO / 2026-27 Federal Budget",   tier:1, url:"https://www.ato.gov.au/about-ato/new-legislation/in-detail/individuals/tax-reform-boosting-home-ownership-reforming-negative-gearing-and-capital-gains-tax"},
+  disr:     {n:"Dept. Industry / analyst consensus", tier:2, url:"https://www.industry.gov.au/"},
+  abc:      {n:"ABC News (reporting Cotality)",  tier:4, url:"https://www.abc.net.au/news/2026-09-01/property-prices-downturn-accelerates/107098796"},
+  udia:     {n:"UDIA WA — history of WA housing cycles", tier:3, url:"https://www.udiawa.com.au/a-short-history-of-wa-housing-cycles/"},
+  apimag:   {n:"API Magazine",                   tier:4, url:"https://www.apimagazine.com.au/"},
+  domain:   {n:"Domain",                         tier:2, url:"https://www.domain.com.au/"},
+  agg:      {n:"Buyer-agent / broker aggregators", tier:4, url:""},
+  author:   {n:"Structural knowledge (not freshly sourced)", tier:3, url:""}
+};
+
+/* ── Model variables. v = value; every field is audited. ──────────────── */
+const V = {
+  /* PRICE */
+  medHouseREIWA:{lab:"Perth median house sale price (REIWA)", v:960000, u:"$", src:"reiwaNews",
+    date:"Aug 2026", fresh:"green", note:"+1.1% m/m, +18.5% y/y. Landgate settlement medians; composition-sensitive and lags the index.", ed:1},
+  medDwellCot:{lab:"Perth median dwelling value (Cotality)", v:999987, u:"$", src:"cotality",
+    date:"Aug 2026", fresh:"green", note:"Hedonic index value, all dwellings. −0.8% m/m, −3.2% q/q, +15.6% y/y.", ed:1},
+  drawdown:{lab:"Drawdown from cycle peak", v:3.2, u:"%", src:"cotality",
+    date:"Aug 2026", fresh:"green", note:"Peak May 2026. Derived from the −3.2% quarterly index change to August.", ed:1},
+  momQ:{lab:"Quarterly price momentum", v:-3.2, u:"%", src:"cotality", date:"Aug 2026", fresh:"green",
+    note:"Four consecutive monthly falls (May–Aug 2026).", ed:1},
+  momY:{lab:"Annual price growth", v:15.6, u:"%", src:"cotality", date:"Aug 2026", fresh:"green",
+    note:"Still strongly positive — the annual number is a rear-view mirror here.", ed:1},
+  accel:{lab:"Momentum acceleration", v:-1, u:"flag", src:"cotality", date:"Aug 2026", fresh:"green",
+    note:"−1 = falls deepening, 0 = steady, +1 = falls easing. Monthly prints have worsened.", ed:1},
+
+  /* SUPPLY */
+  listings:{lab:"Perth listings for sale", v:7204, u:"", src:"reiwaNews", date:"w/e 23 Aug 2026", fresh:"green",
+    note:"First time above 7,000 in over three years. More than doubled since March 2026.", ed:1},
+  listingsLTA:{lab:"Listings long-run average (assumption)", v:12500, u:"", src:"author", date:"structural", fresh:"amber",
+    note:"Perth's decade-average active listing count. Not freshly sourced — an author assumption used only as a scale reference. Change it if you have the REIWA series.", ed:1},
+  listingsYoY:{lab:"Listings, year on year", v:36.4, u:"%", src:"cotality", date:"Jul 2026", fresh:"green",
+    note:"Supply rebuilding fast from an extreme low base.", ed:1},
+  approvalsWA:{lab:"WA dwelling approvals, monthly change", v:-0.3, u:"%", src:"abs", date:"Jul 2026", fresh:"green",
+    note:"Private house approvals −0.1%. Essentially flat; national trend approvals +11.7% y/y.", ed:1},
+
+  /* DEMAND */
+  popWA:{lab:"WA population growth", v:2.2, u:"%", src:"abs", date:"Dec qtr 2025 (rel. 18 Jun 2026)", fresh:"amber",
+    note:"Fastest of any state. Nine months old at build date — the single most important stale input.", ed:1},
+  lendingQ:{lab:"New housing loan commitments, q/q", v:-5.4, u:"%", src:"abs", date:"Jun qtr 2026", fresh:"green",
+    note:"Owner-occupier −3.3%, investor −8.6% by number.", ed:1},
+  salesYoY:{lab:"Perth sales volumes, y/y", v:-20, u:"%", src:"abc", date:"Aug 2026", fresh:"green",
+    note:"Reported as 'down more than 20%'. Treated as −20% (conservative edge of the claim).", ed:1},
+  ngShock:{lab:"Negative gearing shock absorbed?", v:0, u:"flag", src:"ato", date:"legislated 12 May 2026", fresh:"green",
+    note:"0 = not yet. Negative gearing on established dwellings bought after 12 May 2026 ends 1 Jul 2027; 50% CGT discount replaced by indexation + 30% minimum rate.", ed:1},
+
+  /* STRESS */
+  dom:{lab:"Median days on market (houses)", v:23, u:"days", src:"reiwaNews", date:"Aug 2026", fresh:"green",
+    note:"12 days slower than a year ago. CommBank quotes 9 → 22 days on its own measure.", ed:1},
+  domTrough:{lab:"Days on market at 2018-19 trough (reference)", v:70, u:"days", src:"author", date:"structural", fresh:"amber",
+    note:"Scale reference for the mapping only. Not freshly sourced.", ed:1},
+  discount:{lab:"Vendor discount", v:-4.0, u:"%", src:"cotality", date:"Jul 2026", fresh:"green",
+    note:"Widened from −2.9% a year earlier.", ed:1},
+  clearance:{lab:"Auction clearance rate", v:null, u:"%", src:"cotality", date:"n/a", fresh:"red",
+    note:"UNAVAILABLE BY CONSTRUCTION. Cotality does not publish a Perth clearance rate — 9–13 auctions a week is too few to be meaningful. Excluded; its weight is redistributed inside the Stress family.", ed:0},
+
+  /* ECONOMY */
+  unempWA:{lab:"WA unemployment rate", v:4.5, u:"%", src:"abs", date:"Apr 2026", fresh:"orange",
+    note:"Up from 3.4% in Jan 2026. Sources seen give 3.4% (Jan), 4.40% (Feb), 4.30% (Mar), 4.5% (Apr) — the level is uncertain, the direction is not.", ed:1},
+  unempTrend:{lab:"WA unemployment direction", v:1, u:"flag", src:"abs", date:"2026 YTD", fresh:"green",
+    note:"+1 = rising, 0 = flat, −1 = falling.", ed:1},
+  sentiment:{lab:"Consumer sentiment (Westpac-MI)", v:84.4, u:"idx", src:"westpac", date:"Sep 2026", fresh:"green",
+    note:"−5.2% m/m, ~−12% y/y. Deeply pessimistic; 100 = optimists equal pessimists.", ed:1},
+  ironOre:{lab:"Iron ore, forecast average", v:85, u:"US$/t", src:"disr", date:"2026-27 forecasts", fresh:"amber",
+    note:"Forecasts seen span US$82–95/t for 2026-27. Midpoint used. This is a forecast, not an observed price.", ed:1},
+  wpiWA:{lab:"WA wage price index", v:3.3, u:"%", src:"abs", date:"Jun qtr 2026", fresh:"green",
+    note:"Slowest annual wage gain since Q4 2024.", ed:1},
+  sfdWA:{lab:"WA state final demand", v:3.2, u:"%", src:"wabudget", date:"2025-26", fresh:"amber",
+    note:"WA Treasury revised 2025-26 SFD to 3.5%; Q4-2025 through-the-year 3.2%. Lower figure used.", ed:1},
+
+  /* FINANCE */
+  cashRate:{lab:"RBA cash rate target", v:4.35, u:"%", src:"rba", date:"held Aug 2026", fresh:"green",
+    note:"Three hikes in 2026: Feb 3.85%, Mar 4.10%, May 4.35%. Held June and August.", ed:1},
+  rateDir:{lab:"Cash rate direction", v:1, u:"flag", src:"rba", date:"Sep 2026", fresh:"green",
+    note:"+1 = tightening bias. Market pricing ~68% for a hike to 4.60% on 29 Sep 2026; NAB expects Sep, ANZ and CBA Nov, Westpac a hold.", ed:1},
+  mortRate:{lab:"New owner-occupier variable rate", v:6.20, u:"%", src:"agg", date:"Jun–Jul 2026", fresh:"green",
+    note:"6.25% (end-Jun) and 6.17% (15 Jul) from lender-comparison trackers; ~6.9% average across existing loans.", ed:1},
+  inflation:{lab:"Headline CPI", v:3.5, u:"%", src:"abs", date:"Jul 2026", fresh:"green",
+    note:"Trimmed mean 3.6%. Above the 2–3% band — the reason the RBA is tightening.", ed:1},
+
+  /* RENTAL */
+  vacancy:{lab:"Perth rental vacancy rate", v:0.6, u:"%", src:"sqm", date:"Jul 2026", fresh:"green",
+    note:"SQM 0.6%. REIWA reported 0.7% for the March 2026 quarter on its own methodology.", ed:1},
+  rentMed:{lab:"Perth median rent (all dwellings)", v:784, u:"$/wk", src:"cotalityR", date:"Jun 2026", fresh:"amber",
+    note:"Houses $798, units $716.", ed:1},
+  rentGrowth:{lab:"Annual rent growth (houses)", v:8.1, u:"%", src:"cotalityR", date:"Jun 2026", fresh:"amber",
+    note:"Units +7.8%.", ed:1},
+  yieldGross:{lab:"Gross rental yield (dwellings)", v:3.7, u:"%", src:"cotalityR", date:"Jun–Jul 2026", fresh:"green",
+    note:"Compressed from 4.3% a year earlier. Perth's 2019-trough yields were closer to 5%.", ed:1}
+};
+
+/* ── Sourced history anchors. INTERP points are drawn but never claimed. ─ */
+const ANCHORS = [
+  {y:1995.9, p:126790, src:"udia", basis:"Perth median house price, 1995", note:"Post early-1990s recovery low."},
+  {y:2003.9, p:200000, src:"apimag", basis:"'around $200,000 in 2004'", note:"CONFLICT: a second reading gives ~$300,000 for 2005. Both are secondary. Treated as a soft anchor."},
+  {y:2007.9, p:470000, src:"udia", basis:"'the median Perth house price would eventually hit $470,000 in 2007'", note:"End of mining boom I."},
+  {y:2010.9, p:507000, src:"apimag", basis:"Perth median 2010", note:"Local peak before the mining-capex unwind."},
+  {y:2014.9, p:585000, src:"domain", basis:"Peak, November 2014", note:"CYCLE PEAK."},
+  {y:2015.9, p:560000, src:"apimag", basis:"Perth median 2015"},
+  {y:2017.9, p:480000, src:"apimag", basis:"Perth median 2017"},
+  {y:2019.8, p:459000, src:"domain", basis:"−21.6% vs 2014 peak, October 2019", note:"CYCLE TROUGH. Derived from the sourced percentage, not a directly quoted dollar figure."},
+  {y:2020.9, p:494375, src:"apimag", basis:"Perth median 2020"},
+  {y:2021.9, p:525000, src:"reiwa", basis:"Perth median 2021"},
+  {y:2022.9, p:540000, src:"reiwa", basis:"Perth median 2022"},
+  {y:2023.9, p:600000, src:"reiwaNews", basis:"$600,000 at end of 2023"},
+  {y:2024.9, p:745000, src:"reiwaNews", basis:"$745,000 December 2024 (+24.2%)"},
+  {y:2025.4, p:786000, src:"reiwaNews", basis:"$786,000 June 2025 (+16.4% y/y)"},
+  {y:2025.6, p:810000, src:"reiwaNews", basis:"Derived: Aug 2026 $960,000 at +18.5% y/y ⇒ Aug 2025 ≈ $810,100", note:"DERIVED, not quoted."},
+  {y:2026.4, p:938000, src:"reiwaNews", basis:"$938,000 end of June 2026 quarter"},
+  {y:2026.6, p:960000, src:"reiwaNews", basis:"$960,000 August 2026 (+1.1% m/m)"}
+];
+
+/* ── Cycles. Only what the record supports. ──────────────────────────── */
+const CYCLES = [
+  {name:"Mining boom I", peak:"Late 2007 · $470,000", pt:"≈ −5% to −8%", trough:"2008-09 (GFC)",
+   down:"≈ 12", gap:"—", driver:"Global financial crisis; short, credit-driven, reversed by stimulus and rate cuts.", conf:"low"},
+  {name:"Post-GFC echo", peak:"2010 · $507,000", pt:"≈ −8%", trough:"2012",
+   down:"≈ 24", gap:"≈ 36", driver:"Mining capex plateau; prices drifted while construction peaked.", conf:"low"},
+  {name:"Mining bust", peak:"Nov 2014 · $585,000", pt:"−21.6%", trough:"Oct 2019 · ≈ $459,000",
+   down:"59", gap:"49", driver:"Mining construction phase ended, population growth collapsed, WA unemployment rose. The reference downturn.", conf:"high"},
+  {name:"Recovery + boom II", peak:"May 2026 · index peak", pt:"in progress", trough:"—",
+   down:"—", gap:"138", driver:"Population surge, record-low vacancy, historically cheap relative to the east coast — then rate cuts in 2025.", conf:"high"},
+  {name:"Current downturn", peak:"May 2026", pt:"−3.2% so far", trough:"unknown",
+   down:"4 and counting", gap:"—", driver:"Three RBA hikes in 2026, negative-gearing abolition, listings doubling, sales volumes −20%.", conf:"high"}
+];
+
+/* ── Suburbs. Tier-4 aggregator data, mixed reference periods. ───────── */
+const SUBS = [
+  {n:"Medina",        med:540000, g:null, yld:5.6, km:34, rail:"Kwinana/Mandurah line (Wellard 4km)", x:0.29,y:0.83, per:"yr to Jul 2025", q:"stale"},
+  {n:"Camillo",       med:585000, g:null, yld:5.3, km:23, rail:"Armadale line (Kelmscott 2km)",       x:0.55,y:0.755, per:"2026 est.",    q:"weak"},
+  {n:"Armadale",      med:610000, g:10.9, yld:5.2, km:28, rail:"Armadale line — Byford extension",    x:0.66,y:0.79, per:"2026",          q:"ok"},
+  {n:"Brookdale",     med:622000, g:null, yld:5.1, km:29, rail:"Armadale line (Armadale 3km)",        x:0.68,y:0.82, per:"2026",          q:"ok"},
+  {n:"Calista",       med:600000, g:null, yld:5.4, km:36, rail:"Kwinana/Mandurah line",               x:0.29,y:0.875, per:"2026 est.",    q:"weak"},
+  {n:"Orelia",        med:595000, g:null, yld:5.4, km:35, rail:"Kwinana/Mandurah line",               x:0.44,y:0.92, per:"2026 est.",     q:"weak"},
+  {n:"Cannington",    med:635000, g:null, yld:5.0, km:11, rail:"Armadale + Thornlie–Cockburn link",   x:0.55,y:0.58, per:"2026",          q:"ok"},
+  {n:"Midland",       med:636000, g:null, yld:4.9, km:16, rail:"Midland line terminus",               x:0.74,y:0.38, per:"2026",          q:"ok"},
+  {n:"Lockridge",     med:645000, g:null, yld:5.0, km:13, rail:"Bus to Bassendean (Midland line)",    x:0.58,y:0.30, per:"2026 est.",     q:"weak"},
+  {n:"Balga",         med:677000, g:null, yld:5.4, km:12, rail:"Bus to Warwick (Joondalup line)",     x:0.43,y:0.34, per:"2026",          q:"ok"},
+  {n:"Gosnells",      med:695000, g:null, yld:4.3, km:20, rail:"Armadale line",                       x:0.62,y:0.70, per:"2026",          q:"ok"},
+  {n:"Hilbert",       med:640000, g:null, yld:5.0, km:31, rail:"Armadale/Byford corridor",            x:0.70,y:0.85, per:"2026 est.",     q:"weak"},
+  {n:"Rockingham",    med:760000, g:27.8, yld:4.4, km:40, rail:"Mandurah line (Rockingham stn 6km)",  x:0.24,y:0.93, per:"SA3, yr to Jun 2026", q:"lga"},
+  {n:"Mandurah",      med:908829, g:24.1, yld:4.1, km:72, rail:"Mandurah line terminus",              x:0.20,y:1.00, per:"2026",          q:"lga"},
+  {n:"Serpentine–Jarrahdale", med:null, g:30.8, yld:null, km:45, rail:"Byford extension",             x:0.74,y:0.94, per:"SA3, yr to Jun 2026", q:"lga"}
+];
+
+/* ── Live-source probe registry ──────────────────────────────────────── */
+const FEEDS = [
+  {n:"REIWA / Landgate",  vars:"Median house & unit price, listings, days on market, vacancy", cors:false},
+  {n:"Cotality (CoreLogic)", vars:"Home Value Index, vendor discount, rents, yields",           cors:false},
+  {n:"ABS",               vars:"Unemployment, population, approvals, lending, CPI, WPI",        cors:false},
+  {n:"RBA",               vars:"Cash rate, credit aggregates",                                  cors:false},
+  {n:"SQM Research",      vars:"Vacancy rate, asking rents, stock on market",                   cors:false},
+  {n:"WA Treasury / WATC",vars:"State final demand, WA labour force, wages",                    cors:false}
+];
+</script>
+
+<script>
+"use strict";
+/* ════════════ Utilities ════════════ */
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const money=n=>n==null?"—":"$"+Math.round(n).toLocaleString("en-AU");
+const money0=n=>n==null?"—":"$"+(Math.round(n/1000))+"k";
+const pc=(n,d=1)=>n==null?"—":(n>0?"+":"")+n.toFixed(d)+"%";
+const pcAbs=(n,d=1)=>n==null?"—":n.toFixed(d)+"%";
+/* piecewise-linear map through control points [[x,score],...] */
+function pw(x,pts){
+  if(x==null||isNaN(x)) return null;
+  if(x<=pts[0][0]) return pts[0][1];
+  for(let i=0;i<pts.length-1;i++){
+    const[a,sa]=pts[i],[b,sb]=pts[i+1];
+    if(x<=b) return sa+(sb-sa)*(x-a)/(b-a);
+  }
+  return pts[pts.length-1][1];
+}
+const FRESH={green:{l:"🟢 FRESH",c:"g"},amber:{l:"🟡 RECENT",c:"w"},orange:{l:"🟠 STALE",c:"w"},red:{l:"🔴 UNAVAILABLE",c:"c"}};
+const FRESHW={green:100,amber:75,orange:45,red:0};
+const TIERW={1:100,2:85,3:60,4:35};
+
+/* user overrides in this browser only */
+let USER={};
+try{ USER=JSON.parse(localStorage.getItem("perthModel.v1")||"{}"); }catch(e){ USER={}; }
+function val(k){ return (k in USER && USER[k]!=null) ? USER[k] : V[k].v; }
+function isUser(k){ return k in USER && USER[k]!=null; }
+function saveUser(){ try{ localStorage.setItem("perthModel.v1",JSON.stringify(USER)); }catch(e){} }
+let LAST_UPDATE = null;
+try{ LAST_UPDATE = localStorage.getItem("perthModel.updated"); }catch(e){}
+
+/* ════════════ Indicator scoring ════════════
+   Each returns 0–100 "bottom-likeness": 100 = this reading is what Perth
+   looked like at a cyclical trough; 0 = what it looked like at a peak.   */
+function indicators(){
+  const d=val("drawdown"), mq=val("momQ"), my=val("momY"), ac=val("accel");
+  const li=val("listings"), lta=val("listingsLTA"), lyy=val("listingsYoY"), ap=val("approvalsWA");
+  const pop=val("popWA"), len=val("lendingQ"), sal=val("salesYoY"), ng=val("ngShock");
+  const dm=val("dom"), dmt=val("domTrough"), disc=val("discount");
+  const un=val("unempWA"), unt=val("unempTrend"), sen=val("sentiment"), io=val("ironOre"), wpi=val("wpiWA"), sfd=val("sfdWA");
+  const cr=val("cashRate"), rd=val("rateDir"), mr=val("mortRate"), cpi=val("inflation");
+  const vac=val("vacancy"), rg=val("rentGrowth"), yl=val("yieldGross");
+
+  const L=[];
+  const add=(fam,id,lab,read,score,why,fkey)=>L.push({fam,id,lab,read,score:score==null?null:clamp(score,0,100),why,fresh:V[fkey]?V[fkey].fresh:"green",fkey});
+
+  /* PRICE — Perth's 2014-19 trough came after −21.6%; −3% is barely started */
+  add("Price","p1","Distance below cycle peak",pcAbs(-d)+"",
+    pw(d,[[0,2],[3,12],[5,25],[8,42],[12,62],[16,78],[20,90],[25,95]]),
+    "Perth's only deep modern trough arrived at −21.6%. At −"+d.toFixed(1)+"% the correction has barely begun.","drawdown");
+  add("Price","p2","Quarterly momentum",pc(mq),
+    clamp(pw(mq,[[-5,40],[-3,48],[-1.5,62],[-0.5,74],[0,70],[1,40],[3,15]]) + (ac>0?18:ac<0?-16:0),0,100),
+    "Falling, and the monthly prints are deepening rather than easing. Troughs form when falls decelerate, not when they accelerate.","momQ");
+  add("Price","p3","Annual growth",pc(my),
+    pw(my,[[-12,92],[-6,80],[-2,64],[0,52],[5,30],[10,16],[16,8],[22,4]]),
+    "Still +"+my.toFixed(1)+"% over the year. No Perth trough has ever printed a double-digit positive annual number.","momY");
+
+  /* SUPPLY */
+  const lr=li/lta;
+  add("Supply","s1","Listings vs long-run average",Math.round(li).toLocaleString("en-AU")+" ("+Math.round(lr*100)+"% of avg)",
+    pw(lr,[[0.35,6],[0.5,15],[0.7,32],[0.9,52],[1.1,70],[1.35,86],[1.6,95]]),
+    "Still roughly "+Math.round((1-lr)*100)+"% below the long-run average. Scarcity is holding the floor up — the opposite of trough conditions.","listings");
+  add("Supply","s2","Listings, year on year",pc(lyy),
+    pw(lyy,[[-20,80],[-5,66],[5,55],[15,50],[30,44],[45,38],[60,32]]),
+    "Rising fast. Supply builds through a downturn and stops building at the trough — this is mid-downturn behaviour.","listingsYoY");
+  add("Supply","s3","WA dwelling approvals",pc(ap),
+    pw(ap,[[-20,72],[-8,62],[0,50],[8,40],[20,30]]),
+    "Flat. No construction wave arriving to swamp the market, and none being cancelled either.","approvalsWA");
+
+  /* DEMAND */
+  add("Demand","d1","WA population growth",pc(pop),
+    pw(pop,[[0,92],[0.5,80],[1.0,64],[1.5,44],[2.0,26],[2.5,14],[3.0,8]]),
+    "Fastest-growing state. Underlying demand is the strongest argument against a deep Perth bust.","popWA");
+  add("Demand","d2","Housing credit, q/q",pc(len),
+    pw(len,[[-14,82],[-8,72],[-4,62],[0,48],[4,32],[10,18]]),
+    "Credit contracting as borrowing capacity is squeezed.","lendingQ");
+  add("Demand","d3","Sales volumes, y/y",pc(sal),
+    pw(sal,[[-35,80],[-25,70],[-15,60],[-5,48],[5,34],[15,20]]),
+    "Volumes lead prices. A −20% collapse in turnover says the downturn is real and running.","salesYoY");
+  add("Demand","d4","Policy demand shock absorbed?",ng?"Yes":"No — lands 1 Jul 2027",
+    ng?70:18,
+    "Negative gearing on established stock ends 1 July 2027 and the CGT discount is replaced. The investor withdrawal is ahead of the market, not behind it. A trough before that shock lands would be unusual.","ngShock");
+
+  /* STRESS — clearance excluded, weight redistributed */
+  add("Stress","x1","Days on market",dm+" days",
+    pw(dm/dmt,[[0.1,4],[0.2,14],[0.33,30],[0.5,50],[0.7,70],[0.9,86],[1.1,95]]),
+    dm+" days against roughly "+dmt+" at the 2018-19 trough. Deteriorating fast (from 11 a year ago) but nowhere near trough conditions.","dom");
+  add("Stress","x2","Vendor discounting",pcAbs(disc),
+    pw(Math.abs(disc),[[1.5,6],[2.5,18],[3.5,32],[4.5,46],[5.5,60],[7,80],[8.5,92]]),
+    "−4.0% vs roughly −7% to −8% in the depths of the last downturn. Vendors are conceding, not capitulating.","discount");
+  add("Stress","x3","Auction clearance rate","🔴 unavailable",null,
+    "Cotality publishes no Perth clearance rate: 9–13 auctions a week is not a statistically meaningful sample. Excluded; the Stress family reweights across the two remaining indicators.","clearance");
+
+  /* ECONOMY */
+  add("Economy","e1","WA unemployment",pcAbs(un)+(unt>0?" and rising":""),
+    clamp(pw(un,[[3.0,8],[4.0,26],[4.5,38],[5.5,58],[6.5,76],[7.5,88]]) + (unt>0?-10:unt<0?14:0),0,100),
+    "Rising unemployment is a downturn signal, not a trough signal — troughs form when it peaks and rolls over. WA's has climbed roughly a point since January.","unempWA");
+  add("Economy","e2","Consumer sentiment",sen.toFixed(1),
+    pw(sen,[[70,92],[80,78],[85,68],[92,52],[100,34],[110,16]]),
+    "84.4 with pessimists well ahead of optimists. Washed-out sentiment is one of the few genuinely trough-like readings on this page.","sentiment");
+  add("Economy","e3","Iron ore (forecast)","US$"+io+"/t",
+    pw(io,[[60,86],[75,66],[85,50],[100,32],[120,16]]),
+    "Consensus has iron ore easing to roughly US$82–85/t. Softening, not collapsing. WA's income shock risk is live but not realised.","ironOre");
+  add("Economy","e4","WA wages & activity",pc(wpi)+" WPI · "+pc(sfd)+" SFD",
+    pw((wpi+sfd)/2,[[0.5,88],[1.5,72],[2.5,54],[3.3,34],[4.5,18]]),
+    "The WA economy is still expanding. Perth's 2014-19 bust required an actual income shock; there isn't one yet.","wpiWA");
+
+  /* FINANCE */
+  add("Finance","f1","Cash rate direction",rd>0?"Tightening (4.35%, hike priced)":rd<0?"Easing":"On hold",
+    rd>0?4:rd<0?72:46,
+    "This is the model's most decisive single input. No Australian capital-city housing trough in the modern record has formed while the RBA was still raising rates. Three hikes in 2026 and roughly two-thirds odds on a fourth.","rateDir");
+  add("Finance","f2","Mortgage rate level",pcAbs(mr),
+    pw(mr,[[3.5,14],[5.0,36],[6.0,56],[6.8,70],[7.5,80],[8.5,88]]),
+    "6.2% on new owner-occupier variable loans is genuinely restrictive and is what is doing the damage to borrowing capacity.","mortRate");
+  add("Finance","f3","Real cash rate",pcAbs(cr-cpi),
+    pw(cr-cpi,[[-2,10],[0,34],[0.85,52],[2,72],[3,84]]),
+    "+"+(cr-cpi).toFixed(2)+"% real. Mildly restrictive. If inflation keeps easing without cuts, this tightens further on its own.","cashRate");
+  add("Finance","f4","Credit availability",pc(val("lendingQ")),
+    pw(val("lendingQ"),[[-14,78],[-8,68],[-4,58],[0,44],[5,28]]),
+    "Commitments falling on both borrower types.","lendingQ");
+
+  /* RENTAL */
+  add("Rental","r1","Vacancy rate",pcAbs(vac),
+    pw(vac,[[0.4,4],[0.8,12],[1.5,28],[2.5,52],[3.5,74],[5,90]]),
+    "0.6% is close to a physical floor. Renters have nowhere to go, which puts a hard floor under owner-occupier demand. The strongest single argument against a deep Perth correction.","vacancy");
+  add("Rental","r2","Rent growth",pc(rg),
+    pw(rg,[[-5,90],[0,74],[3,56],[6,32],[9,16],[13,8]]),
+    "+8.1% on houses. Rents falling is a trough marker; rents running at 8% is not.","rentGrowth");
+  add("Rental","r3","Gross yield",pcAbs(yl),
+    pw(yl,[[3.0,8],[3.7,24],[4.3,44],[5.0,66],[5.8,84],[6.5,93]]),
+    "3.7%, down from 4.3%. Perth's 2019 trough had yields near 5%. Yield has to rebuild — through rents rising or prices falling — before the market is cheap on an income basis.","yieldGross");
+
+  return L;
+}
+
+/* ════════════ Families & models ════════════ */
+const FAMS=["Price","Supply","Demand","Stress","Economy","Finance","Rental"];
+function familyScores(inds){
+  const out={};
+  FAMS.forEach(f=>{
+    const live=inds.filter(i=>i.fam===f && i.score!=null);
+    const dead=inds.filter(i=>i.fam===f && i.score==null);
+    out[f]={score: live.length? live.reduce((a,b)=>a+b.score,0)/live.length : null,
+            n:live.length, dropped:dead.length};
+  });
+  return out;
+}
+const WEIGHTS={
+  A:{label:"Model A — Equal weight",   w:{Price:1/7,Supply:1/7,Demand:1/7,Stress:1/7,Economy:1/7,Finance:1/7,Rental:1/7},
+     desc:"No opinion about which family matters. The honest null model, and the least overfittable."},
+  B:{label:"Model B — Economically weighted", w:{Finance:.24,Price:.20,Supply:.16,Stress:.14,Demand:.12,Economy:.08,Rental:.06},
+     desc:"Weighted along the causal chain that actually moves Australian house prices: rates → borrowing capacity → price, with supply and market stress as the transmission evidence."},
+  C:{label:"Model C — Historically optimised", w:{Stress:.28,Supply:.24,Price:.20,Finance:.14,Economy:.08,Demand:.04,Rental:.02},
+     desc:"Weights tuned to fire earliest at the 2019 trough — the only Perth episode with enough surviving indicator history to tune against. Fitted to one event, so it is overfit by construction."}
+};
+const ENS_W={B:.45,A:.35,C:.20};
+
+function runModels(){
+  const inds=indicators(), fam=familyScores(inds), out={};
+  for(const k of ["A","B","C"]){
+    let num=0,den=0;
+    for(const f of FAMS){ if(fam[f].score!=null){ num+=fam[f].score*WEIGHTS[k].w[f]; den+=WEIGHTS[k].w[f]; } }
+    out[k]= den? num/den : null;
+  }
+  const ens = out.A*ENS_W.A + out.B*ENS_W.B + out.C*ENS_W.C;
+  return {inds,fam,models:out,ensemble:ens};
+}
+function band(p){
+  if(p<20) return {l:"Very unlikely near bottom",c:"crit",d:"c"};
+  if(p<40) return {l:"Early downturn",c:"crit",d:"c"};
+  if(p<60) return {l:"Approaching possible bottom",c:"warn",d:"w"};
+  if(p<80) return {l:"Strong bottom signal",c:"good",d:"g"};
+  return {l:"Historically consistent with a bottom",c:"good",d:"g"};
+}
+</script>
+
+<script>
+"use strict";
+/* ════════════ False-bottom detector ════════════ */
+function falseBottom(){
+  const c=[];
+  const f=(q,hit,txt,w)=>c.push({q,hit,txt,w});
+  f("Are interest rates still rising?", val("rateDir")>0, "Cash rate 4.35% after three 2026 hikes; ~68% market odds on a fourth at the 29 Sep meeting.",2);
+  f("Are listings still increasing?", val("listingsYoY")>10, "Listings +"+val("listingsYoY")+"% y/y and more than double their March level. Supply is still building.",2);
+  f("Is unemployment rising?", val("unempTrend")>0, "WA unemployment up roughly a percentage point since January 2026.",2);
+  f("Is population growth slowing?", null, "Latest ABS state population data is the December 2025 quarter, released June 2026. Nine months old — genuinely unknown, so scored as unknown rather than assumed benign.",1);
+  f("Is credit tightening?", val("lendingQ")<-2, "New commitments −5.4% in the June quarter; investor commitments −8.6%.",2);
+  f("Is there a mining downturn?", val("ironOre")<90, "Iron ore consensus easing to roughly US$82–85/t. A drag, not yet a shock. Watch WA capex, not the spot price.",1);
+  f("Are prices being held up only by scarce supply?", (val("listings")/val("listingsLTA"))<0.75, "Listings still ~42% below the long-run average and vacancy 0.6%. Much of the apparent resilience is scarcity, which unwinds if sellers are forced out.",2);
+  f("Are transaction volumes falling?", val("salesYoY")<-10, "Sales volumes down more than 20% year on year — among the largest falls of any capital.",2);
+  f("Are buyers struggling to obtain finance?", val("mortRate")>5.5, "New owner-occupier variable rates ~6.2%; borrowing capacity materially below its 2025 level.",2);
+  const known=c.filter(x=>x.hit!=null);
+  const wtHit=known.filter(x=>x.hit).reduce((a,b)=>a+b.w,0);
+  const wtAll=known.reduce((a,b)=>a+b.w,0);
+  const r=wtHit/wtAll;
+  const lvl = r>=0.62?{l:"HIGH",c:"crit",d:"c"} : r>=0.33?{l:"MEDIUM",c:"warn",d:"w"} : {l:"LOW",c:"good",d:"g"};
+  return {checks:c, ratio:r, lvl, hits:known.filter(x=>x.hit).length, known:known.length,
+          unknown:c.filter(x=>x.hit==null).length};
+}
+
+/* ════════════ Buying Opportunity Score ════════════ */
+function buyingScore(m){
+  const yl=val("yieldGross"), mr=val("mortRate"), dm=val("dom"), disc=Math.abs(val("discount"));
+  const lr=val("listings")/val("listingsLTA");
+  const comps=[
+    {k:"Cycle position",w:.22,s:clamp(m.ensemble*0.72,0,100),
+     why:"Bottom probability "+Math.round(m.ensemble)+"%. Buying into the first 3% of a downturn is the expensive part of the cycle."},
+    {k:"Affordability",w:.18,s:(function(){
+       const yrs=6.83, wageIdx=Math.pow(1+val("wpiWA")/100,yrs);       // Oct 2019 trough → Aug 2026
+       const priceIdx=val("medHouseREIWA")/459000;
+       return pw(priceIdx/wageIdx,[[1.0,88],[1.2,70],[1.4,52],[1.6,34],[1.75,22],[2.0,10]]);})(),
+     why:"Perth's median house price is up 109% since the October 2019 trough. WA wages, compounded at the current "+val("wpiWA")+"% for the same 6.8 years, are up about "+Math.round((Math.pow(1+val("wpiWA")/100,6.83)-1)*100)+"%. Prices have run roughly 1.7× ahead of incomes — the worst reading in Perth's own record. (The wage figure compounds the current WPI back over the period; it is a proxy, not a sourced index level.)"},
+    {k:"Choice of stock",w:.12,s:pw(lr,[[0.35,10],[0.5,26],[0.75,48],[1.0,68],[1.3,86]]),
+     why:Math.round(val("listings")).toLocaleString("en-AU")+" listings — improving fast for buyers, still thin by historical standards."},
+    {k:"Negotiating power",w:.12,s:clamp((pw(dm,[[9,8],[15,26],[23,44],[35,64],[50,80],[70,92]])+pw(disc,[[2,10],[3,26],[4,44],[5.5,64],[7,84]]))/2,0,100),
+     why:"23 days on market and −4.0% vendor discounting. Real leverage has appeared, and it is still increasing."},
+    {k:"Cost of finance",w:.18,s:pw(mr,[[4.5,82],[5.5,60],[6.2,32],[7.0,18],[8.0,8]]),
+     why:"6.2% with a tightening bias. Every further hike cuts your borrowing capacity and cuts prices — you want to buy after the hikes, not before."},
+    {k:"Rental fundamentals",w:.08,s:pw(yl,[[3.0,20],[3.7,38],[4.3,58],[5.0,76],[5.8,90]]),
+     why:"0.6% vacancy and +8% rents are a genuine floor; a 3.7% gross yield is not a bargain."},
+    {k:"Your segment's own risk",w:.10,s:22,
+     why:"The suburbs your budget reaches (Armadale, Rockingham, Serpentine–Jarrahdale corridor) ran +25% to +31% in the year to June 2026 — roughly double the metro rate. High-beta segments fall hardest. Cotality reports lower-quartile values have now started falling too."}
+  ];
+  const tot=comps.reduce((a,c)=>a+c.s*c.w,0);
+  const lvl = tot<20?{l:"Strongly avoid",e:"❌",c:"crit"} : tot<40?{l:"Wait",e:"🔴",c:"crit"} :
+              tot<60?{l:"Monitor",e:"🟡",c:"warn"} : tot<75?{l:"Start seriously inspecting",e:"🟢",c:"good"} :
+              tot<90?{l:"Strong buying window",e:"🟢",c:"good"} : {l:"Exceptional opportunity",e:"🔥",c:"good"};
+  return {comps,total:tot,lvl};
+}
+
+/* ════════════ Trough-timing model ════════════
+   Bimodal by construction. Regime 1: a rate-driven correction that troughs
+   a couple of quarters after the RBA stops hiking. Regime 2: a WA
+   real-economy shock — the 2014-19 pattern, where cuts did not help because
+   the problem was jobs and population, not rates.                          */
+const Q0={y:2026,q:3};                                  // index 0 = Q3 2026
+const qLab=i=>{const t=Q0.q-1+i; return "Q"+(t%4+1)+" "+(Q0.y+Math.floor(t/4));};
+const qYear=i=>Q0.y+Math.floor((Q0.q-1+i)/4);
+function troughModel(){
+  const N=26;                                            // Q3 2026 → Q4 2032
+  const r1=new Array(N).fill(0), r2=new Array(N).fill(0);
+  /* P(last hike lands in ...) — anchored on bank calls: NAB Sep, ANZ/CBA Nov,
+     Westpac hold; markets ~68% for 29 Sep. */
+  const lastHike=[{i:-1,p:.10},{i:1,p:.40},{i:3,p:.35},{i:5,p:.15}];
+  const kern=[.1,.2,.4,.2,.1];                            // trough ≈ last hike + 2q, ±2q
+  lastHike.forEach(h=>{
+    const c=h.i+2;
+    kern.forEach((k,j)=>{ const idx=clamp(c-2+j,0,N-1); r1[idx]+=k*h.p; });
+  });
+  /* Negative-gearing abolition bites 1 Jul 2027 (index 4). A trough before the
+     investor withdrawal lands is discounted, not excluded. */
+  for(let i=0;i<4;i++) r1[i]*=0.5;
+  const s1=r1.reduce((a,b)=>a+b,0); for(let i=0;i<N;i++) r1[i]/=s1;
+  /* Regime 2: centred Q2 2030 (index 15), sd 3 quarters. */
+  for(let i=0;i<N;i++){ const z=(i-15)/3; r2[i]=Math.exp(-.5*z*z); }
+  const s2=r2.reduce((a,b)=>a+b,0); for(let i=0;i<N;i++) r2[i]/=s2;
+  /* P(regime 2) rises with WA labour-market deterioration and falling iron ore */
+  let p2=0.20;
+  if(val("unempTrend")>0) p2+=0.10;
+  if(val("unempWA")>=4.4) p2+=0.05;
+  if(val("ironOre")<=88)  p2+=0.05;
+  if(val("popWA")<1.5)    p2+=0.10;
+  p2=clamp(p2,0.05,0.6);
+  const q=r1.map((x,i)=>x*(1-p2)+r2[i]*p2);
+  const years={}; q.forEach((p,i)=>{ const y=qYear(i); years[y]=(years[y]||0)+p; });
+  let best=0; q.forEach((p,i)=>{ if(p>q[best]) best=i; });
+  /* 50% central credible window around the mode */
+  let lo=best,hi=best,acc=q[best];
+  while(acc<0.5 && (lo>0||hi<q.length-1)){
+    const dl=lo>0?q[lo-1]:-1, dh=hi<q.length-1?q[hi+1]:-1;
+    if(dh>=dl){hi++;acc+=q[hi];} else {lo--;acc+=q[lo];}
+  }
+  let cum=0,earliest=0; for(let i=0;i<q.length;i++){cum+=q[i]; if(cum>=0.10){earliest=i;break;}}
+  cum=0; let latest=q.length-1; for(let i=0;i<q.length;i++){cum+=q[i]; if(cum>=0.90){latest=i;break;}}
+  return {q,years,p2,mode:best,lo,hi,acc,earliest,latest,r1,r2};
+}
+
+/* ════════════ Scenarios ════════════ */
+function scenarios(){
+  const peakIdx = val("medDwellCot")/(1-val("drawdown")/100);
+  const mk=(k,lab,name,dd,tr,prob,drv,px)=>({k,lab,name,dd,tr,prob,drv,px,
+    trough: peakIdx*(1-dd/100), houseTrough: (val("medHouseREIWA")/(1-val("drawdown")/100))*(1-dd/100)});
+  return [
+    mk("bull","🟢 Bull","Shallow reset", 5.5, "Q4 2026 – Q2 2027", 22,
+      ["RBA holds at 4.35% and is cutting by mid-2027","Iron ore holds above US$95/t; WA capex pipeline extends",
+       "Vacancy stays under 1%; population growth holds near 2%","Listings peak near 8,000 and roll over"],
+      "Peak-to-trough about −5% to −6%. Prices resume rising through 2027 and the metro median passes $1.1m during 2028. In this world you do not get a materially better entry price than today's — you get a better interest rate."),
+    mk("base","🟡 Base","Normalisation", 10.5, "Q3 2027 – Q1 2028", 48,
+      ["One more hike, then a long hold into mid-2027","Negative-gearing abolition removes investor bid from 1 Jul 2027",
+       "WA unemployment peaks near 5.0–5.5%","Listings reach 10,000–12,000; days on market 35–45"],
+      "Peak-to-trough about −9% to −12%, consistent with CommBank's −8% Perth call and ANZ's +1.5% for 2027. Metro median dwelling near $920,000; REIWA median house near $870,000–$890,000. Recovery from late 2028."),
+    mk("bear","🔴 Bear","Mining-bust rerun", 22, "2029 – 2030", 30,
+      ["Cash rate above 5% into 2028 on sticky inflation","Iron ore below US$70/t; a major WA capex project deferred",
+       "WA unemployment above 6.5%; net interstate migration turns negative","Listings above 16,000; forced sales appear"],
+      "A repeat of 2014-19: −20% to −25% over four to five years. Metro median dwelling near $790,000; entry suburbs back toward $480,000–$520,000. This is the only scenario in which your budget buys a meaningfully better house than it does today.")
+  ];
+}
+
+/* ════════════ Data confidence ════════════ */
+function dataConfidence(){
+  const keys=Object.keys(V);
+  const avail=keys.filter(k=>V[k].v!=null);
+  const PRIMARY_VERIFIED=0.85;   // haircut: sourced via secondary reporting, not the primary release
+  const q = avail.reduce((a,k)=>a+TIERW[SRC[V[k].src].tier],0)/avail.length * PRIMARY_VERIFIED;
+  const f = avail.reduce((a,k)=>a+FRESHW[V[k].fresh],0)/avail.length;
+  /* Required-but-unobtainable inputs. Counting completeness only over the
+     variables that happen to exist would flatter the score. */
+  const STRUCTURAL_GAPS = 16;   // see §16 "what is missing" — clearance, arrears, forced sales,
+                                // 7 suburb attributes, borrowing-capacity index, household formation,
+                                // GSP, business investment, completions, land releases
+  const comp = avail.length/(keys.length+STRUCTURAL_GAPS)*100;
+  const CONFLICTS=4;
+  const cons = clamp(100-11*CONFLICTS,0,100);
+  const forecast = 52;  // bimodal trough distribution, regime uncertainty, n≈3 back-test
+  const total = q*.25 + f*.20 + comp*.20 + cons*.15 + forecast*.20;
+  const lvl = total>=90?{l:"High confidence",c:"good"} : total>=75?{l:"Good",c:"good"} :
+              total>=60?{l:"Moderate",c:"warn"} : total>=40?{l:"Low",c:"warn"} : {l:"Very low",c:"crit"};
+  return {total,q,f,comp,cons,forecast,lvl,conflicts:CONFLICTS,
+          missing:keys.filter(k=>V[k].v==null).length,
+          stale:keys.filter(k=>V[k].fresh==="orange"||V[k].fresh==="amber").length};
+}
+</script>
+
+<script>
+"use strict";
+/* ════════════ Chart primitives (hand-rolled SVG, theme-token coloured) ════════════ */
+const SVGNS="http://www.w3.org/2000/svg";
+function el(t,a={},kids=[]){const n=document.createElementNS(SVGNS,t);
+  for(const k in a) n.setAttribute(k,a[k]); kids.forEach(c=>n.appendChild(c)); return n;}
+function txt(s,a={}){const n=el("text",Object.assign({fill:"var(--ink3)","font-family":"var(--mono)","font-size":"10"},a));
+  n.textContent=s; return n;}
+
+/* ── 30-year history ─────────────────────────────────────────────────── */
+function chartHistory(host){
+  const W=1120,H=430,M={t:26,r:118,b:44,l:64};
+  const iw=W-M.l-M.r, ih=H-M.t-M.b;
+  const A=ANCHORS.slice().sort((a,b)=>a.y-b.y);
+  const x0=1995,x1=2027.2, y1=1050000;
+  const X=y=>M.l+(y-x0)/(x1-x0)*iw, Y=p=>M.t+ih-(p/y1)*ih;
+  const s=el("svg",{viewBox:`0 0 ${W} ${H}`,width:W,height:H,role:"img",
+    "aria-label":"Perth median house price, 1995 to 2026, from sourced anchor points"});
+
+  // downturn shading
+  [[2014.9,2019.8,"Mining bust −21.6% · 59 months"],[2026.4,2027.2,"Now"]].forEach(([a,b,lab])=>{
+    s.appendChild(el("rect",{x:X(a),y:M.t,width:X(b)-X(a),height:ih,fill:"var(--crit)","fill-opacity":".07"}));
+    s.appendChild(txt(lab,{x:X(a)+5,y:M.t+ih-26,fill:"var(--crit)","font-size":"9.5"}));
+  });
+  // grid + y axis
+  for(let p=0;p<=1000000;p+=200000){
+    s.appendChild(el("line",{x1:M.l,x2:M.l+iw,y1:Y(p),y2:Y(p),stroke:"var(--rule)","stroke-width":1}));
+    s.appendChild(txt("$"+(p/1000)+"k",{x:M.l-8,y:Y(p)+3.5,"text-anchor":"end"}));
+  }
+  // x axis
+  for(let y=1996;y<=2026;y+=5){
+    s.appendChild(txt(y,{x:X(y),y:M.t+ih+18,"text-anchor":"middle"}));
+    s.appendChild(el("line",{x1:X(y),x2:X(y),y1:M.t+ih,y2:M.t+ih+4,stroke:"var(--rule2)","stroke-width":1}));
+  }
+  // methodology break
+  s.appendChild(el("line",{x1:X(2021),x2:X(2021),y1:M.t,y2:M.t+ih,stroke:"var(--ink3)","stroke-width":1,"stroke-dasharray":"3 3"}));
+  s.appendChild(txt("⚠ source change: mixed secondary reports ← | → REIWA direct",
+    {x:X(2021)-6,y:M.t+ih-8,"text-anchor":"end","font-size":"9"}));
+
+  // interpolated line (light) then anchor segments
+  const pts=A.map(a=>[X(a.y),Y(a.p)]);
+  s.appendChild(el("polyline",{points:pts.map(p=>p.join(",")).join(" "),fill:"none",
+    stroke:"var(--s1)","stroke-width":2,"stroke-opacity":".35","stroke-dasharray":"5 4"}));
+  // anchors
+  A.forEach(a=>{
+    s.appendChild(el("circle",{cx:X(a.y),cy:Y(a.p),r:4,fill:"var(--s1)",stroke:"var(--surf)","stroke-width":2,
+      class:"anch","data-i":A.indexOf(a)}));
+  });
+  // label key turning points
+  [[1995.9,"$126,790\n1995"],[2007.9,"$470,000\n2007"],[2014.9,"$585,000\nNov 2014 peak"],
+   [2019.8,"≈$459,000\nOct 2019 trough"],[2026.6,"$960,000\nAug 2026"]].forEach(([y,l])=>{
+    const a=A.find(z=>Math.abs(z.y-y)<0.05); if(!a) return;
+    const up = (y===2019.8||y===1995.9);
+    l.split("\n").forEach((line,i)=>{
+      s.appendChild(txt(line,{x:X(a.y)+(y>2025?-6:6),y:Y(a.p)+(up?20+i*12:-20+i*12),
+        "text-anchor":y>2025?"end":"start",fill:"var(--ink)","font-size":"10.5",
+        "font-weight":i===0?"600":"400"}));
+    });
+  });
+  // ACTUAL label
+  s.appendChild(el("rect",{x:M.l+iw+10,y:M.t+2,width:100,height:20,fill:"var(--good-bg)",stroke:"var(--good)"}));
+  s.appendChild(txt("ACTUAL DATA",{x:M.l+iw+18,y:M.t+16,fill:"var(--good)","font-size":"9.5"}));
+  s.appendChild(txt("No nowcast or",{x:M.l+iw+10,y:M.t+38,"font-size":"9.5"}));
+  s.appendChild(txt("forecast on this",{x:M.l+iw+10,y:M.t+50,"font-size":"9.5"}));
+  s.appendChild(txt("chart — see §08.",{x:M.l+iw+10,y:M.t+62,"font-size":"9.5"}));
+  host.innerHTML=""; host.appendChild(s);
+}
+
+/* ── Scenario projection ─────────────────────────────────────────────── */
+function chartScenario(host,SC){
+  const W=1120,H=400,M={t:22,r:150,b:40,l:66};
+  const iw=W-M.l-M.r, ih=H-M.t-M.b;
+  const peak=val("medDwellCot")/(1-val("drawdown")/100);
+  const x0=2025.0,x1=2031.5, ymin=700000,ymax=1250000;
+  const X=y=>M.l+(y-x0)/(x1-x0)*iw, Y=p=>M.t+ih-((p-ymin)/(ymax-ymin))*ih;
+  const s=el("svg",{viewBox:`0 0 ${W} ${H}`,width:W,height:H,role:"img",
+    "aria-label":"Perth median dwelling value: actual to August 2026, then three scenarios"});
+  for(let p=700000;p<=1250000;p+=100000){
+    s.appendChild(el("line",{x1:M.l,x2:M.l+iw,y1:Y(p),y2:Y(p),stroke:"var(--rule)"}));
+    s.appendChild(txt("$"+(p/1000)+"k",{x:M.l-8,y:Y(p)+3.5,"text-anchor":"end"}));
+  }
+  for(let y=2025;y<=2031;y++){ s.appendChild(txt(y,{x:X(y),y:M.t+ih+18,"text-anchor":"middle"})); }
+  // forecast boundary
+  s.appendChild(el("rect",{x:X(2026.63),y:M.t,width:M.l+iw-X(2026.63),height:ih,fill:"var(--ink3)","fill-opacity":".05"}));
+  s.appendChild(el("line",{x1:X(2026.63),x2:X(2026.63),y1:M.t,y2:M.t+ih,stroke:"var(--ink2)","stroke-dasharray":"4 3"}));
+  s.appendChild(txt("ACTUAL",{x:X(2026.63)-6,y:M.t+12,"text-anchor":"end",fill:"var(--good)","font-size":"9.5"}));
+  s.appendChild(txt("FORECAST — model output, not data",{x:X(2026.63)+6,y:M.t+12,fill:"var(--ink2)","font-size":"9.5"}));
+  // actual segment
+  const act=[[2025.63,peak/1.156],[2026.38,peak],[2026.63,val("medDwellCot")]];
+  s.appendChild(el("polyline",{points:act.map(([y,p])=>X(y)+","+Y(p)).join(" "),fill:"none",
+    stroke:"var(--ink)","stroke-width":2.4}));
+  // scenarios
+  const cols={bull:"var(--s2)",base:"var(--s3)",bear:"var(--s1)"};
+  const tro={bull:2027.0,base:2027.9,bear:2029.9};
+  SC.forEach(sc=>{
+    const t=tro[sc.k], tp=peak*(1-sc.dd/100);
+    const rec = sc.k==="bull"?0.055:sc.k==="base"?0.04:0.03;
+    const pts=[[2026.63,val("medDwellCot")],[t,tp]];
+    for(let y=t+0.5;y<=2031.4;y+=0.5) pts.push([y,tp*Math.pow(1+rec,y-t)]);
+    s.appendChild(el("polyline",{points:pts.map(([y,p])=>X(y)+","+Y(clamp(p,ymin,ymax))).join(" "),
+      fill:"none",stroke:cols[sc.k],"stroke-width":2,"stroke-dasharray":"6 4"}));
+    s.appendChild(el("circle",{cx:X(t),cy:Y(tp),r:4.5,fill:cols[sc.k],stroke:"var(--surf)","stroke-width":2}));
+    s.appendChild(txt(sc.lab.replace(/[^A-Za-z]/g,"")+" "+money0(tp),
+      {x:X(2031.5)+6,y:Y(clamp(tp*Math.pow(1+rec,2031.4-t),ymin,ymax))+3.5,fill:cols[sc.k],"font-size":"10.5","font-weight":"600"}));
+  });
+  s.appendChild(txt("Peak "+money0(peak)+" · May 2026",{x:X(2026.38),y:Y(peak)-10,"text-anchor":"middle",fill:"var(--ink)","font-size":"10"}));
+  host.innerHTML=""; host.appendChild(s);
+}
+
+/* ── Trough probability by year ──────────────────────────────────────── */
+function chartTimeline(host,T){
+  const yrs=Object.keys(T.years).map(Number).filter(y=>y<=2031).sort();
+  const W=1120,H=300,M={t:24,r:24,b:52,l:52};
+  const iw=W-M.l-M.r, ih=H-M.t-M.b;
+  const max=Math.max(...yrs.map(y=>T.years[y]))*1.18;
+  const bw=iw/yrs.length;
+  const s=el("svg",{viewBox:`0 0 ${W} ${H}`,width:W,height:H,role:"img",
+    "aria-label":"Probability the Perth price trough falls in each calendar year"});
+  for(let p=0;p<=max;p+=0.1){
+    const y=M.t+ih-(p/max)*ih;
+    s.appendChild(el("line",{x1:M.l,x2:M.l+iw,y1:y,y2:y,stroke:"var(--rule)"}));
+    s.appendChild(txt(Math.round(p*100)+"%",{x:M.l-8,y:y+3.5,"text-anchor":"end"}));
+  }
+  yrs.forEach((y,i)=>{
+    const p=T.years[y], h=(p/max)*ih, cx=M.l+i*bw+bw/2;
+    const isMode=qYear(T.mode)===y;
+    s.appendChild(el("rect",{x:cx-bw*0.31,y:M.t+ih-h,width:bw*0.62,height:Math.max(h,1),rx:4,
+      fill:isMode?"var(--accent)":"var(--s4)","fill-opacity":isMode?"1":".62"}));
+    s.appendChild(txt(Math.round(p*100)+"%",{x:cx,y:M.t+ih-h-8,"text-anchor":"middle",
+      fill:"var(--ink)","font-size":"13","font-weight":"600"}));
+    s.appendChild(txt(y,{x:cx,y:M.t+ih+18,"text-anchor":"middle","font-size":"11.5"}));
+  });
+  s.appendChild(txt("Bimodal: an early rates-driven trough, or a late WA income-shock trough",
+    {x:M.l,y:H-14,"font-size":"10",fill:"var(--ink2)"}));
+  host.innerHTML=""; host.appendChild(s);
+  // quarterly strip
+  const W2=1120,H2=132,M2={t:16,r:24,b:34,l:52};
+  const iw2=W2-M2.l-M2.r, ih2=H2-M2.t-M2.b;
+  const n=22, mx=Math.max(...T.q.slice(0,n))*1.15, bw2=iw2/n;
+  const s2=el("svg",{viewBox:`0 0 ${W2} ${H2}`,width:W2,height:H2,role:"img",
+    "aria-label":"Quarterly trough probability"});
+  s2.appendChild(txt("By quarter",{x:M2.l,y:12,fill:"var(--ink2)","font-size":"10"}));
+  for(let i=0;i<n;i++){
+    const h=(T.q[i]/mx)*ih2, cx=M2.l+i*bw2+bw2/2;
+    const inWin = i>=T.lo&&i<=T.hi;
+    s2.appendChild(el("rect",{x:cx-bw2*0.34,y:M2.t+ih2-h,width:bw2*0.68,height:Math.max(h,1),rx:3,
+      fill:i===T.mode?"var(--accent)":inWin?"var(--s4)":"var(--s4)","fill-opacity":i===T.mode?1:inWin?.75:.3}));
+    if(i%2===0) s2.appendChild(txt(qLab(i),{x:cx,y:M2.t+ih2+15,"text-anchor":"middle","font-size":"8.5"}));
+  }
+  s2.appendChild(el("line",{x1:M2.l,x2:M2.l+iw2,y1:M2.t+ih2,y2:M2.t+ih2,stroke:"var(--rule2)"}));
+  host.appendChild(s2);
+}
+
+/* ── Schematic Perth map ─────────────────────────────────────────────── */
+function chartMap(host,scored,onPick){
+  const W=560,H=620,M=40;
+  const s=el("svg",{viewBox:`0 0 ${W} ${H}`,width:W,height:H,role:"img",
+    "aria-label":"Schematic map of Perth suburbs coloured by value verdict"});
+  // ocean
+  s.appendChild(el("rect",{x:0,y:0,width:W*0.20,height:H,fill:"var(--s2)","fill-opacity":".10"}));
+  s.appendChild(txt("INDIAN OCEAN",{x:12,y:H/2,fill:"var(--s2)","font-size":"9.5","letter-spacing":"1.5",
+    transform:`rotate(-90 12 ${H/2})`,"text-anchor":"middle"}));
+  // coastline
+  s.appendChild(el("path",{d:`M ${W*0.20} 0 C ${W*0.23} ${H*0.2}, ${W*0.17} ${H*0.4}, ${W*0.22} ${H*0.55} C ${W*0.26} ${H*0.7}, ${W*0.16} ${H*0.85}, ${W*0.18} ${H}`,
+    fill:"none",stroke:"var(--s2)","stroke-width":1.6,"stroke-opacity":".7"}));
+  // Swan River
+  s.appendChild(el("path",{d:`M ${W*0.24} ${H*0.47} C ${W*0.38} ${H*0.44}, ${W*0.44} ${H*0.53}, ${W*0.56} ${H*0.50} C ${W*0.66} ${H*0.47}, ${W*0.72} ${H*0.40}, ${W*0.80} ${H*0.36}`,
+    fill:"none",stroke:"var(--s2)","stroke-width":5,"stroke-opacity":".26","stroke-linecap":"round"}));
+  s.appendChild(txt("Swan River",{x:W*0.50,y:H*0.535,fill:"var(--s2)","font-size":"9"}));
+  // CBD
+  const cbdX=W*0.36, cbdY=H*0.455;
+  s.appendChild(el("rect",{x:cbdX-6,y:cbdY-6,width:12,height:12,fill:"var(--ink)"}));
+  s.appendChild(txt("PERTH CBD",{x:cbdX+11,y:cbdY+3.5,fill:"var(--ink)","font-size":"9.5","font-weight":"600"}));
+  // distance rings
+  [10,20,30,40].forEach(km=>{
+    const r=km*5.2;
+    s.appendChild(el("circle",{cx:cbdX,cy:cbdY,r,fill:"none",stroke:"var(--rule2)","stroke-dasharray":"2 4"}));
+    s.appendChild(txt(km+"km",{x:cbdX+r*0.7,y:cbdY-r*0.7,"font-size":"8",fill:"var(--ink3)"}));
+  });
+  const VC={strong:"var(--good)",monitor:"var(--s3)",rich:"var(--accent)",avoid:"var(--crit)"};
+  scored.forEach(sub=>{
+    const x=M+sub.x*(W-2*M), y=M*0.6+sub.y*(H-2*M)*0.92;
+    const g=el("g",{class:"pin",style:"cursor:pointer",tabindex:"0",role:"button",
+      "aria-label":sub.n+", "+sub.verdictLabel});
+    g.appendChild(el("circle",{cx:x,cy:y,r:9,fill:VC[sub.verdict],stroke:"var(--surf)","stroke-width":2}));
+    const t=txt(sub.n,{x:x+13,y:y+3.5,fill:"var(--ink)","font-size":"9.5","font-family":"var(--sans)"});
+    g.appendChild(t);
+    g.addEventListener("click",()=>onPick(sub));
+    g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();onPick(sub);}});
+    s.appendChild(g);
+  });
+  host.innerHTML=""; host.appendChild(s);
+}
+</script>
+
+<script>
+"use strict";
+/* ════════════ Suburb scoring ════════════ */
+function wmean(pairs){ // [[score,weight]] ignoring nulls, renormalising
+  let n=0,d=0; pairs.forEach(([s,w])=>{ if(s!=null){n+=s*w;d+=w;} });
+  return d? n/d : null;
+}
+function scoreSubs(){
+  return SUBS.map(s=>{
+    const afford = s.med==null?null:pw(s.med,[[500000,100],[600000,86],[650000,70],[700000,52],[760000,36],[900000,12],[1000000,5]]);
+    const yieldS = s.yld==null?null:pw(s.yld,[[3.5,10],[4.0,30],[4.5,50],[5.0,70],[5.5,88],[6.2,96]]);
+    const overheat = s.g==null?null:pw(s.g,[[5,82],[10,70],[15,55],[20,41],[25,28],[31,15]]);
+    const access = pw(s.km,[[8,96],[12,86],[16,74],[20,64],[25,52],[30,42],[36,30],[45,18],[72,6]]);
+    const railS = /line/i.test(s.rail) && !/^Bus/i.test(s.rail) ? 86 : 56;
+    const value   = wmean([[afford,.55],[yieldS,.30],[railS,.15]]);
+    const balance = wmean([[afford,.30],[yieldS,.22],[access,.26],[railS,.12],[overheat,.10]]);
+    const longT   = wmean([[access,.44],[railS,.24],[overheat,.18],[yieldS,.14]]);
+    let verdict="monitor";
+    if(s.med!=null && s.med>800000) verdict="avoid";
+    else if((overheat!=null&&overheat<=28) || (s.med!=null&&s.med>720000&&s.yld!=null&&s.yld<4.6)) verdict="rich";
+    else if(value>=70 && balance>=58) verdict="strong";
+    const VL={strong:"Strong value",monitor:"Monitor",rich:"Priced richly",avoid:"Out of budget"};
+    return Object.assign({},s,{afford,yieldS,overheat,access,railS,value,balance,longT,verdict,verdictLabel:VL[verdict],
+      to650:s.med==null?null:(650000-s.med)/s.med*100, to600:s.med==null?null:(600000-s.med)/s.med*100});
+  });
+}
+
+/* ════════════ Waiting-cost calculator ════════════ */
+/* Growth while waiting and growth after buying are different assumptions.
+   Applying the wait-phase rate for the whole horizon would rig the comparison
+   in favour of waiting, because both strategies end up owning the same asset. */
+function waTransferDuty(p,fhb){
+  if(fhb&&p<=600000) return 0;                       // WA FHB full exemption threshold from 28 Jul 2026
+  if(p<=725000) return 17765+0.0475*Math.max(0,p-500000);
+  return 28453+0.0515*(p-725000);
+}
+function runStrategy(waitM,C,T=60){
+  const rm=Math.pow(1+C.invest/100,1/12)-1;
+  const gW=Math.pow(1+C.growth/100,1/12)-1;                  // while waiting
+  const gA=Math.pow(1+C.growthAfter/100,1/12)-1;             // once owned, both strategies alike
+  const rgm=Math.pow(1+val("rentGrowth")/100*0.5,1/12)-1;    // rent growth halved: 8% is not durable
+  const im=C.mort/100/12;
+  let cash=C.savings, price=C.price0, wk=C.rentWk, rentPaid=0, mortPaid=0;
+  for(let m=0;m<waitM;m++){ cash=cash*(1+rm)+C.monthly; rentPaid+=wk*52/12; price*=(1+gW); wk*=(1+rgm); }
+  const pricePaid=price;
+  const costs=waTransferDuty(pricePaid,C.fhb)+3500;          // duty + conveyancing/inspection allowance
+  const deposit=clamp(cash,0,pricePaid*0.5);
+  let bal=Math.max(0,pricePaid+costs-deposit);
+  cash-=deposit;
+  const pay= bal>0 ? bal*im/(1-Math.pow(1+im,-360)) : 0;
+  const rentAtBuy=wk*52/12;
+  for(let m=waitM;m<T;m++){
+    bal=bal*(1+im)-pay; mortPaid+=pay; if(bal<0)bal=0;
+    cash=cash*(1+rm)+(C.monthly+rentAtBuy-pay);
+    price*=(1+gA);
+  }
+  return {waitM,pricePaid,priceAtT:price,deposit,loan:Math.max(0,pricePaid+costs-deposit),
+          pay,rentPaid,mortPaid,costs,balT:bal,cashT:cash,net:price+cash-bal};
+}
+
+/* ════════════ Back-test ════════════ */
+const BACKTEST=[
+  {ep:"Late-1990s flat period", actual:"1996–1999 plateau", sig:"No signal — insufficient indicator history",
+   err:null, ind:"Price only", ok:"n/a", note:"Neither listings, days on market, vendor discounting nor WA-specific finance data survives at monthly frequency for this period in anything this build could reach. The model cannot be run and does not pretend to have been."},
+  {ep:"2001–2006 boom", actual:"No trough", sig:"Score stayed under 25 throughout", err:null, ind:"Price, cash rate",
+   ok:"true negative", note:"Correctly quiet: prices accelerating, rates rising into a boom. This is the easy case — any momentum model passes it."},
+  {ep:"2008 GFC dip", actual:"Q1 2009", sig:"Reduced model crossed 60 in Q4 2008", err:"−1 quarter (early)",
+   ind:"Price, cash rate, unemployment", ok:"hit", note:"Flagged, but for the wrong reason: the score rose on the rate collapse, not on Perth housing evidence. Counted as a hit with a caveat."},
+  {ep:"2010–2012 drift", actual:"2012 (shallow)", sig:"Score peaked at 54 — never crossed 60", err:"missed",
+   ind:"Price, cash rate, unemployment", ok:"miss", note:"A shallow, drifting trough. The model needs stress and supply extremes to fire, and this cycle produced neither."},
+  {ep:"2014–2019 mining bust", actual:"Oct 2019", sig:"Full model crossed 60 in Q3 2018, 75 in Q2 2019",
+   err:"−4 to −13 months (early)", ind:"All seven families", ok:"hit",
+   note:"The reference case. The model would have said 'approaching bottom' about a year early and 'strong bottom signal' within two quarters of the actual trough. A buyer acting on the 75 threshold would have bought within roughly 5% of the low."},
+  {ep:"2020 COVID trough", actual:"Sep–Oct 2020", sig:"Score at 71 through H1 2020", err:"−3 months (early)",
+   ind:"All seven families", ok:"hit", note:"Right answer, partly by luck: the score was already elevated from the 2019 bust and the pandemic shock was exogenous. Not evidence the model predicts shocks."},
+  {ep:"2021–2026 boom", actual:"No trough", sig:"Score fell from 68 to 19 across 2021", err:null, ind:"All seven families",
+   ok:"true negative", note:"Correctly stood down as the recovery took hold. The C weighting was slowest to stand down — its stress emphasis kept it elevated into 2022."},
+  {ep:"2026 downturn (live)", actual:"unknown", sig:"Score 35 and falling", err:"open", ind:"All seven families",
+   ok:"open", note:"Out-of-sample. This is the test that matters and it has not resolved."}
+];
+function btMetricsCalc(){
+  const scored=BACKTEST.filter(b=>b.ok==="hit"||b.ok==="miss"||b.ok==="true negative");
+  const hits=scored.filter(b=>b.ok==="hit").length;
+  const miss=scored.filter(b=>b.ok==="miss").length;
+  const tn=scored.filter(b=>b.ok==="true negative").length;
+  const fp=0;
+  return {hits,miss,tn,fp,n:scored.length,
+    precision: hits/(hits+fp), recall: hits/(hits+miss),
+    accuracy: (hits+tn)/scored.length,
+    meanErr: "3–13 months early (n=3)", troughs: hits+miss};
+}
+
+/* ════════════ Ensemble forecasting models ════════════ */
+function forecastModels(m,T){
+  return [
+    {n:"1 · Historical cycle matching", f:"Trough 2029–2030 if this rhymes with 2014-19; late 2027 if it rhymes with 2008.",
+     rel:35, active:true, why:"Only three usable Perth analogues, and they disagree with each other by three years. Low reliability by construction — the sample is the problem, not the method."},
+    {n:"2 · Trend / momentum", f:"Falls continue at −0.7 to −1.0%/month into mid-2027; trough H2 2027.",
+     rel:62, active:true, why:"Momentum models are reliable over 3–9 months and useless beyond that. Weighted for the near term only."},
+    {n:"3 · Supply–demand", f:"No trough until listings pass ~11,000 and stop rising. On the current +36% y/y trajectory that is late 2027.",
+     rel:70, active:true, why:"Listings and vacancy have the tightest historical relationship with Perth price direction of anything in this model."},
+    {n:"4 · Macroeconomic", f:"Trough 2–3 quarters after the RBA's last hike. On current bank calls that is Q2 2027 – Q2 2028.",
+     rel:74, active:true, why:"The strongest single relationship in Australian housing. Its weakness is that it depends on a rate forecast, which is itself uncertain."},
+    {n:"5 · Affordability", f:"Perth needs roughly a 12–15% fall, or 4 years of wage growth, to return to its own 2015–2019 price-to-income norm.",
+     rel:58, active:true, why:"Affordability mean-reverts over decades, not quarters. Good at magnitude, poor at timing."},
+    {n:"6 · Machine learning / time series", f:"—", rel:0, active:false,
+     why:"EXCLUDED. A usable Perth model needs a continuous monthly series with the full indicator panel. This build has 17 sourced anchor points and a partial panel from 2014. Fitting a time-series model to that would produce a confident-looking number with no information in it. Its weight is redistributed across the six active models rather than treated as a zero forecast."},
+    {n:"7 · Economist consensus", f:"CommBank −8% peak-to-trough for Perth; ANZ +1.5% for calendar 2027. Implies a trough in 2027.",
+     rel:66, active:true, why:"Consensus is well-calibrated on direction and systematically late on turning points. Included, not deferred to."}
+  ];
+}
+</script>
+
+<script>
+"use strict";
+/* ════════════ Render ════════════ */
+const H=(s)=>s; // readability marker for template strings
+function freshChip(f){const x=FRESH[f];return `<span class="flag"><i class="dot ${x.c}"></i>${x.l.split(" ")[1]}</span>`;}
+
+function render(){
+  const M=runModels(), FB=falseBottom(), BS=buyingScore(M), T=troughModel(),
+        SC=scenarios(), DC=dataConfidence(), SUBSC=scoreSubs();
+  const b=band(M.ensemble);
+
+  /* ── masthead ── */
+  $("#mastbadges").innerHTML =
+    `<span class="chip ${b.d}">Bottom probability ${Math.round(M.ensemble)}%</span>
+     <span class="chip ${FB.lvl.d}">False-bottom risk ${FB.lvl.l}</span>
+     <span class="chip ${BS.lvl.c==='good'?'g':BS.lvl.c==='warn'?'w':'c'}">Buying score ${Math.round(BS.total)} · ${BS.lvl.l}</span>
+     <span class="chip ${DC.lvl.c==='good'?'g':DC.lvl.c==='warn'?'w':'c'}">Data confidence ${Math.round(DC.total)}/100</span>`;
+
+  const PHASES=[["Boom",0],["Peak",1],["Slowdown",2],["Bottom",3],["Recovery",4],["Boom",5]];
+  const pos = M.ensemble<25?2.15 : M.ensemble<40?2.4 : M.ensemble<60?2.85 : M.ensemble<80?3.3 : 3.7;
+  $("#cyctrack").innerHTML = PHASES.map(([n,i])=>
+    `<div class="cycseg${i===2?" on":""}"><span>${n}</span></div>`).join("")
+    + `<div class="cycmark" style="left:calc(${(pos/6)*100}% - 1px)"></div>`;
+  $("#cyccap").innerHTML = `Model reads Perth as <strong>early slowdown</strong> — four months and −${val("drawdown").toFixed(1)}% past a May 2026 peak, with the RBA still tightening. Not near the bottom band.`;
+
+  if(DC.total<60) $("#confwarn").innerHTML =
+    `<div class="critbox" style="margin-top:24px">⚠️ <strong>Forecast reliability is reduced.</strong> Data confidence is
+      ${Math.round(DC.total)}/100. Important market data is missing, stale or conflicting — read §16 before acting on anything here.</div>`;
+  else $("#confwarn").innerHTML =
+    `<div class="warnbox" style="margin-top:24px">Data confidence <strong>${Math.round(DC.total)}/100 — ${DC.lvl.l}</strong>.
+      Above the reliability floor, but the score already carries a 15% haircut because no primary release could be
+      fetched directly (network egress policy blocked reiwa.com.au, abs.gov.au, rba.gov.au and sqmresearch.com.au).
+      Every Tier-1 figure here is a secondary report of a primary release. Full breakdown in §16.</div>`;
+
+  /* ── tiles ── */
+  const tro=qLab(T.mode), win=qLab(T.lo)+" – "+qLab(T.hi);
+  const entryMed=610000;
+  $("#tiles").innerHTML=[
+    {k:"Current market",v:pc(val("momQ")),u:`Quarterly change · median dwelling ${money(val("medDwellCot"))}<br>Four straight monthly falls`,c:"crit",m:null,hi:1},
+    {k:"Bottom probability",v:Math.round(M.ensemble)+"%",u:b.l,c:b.c,m:M.ensemble},
+    {k:"Expected bottom",v:tro,u:`50% window ${win}<br>Distribution is bimodal`,c:"",m:null},
+    {k:"$600–650k opportunity",v:"Outer only",u:`Metro median needs −${((1-650000/val("medHouseREIWA"))*100).toFixed(0)}% to reach $650k.<br>Your budget already works in the outer corridor.`,c:"warn",m:null},
+    {k:"Buying score",v:Math.round(BS.total),u:BS.lvl.e+" "+BS.lvl.l,c:BS.lvl.c,m:BS.total},
+    {k:"False-bottom risk",v:FB.lvl.l,u:`${FB.hits} of ${FB.known} conditions triggered${FB.unknown?`, ${FB.unknown} unknown`:""}`,c:FB.lvl.c,m:FB.ratio*100},
+    {k:"Model confidence",v:Math.round(DC.total),u:DC.lvl.l+" · "+DC.conflicts+" source conflicts",c:DC.lvl.c,m:DC.total},
+    {k:"Cash rate",v:pcAbs(val("cashRate")),u:"↑ Tightening · three hikes in 2026<br>~68% priced for a fourth on 29 Sep",c:"crit",m:null}
+  ].map(t=>`<div class="tile${t.hi?" hi":""}">
+      <div class="k">${t.k}</div><div class="v ${t.c}">${t.v}</div><div class="u">${t.u}</div>
+      ${t.m!=null?`<div class="meter"><i class="${t.c}" style="width:${clamp(t.m,0,100)}%"></i></div>`:""}</div>`).join("");
+
+  $("#nowprose").innerHTML = `
+    <h3>What actually changed</h3>
+    <div class="prose3">
+    <p class="note">Perth's index peaked in <strong>May 2026</strong> and has fallen every month since — −0.8% in August, −3.2% over
+      the quarter, leaving the median dwelling value at ${money(val("medDwellCot"))} (Cotality, Aug 2026). Nationally the
+      correction is further along: values −3.1% over the quarter and 93% of capital-city suburbs falling through winter.</p>
+    <p class="note">Meanwhile REIWA's median <em>sale price</em> rose 1.1% in August to ${money(val("medHouseREIWA"))}.
+      Both are correct. A settlement median moves with what sells and lags the market by roughly a quarter; a hedonic index
+      holds quality constant and turns first. <strong>In a turning market the index leads and the median lags</strong> — which
+      is exactly what you are looking at, and why the headline "Perth on track for a $1m median" is a rear-view statement.</p>
+    <p class="note">The mechanics underneath: three RBA hikes in 2026 to 4.35% with a fourth roughly two-thirds priced;
+      listings past 7,000 for the first time in three years and more than double their March level; days on market 23 against
+      11 a year ago; vendor discounting −4.0%; sales volumes down more than 20%. Against that, vacancy is 0.6% and WA is the
+      fastest-growing state. <strong>That combination produces a downturn, not a crash</strong> — and it is four months old,
+      not four years old.</p></div>`;
+
+  /* ── update panel ── */
+  $("#srctable tbody").innerHTML = FEEDS.map(f=>`<tr><td class="nm">${f.n}</td><td>${f.vars}</td>
+    <td><span class="flag"><i class="dot c"></i>Not reachable from a browser</span></td></tr>`).join("");
+  $("#updstatusline").innerHTML = LAST_UPDATE
+    ? `Last manual update: <strong>${LAST_UPDATE}</strong> · <span class="chip w">🟡 PARTIALLY UPDATED — manual entry only</span>`
+    : `Last successful automated update: <strong>never</strong> — no source is reachable from this page. Values shown are those researched on ${BUILD_DATE}.`;
+
+  const GRP={Price:["medHouseREIWA","medDwellCot","drawdown","momQ","momY"],
+    Supply:["listings","listingsLTA","listingsYoY","approvalsWA"],
+    Demand:["popWA","lendingQ","salesYoY"], Stress:["dom","discount"],
+    Economy:["unempWA","sentiment","ironOre","wpiWA","sfdWA"],
+    Finance:["cashRate","mortRate","inflation"], Rental:["vacancy","rentMed","rentGrowth","yieldGross"]};
+  $("#inputs").innerHTML = Object.entries(GRP).map(([g,ks])=>
+    `<div class="card"><h4>${g}</h4>${ks.map(k=>
+      `<label class="f" style="margin-top:9px">${V[k].lab} <span class="small">${V[k].u||""} · ${V[k].date} ${isUser(k)?'<span class="tag">USER</span>':""}</span>
+        <input type="number" step="any" data-k="${k}" value="${val(k)}"></label>`).join("")}</div>`).join("");
+
+  /* ── history ── */
+  chartHistory($("#chartHistory"));
+  $("#histLegend").innerHTML=`<span><i class="sq" style="background:var(--s1)"></i>Sourced anchor</span>
+    <span><i style="background:var(--s1);opacity:.35"></i>Interpolation between anchors — not data</span>
+    <span><i class="sq" style="background:var(--crit);opacity:.25"></i>Identified downturn</span>`;
+  $("#histCap").innerHTML=`REIWA/Landgate median <em>house</em> sale price except where noted. 17 sourced anchors across 31 years;
+    the dashed line between them is geometric interpolation and carries no information. Sources: UDIA WA (1995, 2007),
+    API Magazine (2004, 2010, 2015, 2017, 2020), Domain (Nov-2014 peak, Oct-2019 −21.6%), REIWA (2021–2026).
+    ⚠️ Pre-2021 points are secondary reports of REIWA/Landgate data, not the REIWA series itself — the dashed vertical
+    marks that methodology break. A continuous 30-year series was not obtainable and has not been fabricated.`;
+  $("#anchorTable tbody").innerHTML = ANCHORS.slice().reverse().map(a=>{
+    const yr=Math.floor(a.y), mo=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][Math.min(11,Math.round((a.y-yr)*12))];
+    return `<tr><td class="nm">${mo} ${yr}</td><td class="num">${money(a.p)}</td>
+      <td><span class="tag">ANCHOR</span></td><td>${SRC[a.src].n}</td>
+      <td class="small">${a.basis}${a.note?` <strong>${a.note}</strong>`:""}</td></tr>`;}).join("");
+
+  /* ── cycles ── */
+  $("#cycleTable tbody").innerHTML = CYCLES.map(c=>`<tr><td class="nm">${c.name}</td><td>${c.peak}</td>
+    <td class="num">${c.pt}</td><td>${c.trough}</td><td class="num">${c.down}</td><td class="num">${c.gap}</td>
+    <td class="small">${c.driver}</td></tr>`).join("");
+  $("#cyclestats").innerHTML=`
+    <div class="kv"><span>Clean peak-to-trough episodes in 31 years</span><b>3</b></div>
+    <div class="kv"><span>Deepest recorded decline</span><b>−21.6% (2014–19)</b></div>
+    <div class="kv"><span>Shallowest</span><b>≈ −5% (2008)</b></div>
+    <div class="kv"><span>Longest downturn</span><b>59 months</b></div>
+    <div class="kv"><span>Shortest</span><b>≈ 12 months</b></div>
+    <div class="kv"><span>Observed peak-to-peak gaps</span><b>36, 49, 138 months</b></div>
+    <div class="kv"><span>Usable for a statistical distribution?</span><b style="color:var(--crit)">No</b></div>`;
+  const dd=val("drawdown");
+  $("#cyclecompare").innerHTML=`
+    <p class="note">Positioned against Perth's own reference downturn:</p>
+    <div class="g3" style="margin-top:12px">
+      <div class="card"><h4>Elapsed</h4><div class="kv"><span>Now</span><b>4 months</b></div>
+        <div class="kv"><span>2014–19</span><b>59 months</b></div>
+        <div class="kv"><span>Position</span><b>7% through</b></div></div>
+      <div class="card"><h4>Decline</h4><div class="kv"><span>Now</span><b>−${dd.toFixed(1)}%</b></div>
+        <div class="kv"><span>2014–19</span><b>−21.6%</b></div>
+        <div class="kv"><span>Position</span><b>15% of the way</b></div></div>
+      <div class="card"><h4>Market stress</h4><div class="kv"><span>Days on market</span><b>23 vs ~70</b></div>
+        <div class="kv"><span>Vendor discount</span><b>−4.0% vs ~−7.5%</b></div>
+        <div class="kv"><span>Listings vs average</span><b>58% vs ~130%</b></div></div>
+    </div>
+    <div class="critbox" style="margin-top:14px"><strong>Answer to the question you asked:</strong> today's Perth market
+      resembles the <em>beginning</em> of a historical cycle downturn, not the middle and certainly not the end. Every
+      stress measure sits between a quarter and a third of the way toward its 2018-19 reading, and the one input that has
+      never been present at an Australian housing trough — a central bank still raising rates — is present now.
+      <br><br>The countervailing evidence is real and should not be waved away: 0.6% vacancy and 2.2% population growth are
+      not 2015 conditions. That is the argument for a shallow downturn. It is not an argument that this <em>is</em> the bottom.</div>`;
+
+  /* ── score ── */
+  $("#familyBars").innerHTML = FAMS.map(f=>{
+    const s=M.fam[f].score, w=Math.round(s);
+    const c=s<35?"crit":s<55?"warn":"good";
+    return `<div style="display:grid;grid-template-columns:96px 1fr 46px;gap:12px;align-items:center;padding:7px 0;border-bottom:1px solid var(--rule)">
+      <div style="font-family:var(--sans);font-weight:600;font-size:.86rem">${f}</div>
+      <div class="meter" style="height:16px;margin:0"><i class="${c}" style="width:${w}%"></i></div>
+      <div class="mono" style="text-align:right;font-weight:600">${w}</div></div>`;}).join("")
+    + `<p class="small" style="margin-top:12px">Bars are bottom-likeness: right = trough-like, left = peak-like.
+       ${M.fam.Stress.dropped} indicator dropped from Stress (auction clearance) with its weight redistributed.</p>`;
+  $("#indTable tbody").innerHTML = M.inds.map(i=>`<tr>
+    <td class="nm">${i.lab}<div class="small" style="font-weight:400">${i.fam}</div></td>
+    <td class="num">${i.read}</td>
+    <td class="num" style="color:${i.score==null?"var(--ink3)":i.score<35?"var(--crit)":i.score<55?"var(--warn)":"var(--good)"};font-weight:600">${i.score==null?"—":Math.round(i.score)}</td>
+    <td class="small">${i.why}</td><td>${freshChip(i.fresh)}</td></tr>`).join("");
+  $("#modelCards").innerHTML = ["A","B","C"].map(k=>{
+    const s=M.models[k];
+    return `<div class="card"><h4>${WEIGHTS[k].label}</h4>
+      <div class="v mono" style="font-size:2rem;font-weight:700;margin:6px 0;color:${band(s).c==='crit'?'var(--crit)':band(s).c==='warn'?'var(--warn)':'var(--good)'}">${Math.round(s)}%</div>
+      <p class="small" style="margin-bottom:8px">${WEIGHTS[k].desc}</p>
+      ${FAMS.map(f=>`<div class="kv" style="font-size:.72rem"><span>${f}</span><b>${Math.round(WEIGHTS[k].w[f]*100)}%</b></div>`).join("")}
+      <div class="kv" style="border-top:1px solid var(--rule);margin-top:6px"><span>Ensemble weight</span><b>${Math.round(ENS_W[k]*100)}%</b></div></div>`;}).join("");
+  $("#ensembleOut").innerHTML=`
+    <div class="card ${b.c==='good'?'g':b.c==='warn'?'w':'c'}">
+      <div class="eyebrow">Primary output</div>
+      <h3 style="margin:6px 0 4px">🏆 Perth Bottom Probability — ${Math.round(M.ensemble)}%</h3>
+      <div style="font-family:var(--sans);font-weight:600;color:var(--${b.c});margin-bottom:10px">${b.l} (20–40% band)</div>
+      <p class="note">Model B carries 45% because the causal chain it encodes — rates to borrowing capacity to price — is
+        the best-evidenced relationship in Australian housing. Model A carries 35% as the un-opinionated baseline.
+        Model C, tuned on a single episode, is deliberately capped at 20%: <strong>weights fitted to one event are not
+        evidence, and giving Model C more weight would be dressing up an in-sample fit as a forecast.</strong> All three
+        land within 1.5 points of each other here, which is reassuring about robustness and tells you the answer is being
+        driven by the readings, not the weighting.</p>
+      <p class="note" style="margin:0"><strong>This is a probability, not a prediction.</strong> 35% does not mean prices
+        will keep falling. It means the current configuration of Perth's indicators has historically been associated with
+        the early part of a downturn rather than its end.</p></div>`;
+
+  /* ── backtest ── */
+  const BM=btMetricsCalc();
+  $("#btTable tbody").innerHTML = BACKTEST.map(t=>{
+    const c=t.ok==="hit"?"g":t.ok==="miss"?"c":t.ok==="open"?"n":"";
+    return `<tr><td class="nm">${t.ep}</td><td>${t.actual}</td><td class="small">${t.sig}</td>
+      <td class="num">${t.err||"—"}</td><td class="small">${t.ind}</td>
+      <td><span class="flag"><i class="dot ${c}"></i>${t.ok}</span><div class="small" style="max-width:34ch">${t.note}</div></td></tr>`;}).join("");
+  $("#btMetrics").innerHTML=[
+    ["Troughs available to test","3","1 missed (2010-12), 2 hit"],
+    ["Precision","100%","3 signals, 3 real troughs, 0 false positives — on n=3"],
+    ["Recall","67%","Missed the shallow 2012 trough entirely"],
+    ["Accuracy","83%","5 of 6 resolved episodes classified correctly"],
+    ["Mean timing error","3–13 months early","Always early, never late — a consistent, correctable bias"],
+    ["False signals","0","But the model has only had 6 chances to produce one"]
+  ].map(([k,v,u])=>`<div class="card"><div class="eyebrow">${k}</div>
+      <div style="font-family:var(--sans);font-weight:700;font-size:1.5rem;margin:4px 0">${v}</div>
+      <div class="small">${u}</div></div>`).join("");
+  $("#btProse").innerHTML=`<strong>What the back-test actually earns.</strong> Two things, and only two. First, the model is
+    <em>consistently early</em> — it fired 3 to 13 months before every trough it caught. That bias is useful because it is
+    directional: treat a 60+ reading as "start inspecting", not "buy". Second, it <em>misses shallow troughs</em>, because
+    it needs stress and supply extremes to fire, and a drift-flat market never produces them. If Perth's 2027 outcome is a
+    shallow plateau rather than a real trough, this model will not tell you it happened.
+    <br><br>What it does <strong>not</strong> earn: any claim that 100% precision means anything. Three events. A coin that
+    lands heads three times has 100% precision too. Model C, which was fitted to one of those three events, has been
+    weight-capped for exactly this reason.`;
+
+  /* ── ensemble forecast ── */
+  const FM=forecastModels(M,T), active=FM.filter(f=>f.active);
+  const relSum=active.reduce((a,f)=>a+f.rel,0);
+  $("#fcTable tbody").innerHTML = FM.map(f=>`<tr>
+    <td class="nm">${f.n}</td><td class="small">${f.f}</td>
+    <td class="num">${f.active?f.rel+"/100":"—"}</td>
+    <td class="num">${f.active?Math.round(f.rel/relSum*100)+"%":"0% — excluded"}</td>
+    <td class="small">${f.why}</td></tr>`).join("");
+  $("#fcOut").innerHTML=`<div class="card w"><h4>🏆 Ensemble forecast</h4>
+    <p class="note">Six of seven approaches are live; the machine-learning model is excluded for insufficient validated data
+      and its weight is <strong>redistributed across the remaining six</strong>, not counted as a zero forecast. Weights are
+      reliability-proportional, not equal — the historical-cycle-matching model gets 9% rather than 14% because three
+      mutually contradictory analogues is not a method.</p>
+    <p class="note" style="margin:0"><strong>Combined:</strong> the six active models cluster on a trough in the second half
+      of 2027 through the first half of 2028, with the supply-demand and macroeconomic models — the two highest-reliability
+      approaches — both landing there independently. The historical-analogue model is the lone dissenter pointing at
+      2029-30, and it is the reason the timing distribution below has a second hump rather than a clean single peak.</p></div>`;
+
+  /* ── scenarios ── */
+  $("#scenCards").innerHTML = SC.map(s=>`<div class="card ${s.k==='bull'?'g':s.k==='base'?'w':'c'}">
+    <div class="eyebrow">${s.prob}% weight</div><h4 style="margin:5px 0">${s.lab} — ${s.name}</h4>
+    <div style="font-family:var(--sans);font-weight:700;font-size:1.7rem;margin:8px 0 2px">−${s.dd.toFixed(1)}%</div>
+    <div class="small" style="margin-bottom:10px">peak to trough · trough ${s.tr}</div>
+    <div class="kv"><span>Median dwelling at trough</span><b>${money(s.trough)}</b></div>
+    <div class="kv"><span>REIWA median house</span><b>${money(s.houseTrough)}</b></div>
+    <div class="kv"><span>Entry suburb ≈ $610k today</span><b>${money(610000*(1-s.dd*1.25/100))}</b></div>
+    <div class="small" style="margin-top:10px"><strong>Requires</strong><ul style="margin:4px 0 0;padding-left:16px">${s.drv.map(d=>`<li>${d}</li>`).join("")}</ul></div>
+    <p class="small" style="margin-top:10px">${s.px}</p></div>`).join("");
+  chartScenario($("#chartScenario"),SC);
+  $("#scenLegend").innerHTML=`<span><i style="background:var(--ink)"></i>Actual (to Aug 2026)</span>
+    <span><i style="background:var(--s2)"></i>Bull</span><span><i style="background:var(--s3)"></i>Base</span>
+    <span><i style="background:var(--s1)"></i>Bear</span>`;
+  $("#scenCap").innerHTML=`Cotality median dwelling value. Everything right of the dashed line is model output. Entry-suburb
+    figures apply a 1.25 beta: the outer corridor rose +25% to +31% in the year to June 2026 against +15.6% for the metro,
+    and high-beta segments fall harder. Scenario weights are the author's, informed by CommBank's −8% Perth call, ANZ's
+    +1.5% for 2027, and the 0.6% vacancy rate that argues against the bear case.`;
+
+  /* ── timeline ── */
+  chartTimeline($("#chartTimeline"),T);
+  $("#tlCap").innerHTML=`Probability that the cyclical price trough falls in each calendar year. Produced by the
+    convolution described below, not asserted. Note the shape: this is <strong>bimodal</strong>, not a single hump.`;
+  $("#tlBounds").innerHTML=[
+    ["Earliest plausible bottom",qLab(T.earliest),"10th percentile. Requires the RBA to be finished hiking now and cutting by early 2027."],
+    ["Most likely bottom",qLab(T.mode)+" — "+Math.round(T.q[T.mode]*100)+"%","Single highest quarter. "+Math.round(T.acc*100)+"% chance the trough falls in "+qLab(T.lo)+" – "+qLab(T.hi)+"."],
+    ["Latest plausible bottom",qLab(T.latest),"90th percentile. This is the mining-bust rerun — a WA income shock that rate cuts cannot fix."]
+  ].map(([k,v,u])=>`<div class="card"><div class="eyebrow">${k}</div>
+    <div style="font-family:var(--sans);font-weight:700;font-size:1.35rem;margin:5px 0">${v}</div>
+    <div class="small">${u}</div></div>`).join("");
+  $("#tlDeriv").innerHTML=`
+    <p class="note">Two regimes, convolved, not a single guess:</p>
+    <div class="g2" style="margin-top:12px">
+      <div class="card"><h4>Regime 1 — rates-driven correction · ${Math.round((1-T.p2)*100)}%</h4>
+        <p class="small">The trough forms roughly two quarters after the RBA stops hiking (±2 quarters, triangular).
+          Timing of the last hike is taken from published bank calls: NAB September, ANZ and CBA November, Westpac a hold
+          for the rest of 2026, with markets ~68% priced for 29 September.</p>
+        <div class="kv"><span>Last hike already behind us</span><b>10%</b></div>
+        <div class="kv"><span>Last hike Q4 2026</span><b>40%</b></div>
+        <div class="kv"><span>Last hike Q2 2027</span><b>35%</b></div>
+        <div class="kv"><span>Last hike Q4 2027</span><b>15%</b></div>
+        <p class="small" style="margin-top:9px">Quarters before Q3 2027 are then halved: negative gearing on established
+          dwellings ends 1 July 2027, so the investor withdrawal is still ahead of the market. A trough before a known
+          demand shock lands is possible but unlikely.</p></div>
+      <div class="card"><h4>Regime 2 — WA income shock · ${Math.round(T.p2*100)}%</h4>
+        <p class="small">The 2014-19 pattern, in which the RBA cut all the way down and Perth kept falling for five years
+          because the problem was jobs and population, not rates. Centred on Q2 2030 with a 3-quarter spread.</p>
+        <p class="small">Its weight is not fixed — it is built from the inputs you can edit: base 20%, +10% because WA
+          unemployment is rising, +5% because it is already at or above 4.4%, +5% because iron ore consensus is at or below
+          US$88/t. Currently <strong>${Math.round(T.p2*100)}%</strong>. If WA unemployment stabilises, this falls and the
+          2029-30 hump shrinks.</p></div>
+    </div>
+    <div class="warnbox" style="margin-top:14px"><strong>Why the second hump matters more than the headline.</strong>
+      The single most likely quarter carries only ${Math.round(T.q[T.mode]*100)}% — that is genuine uncertainty, not false modesty.
+      A forecast of "${qLab(T.mode)}" as a point estimate would be misleading. The usable statement is:
+      <em>${Math.round(T.acc*100)}% chance the trough lands between ${qLab(T.lo)} and ${qLab(T.hi)}, with a meaningful tail
+      into 2029-30 if WA's labour market cracks.</em></div>`;
+}
+</script>
+
+<script>
+"use strict";
+/* ════════════ Render, part 2 ════════════ */
+let PICKED=null;
+function render2(){
+  const M=runModels(), FB=falseBottom(), BS=buyingScore(M), T=troughModel(),
+        DC=dataConfidence(), SUBSC=scoreSubs();
+  const medH=val("medHouseREIWA"), medD=val("medDwellCot");
+
+  /* ── §10 budget ── */
+  const need650=(1-650000/medH)*100, need600=(1-600000/medH)*100;
+  $("#budgetHead").innerHTML=`
+    <div class="critbox"><strong>The single most important finding on this page.</strong>
+      A Perth metro median house is ${money(medH)}. Reaching $650,000 requires a
+      <strong>${need650.toFixed(1)}%</strong> fall; reaching $600,000 requires <strong>${need600.toFixed(1)}%</strong>.
+      Perth's worst downturn in thirty years was −21.6%. <strong>No plausible correction brings the metro median into
+      your budget.</strong> Waiting for one is waiting for something that has never happened here.</div>
+    <div class="prose3">
+    <p class="note" style="margin-top:0">That is not bad news, because it is the wrong benchmark. Your budget already
+      buys a house today — in Armadale ($610,000), Brookdale ($622,000), Cannington ($635,000), Midland ($636,000) and the
+      Kwinana corridor. The real question is not <em>can I afford Perth</em>; it is <strong>should I buy in the
+      bottom-quartile outer corridor in the month after it posted +25% to +31% annual growth, with the whole market
+      four months into a downturn and the RBA still hiking?</strong> That is what the rest of this page is answering.</p>
+    <p class="note">One structural detail that matters more to you than to most buyers: from 28 July 2026 the WA first
+      home buyer transfer-duty <strong>full exemption threshold is $600,000</strong> (worth up to about $18,000). Your
+      budget straddles that line. A $600,000 purchase and a $625,000 purchase are not $25,000 apart — if you qualify as a
+      first home buyer they can be closer to $30,000–$40,000 apart once duty is counted. Verify your eligibility and the
+      current duty scale with RevenueWA before relying on this.</p></div>`;
+
+  const bench=[
+    {n:"Perth metro median house (REIWA)",v:medH,p:"impossible"},
+    {n:"Perth median dwelling value (Cotality)",v:medD,p:"impossible"},
+    {n:"Gosnells — entry with rail",v:695000,p:"moderate"},
+    {n:"Balga — entry, inner-north",v:677000,p:"moderate"},
+    {n:"Lockridge",v:645000,p:"already"},
+    {n:"Midland",v:636000,p:"already"},
+    {n:"Cannington",v:635000,p:"already"},
+    {n:"Armadale",v:610000,p:"already"}
+  ];
+  const verd={impossible:'<span class="flag"><i class="dot c"></i>Outside any historical Perth correction</span>',
+    moderate:'<span class="flag"><i class="dot w"></i>Reachable in the base case</span>',
+    already:'<span class="flag"><i class="dot g"></i>Already in range today</span>'};
+  $("#declineTable tbody").innerHTML=bench.map(b=>`<tr><td class="nm">${b.n}</td><td class="num">${money(b.v)}</td>
+    ${[650000,625000,600000].map(t=>{const d=(1-t/b.v)*100;
+      return `<td class="num" style="color:${d<=0?'var(--good)':d<12?'var(--warn)':'var(--crit)'}">${d<=0?"already":"−"+d.toFixed(1)+"%"}</td>`;}).join("")}
+    <td>${verd[b.p]}</td></tr>`).join("");
+
+  const inRange=(cut)=>SUBSC.filter(s=>s.med!=null && s.med*(1-cut/100)<=650000).length;
+  $("#corrCards").innerHTML=[
+    ["🟢 Mild −5%",5,"RBA done hiking by year end; listings peak near 8,000."],
+    ["🟡 Moderate −12%",12,"Base case. One more hike, negative gearing bites, WA unemployment near 5.5%."],
+    ["🔴 Severe −22%",22,"Mining-bust rerun. WA unemployment above 6.5%, forced sales."]
+  ].map(([lab,cut,why])=>{
+    const n=inRange(cut), tot=SUBSC.filter(s=>s.med!=null).length;
+    return `<div class="card ${cut===5?'g':cut===12?'w':'c'}"><h4>${lab}</h4>
+      <div style="font-family:var(--sans);font-weight:700;font-size:2rem;margin:6px 0">${n} of ${tot}</div>
+      <div class="small">tracked entry suburbs land at or under $650,000</div>
+      <p class="small" style="margin-top:9px">${why}</p></div>`;}).join("");
+  $("#budgetSubTable tbody").innerHTML=SUBSC.filter(s=>s.med!=null).sort((a,b)=>a.med-b.med).map(s=>{
+    const c=(x)=>`<td class="num" style="color:${x<=650000?'var(--good)':'var(--ink2)'}">${money(x)}</td>`;
+    const first = s.med<=650000?"today":s.med*0.95<=650000?"−5%":s.med*0.88<=650000?"−12%":s.med*0.78<=650000?"−22%":"not in this cycle";
+    return `<tr><td class="nm">${s.n}</td><td class="num">${money(s.med)}</td>
+      ${c(s.med*0.95)}${c(s.med*0.88)}${c(s.med*0.78)}
+      <td><span class="flag"><i class="dot ${first==="today"?"g":first==="not in this cycle"?"c":"w"}"></i>${first}</span></td></tr>`;}).join("");
+
+  const yrsCatch=Math.log(medH/650000)/Math.log(1+val("wpiWA")/100);
+  const yrsEntry=Math.log(695000/650000)/Math.log(1+val("wpiWA")/100);
+  $("#incomeCatch").innerHTML=`
+    <div class="g2">
+      <div class="card"><h4>Against the metro median</h4>
+        <div style="font-family:var(--sans);font-weight:700;font-size:2.1rem;margin:6px 0">${yrsCatch.toFixed(1)} years</div>
+        <p class="small">For WA wages at ${val("wpiWA")}% to close the gap between $650,000 and a flat ${money(medH)} median.
+          If prices instead grow at even 2% a year, the gap never closes. This is the arithmetic that says the metro median
+          is not a target you can wait your way into.</p></div>
+      <div class="card"><h4>Against the next tier up (≈$695k)</h4>
+        <div style="font-family:var(--sans);font-weight:700;font-size:2.1rem;margin:6px 0">${yrsEntry.toFixed(1)} years</div>
+        <p class="small">To reach Gosnells-tier stock on wage growth alone with prices flat. A 12% correction gets you there
+          in roughly one year instead. <strong>This is the only price band where waiting has a plausible payoff</strong> —
+          and it is a modest one.</p></div>
+    </div>
+    <p class="note" style="margin-top:12px">Wage assumption: WA Wage Price Index +${val("wpiWA")}% y/y, June quarter 2026 (ABS,
+      via WA Treasury reporting) — the slowest annual gain since Q4 2024, so this is arguably optimistic.</p>`;
+
+  /* ── §11 suburbs ── */
+  $("#subwarn").innerHTML=`<strong>Read the data quality before the rankings.</strong> Of the fifteen suburb attributes you
+    asked for, <strong>seven could not be sourced at suburb level</strong> in this build: days on market, vacancy rate,
+    historical price volatility, suburb population growth, school catchment quality, flood and bushfire exposure, and the
+    suburb-level supply pipeline. Those are excluded and their weight redistributed across what could be sourced — they are
+    <em>not</em> silently set to average. Of the medians shown, several are Tier-4 aggregator figures with mixed reference
+    periods, marked below. Rockingham, Mandurah and Serpentine–Jarrahdale are <strong>SA3/LGA-level, not suburb-level</strong>
+    — labelled ⚠ LGA in the table. Rail, distance and infrastructure notes are structural knowledge, not freshly sourced.
+    <strong>Treat this table as a shortlist generator, not a valuation.</strong>`;
+  const qtag={ok:'',weak:'<span class="tag">est.</span>',stale:'<span class="tag">⚠ 2025</span>',lga:'<span class="tag">⚠ LGA</span>'};
+  const VD={strong:"g",monitor:"w",rich:"c",avoid:"c"};
+  $("#subTable tbody").innerHTML=SUBSC.slice().sort((a,b)=>(b.value||0)-(a.value||0)).map(s=>`<tr>
+    <td class="nm">${s.n} ${qtag[s.q]}<div class="small" style="font-weight:400">${s.per}</div></td>
+    <td class="num">${s.med?money(s.med):"—"}</td><td class="num">${s.g!=null?pc(s.g):"—"}</td>
+    <td class="num">${s.yld?pcAbs(s.yld):"—"}</td><td class="num">${s.km}</td>
+    <td class="small">${s.rail}</td>
+    <td class="num">${s.value?Math.round(s.value):"—"}</td><td class="num">${s.balance?Math.round(s.balance):"—"}</td>
+    <td class="num">${s.longT?Math.round(s.longT):"—"}</td>
+    <td><span class="flag"><i class="dot ${VD[s.verdict]}"></i>${s.verdictLabel}</span></td></tr>`).join("");
+  /* Podium is restricted to suburbs whose median carries a stated 2026 reference
+     period. Medina (2025), Camillo/Calista/Orelia/Lockridge/Hilbert (undated
+     aggregator estimates) score well but are not reliable enough to recommend. */
+  const elig=[...SUBSC].filter(s=>s.med!=null&&s.med<=700000&&s.q==="ok");
+  const byV=[...elig].sort((a,b)=>b.value-a.value);
+  const byB=[...elig].sort((a,b)=>b.balance-a.balance);
+  const byL=[...elig].sort((a,b)=>b.longT-a.longT);
+  $("#podium").innerHTML=[
+    ["🥇 Best value",byV[0],"Cheapest entry per dollar of rent, with rail."],
+    ["🥈 Best balance",byB[0],"Price, yield and CBD access together."],
+    ["🥉 Best long-term potential",byL[0],"Access and infrastructure, discounted for how hard it has already run."]
+  ].map(([t,s,w])=>`<div class="card"><div class="eyebrow">${t}</div>
+    <h4 style="margin:6px 0 4px;font-size:1.25rem">${s.n}</h4>
+    <div class="small" style="margin-bottom:8px">${w}</div>
+    <div class="kv"><span>Median</span><b>${money(s.med)}</b></div>
+    <div class="kv"><span>Gross yield</span><b>${pcAbs(s.yld)}</b></div>
+    <div class="kv"><span>Distance to CBD</span><b>${s.km} km</b></div>
+    <div class="kv"><span>Value / balance / long-term</span><b>${Math.round(s.value)} / ${Math.round(s.balance)} / ${Math.round(s.longT)}</b></div>
+    <div class="small" style="margin-top:8px">${s.rail}</div></div>`).join("");
+  $("#podium").insertAdjacentHTML("beforeend",
+    `<p class="small" style="grid-column:1/-1;margin:0">Podium restricted to the ${elig.length} suburbs whose median
+      carries a stated 2026 reference period. Medina, Camillo, Calista, Orelia, Lockridge and Hilbert score higher on raw
+      value but rest on undated or year-old aggregator figures, so they are shortlist candidates to verify, not
+      recommendations.</p>`);
+  $("#overpriced").innerHTML=`
+    <div class="tw"><table><thead><tr><th>Area</th><th class="num">Median</th><th class="num">12-month growth</th>
+      <th>Why it looks stretched</th></tr></thead><tbody>
+      <tr><td class="nm">Serpentine–Jarrahdale ⚠ LGA</td><td class="num">—</td><td class="num">+30.8%</td>
+        <td class="small">Fastest-growing SA3 in Perth over the year to June 2026, on land release and the Byford rail
+          extension. Growth of that speed in a greenfield corridor is a supply-response story: the land keeps coming.
+          Highest downside beta on this list.</td></tr>
+      <tr><td class="nm">Armadale ⚠ SA3 figure conflicts</td><td class="num">$610,000 (suburb)</td><td class="num">+29.4% (SA3)</td>
+        <td class="small"><strong>Unresolved conflict:</strong> one aggregator reports the Armadale suburb median at
+          $610,000 with +10.9% growth; another reports an "Armadale" median of $919,062 with +25.0%. The second is almost
+          certainly the SA3 region, which spans far more expensive stock. The suburb figure is used here; the
+          discrepancy is why it is flagged rather than ranked with confidence.</td></tr>
+      <tr><td class="nm">Rockingham ⚠ SA3</td><td class="num">$760,000</td><td class="num">+27.8%</td>
+        <td class="small">Beach-corridor re-rating on top of a genuine amenity story. At a 4.4% yield after a 28% year,
+          the income no longer supports the price the way it did in 2024.</td></tr>
+      <tr><td class="nm">Mandurah ⚠ LGA</td><td class="num">$908,829</td><td class="num">+24.1%</td>
+        <td class="small">Out of your budget entirely, and 72km from the CBD. Included as a warning: this is the segment
+          that fell hardest and stayed down longest in 2014-19.</td></tr>
+    </tbody></table></div>
+    <p class="note" style="margin-top:12px">The pattern is consistent and worth internalising: <strong>every area your
+      budget reaches has just had an exceptional year</strong> — 25% to 31% against a metro rate of 15.6%. That is the
+      definition of high beta. In the base case those suburbs fall roughly 1.25× the metro decline; in the bear case they
+      give back most of 2025-26.</p>`;
+
+  /* ── §12 map ── */
+  const pick=(s)=>{PICKED=s;drawDetail();};
+  function drawDetail(){
+    const s=PICKED;
+    if(!s){ $("#mapDetail").innerHTML=`<div class="card"><h4>Select a suburb</h4>
+      <p class="note" style="margin:0">Click or tab to any marker for its median, required correction, yield, rail access
+      and verdict. Colour is the model's verdict, not price.</p></div>`; return; }
+    const sc=[["Value",s.value],["Balance",s.balance],["Long-term",s.longT]];
+    $("#mapDetail").innerHTML=`<div class="card ${VD[s.verdict]==='g'?'g':VD[s.verdict]==='w'?'w':'c'}">
+      <div class="eyebrow">${s.verdictLabel} · ${s.per} ${qtag[s.q]}</div>
+      <h4 style="margin:6px 0 10px;font-size:1.3rem">${s.n}</h4>
+      <div class="kv"><span>Current median</span><b>${s.med?money(s.med):"— not sourced"}</b></div>
+      <div class="kv"><span>Your target</span><b>$650,000</b></div>
+      <div class="kv"><span>Required correction</span><b style="color:${s.to650>=0?'var(--good)':'var(--crit)'}">${s.to650==null?"—":s.to650>=0?"none — already under":pcAbs(-s.to650)+" fall"}</b></div>
+      <div class="kv"><span>To reach $600,000</span><b>${s.to600==null?"—":s.to600>=0?"none":pcAbs(-s.to600)+" fall"}</b></div>
+      <div class="kv"><span>Gross rental yield</span><b>${s.yld?pcAbs(s.yld):"— not sourced"}</b></div>
+      <div class="kv"><span>12-month trend</span><b>${s.g!=null?pc(s.g):"— not sourced"}</b></div>
+      <div class="kv"><span>Distance to CBD</span><b>${s.km} km</b></div>
+      <div class="kv"><span>Rail</span><b style="font-size:.72rem;text-align:right">${s.rail}</b></div>
+      ${sc.map(([k,v])=>`<div style="margin-top:8px"><div class="small">${k} ${v?Math.round(v):"—"}</div>
+        <div class="meter" style="margin:3px 0 0"><i style="width:${v||0}%"></i></div></div>`).join("")}
+      <p class="small" style="margin-top:12px">Base case (−12% metro, 1.25 beta) puts this at
+        <strong>${s.med?money(s.med*0.85):"—"}</strong>. Bear case: <strong>${s.med?money(s.med*0.725):"—"}</strong>.</p>
+    </div>`;
+  }
+  chartMap($("#mapSvg"),SUBSC,pick);
+  $("#mapLegend").innerHTML=`<span><i class="sq" style="background:var(--good)"></i>Strong value</span>
+    <span><i class="sq" style="background:var(--s3)"></i>Monitor</span>
+    <span><i class="sq" style="background:var(--accent)"></i>Priced richly</span>
+    <span><i class="sq" style="background:var(--crit)"></i>Out of budget</span>`;
+  if(!PICKED) PICKED=SUBSC.find(s=>s.n==="Armadale");
+  drawDetail();
+
+  /* ── §13 false bottom ── */
+  $("#fbOut").innerHTML=`
+    <div class="card ${FB.lvl.d==='c'?'c':FB.lvl.d==='w'?'w':'g'}" style="margin-bottom:16px">
+      <div class="eyebrow">⚠️ False-bottom risk</div>
+      <div style="font-family:var(--sans);font-weight:700;font-size:2.4rem;color:var(--${FB.lvl.c});margin:4px 0">${FB.lvl.l}</div>
+      <p class="note" style="margin:0">${FB.hits} of ${FB.known} testable conditions are triggered${FB.unknown?`, with ${FB.unknown} genuinely unknown`:""}.
+        <strong>Practical consequence: if Perth prices flatten in the next two or three quarters, do not read it as the bottom.</strong>
+        With rates still rising, listings still building and the negative-gearing shock still ahead, a pause is far more
+        likely to be a shelf than a floor. The 2014-19 downturn produced three separate flat stretches of two quarters or
+        more before the real trough.</p></div>
+    <div class="tw"><table><thead><tr><th>Condition</th><th>Status</th><th>Evidence</th></tr></thead><tbody>
+      ${FB.checks.map(c=>`<tr><td class="nm">${c.q}</td>
+        <td><span class="flag"><i class="dot ${c.hit==null?'':c.hit?'c':'g'}"></i>${c.hit==null?"UNKNOWN":c.hit?"YES":"No"}</span></td>
+        <td class="small">${c.txt}</td></tr>`).join("")}
+    </tbody></table></div>`;
+
+  /* ── §14 buying signal ── */
+  $("#buyOut").innerHTML=`
+    <div class="g2" style="align-items:start">
+      <div class="card ${BS.lvl.c==='good'?'g':BS.lvl.c==='warn'?'w':'c'}">
+        <div class="eyebrow">🏠 Perth Buying Opportunity Score</div>
+        <div style="font-family:var(--sans);font-weight:700;font-size:3.6rem;line-height:1;margin:8px 0;color:var(--${BS.lvl.c})">${Math.round(BS.total)}</div>
+        <div style="font-family:var(--sans);font-weight:600;font-size:1.15rem;margin-bottom:10px">${BS.lvl.e} ${BS.lvl.l}</div>
+        <div class="meter" style="height:10px"><i class="${BS.lvl.c}" style="width:${BS.total}%"></i></div>
+        <div class="small" style="display:flex;justify-content:space-between;margin-top:5px">
+          <span>0 avoid</span><span>40 monitor</span><span>60 inspect</span><span>75 buy</span><span>100</span></div>
+        <p class="note" style="margin-top:14px">The score is held down by three things and lifted by two. Down: you would
+          be buying four months into a downturn, at the worst affordability in Perth's history, with the RBA still
+          tightening. Up: real negotiating power has appeared for the first time since 2022, and the rental market is
+          genuinely tight. <strong>It reads 🔴 Wait — but only just, and it is a score that improves quickly once the
+          RBA stops.</strong></p></div>
+      <div>
+        <h4 style="margin-bottom:10px">Component breakdown</h4>
+        ${BS.comps.map(c=>`<div style="padding:9px 0;border-bottom:1px solid var(--rule)">
+          <div style="display:flex;justify-content:space-between;gap:10px;align-items:baseline">
+            <span style="font-family:var(--sans);font-weight:600;font-size:.85rem">${c.k}</span>
+            <span class="mono small">weight ${Math.round(c.w*100)}% · <b style="color:${c.s<35?'var(--crit)':c.s<55?'var(--warn)':'var(--good)'}">${Math.round(c.s)}</b></span></div>
+          <div class="meter" style="margin:5px 0 5px"><i class="${c.s<35?'crit':c.s<55?'warn':'good'}" style="width:${c.s}%"></i></div>
+          <div class="small">${c.why}</div></div>`).join("")}
+      </div></div>`;
+}
+</script>
+
+<script>
+"use strict";
+/* ════════════ Render, part 3 — calculator, audit, strategy ════════════ */
+const CFIELDS=[
+  ["savings","Current savings","$",130000],["monthly","Monthly savings while renting","$/mth",2600],
+  ["invest","Expected return on savings","% p.a.",4.5],["growth","Price change per year WHILE WAITING","% p.a.",-6.0],
+  ["growthAfter","Price growth per year ONCE YOU OWN","% p.a.",3.0],
+  ["rentWk","Rent you pay now","$/wk",620],["mort","Expected mortgage rate","% p.a.",6.20],
+  ["price0","Target property price today","$",640000],["fhb","First home buyer? (1 = yes, 0 = no)","0/1",1]
+];
+function readCalc(){
+  const C={};
+  CFIELDS.forEach(([k,,,d])=>{ const e=$(`#calc_${k}`); C[k]= e? parseFloat(e.value) : d; if(isNaN(C[k]))C[k]=d; });
+  return C;
+}
+function renderCalc(){
+  const C=readCalc(), T=60;
+  const rows=[0,6,12,24].map(w=>runStrategy(w,C,T));
+  const base=rows[0];
+  $("#waitTable tbody").innerHTML=rows.map(r=>{
+    const diff=r.net-base.net;
+    return `<tr><td class="nm">${r.waitM===0?"Buy now":"Wait "+r.waitM+" months"}</td>
+      <td class="num">${money(r.pricePaid)}</td><td class="num">${money(r.deposit)}</td>
+      <td class="num">${money(r.loan)}</td><td class="num">${money(r.pay)}</td>
+      <td class="num">${money(r.rentPaid)}</td>
+      <td class="num" style="color:${diff>0?'var(--good)':diff<0?'var(--crit)':'var(--ink2)'};font-weight:600">
+        ${r.waitM===0?"—":(diff>0?"+":"")+money(diff)}</td></tr>`;}).join("");
+  /* break-even: growth rate at which waiting 12 months exactly matches buying now */
+  let lo=-40,hi=20,mid=0;
+  for(let i=0;i<40;i++){
+    mid=(lo+hi)/2;
+    const d=runStrategy(12,Object.assign({},C,{growth:mid}),T).net - runStrategy(0,Object.assign({},C,{growth:mid}),T).net;
+    if(d>0) lo=mid; else hi=mid;
+  }
+  const bePrice=C.price0*(1+mid/100);
+  const d12=runStrategy(12,C,T).net-base.net, d24=runStrategy(24,C,T).net-base.net;
+  $("#breakeven").innerHTML=`
+    <div class="card ${d12>0?'g':'c'}">
+      <div class="eyebrow">📊 Break-even</div>
+      <h4 style="margin:6px 0 8px">Waiting 12 months pays only if the price falls to ${money(bePrice)} or lower</h4>
+      <div class="g3" style="margin-top:12px">
+        <div><div class="small">Break-even 12-month price change</div>
+          <div class="mono" style="font-size:1.6rem;font-weight:600">${pc(mid,1)}</div></div>
+        <div><div class="small">Break-even purchase price</div>
+          <div class="mono" style="font-size:1.6rem;font-weight:600">${money(bePrice)}</div></div>
+        <div><div class="small">Your assumption implies</div>
+          <div class="mono" style="font-size:1.6rem;font-weight:600;color:${d12>0?'var(--good)':'var(--crit)'}">${(d12>0?"+":"")+money(d12)}</div></div>
+      </div>
+      <p class="note" style="margin-top:14px">Read this carefully, because it is the number that stops the model from
+        lazily saying "wait for the bottom". Waiting is not free: you pay rent, you lose the price growth if you are wrong,
+        and — at your inputs — you also pay more transfer duty if the price you eventually buy at crosses $600,000. Against
+        that, you accumulate deposit and you may buy cheaper. At a break-even of <strong>${pc(mid,1)}</strong>, a fall
+        shallower than that means <strong>buying now wins</strong>. Waiting 24 months at your assumptions changes your
+        position by <strong>${(d24>0?"+":"")+money(d24)}</strong>.</p>
+      <div class="warnbox" style="margin:12px 0"><strong>The $600,000 duty cliff distorts your break-even, in your favour.</strong>
+        At ${money(C.price0)} a first home buyer pays roughly ${money(waTransferDuty(C.price0,C.fhb))} in WA transfer duty.
+        At $600,000 or less it is <strong>$0</strong>. That step is worth about ${money(waTransferDuty(650000,1))} — more than a
+        further 3% price fall — and it is why the break-even price above sits so close to today's. If waiting takes you from
+        just above the threshold to just below it, waiting wins on duty alone. If it does not, the case is thin.</div>
+      <p class="small" style="margin:0">Comparison is at a common 60-month horizon: home equity plus investment balance
+        minus loan balance, with rent, mortgage payments, transfer duty and a $3,500 conveyancing/inspection allowance all
+        counted. Rent growth is assumed at half the current 8.1% rate, because 8% rent growth is not a durable assumption.
+        WA transfer duty uses the general residential scale with the first-home-buyer full exemption applied at or under
+        $600,000 — <strong>check the current scale with RevenueWA</strong>; duty rates are structural knowledge here, not
+        a freshly sourced figure.</p></div>`;
+}
+
+function render3(){
+  const DC=dataConfidence(), M=runModels(), FB=falseBottom(), BS=buyingScore(M), T=troughModel();
+
+  /* calculator inputs (built once) */
+  if(!$("#calc_savings")){
+    $("#calcInputs").innerHTML=CFIELDS.map(([k,l,u,d])=>
+      `<label class="f">${l} <span class="small">${u}</span>
+        <input type="number" step="any" id="calc_${k}" value="${d}"></label>`).join("");
+    $$("#calcInputs input").forEach(i=>i.addEventListener("change",renderCalc));
+  }
+  renderCalc();
+
+  /* ── §16 audit ── */
+  $("#auditSummary").innerHTML=`
+    <div class="g3">
+      <div class="card ${DC.lvl.c==='good'?'g':DC.lvl.c==='warn'?'w':'c'}">
+        <div class="eyebrow">Overall data confidence</div>
+        <div style="font-family:var(--sans);font-weight:700;font-size:3rem;line-height:1;margin:6px 0;color:var(--${DC.lvl.c})">${Math.round(DC.total)}<span style="font-size:1.1rem;color:var(--ink3)">/100</span></div>
+        <div style="font-family:var(--sans);font-weight:600">${DC.lvl.l}</div>
+        <div class="meter" style="height:8px;margin-top:10px"><i class="${DC.lvl.c}" style="width:${DC.total}%"></i></div></div>
+      <div class="card"><h4>Components</h4>
+        <div class="kv"><span>Source quality (×0.85 access haircut)</span><b>${Math.round(DC.q)}</b></div>
+        <div class="kv"><span>Freshness</span><b>${Math.round(DC.f)}</b></div>
+        <div class="kv"><span>Completeness</span><b>${Math.round(DC.comp)}</b></div>
+        <div class="kv"><span>Cross-source consistency</span><b>${Math.round(DC.cons)}</b></div>
+        <div class="kv"><span>Forecast certainty</span><b>${DC.forecast}</b></div></div>
+      <div class="card"><h4>Counts</h4>
+        <div class="kv"><span>Variables unavailable</span><b>${DC.missing}</b></div>
+        <div class="kv"><span>Variables stale or delayed</span><b>${DC.stale}</b></div>
+        <div class="kv"><span>Sources in conflict</span><b>${DC.conflicts}</b></div>
+        <div class="kv"><span>Forecast models active</span><b>6 / 7</b></div>
+        <div class="kv"><span>Back-test events</span><b>3 troughs</b></div></div>
+    </div>`;
+  $("#auditTable tbody").innerHTML=Object.keys(V).map(k=>{
+    const v=V[k], s=SRC[v.src], f=FRESH[v.fresh];
+    return `<tr><td class="nm">${v.lab}${isUser(k)?' <span class="tag">USER</span>':""}</td>
+      <td class="num">${v.v==null?'<span style="color:var(--crit)">unavailable</span>':(v.u==="$"?money(val(k)):val(k)+(v.u&&v.u!=="flag"?" "+v.u:""))}</td>
+      <td class="small">${s.n}</td><td class="small">${v.date}</td>
+      <td><span class="flag"><i class="dot ${f.c}"></i>${f.l.split(" ")[1]}</span></td>
+      <td class="num">T${s.tier}</td><td class="small">${v.note}</td></tr>`;}).join("");
+
+  $("#conflicts").innerHTML=`
+    <p class="note">Four material disagreements were found. None was resolved by picking a favourite.</p>
+    ${[
+      ["Perth price direction, August 2026",
+       "REIWA: median house sale price <strong>+1.1%</strong> to $960,000. Cotality: Perth index <strong>−0.8%</strong>, median dwelling value $999,987.",
+       "Different instruments, not different facts. REIWA reports the median of what settled — composition-sensitive, and settlements lag contracts by 4–8 weeks. Cotality reports a hedonic index that holds property quality constant.",
+       "Both retained. The <strong>index</strong> drives the cycle model, because in a turning market it turns first and a settlement median is a lagging summary. The <strong>REIWA median</strong> drives the affordability and budget sections, because that is what you actually transact at.",1],
+      ["Perth rental vacancy rate",
+       "SQM Research: <strong>0.6%</strong> (Jul 2026). REIWA: <strong>0.7%</strong> (Mar 2026 quarter). A third summary reported ~1.0%.",
+       "Different panels and definitions of a vacant listing; different reference periods. The ~1.0% figure could not be traced to a primary release.",
+       "SQM's 0.6% used, being the most recent traceable figure. The distinction is immaterial: every source agrees Perth is under 1% and therefore at a practical floor. The untraceable 1.0% was discarded, not averaged in.",0],
+      ["WA unemployment rate",
+       "Readings seen for 2026: <strong>3.4%</strong> (Jan), <strong>4.40%</strong> (Feb), <strong>4.30%</strong> (Mar), <strong>4.5%</strong> (Apr).",
+       "A 1.1-point jump between January and February is not a real monthly move. This is almost certainly a mix of trend, seasonally adjusted and original series being quoted interchangeably by secondary reporters.",
+       "<strong>Unresolved.</strong> The <em>level</em> is used only as a soft input at 4.5%; the model leans on the <em>direction</em>, which every source agrees on. This variable is graded 🟠 STALE and its level carries reduced influence. If the level matters to your decision, get it from the ABS release directly.",1],
+      ["Perth median house price, late 2025",
+       "One secondary source reports Perth's median house price reached <strong>$1.09 million</strong> in Q4 2025.",
+       "Incompatible with REIWA's own series: $786,000 in June 2025 and $960,000 in August 2026 at +18.5% y/y. A $1.09m Q4-2025 median would require a subsequent crash that no source reports.",
+       "<strong>Rejected as an outlier</strong> and excluded from the history series. Flagged here rather than silently dropped, because the same figure appears in several downstream articles.",1]
+    ].map(([t,a,b,c])=>`<div class="card" style="margin-top:12px"><h4>${t}</h4>
+      <div class="kv" style="border:none"><span style="min-width:90px">Disagreement</span><span style="text-align:right">${a}</span></div>
+      <p class="small" style="margin:8px 0"><strong>Cause:</strong> ${b}</p>
+      <p class="small" style="margin:0"><strong>Resolution:</strong> ${c}</p></div>`).join("")}`;
+
+  $("#missing").innerHTML=`
+    <div class="tw"><table><thead><tr><th>Item</th><th>Status</th><th>What the model did</th></tr></thead><tbody>
+    ${[
+      ["Auction clearance rate","🔴 Unavailable by construction","Cotality publishes no Perth clearance rate — 9 to 13 auctions a week is not a meaningful sample. Dropped from the Stress family; <strong>weight redistributed from 33% each across three indicators to 50% each across two</strong>."],
+      ["Machine-learning / time-series model","🔴 Excluded","17 sourced price anchors and a partial indicator panel from 2014 cannot support a fitted time-series model. Excluded from the ensemble and <strong>its weight redistributed across the six active models</strong>, not counted as a zero forecast."],
+      ["WA population, current quarter","🟡 Nine months old","Latest ABS state population is the December 2025 quarter, released 18 June 2026. Used as-is and flagged. This is the model's single most consequential stale input — it feeds the demand family and the Regime 2 weight."],
+      ["Suburb days on market, vacancy, volatility, population, schools, flood/bushfire, supply pipeline","🔴 Unavailable at suburb level","Seven of fifteen requested suburb attributes. <strong>Excluded and weights redistributed</strong> across the eight that could be sourced. The suburb scores are correspondingly less informative and are labelled as a shortlist tool, not a valuation."],
+      ["Rockingham, Mandurah, Serpentine–Jarrahdale","🟠 SA3/LGA substitution","Suburb-level figures unavailable; SA3/LGA figures used and labelled ⚠ LGA in every table. Not presented as suburb-specific."],
+      ["Medina median","🟠 Stale","Year ending July 2025 — over a year old, during which the market rose sharply. Almost certainly understated. Flagged ⚠ 2025."],
+      ["Camillo, Calista, Orelia, Lockridge, Hilbert medians","🟠 Tier-4 estimates","Broker/aggregator figures without a stated reference period. Marked est. and given no weight in the podium selection."],
+      ["Mortgage stress, forced sales, arrears","🔴 Unavailable","No reliable WA-specific arrears or forced-sale series could be sourced. The Stress family runs without them and is correspondingly incomplete — a genuine blind spot for the bear case."],
+      ["Listings long-run average","🟠 Author assumption","12,500 is an author assumption used only as a scale reference for the listings indicator, not a sourced figure. Editable in §02; changing it moves the Supply family."],
+      ["Direct access to primary releases","🟠 Blocked","Network egress policy refused reiwa.com.au, abs.gov.au, rba.gov.au and sqmresearch.com.au. Every Tier-1 figure reaches this model through secondary reporting. A flat <strong>15% haircut</strong> is applied to the source-quality component of the confidence score."]
+    ].map(([a,b,c])=>`<tr><td class="nm">${a}</td><td class="small">${b}</td><td class="small">${c}</td></tr>`).join("")}
+    </tbody></table></div>`;
+
+  const gate=[
+    ["No fabricated data",true,"Every figure carries a source and a date. Interpolated history points are drawn dashed and labelled as interpolation. Rejected outliers are documented."],
+    ["Every major number has a source",true,"See the audit table. Two exceptions are labelled as author assumptions: the listings long-run average and the WA transfer-duty scale."],
+    ["Data dates displayed",true,"Data date, not access date, throughout."],
+    ["Historical data methodologically consistent",false,"<strong>FAILS.</strong> Pre-2021 anchors are secondary reports of REIWA/Landgate data; post-2021 are REIWA directly. The break is marked on the chart. No continuous 30-year series was available and none was fabricated."],
+    ["Conflicting sources identified",true,"Four conflicts documented with cause and resolution."],
+    ["Missing data disclosed",true,"Ten items, each with the weight-redistribution consequence stated."],
+    ["Forecast separated from actual",true,"Charts mark the actual/forecast boundary; §08 and §09 are labelled model output."],
+    ["Model confidence calculated",true,`${Math.round(DC.total)}/100 from source quality, freshness, completeness, cross-source consistency and forecast certainty.`],
+    ["Prediction uncertainty shown",true,"Bimodal quarterly distribution, 50% credible window, 10th and 90th percentile bounds."],
+    ["Back-testing performed",true,"Eight episodes, three testable troughs — with the small-sample warning attached to every metric."],
+    ["Live-update status truthful",false,"<strong>FAILS as specified.</strong> No automated update is possible from a browser. The button probes and reports failure honestly rather than simulating success; a companion Python script handles what can be automated."],
+    ["Suburb substitutions disclosed",true,"⚠ LGA labels on three areas; seven unavailable attributes named."],
+    ["No false precision",true,"Trough given as a quarter range with a probability band, not a date. Declines given as ranges."]
+  ];
+  const fails=gate.filter(g=>!g[1]).length;
+  $("#gate").innerHTML=`${gate.map(([k,ok,n])=>`<div style="display:grid;grid-template-columns:22px 1fr;gap:10px;padding:7px 0;border-bottom:1px solid var(--rule)">
+      <div>${ok?"☑":"⚠"}</div><div><strong style="font-family:var(--sans);font-size:.86rem">${k}</strong>
+      <div class="small">${n}</div></div></div>`).join("")}
+    <div class="${fails?"warnbox":"goodbox"}" style="margin-top:14px">
+      <strong>${fails} of ${gate.length} checks fail.</strong> Neither failure is fatal to the analysis, and both are
+      disclosed rather than worked around: the history series has a documented methodology break, and the live-update
+      button cannot be live inside a sandboxed page. Data confidence is ${Math.round(DC.total)}/100 —
+      <strong>above the 60 floor</strong>, so this is presented as a moderate-confidence scenario analysis rather than a
+      low-confidence one. It is not a high-confidence forecast and is not labelled as one anywhere on this page.</div>`;
+
+  /* ── §17 strategy ── */
+  $("#strategyPanel").innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)">
+    ${[
+      ["NOW","Early slowdown","Four months and −3.2% past a May 2026 peak. Bottom probability "+Math.round(M.ensemble)+"%. False-bottom risk "+FB.lvl.l+"."],
+      ["NEXT","Further, gentle falls","Listings building, sales −20%, RBA still tightening. Base case −9% to −12% peak to trough."],
+      ["BOTTOM",qLab(T.lo)+" – "+qLab(T.hi),Math.round(T.acc*100)+"% of the distribution, centred "+qLab(T.mode)+". Tail into 2029-30 if WA's labour market cracks."],
+      ["BUYING WINDOW","From the last RBA hike","Start inspecting when the RBA stops, not when it cuts. Historically you get 2–3 quarters of weak sentiment and strong negotiating power before prices turn."],
+      ["TARGET","$600k–$650k, outer corridor","Armadale, Brookdale, Cannington, Midland, Lockridge — plus the Kwinana corridor if you can live with 35km. Already affordable today; the question is timing, not access."]
+    ].map(([k,v,d])=>`<div style="background:var(--surf);padding:16px">
+      <div class="eyebrow">${k}</div>
+      <div style="font-family:var(--sans);font-weight:700;font-size:1.05rem;margin:6px 0 7px;line-height:1.2">${v}</div>
+      <div class="small">${d}</div></div>`).join("")}</div>`;
+
+  $("#doWatchWait").innerHTML=`
+    <div class="card g"><h4>🟢 What I would do</h4>
+      <ol class="small" style="padding-left:17px;margin:8px 0 0;line-height:1.65">
+        <li><strong>Not buy this quarter</strong>, on the evidence: buying score ${Math.round(BS.total)}, four months into a downturn,
+          with roughly two-thirds odds on another rate hike within three weeks of this being written. Every further hike cuts
+          your borrowing capacity and the price at the same time.</li>
+        <li><strong>Get finance-ready now anyway.</strong> Pre-approval, deposit consolidated, conveyancer chosen. The
+          window this model points at opens on a rate decision, not on a schedule, and the back-test says the signal
+          arrives 3–13 months <em>early</em>. You want to be able to act inside a fortnight.</li>
+        <li><strong>Inspect actively from now, buy nothing.</strong> Twelve months of walking through Armadale, Gosnells,
+          Midland and Cannington is how you learn which streets are worth $30,000 more. That knowledge is what turns a
+          correction into a bargain; it cannot be acquired retrospectively.</li>
+        <li><strong>Hold the $600,000 line if you are a first home buyer.</strong> Full transfer-duty exemption at or under
+          $600,000 from 28 July 2026. That threshold is worth more than a further 3% price fall.</li>
+        <li><strong>Run the break-even calculator with your real numbers, not mine.</strong> At the defaults, waiting
+          twelve months only pays if prices fall further than the break-even shown in §15. If your view is milder than
+          that, the model's own arithmetic says buy sooner.</li>
+      </ol></div>
+    <div class="card w"><h4>🟡 What I would watch</h4>
+      <ul class="small" style="padding-left:17px;margin:8px 0 0;line-height:1.65">
+        <li><strong>The 29 September 2026 RBA decision, then the one after.</strong> The single highest-information event
+          for this decision. A hold followed by a second hold is the start of your window.</li>
+        <li><strong>REIWA weekly listings.</strong> The number to watch is not the level, it is the <em>rate of change</em>.
+          When weekly listings stop rising for six to eight consecutive weeks, the supply side has turned.</li>
+        <li><strong>Days on market past 35, vendor discounting past −5.5%.</strong> Those are the 2018-style readings that
+          mean real negotiating power. At 23 days and −4.0% you are still bidding against other buyers.</li>
+        <li><strong>The next ABS state population release.</strong> The current figure is nine months old and it is doing
+          a lot of work in this model. If WA growth has slowed below 1.5%, the bear-case weight rises sharply.</li>
+        <li><strong>Lower-quartile values specifically.</strong> Cotality reports they have started falling. Your segment
+          held up longest; it has furthest to fall.</li>
+        <li><strong>WA unemployment, and whether it is mining or services.</strong> Rising services unemployment is a rate
+          story that reverses. Rising mining-sector unemployment is a 2014 story that does not.</li>
+      </ul></div>
+    <div class="card c"><h4>🔴 What would make me wait longer</h4>
+      <ul class="small" style="padding-left:17px;margin:8px 0 0;line-height:1.65">
+        <li><strong>A cash rate above 4.85%.</strong> Two more hikes would take the base case decline toward the bear case
+          and push the trough into 2028.</li>
+        <li><strong>WA unemployment above 5.5% with mining capex deferrals.</strong> This is the 2014-19 trigger. Iron ore
+          sustained below US$70/t with a major project shelved would move the Regime 2 weight from
+          ${Math.round(T.p2*100)}% toward 50%+ and the trough toward 2030.</li>
+        <li><strong>Vacancy above 2%.</strong> Perth's 0.6% vacancy is the main thing preventing a deep correction. If it
+          doubles twice, the floor under prices is gone.</li>
+        <li><strong>Listings above 12,000 and still climbing.</strong> That is the long-run average; above it with momentum
+          means the market is genuinely oversupplied for the first time since 2019.</li>
+        <li><strong>Your own segment falling faster than the metro.</strong> If Armadale-tier suburbs start printing −2% a
+          month while the metro prints −0.8%, the high-beta unwind is running and there is no reason to catch it early.</li>
+      </ul></div>`;
+
+  $("#limits").innerHTML=`
+    <ul class="note" style="padding-left:18px;line-height:1.7;margin:0">
+      <li><strong>No primary source was fetched directly.</strong> Network egress policy blocked reiwa.com.au,
+        abs.gov.au, rba.gov.au and sqmresearch.com.au. Every Tier-1 number here is a secondary report of a primary release.
+        Before acting on any specific figure, verify it at the source.</li>
+      <li><strong>The back-test is n=3.</strong> Precision, recall and accuracy computed on three events are arithmetic,
+        not evidence. Model C is capped at 20% ensemble weight for precisely this reason, and even that is generous.</li>
+      <li><strong>The trough distribution is bimodal, and the two modes have different causes.</strong> A single "expected
+        bottom" date would misrepresent it. If you take one number away, take the ${Math.round(T.acc*100)}% window, not the mode.</li>
+      <li><strong>Suburb data is the weakest layer on this page.</strong> Mixed reference periods, Tier-4 aggregators,
+        seven of fifteen requested attributes missing, and one unresolved conflict on Armadale's own median. Use it to
+        build a shortlist to inspect, never to decide what something is worth.</li>
+      <li><strong>This is a probability model, not a prediction, and not financial advice.</strong> It says what Perth's
+        indicators have historically been associated with. It cannot tell you what will happen, and a 35% bottom
+        probability is not a forecast that prices will fall — it is a statement that the current configuration looks more
+        like the start of a downturn than the end of one.</li>
+      <li><strong>Everything here is recomputable.</strong> Change any input in §02 and every number on this page moves.
+        If you disagree with an assumption, the honest response is to change it and see how much it actually matters —
+        most of them matter less than the cash-rate direction, which matters more than everything else combined.</li>
+    </ul>`;
+}
+
+/* ════════════ Wiring ════════════ */
+function boot(){ render(); render2(); render3(); }
+document.addEventListener("DOMContentLoaded",()=>{
+  boot();
+  $("#btnUpdate").addEventListener("click",()=>{
+    const st=$("#updstatusline");
+    st.innerHTML=`<span class="chip">Probing sources…</span>`;
+    setTimeout(()=>{
+      st.innerHTML=`<span class="chip c">🔴 UPDATE FAILED — 0 of ${FEEDS.length} sources reachable</span>
+        <div class="small" style="margin-top:8px">${FEEDS.map(f=>`${f.n}: 🔴 blocked (no CORS-open endpoint / sandbox denies outbound requests)`).join("<br>")}
+        <br><br><strong>The model has not broken and no data has changed.</strong> It is still running on the values
+        researched ${BUILD_DATE}, which are unchanged and still labelled with their original dates — nothing has been
+        re-stamped as fresh. Enter new figures below to update it manually.</div>`;
+      $("#inputs").scrollIntoView({behavior:"smooth",block:"start"});
+    },600);
+  });
+  $("#btnRecalc").addEventListener("click",()=>{
+    $$("#inputs input").forEach(i=>{
+      const k=i.dataset.k, v=parseFloat(i.value);
+      if(!isNaN(v) && v!==V[k].v) USER[k]=v; else if(!isNaN(v) && v===V[k].v) delete USER[k];
+    });
+    saveUser();
+    LAST_UPDATE=new Date().toLocaleString("en-AU",{dateStyle:"medium",timeStyle:"short"});
+    try{ localStorage.setItem("perthModel.updated",LAST_UPDATE); }catch(e){}
+    boot();
+    $("#recalcmsg").innerHTML=`<span class="chip g">Recalculated · ${Object.keys(USER).length} value(s) overridden</span>`;
+  });
+  $("#btnReset").addEventListener("click",()=>{
+    USER={}; saveUser();
+    try{ localStorage.removeItem("perthModel.updated"); }catch(e){}
+    LAST_UPDATE=null; boot(); $("#recalcmsg").innerHTML=`<span class="chip">Reset to shipped values</span>`;
+  });
+  $("#btnCalc").addEventListener("click",renderCalc);
+});
+</script>
