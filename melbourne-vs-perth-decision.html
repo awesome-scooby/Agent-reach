@@ -1,0 +1,1005 @@
+<title>Melbourne or Perth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Sans+3:wght@400;600;700&display=swap">
+
+<style>
+:root{
+  --mel:#0C63AE; --per:#D2691E; --s3:#7B4FBF; --s4:#0F8A72;
+  --mel-wash:rgba(12,99,174,.10); --per-wash:rgba(210,105,30,.10);
+  --good:#1F7A4C; --warn:#A96A05; --crit:#B3261E;
+  --bg:#FBFAF8; --surface:#FFFFFF; --surface-2:#F4F2EE;
+  --ink:#16191D; --ink-2:#454B54; --ink-3:#71787F;
+  --rule:#E0DDD6; --rule-strong:#C8C4BA;
+  --display:'Archivo',system-ui,sans-serif;
+  --body:'Source Sans 3',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --maxw:1180px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --mel:#3E93D6; --per:#D0742A; --s3:#9179E0; --s4:#0E9B79;
+    --mel-wash:rgba(62,147,214,.16); --per-wash:rgba(208,116,42,.16);
+    --good:#3FA971; --warn:#D69420; --crit:#E4685E;
+    --bg:#141513; --surface:#1C1E1C; --surface-2:#242624;
+    --ink:#F0EEE9; --ink-2:#BFBCB4; --ink-3:#8B8880;
+    --rule:#33352F; --rule-strong:#4A4C45;
+  }
+}
+:root[data-theme="dark"]{
+  --mel:#3E93D6; --per:#D0742A; --s3:#9179E0; --s4:#0E9B79;
+  --mel-wash:rgba(62,147,214,.16); --per-wash:rgba(208,116,42,.16);
+  --good:#3FA971; --warn:#D69420; --crit:#E4685E;
+  --bg:#141513; --surface:#1C1E1C; --surface-2:#242624;
+  --ink:#F0EEE9; --ink-2:#BFBCB4; --ink-3:#8B8880;
+  --rule:#33352F; --rule-strong:#4A4C45;
+}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px 90px}
+h1,h2,h3,h4{font-family:var(--display);text-wrap:balance;margin:0}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+.num{font-variant-numeric:tabular-nums}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* ---------- masthead ---------- */
+.mast{padding:52px 0 30px;border-bottom:2px solid var(--ink)}
+.mast h1{font-size:clamp(38px,6.4vw,68px);line-height:.98;font-weight:800;letter-spacing:-.028em}
+.mast h1 .a{color:var(--mel)} .mast h1 .b{color:var(--per)}
+.mast .sub{margin-top:16px;font-size:18px;color:var(--ink-2);max-width:62ch}
+.mastmeta{display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:20px}
+.mastmeta span{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.03em}
+
+/* ---------- verdict ---------- */
+.verdict{margin-top:34px;border:1px solid var(--rule-strong);background:var(--surface);border-left:7px solid var(--mel);border-radius:3px;padding:26px 28px}
+.verdict .vh{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px}
+.verdict h2{font-size:clamp(27px,4vw,40px);font-weight:800;letter-spacing:-.02em;color:var(--mel)}
+.conf{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--ink-2);border:1px solid var(--rule-strong);border-radius:2px;padding:4px 9px}
+.verdict p{margin:14px 0 0;font-size:17px;color:var(--ink-2);max-width:72ch}
+.verdict .kick{color:var(--ink);font-weight:600}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:1px;background:var(--rule);margin-top:24px;border:1px solid var(--rule)}
+.vgrid div{background:var(--surface);padding:13px 14px}
+.vgrid dt{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.vgrid dd{margin:5px 0 0;font-family:var(--display);font-weight:700;font-size:16px}
+.win-m{color:var(--mel)} .win-p{color:var(--per)}
+
+/* ---------- sections ---------- */
+section{margin-top:64px;scroll-margin-top:20px}
+.sechead{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--rule-strong);padding-bottom:11px;margin-bottom:26px}
+.sechead .n{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink-3);letter-spacing:.06em}
+.sechead h2{font-size:clamp(22px,3vw,30px);font-weight:700;letter-spacing:-.018em}
+.sechead .w{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink-3);white-space:nowrap}
+p.lede{font-size:17.5px;color:var(--ink-2);max-width:70ch;margin:0 0 22px}
+p{max-width:74ch}
+
+/* ---------- premise busters ---------- */
+.busters{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}
+.buster{background:var(--surface);border:1px solid var(--rule);border-top:4px solid var(--crit);padding:20px 21px 22px;border-radius:2px;display:flex;flex-direction:column;gap:11px}
+.buster .tag{font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--crit);font-weight:600}
+.buster h3{font-size:19px;font-weight:700;line-height:1.25}
+.buster .big{font-family:var(--display);font-size:31px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.buster p{font-size:14.5px;color:var(--ink-2);margin:0;max-width:none}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;border:1px solid var(--rule);background:var(--surface);border-radius:2px}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:560px}
+th,td{padding:10px 13px;text-align:right;border-bottom:1px solid var(--rule);white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal;min-width:170px}
+thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:600;background:var(--surface-2);border-bottom:1px solid var(--rule-strong)}
+tbody td{font-variant-numeric:tabular-nums;color:var(--ink-2)}
+tbody td:first-child{color:var(--ink);font-weight:600}
+tbody tr:last-child td{border-bottom:none}
+tr.total td{background:var(--surface-2);font-weight:700;color:var(--ink);border-top:2px solid var(--ink)}
+.cM{color:var(--mel);font-weight:600} .cP{color:var(--per);font-weight:600}
+
+/* ---------- score bars ---------- */
+.scorebar{display:flex;align-items:center;gap:9px;justify-content:flex-end}
+.scorebar .track{width:64px;height:7px;background:var(--surface-2);border-radius:1px;overflow:hidden;flex:none}
+.scorebar .fill{height:100%;display:block}
+.scorebar .v{font-family:var(--mono);font-size:13px;font-weight:600;min-width:26px;text-align:right}
+
+/* ---------- charts ---------- */
+.figure{background:var(--surface);border:1px solid var(--rule);border-radius:2px;padding:22px 24px 18px;margin:0}
+.figure + .figure{margin-top:20px}
+.fighead{margin-bottom:6px}
+.fighead h3{font-size:17.5px;font-weight:700}
+.fighead p{font-size:13.5px;color:var(--ink-3);margin:5px 0 0;max-width:78ch}
+.legend{display:flex;flex-wrap:wrap;gap:7px 20px;margin:14px 0 6px}
+.legend i{display:inline-flex;align-items:center;gap:7px;font-style:normal;font-size:13px;color:var(--ink-2)}
+.swatch{width:15px;height:3px;border-radius:2px;display:inline-block;flex:none}
+.swatch.dash{background:none!important;border-top:3px dashed currentColor;height:0}
+.chart{width:100%;height:auto;display:block;overflow:visible}
+.chart text{font-family:var(--mono);font-size:10.5px;fill:var(--ink-3)}
+.chart .lbl{font-family:var(--display);font-size:12px;font-weight:700}
+.grid line{stroke:var(--rule);stroke-width:1}
+.axis line{stroke:var(--rule-strong);stroke-width:1}
+.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--rule-strong);border-radius:3px;padding:9px 11px;font-size:12.5px;font-family:var(--mono);box-shadow:0 5px 18px rgba(0,0,0,.14);opacity:0;transition:opacity .1s;z-index:20;white-space:nowrap}
+.chartbox{position:relative}
+
+/* CSS bar charts */
+.bars{display:flex;flex-direction:column;gap:13px;margin-top:16px}
+.barrow{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:16px;align-items:center}
+.barrow .name{font-size:13.5px;color:var(--ink-2);line-height:1.3}
+.barrow .name b{color:var(--ink);font-weight:600;display:block;font-size:14px}
+.pair{display:flex;flex-direction:column;gap:5px}
+.bl{display:flex;align-items:center;gap:9px}
+.bl .t{flex:1;height:15px;background:var(--surface-2);position:relative;border-radius:1px}
+.bl .f{height:100%;border-radius:0 1px 1px 0;display:block}
+.bl .n{font-family:var(--mono);font-size:12px;font-weight:600;min-width:62px;text-align:right;font-variant-numeric:tabular-nums}
+.bl .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;color:var(--ink-3);width:26px;flex:none}
+
+/* traffic lights */
+.tl{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.tl::before{content:"";width:9px;height:9px;border-radius:50%;flex:none}
+.tl.low::before{background:var(--good)} .tl.low{color:var(--good)}
+.tl.med::before{background:var(--warn)} .tl.med{color:var(--warn)}
+.tl.high::before{background:var(--crit)} .tl.high{color:var(--crit)}
+
+/* callouts */
+.note{border-left:3px solid var(--rule-strong);padding:3px 0 3px 17px;margin:22px 0;color:var(--ink-2);font-size:15px;max-width:74ch}
+.note strong{color:var(--ink)}
+.flag{background:var(--surface);border:1px solid var(--rule);border-left:5px solid var(--warn);padding:17px 20px;margin:22px 0;border-radius:2px}
+.flag h4{font-size:15px;font-weight:700;margin-bottom:6px;color:var(--warn)}
+.flag p{font-size:14.5px;color:var(--ink-2);margin:0}
+.flag p + p{margin-top:8px}
+
+/* two-col */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:20px}
+.panel{background:var(--surface);border:1px solid var(--rule);border-radius:2px;padding:20px 22px}
+.panel.m{border-top:4px solid var(--mel)} .panel.p{border-top:4px solid var(--per)}
+.panel h3{font-size:18px;font-weight:700;margin-bottom:4px}
+.panel h3.m{color:var(--mel)} .panel h3.p{color:var(--per)}
+.panel .cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin-bottom:13px}
+.panel ul{margin:0;padding-left:17px;font-size:14.5px;color:var(--ink-2)}
+.panel li{margin-bottom:7px} .panel li::marker{color:var(--ink-3)}
+.panel li b{color:var(--ink)}
+
+/* stat strip */
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:20px 0}
+.strip div{background:var(--surface);padding:15px 16px}
+.strip .k{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
+.strip .v{font-family:var(--display);font-size:24px;font-weight:800;letter-spacing:-.02em;margin-top:5px;font-variant-numeric:tabular-nums}
+.strip .d{font-size:12.5px;color:var(--ink-3);margin-top:3px;line-height:1.35}
+
+/* final */
+.final{border:2px solid var(--ink);background:var(--surface);padding:30px 32px;margin-top:34px;border-radius:2px}
+.final h2{font-size:clamp(24px,3.6vw,34px);font-weight:800;letter-spacing:-.02em}
+.bullets{counter-reset:b;list-style:none;padding:0;margin:22px 0 0;display:flex;flex-direction:column;gap:15px}
+.bullets li{counter-increment:b;display:grid;grid-template-columns:30px 1fr;gap:14px;font-size:16px;color:var(--ink-2);max-width:76ch}
+.bullets li::before{content:counter(b);font-family:var(--mono);font-size:12px;font-weight:600;color:var(--bg);background:var(--ink);width:23px;height:23px;display:grid;place-items:center;border-radius:50%;margin-top:2px}
+.bullets li b{color:var(--ink)}
+
+.flip{margin-top:26px;border:1px solid var(--per);background:var(--per-wash);padding:22px 24px;border-radius:2px}
+.flip .eyebrow{color:var(--per)}
+.flip h3{font-size:20px;font-weight:800;margin:7px 0 9px;color:var(--per)}
+.flip p{font-size:15.5px;color:var(--ink-2);margin:0}
+.flip p + p{margin-top:10px}
+
+footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--rule);font-size:13px;color:var(--ink-3)}
+footer h4{font-family:var(--display);font-size:13px;font-weight:700;color:var(--ink-2);margin:18px 0 7px;letter-spacing:.02em}
+footer ul{padding-left:17px;margin:0;columns:2;column-gap:34px}
+@media(max-width:640px){footer ul{columns:1}}
+footer li{margin-bottom:4px;break-inside:avoid}
+footer a{color:var(--ink-2)}
+a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--mel);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media(max-width:560px){
+  .barrow{grid-template-columns:1fr;gap:7px}
+  .vgrid{grid-template-columns:1fr 1fr}
+}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">Household property &amp; career decision model · September 2026</p>
+  <h1><span class="a">Melbourne</span> or <span class="b">Perth</span></h1>
+  <p class="sub">A risk-adjusted 20-year model for Tiger (electrical project engineer, $113k) and Tigress (AHPRA-registered psychologist), buying their first home on $160k of savings with children expected inside four years.</p>
+  <div class="mastmeta">
+    <span>10 weighted factors</span><span>4 wealth scenarios to 2046</span><span>Rate used: 6.35% p.a.</span><span>All figures AUD</span><span>Base year 2026</span>
+  </div>
+</header>
+
+<div class="verdict">
+  <div class="vh">
+    <p class="eyebrow" style="width:100%">The answer</p>
+    <h2>Melbourne — but not in 2026</h2>
+    <span class="conf">Confidence 72%</span>
+  </div>
+  <p><span class="kick">Melbourne wins on the numbers, not on preference.</span> Strip lifestyle out entirely and Melbourne still wins 77.5 to 62.2. That matters, because you explicitly asked not to be told "Melbourne" just because you like it — and the pure-financial score is the one that moved. The reason is simple and recent: <strong>Perth is now 27% more expensive than Melbourne</strong>, and the affordability argument that made Perth obvious two years ago has been fully consumed by a 90% five-year run.</p>
+  <p>The timing sub-answer is the more valuable half: on the base case, <strong>buying Melbourne in 2027–2028 beats buying in 2026</strong> by roughly $57,000 of loan principal, because prices are falling into a rising-rate cycle while your deposit grows.</p>
+  <dl class="vgrid">
+    <div><dt>Financial winner</dt><dd class="win-m">Melbourne</dd></div>
+    <div><dt>Career winner</dt><dd class="win-m">Melbourne</dd></div>
+    <div><dt>Lifestyle winner</dt><dd class="win-m">Melbourne <span style="font-weight:400;color:var(--ink-3);font-size:13px">(narrowly)</span></dd></div>
+    <div><dt>10-year wealth</dt><dd class="win-m">Melbourne</dd></div>
+    <div><dt>20-year wealth</dt><dd class="win-m">Melbourne</dd></div>
+    <div><dt>Best for Tiger</dt><dd class="win-m">Melbourne</dd></div>
+    <div><dt>Best for Tigress</dt><dd class="win-m">Melbourne</dd></div>
+    <div><dt>Job security now</dt><dd class="win-p">Perth</dd></div>
+  </dl>
+</div>
+
+<!-- ================= PREMISE ================= -->
+<section id="premise">
+  <div class="sechead"><span class="n">00</span><h2>Three facts that break the framing</h2></div>
+  <p class="lede">Your brief assumed Perth is the affordable, job-rich option and Melbourne is the expensive indulgence. As of September 2026, two of those three assumptions are no longer true.</p>
+
+  <div class="busters">
+    <div class="buster">
+      <span class="tag">Assumption inverted</span>
+      <h3>Perth is now dearer than Melbourne</h3>
+      <div class="big"><span class="cP">$999,987</span> <span style="color:var(--ink-3);font-weight:400;font-size:18px">vs</span> <span class="cM">$786,718</span></div>
+      <p>Cotality median dwelling values, 31 Aug 2026. Perth sits <strong>27% above</strong> Melbourne. Perth rose 15.6% over the year; Melbourne peaked in Nov 2025 and is ~6.3% below that peak. Melbourne is now the cheapest mainland east-coast capital and the cheapest big capital in the country.</p>
+    </div>
+    <div class="buster">
+      <span class="tag">Window closed</span>
+      <h3>Perth's entry corridor has been eaten</h3>
+      <div class="big" style="color:var(--per)">$710k–$755k</div>
+      <p>The suburbs that were Perth's first-home-buyer answer — Byford, Baldivis, Ellenbrook — are now <strong>above your budget</strong>. At $600–650k what remains is Armadale / Gosnells / Midland. In Melbourne, $600–650k still buys in Craigieburn, Werribee or Melton — and those prices are flat-to-falling, not post-boom.</p>
+    </div>
+    <div class="buster">
+      <span class="tag">Macro reversed</span>
+      <h3>Rates are rising, not falling</h3>
+      <div class="big">4.35%<span style="font-size:17px;color:var(--ink-3);font-weight:400"> cash rate</span></div>
+      <p>The RBA hiked three times in 2026 (Feb, Mar, May). All four major banks now forecast <strong>another hike before year-end</strong>; Westpac has modelled a 4.85% peak. National values have fallen five months straight, 3.6% below the March 2026 peak. Any model assuming a 2026 rate-cut tailwind is wrong.</p>
+    </div>
+  </div>
+
+  <div class="note"><strong>Why this changes the decision.</strong> At $600k you now pay <em>the same</em> stamp duty ($0, both states, as first home buyers) and <em>the same</em> repayment in either city. Price is not the differentiator. What differs is <strong>what $600k buys relative to each city's own market</strong> — 76% of Melbourne's median versus 60% of Perth's — and which market you are buying at the top of.</p>
+  </div>
+</section>
+
+<!-- ================= SCORECARD ================= -->
+<section id="scorecard">
+  <div class="sechead"><span class="n">01</span><h2>Final scorecard</h2><span class="w">weighted 0–100</span></div>
+  <p class="lede">Ten factors, weighted as you specified. The four residual factors (lifestyle, job security, flexibility) carry the remaining 15%.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Factor</th><th>Weight</th><th>Melbourne</th><th>Perth</th><th>Winner</th><th>Margin</th></tr></thead>
+      <tbody>
+        <tr><td>Tiger career opportunity</td><td class="mono">20%</td>
+          <td><div class="scorebar"><span class="track"><span class="fill" style="width:78%;background:var(--mel)"></span></span><span class="v cM">78</span></div></td>
+          <td><div class="scorebar"><span class="track"><span class="fill" style="width:69%;background:var(--per)"></span></span><span class="v cP">69</span></div></td>
+          <td class="cM">Melbourne</td><td class="mono">+9</td></tr>
+        <tr><td>Tigress career opportunity</td><td class="mono">15%</td>
+          <td><div class="scorebar"><span class="track"><span class="fill" style="width:80%;background:var(--mel)"></span></span><span class="v cM">80</span></div></td>
+          <td><div class="scorebar"><span class="track"><span class="fill" style="width:72%;background:var(--per)"></span></span><span class="v cP">72</span></div></td>
+          <td class="cM">Melbourne</td><td class="mono">+8</td></tr>
+        <tr><td>Property affordability</td><td class="mono">15%</td>
+          <td><div class="scorebar"><span class="track"><span class="fill" style="width:76%;background:var(--mel)"></span></span><span class="v cM">76</span></div></td>
+          <td><div class="scorebar"><span class="track"><span class="fill" style="width:58%;background:var(--per)"></span></span><span class="v cP">58</span></div></td>
+          <td class="cM">Melbourne</td><td class="mono">+18</td></tr>
+        <tr><td>Property growth potential</td><td class="mono">15%</td>
+          <td><div class="scorebar"><span class="track"><span class="fill" style="width:74%;background:var(--mel)"></span></span><span class="v cM">74</span></div></td>
+          <td><div class="scorebar"><span class="track"><span class="fill" style="width:48%;background:var(--per)"></span></span><span class="v cP">48</span></div></td>
+          <td class="cM">Melbourne</td><td class="mono">+26</td></tr>
+        <tr><td>20-year household wealth</td><td class="mono">20%</td>
+          <td><div class="scorebar"><span class="track"><span class="fill" style="width:82%;background:var(--mel)"></span></span><span class="v cM">82</span></div></td>
+          <td><div class="scorebar"><span class="track"><span class="fill" style="width:60%;background:var(--per)"></span></span><span class="v cP">60</span></div></td>
+          <td class="cM">Melbourne</td><td class="mono">+22</td></tr>
+        <tr><td>Lifestyle value</td><td class="mono">8%</td>
+          <td><div class="scorebar"><span class="track"><span class="fill" style="width:78%;background:var(--mel)"></span></span><span class="v cM">78</span></div></td>
+          <td><div class="scorebar"><span class="track"><span class="fill" style="width:70%;background:var(--per)"></span></span><span class="v cP">70</span></div></td>
+          <td class="cM">Melbourne</td><td class="mono">+8</td></tr>
+        <tr><td>Job security (right now)</td><td class="mono">4%</td>
+          <td><div class="scorebar"><span class="track"><span class="fill" style="width:66%;background:var(--mel)"></span></span><span class="v cM">66</span></div></td>
+          <td><div class="scorebar"><span class="track"><span class="fill" style="width:74%;background:var(--per)"></span></span><span class="v cP">74</span></div></td>
+          <td class="cP">Perth</td><td class="mono">+8</td></tr>
+        <tr><td>Flexibility to change course</td><td class="mono">3%</td>
+          <td><div class="scorebar"><span class="track"><span class="fill" style="width:72%;background:var(--mel)"></span></span><span class="v cM">72</span></div></td>
+          <td><div class="scorebar"><span class="track"><span class="fill" style="width:58%;background:var(--per)"></span></span><span class="v cP">58</span></div></td>
+          <td class="cM">Melbourne</td><td class="mono">+14</td></tr>
+        <tr class="total"><td>Overall (personal-optimised)</td><td class="mono">100%</td>
+          <td class="cM mono" style="font-size:17px">77.5</td><td class="cP mono" style="font-size:17px">62.8</td>
+          <td class="cM">Melbourne</td><td class="mono">+14.7</td></tr>
+        <tr class="total"><td>Overall (pure financial — lifestyle removed)</td><td class="mono">92%→100%</td>
+          <td class="cM mono" style="font-size:17px">77.5</td><td class="cP mono" style="font-size:17px">62.2</td>
+          <td class="cM">Melbourne</td><td class="mono">+15.3</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note"><strong>Read this line carefully:</strong> the pure-financial and personal-optimised scores are effectively identical (77.5 vs 77.5 for Melbourne). Removing every ounce of lifestyle preference does not change the answer. This is the strongest single result in the model — your preference for Melbourne is <em>not</em> what is driving the recommendation.</div>
+
+  <figure class="figure">
+    <div class="fighead"><h3>Overall decision score by factor contribution</h3>
+      <p>Weighted points contributed to each city's total. Melbourne's lead is built on property growth, 20-year wealth and Tiger's career — not lifestyle.</p></div>
+    <div class="bars" id="scoreChart"></div>
+  </figure>
+</section>
+
+<!-- ================= TIGER ================= -->
+<section id="tiger">
+  <div class="sechead"><span class="n">02</span><h2>Tiger — job suitability index</h2><span class="w">weight 20%</span></div>
+  <p class="lede">Not "how many electrical engineer ads exist" — how many roles genuinely match a 31-year-old project engineer with 3+ years in switchboards and switchrooms, who will not do FIFO.</p>
+
+  <div class="flag">
+    <h4>The no-FIFO constraint costs Perth its top quartile</h4>
+    <p>Perth's headline engineering salaries beat Melbourne's — but a disproportionate share of the $170k+ non-graduate electrical roles in WA are resources roles that assume FIFO or long-term site residency. Ruling out FIFO removes most of the top of the WA salary distribution while leaving Melbourne's largely intact, because Melbourne's high-paying electrical work is metro data centres and metro infrastructure.</p>
+    <p>This is the single biggest correction to the intuition that "Perth pays engineers more."</p>
+  </div>
+
+  <div class="cols">
+    <div class="panel m">
+      <h3 class="m">Melbourne</h3><div class="cap">Index 78 / 100</div>
+      <ul>
+        <li><b>37 data centre projects in the pipeline, 38 operating</b> (Sept 2026) — roughly a quarter of Australia's ~6 GW national pipeline.</li>
+        <li>Four new campuses lodged at Mickleham, Truganina, Campbellfield and Clyde North; ~<b>$5bn across two costed sites</b> alone.</li>
+        <li>Victoria's <b>Sustainable Data Centre Action Plan</b> targets unlocking up to <b>$25bn</b> in private projects, with explicit workforce development.</li>
+        <li>Deep switchboard/switchgear OEM base — the largest concentration of LV/MV panel builders and integrators in the country. <b>Directly matches your background.</b></li>
+        <li>All of it <b>metro and non-FIFO.</b></li>
+        <li><b>Against it:</b> Victorian unemployment 4.8% (up from 4.3%); employment grew just <b>+26,000</b> in the year to March 2026 — the weakest since 2021, against +71,500 the year prior. More competition per role.</li>
+      </ul>
+    </div>
+    <div class="panel p">
+      <h3 class="p">Perth</h3><div class="cap">Index 69 / 100</div>
+      <ul>
+        <li><b>$973m Western Power network investment</b> plus a <b>$1.5bn Powering WA Clean Energy Fund</b> — real, funded, metro-accessible HV/LV work.</li>
+        <li><b>Clean Energy Link – North:</b> 354 km of transmission, terminals and substations from Malaga to Three Springs.</li>
+        <li>Consolidated Power Projects is expanding WA operations with engineering and project-delivery headcount <b>set to more than double.</b></li>
+        <li>Tightest labour market in the country: <b>4.0% unemployment</b>, employment forecast +1.75% in 2026–27. <b>You will get hired faster here.</b></li>
+        <li><b>Against it:</b> only <b>7 data centre projects in the pipeline</b> vs Victoria's 37. Largest is CDC Maddington (200 MW).</li>
+        <li><b>Against it:</b> switchboard sector is heavily mining-serving; ruling out FIFO thins the senior ladder materially.</li>
+      </ul>
+    </div>
+  </div>
+
+  <figure class="figure">
+    <div class="fighead"><h3>Tiger job suitability index — realistic roles, not raw ad counts</h3>
+      <p>Scored 0–100 on each dimension for a non-FIFO project engineer with your specific switchboard/switchroom background.</p></div>
+    <div class="bars" id="tigerChart"></div>
+  </figure>
+
+  <figure class="figure">
+    <div class="fighead"><h3>Modelled salary trajectory, 2026–2046</h3>
+      <p>Same $113k start. Melbourne compounds faster on data-centre and infrastructure step-changes; Perth starts faster (tighter market) but the non-FIFO ceiling binds from the mid-2030s. Forecast, not a promise.</p></div>
+    <div class="legend"><i><span class="swatch" style="background:var(--mel)"></span>Melbourne</i><i><span class="swatch" style="background:var(--per)"></span>Perth</i></div>
+    <div class="chartbox"><svg class="chart" id="salaryChart" viewBox="0 0 900 320" role="img" aria-label="Tiger salary trajectory: Melbourne reaches $256k by 2046, Perth $233k"></svg><div class="tip" id="salaryTip"></div></div>
+  </figure>
+
+  <div class="note"><strong>On job-board counts.</strong> A SEEK search for "electrical engineer" returns hundreds of results in both cities, but that number is close to meaningless: it double-counts agency reposts, mixes graduate with 15-year-senior roles, includes maintenance and design positions that are not project delivery, and in Perth silently includes FIFO. The index above is built from <em>funded project pipelines and employer counts</em> — a better proxy for sustained demand than any snapshot of advertisements.</div>
+</section>
+
+<!-- ================= TIGRESS ================= -->
+<section id="tigress">
+  <div class="sechead"><span class="n">03</span><h2>Tigress — career index</h2><span class="w">weight 15%</span></div>
+  <p class="lede">Full AHPRA general registration removes the single biggest risk here. She is employable from day one in either city, so this becomes a question of ceiling and competition, not pathway.</p>
+
+  <div class="strip">
+    <div><span class="k">National shortfall 2025</span><span class="v">57.3%</span><span class="d">Demand over supply for psychological services</span></div>
+    <div><span class="k">Projected 2038</span><span class="v" style="color:var(--crit)">96.6%</span><span class="d">Shortage roughly doubles — structural, not cyclical</span></div>
+    <div><span class="k">Private vs public growth</span><span class="v">42 : 1</span><span class="d">FTE growth ratio, private over public, 2019–2023</span></div>
+    <div><span class="k">VIC average</span><span class="v cM">~$100k</span><span class="d">Registered psychologist</span></div>
+    <div><span class="k">WA average</span><span class="v cP">~$99.8k</span><span class="d">Statistically indistinguishable</span></div>
+  </div>
+
+  <p><strong>Pay is a tie.</strong> Victoria ~$100k, WA ~$99,750 — a 0.25% difference, inside the noise. So salary cannot decide this. What decides it is <em>ceiling</em> and <em>optionality</em>, and there Melbourne is clearly deeper: more clinical-endorsement supervisors, more universities running the registrar pathway, more specialist private practices, a far larger NDIS and EAP provider market, and more employers to move between without changing city.</p>
+
+  <p><strong>Perth's genuine advantage is speed.</strong> A tighter market and fewer registered psychologists per capita means she places faster and can likely negotiate harder on day one. If she wants to open a private practice quickly, Perth's 0.6% rental vacancy and low practitioner density is a real commercial opening.</p>
+
+  <figure class="figure">
+    <div class="fighead"><h3>Tigress career index</h3>
+      <p>Melbourne wins on ceiling and optionality; Perth wins on immediacy and competition. Neither city puts her career at risk — the national shortage protects her in both.</p></div>
+    <div class="bars" id="tigressChart"></div>
+  </figure>
+
+  <div class="flag">
+    <h4>The real risk to Tigress's income is not the city — it's the childcare cliff</h4>
+    <p>With children expected inside four years, her income is modelled dropping to ~25% of full-time in the first baby year and ~55% the year after. That single assumption moves your household's mortgage-servicing capacity far more than any Melbourne–Perth difference. See the career risk test below.</p>
+  </div>
+</section>
+
+<!-- ================= AFFORDABILITY ================= -->
+<section id="afford">
+  <div class="sechead"><span class="n">04</span><h2>Property affordability</h2><span class="w">weight 15%</span></div>
+  <p class="lede">Modelled at 6.35% p.a. over 30 years — a competitive owner-occupier variable rate as at September 2026, with the cash rate at 4.35% and lenders pricing between 5.8% and 6.6%. Both of you are first home buyers, which is worth more than you may realise.</p>
+
+  <div class="strip">
+    <div><span class="k">Victoria FHB duty</span><span class="v cM">$0</span><span class="d">Nil to $600k · sliding concession to $750k</span></div>
+    <div><span class="k">WA FHB duty</span><span class="v cP">$0</span><span class="d">Nil to $600k (raised from $500k on 7 May 2026) · concession to $800k</span></div>
+    <div><span class="k">Your net household income</span><span class="v">$163,264</span><span class="d">After tax + Medicare, both working full-time</span></div>
+    <div><span class="k">Modelling rate</span><span class="v">6.35%</span><span class="d">30-year P&amp;I owner-occupier variable</span></div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Purchase price</th><th>MEL duty</th><th>PER duty</th><th>Loan (incl. LMI)</th><th>LVR</th><th>Monthly</th><th>Annual</th><th>% of net income</th></tr></thead>
+      <tbody>
+        <tr><td>$550,000</td><td class="cM">$0</td><td class="cP">$0</td><td>$461,436</td><td>82.5%</td><td>$2,871</td><td>$34,452</td><td>21.1%</td></tr>
+        <tr><td>$600,000</td><td class="cM">$0</td><td class="cP">$0</td><td>$512,311</td><td>83.9%</td><td>$3,188</td><td>$38,253</td><td>23.4%</td></tr>
+        <tr><td>$625,000</td><td class="cM">$5,428</td><td class="cP">$4,039</td><td>~$548,000</td><td>85.3%</td><td>~$3,410</td><td>~$40,920</td><td>25.1%</td></tr>
+        <tr><td>$650,000</td><td class="cM">$11,357</td><td class="cP">$8,079</td><td>~$579,000</td><td>86.7%</td><td>~$3,602</td><td>~$43,230</td><td>26.5%</td></tr>
+        <tr><td>$700,000</td><td class="cM">$24,713</td><td class="cP">$16,158</td><td>~$641,000</td><td>89.1%</td><td>~$3,991</td><td>~$47,890</td><td>29.3%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:13px;color:var(--ink-3);margin-top:9px">Assumes your stated $100,000 deposit, ~$3,500 of conveyancing and transfer costs, and capitalised LMI. WA concessional duty above $600k is estimated by linear phase-in to $800k; confirm exact figures with RevenueWA.</p>
+
+  <div class="flag">
+    <h4>Your $100,000 deposit plan is costing you about $2,400 a year and $21,500 of safety buffer</h4>
+    <p>You have $160,000. A $100,000 deposit at $600k puts you at <strong>83.9% LVR — above the 80% threshold — triggering roughly $8,800 of lenders mortgage insurance</strong> and leaving only ~$15,000 of cash behind.</p>
+    <p><strong>Deposit $123,500 instead</strong> ($120,000 deposit + $3,500 costs) and you land at exactly <strong>80.0% LVR, $480,000 loan, zero LMI</strong> — repayments $2,987/month instead of $3,188, and you keep <strong>$36,500</strong> in the offset rather than $15,000. That is strictly better on both axes: lower cost and more buffer. There is no version of the $100k plan that beats it.</p>
+  </div>
+
+  <figure class="figure">
+    <div class="fighead"><h3>Mortgage affordability under income stress</h3>
+      <p>Annual repayment on a $512k loan as a share of net household income. Above 38% is conventionally mortgage stress. The binding constraint is not Tiger's salary — it is Tigress's income during the baby years.</p></div>
+    <div class="bars" id="stressChart"></div>
+  </figure>
+
+  <div class="note"><strong>Rate sensitivity on the same $512k loan.</strong> At 5.75% → $2,990/mo (22.0% of net). At 6.35% → $3,188 (23.4%). At 7.10% → $3,443 (25.3%). At 7.85% → $3,706 (27.2%). Even a 7.85% rate is survivable on two full incomes — <em>and unsurvivable on one</em>. Rate risk and baby risk are the same risk.</div>
+</section>
+
+<!-- ================= GROWTH ================= -->
+<section id="growth">
+  <div class="sechead"><span class="n">05</span><h2>Property growth potential</h2><span class="w">weight 15%</span></div>
+  <p class="lede">You asked not to extrapolate the last five years. Doing so would be the single worst error available here — because the last five years are exactly what makes Perth look good and Melbourne look bad, and they are the least repeatable five years in either city's record.</p>
+
+  <div class="cols">
+    <div class="panel">
+      <h3>Since 2000, Perth has beaten Melbourne — in two bursts, with a lost decade between</h3>
+      <div class="cap">Total growth 2000 → 2026</div>
+      <ul>
+        <li><b>Perth +459%</b> (~6.0–6.8% CAGR) · <b>Melbourne +346%</b> (~4.9–5.9% CAGR)</li>
+        <li>But Perth's entire outperformance was delivered in <b>two mining-linked bursts</b>: 2003–2008 and 2020–2026.</li>
+        <li>Between them, <b>Perth's median fell from 2010 to 2020</b> — a full decade of negative real growth after the last boom unwound.</li>
+        <li>Melbourne's path was slower but far steadier, with shallower drawdowns.</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>Where each city sits in its cycle right now</h3>
+      <div class="cap">As at 31 August 2026</div>
+      <ul>
+        <li><b>Perth:</b> +15.6% year-on-year, fastest capital — but just rolled over. Houses <b>−3.0%</b> and units <b>−4.1%</b> over the three months to August. Slipped back under $1m.</li>
+        <li><b>Melbourne:</b> peaked November 2025 at ~$840k, now $786,718 — roughly <b>6.3% below peak</b>, with the cheapest entry of any large capital.</li>
+        <li><b>Vacancy:</b> Perth 0.6% (below 1.5% for 18 straight months) vs Melbourne 1.6%. Perth's rental market is tighter — supportive of prices, punishing if you rent.</li>
+        <li><b>Migration:</b> WA net interstate <b>+9,800</b> (best in over a decade); Victoria <b>−3,200</b>. But Melbourne takes a far larger share of net overseas migration, which is the bigger number nationally.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note"><strong>The honest counter-argument for Perth.</strong> Migration and vacancy both currently favour Perth, and WA's fiscal position is far stronger (net debt 7.1% of GSP, eighth consecutive surplus, $3.5bn). If WA's energy and critical-minerals build-out is structural rather than cyclical, Perth's growth need not mean-revert. That is the bull case, and it is not silly — it is the reason confidence here is 72% and not 90%.</div>
+
+  <figure class="figure">
+    <div class="fighead"><h3>Value of a $600,000 purchase, 2026–2046 — scenario bands</h3>
+      <p>Shaded bands span bear to bull; solid lines are the base case. <strong>Forecasts, not predictions.</strong> Melbourne base assumes 5.0% CAGR after a 2027 dip; Perth base assumes 3.5% after a sharper 2027–28 correction.</p></div>
+    <div class="legend">
+      <i><span class="swatch" style="background:var(--mel)"></span>Melbourne base (5.0%)</i>
+      <i><span class="swatch" style="background:var(--per)"></span>Perth base (3.5%)</i>
+      <i><span class="swatch" style="background:var(--mel-wash);height:11px;border-radius:2px"></span>Melbourne bear–bull</i>
+      <i><span class="swatch" style="background:var(--per-wash);height:11px;border-radius:2px"></span>Perth bear–bull</i>
+    </div>
+    <div class="chartbox"><svg class="chart" id="propChart" viewBox="0 0 900 380" role="img" aria-label="Property value trajectory 2026-2046, Melbourne base reaches $1.44m, Perth base $1.02m"></svg><div class="tip" id="propTip"></div></div>
+  </figure>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Scenario ($600k purchase)</th><th>2030</th><th>2035</th><th>2040</th><th>2045</th></tr></thead>
+      <tbody>
+        <tr><td>Melbourne — bear (2.5%)</td><td>$608k</td><td>$688k</td><td>$779k</td><td>$881k</td></tr>
+        <tr><td>Melbourne — <b>base (5.0%)</b></td><td class="cM">$658k</td><td class="cM">$840k</td><td class="cM">$1,072k</td><td class="cM">$1,368k</td></tr>
+        <tr><td>Melbourne — bull (7.0%)</td><td>$704k</td><td>$987k</td><td>$1,385k</td><td>$1,942k</td></tr>
+        <tr><td>Perth — bear (1.0%)</td><td>$540k</td><td>$568k</td><td>$597k</td><td>$627k</td></tr>
+        <tr><td>Perth — <b>base (3.5%)</b></td><td class="cP">$586k</td><td class="cP">$696k</td><td class="cP">$826k</td><td class="cP">$981k</td></tr>
+        <tr><td>Perth — bull (6.0%)</td><td>$634k</td><td>$848k</td><td>$1,135k</td><td>$1,519k</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note"><strong>Conflicting forecasts, shown rather than hidden.</strong> For Melbourne in calendar 2026 alone: KPMG projects <em>+6%</em>; most independents +4% to +7%; Domain expects record highs by year-end. Against that, <strong>ANZ forecasts −9.2%, CBA −7.0%, Westpac −4.0%</strong>. That is a 15-point spread between reputable houses on a single year. Treat every number in the table above as a scenario, not a projection — and note that the bank forecasts are the more recent and more bearish, which is why the model builds a 2027 dip into <em>both</em> cities.</div>
+
+  <div class="note"><strong>The break-even that matters.</strong> Because Perth enters from a worse cyclical position, it needs roughly <strong>+0.9 to +1.0 percentage points of extra annual growth</strong> just to match Melbourne's 2046 value. At 5.5% CAGR Perth reaches $1,433k — dead level with Melbourne's 5.0%. <em>Perth has to grow meaningfully faster to merely tie.</em></div>
+</section>
+
+<!-- ================= WEALTH ================= -->
+<section id="wealth">
+  <div class="sechead"><span class="n">06</span><h2>Household wealth model, 2026 → 2046</h2><span class="w">weight 20%</span></div>
+  <p class="lede">Four scenarios, base-case growth throughout. Includes tax, two children (2028 and 2030), childcare, 2.7% cost inflation, 7.2% nominal returns on invested surplus, rates/insurance/maintenance at 1.1% of value, and rent rising 3.2% a year.</p>
+
+  <figure class="figure">
+    <div class="fighead"><h3>Household net worth, 2026–2046</h3>
+      <p>All four paths dip in the childcare years (2029–2032). The two Melbourne-asset paths separate decisively from Perth after 2035.</p></div>
+    <div class="legend">
+      <i><span class="swatch" style="background:var(--mel)"></span>A · Buy Melbourne 2026</i>
+      <i><span class="swatch" style="background:var(--per)"></span>B · Buy Perth 2026</i>
+      <i><span class="swatch" style="background:var(--s3)"></span>C · Rent Perth, buy Melbourne 2031</i>
+      <i><span class="swatch" style="background:var(--s4)"></span>D · Rent Melbourne, buy Melbourne 2029</i>
+    </div>
+    <div class="chartbox"><svg class="chart" id="nwChart" viewBox="0 0 900 400" role="img" aria-label="Net worth 2026-2046: scenario D reaches $2.44m, A $2.32m, C $2.08m, B $1.72m"></svg><div class="tip" id="nwTip"></div></div>
+  </figure>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Scenario</th><th>Metric</th><th>2030</th><th>2035</th><th>2040</th><th>2046</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="5" style="vertical-align:top"><span class="cM">A · Buy Melbourne 2026</span></td><td style="text-align:left">Property value</td><td>$658k</td><td>$840k</td><td>$1,072k</td><td>$1,436k</td></tr>
+        <tr><td style="text-align:left">Mortgage balance</td><td>$435k</td><td>$397k</td><td>$343k</td><td>$253k</td></tr>
+        <tr><td style="text-align:left">Equity</td><td>$223k</td><td>$443k</td><td>$728k</td><td>$1,183k</td></tr>
+        <tr><td style="text-align:left">Investments + cash</td><td>$134k</td><td>$189k</td><td>$441k</td><td>$1,097k</td></tr>
+        <tr><td style="text-align:left"><b>Net worth</b></td><td class="cM"><b>$388k</b></td><td class="cM"><b>$606k</b></td><td class="cM"><b>$1,209k</b></td><td class="cM"><b>$2,320k</b></td></tr>
+
+        <tr><td rowspan="5" style="vertical-align:top"><span class="cP">B · Buy Perth 2026</span></td><td style="text-align:left">Property value</td><td>$586k</td><td>$696k</td><td>$826k</td><td>$1,016k</td></tr>
+        <tr><td style="text-align:left">Mortgage balance</td><td>$435k</td><td>$397k</td><td>$343k</td><td>$253k</td></tr>
+        <tr><td style="text-align:left">Equity</td><td>$151k</td><td>$299k</td><td>$483k</td><td>$763k</td></tr>
+        <tr><td style="text-align:left">Investments + cash</td><td>$136k</td><td>$192k</td><td>$373k</td><td>$915k</td></tr>
+        <tr><td style="text-align:left"><b>Net worth</b></td><td class="cP"><b>$315k</b></td><td class="cP"><b>$441k</b></td><td class="cP"><b>$895k</b></td><td class="cP"><b>$1,718k</b></td></tr>
+
+        <tr><td rowspan="2" style="vertical-align:top">C · Rent Perth → buy Melbourne 2031</td><td style="text-align:left">Equity / investments</td><td>$0 / $343k</td><td>$174k / $486k</td><td>$465k / $688k</td><td>$931k / $1,112k</td></tr>
+        <tr><td style="text-align:left"><b>Net worth</b></td><td><b>$399k</b></td><td><b>$498k</b></td><td><b>$1,081k</b></td><td><b>$2,083k</b></td></tr>
+
+        <tr><td rowspan="2" style="vertical-align:top">D · Rent Melbourne → buy Melbourne 2029</td><td style="text-align:left">Equity / investments</td><td>$52k / $338k</td><td>$276k / $478k</td><td>$567k / $677k</td><td>$1,032k / $1,372k</td></tr>
+        <tr><td style="text-align:left"><b>Net worth</b></td><td><b>$377k</b></td><td><b>$625k</b></td><td><b>$1,284k</b></td><td><b>$2,444k</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="strip">
+    <div><span class="k">2046 — Melbourne buy</span><span class="v cM">$2.32m</span><span class="d">Scenario A</span></div>
+    <div><span class="k">2046 — Perth buy</span><span class="v cP">$1.72m</span><span class="d">Scenario B</span></div>
+    <div><span class="k">The gap</span><span class="v">$602k</span><span class="d">~35% more wealth from the same income and deposit</span></div>
+    <div><span class="k">2046 — best path</span><span class="v" style="color:var(--s4)">$2.44m</span><span class="d">Scenario D · rent, then buy Melbourne 2029</span></div>
+  </div>
+
+  <div class="flag">
+    <h4>Be sceptical of Scenario D, even though it wins</h4>
+    <p>Renting in Melbourne and buying in 2029 produces the highest modelled net worth ($2.44m) — but it wins on assumptions you cannot control. It needs (a) Melbourne prices to actually dip in 2027 as modelled, (b) 7.2% investment returns to hold, and (c) three years of genuine savings discipline while renting with a newborn. If Melbourne instead rallies 6% a year from here, Scenario D loses to Scenario A outright.</p>
+    <p>What is robust across every variation is the <em>city</em>, not the <em>timing</em>: all three Melbourne-asset paths (A, C, D) beat Perth (B) by $365k–$726k at 2046.</p>
+  </div>
+
+  <div class="note"><strong>Where the $602k gap actually comes from.</strong> Almost all of it is the property growth assumption (Melbourne 5.0% vs Perth 3.5%), which is doing more work than any other input in this model. Set both cities to 5.0% and the gap collapses to roughly $120k — Melbourne still wins, but on entry price rather than growth rate. You should treat the direction as reliable and the magnitude as soft.</div>
+</section>
+
+<!-- ================= CAREER RISK ================= -->
+<section id="risk-career">
+  <div class="sechead"><span class="n">07</span><h2>Career risk test</h2><span class="w">the section that should worry you most</span></div>
+  <p class="lede">This is where moving to Melbourne actually costs you, and the model does not hide it. Victoria's job market is genuinely softer right now.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>If Tiger is out of work for…</th><th>Savings drawdown</th><th>On a $15k buffer</th><th>On a $36.5k buffer</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td>3 months</td><td>$7,011</td><td><span class="tl low">Survives</span></td><td><span class="tl low">Survives</span></td><td>Comfortable</td></tr>
+        <tr><td>6 months</td><td>$14,022</td><td><span class="tl med">Just survives</span></td><td><span class="tl low">Survives</span></td><td>Tight but intact</td></tr>
+        <tr><td>9 months</td><td>$21,033</td><td><span class="tl high">Short $6,033</span></td><td><span class="tl low">Survives</span></td><td>Buffer decides it</td></tr>
+        <tr><td>12 months</td><td>$28,044</td><td><span class="tl high">Short $13,044</span></td><td><span class="tl med">Survives, barely</span></td><td>Buffer decides it</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:13px;color:var(--ink-3);margin-top:9px">Assumes Tigress working full-time throughout, $600k purchase, $3,188/month repayment, $65k annual living costs. No income support assumed.</p>
+
+  <div class="note"><strong>This single table justifies the 80% LVR structure.</strong> On your stated $100k deposit you can absorb six months of unemployment. On a $123,500 deposit you can absorb twelve. Same house, same city — a structuring choice worth more than the entire Melbourne–Perth job-market difference.</div>
+
+  <h3 style="font-size:19px;margin:34px 0 14px">Salary scenarios — repayment as a share of net household income</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Tiger's salary</th><th>Tigress full-time</th><th>Tigress 0.55 FTE (baby years)</th><th>Tigress $0 (parental leave)</th></tr></thead>
+      <tbody>
+        <tr><td>$100,000 (temporary step down)</td><td>24.8%</td><td>30.9%</td><td><span class="tl high">49.5%</span></td></tr>
+        <tr><td>$110,000</td><td>23.7%</td><td>29.3%</td><td><span class="tl high">45.5%</span></td></tr>
+        <tr><td>$113,000 (today)</td><td>23.4%</td><td>28.8%</td><td><span class="tl high">44.5%</span></td></tr>
+        <tr><td>$140,000</td><td>21.1%</td><td>25.4%</td><td><span class="tl med">36.8%</span></td></tr>
+        <tr><td>$160,000</td><td>19.8%</td><td>23.5%</td><td><span class="tl med">32.9%</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="flag">
+    <h4>The real finding: a temporary $100–110k role is almost irrelevant. Tigress going to zero is not.</h4>
+    <p>Tiger accepting $100k instead of $113k moves your repayment burden from 23.4% to 24.8% — a rounding error. But Tigress on full parental leave pushes you to <strong>44.5%, deep into mortgage stress</strong>, regardless of city.</p>
+    <p><strong>Practical consequence:</strong> do not let a $10–13k salary difference decide which city you move to. Do build a buffer that covers 12 months of single-income servicing before you have the first child — roughly <strong>$40,000</strong>. That is the number that protects you, and it is achievable by 2028 on your current savings rate.</p>
+  </div>
+</section>
+
+<!-- ================= RISK ================= -->
+<section id="risks">
+  <div class="sechead"><span class="n">08</span><h2>Risk register</h2></div>
+  <p class="lede">Probabilities are the model's judgement over a 10-year horizon, stated so you can disagree with a number rather than a vibe.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Risk</th><th>City</th><th>Severity</th><th>Prob. (10yr)</th><th>What it does to you</th></tr></thead>
+      <tbody>
+        <tr><td>Perth commodity-cycle downturn repeats 2010–2020</td><td class="cP">Perth</td><td><span class="tl high">High</span></td><td class="mono">30–35%</td><td>A decade of flat-to-negative equity. This is the dominant Perth risk and it has a direct precedent.</td></tr>
+        <tr><td>Buying Perth near a cyclical peak</td><td class="cP">Perth</td><td><span class="tl high">High</span></td><td class="mono">50–60%</td><td>Already materialising: houses −3.0%, units −4.1% over three months to Aug 2026.</td></tr>
+        <tr><td>Tiger's job search in Melbourne takes 9–12 months</td><td class="cM">Melbourne</td><td><span class="tl high">High</span></td><td class="mono">15–20%</td><td>Buffer exhausted on the $100k deposit plan. <b>The main Melbourne risk.</b></td></tr>
+        <tr><td>Further RBA hikes to 4.85%+</td><td>Both</td><td><span class="tl med">Medium</span></td><td class="mono">55–65%</td><td>Repayment to ~$3,443/mo. Survivable on two incomes only.</td></tr>
+        <tr><td>Victorian property tax / policy tightening</td><td class="cM">Melbourne</td><td><span class="tl med">Medium</span></td><td class="mono">40–50%</td><td>Suppresses investor demand and therefore price growth — the main reason Melbourne underperformed 2021–26.</td></tr>
+        <tr><td>Perth affordability deterioration blocks re-entry</td><td class="cP">Perth</td><td><span class="tl med">Medium</span></td><td class="mono">45%</td><td>You are already priced out of Byford/Baldivis/Ellenbrook. Waiting makes it worse.</td></tr>
+        <tr><td>Melbourne outer-corridor oversupply</td><td class="cM">Melbourne</td><td><span class="tl med">Medium</span></td><td class="mono">40%</td><td>Melton/Tarneit land release caps growth in exactly your price band.</td></tr>
+        <tr><td>Victorian economy stays weak (unemployment 5%+)</td><td class="cM">Melbourne</td><td><span class="tl med">Medium</span></td><td class="mono">35%</td><td>Slower salary progression for both of you. Already partly visible.</td></tr>
+        <tr><td>Tigress unable to work post-children as planned</td><td>Both</td><td><span class="tl high">High</span></td><td class="mono">25%</td><td>44.5% repayment burden. City-independent — the largest single household risk.</td></tr>
+        <tr><td>Melbourne data-centre pipeline stalls on grid constraints</td><td class="cM">Melbourne</td><td><span class="tl med">Medium</span></td><td class="mono">30%</td><td>Removes Tiger's main salary-growth thesis; falls back to ~Perth trajectory.</td></tr>
+        <tr><td>Tigress cannot find work</td><td>Both</td><td><span class="tl low">Low</span></td><td class="mono">&lt;5%</td><td>National shortage of 57% rising to 96% by 2038 protects her in either city.</td></tr>
+        <tr><td>Perth psychology market saturates</td><td class="cP">Perth</td><td><span class="tl low">Low</span></td><td class="mono">&lt;10%</td><td>Minimal — smaller market but proportionally fewer practitioners.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <figure class="figure">
+    <div class="fighead"><h3>Aggregate risk exposure</h3>
+      <p>Severity × probability, summed by city. Lower is better. Perth's concentration in a single commodity cycle outweighs Melbourne's employment softness.</p></div>
+    <div class="bars" id="riskChart"></div>
+  </figure>
+</section>
+
+<!-- ================= FLEXIBILITY ================= -->
+<section id="flex">
+  <div class="sechead"><span class="n">09</span><h2>What if you want to move later?</h2><span class="w">weight 3%, but read it anyway</span></div>
+  <p class="lede">You raised this as critical, and you were right to. It is the option that looks safest and is in fact the most expensive.</p>
+
+  <div class="strip">
+    <div><span class="k">Perth value 2031</span><span class="v cP">$606k</span><span class="d">Base case, after correction</span></div>
+    <div><span class="k">Selling costs</span><span class="v">$15,157</span><span class="d">Agent + marketing @2.5%</span></div>
+    <div><span class="k">Melbourne stamp duty</span><span class="v" style="color:var(--crit)">$36,524</span><span class="d">You are no longer a first home buyer</span></div>
+    <div><span class="k">Total switching friction</span><span class="v" style="color:var(--crit)">$63,681</span><span class="d">10.5% of the asset, plus relocation</span></div>
+  </div>
+
+  <div class="flag">
+    <h4>Buy Perth now, move to Melbourne in 5 years is the worst of the four options</h4>
+    <p>You would sell a $606k Perth property carrying a $478,743 loan, walk away with <strong>$112,391 of equity after costs</strong>, then need <strong>$690,894</strong> for the Melbourne equivalent — requiring a <strong>$630,527 loan, $118,000 larger than the one you started with</strong>, at age 36 with two children.</p>
+      <p>You would have paid five years of interest, lost your first-home-buyer stamp duty exemption permanently, absorbed a Perth correction, and financed a more expensive Melbourne entry. <strong>The FHB exemption is a one-shot asset worth up to $36,500 — spend it in the city you intend to stay in.</strong></p>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Option</th><th>Transaction cost</th><th>Flexibility</th><th>2046 net worth</th><th>Assessment</th></tr></thead>
+      <tbody>
+        <tr><td>Buy Melbourne, stay 10+ years</td><td class="cM">$3,500</td><td><span class="tl low">High</span></td><td class="cM">$2,320k</td><td>Cheapest entry, largest market to sell into later</td></tr>
+        <tr><td>Rent Perth → buy Melbourne 2031</td><td>$3,500 + 5yr rent premium</td><td><span class="tl low">Highest</span></td><td>$2,083k</td><td>Maximum optionality; Perth's 0.6% vacancy makes renting expensive and insecure</td></tr>
+        <tr><td>Rent Melbourne → buy Melbourne 2029</td><td>$3,500</td><td><span class="tl low">High</span></td><td style="color:var(--s4)"><b>$2,444k</b></td><td>Best modelled outcome; requires discipline and a 2027 dip to materialise</td></tr>
+        <tr><td>Buy Perth → move Melbourne 2031</td><td class="mono" style="color:var(--crit)">$63,681</td><td><span class="tl high">Lowest</span></td><td>~$1,850k</td><td><b>Avoid.</b> Pays for two entries, keeps neither advantage</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================= TIMING ================= -->
+<section id="timing">
+  <div class="sechead"><span class="n">10</span><h2>Buy now, or wait?</h2></div>
+  <p class="lede">Modelled on Melbourne, base case. Prices do <em>not</em> simply rise every year here — the model has them falling 2% in 2027 before recovering, consistent with five consecutive months of national declines and a rising cash rate.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Buy in</th><th>Expected price</th><th>Deposit available</th><th>Stamp duty</th><th>LVR</th><th>LMI</th><th>Loan</th><th>Annual repayment</th></tr></thead>
+      <tbody>
+        <tr><td>2026 (now)</td><td>$600,000</td><td>$160,000</td><td>$0</td><td>73.9%</td><td>$0</td><td>$443,500</td><td>$33,115</td></tr>
+        <tr style="background:var(--mel-wash)"><td><b>2027</b></td><td>$588,000</td><td>$205,200</td><td>$0</td><td><b>65.7%</b></td><td>$0</td><td><b>$386,300</b></td><td><b>$28,844</b></td></tr>
+        <tr style="background:var(--mel-wash)"><td><b>2028</b></td><td>$596,820</td><td>$228,434</td><td>$0</td><td><b>62.3%</b></td><td>$0</td><td><b>$371,886</b></td><td><b>$27,768</b></td></tr>
+        <tr><td>2029</td><td>$626,661</td><td>$252,714</td><td>$5,807</td><td>61.2%</td><td>$0</td><td>$383,254</td><td>$28,617</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:13px;color:var(--ink-3);margin-top:9px">Deposit growth assumes ~$38k annual savings while renting pre-children, tapering to ~$14k from 2028, plus 4.5% returns. Note this table deploys your <em>full</em> savings, not a $100k deposit.</p>
+
+  <div class="note"><strong>The window is 2027–2028, and it closes.</strong> Waiting one year cuts your loan by $57,200 and your repayment by $4,271 a year — because prices dip while your deposit grows. Waiting to 2029 starts to reverse it: prices recover past $600k, you lose the full stamp duty exemption ($5,807), and your first child has already arrived, cutting your savings rate. <strong>2028 is the last clean year.</strong></div>
+
+  <div class="flag">
+    <h4>The case against waiting — stated fairly</h4>
+    <p>This entire timing recommendation rests on Melbourne prices being flat-to-down through 2027. That is the majority view right now (ANZ −9.2%, CBA −7.0%, Westpac −4.0% for 2026), but <strong>KPMG and most independent forecasters expect +4% to +7% instead</strong>. If they are right, waiting costs you roughly $25–40k of price appreciation against ~$45k of extra deposit — close to a wash, with more rate risk.</p>
+      <p><strong>Reasonable compromise:</strong> treat 2027–2028 as a target window rather than a firm delay, and buy the moment Tiger has a signed Melbourne contract and you clear $123,500 in cash. Do not wait for a price bottom you cannot identify in advance.</p>
+  </div>
+</section>
+
+<!-- ================= LIFESTYLE ================= -->
+<section id="lifestyle">
+  <div class="sechead"><span class="n">11</span><h2>Lifestyle &amp; the preference adjustment</h2><span class="w">weight 8%</span></div>
+  <p class="lede">Scored honestly, including the two things you raised yourself — your friends are in Perth, and Melbourne traffic is getting worse. Both count against Melbourne, and the gap is narrower than you would probably guess.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Dimension</th><th>Melbourne</th><th>Perth</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Food &amp; dining</td><td class="cM">92</td><td class="cP">68</td><td>No serious contest</td></tr>
+        <tr><td>Pakistani &amp; South Asian community</td><td class="cM">88</td><td class="cP">66</td><td>Clayton, Dandenong, Truganina, Point Cook — much larger established community</td></tr>
+        <tr><td>Public transport</td><td class="cM">85</td><td class="cP">62</td><td>Tram network has no Perth equivalent; Metronet is closing the gap on rail only</td></tr>
+        <tr><td>International flights</td><td class="cM">82</td><td class="cP">72</td><td>Melbourne more carriers and routes; Perth better direct access westward</td></tr>
+        <tr><td>Activities &amp; weekends</td><td class="cM">86</td><td class="cP">74</td><td>Melbourne events/culture vs Perth beaches, Margaret River, Rottnest</td></tr>
+        <tr><td>Existing friends &amp; social circle</td><td class="cM">45</td><td class="cP">90</td><td><b>Your circle is in Perth.</b> Rebuilding at 31 with a newborn is genuinely hard</td></tr>
+        <tr><td><b>Commute at your budget</b></td><td class="cM">48</td><td class="cP">78</td><td><b>Melton/Werribee ~40km, 50–80min peak. Armadale/Gosnells ~25km, 30–40min.</b> Perth wins clearly</td></tr>
+        <tr><td>Weather</td><td class="cM">58</td><td class="cP">88</td><td>Perth wins outright</td></tr>
+        <tr><td>Family proximity</td><td>70</td><td>70</td><td>Family overseas — neutral between cities</td></tr>
+        <tr class="total"><td>Weighted lifestyle score</td><td class="cM">78</td><td class="cP">70</td><td>Melbourne, but by only 8 points</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="flag">
+    <h4>Your commute preference is a real argument for Perth, and it is not fully priced in</h4>
+    <p>At $600–650k, Melbourne pushes you to Melton, Werribee or Craigieburn — 40km out, 50–80 minutes in peak traffic, on a road network that is measurably worsening. Perth at the same budget puts you in Armadale or Gosnells, ~25km out, 30–40 minutes, on far less congested roads with the Armadale line rebuilt.</p>
+    <p><strong>If you are unwilling to accept a 60-minute commute, Melbourne at $600k does not work</strong> — and the honest fix is not Perth, it is <strong>raising the Melbourne budget to ~$700k</strong> (middle-ring townhouse, 25–35 minutes) or accepting an apartment closer in. At $700k your repayment is 29.3% of net income: affordable on two incomes, stressed on one. That is a real trade and it belongs in your decision, not in a footnote.</p>
+  </div>
+
+  <h3 style="font-size:19px;margin:32px 0 12px">The preference adjustment, run in reverse</h3>
+  <p>You asked: "if Melbourne is worth an extra $X per year in lifestyle value, does Melbourne become the better decision?" <strong>The question inverts, because Melbourne already wins on the pure financial score.</strong> So the useful question is the opposite one:</p>
+
+  <div class="strip">
+    <div><span class="k">2046 wealth gap (A vs B)</span><span class="v">$602,000</span><span class="d">Melbourne buy over Perth buy</span></div>
+    <div><span class="k">Undiscounted per year</span><span class="v">~$30,100</span><span class="d">Over 20 years</span></div>
+    <div><span class="k">Present-value equivalent</span><span class="v">~$19,500 / yr</span><span class="d">Discounted at 4% real</span></div>
+    <div><span class="k">Break-even</span><span class="v cP">$19,500</span><span class="d">Perth must be worth this much more per year to win</span></div>
+  </div>
+
+  <p><strong>So: is Perth worth $19,500 a year to you?</strong> Keeping your friends, gaining 40 minutes a day back (~160 hours a year), and better weather is not worth nothing — plausibly $8,000–$14,000 a year in honest lifestyle terms. <strong>That is real, and it is not quite enough.</strong> It closes perhaps two-thirds of the gap. This is why confidence is 72% rather than 90%: a reasonable person who weights friends and commute at the top of their range could rationally choose Perth, and would not be making a mistake.</p>
+</section>
+
+<!-- ================= JOB MARKET CHART ================= -->
+<section id="jobmarket">
+  <div class="sechead"><span class="n">12</span><h2>Job-market strength, side by side</h2></div>
+  <figure class="figure">
+    <div class="fighead"><h3>Labour market and pipeline indicators</h3>
+      <p>Perth wins on current conditions; Melbourne wins on forward pipeline. This is the central trade-off in the whole decision.</p></div>
+    <div class="bars" id="jobChart"></div>
+  </figure>
+  <div class="note"><strong>How to hold both facts at once.</strong> Perth is easier to get a job in <em>today</em> (4.0% vs 4.8% unemployment, +1.75% vs +1.25% forecast employment growth). Melbourne has far more of the work Tiger specifically wants over the next fifteen years (37 vs 7 data centre projects, ~25% of the national 6 GW pipeline, a $25bn state action plan, and the country's deepest switchboard manufacturing base). You are choosing between a better <em>next six months</em> and a better <em>next fifteen years</em>. The model weights the fifteen years — but only because your buffer can absorb the six months, which is why the deposit structure matters so much.</div>
+</section>
+
+<!-- ================= FINAL ================= -->
+<div class="final">
+  <p class="eyebrow">If we were Tiger and Tigress</p>
+  <h2>We would buy in Melbourne — in 2027 or 2028, at 80% LVR, and not before Tiger has a signed contract.</h2>
+
+  <ol class="bullets">
+    <li><b>Perth is no longer the cheap option — it is 27% dearer than Melbourne</b> ($999,987 vs $786,718), and your budget no longer reaches Byford, Baldivis or Ellenbrook. The reason Perth looked obvious has already expired.</li>
+    <li><b>You would be buying Perth at the top and Melbourne near the bottom.</b> Perth is +15.6% year-on-year and just turned negative; Melbourne is 6.3% below its Nov 2025 peak. Perth needs ~1 percentage point more growth every year for twenty years just to draw level.</li>
+    <li><b>Melbourne has the career Tiger actually wants.</b> 37 data centre projects to Perth's 7, a $25bn state pipeline, the deepest switchboard manufacturing base in the country — and all of it non-FIFO, which is exactly the constraint that removes Perth's top-paying roles.</li>
+    <li><b>The answer does not depend on liking Melbourne.</b> Remove lifestyle from the model entirely and Melbourne still wins 77.5 to 62.2. Modelled 2046 net worth: $2.32m Melbourne against $1.72m Perth.</li>
+    <li><b>Structure beats city choice on the risks that could actually hurt you.</b> A $123,500 deposit instead of $100,000 gets you to 80% LVR, kills $8,800 of LMI, and extends your unemployment survival from six months to twelve. Do that before you worry about which suburb.</li>
+  </ol>
+
+  <div class="flip">
+    <p class="eyebrow">The one fact that would flip this to Perth</p>
+    <h3>Whether Tiger can secure a Melbourne offer at $115k+ within three months.</h3>
+    <p>Everything above assumes he can. Victoria added just <strong>26,000 jobs in the year to March 2026</strong> — the weakest since 2021, against +71,500 the year before — while WA runs 4.0% unemployment with employers competing for exactly his skillset. If a genuine Melbourne search returns nothing at his level in twelve weeks, the wealth model is irrelevant: an unemployed engineer with a Melton mortgage and a newborn is a materially worse outcome than a well-paid one in Armadale.</p>
+    <p><strong>So make it testable, and make it free.</strong> Apply for Melbourne roles now, from Perth, before committing to anything. A written offer at $115k+ converts this from a forecast into a fact — and if three months of genuine applications produce nothing, buy in Perth and revisit in five years. The second fact worth watching: if Perth's growth holds above 5.5% CAGR while Melbourne stays under 4%, the property case inverts too.</p>
+  </div>
+</div>
+
+<footer>
+  <p><strong>Method and honesty notes.</strong> This is a scenario model, not a forecast. Property values from 2027 onward are estimates under stated assumptions and should not be read as predictions. The single most influential input is the Melbourne-vs-Perth growth differential (5.0% vs 3.5%); equalising it at 5.0% narrows the 2046 gap from ~$602k to ~$120k, so treat the direction as robust and the magnitude as soft. WA concessional stamp duty above $600k is estimated by linear phase-in to $800k and should be confirmed with RevenueWA. Job-board counts are deliberately not used as demand measures. Not financial advice — check the mortgage structure with a broker and the duty figures with each state revenue office before acting.</p>
+
+  <h4>Sources</h4>
+  <ul>
+    <li><a href="https://www.cotality.com/au/insights/articles/monthly-housing-chart-pack-august-2026">Cotality Monthly Housing Chart Pack, August 2026</a></li>
+    <li><a href="https://www.cotality.com/au/insights/articles/2025-delivers-strong-housing-gains-but-2026-set-for-a-softer-landing-as-rate-fears-and-affordability-bite">Cotality Home Value Index outlook</a></li>
+    <li><a href="https://www.rba.gov.au/media-releases/2026/mr-26-08.html">RBA Monetary Policy Decision, August 2026</a></li>
+    <li><a href="https://www.westpaciq.com.au/economics/2026/03/rba-update-30-march-2026">Westpac IQ — revised RBA rate view</a></li>
+    <li><a href="https://reiwa.com.au/news/perth-median-house-sale-price-on-track-to-reach--1-million-by-the-end-of-the-year/">REIWA — Perth median house price update</a></li>
+    <li><a href="https://reiwa.com.au/the-wa-market/perth-metro/">REIWA Perth Metro market data</a></li>
+    <li><a href="https://www.vic.gov.au/support-first-home-buyers">Victorian Government — support for first home buyers</a></li>
+    <li><a href="https://www.smartpropertyinvestment.com.au/hotspots/27757-wa-lifts-first-home-buyer-stamp-duty-thresholds">WA lifts first home buyer stamp duty thresholds (7 May 2026)</a></li>
+    <li><a href="https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release">ABS Labour Force, Australia</a></li>
+    <li><a href="https://www.ourstatebudget.wa.gov.au/2026-27/economic.html">WA State Budget 2026–27 — economic outlook</a></li>
+    <li><a href="https://www.budget.vic.gov.au/sustaining-victorias-economic-growth">Victorian Budget 2026–27 — economic growth</a></li>
+    <li><a href="https://certifiedstrategic.com/insights/melbourne-data-centre-pipeline-four-new-campuses">Melbourne data centre pipeline — four new campuses</a></li>
+    <li><a href="https://www.invest.vic.gov.au/explore-your-sector/digital-technology/data-centres">Invest Victoria — data centres</a></li>
+    <li><a href="https://renewmap.com.au/resources/projects/wa/datacentre/">RenewMap — WA data centre projects</a></li>
+    <li><a href="https://www.commbank.com.au/articles/newsroom/2026/08/australias-data-centre-boom.html">CommBank — Australia's $150bn data centre boom</a></li>
+    <li><a href="https://www.renewableinstitute.org/western-australia-commits-1-billion-to-strengthen-clean-energy-network/">WA clean energy network investment</a></li>
+    <li><a href="https://hwd.health.gov.au/resources/primary/psychology-compendium-report-april-2026.pdf">Psychology Supply and Demand Compendium, April 2026</a></li>
+    <li><a href="https://lighthouse.mq.edu.au/article/2026/may-2026/demand-for-psychologists-to-outstrip-supply-by-96-in-2038">Macquarie University — psychologist shortfall to 2038</a></li>
+    <li><a href="https://au.seek.com/career-advice/role/psychologist/salary">SEEK — psychologist salary data, 2026</a></li>
+    <li><a href="https://www.jobsandskills.gov.au/publications/occupation-shortage-report-march-2026">Jobs and Skills Australia — Occupation Shortage Report, March 2026</a></li>
+    <li><a href="https://sqmresearch.com.au/uploads/12-05-26-National-Vacancy-Rates-April-2026-2021.pdf">SQM Research — national vacancy rates</a></li>
+    <li><a href="https://www.canstar.com.au/home-loans/interest-rate-forecast-australia/">Canstar — 2026 interest rate forecasts</a></li>
+  </ul>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const money = v => "$" + v.toLocaleString("en-AU");
+
+  /* ---------- CSS bar charts ---------- */
+  function bars(id, rows, opts){
+    const el = document.getElementById(id); if(!el) return;
+    const max = opts.max || Math.max(...rows.flatMap(r=>r.vals.map(v=>v.v)));
+    el.innerHTML = rows.map(r=>`
+      <div class="barrow">
+        <div class="name"><b>${r.label}</b>${r.sub?`<span>${r.sub}</span>`:""}</div>
+        <div class="pair">
+          ${r.vals.map(v=>`
+            <div class="bl" title="${v.k}: ${v.fmt||v.v}">
+              <span class="k">${v.k}</span>
+              <span class="t"><span class="f" style="width:${Math.max(1.5,(v.v/max)*100)}%;background:${v.c}"></span></span>
+              <span class="n" style="color:${v.c}">${v.fmt||v.v}</span>
+            </div>`).join("")}
+        </div>
+      </div>`).join("");
+  }
+  const M = css("--mel"), P = css("--per"), S3 = css("--s3"), S4 = css("--s4");
+  const CR = css("--crit"), WN = css("--warn"), GD = css("--good");
+
+  bars("scoreChart",[
+    {label:"20-year household wealth", sub:"weight 20%", vals:[{k:"MEL",v:16.4,c:M,fmt:"16.4"},{k:"PER",v:12.0,c:P,fmt:"12.0"}]},
+    {label:"Tiger career", sub:"weight 20%", vals:[{k:"MEL",v:15.6,c:M,fmt:"15.6"},{k:"PER",v:13.8,c:P,fmt:"13.8"}]},
+    {label:"Tigress career", sub:"weight 15%", vals:[{k:"MEL",v:12.0,c:M,fmt:"12.0"},{k:"PER",v:10.8,c:P,fmt:"10.8"}]},
+    {label:"Property affordability", sub:"weight 15%", vals:[{k:"MEL",v:11.4,c:M,fmt:"11.4"},{k:"PER",v:8.7,c:P,fmt:"8.7"}]},
+    {label:"Property growth", sub:"weight 15%", vals:[{k:"MEL",v:11.1,c:M,fmt:"11.1"},{k:"PER",v:7.2,c:P,fmt:"7.2"}]},
+    {label:"Lifestyle", sub:"weight 8%", vals:[{k:"MEL",v:6.2,c:M,fmt:"6.2"},{k:"PER",v:5.6,c:P,fmt:"5.6"}]},
+    {label:"Job security now", sub:"weight 4%", vals:[{k:"MEL",v:2.6,c:M,fmt:"2.6"},{k:"PER",v:3.0,c:P,fmt:"3.0"}]},
+    {label:"Flexibility", sub:"weight 3%", vals:[{k:"MEL",v:2.2,c:M,fmt:"2.2"},{k:"PER",v:1.7,c:P,fmt:"1.7"}]}
+  ],{max:17});
+
+  bars("tigerChart",[
+    {label:"Data centre pipeline depth", vals:[{k:"MEL",v:92,c:M},{k:"PER",v:44,c:P}]},
+    {label:"Switchgear / switchboard base", vals:[{k:"MEL",v:88,c:M},{k:"PER",v:62,c:P}]},
+    {label:"Non-FIFO senior roles", vals:[{k:"MEL",v:85,c:M},{k:"PER",v:55,c:P}]},
+    {label:"HV/LV infrastructure work", vals:[{k:"MEL",v:76,c:M},{k:"PER",v:84,c:P}]},
+    {label:"Speed to first offer", vals:[{k:"MEL",v:58,c:M},{k:"PER",v:82,c:P}]},
+    {label:"Salary ceiling (non-FIFO)", vals:[{k:"MEL",v:82,c:M},{k:"PER",v:66,c:P}]},
+    {label:"Competition per role", sub:"higher = less competition", vals:[{k:"MEL",v:60,c:M},{k:"PER",v:76,c:P}]},
+    {label:"15-year demand durability", vals:[{k:"MEL",v:84,c:M},{k:"PER",v:64,c:P}]}
+  ],{max:100});
+
+  bars("tigressChart",[
+    {label:"Role volume", vals:[{k:"MEL",v:88,c:M},{k:"PER",v:64,c:P}]},
+    {label:"Clinical endorsement pathway", sub:"supervisors, universities", vals:[{k:"MEL",v:88,c:M},{k:"PER",v:62,c:P}]},
+    {label:"Private practice potential", vals:[{k:"MEL",v:78,c:M},{k:"PER",v:80,c:P}]},
+    {label:"NDIS / health / government", vals:[{k:"MEL",v:84,c:M},{k:"PER",v:72,c:P}]},
+    {label:"Salary", sub:"$100k vs $99.8k — a tie", vals:[{k:"MEL",v:72,c:M},{k:"PER",v:71,c:P}]},
+    {label:"Speed to placement", vals:[{k:"MEL",v:64,c:M},{k:"PER",v:82,c:P}]},
+    {label:"Long-term ceiling", vals:[{k:"MEL",v:86,c:M},{k:"PER",v:68,c:P}]}
+  ],{max:100});
+
+  bars("stressChart",[
+    {label:"Both full-time", sub:"Tiger $113k + Tigress $100k", vals:[{k:"",v:23.4,c:GD,fmt:"23.4%"}]},
+    {label:"Tiger steps down to $100k", sub:"Tigress full-time", vals:[{k:"",v:24.8,c:GD,fmt:"24.8%"}]},
+    {label:"Tiger at $140k", sub:"Tigress full-time", vals:[{k:"",v:21.1,c:GD,fmt:"21.1%"}]},
+    {label:"Baby years — Tigress 0.55 FTE", sub:"Tiger $113k", vals:[{k:"",v:28.8,c:GD,fmt:"28.8%"}]},
+    {label:"Baby years — Tigress 0.55 FTE", sub:"Tiger down to $100k", vals:[{k:"",v:30.9,c:WN,fmt:"30.9%"}]},
+    {label:"Parental leave — Tigress $0", sub:"Tiger at $160k", vals:[{k:"",v:32.9,c:WN,fmt:"32.9%"}]},
+    {label:"Parental leave — Tigress $0", sub:"Tiger at $140k", vals:[{k:"",v:36.8,c:WN,fmt:"36.8%"}]},
+    {label:"Parental leave — Tigress $0", sub:"Tiger at $113k — STRESS", vals:[{k:"",v:44.5,c:CR,fmt:"44.5%"}]},
+    {label:"Parental leave — Tigress $0", sub:"Tiger at $100k — STRESS", vals:[{k:"",v:49.5,c:CR,fmt:"49.5%"}]}
+  ],{max:55});
+
+  bars("jobChart",[
+    {label:"Unemployment rate", sub:"lower is better — shown inverted", vals:[{k:"MEL",v:52,c:M,fmt:"4.8%"},{k:"PER",v:60,c:P,fmt:"4.0%"}]},
+    {label:"Employment growth forecast", sub:"2026–27", vals:[{k:"MEL",v:1.25,c:M,fmt:"+1.25%"},{k:"PER",v:1.75,c:P,fmt:"+1.75%"}]},
+    {label:"Jobs added, year to Mar 2026", vals:[{k:"MEL",v:26,c:M,fmt:"+26,000"},{k:"PER",v:41,c:P,fmt:"~+41,000"}]},
+    {label:"Data centre projects in pipeline", vals:[{k:"MEL",v:37,c:M,fmt:"37"},{k:"PER",v:7,c:P,fmt:"7"}]},
+    {label:"Data centres operating", vals:[{k:"MEL",v:38,c:M,fmt:"38"},{k:"PER",v:14,c:P,fmt:"14"}]},
+    {label:"State net debt", sub:"% of GSP — lower is better", vals:[{k:"MEL",v:24,c:M,fmt:"~24%"},{k:"PER",v:7.1,c:P,fmt:"7.1%"}]},
+    {label:"Net interstate migration", vals:[{k:"MEL",v:0,c:M,fmt:"−3,200"},{k:"PER",v:9.8,c:P,fmt:"+9,800"}]}
+  ],{max:60});
+
+  bars("riskChart",[
+    {label:"Property cycle risk", vals:[{k:"MEL",v:28,c:M,fmt:"28"},{k:"PER",v:72,c:P,fmt:"72"}]},
+    {label:"Employment risk", vals:[{k:"MEL",v:58,c:M,fmt:"58"},{k:"PER",v:30,c:P,fmt:"30"}]},
+    {label:"Economic concentration risk", vals:[{k:"MEL",v:24,c:M,fmt:"24"},{k:"PER",v:76,c:P,fmt:"76"}]},
+    {label:"Policy / tax risk", vals:[{k:"MEL",v:55,c:M,fmt:"55"},{k:"PER",v:28,c:P,fmt:"28"}]},
+    {label:"Affordability risk", vals:[{k:"MEL",v:34,c:M,fmt:"34"},{k:"PER",v:62,c:P,fmt:"62"}]},
+    {label:"Flexibility / exit risk", vals:[{k:"MEL",v:30,c:M,fmt:"30"},{k:"PER",v:56,c:P,fmt:"56"}]},
+    {label:"TOTAL RISK EXPOSURE", sub:"lower is better", vals:[{k:"MEL",v:38,c:M,fmt:"38"},{k:"PER",v:54,c:P,fmt:"54"}]}
+  ],{max:80});
+
+  /* ---------- SVG line charts ---------- */
+  const NS="http://www.w3.org/2000/svg";
+  function mk(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+
+  function lineChart(svgId, tipId, cfg){
+    const svg=document.getElementById(svgId); if(!svg) return;
+    const tip=document.getElementById(tipId);
+    const vb=svg.getAttribute("viewBox").split(" ").map(Number);
+    const W=vb[2],H=vb[3], L=62,R=74,T=18,B=34;
+    const iw=W-L-R, ih=H-T-B;
+    const yrs=cfg.years, y0=yrs[0], y1=yrs[yrs.length-1];
+    const x=y=>L+((y-y0)/(y1-y0))*iw;
+    const yv=v=>T+ih-((v-cfg.min)/(cfg.max-cfg.min))*ih;
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+
+    // grid + y labels
+    const g=mk("g",{class:"grid"});
+    cfg.ticks.forEach(t=>{
+      g.appendChild(mk("line",{x1:L,x2:L+iw,y1:yv(t),y2:yv(t)}));
+      const tx=mk("text",{x:L-9,y:yv(t)+3.5,"text-anchor":"end"}); tx.textContent=cfg.fmtY(t); svg.appendChild(tx);
+    });
+    svg.appendChild(g);
+    // x axis
+    const ax=mk("g",{class:"axis"});
+    ax.appendChild(mk("line",{x1:L,x2:L+iw,y1:T+ih,y2:T+ih}));
+    svg.appendChild(ax);
+    cfg.xticks.forEach(t=>{
+      const tx=mk("text",{x:x(t),y:T+ih+19,"text-anchor":"middle"}); tx.textContent=t; svg.appendChild(tx);
+    });
+
+    // bands
+    (cfg.bands||[]).forEach(bd=>{
+      let d="M "+bd.hi.map((v,i)=>`${x(yrs[i])} ${yv(v)}`).join(" L ");
+      d+=" L "+bd.lo.map((v,i)=>`${x(yrs[i])} ${yv(v)}`).reverse().join(" L ")+" Z";
+      svg.appendChild(mk("path",{d,fill:css(bd.fill),stroke:"none"}));
+    });
+
+    // series
+    cfg.series.forEach(s=>{
+      const d="M "+s.data.map((v,i)=>`${x(yrs[i])} ${yv(v)}`).join(" L ");
+      svg.appendChild(mk("path",{d,fill:"none",stroke:s.color,"stroke-width":2.4,
+        "stroke-linejoin":"round","stroke-linecap":"round",
+        ...(s.dash?{"stroke-dasharray":s.dash}:{})}));
+      // endpoint marker + direct label
+      const lv=s.data[s.data.length-1];
+      svg.appendChild(mk("circle",{cx:x(y1),cy:yv(lv),r:4.2,fill:s.color,stroke:css("--surface"),"stroke-width":2}));
+      const lb=mk("text",{x:x(y1)+9,y:yv(lv)+s.off+4,class:"lbl",style:"fill:"+s.color,"text-anchor":"start"});
+      lb.textContent=cfg.fmtY(lv); svg.appendChild(lb);
+    });
+
+    // hover layer
+    const hl=mk("line",{x1:0,x2:0,y1:T,y2:T+ih,stroke:css("--rule-strong"),"stroke-width":1,opacity:0});
+    svg.appendChild(hl);
+    const dots=cfg.series.map(s=>{const c=mk("circle",{r:4.5,fill:s.color,stroke:css("--surface"),"stroke-width":2,opacity:0});svg.appendChild(c);return c;});
+    const hit=mk("rect",{x:L,y:T,width:iw,height:ih,fill:"transparent"});
+    svg.appendChild(hit);
+    function move(ev){
+      const r=svg.getBoundingClientRect();
+      const px=((ev.clientX-r.left)/r.width)*W;
+      let i=Math.round(((px-L)/iw)*(y1-y0));
+      i=Math.max(0,Math.min(yrs.length-1,i));
+      const yr=yrs[i];
+      hl.setAttribute("x1",x(yr)); hl.setAttribute("x2",x(yr)); hl.setAttribute("opacity",1);
+      cfg.series.forEach((s,k)=>{dots[k].setAttribute("cx",x(yr));dots[k].setAttribute("cy",yv(s.data[i]));dots[k].setAttribute("opacity",1);});
+      tip.innerHTML=`<b>${yr}</b><br>`+cfg.series.map(s=>`<span style="color:${s.color}">■</span> ${s.name} ${cfg.fmtY(s.data[i])}`).join("<br>");
+      tip.style.opacity=1;
+      const box=svg.getBoundingClientRect();
+      const lx=(x(yr)/W)*box.width;
+      tip.style.left=Math.min(Math.max(lx+14,0),box.width-tip.offsetWidth-4)+"px";
+      tip.style.top="12px";
+    }
+    hit.addEventListener("mousemove",move);
+    hit.addEventListener("mouseleave",()=>{tip.style.opacity=0;hl.setAttribute("opacity",0);dots.forEach(d=>d.setAttribute("opacity",0));});
+  }
+
+  const YRS=[];for(let y=2026;y<=2046;y++)YRS.push(y);
+
+  lineChart("propChart","propTip",{
+    years:YRS,min:400,max:2300,ticks:[400,800,1200,1600,2000],
+    xticks:[2026,2030,2035,2040,2046],
+    fmtY:v=>"$"+(v/1000).toFixed(2).replace(/0$/,"")+"m",
+    bands:[
+      {fill:"--mel-wash",
+       hi:[600,631,662,708,758,811,868,928,993,1063,1137,1216,1302,1393,1490,1594,1706,1825,1953,2089,2235],
+       lo:[600,579,584,599,614,629,645,661,678,695,712,730,748,767,786,806,826,847,868,890,912]},
+      {fill:"--per-wash",
+       hi:[600,549,536,568,602,638,677,717,760,806,854,906,960,1017,1078,1143,1211,1284,1361,1443,1529],
+       lo:[600,549,536,542,547,553,558,564,570,575,581,587,593,599,605,611,617,623,630,636,642]}
+    ],
+    series:[
+      {name:"Melbourne",color:M,off:-14,
+       data:[600,588,597,627,658,691,726,762,800,840,882,926,972,1021,1072,1126,1182,1241,1303,1368,1436]},
+      {name:"Perth",color:P,off:14,
+       data:[600,558,547,566,586,606,628,650,672,696,720,745,772,798,826,855,885,916,948,981,1016]}
+    ]
+  });
+
+  lineChart("salaryChart","salaryTip",{
+    years:YRS,min:100,max:270,ticks:[100,140,180,220,260],
+    xticks:[2026,2030,2035,2040,2046],
+    fmtY:v=>"$"+Math.round(v)+"k",
+    series:[
+      {name:"Melbourne",color:M,off:-12,
+       data:[113,119,129,133,146,150,155,168,173,178,190,196,201,207,217,223,230,236,243,249,256]},
+      {name:"Perth",color:P,off:12,
+       data:[113,121,128,132,141,145,149,158,162,167,175,180,185,190,197,203,208,214,220,226,233]}
+    ]
+  });
+
+  lineChart("nwChart","nwTip",{
+    years:YRS,min:150,max:2500,ticks:[200,700,1200,1700,2200],
+    xticks:[2026,2030,2035,2040,2046],
+    fmtY:v=>"$"+(v/1000).toFixed(2).replace(/0$/,"")+"m",
+    series:[
+      {name:"D · Rent MEL → buy 2029",color:S4,off:-13,dash:"7 4",
+       data:[232,320,354,335,377,406,440,485,552,625,736,854,989,1131,1284,1445,1617,1803,2002,2215,2444]},
+      {name:"A · Buy Melbourne 2026",color:M,off:2,
+       data:[216,276,302,350,388,414,442,481,542,606,707,812,935,1066,1209,1363,1528,1706,1896,2101,2320]},
+      {name:"C · Rent PER → buy MEL 2031",color:S3,off:16,dash:"3 4",
+       data:[230,318,349,380,399,327,351,384,439,498,595,697,818,946,1081,1225,1377,1538,1709,1889,2083]},
+      {name:"B · Buy Perth 2026",color:P,off:19,
+       data:[216,248,254,291,315,326,339,359,398,441,517,596,690,789,895,1010,1132,1264,1405,1556,1718]}
+    ]
+  });
+})();
+</script>
