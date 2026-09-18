@@ -167,7 +167,7 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:18px 0}
       <div>
         <div class="eyebrow">Perth metropolitan · houses · $600k–$650k buyer brief</div>
         <h1>Perth Property Bottom Model</h1>
-        <div class="sub" id="gendate">Generated 8 September 2026 · Perth (AWST)</div>
+        <div class="sub" id="gendate">Built 8 September 2026 · refreshed 18 September 2026 · Perth (AWST)</div>
       </div>
       <div class="badgebar" id="mastbadges"></div>
     </div>
@@ -189,6 +189,7 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:18px 0}
   <li><a href="#scenarios">Scenarios</a></li>
   <li><a href="#timeline">Timeline</a></li>
   <li><a href="#budget">$600–650k</a></li>
+  <li><a href="#finance">Can you borrow it?</a></li>
   <li><a href="#suburbs">Suburbs</a></li>
   <li><a href="#map">Map</a></li>
   <li><a href="#falsebottom">False bottom</a></li>
@@ -396,9 +397,41 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:18px 0}
   </div>
 </section>
 
-<!-- ══ 11 SUBURBS ══ -->
+<!-- ══ 11 FINANCE ══ -->
+<section id="finance">
+  <div class="sechead"><h2>Can you actually borrow this?</h2><div class="n">11 / Finance reality check</div></div>
+  <div class="panel" id="financeLede"></div>
+  <div class="panel">
+    <h3>Your numbers</h3>
+    <div class="g3" id="finInputs" style="margin-top:14px"></div>
+    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <button class="primary" id="btnFin">Recalculate capacity</button>
+      <span class="small">Stored in this browser only. Nothing is sent anywhere.</span>
+    </div>
+  </div>
+  <div class="panel"><h3>What binds you</h3><div id="finBinding" style="margin-top:12px"></div></div>
+  <div class="panel">
+    <h3>Three deposit routes, same savings</h3>
+    <div class="tw" style="margin-top:10px"><table id="routeTable"><thead><tr>
+      <th>Route</th><th class="num">Deposit</th><th class="num">LVR</th><th class="num">LMI</th>
+      <th class="num">Transfer duty</th><th class="num">Cash needed</th><th class="num">Loan</th>
+      <th>Serviceable?</th></tr></thead><tbody></tbody></table></div>
+    <div id="routeNote" style="margin-top:14px"></div>
+  </div>
+  <div class="panel">
+    <h3>What the RBA does to your capacity</h3>
+    <div class="g2" style="align-items:start">
+      <figure><div id="chartCapacity"></div>
+        <figcaption id="capCap"></figcaption></figure>
+      <div id="capTable"></div>
+    </div>
+  </div>
+  <div class="panel"><h3>If you buy, and then rates rise</h3><div id="stressOut" style="margin-top:12px"></div></div>
+</section>
+
+<!-- ══ 12 SUBURBS ══ -->
 <section id="suburbs">
-  <div class="sechead"><h2>Suburb opportunity model</h2><div class="n">11 / Where $600–650k works</div></div>
+  <div class="sechead"><h2>Suburb opportunity model</h2><div class="n">12 / Where $600–650k works</div></div>
   <div class="panel">
     <div class="warnbox" style="margin-bottom:16px" id="subwarn"></div>
     <div class="tw"><table id="subTable"><thead><tr>
@@ -415,7 +448,7 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:18px 0}
 
 <!-- ══ 12 MAP ══ -->
 <section id="map">
-  <div class="sechead"><h2>Perth value map</h2><div class="n">12 / Click a suburb</div></div>
+  <div class="sechead"><h2>Perth value map</h2><div class="n">13 / Click a suburb</div></div>
   <div class="panel">
     <div class="g2" style="grid-template-columns:minmax(300px,1.5fr) minmax(240px,1fr)">
       <figure>
@@ -432,7 +465,7 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:18px 0}
 
 <!-- ══ 13 FALSE BOTTOM ══ -->
 <section id="falsebottom">
-  <div class="sechead"><h2>False-bottom detector</h2><div class="n">13 / Is a pause a trough?</div></div>
+  <div class="sechead"><h2>False-bottom detector</h2><div class="n">14 / Is a pause a trough?</div></div>
   <div class="panel">
     <p class="lede">A market can stop falling for two very different reasons: buyers have returned, or sellers have
       withdrawn. This checks the nine conditions that separate them.</p>
@@ -442,21 +475,26 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:18px 0}
 
 <!-- ══ 14 BUYING SIGNAL ══ -->
 <section id="buysignal">
-  <div class="sechead"><h2>Perth Buying Opportunity Score</h2><div class="n">14 / Composite signal</div></div>
+  <div class="sechead"><h2>Perth Buying Opportunity Score</h2><div class="n">15 / Composite signal</div></div>
   <div class="panel" id="buyOut"></div>
 </section>
 
 <!-- ══ 15 WAITING ══ -->
 <section id="waiting">
-  <div class="sechead"><h2>Waiting is not free</h2><div class="n">15 / Buy now vs wait</div></div>
+  <div class="sechead"><h2>Waiting is not free</h2><div class="n">16 / Buy now vs wait</div></div>
   <div class="panel">
     <p class="lede">Waiting for a lower price costs rent and buys you extra deposit. This settles which effect wins,
       at your numbers.</p>
+    <div class="warnbox" style="margin-top:12px"><strong>Read §11 first.</strong> If the Home Guarantee Scheme is open
+      to you, extra deposit is worth far less than this calculator's structure implies — you can already buy at 5% down
+      with no LMI. The deposit-accumulation benefit of waiting is then mostly illusory, and only the price fall counts.
+      Set <em>Use the Home Guarantee Scheme</em> below to 1 to see that version.</div>
     <div class="g3" id="calcInputs" style="margin-top:16px"></div>
     <div style="margin-top:16px"><button class="primary" id="btnCalc">Run comparison</button></div>
     <div class="tw" style="margin-top:18px"><table id="waitTable"><thead><tr>
       <th>Strategy</th><th class="num">Price paid</th><th class="num">Deposit</th><th class="num">Loan</th>
-      <th class="num">Monthly repay</th><th class="num">Rent paid</th><th class="num">Net position vs buy now</th>
+      <th class="num">Monthly repay</th><th class="num">LMI</th><th class="num">Rent paid</th>
+      <th class="num">Net position vs buy now</th>
       </tr></thead><tbody></tbody></table></div>
     <div style="margin-top:16px" id="breakeven"></div>
   </div>
@@ -464,7 +502,7 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:18px 0}
 
 <!-- ══ 16 AUDIT ══ -->
 <section id="audit">
-  <div class="sechead"><h2>Data &amp; model audit</h2><div class="n">16 / Trust check</div></div>
+  <div class="sechead"><h2>Data &amp; model audit</h2><div class="n">17 / Trust check</div></div>
   <div class="panel" id="auditSummary"></div>
   <details style="margin-top:14px" open>
     <summary>🔍 Full variable audit — every number on this page</summary>
@@ -490,7 +528,7 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:18px 0}
 
 <!-- ══ 17 STRATEGY ══ -->
 <section id="strategy">
-  <div class="sechead"><h2>My Perth property strategy</h2><div class="n">17 / The decision</div></div>
+  <div class="sechead"><h2>My Perth property strategy</h2><div class="n">18 / The decision</div></div>
   <div class="panel" id="strategyPanel"></div>
   <div class="g3" style="margin-top:14px" id="doWatchWait"></div>
   <div class="panel" style="margin-top:14px">
@@ -519,7 +557,7 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:18px 0}
    Data Confidence score, not hidden.
    ════════════════════════════════════════════════════════════════════════ */
 
-const BUILD_DATE = "2026-09-08";
+const BUILD_DATE = "2026-09-18";
 
 /* ── Source registry ─────────────────────────────────────────────────── */
 const SRC = {
@@ -542,7 +580,13 @@ const SRC = {
   apimag:   {n:"API Magazine",                   tier:4, url:"https://www.apimagazine.com.au/"},
   domain:   {n:"Domain",                         tier:2, url:"https://www.domain.com.au/"},
   agg:      {n:"Buyer-agent / broker aggregators", tier:4, url:""},
-  author:   {n:"Structural knowledge (not freshly sourced)", tier:3, url:""}
+  author:   {n:"Structural knowledge (not freshly sourced)", tier:3, url:""},
+  wagov:    {n:"WA Government — 2026-27 Housing Taxation Package", tier:1, url:"https://www.wa.gov.au/government/announcements/2026-27-housing-taxation-package"},
+  hgs:      {n:"Housing Australia — Home Guarantee Scheme", tier:1, url:"https://firsthomebuyers.gov.au/australian-government-5-percent-deposit-scheme/property-price-caps"},
+  apra:     {n:"APRA",                           tier:1, url:"https://www.apra.gov.au/news-and-publications/apra-maintains-current-macroprudential-policy-settings-highly-uncertain"},
+  hem:      {n:"HEM benchmark, via lender/broker reporting", tier:3, url:""},
+  lmi:      {n:"LMI premium tables (Helia/QBE), via broker reporting", tier:3, url:""},
+  ato2:     {n:"Legislated 2026-27 personal income tax rates", tier:3, url:""}
 };
 
 /* ── Model variables. v = value; every field is audited. ──────────────── */
@@ -562,12 +606,12 @@ const V = {
     note:"−1 = falls deepening, 0 = steady, +1 = falls easing. Monthly prints have worsened.", ed:1},
 
   /* SUPPLY */
-  listings:{lab:"Perth listings for sale", v:7204, u:"", src:"reiwaNews", date:"w/e 23 Aug 2026", fresh:"green",
-    note:"First time above 7,000 in over three years. More than doubled since March 2026.", ed:1},
+  listings:{lab:"Perth listings for sale", v:7565, u:"", src:"reiwaNews", date:"w/e 13 Sep 2026", fresh:"green",
+    note:"REFRESHED 18 Sep. Up from 7,204 at 23 Aug — +5.0% in three weeks, +6.9% on four weeks ago. Houses +3.6% w/w. Supply is still building, and building faster.", ed:1},
   listingsLTA:{lab:"Listings long-run average (assumption)", v:12500, u:"", src:"author", date:"structural", fresh:"amber",
     note:"Perth's decade-average active listing count. Not freshly sourced — an author assumption used only as a scale reference. Change it if you have the REIWA series.", ed:1},
-  listingsYoY:{lab:"Listings, year on year", v:36.4, u:"%", src:"cotality", date:"Jul 2026", fresh:"green",
-    note:"Supply rebuilding fast from an extreme low base.", ed:1},
+  listingsYoY:{lab:"Listings, year on year", v:157.2, u:"%", src:"reiwaNews", date:"w/e 13 Sep 2026", fresh:"green",
+    note:"REVISED UP sharply. REIWA reports listings +157.2% y/y — a year ago Perth had roughly 2,940 properties for sale. Cotality's +36.4% (Jul) counts differently; see the conflicts panel. The REIWA figure is used because it is the same series as the listings level above.", ed:1},
   approvalsWA:{lab:"WA dwelling approvals, monthly change", v:-0.3, u:"%", src:"abs", date:"Jul 2026", fresh:"green",
     note:"Private house approvals −0.1%. Essentially flat; national trend approvals +11.7% y/y.", ed:1},
 
@@ -577,7 +621,7 @@ const V = {
   lendingQ:{lab:"New housing loan commitments, q/q", v:-5.4, u:"%", src:"abs", date:"Jun qtr 2026", fresh:"green",
     note:"Owner-occupier −3.3%, investor −8.6% by number.", ed:1},
   salesYoY:{lab:"Perth sales volumes, y/y", v:-20, u:"%", src:"abc", date:"Aug 2026", fresh:"green",
-    note:"Reported as 'down more than 20%'. Treated as −20% (conservative edge of the claim).", ed:1},
+    note:"Reported as 'down more than 20%'. Treated as −20% (conservative edge of the claim). REIWA's weekly count for w/e 13 Sep was 600 transactions, down 12.4% on the week before.", ed:1},
   ngShock:{lab:"Negative gearing shock absorbed?", v:0, u:"flag", src:"ato", date:"legislated 12 May 2026", fresh:"green",
     note:"0 = not yet. Negative gearing on established dwellings bought after 12 May 2026 ends 1 Jul 2027; 50% CGT discount replaced by indexation + 30% minimum rate.", ed:1},
 
@@ -593,7 +637,7 @@ const V = {
 
   /* ECONOMY */
   unempWA:{lab:"WA unemployment rate", v:4.5, u:"%", src:"abs", date:"Apr 2026", fresh:"orange",
-    note:"Up from 3.4% in Jan 2026. Sources seen give 3.4% (Jan), 4.40% (Feb), 4.30% (Mar), 4.5% (Apr) — the level is uncertain, the direction is not.", ed:1},
+    note:"Up from 3.4% in Jan 2026. Sources seen give 3.4% (Jan), 4.40% (Feb), 4.30% (Mar), 4.5% (Apr) — the level is uncertain, the direction is not. STILL STALE at the 18 Sep refresh: ABS Labour Force for August 2026 is not released until 24 September.", ed:1},
   unempTrend:{lab:"WA unemployment direction", v:1, u:"flag", src:"abs", date:"2026 YTD", fresh:"green",
     note:"+1 = rising, 0 = flat, −1 = falling.", ed:1},
   sentiment:{lab:"Consumer sentiment (Westpac-MI)", v:84.4, u:"idx", src:"westpac", date:"Sep 2026", fresh:"green",
@@ -609,7 +653,7 @@ const V = {
   cashRate:{lab:"RBA cash rate target", v:4.35, u:"%", src:"rba", date:"held Aug 2026", fresh:"green",
     note:"Three hikes in 2026: Feb 3.85%, Mar 4.10%, May 4.35%. Held June and August.", ed:1},
   rateDir:{lab:"Cash rate direction", v:1, u:"flag", src:"rba", date:"Sep 2026", fresh:"green",
-    note:"+1 = tightening bias. Market pricing ~68% for a hike to 4.60% on 29 Sep 2026; NAB expects Sep, ANZ and CBA Nov, Westpac a hold.", ed:1},
+    note:"+1 = tightening bias. Market pricing for 29 Sep 2026 is reported at ~55% (ASX futures, 3 Sep) and ~68% (later summary) — a live disagreement, see conflicts. NAB expects Sep, ANZ and CBA Nov, Westpac a hold through 2026.", ed:1},
   mortRate:{lab:"New owner-occupier variable rate", v:6.20, u:"%", src:"agg", date:"Jun–Jul 2026", fresh:"green",
     note:"6.25% (end-Jun) and 6.17% (15 Jul) from lender-comparison trackers; ~6.9% average across existing loans.", ed:1},
   inflation:{lab:"Headline CPI", v:3.5, u:"%", src:"abs", date:"Jul 2026", fresh:"green",
@@ -624,6 +668,38 @@ const V = {
     note:"Units +7.8%.", ed:1},
   yieldGross:{lab:"Gross rental yield (dwellings)", v:3.7, u:"%", src:"cotalityR", date:"Jun–Jul 2026", fresh:"green",
     note:"Compressed from 4.3% a year earlier. Perth's 2019-trough yields were closer to 5%.", ed:1}
+};
+
+/* ── Policy parameters for the finance engine. These are rules, not market
+      readings, so they live apart from V — but they are audited the same way. */
+const POLICY = {
+  dutyFullExempt:{lab:"WA first home owner duty — full exemption to", v:600000, u:"$", src:"wagov",
+    date:"from 7 May 2026", fresh:"green",
+    note:"2026-27 WA Housing Taxation Package. CONFLICT: a Tier-4 source dated this change 28 July 2026. The WA Government announcement (7 May 2026) is preferred."},
+  dutyConcessionTop:{lab:"WA first home owner duty — concession ceiling", v:800000, u:"$", src:"wagov",
+    date:"from 7 May 2026", fresh:"green",
+    note:"Statewide, replacing the earlier $700,000 metro / $750,000 regional ceilings."},
+  fhogCap:{lab:"WA First Home Owner Grant property cap", v:800000, u:"$", src:"wagov",
+    date:"from 7 May 2026", fresh:"green",
+    note:"South of the 26th parallel. The grant itself applies to new builds, not established homes — it does not help an established-house purchase."},
+  hgsCapPerth:{lab:"Home Guarantee Scheme — Perth price cap", v:850000, u:"$", src:"hgs",
+    date:"expanded 1 Oct 2025", fresh:"green",
+    note:"Perth metro. Your whole budget sits well inside it."},
+  hgsDeposit:{lab:"Home Guarantee Scheme — minimum deposit", v:5, u:"%", src:"hgs",
+    date:"expanded 1 Oct 2025", fresh:"green",
+    note:"No LMI, no income caps for most applicants, unlimited places. Applied through a participating lender, not directly."},
+  apraBuffer:{lab:"APRA serviceability buffer", v:3.0, u:"pp", src:"apra",
+    date:"reaffirmed May 2026", fresh:"green",
+    note:"Lenders must assess you at your product rate plus 3 percentage points. Cuts borrowing capacity by roughly 15–20%."},
+  dtiCap:{lab:"Debt-to-income cap (typical lender policy)", v:6.0, u:"×", src:"apra",
+    date:"tightened Feb 2026", fresh:"amber",
+    note:"Most lenders now cap total debt near 6× gross household income. Lender policy rather than a hard regulation, so it varies — treat as indicative."},
+  hemSingle:{lab:"HEM living-expense floor — single, capital city", v:2200, u:"$/mth", src:"hem",
+    date:"2026 indicative", fresh:"amber",
+    note:"Reported range $2,000–$2,400/month. Lenders use the HIGHER of your declared expenses and HEM, so understating expenses does not help."},
+  hemCouple:{lab:"HEM living-expense floor — couple, capital city", v:3300, u:"$/mth", src:"hem",
+    date:"2026 indicative", fresh:"amber",
+    note:"Indicative. Add roughly $500/month per dependant."}
 };
 
 /* ── Sourced history anchors. INTERP points are drawn but never claimed. ─ */
@@ -999,11 +1075,11 @@ function dataConfidence(){
   const f = avail.reduce((a,k)=>a+FRESHW[V[k].fresh],0)/avail.length;
   /* Required-but-unobtainable inputs. Counting completeness only over the
      variables that happen to exist would flatter the score. */
-  const STRUCTURAL_GAPS = 16;   // see §16 "what is missing" — clearance, arrears, forced sales,
+  const STRUCTURAL_GAPS = 16;   // see §17 "what is missing" — clearance, arrears, forced sales,
                                 // 7 suburb attributes, borrowing-capacity index, household formation,
                                 // GSP, business investment, completions, land releases
   const comp = avail.length/(keys.length+STRUCTURAL_GAPS)*100;
-  const CONFLICTS=4;
+  const CONFLICTS=7;
   const cons = clamp(100-11*CONFLICTS,0,100);
   const forecast = 52;  // bimodal trough distribution, regime uncertainty, n≈3 back-test
   const total = q*.25 + f*.20 + comp*.20 + cons*.15 + forecast*.20;
@@ -1241,11 +1317,7 @@ function scoreSubs(){
 /* Growth while waiting and growth after buying are different assumptions.
    Applying the wait-phase rate for the whole horizon would rig the comparison
    in favour of waiting, because both strategies end up owning the same asset. */
-function waTransferDuty(p,fhb){
-  if(fhb&&p<=600000) return 0;                       // WA FHB full exemption threshold from 28 Jul 2026
-  if(p<=725000) return 17765+0.0475*Math.max(0,p-500000);
-  return 28453+0.0515*(p-725000);
-}
+function waTransferDuty(p,fhb){ return fhb?dutyFHB(p):dutyGeneral(p); }
 function runStrategy(waitM,C,T=60){
   const rm=Math.pow(1+C.invest/100,1/12)-1;
   const gW=Math.pow(1+C.growth/100,1/12)-1;                  // while waiting
@@ -1255,10 +1327,24 @@ function runStrategy(waitM,C,T=60){
   let cash=C.savings, price=C.price0, wk=C.rentWk, rentPaid=0, mortPaid=0;
   for(let m=0;m<waitM;m++){ cash=cash*(1+rm)+C.monthly; rentPaid+=wk*52/12; price*=(1+gW); wk*=(1+rgm); }
   const pricePaid=price;
-  const costs=waTransferDuty(pricePaid,C.fhb)+3500;          // duty + conveyancing/inspection allowance
-  const deposit=clamp(cash,0,pricePaid*0.5);
-  let bal=Math.max(0,pricePaid+costs-deposit);
-  cash-=deposit;
+  const duty=waTransferDuty(pricePaid,C.fhb);
+  let costs=duty+3500;                                       // duty + conveyancing/inspection allowance
+  /* Deposit is what is LEFT after duty and fees, not the whole savings balance.
+     The first build got this wrong and financed the costs while still counting
+     them as deposit, which understated the loan and skipped LMI entirely. */
+  let deposit=clamp(cash-costs,0,pricePaid*0.5);
+  let bal=Math.max(0,pricePaid-deposit);
+  let lmi=0;
+  const hgsOK = C.fhb && C.useHGS && pricePaid<=POLICY.hgsCapPerth.v;
+  if(hgsOK){
+    deposit=Math.max(pricePaid*POLICY.hgsDeposit.v/100, Math.min(deposit,pricePaid*0.5));
+    bal=pricePaid-deposit;                                   // guarantee scheme: no LMI at any LVR down to 5%
+  }else{
+    lmi=lmiCost(bal,bal/pricePaid);
+    bal+=lmi; costs+=lmi;
+  }
+  cash=Math.max(0,cash-deposit-duty-3500);
+  const loanAtBuy=bal;
   const pay= bal>0 ? bal*im/(1-Math.pow(1+im,-360)) : 0;
   const rentAtBuy=wk*52/12;
   for(let m=waitM;m<T;m++){
@@ -1266,7 +1352,7 @@ function runStrategy(waitM,C,T=60){
     cash=cash*(1+rm)+(C.monthly+rentAtBuy-pay);
     price*=(1+gA);
   }
-  return {waitM,pricePaid,priceAtT:price,deposit,loan:Math.max(0,pricePaid+costs-deposit),
+  return {waitM,pricePaid,priceAtT:price,deposit,loan:loanAtBuy,lmi,duty,
           pay,rentPaid,mortPaid,costs,balT:bal,cashT:cash,net:price+cash-bal};
 }
 
@@ -1350,12 +1436,12 @@ function render(){
 
   if(DC.total<60) $("#confwarn").innerHTML =
     `<div class="critbox" style="margin-top:24px">⚠️ <strong>Forecast reliability is reduced.</strong> Data confidence is
-      ${Math.round(DC.total)}/100. Important market data is missing, stale or conflicting — read §16 before acting on anything here.</div>`;
+      ${Math.round(DC.total)}/100. Important market data is missing, stale or conflicting — read §17 before acting on anything here.</div>`;
   else $("#confwarn").innerHTML =
     `<div class="warnbox" style="margin-top:24px">Data confidence <strong>${Math.round(DC.total)}/100 — ${DC.lvl.l}</strong>.
       Above the reliability floor, but the score already carries a 15% haircut because no primary release could be
       fetched directly (network egress policy blocked reiwa.com.au, abs.gov.au, rba.gov.au and sqmresearch.com.au).
-      Every Tier-1 figure here is a secondary report of a primary release. Full breakdown in §16.</div>`;
+      Every Tier-1 figure here is a secondary report of a primary release. Full breakdown in §17.</div>`;
 
   /* ── tiles ── */
   const tro=qLab(T.mode), win=qLab(T.lo)+" – "+qLab(T.hi);
@@ -1619,11 +1705,18 @@ function render2(){
       Kwinana corridor. The real question is not <em>can I afford Perth</em>; it is <strong>should I buy in the
       bottom-quartile outer corridor in the month after it posted +25% to +31% annual growth, with the whole market
       four months into a downturn and the RBA still hiking?</strong> That is what the rest of this page is answering.</p>
-    <p class="note">One structural detail that matters more to you than to most buyers: from 28 July 2026 the WA first
-      home buyer transfer-duty <strong>full exemption threshold is $600,000</strong> (worth up to about $18,000). Your
-      budget straddles that line. A $600,000 purchase and a $625,000 purchase are not $25,000 apart — if you qualify as a
-      first home buyer they can be closer to $30,000–$40,000 apart once duty is counted. Verify your eligibility and the
-      current duty scale with RevenueWA before relying on this.</p></div>`;
+    <p class="note"><strong>Correction, 18 September 2026.</strong> The first build of this page said the $600,000
+      duty threshold made a $625,000 purchase "$30,000–$40,000" more expensive than a $600,000 one. <em>That was wrong</em>,
+      and it was wrong in the direction that made buying look worse. It came from a defect in the duty function, which
+      applied the general residential scale above $600,000 instead of the first home owner rate. The real figures, on the
+      scale in force from 7 May 2026: duty is <strong>nil to $600,000</strong>, then runs at about
+      <strong>$16.16 per $100</strong> until it meets full duty at $800,000. So a first home buyer pays
+      <strong>${money(dutyFHB(600000))} at $600,000, ${money(dutyFHB(625000))} at $625,000 and ${money(dutyFHB(650000))} at $650,000</strong> —
+      against ${money(dutyGeneral(650000))} at the general rate. The threshold is still worth crossing below if you can,
+      but it is worth roughly 1% of the purchase price, not 5%. Confirm your eligibility with RevenueWA.</p>
+    <p class="note">The bigger policy fact, which the first build missed entirely: the expanded
+      <strong>Home Guarantee Scheme</strong> covers Perth purchases to $850,000 with a <strong>5% deposit and no LMI</strong>,
+      no income caps and unlimited places. If it is open to you, your deposit is not the constraint — see §11.</p></div>`;
 
   const bench=[
     {n:"Perth metro median house (REIWA)",v:medH,p:"impossible"},
@@ -1830,7 +1923,8 @@ const CFIELDS=[
   ["invest","Expected return on savings","% p.a.",4.5],["growth","Price change per year WHILE WAITING","% p.a.",-6.0],
   ["growthAfter","Price growth per year ONCE YOU OWN","% p.a.",3.0],
   ["rentWk","Rent you pay now","$/wk",620],["mort","Expected mortgage rate","% p.a.",6.20],
-  ["price0","Target property price today","$",640000],["fhb","First home buyer? (1 = yes, 0 = no)","0/1",1]
+  ["price0","Target property price today","$",640000],["fhb","First home buyer? (1 = yes, 0 = no)","0/1",1],
+  ["useHGS","Use the Home Guarantee Scheme? (1 = yes, 0 = no)","0/1",1]
 ];
 function readCalc(){
   const C={};
@@ -1846,6 +1940,7 @@ function renderCalc(){
     return `<tr><td class="nm">${r.waitM===0?"Buy now":"Wait "+r.waitM+" months"}</td>
       <td class="num">${money(r.pricePaid)}</td><td class="num">${money(r.deposit)}</td>
       <td class="num">${money(r.loan)}</td><td class="num">${money(r.pay)}</td>
+      <td class="num" style="color:${r.lmi>0?'var(--crit)':'var(--good)'}">${r.lmi>0?money(r.lmi):"nil"}</td>
       <td class="num">${money(r.rentPaid)}</td>
       <td class="num" style="color:${diff>0?'var(--good)':diff<0?'var(--crit)':'var(--ink2)'};font-weight:600">
         ${r.waitM===0?"—":(diff>0?"+":"")+money(diff)}</td></tr>`;}).join("");
@@ -1876,17 +1971,25 @@ function renderCalc(){
         that, you accumulate deposit and you may buy cheaper. At a break-even of <strong>${pc(mid,1)}</strong>, a fall
         shallower than that means <strong>buying now wins</strong>. Waiting 24 months at your assumptions changes your
         position by <strong>${(d24>0?"+":"")+money(d24)}</strong>.</p>
-      <div class="warnbox" style="margin:12px 0"><strong>The $600,000 duty cliff distorts your break-even, in your favour.</strong>
-        At ${money(C.price0)} a first home buyer pays roughly ${money(waTransferDuty(C.price0,C.fhb))} in WA transfer duty.
-        At $600,000 or less it is <strong>$0</strong>. That step is worth about ${money(waTransferDuty(650000,1))} — more than a
-        further 3% price fall — and it is why the break-even price above sits so close to today's. If waiting takes you from
-        just above the threshold to just below it, waiting wins on duty alone. If it does not, the case is thin.</div>
+      <div class="warnbox" style="margin:12px 0"><strong>The $600,000 duty threshold tilts the break-even in your favour — modestly.</strong>
+        At ${money(C.price0)} a first home buyer pays ${money(waTransferDuty(C.price0,1))} in WA transfer duty; at $600,000
+        or less it is <strong>nil</strong>. On your target that step is worth
+        <strong>${money(waTransferDuty(C.price0,1))}</strong>, or about ${pcAbs(waTransferDuty(C.price0,1)/C.price0*100)} of
+        the price. Real, but it will not decide this on its own.
+        ${C.useHGS?`<br><br><strong>You have the guarantee scheme switched on, which removes LMI entirely — and that is what
+        really changes the answer.</strong> Without it, waiting looks better largely because a bigger deposit escapes LMI.
+        With it, that reason disappears and only the price fall is left.`
+        :`<br><br><strong>The guarantee scheme is switched off, so this run charges LMI.</strong> Much of the apparent gain
+        from waiting below is you escaping an LMI premium you may not have to pay at all — set the scheme toggle to 1 and
+        compare. See §11.`}</div>
       <p class="small" style="margin:0">Comparison is at a common 60-month horizon: home equity plus investment balance
         minus loan balance, with rent, mortgage payments, transfer duty and a $3,500 conveyancing/inspection allowance all
         counted. Rent growth is assumed at half the current 8.1% rate, because 8% rent growth is not a durable assumption.
-        WA transfer duty uses the general residential scale with the first-home-buyer full exemption applied at or under
-        $600,000 — <strong>check the current scale with RevenueWA</strong>; duty rates are structural knowledge here, not
-        a freshly sourced figure.</p></div>`;
+        WA transfer duty uses the first home owner rate in force from 7 May 2026 — nil to $600,000, tapering to full
+        general duty at $800,000 — and LMI is charged at the indicative band rate unless the Home Guarantee Scheme route
+        is selected, in which case it is nil. <strong>Confirm the duty scale with RevenueWA and your LMI premium with a
+        lender.</strong> <em>Corrected 18 September 2026: the first build financed the purchase costs into the loan while
+        still counting them as deposit, and never charged LMI at all. Both are fixed here, and the numbers moved.</em></p></div>`;
 }
 
 function render3(){
@@ -1922,7 +2025,14 @@ function render3(){
         <div class="kv"><span>Forecast models active</span><b>6 / 7</b></div>
         <div class="kv"><span>Back-test events</span><b>3 troughs</b></div></div>
     </div>`;
-  $("#auditTable tbody").innerHTML=Object.keys(V).map(k=>{
+  $("#auditTable tbody").innerHTML=Object.keys(POLICY).map(k=>{
+    const v=POLICY[k], sc=SRC[v.src], f=FRESH[v.fresh];
+    return `<tr><td class="nm">${v.lab} <span class="tag">POLICY</span></td>
+      <td class="num">${v.u==="$"?money(v.v):v.v+" "+v.u}</td>
+      <td class="small">${sc.n}</td><td class="small">${v.date}</td>
+      <td><span class="flag"><i class="dot ${f.c}"></i>${f.l.split(" ")[1]}</span></td>
+      <td class="num">T${sc.tier}</td><td class="small">${v.note}</td></tr>`;}).join("")
+   + Object.keys(V).map(k=>{
     const v=V[k], s=SRC[v.src], f=FRESH[v.fresh];
     return `<tr><td class="nm">${v.lab}${isUser(k)?' <span class="tag">USER</span>':""}</td>
       <td class="num">${v.v==null?'<span style="color:var(--crit)">unavailable</span>':(v.u==="$"?money(val(k)):val(k)+(v.u&&v.u!=="flag"?" "+v.u:""))}</td>
@@ -1931,7 +2041,7 @@ function render3(){
       <td class="num">T${s.tier}</td><td class="small">${v.note}</td></tr>`;}).join("");
 
   $("#conflicts").innerHTML=`
-    <p class="note">Four material disagreements were found. None was resolved by picking a favourite.</p>
+    <p class="note">Seven material disagreements were found. None was resolved by picking a favourite.</p>
     ${[
       ["Perth price direction, August 2026",
        "REIWA: median house sale price <strong>+1.1%</strong> to $960,000. Cotality: Perth index <strong>−0.8%</strong>, median dwelling value $999,987.",
@@ -1945,6 +2055,18 @@ function render3(){
        "Readings seen for 2026: <strong>3.4%</strong> (Jan), <strong>4.40%</strong> (Feb), <strong>4.30%</strong> (Mar), <strong>4.5%</strong> (Apr).",
        "A 1.1-point jump between January and February is not a real monthly move. This is almost certainly a mix of trend, seasonally adjusted and original series being quoted interchangeably by secondary reporters.",
        "<strong>Unresolved.</strong> The <em>level</em> is used only as a soft input at 4.5%; the model leans on the <em>direction</em>, which every source agrees on. This variable is graded 🟠 STALE and its level carries reduced influence. If the level matters to your decision, get it from the ABS release directly.",1],
+      ["Perth listings growth, year on year",
+       "REIWA: <strong>+157.2%</strong> (w/e 13 Sep 2026). Cotality: <strong>+36.4%</strong> (Jul 2026).",
+       "Different series. REIWA counts properties actively listed by its members at a point in time; Cotality's 'total listings' uses a longer counting window that carries stale listings forward, which compresses the growth rate off a very low base. A year ago Perth had roughly 2,940 active listings — the REIWA figure is arithmetically consistent with that.",
+       "<strong>REIWA used</strong>, because it is the same series as the listings <em>level</em> the model scores against; mixing a level from one source with a growth rate from another would be incoherent. This revision alone lifted the Supply family score materially at the 18 September refresh.",1],
+      ["Market odds on the 29 September RBA hike",
+       "ASX cash-rate futures: <strong>~55%</strong> (as at 3 Sep 2026). A later summary: <strong>~68%</strong>.",
+       "Probably a genuine repricing between the two dates rather than a measurement difference — but neither figure could be traced to a primary RBA or ASX release.",
+       "<strong>Unresolved.</strong> Reported as a 55–68% range rather than a false point estimate. The model uses the <em>direction</em> of the rate cycle, not the odds, so nothing downstream turns on which is right.",1],
+      ["WA first home owner duty threshold — effective date",
+       "WA Government: the $600,000 exemption and $800,000 concession ceiling apply <strong>from 7 May 2026</strong>. A broker-aggregator source dated the change <strong>28 July 2026</strong>.",
+       "The 7 May date matches the 2026-27 WA Housing Taxation Package announcement; the July date has no primary corroboration.",
+       "<strong>WA Government used</strong> (Tier 1 over Tier 4). The first build cited the 28 July date — corrected at the 18 September refresh.",1],
       ["Perth median house price, late 2025",
        "One secondary source reports Perth's median house price reached <strong>$1.09 million</strong> in Q4 2025.",
        "Incompatible with REIWA's own series: $786,000 in June 2025 and $960,000 in August 2026 at +18.5% y/y. A $1.09m Q4-2025 median would require a subsequent crash that no source reports.",
@@ -2022,8 +2144,13 @@ function render3(){
         <li><strong>Inspect actively from now, buy nothing.</strong> Twelve months of walking through Armadale, Gosnells,
           Midland and Cannington is how you learn which streets are worth $30,000 more. That knowledge is what turns a
           correction into a bargain; it cannot be acquired retrospectively.</li>
-        <li><strong>Hold the $600,000 line if you are a first home buyer.</strong> Full transfer-duty exemption at or under
-          $600,000 from 28 July 2026. That threshold is worth more than a further 3% price fall.</li>
+        <li><strong>Find out this week whether the Home Guarantee Scheme is open to you.</strong> One call to a
+          participating lender. If it is, you can buy at 5% down with no LMI inside an $850,000 Perth cap — which means
+          your deposit stopped being the constraint some time ago, and most of the financial case for waiting evaporates.
+          This is the highest-value hour you can spend on this decision.</li>
+        <li><strong>Prefer $600,000 or under if you can find the right house there.</strong> Nil transfer duty below the
+          threshold, then about $16.16 per $100 above it. Worth roughly 1% of the price on your budget — a tiebreaker
+          between two similar houses, not a reason to buy a worse one.</li>
         <li><strong>Run the break-even calculator with your real numbers, not mine.</strong> At the defaults, waiting
           twelve months only pays if prices fall further than the break-even shown in §15. If your view is milder than
           that, the model's own arithmetic says buy sooner.</li>
@@ -2058,6 +2185,25 @@ function render3(){
           month while the metro prints −0.8%, the high-beta unwind is running and there is no reason to catch it early.</li>
       </ul></div>`;
 
+  const finC=readFin(), finCap=capacity(finC,val("mortRate"));
+  const finMax=Math.max(...["hgs","all","std"].map(k=>maxPrice(k,finC,finCap)));
+  const capPer25=(finMax-Math.max(...["hgs","all","std"].map(k=>maxPrice(k,finC,capacity(finC,val("mortRate")+0.25)))));
+  $("#strategyPanel").insertAdjacentHTML("beforeend",`
+    <div class="card w" style="margin-top:14px"><h4>⚖️ The market says wait. Your finances say the prize is small.</h4>
+      <p class="note">These two findings sit in tension and you should hold both. The cycle model is unambiguous:
+        bottom probability ${Math.round(M.ensemble)}%, false-bottom risk ${FB.lvl.l}, buying score ${Math.round(BS.total)} —
+        this is early in a downturn and the RBA is still tightening.</p>
+      <p class="note">But §11 and §16 put a number on what waiting actually wins you, and it is not large.
+        With the guarantee scheme, waiting twelve months at a 6% annual fall improves your position by single-digit
+        thousands, and waiting twenty-four months makes it slightly <em>worse</em>. Meanwhile every 25bp hike removes about
+        <strong>${money(Math.abs(capPer25))}</strong> of purchasing power, against roughly
+        <strong>${money(finC.target*0.10)}</strong> from a base-case 10% fall on your target. Price falls win that race
+        about five to one — so the hikes do not reverse the argument, but they do erode it.</p>
+      <p class="note" style="margin:0"><strong>The resolution is not "wait" or "buy" — it is "wait, but not for long,
+        and not for the reason you think."</strong> You are not waiting to save a deposit; you already have one. You are
+        waiting for the rate cycle to stop, which the model puts somewhere between the next meeting and late 2027. If the
+        RBA holds twice and a house you genuinely want appears in the outer corridor at or under $600,000, the financial
+        case for continuing to wait is thin enough that the right answer is probably to buy it.</p></div>`);
   $("#limits").innerHTML=`
     <ul class="note" style="padding-left:18px;line-height:1.7;margin:0">
       <li><strong>No primary source was fetched directly.</strong> Network egress policy blocked reiwa.com.au,
@@ -2070,6 +2216,14 @@ function render3(){
       <li><strong>Suburb data is the weakest layer on this page.</strong> Mixed reference periods, Tier-4 aggregators,
         seven of fifteen requested attributes missing, and one unresolved conflict on Armadale's own median. Use it to
         build a shortlist to inspect, never to decide what something is worth.</li>
+      <li><strong>Two defects from the 8 September build are corrected here, and both had made buying look worse
+        than it is.</strong> The waiting calculator financed purchase costs into the loan while still counting them as
+        deposit, and never charged LMI; and the duty function applied the general residential scale above $600,000
+        instead of the first home owner rate, overstating duty for a first home buyer in the $600k–$800k band by around
+        $18,000. If you acted on the earlier version, re-read §10, §11 and §16.</li>
+      <li><strong>The finance engine is only as good as the inputs you give it.</strong> Tax brackets, HEM floors, LMI
+        premiums and the DTI cap are indicative and vary by lender — HEM alone ranges $2,000–$2,400 a month for a single
+        person. Treat the capacity number as a planning figure and get a real pre-approval before you rely on it.</li>
       <li><strong>This is a probability model, not a prediction, and not financial advice.</strong> It says what Perth's
         indicators have historically been associated with. It cannot tell you what will happen, and a 35% bottom
         probability is not a forecast that prices will fall — it is a statement that the current configuration looks more
@@ -2080,8 +2234,300 @@ function render3(){
     </ul>`;
 }
 
+
+/* ════════════════════════════════════════════════════════════════════════
+   FINANCE ENGINE — serviceability, deposit routes, rate sensitivity.
+   Added 18 Sep 2026. This answers the question the first build could not:
+   not "is waiting better" but "can you borrow this at all, and what does
+   the next rate decision do to the answer".
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* Legislated 2026-27 personal rates (the 16% step fell to 15% on 1 Jul 2026),
+   plus Medicare at 2% with the usual shade-in. Author knowledge, not a
+   freshly sourced table — verify before relying on the dollar figures. */
+function auTax(g){
+  let t=0;
+  if(g>190000)      t=51638+0.45*(g-190000);
+  else if(g>135000) t=31288+0.37*(g-135000);
+  else if(g>45000)  t= 4288+0.30*(g- 45000);
+  else if(g>18200)  t=        0.15*(g- 18200);
+  let m=0;
+  if(g>34027) m=0.02*g;
+  else if(g>27222) m=0.10*(g-27222);
+  return t+m;
+}
+const af=(ratePct,yrs)=>{const i=ratePct/100/12,n=yrs*12;return i/(1-Math.pow(1+i,-n));};
+
+/* WA general residential transfer duty scale. Long-standing structure;
+   confirm against RevenueWA before exchanging contracts. */
+function dutyGeneral(p){
+  if(p<=120000)  return 0.019*p;
+  if(p<=150000)  return 2280+0.0285*(p-120000);
+  if(p<=360000)  return 3135+0.0380*(p-150000);
+  if(p<=725000)  return 11115+0.0475*(p-360000);
+  return 28453+0.0515*(p-725000);
+}
+/* First Home Owner Rate from 7 May 2026: nil to $600,000, then a flat
+   concessional rate that reaches full general duty at $800,000. That is how
+   WA builds the FHOR — the implied marginal rate is $16.16 per $100, which
+   reproduces the old $15.01-per-$100 rate exactly when run on the previous
+   $450k/$600k thresholds, so the construction is right rather than guessed. */
+function dutyFHB(p){
+  const E=POLICY.dutyFullExempt.v, C=POLICY.dutyConcessionTop.v;
+  if(p<=E) return 0;
+  if(p>=C) return dutyGeneral(p);
+  return dutyGeneral(C)*(p-E)/(C-E);
+}
+const FHOR_MARGINAL = dutyGeneral(POLICY.dutyConcessionTop.v)/
+                      (POLICY.dutyConcessionTop.v-POLICY.dutyFullExempt.v)*100;
+
+/* Indicative LMI. Premiums are not published as public tables; these are the
+   reported mid-points by LVR band, plus WA's 10% duty on the premium. */
+function lmiCost(loan,lvr){
+  if(lvr<=0.80) return 0;
+  const rate = lvr<=0.85?0.010 : lvr<=0.90?0.020 : lvr<=0.95?0.035 : 0.045;
+  return loan*rate*1.10;
+}
+
+const FIN={income1:120000,income2:0,deps:0,commit:0,ccLimit:0,otherDebt:0,
+           savings:130000,target:640000,fhb:1,hemOverride:0};
+const FINF=[
+  ["income1","Your gross income","$ p.a."],["income2","Partner's gross income (0 if none)","$ p.a."],
+  ["deps","Dependants","count"],["commit","Other monthly commitments (car, HECS-free debts)","$/mth"],
+  ["ccLimit","Total credit card limits","$"],["otherDebt","Other debt balances","$"],
+  ["savings","Savings available","$"],["target","Target purchase price","$"],
+  ["fhb","First home buyer? (1 = yes, 0 = no)","0/1"]
+];
+function readFin(){
+  const C=Object.assign({},FIN);
+  FINF.forEach(([k])=>{const e=$("#fin_"+k); if(e){const v=parseFloat(e.value); if(!isNaN(v)) C[k]=v;}});
+  return C;
+}
+function capacity(C,mortRate){
+  const gross=C.income1+C.income2;
+  const net=gross-auTax(C.income1)-(C.income2>0?auTax(C.income2):0);
+  const hem=(C.hemOverride>0?C.hemOverride
+            :(C.income2>0?POLICY.hemCouple.v:POLICY.hemSingle.v))+500*C.deps;
+  const assess=mortRate+POLICY.apraBuffer.v;
+  const surplus=net/12-hem-C.commit-C.ccLimit*0.038;
+  const byService=Math.max(0,surplus/af(assess,30));
+  const byDTI=Math.max(0,POLICY.dtiCap.v*gross-C.otherDebt);
+  return {gross,net,hem,assess,surplus,byService,byDTI,
+          maxLoan:Math.min(byService,byDTI),
+          binding: byService<=byDTI?"serviceability":"debt-to-income"};
+}
+function route(kind,P,C,cap){
+  const duty=C.fhb?dutyFHB(P):dutyGeneral(P);
+  const fees=3500;
+  let deposit,loan,lmi=0,eligible=true,why="";
+  if(kind==="hgs"){
+    if(P>POLICY.hgsCapPerth.v){eligible=false;why="Above the $850,000 Perth cap";}
+    if(!C.fhb){eligible=false;why="Not a first home buyer";}
+    deposit=P*POLICY.hgsDeposit.v/100; loan=P-deposit;
+  }else if(kind==="all"){
+    deposit=Math.max(0,C.savings-duty-fees); loan=P-deposit;
+    lmi=lmiCost(loan,loan/P); loan+=lmi;
+  }else{
+    deposit=P*0.20; loan=P-deposit;
+  }
+  const cash=deposit+duty+fees;
+  return {kind,P,duty,fees,deposit,loan,lmi,cash,lvr:loan/P,eligible,why,
+          affordable:eligible&&cash<=C.savings+0.5,
+          serviceable:loan<=cap.maxLoan,
+          ok:eligible&&cash<=C.savings+0.5&&loan<=cap.maxLoan};
+}
+function maxPrice(kind,C,cap){
+  let best=0;
+  for(let P=300000;P<=1400000;P+=1000){ if(route(kind,P,C,cap).ok) best=P; }
+  return best;
+}
+
+/* ════════════ Finance renderer ════════════ */
+function renderFinance(){
+  const C=readFin(), mr=val("mortRate"), cap=capacity(C,mr);
+  const routes=[["hgs","Home Guarantee Scheme · 5% deposit"],
+                ["all","Everything you have as deposit"],
+                ["std","Conventional 20% deposit"]];
+  const rows=routes.map(([k,lab])=>({lab,...route(k,C.target,C,cap),max:maxPrice(k,C,cap)}));
+  const bestMax=Math.max(...rows.map(r=>r.max));
+  const bestRow=rows.find(r=>r.max===bestMax);
+
+  $("#financeLede").innerHTML=`
+    <div class="${cap.maxLoan>0?'warnbox':'critbox'}">
+      <strong>Why this section exists, and why the first build was incomplete without it.</strong>
+      The rest of this page asks whether waiting beats buying. It never asked whether you can borrow the money —
+      and for a $600k–$650k Perth purchase in 2026 that is the harder constraint. Two policy facts do most of the work:
+      the <strong>Home Guarantee Scheme</strong> now covers Perth purchases up to $850,000 with a
+      <strong>5% deposit and no LMI</strong>, no income caps and unlimited places; and APRA has
+      <strong>reaffirmed the 3-percentage-point serviceability buffer</strong>, so a ${pcAbs(mr)} mortgage is
+      assessed at <strong>${pcAbs(cap.assess)}</strong>.</div>
+    <p class="note" style="margin-top:14px"><strong>The consequence is uncomfortable for the conclusion I gave you
+      on 8 September.</strong> If the scheme is open to you, your deposit stopped being the binding constraint some
+      time ago — 5% of $640,000 is ${money(640000*0.05)}, and you hold ${money(C.savings)}. The waiting calculator in
+      §16 credits you with deposit accumulation as a benefit of waiting. If you do not need a larger deposit, that
+      benefit is largely fictional, and <strong>the case for waiting is weaker than the model originally scored it.</strong>
+      What waiting genuinely buys is a lower price. What it costs is rent, plus any borrowing capacity lost to further
+      rate rises.</p>`;
+
+  $("#finBinding").innerHTML=`
+    <div class="g3">
+      <div class="card ${cap.binding==="serviceability"?'c':''}">
+        <div class="eyebrow">Maximum loan — serviceability</div>
+        <div style="font-family:var(--sans);font-weight:700;font-size:1.9rem;margin:6px 0">${money(cap.byService)}</div>
+        <div class="small">Monthly surplus ${money(cap.surplus)} after tax, a ${money(cap.hem)} HEM floor, and
+          ${money(C.ccLimit*0.038)}/month charged against your card limits — divided by a 30-year repayment at
+          ${pcAbs(cap.assess)} (your ${pcAbs(mr)} rate plus APRA's 3-point buffer).</div></div>
+      <div class="card ${cap.binding==="debt-to-income"?'c':''}">
+        <div class="eyebrow">Maximum loan — debt-to-income</div>
+        <div style="font-family:var(--sans);font-weight:700;font-size:1.9rem;margin:6px 0">${money(cap.byDTI)}</div>
+        <div class="small">${POLICY.dtiCap.v}× gross household income of ${money(cap.gross)}, less existing debt.
+          Typical lender policy since February 2026 rather than a hard rule — it varies by lender.</div></div>
+      <div class="card ${bestMax>=C.target?'g':'c'}">
+        <div class="eyebrow">Most you can buy</div>
+        <div style="font-family:var(--sans);font-weight:700;font-size:1.9rem;margin:6px 0">${bestMax?money(bestMax):"—"}</div>
+        <div class="small">Best route: <strong>${bestRow?bestRow.lab:"none available"}</strong>.
+          ${bestMax>=C.target
+            ? `Your ${money(C.target)} target is inside capacity by ${money(bestMax-C.target)}.`
+            : `<strong style="color:var(--crit)">Your ${money(C.target)} target is ${money(C.target-bestMax)} beyond reach on these inputs.</strong>`}
+          Binding constraint: <strong>${cap.binding}</strong>.</div></div>
+    </div>`;
+
+  $("#routeTable tbody").innerHTML=rows.map(r=>`<tr>
+    <td class="nm">${r.lab}${!r.eligible?`<div class="small" style="font-weight:400;color:var(--crit)">${r.why}</div>`:""}</td>
+    <td class="num">${r.eligible?money(r.deposit):"—"}</td>
+    <td class="num">${r.eligible?pcAbs(r.lvr*100,0):"—"}</td>
+    <td class="num" style="color:${r.lmi>0?'var(--crit)':'var(--good)'}">${r.eligible?(r.lmi>0?money(r.lmi):"nil"):"—"}</td>
+    <td class="num">${r.eligible?(r.duty>0?money(r.duty):"nil"):"—"}</td>
+    <td class="num" style="color:${r.eligible&&r.cash>C.savings?'var(--crit)':'var(--ink2)'}">${r.eligible?money(r.cash):"—"}</td>
+    <td class="num">${r.eligible?money(r.loan):"—"}</td>
+    <td><span class="flag"><i class="dot ${r.ok?'g':'c'}"></i>${
+      !r.eligible?"Not eligible":!r.affordable?"Not enough cash":!r.serviceable?"Loan too large":"Yes"}</span>
+      <div class="small">Max price this route: <strong>${r.max?money(r.max):"—"}</strong></div></td></tr>`).join("");
+
+  const hgs=rows[0], all=rows[1];
+  $("#routeNote").innerHTML=`
+    <div class="g2">
+      <div class="card"><h4>The two cliffs, priced</h4>
+        <div class="kv"><span>Duty at ${money(C.target)} ${C.fhb?"(first home buyer)":"(general rate)"}</span><b>${money(C.fhb?dutyFHB(C.target):dutyGeneral(C.target))}</b></div>
+        <div class="kv"><span>Duty at $600,000</span><b>${money(C.fhb?0:dutyGeneral(600000))}</b></div>
+        <div class="kv"><span>Duty at $650,000</span><b>${money(C.fhb?dutyFHB(650000):dutyGeneral(650000))}</b></div>
+        <div class="kv"><span>LMI if you use your own deposit</span><b>${all.lmi>0?money(all.lmi):"nil"}</b></div>
+        <div class="kv"><span>LMI under the guarantee scheme</span><b>nil</b></div>
+        <p class="small" style="margin-top:9px">Above $600,000 the WA first home owner rate runs at about
+          <strong>$${FHOR_MARGINAL.toFixed(2)} per $100</strong> until it meets full duty at $800,000. That is a
+          <em>marginal</em> rate of roughly 16% on the portion above the threshold — steeper than the general duty
+          scale it eventually joins. Every $10,000 you go above $600,000 costs about
+          <strong>${money(FHOR_MARGINAL*100)}</strong> in duty on top of the price.</p></div>
+      <div class="card ${hgs.ok?'g':'w'}"><h4>What this means for your $600k–$650k band</h4>
+        <p class="small">${hgs.ok
+          ? `Under the guarantee scheme a ${money(C.target)} purchase needs ${money(hgs.cash)} in cash — deposit,
+             duty and fees — against ${money(C.savings)} saved. That leaves <strong>${money(C.savings-hgs.cash)}</strong>
+             spare. You are not deposit-constrained; you are rate-constrained.`
+          : `At ${money(C.target)} the guarantee-scheme route does not clear on these inputs: ${hgs.why||(!hgs.serviceable?"the 95% loan exceeds what your income services":"insufficient cash")}.`}</p>
+        <p class="small">A larger deposit is still worth something — it cuts the loan, the interest and the LMI — but
+          it is no longer the thing standing between you and a purchase. That changes what waiting is <em>for</em>.
+          Waiting to save is close to pointless here. Waiting for a lower price is a real, if modest, argument.
+          Waiting through further rate rises is actively costly, because it shrinks the number below.</p></div>
+    </div>`;
+
+  /* rate sensitivity */
+  const scen=[-0.25,0,0.25,0.50,0.75].map(d=>{
+    const c2=capacity(C,mr+d);
+    const m=Math.max(...routes.map(([k])=>maxPrice(k,C,c2)));
+    return {d,cash:val("cashRate")+d,mort:mr+d,cap:c2,max:m};
+  });
+  const base=scen[1];
+  chartCapacity($("#chartCapacity"),scen,C);
+  $("#capCap").innerHTML=`Maximum purchase price across all three deposit routes, recomputed at each mortgage rate.
+    Cash rate shown on the assumption that lenders pass moves through one-for-one.`;
+  $("#capTable").innerHTML=`
+    <div class="tw"><table><thead><tr><th>Cash rate</th><th class="num">Assessed at</th>
+      <th class="num">Max loan</th><th class="num">Max price</th><th class="num">vs today</th></tr></thead><tbody>
+    ${scen.map(x=>`<tr${x.d===0?' style="background:var(--accent-soft)"':''}>
+      <td class="nm">${pcAbs(x.cash,2)}${x.d===0?" — today":""}</td>
+      <td class="num">${pcAbs(x.cap.assess)}</td><td class="num">${money(x.cap.maxLoan)}</td>
+      <td class="num">${money(x.max)}</td>
+      <td class="num" style="color:${x.max-base.max>0?'var(--good)':x.max<base.max?'var(--crit)':'var(--ink2)'}">
+        ${x.d===0?"—":(x.max-base.max>0?"+":"")+money(x.max-base.max)}</td></tr>`).join("")}
+    </tbody></table></div>
+    <p class="note" style="margin-top:12px"><strong>Read this against the price forecast, not on its own.</strong>
+      A 25bp hike costs you about <strong>${money(Math.abs(scen[3].max-base.max)/2)}</strong> of purchasing power.
+      The base-case correction takes roughly 10% off a ${money(C.target)} house, or about
+      <strong>${money(C.target*0.10)}</strong>. Price falls still win that race — but by less than the headline
+      suggests, and the gap closes with every hike. If the RBA goes to ${pcAbs(val("cashRate")+0.75,2)}, the two
+      effects roughly cancel and waiting has bought you nothing.</p>`;
+
+  /* personal stress test */
+  const okRows=rows.filter(r=>r.ok);
+  const pick=okRows.length?okRows.reduce((a,b)=>b.loan<a.loan?b:a):rows[1];
+  const maxLev=okRows.length?okRows.reduce((a,b)=>b.loan>a.loan?b:a):pick;
+  const stress=[0,0.25,0.50,0.75,1.00].map(d=>{
+    const r=(mr+d)/100/12, pay=pick.loan*r/(1-Math.pow(1+r,-360));
+    return {d,rate:mr+d,pay};
+  });
+  const s0=stress[0], netM=cap.net/12;
+  $("#stressOut").innerHTML=`
+    <p class="note">On the <strong>${pick.lab}</strong> route at ${money(C.target)}, borrowing ${money(pick.loan)} —
+      the <em>smallest</em> loan you can take at this price, which is the one worth stress-testing.
+      ${maxLev.loan>pick.loan?`The 5%-deposit route would borrow ${money(maxLev.loan)} instead and every figure below
+      would be about ${pcAbs((maxLev.loan/pick.loan-1)*100,0)} worse — a reason to put more than the minimum down even
+      when the scheme lets you put less.`:""}</p>
+    <div class="tw" style="margin-top:10px"><table><thead><tr><th>Scenario</th><th class="num">Mortgage rate</th>
+      <th class="num">Monthly repayment</th><th class="num">Extra vs today</th>
+      <th class="num">Share of net income</th></tr></thead><tbody>
+    ${stress.map(x=>`<tr${x.d===0?' style="background:var(--accent-soft)"':''}>
+      <td class="nm">${x.d===0?"You buy today":"+"+Math.round(x.d*100)+"bp"}</td>
+      <td class="num">${pcAbs(x.rate)}</td><td class="num">${money(x.pay)}</td>
+      <td class="num" style="color:${x.d?'var(--crit)':'var(--ink2)'}">${x.d?"+"+money(x.pay-s0.pay):"—"}</td>
+      <td class="num" style="color:${x.pay/netM>0.40?'var(--crit)':x.pay/netM>0.30?'var(--warn)':'var(--good)'}">${pcAbs(x.pay/netM*100,0)}</td>
+      </tr>`).join("")}
+    </tbody></table></div>
+    <div class="${s0.pay/netM>0.35?'critbox':'warnbox'}" style="margin-top:14px">
+      <strong>Mortgage stress is conventionally 30% of gross income; this table uses net, which is stricter and more
+      honest.</strong> You would start at <strong>${pcAbs(s0.pay/netM*100,0)}</strong> of take-home pay and reach
+      <strong>${pcAbs(stress[4].pay/netM*100,0)}</strong> if rates rise a full point. That top row is not a tail
+      scenario — it is roughly where the bear case in §08 puts the cash rate. If that number is uncomfortable, the
+      answer is not to wait for a better market; it is to buy less house.</div>`;
+}
+
+/* capacity chart */
+function chartCapacity(host,scen,C){
+  const W=560,H=300,M={t:24,r:20,b:48,l:74};
+  const iw=W-M.l-M.r, ih=H-M.t-M.b;
+  const max=Math.max(...scen.map(x=>x.max))*1.12, bw=iw/scen.length;
+  const s=el("svg",{viewBox:`0 0 ${W} ${H}`,width:W,height:H,role:"img",
+    "aria-label":"Maximum purchase price at each cash rate"});
+  for(let v=0;v<=max;v+=200000){
+    const y=M.t+ih-(v/max)*ih;
+    s.appendChild(el("line",{x1:M.l,x2:M.l+iw,y1:y,y2:y,stroke:"var(--rule)"}));
+    s.appendChild(txt("$"+(v/1000)+"k",{x:M.l-8,y:y+3.5,"text-anchor":"end"}));
+  }
+  /* target line */
+  const ty=M.t+ih-(C.target/max)*ih;
+  s.appendChild(el("line",{x1:M.l,x2:M.l+iw,y1:ty,y2:ty,stroke:"var(--accent)","stroke-width":1.5,"stroke-dasharray":"5 3"}));
+  s.appendChild(txt("your target "+money0(C.target),{x:M.l+iw,y:ty-6,"text-anchor":"end",fill:"var(--accent)","font-size":"9.5"}));
+  scen.forEach((x,i)=>{
+    const h=(x.max/max)*ih, cx=M.l+i*bw+bw/2;
+    s.appendChild(el("rect",{x:cx-bw*0.3,y:M.t+ih-h,width:bw*0.6,height:Math.max(h,1),rx:4,
+      fill:x.d===0?"var(--accent)":x.max>=C.target?"var(--s4)":"var(--crit)","fill-opacity":x.d===0?1:.72}));
+    s.appendChild(txt(money0(x.max),{x:cx,y:M.t+ih-h-7,"text-anchor":"middle",fill:"var(--ink)","font-size":"10.5","font-weight":"600"}));
+    s.appendChild(txt(pcAbs(x.cash,2),{x:cx,y:M.t+ih+16,"text-anchor":"middle","font-size":"10"}));
+    if(x.d===0) s.appendChild(txt("today",{x:cx,y:M.t+ih+29,"text-anchor":"middle",fill:"var(--accent)","font-size":"9"}));
+  });
+  s.appendChild(txt("RBA cash rate",{x:M.l+iw/2,y:H-8,"text-anchor":"middle","font-size":"10"}));
+  host.innerHTML=""; host.appendChild(s);
+}
+
 /* ════════════ Wiring ════════════ */
-function boot(){ render(); render2(); render3(); }
+function boot(){
+  if(!$("#fin_income1")){
+    $("#finInputs").innerHTML=FINF.map(([k,l,u])=>
+      `<label class="f">${l} <span class="small">${u}</span>
+        <input type="number" step="any" id="fin_${k}" value="${FIN[k]}"></label>`).join("");
+    $$("#finInputs input").forEach(i=>i.addEventListener("change",renderFinance));
+  }
+  render(); render2(); renderFinance(); render3();
+}
 document.addEventListener("DOMContentLoaded",()=>{
   boot();
   $("#btnUpdate").addEventListener("click",()=>{
@@ -2113,5 +2559,6 @@ document.addEventListener("DOMContentLoaded",()=>{
     LAST_UPDATE=null; boot(); $("#recalcmsg").innerHTML=`<span class="chip">Reset to shipped values</span>`;
   });
   $("#btnCalc").addEventListener("click",renderCalc);
+  $("#btnFin").addEventListener("click",renderFinance);
 });
 </script>
