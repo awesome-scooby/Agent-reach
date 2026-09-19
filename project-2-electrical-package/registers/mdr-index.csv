@@ -1,0 +1,50 @@
+Section,Document,Document Number,Rev,Originator,Status,Notes
+1.2,Document index,NFD-ELE-MDR-0001,0,PE,Included,
+1.3,Equipment register with serial numbers,NFD-ELE-EQR-0001,0,Workshop,Included,
+2.1,Design basis,NFD-ELE-DBS-0001,1,Designer / PE,Included,
+2.2,Design input register,NFD-ELE-REG-0001,1,PE,Included,"Closed out, open items flagged"
+2.3,Assumptions register,NFD-ELE-REG-0002,1,PE,Included,"MOST OFTEN OMITTED, MOST OFTEN NEEDED"
+2.4,Functional description,NFD-ELE-FDS-0001,1,PE,Included,
+2.6,I/O list,NFD-ELE-IOL-0001,1,Designer,Included,
+2.7,Load schedule,NFD-ELE-LSC-0001,1,Designer,Included,
+2.8,Interface register,NFD-ELE-IFR-0001,1,PE,Included,
+3.1,Drawing register with revision history,NFD-ELE-DRG-0001,1,PE,Included,
+3.2,Single line diagram,NFD-ELE-SLD-0001,1,Designer,Included,
+3.3,General arrangement and cubicle layouts,NFD-ELE-GA-0020,1,Designer,Included,
+3.4,Schematic diagrams - all sheets,NFD-ELE-SCH-00xx,1,Designer,Included,
+3.5,Termination drawings and schedule,NFD-ELE-TRM-04xx,1,Designer,Included,
+3.6,Cable schedule,NFD-ELE-CBS-0001,1,Designer,Included,Sizes provisional - see CF-08
+3.7,Label schedule,NFD-ELE-LBL-0001,1,Designer,Included,
+3.10,Network architecture drawing,NFD-ELE-SCH-0301,1,Designer,Included,
+4.1,As-built drawing set,NFD-ELE-xxx-AB,AS-BUILT,Designer / PE,Included,"PHYSICALLY VERIFIED against the board, not transcribed"
+4.3,Record of differences between approved and as-built sets,NFD-ELE-ABD-0001,0,PE,Included,
+5.1,"Final BOM, as-built, reconciled",NFD-ELE-BOM-0001,D,PE,Included,
+5.2,Equipment data sheets,Vendor,-,Vendors,Included,
+5.3,Drive parameter schedule + backup FILES,NFD-ELE-PAR-0001,0,Workshop / integrator,Included,"Files, not printouts"
+5.4,"Protection settings schedule, as applied",NFD-ELE-PRS-0001,0,PE,Included,MARKED PROVISIONAL - see CF-01
+5.5,Spares list and recommended spares holding,NFD-ELE-SPR-0001,0,PE,Included,
+6.1,Manufacturer AS/NZS 61439 design verification evidence,Manufacturer,-,Panel builder,Obtained,"MANUFACTURER responsibility, not designer"
+6.2,Manufacturer routine verification records,Manufacturer,-,Panel builder,Obtained,
+6.3,Equipment type test certificates and compliance declarations,Vendor,-,Vendors,Obtained,Chased BEFORE final payment
+6.5,Calibration certificates for FAT test equipment,Various,-,Workshop,Included,
+7.1,Approved FAT procedure,NFD-ELE-FAT-0001,1,PE,Included,
+7.2,"Completed FAT sheet, signed, all actual results",NFD-ELE-FAT-0001,1,PE / Client,Included,"127 tests, individual results"
+7.3,Earth continuity test results - individual readings,FAT attachment,-,Workshop,Included,Not 'all satisfactory'
+7.4,Insulation resistance test results - individual readings,FAT attachment,-,Workshop,Included,
+7.7,Emergency stop test records incl. single-channel fault tests,FAT attachment,-,Workshop,Included,
+7.9,Retest records for every punch-list item,FAT attachment,-,PE,Included,
+8.1,In-progress inspection records - all four inspection points,NFD-ELE-INS-0001,-,PE,Included,
+8.2,Goods-inward inspection records,Workshop,-,Workshop,Included,Root cause of FD-002
+9.1,Technical query register with responses,NFD-ELE-TQR-0001,-,PE,Included,Open items flagged
+9.2,Deviation register with client written acceptances,NFD-ELE-DEV-0001,-,PE,Included,DEV-002 explains the drive brand decision
+9.3,Change register with impact assessments and approvals,NFD-ELE-CHG-0001,-,PE,Included,CR-001 motor uprate
+10.1,"VSD manuals - installation, programming, maintenance",Danfoss,-,Vendor,Included,
+10.2,PLC and I/O manuals,Rockwell,-,Vendor,Included,
+10.3,Network equipment manuals and configuration backup,Moxa,-,Vendor,Included,
+10.6,Safety relay manual,Pilz,-,Vendor,Included,
+11.1,Final punch list with close-out evidence,NFD-ELE-PCH-0001,1,PE / Client,Included,
+11.2,ITEMS CARRIED FORWARD TO SITE,NFD-ELE-CF-0001,0,PE,Included,SIGNED BY BOTH PARTIES - 10 items
+11.4,Close-out certificate,NFD-ELE-COC-0001,0,PE / Client,Included,
+12.3,Settings to be applied before energisation,Within CF-0001,0,PE,Included,Protection settings hold point
+12.5,KNOWN LIMITATIONS OF THE FAT,Within FAT report,1,PE,Included,EXPLICIT - what was simulated and what was not
+12.7,Spare capacity record,NFD-ELE-SPC-0001,0,PE,Included,Written unprompted

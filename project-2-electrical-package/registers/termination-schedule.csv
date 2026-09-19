@@ -1,0 +1,237 @@
+Cable No.,From,To,Core,Terminal,Signal,Voltage,Drawing Reference
+C-0001,TX-01 LV,MCC-01 X0,L1,X0:L1,Incoming active phase 1,415 V AC,SLD-0001
+C-0001,TX-01 LV,MCC-01 X0,L2,X0:L2,Incoming active phase 2,415 V AC,SLD-0001
+C-0001,TX-01 LV,MCC-01 X0,L3,X0:L3,Incoming active phase 3,415 V AC,SLD-0001
+C-0001,TX-01 LV,MCC-01 X0,N,X0:N,Incoming neutral (full size),415 V AC,SLD-0001
+C-0001,TX-01 LV,MCC-01 X0,E,XE:01,Incoming protective earth,-,SLD-0001
+C-0101,MCC-01 VSD-101 output,P-101 motor,U,VSD-101 U,Motor phase U,415 V AC,SCH-0101/02
+C-0101,MCC-01 VSD-101 output,P-101 motor,V,VSD-101 V,Motor phase V,415 V AC,SCH-0101/02
+C-0101,MCC-01 VSD-101 output,P-101 motor,W,VSD-101 W,Motor phase W,415 V AC,SCH-0101/02
+C-0101,MCC-01 VSD-101 output,P-101 motor,E,XE:11,Motor protective earth,-,SCH-0101/02
+C-0101,MCC-01 VSD-101 output,P-101 motor,Screen,EMC gland,360 deg screen - EARTHED BOTH ENDS,-,SCH-0101/02
+C-0111,MCC-01 VSD-102 output,P-102 motor,U,VSD-102 U,Motor phase U,415 V AC,SCH-0111/02
+C-0111,MCC-01 VSD-102 output,P-102 motor,V,VSD-102 V,Motor phase V,415 V AC,SCH-0111/02
+C-0111,MCC-01 VSD-102 output,P-102 motor,W,VSD-102 W,Motor phase W,415 V AC,SCH-0111/02
+C-0111,MCC-01 VSD-102 output,P-102 motor,E,XE:12,Motor protective earth,-,SCH-0111/02
+C-0111,MCC-01 VSD-102 output,P-102 motor,Screen,EMC gland,360 deg screen - EARTHED BOTH ENDS,-,SCH-0111/02
+C-0121,MCC-01 X1,P-103 sump pump,L1,X1:001,Active phase 1,415 V AC,SCH-0121/02
+C-0121,MCC-01 X1,P-103 sump pump,L2,X1:002,Active phase 2,415 V AC,SCH-0121/02
+C-0121,MCC-01 X1,P-103 sump pump,L3,X1:003,Active phase 3,415 V AC,SCH-0121/02
+C-0121,MCC-01 X1,P-103 sump pump,E,XE:21,Protective earth,-,SCH-0121/02
+C-0131,MCC-01 X1,C-101 compressor,L1,X1:005,Active phase 1,415 V AC,SCH-0131/02
+C-0131,MCC-01 X1,C-101 compressor,L2,X1:006,Active phase 2,415 V AC,SCH-0131/02
+C-0131,MCC-01 X1,C-101 compressor,L3,X1:007,Active phase 3,415 V AC,SCH-0131/02
+C-0131,MCC-01 X1,C-101 compressor,E,XE:25,Protective earth,-,SCH-0131/02
+C-0141,MCC-01 X1,MOV-101 actuator,L1,X1:009,Active phase 1,415 V AC,SCH-0141/02
+C-0141,MCC-01 X1,MOV-101 actuator,L2,X1:010,Active phase 2,415 V AC,SCH-0141/02
+C-0141,MCC-01 X1,MOV-101 actuator,L3,X1:011,Active phase 3,415 V AC,SCH-0141/02
+C-0141,MCC-01 X1,MOV-101 actuator,E,XE:29,Protective earth,-,SCH-0141/02
+C-0501,MCC-01 X1,DB-01,L1,X1:013,Active phase 1,415 V AC,SLD-0001
+C-0501,MCC-01 X1,DB-01,L2,X1:014,Active phase 2,415 V AC,SLD-0001
+C-0501,MCC-01 X1,DB-01,L3,X1:015,Active phase 3,415 V AC,SLD-0001
+C-0501,MCC-01 X1,DB-01,E,XE:33,Protective earth,-,SLD-0001
+C-0502,MCC-01 X1,PKG-201 dosing skid,L1,X1:017,Active phase 1,415 V AC,SLD-0001
+C-0502,MCC-01 X1,PKG-201 dosing skid,L2,X1:018,Active phase 2,415 V AC,SLD-0001
+C-0502,MCC-01 X1,PKG-201 dosing skid,L3,X1:019,Active phase 3,415 V AC,SLD-0001
+C-0502,MCC-01 X1,PKG-201 dosing skid,E,XE:37,Protective earth,-,SLD-0001
+C-0503,MCC-01 X1,HVAC-01,L1,X1:021,Active phase 1,415 V AC,SLD-0001
+C-0503,MCC-01 X1,HVAC-01,L2,X1:022,Active phase 2,415 V AC,SLD-0001
+C-0503,MCC-01 X1,HVAC-01,L3,X1:023,Active phase 3,415 V AC,SLD-0001
+C-0503,MCC-01 X1,HVAC-01,E,XE:41,Protective earth,-,SLD-0001
+C-0102,LCS-101,MCC-01 X3,1,X3:001,LCS Start PB - 24 VDC supply out,24 V DC,SCH-0101/12
+C-0102,LCS-101,MCC-01 X3,2,X3:002,LCS Start PB - return,24 V DC,SCH-0101/12
+C-0102,LCS-101,MCC-01 X3,3,X3:003,LCS Stop PB - 24 VDC supply out,24 V DC,SCH-0101/13
+C-0102,LCS-101,MCC-01 X3,4,X3:004,"LCS Stop PB - return (NC, fail-safe)",24 V DC,SCH-0101/13
+C-0102,LCS-101,MCC-01 X3,5,X3:005,LCS selector - Local position,24 V DC,SCH-0201/04
+C-0102,LCS-101,MCC-01 X3,6,X3:006,LCS selector - Remote position,24 V DC,SCH-0201/05
+C-0102,LCS-101,MCC-01 X3,7,X3:007,LCS Running lamp - supply,24 V DC,SCH-0101/22
+C-0102,LCS-101,MCC-01 X3,8,X3:008,LCS Running lamp - return,24 V DC,SCH-0101/22
+C-0102,LCS-101,MCC-01 X3,9,X3:009,SPARE,-,-
+C-0102,LCS-101,MCC-01 X3,10,X3:010,SPARE,-,-
+C-0102,LCS-101,MCC-01 X3,11,X3:011,SPARE,-,-
+C-0102,LCS-101,MCC-01 X3,12,X3:012,SPARE,-,-
+C-0102,LCS-101,MCC-01 X3,13,X3:009a,SPARE,-,-
+C-0102,LCS-101,MCC-01 X3,14,X3:010a,SPARE,-,-
+C-0102,LCS-101,MCC-01 X3,15,X3:011a,SPARE,-,-
+C-0102,LCS-101,MCC-01 X3,16,X3:012a,SPARE,-,-
+C-0102,LCS-101,MCC-01 X3,Screen,XS:01,Overall screen - MCC END ONLY,-,SCH-0101
+C-0103,P-101 motor TB,MCC-01 X3,1,X3:013,PTC thermistor leg 1 to KT101,ELV,SCH-0101/08
+C-0103,P-101 motor TB,MCC-01 X3,2,X3:014,PTC thermistor leg 2 to KT101,ELV,SCH-0101/08
+C-0103,P-101 motor TB,MCC-01 X3,Screen,XS:02,Screen - MCC END ONLY,-,SCH-0101
+C-0104,B101-SEAL,MCC-01 X3,1,X3:015,Seal water flow switch - 24 VDC out,24 V DC,SCH-0201/08
+C-0104,B101-SEAL,MCC-01 X3,2,X3:016,Seal water flow switch - return (NC),24 V DC,SCH-0201/08
+C-0104,B101-SEAL,MCC-01 X3,Screen,XS:03,Screen - MCC END ONLY,-,SCH-0201
+-,VSD-101 / MCC internal,MCC-01 X3,-,X3:017,"VSD-101 drive healthy to PLC DI (NC, fail-safe)",24 V DC,SCH-0201/02
+-,VSD-101 / MCC internal,MCC-01 X3,-,X3:018,VSD-101 drive running to PLC DI,24 V DC,SCH-0201/03
+-,VSD-101 / MCC internal,MCC-01 X3,-,X3:019,KA101 run command to VSD-101 term 18,24 V DC,SCH-0101/18
+-,VSD-101 / MCC internal,MCC-01 X3,-,X3:020,Q11 auxiliary - feeder available to PLC DI,24 V DC,SCH-0201/01
+-,VSD-101 / MCC internal,MCC-01 X3,-,X3:023,PLC DO - VSD-101 fault reset,24 V DC,SCH-0202/02
+-,VSD-101 / MCC internal,MCC-01 X3,-,X3:024,PLC DO - VSD-101 remote reference enable,24 V DC,SCH-0202/13
+C-0210,LSLL-101,MCC-01 X3,1,X3:021,Low-low float - 24 VDC out,24 V DC,SCH-0101/09
+C-0210,LSLL-101,MCC-01 X3,2,X3:022,"Low-low float - return (NC, HARDWIRED DRY-RUN TRIP)",24 V DC,SCH-0101/09
+C-0210,LSLL-101,MCC-01 X3,Screen,XS:04,Screen - MCC END ONLY,-,SCH-0101
+-,-,-,-,X3:025,SPARE,-,-
+-,-,-,-,X3:026,SPARE,-,-
+-,-,-,-,X3:027,SPARE,-,-
+-,-,-,-,X3:028,SPARE,-,-
+-,-,-,-,X3:029,SPARE,-,-
+-,-,-,-,X3:030,SPARE,-,-
+C-0112,LCS-102,MCC-01 X3,1,X3:031,LCS Start PB - 24 VDC supply out,24 V DC,SCH-0111/12
+C-0112,LCS-102,MCC-01 X3,2,X3:032,LCS Start PB - return,24 V DC,SCH-0111/12
+C-0112,LCS-102,MCC-01 X3,3,X3:033,LCS Stop PB - 24 VDC supply out,24 V DC,SCH-0111/13
+C-0112,LCS-102,MCC-01 X3,4,X3:034,"LCS Stop PB - return (NC, fail-safe)",24 V DC,SCH-0111/13
+C-0112,LCS-102,MCC-01 X3,5,X3:035,LCS selector - Local position,24 V DC,SCH-0201/11
+C-0112,LCS-102,MCC-01 X3,6,X3:036,LCS selector - Remote position,24 V DC,SCH-0201/12
+C-0112,LCS-102,MCC-01 X3,7,X3:037,LCS Running lamp - supply,24 V DC,SCH-0111/22
+C-0112,LCS-102,MCC-01 X3,8,X3:038,LCS Running lamp - return,24 V DC,SCH-0111/22
+C-0112,LCS-102,MCC-01 X3,9-16,X3:039-042,SPARE (8 cores),-,-
+C-0112,LCS-102,MCC-01 X3,Screen,XS:05,Overall screen - MCC END ONLY,-,SCH-0111
+C-0113,P-102 motor TB,MCC-01 X3,1,X3:043,PTC thermistor leg 1 to KT102,ELV,SCH-0111/08
+C-0113,P-102 motor TB,MCC-01 X3,2,X3:044,PTC thermistor leg 2 to KT102,ELV,SCH-0111/08
+C-0113,P-102 motor TB,MCC-01 X3,Screen,XS:06,Screen - MCC END ONLY,-,SCH-0111
+C-0114,B102-SEAL,MCC-01 X3,1,X3:045,Seal water flow switch - 24 VDC out,24 V DC,SCH-0201/15
+C-0114,B102-SEAL,MCC-01 X3,2,X3:046,Seal water flow switch - return (NC),24 V DC,SCH-0201/15
+C-0114,B102-SEAL,MCC-01 X3,Screen,XS:07,Screen - MCC END ONLY,-,SCH-0201
+-,VSD-102 / MCC internal,MCC-01 X3,-,X3:047,"VSD-102 drive healthy to PLC DI (NC, fail-safe)",24 V DC,SCH-0201/09
+-,VSD-102 / MCC internal,MCC-01 X3,-,X3:048,VSD-102 drive running to PLC DI,24 V DC,SCH-0201/10
+-,VSD-102 / MCC internal,MCC-01 X3,-,X3:049,KA102 run command to VSD-102 term 18,24 V DC,SCH-0111/18
+-,VSD-102 / MCC internal,MCC-01 X3,-,X3:050,Q12 auxiliary - feeder available to PLC DI,24 V DC,SCH-0201/08
+-,VSD-102 / MCC internal,MCC-01 X3,-,X3:053,PLC DO - VSD-102 fault reset,24 V DC,SCH-0202/04
+-,VSD-102 / MCC internal,MCC-01 X3,-,X3:054,PLC DO - VSD-102 remote reference enable,24 V DC,SCH-0202/14
+-,-,-,-,X3:055,SPARE,-,-
+-,-,-,-,X3:056,SPARE,-,-
+-,-,-,-,X3:057,SPARE,-,-
+-,-,-,-,X3:058,SPARE,-,-
+-,-,-,-,X3:059,SPARE,-,-
+-,-,-,-,X3:060,SPARE,-,-
+-,MCC internal,MCC-01 X3,-,X3:061,Q15 MPCB auxiliary - P-103 feeder available,24 V DC,SCH-0201/16
+-,MCC internal,MCC-01 X3,-,X3:062,KM103 auxiliary - P-103 running,24 V DC,SCH-0201/17
+-,MCC internal,MCC-01 X3,-,X3:063,S103-LOR Local position,24 V DC,SCH-0201/18
+-,MCC internal,MCC-01 X3,-,X3:064,S103-LOR Remote position,24 V DC,SCH-0201/19
+-,MCC internal,MCC-01 X3,-,X3:067,PLC DO - KM103 start command,24 V DC,SCH-0202/05
+C-0122,Sump floats,MCC-01 X3,1,X3:065,LSH-103 sump high level float - start,24 V DC,SCH-0201/20
+C-0122,Sump floats,MCC-01 X3,2,X3:065r,LSH-103 return,24 V DC,SCH-0201/20
+C-0122,Sump floats,MCC-01 X3,3,X3:066,LSL-103 sump low level float - stop (NC),24 V DC,SCH-0201/21
+C-0122,Sump floats,MCC-01 X3,4,X3:066r,LSL-103 return,24 V DC,SCH-0201/21
+C-0122,Sump floats,MCC-01 X3,Screen,XS:08,Screen - MCC END ONLY,-,SCH-0201
+-,MCC internal,MCC-01 X3,-,X3:071,Q16 MPCB auxiliary - C-101 feeder available,24 V DC,SCH-0201/22
+-,MCC internal,MCC-01 X3,-,X3:072,KM101C auxiliary - C-101 running,24 V DC,SCH-0201/23
+-,MCC internal,MCC-01 X3,-,X3:074,PLC DO - KM101C start command,24 V DC,SCH-0202/06
+C-0132,PSL-101,MCC-01 X3,1,X3:073,Instrument air pressure low switch,24 V DC,SCH-0201/24
+C-0132,PSL-101,MCC-01 X3,2,X3:073r,Return,24 V DC,SCH-0201/24
+C-0132,PSL-101,MCC-01 X3,Screen,XS:09,Screen - MCC END ONLY,-,SCH-0201
+C-0142,MOV-101 actuator,MCC-01 X3,1,X3:081,ZSO-101 valve opened limit,24 V DC,SCH-0201/25
+C-0142,MOV-101 actuator,MCC-01 X3,2,X3:082,ZSC-101 valve closed limit,24 V DC,SCH-0201/26
+C-0142,MOV-101 actuator,MCC-01 X3,3,X3:083,"Actuator fault (NC, vendor contact)",24 V DC,SCH-0201/27
+C-0142,MOV-101 actuator,MCC-01 X3,4,X3:084,Actuator remote selected (vendor contact),24 V DC,SCH-0201/28
+C-0142,MOV-101 actuator,MCC-01 X3,5,X3:085,PLC DO - open command,24 V DC,SCH-0202/07
+C-0142,MOV-101 actuator,MCC-01 X3,6,X3:086,PLC DO - close command,24 V DC,SCH-0202/08
+C-0142,MOV-101 actuator,MCC-01 X3,7,X3:087,PLC DO - stop command,24 V DC,SCH-0202/09
+C-0142,MOV-101 actuator,MCC-01 X3,8,X3:088,Common return,24 V DC,SCH-0141
+C-0142,MOV-101 actuator,MCC-01 X3,9-12,X3:089-090,SPARE (4 cores),-,-
+C-0142,MOV-101 actuator,MCC-01 X3,Screen,XS:10,Overall screen - MCC END ONLY,-,SCH-0141
+C-0503,HVAC-01,MCC-01 X3,C1,X3:091,HVAC fault (NC) - drives ramp to min speed,24 V DC,SCH-0201/29
+C-0503,HVAC-01,MCC-01 X3,C2,X3:091r,Return,24 V DC,SCH-0201/29
+-,-,-,-,X3:092,SPARE,-,-
+-,-,-,-,X3:093,SPARE,-,-
+-,MCC internal,MCC-01 X3,-,X3:101,KS-01 safety relay auxiliary - E-stop circuit healthy,24 V DC,SCH-0202/01
+-,MCC internal,MCC-01 X3,-,X3:102,Q1 OF auxiliary - incomer closed,24 V DC,SCH-0202/02
+-,MCC internal,MCC-01 X3,-,X3:103,Q1 SD auxiliary - incomer tripped,24 V DC,SCH-0202/03
+-,MCC internal,MCC-01 X3,-,X3:104,KVP-01 phase failure relay healthy (NC),24 V DC,SCH-0202/04
+-,MCC internal,MCC-01 X3,-,X3:105,SPD-01 surge diverter status (NC),24 V DC,SCH-0202/05
+-,MCC internal,MCC-01 X3,-,X3:106,PSU-1 healthy (NC),24 V DC,SCH-0202/06
+-,MCC internal,MCC-01 X3,-,X3:107,PSU-2 healthy (NC),24 V DC,SCH-0202/07
+-,MCC internal,MCC-01 X3,-,X3:108,UPS-01 on battery,24 V DC,SCH-0202/08
+-,MCC internal,MCC-01 X3,-,X3:109,UPS-01 fault,24 V DC,SCH-0202/09
+-,MCC internal,MCC-01 X3,-,X3:110,ECP group trip common (NC),24 V DC,SCH-0202/10
+-,MCC internal,MCC-01 X3,-,X3:121,PLC DO - common alarm beacon,24 V DC,SCH-0202/10
+-,MCC internal,MCC-01 X3,-,X3:122,PLC DO - common alarm sounder,24 V DC,SCH-0202/11
+-,MCC internal,MCC-01 X3,-,X3:123,PLC DO - station healthy watchdog to SCADA,24 V DC,SCH-0202/12
+C-0211,LSHH-101,MCC-01 X3,1,X3:111,Wet well high-high float (NC),24 V DC,SCH-0202/11
+C-0211,LSHH-101,MCC-01 X3,2,X3:111r,Return,24 V DC,SCH-0202/11
+C-0211,LSHH-101,MCC-01 X3,Screen,XS:11,Screen - MCC END ONLY,-,SCH-0202
+-,-,-,-,X3:112,SPARE,-,-
+-,-,-,-,X3:113,SPARE,-,-
+-,-,-,-,X3:114,SPARE,-,-
+-,-,-,-,X3:115,SPARE,-,-
+C-0201,LIT-101 wet well level,MCC-01 X4,+,X4:001,LIT-101 wet well level 4-20 mA loop + (DISCONNECT TERMINAL),24 V DC loop,SCH-0203/01
+C-0201,LIT-101 wet well level,MCC-01 X4,-,X4:002,LIT-101 wet well level 4-20 mA loop -,24 V DC loop,SCH-0203/01
+C-0201,LIT-101 wet well level,MCC-01 X4,Screen,XS:20,Screen - MCC END ONLY,-,SCH-0203/01
+C-0202,FIT-101 discharge flow,MCC-01 X4,+,X4:003,FIT-101 discharge flow 4-20 mA loop + (DISCONNECT TERMINAL),24 V DC loop,SCH-0203/02
+C-0202,FIT-101 discharge flow,MCC-01 X4,-,X4:004,FIT-101 discharge flow 4-20 mA loop -,24 V DC loop,SCH-0203/02
+C-0202,FIT-101 discharge flow,MCC-01 X4,Screen,XS:21,Screen - MCC END ONLY,-,SCH-0203/02
+C-0203,PIT-101 P-101 discharge pressure,MCC-01 X4,+,X4:005,PIT-101 P-101 discharge pressure 4-20 mA loop + (DISCONNECT TERMINAL),24 V DC loop,SCH-0203/03
+C-0203,PIT-101 P-101 discharge pressure,MCC-01 X4,-,X4:006,PIT-101 P-101 discharge pressure 4-20 mA loop -,24 V DC loop,SCH-0203/03
+C-0203,PIT-101 P-101 discharge pressure,MCC-01 X4,Screen,XS:22,Screen - MCC END ONLY,-,SCH-0203/03
+C-0204,PIT-102 P-102 discharge pressure,MCC-01 X4,+,X4:007,PIT-102 P-102 discharge pressure 4-20 mA loop + (DISCONNECT TERMINAL),24 V DC loop,SCH-0203/04
+C-0204,PIT-102 P-102 discharge pressure,MCC-01 X4,-,X4:008,PIT-102 P-102 discharge pressure 4-20 mA loop -,24 V DC loop,SCH-0203/04
+C-0204,PIT-102 P-102 discharge pressure,MCC-01 X4,Screen,XS:23,Screen - MCC END ONLY,-,SCH-0203/04
+C-0205,PIT-103 common suction pressure,MCC-01 X4,+,X4:009,PIT-103 common suction pressure 4-20 mA loop + (DISCONNECT TERMINAL),24 V DC loop,SCH-0203/05
+C-0205,PIT-103 common suction pressure,MCC-01 X4,-,X4:010,PIT-103 common suction pressure 4-20 mA loop -,24 V DC loop,SCH-0203/05
+C-0205,PIT-103 common suction pressure,MCC-01 X4,Screen,XS:24,Screen - MCC END ONLY,-,SCH-0203/05
+C-0206,AIT-101 raw water turbidity,MCC-01 X4,+,X4:011,AIT-101 raw water turbidity 4-20 mA loop + (DISCONNECT TERMINAL),24 V DC loop,SCH-0203/06
+C-0206,AIT-101 raw water turbidity,MCC-01 X4,-,X4:012,AIT-101 raw water turbidity 4-20 mA loop -,24 V DC loop,SCH-0203/06
+C-0206,AIT-101 raw water turbidity,MCC-01 X4,Screen,XS:25,Screen - MCC END ONLY,-,SCH-0203/06
+-,-,-,-,X4:013,SPARE - disconnect type,-,-
+-,-,-,-,X4:014,SPARE - disconnect type,-,-
+-,-,-,-,X4:015,SPARE - disconnect type,-,-
+-,-,-,-,X4:016,SPARE - disconnect type,-,-
+-,-,-,-,X4:017,SPARE - disconnect type,-,-
+-,-,-,-,X4:018,SPARE - disconnect type,-,-
+-,-,-,-,X4:019,SPARE - disconnect type,-,-
+-,-,-,-,X4:020,SPARE - disconnect type,-,-
+-,-,-,-,X4:021,SPARE - disconnect type,-,-
+-,-,-,-,X4:022,SPARE - disconnect type,-,-
+-,-,-,-,X4:023,SPARE - disconnect type,-,-
+-,-,-,-,X4:024,SPARE - disconnect type,-,-
+-,-,-,-,X4:025,SPARE - disconnect type,-,-
+-,-,-,-,X4:026,SPARE - disconnect type,-,-
+-,-,-,-,X4:027,SPARE - disconnect type,-,-
+-,-,-,-,X4:028,SPARE - disconnect type,-,-
+-,-,-,-,X4:029,SPARE - disconnect type,-,-
+-,-,-,-,X4:030,SPARE - disconnect type,-,-
+-,PLC AO ch.0,VSD-101 term 53/55,-,X4:031,P-101 speed reference 4-20 mA + (DISCONNECT),-,SCH-0204/01
+-,PLC AO ch.0,VSD-101 term 53/55,-,X4:032,P-101 speed reference 4-20 mA -,-,SCH-0204/01
+-,PLC AO ch.1,VSD-102 term 53/55,-,X4:033,P-102 speed reference 4-20 mA + (DISCONNECT),-,SCH-0204/02
+-,PLC AO ch.1,VSD-102 term 53/55,-,X4:034,P-102 speed reference 4-20 mA -,-,SCH-0204/02
+-,-,-,-,X4:035,SPARE - disconnect type,-,-
+-,-,-,-,X4:036,SPARE - disconnect type,-,-
+-,-,-,-,X4:037,SPARE - disconnect type,-,-
+-,-,-,-,X4:038,SPARE - disconnect type,-,-
+-,S-ES-MCC (MCC door),MCC-01 X5,-,X5:001,"E-stop MCC door, channel A in (YELLOW)",24 V DC,SCH-0040/02
+-,S-ES-MCC (MCC door),MCC-01 X5,-,X5:002,"E-stop MCC door, channel A out (YELLOW)",24 V DC,SCH-0040/02
+-,S-ES-MCC (MCC door),MCC-01 X5,-,X5:003,"E-stop MCC door, channel B in (YELLOW)",24 V DC,SCH-0040/02
+-,S-ES-MCC (MCC door),MCC-01 X5,-,X5:004,"E-stop MCC door, channel B out (YELLOW)",24 V DC,SCH-0040/02
+C-0105,LCS-101 E-stop,MCC-01 X5,1,X5:005,"E-stop 101, channel A in (YELLOW)",24 V DC,SCH-0040/03
+C-0105,LCS-101 E-stop,MCC-01 X5,2,X5:006,"E-stop 101, channel A out (YELLOW)",24 V DC,SCH-0040/03
+C-0105,LCS-101 E-stop,MCC-01 X5,3,X5:007,"E-stop 101, channel B in (YELLOW)",24 V DC,SCH-0040/04
+C-0105,LCS-101 E-stop,MCC-01 X5,4,X5:008,"E-stop 101, channel B out (YELLOW)",24 V DC,SCH-0040/04
+C-0105,LCS-101 E-stop,MCC-01 X5,Screen,XS:30,Screen - MCC END ONLY,-,SCH-0040
+C-0115,LCS-102 E-stop,MCC-01 X5,1,X5:009,"E-stop 102, channel A in (YELLOW)",24 V DC,SCH-0040/05
+C-0115,LCS-102 E-stop,MCC-01 X5,2,X5:010,"E-stop 102, channel A out (YELLOW)",24 V DC,SCH-0040/05
+C-0115,LCS-102 E-stop,MCC-01 X5,3,X5:011,"E-stop 102, channel B in (YELLOW)",24 V DC,SCH-0040/06
+C-0115,LCS-102 E-stop,MCC-01 X5,4,X5:012,"E-stop 102, channel B out (YELLOW)",24 V DC,SCH-0040/06
+C-0115,LCS-102 E-stop,MCC-01 X5,Screen,XS:31,Screen - MCC END ONLY,-,SCH-0040
+C-0301,S-ES-PH pump hall E-stop,MCC-01 X5,1,X5:013,"E-stop pump hall, channel A in (YELLOW)",24 V DC,SCH-0040/07
+C-0301,S-ES-PH pump hall E-stop,MCC-01 X5,2,X5:014,"E-stop pump hall, channel A out (YELLOW)",24 V DC,SCH-0040/07
+C-0301,S-ES-PH pump hall E-stop,MCC-01 X5,3,X5:015,"E-stop pump hall, channel B in (YELLOW)",24 V DC,SCH-0040/08
+C-0301,S-ES-PH pump hall E-stop,MCC-01 X5,4,X5:016,"E-stop pump hall, channel B out (YELLOW)",24 V DC,SCH-0040/08
+C-0301,S-ES-PH pump hall E-stop,MCC-01 X5,Screen,XS:32,Screen - MCC END ONLY,-,SCH-0040
+-,KS-01 safety relay,VSD STO,-,X5:017,KS-01 output 13/14 to VSD-101 STO ch.1 (term 37),24 V DC,SCH-0040/12
+-,KS-01 safety relay,VSD STO,-,X5:018,KS-01 output 23/24 to VSD-101 STO ch.2 (term 38),24 V DC,SCH-0040/12
+-,KS-01 safety relay,VSD STO,-,X5:019,KS-01 output 13/14 to VSD-102 STO ch.1 (term 37),24 V DC,SCH-0040/13
+-,KS-01 safety relay,VSD STO,-,X5:020,KS-01 output 23/24 to VSD-102 STO ch.2 (term 38),24 V DC,SCH-0040/13
+-,-,-,-,X5:021,"SPARE (YELLOW) - reserved for future E-stop, loop in series",-,SCH-0040 note 3
+-,-,-,-,X5:022,"SPARE (YELLOW) - reserved for future E-stop, loop in series",-,SCH-0040 note 3
+-,-,-,-,X5:023,"SPARE (YELLOW) - reserved for future E-stop, loop in series",-,SCH-0040 note 3
+-,-,-,-,X5:024,"SPARE (YELLOW) - reserved for future E-stop, loop in series",-,SCH-0040 note 3
+C-0401,MCC-01 X6,Control room patch panel,Fibre 1,X6-LIU:01,OM3 multimode Tx to control room,-,SCH-0301/01
+C-0401,MCC-01 X6,Control room patch panel,Fibre 2,X6-LIU:02,OM3 multimode Rx from control room,-,SCH-0301/01
+C-0402,MCC-01 X6,RIO-01 intake kiosk,Fibre 1,X6-LIU:03,OM3 multimode Tx to RIO-01,-,SCH-0301/02
+C-0402,MCC-01 X6,RIO-01 intake kiosk,Fibre 2,X6-LIU:04,OM3 multimode Rx from RIO-01,-,SCH-0301/02
+-,SW-01 managed switch,MCC internal,-,X6-RJ:01,PLC 5069-L306ER port A1,-,SCH-0301/03
+-,SW-01 managed switch,MCC internal,-,X6-RJ:02,VSD-101 EtherNet/IP,-,SCH-0301/04
+-,SW-01 managed switch,MCC internal,-,X6-RJ:03,VSD-102 EtherNet/IP,-,SCH-0301/05
+-,SW-01 managed switch,MCC internal,-,X6-RJ:04,PM-01 power meter,-,SCH-0301/06
+-,SW-01 managed switch,MCC internal,-,X6-RJ:05,Service / laptop port (bulkhead),-,SCH-0301/07
+-,SW-01 managed switch,MCC internal,-,X6-RJ:06,SPARE,-,-

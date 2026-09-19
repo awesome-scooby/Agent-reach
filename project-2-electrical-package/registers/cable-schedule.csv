@@ -1,0 +1,33 @@
+Cable No.,From,To,Service,Type,Cores / Size,Screen,Screen Earthed,Supply Scope,Status
+C-0001,TX-01 LV terminals,MCC-01 X0,Incoming supply,415 V power,TBC - client scope,-,-,Client / installer,TBC
+C-0101,MCC-01 VSD-101 output,P-101 motor terminal box,Motor power,VSD motor cable,3C+E 95 mm2 (provisional),Screened,"BOTH ends, 360 deg EMC gland",Installer,Provisional - pending AS/NZS 3008 calc
+C-0102,MCC-01 X3,LCS-101,Pump 1 local control,Control multicore,16C x 1.5 mm2,Overall,MCC end only,Installer,IFC
+C-0103,MCC-01 X3,P-101 motor terminal box,Motor thermistor,Instrument,2C x 1.5 mm2,Screened,MCC end only,Installer,IFC
+C-0104,MCC-01 X3,B101-SEAL seal water flow switch,Seal water proving,Control,2C x 1.5 mm2,Screened,MCC end only,Installer,IFC
+C-0105,MCC-01 X5,LCS-101 E-stop,SAFETY - dual channel,Control,4C x 1.5 mm2,Screened,MCC end only,Installer,IFC
+C-0111,MCC-01 VSD-102 output,P-102 motor terminal box,Motor power,VSD motor cable,3C+E 95 mm2 (provisional),Screened,"BOTH ends, 360 deg EMC gland",Installer,Provisional
+C-0112,MCC-01 X3,LCS-102,Pump 2 local control,Control multicore,16C x 1.5 mm2,Overall,MCC end only,Installer,IFC
+C-0113,MCC-01 X3,P-102 motor terminal box,Motor thermistor,Instrument,2C x 1.5 mm2,Screened,MCC end only,Installer,IFC
+C-0114,MCC-01 X3,B102-SEAL seal water flow switch,Seal water proving,Control,2C x 1.5 mm2,Screened,MCC end only,Installer,IFC
+C-0115,MCC-01 X5,LCS-102 E-stop,SAFETY - dual channel,Control,4C x 1.5 mm2,Screened,MCC end only,Installer,IFC
+C-0121,MCC-01 X1,P-103 sump pump,Motor power,Power,4C x 2.5 mm2,-,-,Installer,IFC
+C-0122,MCC-01 X3,Sump float switches LSH/LSL-103,Level control,Control,4C x 1.5 mm2,Screened,MCC end only,Installer,IFC
+C-0131,MCC-01 X1,C-101 air compressor,Motor power,Power,4C x 2.5 mm2,-,-,Installer,IFC
+C-0132,MCC-01 X3,PSL-101 air pressure switch,Pressure control,Control,2C x 1.5 mm2,Screened,MCC end only,Installer,IFC
+C-0141,MCC-01 X1,MOV-101 actuator,Actuator power,Power,4C x 2.5 mm2,-,-,Installer,IFC
+C-0142,MCC-01 X3,MOV-101 actuator control,Actuator control,Control multicore,12C x 1.5 mm2,Overall,MCC end only,Installer,IFC
+C-0201,MCC-01 X4,LIT-101 wet well level,Level transmitter,Instrument,1 pr x 1.5 mm2 IS/OS,Individual + overall,MCC end only,Installer,IFC
+C-0202,MCC-01 X4,FIT-101 discharge flow,Flow transmitter,Instrument,1 pr x 1.5 mm2 IS/OS,Individual + overall,MCC end only,Installer,IFC
+C-0203,MCC-01 X4,PIT-101 P-101 discharge pressure,Pressure transmitter,Instrument,1 pr x 1.5 mm2 IS/OS,Individual + overall,MCC end only,Installer,IFC
+C-0204,MCC-01 X4,PIT-102 P-102 discharge pressure,Pressure transmitter,Instrument,1 pr x 1.5 mm2 IS/OS,Individual + overall,MCC end only,Installer,IFC
+C-0205,MCC-01 X4,PIT-103 common suction pressure,Pressure transmitter,Instrument,1 pr x 1.5 mm2 IS/OS,Individual + overall,MCC end only,Installer,IFC
+C-0206,MCC-01 X4,AIT-101 raw water turbidity,Analyser,Instrument,1 pr x 1.5 mm2 IS/OS,Individual + overall,MCC end only,Installer,IFC
+C-0210,MCC-01 X3,LSLL-101 low-low float,DRY-RUN TRIP - hardwired,Control,2C x 1.5 mm2,Screened,MCC end only,Installer,IFC
+C-0211,MCC-01 X3,LSHH-101 high-high float,High level alarm,Control,2C x 1.5 mm2,Screened,MCC end only,Installer,IFC
+C-0301,MCC-01 X5,S-ES-PH pump hall E-stop,SAFETY - dual channel,Control,4C x 1.5 mm2,Screened,MCC end only,Installer,IFC
+C-0401,MCC-01 X6,Control room patch panel,SCADA fibre,Fibre optic,2C OM3 multimode,-,-,Installer,IFC
+C-0402,MCC-01 X6,RIO-01 intake screen kiosk,Remote I/O fibre,Fibre optic,2C OM3 multimode,-,-,Installer,IFC
+C-0501,MCC-01 X1,DB-01 light and power board,Sub-board supply,Power,4C x 25 mm2 (provisional),-,-,Installer,Provisional - DB-01 MD by others
+C-0502,MCC-01 X1,PKG-201 dosing skid isolator,Vendor skid supply,Power,4C x 6 mm2 (provisional),-,-,Installer,Provisional - confirm skid FLC
+C-0503,MCC-01 X1,HVAC-01 switchroom air conditioner,HVAC supply + fault,Power + control,4C x 4 mm2 + 2C x 1.5 mm2,-,-,Installer,IFC
+C-0601,DB-01,RIO-01 intake screen kiosk,Kiosk supply,Power,4C x 4 mm2,-,-,Installer,IFC - not our supply

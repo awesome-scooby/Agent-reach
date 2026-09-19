@@ -1,0 +1,106 @@
+Item,Category,Description,Manufacturer,Part Number,Qty,Rating,Drawing Reference,Lead Time,Status,Notes
+A01,Enclosure,"MCC enclosure, floor standing, Form 3b, 5 cubicles, 2300H x 3000W x 600D",Panel builder (custom),Per NFD-ELE-GA-0020,1,IP42 indoor,GA-0020,8 wks fab,HOLD,Cable entry direction blocked release (TQ-001). AS/NZS 61439.1 design verification evidence required for MDR. Rev 1: drive cubicles enlarged - CR-001
+A02,Enclosure,"Gland plate, removable, undrilled, aluminium, 600 x 400",Panel builder,Per GA-0020,5,-,GA-0020,With A01,HOLD,Non-magnetic. Bonded to cubicle earth. UNDRILLED - saved rework at CR-001
+A03,Enclosure,"Plinth, 100 mm, galvanised",Panel builder,Per GA-0020,1 set,-,GA-0020,With A01,HOLD,Confirm against civil plinth
+A04,Enclosure,"Cubicle internal lighting, LED, with door switch",Rittal,SZ 2500.100,5,240 V AC,SCH-0030/22,3 wks,OK,
+A05,Enclosure,"GPO, double, 10 A, DIN mount",Clipsal,56 series equiv. DIN,2,240 V AC,SCH-0030/24,2 wks,OK,For laptop at FAT and site
+A06,Enclosure,"Anti-condensation heater, 50 W, with guard",Rittal,SK 3105.340,5,240 V AC,SCH-0030/26,3 wks,OK,Heat source - include in thermal declaration
+A07,Enclosure,"Hygrostat, DIN mount",Rittal,SK 3118.000,2,-,SCH-0030/26,3 wks,OK,
+A08,Enclosure,"Door earth bonding strap, flexible, 4 mm2, 300 mm",Generic,-,12,-,GA-0020,1 wk,OK,Every door carrying equipment - hinges are not an earth path
+A09,Enclosure,"Main earth bar, tinned copper, 50 x 6, full board length",Panel builder,-,1,-,SLD-0001,With A01,HOLD,
+A10,Enclosure,"Instrument screen earth bar, insulated, 25 x 3",Panel builder,-,1,-,TRM-0401,With A01,HOLD,SINGLE-POINT bonded to A09 - see FD-003
+A11,Enclosure,"Busbar system, 800 A, 3P + full N, supports and shrouding",Panel builder,Per GA-0020,1 set,"800 A, Icw TBC",SLD-0001,With A01,HOLD,Icw cannot be finalised until fault level confirmed (TQ-002). FULL-SIZE neutral for triplen harmonics
+A12,Enclosure,Escutcheon / blanking panels for spare chassis space,Panel builder,-,1 set,-,GA-0020,With A01,HOLD,
+B01,Incomer,"Main circuit breaker, MCCB, 4-pole, electronic trip unit",Schneider Electric,ComPacT NSX630N + MicroLogic 2.3,1,"630 A, Icu 50 kA @ 415 V",SLD-0001,8-10 wks,HOLD,Icu provisional against 25 kA assumption (TQ-002). Settings from coordination study - not available
+B02,Incomer,"Rotary handle, door-interlocked, lockable off, extended",Schneider Electric,ComPacT rotary handle kit,1,-,GA-0020,With B01,HOLD,
+B03,Incomer,Auxiliary contact kit - OF (status) + SD (trip indication),Schneider Electric,ComPacT aux kit,1 set,-,SCH-0202/02,With B01,HOLD,Status and trip are DIFFERENT alarms
+B04,Incomer,"Current transformer, 600/5 A, metering class",Schneider Electric,METSECT5MB060,3,"600/5, Cl. 0.5",SLD-0001,6 wks,TBC,Class and burden to be verified against meter + lead length. Confirm if revenue-grade metering required
+B05,Incomer,"Power meter, EtherNet/IP",Schneider Electric,PowerLogic PM5560 (METSEPM5560),1,-,SLD-0001,6 wks,OK,"Energy, PQ logging, harmonic indication"
+B06,Incomer,"Surge protective device, Type 1+2",Schneider Electric,Acti9 iPRD1 25r,1,3P+N,SLD-0001,4 wks,OK,Status contact to PLC. Connecting lead length critical to performance
+B07,Incomer,"SPD protective device, 3P+N",Schneider Electric,Acti9 iC60 (rating per SPD manual),1,Per B06 manual,SLD-0001,4 wks,TBC,"Rating MUST come from SPD manual, not guessed"
+B08,Incomer,Phase failure / phase sequence relay,Schneider Electric,Zelio RM35TF30,1,415 V,SCH-0202/04,4 wks,OK,"Permissive + alarm, not a trip"
+C01,VSD feeder,"Feeder MCCB, 3-pole",Schneider Electric,"ComPacT NSX250N, TMD trip",2,"250 A, Icu 50 kA",SLD-0001,8 wks,HOLD,"Rating MUST be confirmed from drive manual, not motor FLC. Rev 1: frame unchanged after CR-001, setting revised"
+C02,VSD feeder,"Rotary handle, door-interlocked, lockable",Schneider Electric,ComPacT handle kit,2,-,GA-0020,With C01,HOLD,
+C03,VSD feeder,"Auxiliary contacts, OF + SD",Schneider Electric,ComPacT aux kit,2 set,-,SCH-0201/01,With C01,HOLD,
+C04,VSD feeder,"Variable speed drive, 90 kW, 380-480 V",Danfoss,"VLT AQUA Drive FC202, type code TBC",2,"90 kW, 415 V","SLD-0001, SCH-0101",14-16 wks,HOLD,LONGEST LEAD ITEM. Rev D: 75 kW to 90 kW per CR-001. Order had NOT been placed - no cancellation cost. Type code must be finalised before PO. See DR-005
+C05,VSD feeder,"Line reactor, 3% impedance",Danfoss,Per drive selection guide,2,90 kW,SLD-0001,10 wks,HOLD,Provisional - subject to harmonic assessment TQ-006 and confirmed motor cable length. May be superseded by active harmonic filter
+C06,VSD feeder,"EMC cable gland, 360 deg screen termination",CMP / Lapp,Size to suit final cable,4,-,TRM-0401,4 wks,TBC,Held pending cable size - saved wrong stock at CR-001
+C07,VSD feeder,PTC thermistor protection relay,Schneider Electric,TeSys LT3SA00M,2,24 V DC,SCH-0101/08,6 wks,TBC,Independent of drive thermal model. See FD-001
+C08,VSD feeder,"Interposing relay, run command",Phoenix Contact,PLC-RSC-24DC/21,2,"24 V DC, 6 A",SCH-0101/18,2 wks,OK,
+D01,DOL feeder,"Motor protection circuit breaker, P-103",Schneider Electric,TeSys GV2ME14,1,6-10 A,SLD-0001,4 wks,OK,Set to confirmed motor FLC
+D02,DOL feeder,"Motor protection circuit breaker, C-101",Schneider Electric,TeSys GV2ME16,1,9-14 A,SLD-0001,4 wks,OK,
+D03,DOL feeder,"Motor protection circuit breaker, MOV-101",Schneider Electric,TeSys GV2ME08,1,2.5-4 A,SLD-0001,4 wks,OK,
+D04,DOL feeder,"Contactor, AC-3, 24 V DC coil",Schneider Electric,TeSys LC1D09BD,2,9 A AC-3,SCH-0121,4 wks,TBC,AC-3 rating NOT AC-1. Type 2 coordination with D01/D02 verified against manufacturer tables. See FD-002 (240 V AC coil supplied in error)
+D05,DOL feeder,"Auxiliary contact block, 1 NO + 1 NC",Schneider Electric,LADN11,2,-,SCH-0121,4 wks,OK,
+D05a,DOL feeder,"Auxiliary contact block, 2 NO (ADDED - DR-002)",Schneider Electric,LADN20,2,-,SCH-0121/14,4 wks,OK,"ADDED at Rev C - schematic uses 4 contacts, base device supplies 2. See DR-002"
+D06,Distribution,"MCCB, 3-pole, DB-01 feeder",Schneider Electric,ComPacT NSX100N TMD80,1,80 A,SLD-0001,8 wks,OK,DB-01 maximum demand is DB-01 designer's responsibility
+D07,Distribution,"MCCB, 3-pole, PKG-201 feeder",Schneider Electric,ComPacT NSX100N TMD32,1,32 A,SLD-0001,8 wks,TBC,Confirm skid declared FLC from FINAL vendor data sheet
+D08,Distribution,"MCB, 3-pole, C-curve, HVAC-01",Schneider Electric,Acti9 iC60N 3P C20,1,20 A,SLD-0001,2 wks,OK,
+D09,Distribution,"MCCB, 3-pole, SPARE FEEDER 1",Schneider Electric,ComPacT NSX100N TMD63,1,63 A,SLD-0001,8 wks,OK,Fitted AND wired to terminals - adding later costs a shutdown
+D10,Distribution,"MCCB, 3-pole, SPARE FEEDER 2",Schneider Electric,ComPacT NSX100N TMD32,1,32 A,SLD-0001,8 wks,OK,Fitted AND wired to terminals
+E01,Control power,"UPS, online, with volt-free status contacts",Eaton,9SX 1000i (or equivalent),1,1 kVA,SCH-0030/02,10 wks,TBC,"Autonomy to be confirmed against actual control load. Confirm status contacts are included, not an option"
+E02,Control power,"Power supply, 24 V DC, 20 A, switch-mode",Phoenix Contact,QUINT4-PS/1AC/24DC/20,2,24 V DC 20 A,SCH-0030/06,6 wks,OK,"EACH sized for FULL load, not half"
+E03,Control power,Redundancy (O-ring) module,Phoenix Contact,QUINT4-ORING/24DC/2X20/1X40,1,40 A,SCH-0030/08,6 wks,OK,Not a direct parallel connection
+E04,Control power,"Electronic circuit protector, DC, adjustable, with status",Phoenix Contact,CBM E4 24DC series,6,24 V DC,SCH-0030/10-20,6 wks,OK,DC-RATED. AC MCBs are not acceptable on DC - no natural current zero
+E05,Control power,"MCB, 1-pole, C-curve, 10 A",Schneider Electric,Acti9 iC60N 1P C10,2,10 A,SCH-0030/04,2 wks,OK,Separate MCB per PSU - single trip cannot take out both
+E06,Control power,"MCB, 1-pole, C-curve, 16 A",Schneider Electric,Acti9 iC60N 1P C16,1,16 A,SCH-0030/22,2 wks,OK,Cubicle services
+E07,Control power,"24 V DC distribution terminal block, feed-through",Phoenix Contact,PTFIX series,4,24 V DC,SCH-0030/09,2 wks,OK,
+F01,Safety,"Safety relay, dual channel, monitored manual reset",Pilz,PNOZ s4,1,24 V DC,SCH-0040,8 wks,HOLD,Selection PROVISIONAL - required Performance Level not determined (TQ-003). May change if PLe required
+F02,Safety,"Emergency stop, 40 mm mushroom, twist release, 2 x NC",Schneider Electric,Harmony XB5AS8445,1,24 V DC,SCH-0040/02,3 wks,OK,MCC door
+F03,Safety,"Emergency stop, IP66, 2 x NC (for LCS)",Schneider Electric,Harmony XB5AS8445 + IP66 mounting,2,24 V DC,SCH-0040/03-06,3 wks,OK,In LCS-101 / LCS-102
+F04,Safety,"Emergency stop, IP66 enclosed field station, 2 x NC",Schneider Electric,Harmony XALK178,1,24 V DC,SCH-0040/07,4 wks,OK,Pump hall entry
+F05,Safety,"Reset pushbutton, blue, illuminated",Schneider Electric,Harmony XB5AW36B5,1,24 V DC,SCH-0040/10,3 wks,OK,"Monitored reset - acts on RELEASE, not press"
+G01,PLC,"Controller, CompactLogix 5380",Rockwell Automation,5069-L306ER,1,-,SCH-0201,10-12 wks,OK,Platform confirmed TQ-007 Wk9
+G02,PLC,"Digital input module, 16 pt, 24 V DC sinking",Rockwell Automation,5069-IB16,3,24 V DC,SCH-0201/02,10 wks,OK,"40 points used, 8 spare (20%)"
+G03,PLC,"Digital output module, 16 pt, 24 V DC sourcing",Rockwell Automation,5069-OB16,2,24 V DC,SCH-0202,10 wks,OK,"14 used, 18 spare - module granularity"
+G04,PLC,"Analogue input module, 8 ch, current/voltage",Rockwell Automation,5069-IF8,2,4-20 mA,SCH-0203,10 wks,OK,"6 used, 10 spare"
+G05,PLC,"Analogue output module, 4 ch",Rockwell Automation,5069-OF4,1,4-20 mA,SCH-0204,10 wks,OK,"2 used, 2 spare"
+G06,PLC,Field potential distributor,Rockwell Automation,5069-FPD,2,-,SCH-0201,10 wks,OK,Segments field power between module groups
+G07,PLC,Address reserve module (spare slot placeholder),Rockwell Automation,5069-ARM,1,-,SCH-0201,10 wks,OK,Keeps a slot addressable for future expansion
+G08,PLC,"SD card, industrial",Rockwell Automation,1784-SD2,2,-,-,4 wks,OK,"One installed, one spare for the client"
+G09,PLC,"End cap, DIN rail, mounting accessories",Rockwell Automation,5069-ECR + accessories,1 set,-,SCH-0201,10 wks,OK,COMMONLY FORGOTTEN - the chassis does not work without the end cap
+G10,PLC,EtherNet/IP adapter for RIO-01,Rockwell Automation,5069-AEN2TR,1,-,RIO-0201,10 wks,OK,Dual-port for future ring topology
+G11,PLC,Digital input module for RIO-01,Rockwell Automation,5069-IB16,1,24 V DC,RIO-0201,10 wks,OK,"10 used, 6 spare"
+G12,PLC,Analogue input module for RIO-01,Rockwell Automation,5069-IF8,1,4-20 mA,RIO-0203,10 wks,OK,"2 used, 6 spare"
+H01,Network,"Managed Ethernet switch, 8 port, multimode fibre",Moxa,EDS-408A-MM-SC,1,24 V DC,SCH-0301,8 wks,TBC,DR-004: only 2 fibre ports = zero spare. 4-port variant recommended to client. Fed from ECP1 (PLC/network group) NOT field I/O group
+H02,Network,"Fibre optic termination enclosure / LIU, DIN mount",Generic,-,1,-,SCH-0301,4 wks,OK,
+H03,Network,"Fibre pigtails, OM3, SC, 1 m",Generic,-,8,-,SCH-0301,4 wks,OK,
+H04,Network,"Patch lead, Cat6 industrial, 1 m",Generic,-,8,-,SCH-0301,2 wks,OK,"PLC, drives, meter, spare"
+H05,Network,"RJ45 bulkhead patch panel, DIN",Generic,-,1,-,SCH-0301,2 wks,OK,Service port on X6
+I01,Indication,"Selector switch, 3-position stay-put, Local/Off/Remote",Schneider Electric,Harmony XB5AD33,3,24 V DC,SCH-0101/02,3 wks,OK,"P-101, P-102, P-103"
+I02,Indication,"Pushbutton, flush, green, Start",Schneider Electric,Harmony XB5AA31,4,24 V DC,SCH-0101/12,3 wks,OK,
+I03,Indication,"Pushbutton, flush, red, Stop",Schneider Electric,Harmony XB5AA42,4,24 V DC,SCH-0101/13,3 wks,OK,
+I04,Indication,"Pilot light, LED, green - Running",Schneider Electric,Harmony XB5AVB3,6,24 V DC,SCH-0101/22,3 wks,OK,Qty corrected 4 to 6 at Rev C - see DR-001
+I05,Indication,"Pilot light, LED, red - Fault",Schneider Electric,Harmony XB5AVB4,6,24 V DC,SCH-0101/23,3 wks,OK,
+I06,Indication,"Pilot light, LED, white - Available",Schneider Electric,Harmony XB5AVB1,6,24 V DC,SCH-0101/21,3 wks,OK,
+I07,Indication,"Pushbutton, flush, blue - Lamp test",Schneider Electric,Harmony XB5AA61,1,24 V DC,SCH-0030/30,3 wks,OK,"Without lamp test, a failed lamp reads as NOT RUNNING"
+I08,Indication,"Beacon and sounder, common alarm",Auer / Werma,24 V DC combination unit,1,24 V DC,SCH-0202/10,4 wks,TBC,Confirm client requires local audible alarm
+J01,Relays/terminals,"Interposing relay, 24 V DC coil, 1 CO, LED and test lever",Phoenix Contact,PLC-RSC-24DC/21,20,24 V DC,SCH-0202,2 wks,OK,Every DO leaving the board
+J02,Relays/terminals,"Terminal, feed-through, 2.5 mm2, grey",Phoenix Contact,"UT 2,5",360,-,TRM-0401,2 wks,OK,Includes 20% spare
+J03,Relays/terminals,"Terminal, feed-through, 4 mm2, grey",Phoenix Contact,UT 4,60,-,TRM-0402,2 wks,OK,240 V AC control
+J04,Relays/terminals,"Terminal, DISCONNECT (knife), 2.5 mm2",Phoenix Contact,"UT 2,5-MT",36,-,TRM-0403,2 wks,OK,Every analogue loop - inject calibrator without unwiring
+J05,Relays/terminals,"Terminal, feed-through, 2.5 mm2, YELLOW",Phoenix Contact,"UT 2,5 YE",24,-,TRM-0404,3 wks,OK,SAFETY CIRCUIT ONLY. Includes 4 spare for future E-stop
+J06,Relays/terminals,"Terminal, earth, 2.5 mm2",Phoenix Contact,"UT 2,5-PE",40,-,TRM,2 wks,OK,
+J07,Relays/terminals,"Terminal, power, 35 mm2",Phoenix Contact,UK 35,24,-,TRM-0405,3 wks,OK,Small feeder outgoings
+J08,Relays/terminals,"End covers, partition plates, end brackets, separators",Phoenix Contact,"D-UT 2,5 / ATP / E-UK",1 set,-,TRM,2 wks,TBC,ROUTINELY UNDER-ORDERED. Quantity derived from rail layout. Partition plates REQUIRED between voltage groups. See DR-003
+J09,Relays/terminals,"Terminal marker strips, printed",Phoenix Contact,ZB series,1 set,-,TRM,2 wks,OK,"Printed FROM the termination schedule, not hand-written. See FD-006b"
+K01,Wiring,"Panel wire, tri-rated, 1.0 mm2, DARK BLUE - DC control",Generic BS6231,-,500 m,0.6/1 kV,All,2 wks,OK,AS 60204.1 colour convention
+K02,Wiring,"Panel wire, tri-rated, 1.0 mm2, RED - AC control",Generic BS6231,-,200 m,0.6/1 kV,All,2 wks,OK,
+K03,Wiring,"Panel wire, tri-rated, 1.0 mm2, ORANGE - external source",Generic BS6231,-,50 m,0.6/1 kV,SCH-0141,2 wks,OK,Conductors that stay LIVE when the board is isolated. Safety convention
+K04,Wiring,"Panel wire, 2.5 / 4 / 16 / 35 / 95 mm2, black",Generic,-,Lot,0.6/1 kV,All,2 wks,OK,Power. 95 mm2 added at Rev D per CR-001
+K05,Wiring,"Panel wire, green/yellow, 2.5 / 4 / 16 mm2",Generic,-,Lot,-,All,2 wks,OK,Earth
+K06,Wiring,"Wire ferrules, printed, heat-shrink type",Partex / Grafoplast,-,Lot,-,All,2 wks,OK,BOTH ends of every wire
+K07,Wiring,"Slotted cable duct, 40x60 / 60x80 / 80x80, with lids",Betaduct / Panduit,-,Lot,-,GA-0020,3 wks,OK,SEPARATE ducts: power / AC control / DC digital / analogue
+K08,Wiring,"DIN rail, 35 mm, slotted",Generic,-,Lot,-,GA-0020,2 wks,OK,
+K09,Wiring,"Bootlace ferrules, insulated, assorted",Generic,-,Lot,-,All,2 wks,OK,
+K10,Wiring,"Crimp lugs, compression, for power terminations",Cabac / Utilux,Size to suit,Lot,-,TRM,3 wks,TBC,Sizes depend on FINAL cable sizes. PO amended at CR-001 (70 to 95 mm2)
+K11,Wiring,"Cable ties, spiral wrap, adhesive bases",Generic,-,Lot,-,-,2 wks,OK,
+L01,Labels,"Traffolyte label, engraved, black on white, device labels",Local engraver,Per LBL-0001,140,-,LBL-0001,3 wks,TBC,"Cannot order until label schedule approved. MECHANICALLY FIXED, not adhesive"
+L02,Labels,"Traffolyte label, cubicle identification, large",Local engraver,Per LBL-0001,5,-,LBL-0001,3 wks,TBC,
+L03,Labels,"Warning labels - danger 415 V, MULTIPLE SUPPLIES, CT secondary",Generic,Per LBL-0001,Lot,-,LBL-0001,2 wks,OK,Multiple-supplies label added to schedule at Rev 1 - see FD-006c. CT secondary label is a genuine safety item
+L04,Labels,"Asset / rating nameplate, engraved",Local engraver,Per LBL-0001,1,-,LBL-0001,3 wks,TBC,"Rated current, voltage, Icw, IP, mfr, date, standard - AS/NZS 61439 marking"
+L05,Labels,Arc flash warning label,-,-,1,-,-,-,CLIENT SCOPE,Content comes from client arc flash study. We fit a blank holder only
+M01,Field,"Local control station enclosure, GRP, IP66",Schneider / Fibox,To suit XB5 devices,2,IP66,LCS-0101/0102,4 wks,OK,"Pump hall - wet, washdown"
+M02,Field,"LCS internals - L/R selector, Start, Stop, E-stop, Running lamp, terminals",Schneider Electric,Harmony XB5 range,2 sets,24 V DC,LCS-0101/0102,4 wks,OK,
+M03,Field,"RIO-01 enclosure, 316 stainless, IP66, 600 x 600 x 250",Generic,-,1,IP66,RIO-0001,6 wks,TBC,"Outdoor at intake - confirm solar loading, sunshade or cooling"
+M04,Field,"RIO-01 internals - MCB, 24 V DC PSU, terminals, fibre LIU",Assorted,-,1 set,-,RIO-0001,6 wks,TBC,

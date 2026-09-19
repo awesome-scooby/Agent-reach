@@ -1,0 +1,12 @@
+TQ No.,Subject,Raised (Wk),Required By (Wk),Assumption Stated,Impact If Unanswered,Owner,Status
+TQ-001,"Client Electrical Design Standard. Covers earthing system, form of separation, cable entry direction, spare capacity, wire numbering convention, drive brand standard.",1,3,"Generic industry practice, TN-S, Form 3b, top entry, 20% spares",Blocks enclosure fabrication release. Six assumptions depend on it.,Client,Closed Wk11
+TQ-002,Prospective short-circuit current at MCC incomer and expected duration.,1,4,25 kA for 1 s,Blocks all MCCB and busbar orders. Highest cost exposure in the package.,Client / network operator,OPEN - escalated x2
+TQ-003,"Required Performance Level for E-stop safety function, and required stop category (0 or 1) given hydraulic surge considerations.",2,6,"PLd architecture, Category 0",Blocks safety relay order; may change safety circuit architecture.,Client / safety consultant,OPEN
+TQ-004,Who is performing the protection coordination study and when will settings be available?,2,10,Provisional conservative settings,Settings cannot be applied or recorded at FAT.,Client,OPEN - see FD-005
+TQ-005,Must the MCC operate with switchroom HVAC failed? Two options priced.,2,5,40 C design ambient with HVAC operating,"Changes derating basis, possibly drive frame size, or adds control interlock.",Client,Closed Wk7 - interlock selected
+TQ-006,Harmonic distortion limits at point of connection. Is a harmonic assessment being performed?,3,6,Line reactors sufficient,"May require active harmonic filter - additional cubicle, cost, 12+ wk lead.",Client,OPEN - highest technical risk
+TQ-007,PLC platform standard and IP address schedule.,1,4,CompactLogix 5380,Blocks all PLC hardware orders.,Client,Closed Wk9
+TQ-008,Motor nameplate data for P-101 / P-102.,2,6,Typical 4-pole values,"Blocks drive, feeder breaker, cable and thermal settings.",Pump vendor,Superseded by TQ-009
+TQ-009,Revised pump duty - hydraulic re-modelling indicates 90 kW motors required. Confirm and issue nameplate data.,12,13,-,Major change - see CR-001.,Client / pump vendor,Closed Wk13
+TQ-010,"MOV-101 actuator control interface - hardwired, analogue or fieldbus? Wiring diagram required.",3,7,Hardwired open/close/stop,Schematic and terminal count cannot be finalised.,Valve vendor,Closed Wk8
+TQ-011,TX-01 transformer capacity with revised MCC demand plus existing site loads not in our scope.,13,15,Adequate,"Potential transformer replacement - six figures, long lead, outage.",Client,OPEN - carried to site

@@ -1,0 +1,27 @@
+ID,Requirement,Source,Engineering Response,Drawing/Document Affected,Status,Owner to Close
+DI-001,Supply 415 V 3ph 4W 50 Hz from TX-01,Client drawing NFD-CLI-SLD-9001,Adopted as design supply. Incomer 4-pole to break neutral.,SLD-0001,Closed,-
+DI-002,Transformer 500 kVA Dyn11 Z=5%,TX-01 nameplate (photo on file),Used for indicative fault contribution only. Not accepted as design fault level.,DBS-0001,Closed,-
+DI-003,Prospective fault level at MCC,NOT SUPPLIED,25 kA / 1 s ASSUMED for tender. All breaker Icu/Ics and busbar Icw provisional. Must be confirmed before design freeze.,"SLD-0001, BOM",OPEN - TQ-002,Client / network operator
+DI-004,Earthing system (TN-S / TN-C-S),NOT SUPPLIED,TN-S assumed. Separate N and E bars. Earth-fault element provisioned at incomer.,SLD-0001,OPEN - TQ-001,Client
+DI-005,Client Electrical Design Standard,NOT SUPPLIED,Generic industry practice adopted as interim basis. Substantial rework risk if client standard differs.,All,Closed Wk11 - TQ-001,Client
+DI-006,Two transfer pumps 75 kW variable speed duty/assist,Client functional spec 4.2,Two VSD feeders. Duty rotation and assist logic in functional description.,"SLD-0001, SCH-0101/0111, FDS",Superseded by DI-024,-
+DI-007,Pump motor full nameplate data,Pump vendor - NOT ISSUED,"Typical 4-pole figures used for frame selection only. Drive, breaker, cable and thermal data cannot be finalised without it.","SLD, BOM, cable schedule",Closed Wk13 (90 kW),Pump vendor
+DI-008,Drive must accept motor PTC thermistors,Design decision,Independent thermistor relay per pump. Trip wired to drive external fault and to PLC.,"SCH-0101, BOM",Closed,-
+DI-009,Dry-run protection required,Client functional spec 4.6,Independent low-low float hardwired into stop logic in addition to PLC level control.,"SCH-0101, SCH-0201",Closed,-
+DI-010,Emergency stop at each pump and at MCC,Client functional spec 6.1,"Dual-channel monitored E-stop, safety relay, STO to drives, coil drop to DOL feeders, monitored manual reset.",SCH-0040,Closed (architecture),-
+DI-011,Required Performance Level for E-stop safety function,NOT SUPPLIED,PLd architecture adopted as interim. Required PL requires machinery risk assessment; achieved PL requires ISO 13849-1 calculation. NEITHER PERFORMED BY US.,"SCH-0040, BOM",OPEN - TQ-003,Client / safety consultant
+DI-012,Local control station at each pump,Client functional spec 6.2,"LCS-101/102: L-O-R selector, Start, Stop, E-stop, Running lamp. IP66 GRP.","SCH-0101, TRM-0401",Closed,-
+DI-013,Indoor air-conditioned switchroom,Site visit report,IP42 adopted. Anti-condensation heaters with hygrostat as insurance against HVAC outage.,"DBS, BOM",Closed,-
+DI-014,MCC operation with HVAC failed,NOT STATED,"Two options priced: (a) uprate/derate for 50 C, (b) HVAC-fail interlock ramping drives down.","DBS, SCH-0201, BOM",Closed Wk7 - option (b),Client
+DI-015,Declared heat load to HVAC designer,Interface requirement,Estimated total dissipation issued in writing at Rev B. Reissued at Rev 1 after motor uprate.,IFM-002,Closed (reissued),-
+DI-016,PLC platform and I/O standard,NOT SUPPLIED,"CompactLogix 5380 assumed. Module selection, spares and SCADA driver all depend on this.","SLD, BOM, I/O list",Closed Wk9 - TQ-007,Client
+DI-017,IP address schedule,NOT SUPPLIED,Placeholder scheme used for FAT only. Must be replaced before site.,"Network drawing, FAT",Closed Wk9,Client
+DI-018,SCADA communication over existing plant fibre,Client functional spec 8,"Managed switch with multimode fibre ports. One to control room, one to RIO-01.","SLD, BOM",Closed (see DR-004),-
+DI-019,Remote I/O at intake screen approx 120 m,Site layout drawing,RIO-01 with EtherNet/IP adapter and fibre link. Separate 240 V supply at kiosk with own 24 V PSU.,"SLD, RIO drawings",Closed,-
+DI-020,Harmonic distortion limits at point of connection,NOT SUPPLIED,Two six-pulse drives on a 500 kVA transformer warrants assessment. Provisional line reactors; active filter carried as risk.,"SLD, BOM, GA",OPEN - TQ-006,Client / specialist
+DI-021,Spare capacity requirement,NOT STATED,"20% spare terminals, 20% spare I/O, two fitted spare feeders, 20% spare chassis.",All,Closed Wk11 - TQ-001,Client
+DI-022,Surge protection required,Client functional spec 5.4,"Type 1+2 SPD at incomer on dedicated protective device, status contact to PLC.","SLD, SCH-0201",Closed,-
+DI-023,Cable entry direction,NOT SUPPLIED,Top entry assumed. GA cannot be released until confirmed.,"GA, gland plate detail",Closed Wk11 - TQ-001,Client
+DI-024,REVISED PUMP DUTY - motors uprated 75 kW to 90 kW,Client TQ response TQR-009 after hydraulic re-modelling,Full change impact assessment raised. See CR-001 / Stage 9.,"SLD, SCH-0101/0111, TRM, BOM, GA, cable schedule, FAT, heat load",Closed Wk14 - implemented Rev 1,-
+DI-025,Seal water flow proving on each pump,Client functional spec 4.7,Flow switch per pump wired as start permissive with run-delay bypass.,"SCH-0101, SCH-0201",Closed,-
+DI-026,TX-01 transformer capacity with revised MCC demand plus existing site loads,Raised by us following CR-001,Revised MCC demand ~447 A against 500 kVA (~695 A). TX-01 also feeds site loads outside our scope. Client must confirm total.,"DBS, carried-forward register",OPEN - TQ-011,Client

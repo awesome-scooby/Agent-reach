@@ -1,0 +1,140 @@
+Test No.,Section,Test Description,Expected Result,Actual Result,Pass/Fail,Comments
+A-01,A Documentation,"Drawing register complete, all drawings at listed revision",All present at Rev 1,All present at Rev 1,Pass,
+A-02,A Documentation,"BOM at current revision, reconciled against drawings",BOM Rev D reconciled,Reconciled,Pass,
+A-03,A Documentation,Approved FAT procedure signed,Signed by client,Signed,Pass,
+A-04,A Documentation,Equipment data sheets and test certificates available,All available,All available,Pass,
+A-05,A Documentation,Manufacturer AS/NZS 61439 design verification evidence available,Documentation provided,Provided,Pass,Filed in MDR Section 6.1
+A-06,A Documentation,"Calibration certificates for all test equipment, current",All current,All current,Pass,
+A-07,A Documentation,PLC program version recorded,Version recorded,Recorded,Pass,
+A-08,A Documentation,Outstanding items and deviations declared,Declared at FAT opening,Declared,Pass,Coordination study outstanding - declared up front
+B-09,B Visual inspection,"Enclosure undamaged, paint finish acceptable",No damage,No damage,Pass,
+B-10,B Visual inspection,Form of separation as specified (Form 3b),Form 3b verified,Verified,Pass,
+B-11,B Visual inspection,Equipment layout matches approved general arrangement,Matches GA Rev 1,Matches,Pass,
+B-12,B Visual inspection,All devices present and match BOM part numbers (labels physically read),Match BOM Rev D,1 discrepancy,FAIL,FD-002 KM103 240 V AC coil supplied instead of 24 V DC
+B-13,B Visual inspection,"Labelling complete, engraved, mechanically fixed, matching drawings",All correct,3 discrepancies,FAIL,FD-006
+B-14,B Visual inspection,Warning labels fitted including multiple supplies,All fitted,Multiple-supplies label missing,FAIL,FD-006c
+B-15,B Visual inspection,Asset / rating nameplate fitted and correct,Correct,Correct,Pass,
+B-16,B Visual inspection,"Board internally clean - no swarf, offcuts, packaging or tools",Clean,Clean,Pass,
+B-17,B Visual inspection,"Wiring workmanship - routing, duct fill, ferruling, consistency",Acceptable,Acceptable,Pass,Ferrule orientation corrected at 50% inspection
+B-18,B Visual inspection,"Door wiring looms, service loops and strain relief",Correct,Correct,Pass,
+C-19,C Mechanical inspection,"Doors open, close and latch. Door interlocks operate",All correct,All correct,Pass,
+C-20,C Mechanical inspection,Every isolating handle operates and padlocks in the off position,All operate and lock,All operate and lock,Pass,
+C-21,C Mechanical inspection,Door interlock defeat mechanism operates and resets,Operates,Operates,Pass,
+C-22,C Mechanical inspection,Removable items withdraw and re-insert correctly,Correct,Correct,Pass,
+C-23,C Mechanical inspection,"Gland plates removable, fixings complete",Correct,Correct,Pass,
+C-24,C Mechanical inspection,Gaskets intact and continuous,Intact,Intact,Pass,
+C-25,C Mechanical inspection,Lifting provisions secure and marked,Secure and marked,Secure and marked,Pass,
+C-26,C Mechanical inspection,"Terminal rails secure, end brackets fitted",Correct,Correct,Pass,
+D-27,D Wiring verification,Point-to-point check of every internal wire against schematics (by a person other than the wireman),All correct,1 discrepancy,FAIL,FD-001 KT101 wired to NO contact instead of NC
+D-28,D Wiring verification,Wire numbers verified at both ends against drawings,All correct,All correct,Pass,
+D-29,D Wiring verification,Terminal allocation verified against termination schedule,All correct,All correct,Pass,
+D-30,D Wiring verification,"Terminations tight - sample torque check, sample size recorded",Within spec,Within spec,Pass,"20% sample, all within manufacturer torque"
+D-31,D Wiring verification,Conductor sizes per drawing,Correct,Correct,Pass,
+D-32,D Wiring verification,Colour convention verified including orange for external supplies,Correct,Correct,Pass,
+D-33,D Wiring verification,Maximum two conductors per terminal confirmed,Confirmed,Confirmed,Pass,
+E-34,E Continuity and earth,"Earth continuity, main earth bar to each cubicle earth bar, door, gland plate and equipment earth","Within client criterion, each reading recorded",All within criterion,Pass,Individual readings on attached sheet - not 'all satisfactory'
+E-35,E Continuity and earth,"Instrument screen bar insulated from enclosure, bonded at ONE point only",> 1 Mohm to enclosure,0 ohm,FAIL,FD-003 - mounting screw through to mounting plate
+E-36,E Continuity and earth,Continuity of every control circuit per schematic,All continuous,All continuous,Pass,
+E-37,E Continuity and earth,Continuity from every field terminal to destination device,All continuous,All continuous,Pass,
+E-38,E Continuity and earth,Phase continuity and identification through busbar to every feeder,Correct,Correct,Pass,
+F-39,F Insulation resistance,"ALL electronic equipment disconnected before IR test, per disconnection list, signed",Complete and signed,Complete and signed,Pass,"Drives, PLC, PSUs, UPS, SPD, meter, electronic trip units"
+F-40,F Insulation resistance,"IR test power circuits - ph-ph, ph-N, ph-E, N-E","Per client criterion, readings recorded",All within criterion,Pass,Individual readings recorded
+F-41,F Insulation resistance,IR test control circuits (electronics disconnected),Per client criterion,Within criterion,Pass,
+F-42,F Insulation resistance,Every reading recorded individually,All recorded,All recorded,Pass,
+F-43,F Insulation resistance,All disconnected equipment reconnected and verified - SIGNED step,Signed reconnection check,Complete and signed,Pass,
+G-44,G Control power,"Energise 240 V AC supply, verify voltage",Within tolerance,Within tolerance,Pass,
+G-45,G Control power,"Verify UPS operation, on-line status and status contacts",Correct,Correct,Pass,
+G-46,G Control power,"Energise PSU-1 with PSU-2 isolated, verify 24 V DC bus",Bus healthy,Bus healthy,Pass,
+G-47,G Control power,"Energise PSU-2 with PSU-1 isolated, verify 24 V DC bus",Bus healthy,Bus healthy,Pass,
+G-48,G Control power,"Both energised, verify redundancy module operation",Correct,Correct,Pass,
+G-49,G Control power,"Fail PSU-1 under load - no interruption to bus, alarm raised","Bus holds, alarm at SCADA","Bus holds, alarm at SCADA",Pass,
+G-49b,G Control power,"Fail PSU-2 under load - no interruption to bus, alarm raised","Bus holds, alarm at SCADA","Bus holds, alarm at SCADA",Pass,
+G-50,G Control power,Verify each ECP group live and correctly allocated,Correct allocation,Correct,Pass,"Switch confirmed on ECP1 network group, not field I/O - DR-004"
+G-51,G Control power,"Trip one ECP group - only that group affected, status alarm raised","Group isolated, alarm raised",Correct,Pass,
+G-52,G Control power,"Verify PLC powers up, no faults, correct program version","No faults, version correct",Correct,Pass,
+G-53,G Control power,Verify network switch and all network devices reachable,All reachable,All reachable,Pass,
+H-54,H Functional testing,Lamp test - every indicator operates,All operate,All operate,Pass,
+H-55,H Functional testing,"Selector positions produce correct mode, PLC reads correct combination",Correct for all feeders,Correct,Pass,Both Local and Remote DIs read - Off detectable
+H-56,H Functional testing,Start and stop from MCC pushbuttons in Local,Correct,Correct,Pass,
+H-57,H Functional testing,Start and stop from local control station in Local,Correct,Correct,Pass,
+H-58,H Functional testing,Start and stop from PLC / SCADA in Remote,Correct,Correct,Pass,
+H-59,H Functional testing,Local commands ignored in Remote and vice versa,Ignored,Ignored,Pass,
+H-60,H Functional testing,"Off position prevents all operation, PLC reports feeder unavailable",Correct,Correct,Pass,
+H-61,H Functional testing,"Running, fault and available indication at MCC and at LCS",Correct,Correct,Pass,
+H-62,H Functional testing,"DOL contactor pull-in and drop-out verified by CONTACTOR AUXILIARY, not PLC output",Aux confirms operation,Correct,Pass,
+H-63,H Functional testing,"Discrepancy alarms - commanded-but-not-running, running-but-not-commanded",Both operate,Both operate,Pass,
+H-64,H Functional testing,Duty rotation logic - changeover on run hours,Correct,Correct,Pass,
+H-65,H Functional testing,Duty / standby changeover on simulated duty pump fault,Correct,Correct,Pass,
+I-66a,I Interlocks and permissives,"Remove thermistor permissive - start blocked, correct reason reported","Blocked, correct reason","Blocked, reason INCORRECT",FAIL,FD-004 alarm descriptions transposed
+I-66b,I Interlocks and permissives,"Remove drive healthy permissive - start blocked, correct reason","Blocked, correct reason",Correct,Pass,
+I-66c,I Interlocks and permissives,"Remove low-low float permissive - start blocked, correct reason","Blocked, correct reason",Correct,Pass,
+I-66d,I Interlocks and permissives,"Remove seal water permissive - start blocked, correct reason","Blocked, correct reason",Correct,Pass,
+I-66e,I Interlocks and permissives,"Remove valve open permissive - start blocked, correct reason","Blocked, correct reason",Correct,Pass,
+I-66f,I Interlocks and permissives,"Open Q11 - feeder unavailable, start blocked",Blocked,Correct,Pass,
+I-66g,I Interlocks and permissives,Press E-stop - start blocked,Blocked,Correct,Pass,
+I-66h,I Interlocks and permissives,Inject wet well level below setpoint - start blocked,Blocked,Correct,Pass,
+I-67,I Interlocks and permissives,HARDWIRED dry-run trip operates with PLC in PROGRAM-STOP mode,Drive trips,Drive trips,Pass,CRITICAL TEST - the entire point of hardwiring it
+I-68,I Interlocks and permissives,Seal water start bypass timer operates then enforces permissive,Correct,Correct,Pass,
+I-69,I Interlocks and permissives,HVAC-fail interlock ramps drives to minimum speed and alarms,Correct,Correct,Pass,TQ-005 outcome
+J-70,J Protection verification,Protection settings recorded against coordination study,Settings applied and verified,COORDINATION STUDY NOT AVAILABLE,N/A - DEVIATION,"FD-005 - recorded as deviation, NOT as pass. SAT hold point"
+J-71,J Protection verification,MPCB thermal settings verified against confirmed motor FLC,Correct,Correct,Pass,
+J-72,J Protection verification,Drive motor thermal parameters verified against motor nameplate,Correct,Correct,Pass,90 kW nameplate data per CR-001
+J-73,J Protection verification,"Operate trip mechanism on each protective device, verify indication to PLC",All correct,All correct,Pass,
+J-74,J Protection verification,"Phase failure relay operates on simulated phase loss, alarm raised",Operates,Operates,Pass,
+J-75,J Protection verification,SPD status contact reports correctly,Correct,Correct,Pass,
+J-76,J Protection verification,"CT shorting links present, CT secondary warning label fitted, meter reads correctly",All correct,All correct,Pass,
+K-77,K PLC I/O simulation,"Every digital input - operate field device, verify bit at PLC and tag at SCADA, description matches I/O list",All 40 correct,All 40 correct after FD-004 correction,Pass,
+K-78,K PLC I/O simulation,"Every digital output - force output, verify relay, field terminal and SCADA status",All 14 correct,All 14 correct,Pass,
+K-79,K PLC I/O simulation,"Every analogue input - inject 4, 8, 12, 16, 20 mA, verify EU at PLC and SCADA",All 6 correct at 5 points,All correct,Pass,30 individual readings recorded
+K-80,K PLC I/O simulation,"Every analogue output - command 0, 25, 50, 75, 100%, measure current at field terminal",Both correct,Both correct,Pass,
+K-81,K PLC I/O simulation,"Verify live-zero detection on each analogue input - open loop, fault detected and alarmed",All detect,All detect,Pass,
+K-82,K PLC I/O simulation,"Verify every spare I/O point terminated, labelled and available",All available,All available,Pass,"8 DI, 18 DO, 10 AI, 2 AO spare"
+K-83,K PLC I/O simulation,"Fail-safe check - disconnect critical DI field wire, signal reads FAULT not healthy",Reads fault,Reads fault,Pass,
+L-84,L Alarm testing,"Every alarm generated at source, verified at PLC and SCADA with correct description, priority and time stamp",All correct,2 further description errors found,FAIL then Pass,"FD-004 - full section re-run after correction, all correct"
+L-85,L Alarm testing,Common alarm beacon and sounder operate,Operate,Operate,Pass,
+L-86,L Alarm testing,Alarm acknowledge and reset behaviour,Correct,Correct,Pass,
+L-87,L Alarm testing,Latched alarms remain latched until acknowledged,Correct,Correct,Pass,
+L-88,L Alarm testing,Alarms that must survive a power interruption do so,Correct,Correct,Pass,
+M-89a,M Emergency stop,"E-stop MCC door - both drives to STO, DOL contactors drop, alarm at SCADA",All operate,All operate,Pass,
+M-89b,M Emergency stop,"E-stop LCS-101 - both drives to STO, contactors drop, alarm",All operate,All operate,Pass,
+M-89c,M Emergency stop,"E-stop LCS-102 - both drives to STO, contactors drop, alarm",All operate,All operate,Pass,
+M-89d,M Emergency stop,"E-stop pump hall - both drives to STO, contactors drop, alarm",All operate,All operate,Pass,
+M-90,M Emergency stop,Plant cannot restart while E-stop latched,Cannot restart,Cannot restart,Pass,
+M-91,M Emergency stop,Reset requires E-stop released AND reset button pressed and released,Correct,Correct,Pass,
+M-92,M Emergency stop,Reset does NOT occur on press (monitored reset acts on release),No reset on press,No reset on press,Pass,
+M-93a,M Emergency stop,"SINGLE-CHANNEL FAULT - open channel A only, relay detects discrepancy, safe state, will not reset","Detected, will not reset","Detected, will not reset",Pass,The test that actually proves dual channel
+M-93b,M Emergency stop,"SINGLE-CHANNEL FAULT - open channel B only, relay detects discrepancy","Detected, will not reset","Detected, will not reset",Pass,
+M-94,M Emergency stop,Safety relay auxiliary status reaches PLC and SCADA,Correct,Correct,Pass,
+M-95,M Emergency stop,E-stop function with PLC in PROGRAM-STOP - safety function independent of PLC,Operates,Operates,Pass,
+N-96,N Local / remote,Mode logic recorded per feeder,All recorded,All recorded,Pass,
+N-97,N Local / remote,ALL permissives and trips remain active in Local mode,All active,All active,Pass,Design decision verified - Local does not bypass protection
+O-98,O VSD operation,Motor simulation method per agreed arrangement,Per agreed method,"Test motor, no load",Pass,Method agreed with client in advance
+O-99,O VSD operation,"Drive parameters verified against parameter schedule, full set backed up",Verified and backed up,Verified and backed up,Pass,Backup files to MDR Section 5.3
+O-100,O VSD operation,"Run command, start, ramp, stop, ramp-down",Correct,Correct,Pass,
+O-101,O VSD operation,Speed reference tracking at 0 / 25 / 50 / 75 / 100 %,Within tolerance,Within tolerance,Pass,"Test motor, no load - does NOT prove performance under load"
+O-102,O VSD operation,Minimum and maximum speed clamps,Correct,Correct,Pass,
+O-103,O VSD operation,Acceleration and deceleration ramp times,Per parameter schedule,Correct,Pass,
+O-104,O VSD operation,"STO operation from safety relay, both channels",Correct,Correct,Pass,STO terminals re-verified after CR-001 drive change
+O-105,O VSD operation,"Drive fault, healthy and running signals via hardwired AND network routes",Both routes correct,Both correct,Pass,
+O-106,O VSD operation,Live-zero response on loss of speed reference,Holds last speed and alarms,Correct,Pass,"Configured response, not default"
+O-107,O VSD operation,Motor thermal parameters and external thermistor trip input,Correct,Correct,Pass,Retested after FD-001 rectification
+P-108,P Network,Every network device reachable at assigned IP address,All reachable,All reachable,Pass,
+P-109,P Network,Address schedule matches issued IP schedule,Matches,Matches,Pass,
+P-110,P Network,Fibre links - light levels within specification,Within spec,Within spec,Pass,
+P-111,P Network,"Switch configuration - VLANs, port settings, management access",Correct,Correct,Pass,
+P-112,P Network,"Drive data over EtherNet/IP - status, speed, current, fault codes",All correct,All correct,Pass,
+P-113,P Network,Power meter data,Correct,Correct,Pass,
+P-114,P Network,Remote I/O node communication and every RIO point,All correct,All correct,Pass,12 RIO points verified
+P-115,P Network,"NETWORK FAILURE - disconnect network, hardwired control still functions, comms-fail alarm raised","Control retained, alarm raised","Control retained, alarm raised",Pass,Validates the hardwired control design decision
+Q-116,Q Labels,"Every label checked against label schedule, character for character",All match,3 discrepancies,FAIL,FD-006
+Q-117,Q Labels,Asset / rating nameplate content per AS/NZS 61439 marking requirements,Correct,Correct,Pass,
+Q-118,Q Labels,Terminal markers checked against termination schedule,All correct,2 markers transposed on X3,FAIL,FD-006b
+Q-119,Q Labels,Warning labels present and correct,All present,Multiple-supplies label missing,FAIL,FD-006c
+Q-120,Q Labels,Arc flash label holder present (content client scope),Holder present,Holder present,Pass,
+R-121,R Drawing mark-ups,"Every discrepancy marked on drawings in red AS FOUND, not reconstructed",All marked as found,All marked as found,Pass,
+R-122,R Drawing mark-ups,Marked-up drawings signed and dated by the person who marked them,Signed and dated,Signed and dated,Pass,
+R-123,R Drawing mark-ups,Marked-up set retained as basis for as-built drawings,Retained,Retained,Pass,
+S-124,S Punch list,"Every defect recorded with category, owner, action and due date",All recorded,All recorded,Pass,8 items
+S-125,S Punch list,Categories agreed with client BEFORE FAT started,Agreed,Agreed,Pass,
+S-126,S Punch list,Punch list signed by both parties at close of FAT,Signed,Signed,Pass,
+S-127,S Punch list,Retest requirements identified and agreed at the time of each defect,Agreed at the time,Agreed at the time,Pass,
