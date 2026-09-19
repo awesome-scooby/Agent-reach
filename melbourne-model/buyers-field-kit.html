@@ -1,0 +1,995 @@
+<title>Melbourne Buyer's Field Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --plane:#f1f3f5; --surface-1:#fcfcfb; --surface-2:#f6f7f8; --surface-3:#eceef0;
+  --text-primary:#0b0b0b; --text-secondary:#4e4d4a; --text-muted:#75746f;
+  --grid:#e1e0d9; --axis:#c3c2b7; --rule:rgba(11,11,11,.11); --rule-strong:rgba(11,11,11,.22);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s8:#e34948;
+  --good:#0ca30c; --warning:#fab219; --critical:#d03b3b;
+  --good-ink:#006300; --warn-ink:#7a5300; --crit-ink:#a72d2d;
+  --shadow:0 1px 2px rgba(11,11,11,.05), 0 10px 26px -18px rgba(11,11,11,.3);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  color-scheme: dark;
+  --plane:#0c0d0e; --surface-1:#1a1a19; --surface-2:#212120; --surface-3:#2a2a28;
+  --text-primary:#fff; --text-secondary:#c3c2b7; --text-muted:#928f86;
+  --grid:#2c2c2a; --axis:#383835; --rule:rgba(255,255,255,.11); --rule-strong:rgba(255,255,255,.24);
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s8:#e66767;
+  --good-ink:#0ca30c; --warn-ink:#fab219; --crit-ink:#e66767;
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 26px -18px rgba(0,0,0,.9);
+}}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --plane:#0c0d0e; --surface-1:#1a1a19; --surface-2:#212120; --surface-3:#2a2a28;
+  --text-primary:#fff; --text-secondary:#c3c2b7; --text-muted:#928f86;
+  --grid:#2c2c2a; --axis:#383835; --rule:rgba(255,255,255,.11); --rule-strong:rgba(255,255,255,.24);
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s8:#e66767;
+  --good-ink:#0ca30c; --warn-ink:#fab219; --crit-ink:#e66767;
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 26px -18px rgba(0,0,0,.9);
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--plane); color:var(--text-primary);
+  font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif; font-size:15px; line-height:1.55;
+  -webkit-font-smoothing:antialiased; -webkit-text-size-adjust:100%;}
+.wrap{max-width:1060px; margin:0 auto; padding:18px 16px 90px;}
+h1,h2,h3,h4{font-family:"IBM Plex Sans Condensed","IBM Plex Sans",sans-serif; margin:0; text-wrap:balance;}
+h1{font-size:clamp(26px,6vw,40px); font-weight:700; letter-spacing:-.02em; line-height:1.06;}
+h2{font-size:clamp(19px,4.2vw,25px); font-weight:600; letter-spacing:-.01em;}
+h3{font-size:16.5px; font-weight:600;}
+p{margin:0 0 10px; max-width:68ch; color:var(--text-secondary);}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums;}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:500; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--text-muted);}
+a{color:var(--s1); text-underline-offset:2px;}
+:focus-visible{outline:2px solid var(--s1); outline-offset:2px; border-radius:4px;}
+hr{border:none; border-top:1px solid var(--rule); margin:18px 0;}
+
+/* header + tabs */
+.mast{padding-bottom:14px; border-bottom:2px solid var(--rule-strong);}
+.mast .sub{margin-top:7px; max-width:60ch;}
+.tabs{position:sticky; top:0; z-index:30; display:flex; gap:5px; overflow-x:auto; padding:9px 0;
+  background:var(--plane); border-bottom:1px solid var(--rule); margin-bottom:18px; scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none; padding:9px 15px; border-radius:7px; border:1px solid var(--rule-strong); background:var(--surface-1);
+  color:var(--text-secondary); font:inherit; font-size:14px; font-weight:500; cursor:pointer; white-space:nowrap;}
+.tab[aria-selected="true"]{background:var(--s1); color:#fff; border-color:var(--s1);}
+.panelview[hidden]{display:none}
+
+/* cards */
+.card{background:var(--surface-1); border:1px solid var(--rule); border-radius:9px; padding:17px; box-shadow:var(--shadow);}
+.card + .card{margin-top:13px}
+.grid{display:grid; gap:13px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.sec-head{display:flex; flex-wrap:wrap; gap:10px; align-items:baseline; justify-content:space-between;
+  margin:26px 0 12px; padding-bottom:8px; border-bottom:1px solid var(--rule);}
+.sec-head:first-child{margin-top:0}
+.note{font-size:12.5px; color:var(--text-muted); max-width:80ch; line-height:1.6; margin-top:9px;}
+
+/* chips */
+.chip{display:inline-flex; align-items:center; gap:5px; padding:2px 8px; border-radius:4px;
+  font-family:"IBM Plex Mono",monospace; font-size:10px; font-weight:500; letter-spacing:.06em;
+  text-transform:uppercase; border:1px solid; white-space:nowrap;}
+.c-stop{color:var(--crit-ink); border-color:var(--critical); background:color-mix(in srgb,var(--critical) 11%,transparent)}
+.c-warn{color:var(--warn-ink); border-color:var(--warning); background:color-mix(in srgb,var(--warning) 15%,transparent)}
+.c-ok{color:var(--good-ink); border-color:var(--good); background:color-mix(in srgb,var(--good) 11%,transparent)}
+.c-info{color:var(--s1); border-color:var(--s1); background:color-mix(in srgb,var(--s1) 10%,transparent)}
+.c-free{color:var(--text-secondary); border-color:var(--rule-strong); background:var(--surface-2)}
+
+/* tables */
+.twrap{overflow-x:auto; border:1px solid var(--rule); border-radius:8px; margin-top:8px;}
+table{border-collapse:collapse; width:100%; font-size:13.5px; min-width:520px}
+th,td{padding:8px 11px; text-align:left; border-bottom:1px solid var(--grid); vertical-align:top}
+thead th{font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.07em; text-transform:uppercase;
+  color:var(--text-muted); font-weight:500; background:var(--surface-2); border-bottom:1px solid var(--axis);}
+tbody tr:last-child td{border-bottom:none}
+td.num,th.num{text-align:right; font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+
+/* inputs */
+button{font:inherit; cursor:pointer}
+.btn{padding:10px 16px; border-radius:7px; border:1px solid var(--s1); background:var(--s1); color:#fff;
+  font-weight:600; font-size:14.5px; box-shadow:var(--shadow)}
+.btn:hover{filter:brightness(1.08)}
+.btn-2{padding:8px 14px; border-radius:6px; border:1px solid var(--rule-strong); background:var(--surface-1);
+  color:var(--text-primary); font-size:13.5px; font-weight:500}
+.btn-2:hover{background:var(--surface-2)}
+.btn-danger{border-color:var(--critical); color:var(--crit-ink); background:transparent}
+.row{display:flex; flex-wrap:wrap; gap:8px; align-items:center}
+input[type=text],input[type=number],select,textarea{
+  width:100%; padding:9px 11px; border-radius:7px; border:1px solid var(--rule-strong);
+  background:var(--surface-2); color:var(--text-primary); font:inherit; font-size:15px;}
+label.fl{display:block; font-size:12.5px; color:var(--text-secondary); margin-bottom:4px; font-weight:500}
+.field{margin-bottom:11px}
+
+/* scoring rows */
+.qgroup{border:1px solid var(--rule); border-radius:9px; overflow:hidden; margin-bottom:12px; background:var(--surface-1)}
+.qhead{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 15px;
+  background:var(--surface-2); border-bottom:1px solid var(--rule); cursor:pointer}
+.qhead h3{font-size:15.5px}
+.qhead .wt{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--text-muted)}
+.q{padding:12px 15px; border-bottom:1px solid var(--grid)}
+.q:last-child{border-bottom:none}
+.qtext{font-size:14px; margin-bottom:3px}
+.qhint{font-size:12px; color:var(--text-muted); margin-bottom:8px; line-height:1.5}
+.opts{display:flex; gap:6px; flex-wrap:wrap}
+.opt{flex:1 1 68px; min-width:68px; padding:9px 6px; border-radius:7px; border:1px solid var(--rule-strong);
+  background:var(--surface-2); font-size:12.5px; font-weight:500; text-align:center; color:var(--text-secondary)}
+.opt[aria-pressed="true"]{background:var(--s1); border-color:var(--s1); color:#fff}
+.opt.bad[aria-pressed="true"]{background:var(--critical); border-color:var(--critical)}
+.opt.mid[aria-pressed="true"]{background:var(--warning); border-color:var(--warning); color:#1a1a19}
+.opt.good[aria-pressed="true"]{background:var(--good); border-color:var(--good)}
+
+/* score header */
+.scorebar{position:sticky; bottom:0; z-index:25; margin:0 -16px; padding:12px 16px;
+  background:var(--surface-1); border-top:2px solid var(--rule-strong); box-shadow:0 -6px 20px -12px rgba(0,0,0,.4);
+  display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between}
+.bigscore{font-family:"IBM Plex Sans Condensed",sans-serif; font-size:34px; font-weight:700; line-height:1}
+.verdict{font-size:13.5px; font-weight:600}
+.meter{height:9px; border-radius:5px; background:var(--surface-3); overflow:hidden; flex:1 1 150px; min-width:120px}
+.meter i{display:block; height:100%; border-radius:5px}
+
+/* stat tiles */
+.tile{background:var(--surface-1); border:1px solid var(--rule); border-radius:8px; padding:12px 13px}
+.tile .lab{font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-muted)}
+.tile .val{font-family:"IBM Plex Sans Condensed",sans-serif; font-size:24px; font-weight:600; line-height:1.2; margin-top:2px}
+.tile .sub{font-size:11.5px; color:var(--text-secondary); margin-top:3px; line-height:1.45}
+
+ul.tight{margin:6px 0 10px; padding-left:19px; color:var(--text-secondary); font-size:13.5px}
+ul.tight li{margin-bottom:5px}
+.banner{padding:12px 15px; border-radius:8px; border:1px solid; font-size:13.5px; margin-bottom:13px}
+.b-stop{border-color:var(--critical); background:color-mix(in srgb,var(--critical) 9%,transparent); color:var(--text-primary)}
+.b-info{border-color:var(--s1); background:color-mix(in srgb,var(--s1) 8%,transparent); color:var(--text-primary)}
+.b-warn{border-color:var(--warning); background:color-mix(in srgb,var(--warning) 12%,transparent); color:var(--text-primary)}
+@media (max-width:680px){
+  table.stack{min-width:0}
+  table.stack thead{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+  table.stack tbody tr{display:block; padding:12px 13px; border-bottom:1px solid var(--rule)}
+  table.stack tbody tr:last-child{border-bottom:none}
+  table.stack td{display:block; border:none; padding:0 0 7px}
+  table.stack td:last-child{padding-bottom:0}
+  table.stack td.num{text-align:left}
+  table.stack td[data-label]::before{
+    content:attr(data-label) " "; display:block;
+    font-family:"IBM Plex Mono",monospace; font-size:9.5px; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--text-muted); margin-bottom:2px;}
+  table.stack td[data-label="_"]::before{content:none}
+  .twrap:has(table.stack){overflow-x:visible}
+}
+.scorebar .bigscore{min-width:54px}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+@media print{.tabs,.scorebar,.btn,.btn-2{display:none!important} .panelview[hidden]{display:block!important}}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="eyebrow">Companion to the Melbourne Bottom Clock &middot; Houses &middot; $600k&ndash;$650k &middot; within 35&nbsp;km</div>
+  <h1>Melbourne Buyer's Field Kit</h1>
+  <p class="sub">How to research a suburb from your desk, what to check standing in the driveway, and what the whole thing actually costs.</p>
+  <div class="row" style="margin-top:11px">
+    <span id="store-state" class="chip c-free">Checking storage&hellip;</span>
+    <button class="btn-2" id="theme-toggle" aria-pressed="false">Toggle theme</button>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Sections">
+  <button class="tab" role="tab" data-view="research" aria-selected="true">1 · Research</button>
+  <button class="tab" role="tab" data-view="flags" aria-selected="false">2 · Red flags</button>
+  <button class="tab" role="tab" data-view="inspect" aria-selected="false">3 · Inspect &amp; score</button>
+  <button class="tab" role="tab" data-view="costs" aria-selected="false">4 · Costs</button>
+  <button class="tab" role="tab" data-view="shortlist" aria-selected="false">5 · Shortlist</button>
+</nav>
+
+<!-- ============ 1 · RESEARCH ============ -->
+<div class="panelview" id="view-research">
+  <div class="banner b-info">
+    <b>The principle:</b> agents sell you a property; data tells you what it's worth. Do all of section 1 before you book a single
+    inspection. It takes about two hours the first time and twenty minutes per suburb after that.
+  </div>
+
+  <div class="sec-head"><div><div class="eyebrow">Step 1</div><h2>The free data stack</h2></div>
+    <div class="note" style="margin:0">Everything here is free. The paid tools mostly repackage it.</div></div>
+  <div class="card">
+    <div class="twrap"><table class="stack">
+      <thead><tr><th>Source</th><th>What you get</th><th>What to do with it</th><th>Cost</th></tr></thead>
+      <tbody id="sources-rows"></tbody>
+    </table></div>
+    <p class="note"><b>Order matters.</b> Sold prices first (what the market actually paid), then planning overlays (what you're
+    legally allowed to do and what floods), then the commute test (the thing you can't change). Only then look at photos.</p>
+  </div>
+
+  <div class="sec-head"><div><div class="eyebrow">Step 2</div><h2>Build a comparable-sales file</h2></div></div>
+  <div class="card">
+    <p>A "comp" is a sale that tells you what your target is worth. Most buyers do this badly by comparing asking prices.
+    Asking prices are marketing. Only <b>sold</b> prices count.</p>
+    <div class="grid g2">
+      <div>
+        <h3>Rules for a valid comp</h3>
+        <ul class="tight">
+          <li><b>Sold in the last 3 months.</b> In a market falling ~1% a month, a six-month-old comp overstates value by ~6%.</li>
+          <li><b>Same suburb, or an adjoining one you've checked is comparable.</b> Never average across a freeway or a rail line.</li>
+          <li><b>Same type:</b> house to house, same bedroom count, land size within ~20%.</li>
+          <li><b>At least five comps.</b> Three is an anecdote. Discard the highest and lowest before you average.</li>
+          <li><b>Note the sale method.</b> A passed-in auction that sold later privately is a weak sale — that's a seller who had to take less.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>What to record for each comp</h3>
+        <ul class="tight">
+          <li>Address, sold price, sold date, days on market</li>
+          <li>Beds / baths / cars / land size (m&sup2;)</li>
+          <li>Sale method: auction, private, passed in then sold</li>
+          <li>Condition: original, part-renovated, renovated</li>
+          <li><b>Price per m&sup2; of land</b> — the single most useful number in the outer suburbs, where you are largely buying land</li>
+        </ul>
+        <p class="note" style="margin-top:4px"><b>Then:</b> your fair offer is the median of your five comps, adjusted down for
+        every month since they sold while the market is falling, and adjusted for condition.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-head"><div><div class="eyebrow">Step 3</div><h2>Read the Section 32 before you fall in love</h2></div>
+    <div class="note" style="margin:0">Ask the agent for it on day one. If they stall, that itself is information.</div></div>
+  <div class="card">
+    <p>The Section 32 Vendor Statement is the disclosure document a Victorian seller must give you before you sign. Your conveyancer
+    reviews it properly &mdash; but you should read it first, because it is free and it kills bad properties early.</p>
+    <div class="twrap"><table class="stack">
+      <thead><tr><th>Look for</th><th>Why it matters</th><th>If you find it</th></tr></thead>
+      <tbody id="s32-rows"></tbody>
+    </table></div>
+    <div class="banner b-warn" style="margin-top:13px">
+      <b>Cooling off: 3 clear business days</b> on a private sale, and the penalty for withdrawing is 0.2% of the price or $100,
+      whichever is greater &mdash; about <b>$1,242</b> on a $621,000 house. <b>There is no cooling off at auction</b>, or in the
+      3 days either side of one. That is why every check in this kit happens <i>before</i> auction day, not after.
+      Separately: if a Section 32 is defective, you may have a right to rescind even after cooling off has passed &mdash;
+      another reason a conveyancer reads it, not just you.
+    </div>
+  </div>
+
+  <div class="sec-head"><div><div class="eyebrow">Step 4</div><h2>Test the commute before you inspect</h2></div></div>
+  <div class="card">
+    <div class="banner b-info">
+      Your whole plan &mdash; buy, live in it, move near work, rent it out &mdash; exists because of commute distance. So measure it
+      properly <b>before</b> you get emotionally attached to a house, not after.
+    </div>
+    <ul class="tight">
+      <li><b>Never trust the default map estimate.</b> It gives you an off-peak number. Set the departure time to the actual weekday hour you'd leave.</li>
+      <li><b>Drive it once for real</b>, on a Tuesday or Wednesday morning, from the actual street. Wyndham and Melton corridor traffic is not well modelled.</li>
+      <li><b>Check the train, not just the line.</b> Werribee, Melton and Craigieburn lines differ hugely in frequency and reliability. Peak frequency and whether you'll get a seat both matter more than distance.</li>
+      <li><b>Measure the walk to the station</b> in minutes, and check parking &mdash; station car parks in the growth corridors fill before 7:30am.</li>
+      <li><b>Double it and add the return.</b> A 50-minute each-way commute is about 8 hours a week, or 400 hours a year. Price that against what you save on the house.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ 2 · RED FLAGS ============ -->
+<div class="panelview" id="view-flags" hidden>
+  <div class="banner b-stop">
+    <b>The one defect most likely to cost you money in Melton, Wyndham or Werribee is soil movement.</b>
+    The western growth corridor sits on highly reactive clay &mdash; classes M to H1 under AS&nbsp;2870, with H2 pockets in the older
+    Werribee and Wyndham Vale flats. The ground swells in a wet winter and shrinks in a dry summer, and the house moves with it.
+    Wall cracks, sloping floors, sticking doors and slab heave are the standard findings. Underpinning a heaved slab runs into
+    tens of thousands and is rarely covered by insurance.
+  </div>
+
+  <div class="sec-head"><div><h2>Reactive clay: what to actually look at</h2></div></div>
+  <div class="grid g2">
+    <div class="card">
+      <h3>Signs the ground is moving</h3>
+      <ul class="tight">
+        <li><b>Diagonal cracks radiating from window and door corners</b> &mdash; the classic signature. Vertical hairlines in render are usually cosmetic; diagonals through brickwork are not.</li>
+        <li><b>Cracks wider at one end</b> (tapered) rather than parallel-sided.</li>
+        <li><b>Doors and windows binding</b>, especially several on the same side of the house.</li>
+        <li><b>Floors out of level</b> &mdash; put a marble or a spirit level down in each room. Take a $10 level with you.</li>
+        <li><b>Gaps opening between cornice and wall</b>, or skirting lifting off the floor.</li>
+        <li><b>Recent patch-and-paint on one wall only</b> &mdash; ask what was repaired and when. Fresh filler over a structural crack is a selling tactic.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>What makes it worse &mdash; check these on site</h3>
+      <ul class="tight">
+        <li><b>Stormwater discharging next to the slab.</b> Follow every downpipe to where it ends. If it empties onto soil beside the footing, that is the cause of a lot of movement in the west.</li>
+        <li><b>Ground falling towards the house</b> instead of away from it.</li>
+        <li><b>Large water-seeking trees close to the building</b> &mdash; especially willows, poplars, liquidambars, eucalypts. Rule of thumb: trouble if the distance to the house is less than the tree's mature height.</li>
+        <li><b>Leaking taps, pipes or air-conditioner condensate</b> soaking one patch of ground.</li>
+        <li><b>A recently removed large tree</b> &mdash; the soil rehydrates and can heave for years afterward. Ask.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sec-head"><div><h2>Crack widths: the scale inspectors actually use</h2></div>
+    <div class="note" style="margin:0">Carry a crack gauge or a ruler. Measure, don't guess.</div></div>
+  <div class="card">
+    <div class="twrap"><table class="stack">
+      <thead><tr><th>Category</th><th class="num">Width</th><th>What it means</th><th>Your move</th></tr></thead>
+      <tbody id="crack-rows"></tbody>
+    </table></div>
+    <p class="note">Categories follow the damage classification used with AS&nbsp;2870 and AS&nbsp;4349.1 pre-purchase inspections.
+    <b>Width alone does not determine the classification</b> &mdash; a narrow crack that is actively growing can be worse than a wide
+    dormant one. Anything from 5&nbsp;mm up should be assessed by a structural engineer, not a general building inspector.</p>
+  </div>
+
+  <div class="sec-head"><div><h2>Other Melbourne-specific traps</h2></div></div>
+  <div class="card">
+    <div class="twrap"><table class="stack">
+      <thead><tr><th>Trap</th><th>Where it bites</th><th>How to check, free</th></tr></thead>
+      <tbody id="traps-rows"></tbody>
+    </table></div>
+  </div>
+
+  <div class="sec-head"><div><h2>Hazards by build era</h2></div></div>
+  <div class="card">
+    <div class="twrap"><table class="stack">
+      <thead><tr><th>If built</th><th>Assume</th><th>Where it hides</th><th>Cost reality</th></tr></thead>
+      <tbody id="era-rows"></tbody>
+    </table></div>
+    <p class="note"><b>None of these is automatically a walk-away.</b> Bonded asbestos in good condition, left undisturbed, is
+    legal and common across Melbourne's older stock. It becomes a cost the moment you want to renovate. Price it in;
+    don't panic about it.</p>
+  </div>
+</div>
+
+<!-- ============ 3 · INSPECT & SCORE ============ -->
+<div class="panelview" id="view-inspect" hidden>
+  <div class="card" style="margin-bottom:14px">
+    <div class="grid g2" style="gap:11px">
+      <div class="field"><label class="fl" for="p-address">Address</label>
+        <input type="text" id="p-address" placeholder="12 Example St, Broadmeadows"></div>
+      <div class="field"><label class="fl" for="p-price">Asking / guide price</label>
+        <input type="number" id="p-price" placeholder="620000" step="5000"></div>
+    </div>
+    <div class="grid g3" style="gap:11px">
+      <div class="field"><label class="fl" for="p-built">Year built (approx)</label>
+        <input type="number" id="p-built" placeholder="1985" step="1"></div>
+      <div class="field"><label class="fl" for="p-land">Land size m&sup2;</label>
+        <input type="number" id="p-land" placeholder="550" step="10"></div>
+      <div class="field"><label class="fl" for="p-commute">Peak commute, minutes each way</label>
+        <input type="number" id="p-commute" placeholder="55" step="5"></div>
+    </div>
+    <div class="row">
+      <button class="btn" id="btn-save">Save to shortlist</button>
+      <button class="btn-2" id="btn-new">Start a new property</button>
+      <span id="save-state" class="mono" style="font-size:12px;color:var(--text-muted)"></span>
+    </div>
+  </div>
+
+  <div class="banner b-warn">
+    <b>This does not replace a building inspection.</b> It gets you to the shortlist for free, so you only pay
+    $500&ndash;$900 for inspections on houses worth inspecting. Never buy on this score alone.
+  </div>
+
+  <div id="deal-breaker-banner"></div>
+  <div id="question-groups"></div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>Ask the agent these &mdash; and know which answers bind them</h3>
+    <div class="twrap"><table class="stack">
+      <thead><tr><th>Question</th><th>Why</th><th>Binding?</th></tr></thead>
+      <tbody id="agent-rows"></tbody>
+    </table></div>
+    <p class="note"><b>Nothing an agent says verbally is worth anything in a dispute.</b> If an answer matters to your decision,
+    get it in writing by email, or get it into the contract as a special condition. Agents legally cannot mislead you, but
+    "I don't recall saying that" is very hard to disprove.</p>
+  </div>
+
+  <div class="card" style="margin-top:13px">
+    <h3>Go back a second time &mdash; and change one variable</h3>
+    <ul class="tight">
+      <li><b>In the rain.</b> The only way to see where water actually goes, whether the yard drains, and whether the roof leaks. Worth waiting a week for.</li>
+      <li><b>On a weekday, at the hour you'd leave for work.</b> Traffic noise, school traffic, street parking pressure, and sun position all change completely.</li>
+      <li><b>At night.</b> Street lighting, neighbour noise, who's around, whether you'd walk from the station.</li>
+      <li><b>Open every cupboard, every window, and the manhole.</b> Inspections are choreographed; the roof space is where nobody has staged anything.</li>
+      <li><b>Run the taps and the shower simultaneously</b> and watch the pressure. Then check the ceiling of the room below the bathroom.</li>
+    </ul>
+  </div>
+
+  <div class="scorebar">
+    <div>
+      <div class="eyebrow">Weighted score</div>
+      <div class="bigscore" id="score-val">&mdash;</div>
+    </div>
+    <div style="flex:1 1 180px">
+      <div class="meter"><i id="score-bar" style="width:0%;background:var(--s1)"></i></div>
+      <div class="verdict" id="score-verdict" style="margin-top:6px">Answer some questions to see a score</div>
+    </div>
+    <div class="mono" style="font-size:12px;color:var(--text-muted)" id="score-count">0 answered</div>
+  </div>
+</div>
+
+<!-- ============ 4 · COSTS ============ -->
+<div class="panelview" id="view-costs" hidden>
+  <div class="banner b-info">
+    <b>Stamp duty and land tax here use the same validated functions as the Bottom Clock</b>, so the two tools agree.
+    Service costs are <b>indicative 2026 ranges</b> from published price guides, not quotes &mdash; every one is editable.
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>Your numbers</h3>
+      <div class="field"><label class="fl" for="c-price">Purchase price</label>
+        <input type="number" id="c-price" value="621000" step="5000"></div>
+      <div class="field"><label class="fl" for="c-depositpct">Deposit %</label>
+        <select id="c-depositpct">
+          <option value="5">5% — First Home Guarantee, no LMI</option>
+          <option value="10">10%</option>
+          <option value="15">15%</option>
+          <option value="20" selected>20% — no LMI without the scheme</option>
+        </select></div>
+      <div class="field"><label class="fl" for="c-fhb">First home buyer?</label>
+        <select id="c-fhb"><option value="1" selected>Yes — duty exemption/taper applies</option>
+          <option value="0">No — full duty</option></select></div>
+      <div class="field"><label class="fl" for="c-repairs">Immediate repairs budget</label>
+        <input type="number" id="c-repairs" value="5000" step="500"></div>
+      <div class="field"><label class="fl" for="c-rented">Will it become a rental later?</label>
+        <select id="c-rented"><option value="1" selected>Yes — show land tax and rental costs</option>
+          <option value="0">No — owner-occupied throughout</option></select></div>
+    </div>
+    <div>
+      <div class="grid g2" style="gap:11px">
+        <div class="tile"><div class="lab">Cash needed at settlement</div><div class="val" id="c-total">&mdash;</div>
+          <div class="sub" id="c-totalsub">Deposit plus every upfront cost.</div></div>
+        <div class="tile"><div class="lab">Upfront costs beyond the deposit</div><div class="val" id="c-extras">&mdash;</div>
+          <div class="sub">The number most buyers underestimate.</div></div>
+        <div class="tile"><div class="lab">Ongoing, per year</div><div class="val" id="c-ongoing">&mdash;</div>
+          <div class="sub" id="c-ongoingsub">Before mortgage repayments.</div></div>
+        <div class="tile"><div class="lab">Stamp duty</div><div class="val" id="c-duty">&mdash;</div>
+          <div class="sub" id="c-dutysub">&mdash;</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-head"><div><h2>Upfront &mdash; every line</h2></div></div>
+  <div class="card">
+    <div class="twrap"><table class="stack">
+      <thead><tr><th>Cost</th><th class="num">Amount</th><th>Typical range &amp; note</th></tr></thead>
+      <tbody id="upfront-rows"></tbody>
+    </table></div>
+  </div>
+
+  <div class="sec-head"><div><h2>Ongoing, every year you own it</h2></div></div>
+  <div class="card">
+    <div class="twrap"><table class="stack">
+      <thead><tr><th>Cost</th><th class="num">Per year</th><th>Note</th></tr></thead>
+      <tbody id="ongoing-rows"></tbody>
+    </table></div>
+  </div>
+
+  <div class="sec-head"><div><h2>Costs people forget until they hit</h2></div></div>
+  <div class="card">
+    <div class="twrap"><table class="stack">
+      <thead><tr><th>Cost</th><th class="num">Typical</th><th>When it lands</th></tr></thead>
+      <tbody id="forgot-rows"></tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- ============ 5 · SHORTLIST ============ -->
+<div class="panelview" id="view-shortlist" hidden>
+  <div class="sec-head"><div><h2>Your shortlist</h2></div>
+    <div class="row"><button class="btn-2" id="btn-export">Export as CSV text</button></div></div>
+  <div id="shortlist-body"></div>
+  <div class="card" id="export-card" hidden style="margin-top:13px">
+    <h3>Copy this into a spreadsheet</h3>
+    <textarea id="export-text" rows="8" readonly style="font-family:'IBM Plex Mono',monospace;font-size:12px"></textarea>
+  </div>
+</div>
+
+<footer style="margin-top:36px; padding-top:16px; border-top:1px solid var(--rule); font-size:12.5px; color:var(--text-muted)">
+  <p style="max-width:none;color:inherit">
+    A research and inspection aid, not a substitute for a licensed building inspector, a conveyancer or a registered tax agent.
+    Service costs are indicative 2026 published ranges, not quotes. Statutory fees and tax rules change &mdash; confirm current
+    figures with the State Revenue Office and Land Services Victoria before you rely on them.
+    Your saved properties are private to you.
+  </p>
+</footer>
+
+</div>
+
+<script>
+"use strict";
+const $=(s,r)=>(r||document).querySelector(s), $$=(s,r)=>Array.from((r||document).querySelectorAll(s));
+const esc = t => String(t).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const aud = v => "$" + Math.round(v).toLocaleString();
+
+/* ---------------- reference tables ---------------- */
+const SOURCES = [
+ ["DataVic — Victorian Property Sales Report","Actual recorded sale prices by suburb, quarterly, straight from the Valuer-General. The same raw data the paid tools resell.","Get the real median for your suburb and watch it move quarter to quarter. This is your anchor.","Free"],
+ ["Domain / realestate.com.au sold listings","Individual sold prices with photos, land size and days on market.","Build your five comps. Filter to the last 3 months, house only, similar land size.","Free"],
+ ["VicPlan (mapshare.vic.gov.au)","Zoning and every planning overlay on the exact parcel.","Check for flood (LSIO, SBO, FO), bushfire (BMO), heritage, and development overlays before you inspect.","Free"],
+ ["Melbourne Water flood maps / council flood advice","Flood extent and applicable flood levels.","A flood overlay affects insurance premiums, what you can build, and resale. Check before, not after.","Free"],
+ ["Council planning scheme + property report","Rates, permitted use, any live planning applications nearby.","Find out if a townhouse block or a road widening is coming next door.","Free"],
+ ["findmyschool.vic.gov.au","The official government school zone for an exact address.","School zones move. Never trust an agent's claim about a zone — check the address itself.","Free"],
+ ["PTV journey planner","Real timetables and frequency.","Set a weekday 7:30am departure. Check frequency, not just distance to the station.","Free"],
+ ["Crime Statistics Agency Victoria","Recorded offence rates by LGA and suburb, over time.","Look at the trend over five years, not the level. A falling rate in a cheap suburb is the useful signal.","Free"],
+ ["Land Services Victoria title search","Registered owner, easements, covenants, caveats.","Confirms what the Section 32 claims. Small fee, worth it before an auction.","~$10–$20"],
+ ["State Revenue Office calculators","Stamp duty, first-home concessions, land tax.","Confirm the duty number this kit estimates before you bid.","Free"],
+ ["Landchecker / Pricefinder (free tier)","Sales history, aerial imagery over time, permits.","Aerial history reveals extensions and sheds that may never have had a permit.","Free tier"],
+ ["NBN Co address check","Connection type at that address.","Fibre to the node versus fibre to the premises is a real quality-of-life difference if you work from home.","Free"]
+];
+
+const S32 = [
+ ["Title particulars and any easements","An easement across the backyard can stop you extending, building a shed, or putting in a pool.","Get the diagram. Ask your conveyancer exactly what you cannot build over."],
+ ["Restrictive covenants","Common in growth-corridor estates. Can dictate materials, build timeframes, fencing, even where you park a caravan.","Read the actual wording. Covenants are very hard to remove."],
+ ["Planning overlays and zoning","Flood and bushfire overlays add cost and restrict building. Development zones change the street around you.","Cross-check against VicPlan yourself — don't take the summary on faith."],
+ ["Rates, land tax and outgoings","Tells you the real annual holding cost, and the site value used for land tax if you later rent it out.","Note the site value. It drives your land tax bill if this becomes an investment."],
+ ["Building permits in the last 7 years","A missing permit for an obvious extension means unapproved work — and it becomes your liability on settlement.","Cross-check permits against what you can see. Aerial imagery history is the giveaway."],
+ ["Owners corporation certificate","Applies to some townhouses and units. Shows fees, the sinking fund balance and any special levies coming.","A thin sinking fund means a special levy is coming. Ask for the last two years of minutes."],
+ ["Services connected","Whether the property has mains sewerage, water, gas and electricity.","Septic instead of sewer is a real cost in some outer pockets."],
+ ["Notices, orders and declarations","Council orders, road-widening proposals, compulsory acquisition.","Any of these should stop the process until fully explained in writing."]
+];
+
+const CRACKS = [
+ ["0","≤ 0.1 mm","Hairline. Negligible.","Ignore it.","ok"],
+ ["1","≤ 1.0 mm","Fine. Doesn't need repair.","Note it, photograph it, move on.","ok"],
+ ["2","≤ 5.0 mm","Noticeable but easily filled. Doors and windows may stick slightly.","Get the building inspector to comment specifically on it.","warn"],
+ ["3","5 – 15 mm","Moderate. Likely needs some brickwork cut out and replaced. Doors and windows stick. Service pipes may be affected.","Structural engineer, not a general inspector. Budget for repair or walk.","stop"],
+ ["4","15 – 25 mm","Severe. Wall leaning or bulging, structural weakness, possible window breakage.","Engineer's report before any offer. Usually a walk-away at your price point.","stop"],
+ ["5","> 25 mm","Very severe. Major repair involving partial or complete rebuilding.","Walk away.","stop"]
+];
+
+const TRAPS = [
+ ["Flood overlay (LSIO / SBO / FO)","Parts of Werribee, Wyndham Vale, Melton South, Sunshine, Maribyrnong flats","VicPlan: search the address, switch on planning overlays. Free, takes 60 seconds."],
+ ["Restrictive covenant","Almost every new growth-corridor estate","Section 32, title. Check build materials, minimum floor area, fencing, timeframe clauses."],
+ ["Easement across the yard","Anywhere with rear drainage or sewer mains","Title plan in the Section 32. You generally cannot build over it, which kills extension plans."],
+ ["Former landfill, quarry or industrial land","Pockets of the north and west","Council property report, EPA priority sites register, and historical aerial imagery."],
+ ["Unapproved extension, deck, shed or carport","Very common on older outer-suburb stock","Compare aerial imagery over time against the permit list in the Section 32."],
+ ["Small-lot housing / zero-lot boundary","Newer estates in Tarneit, Truganina, Craigieburn","Check the plan of subdivision. Affects privacy, noise and resale depth."],
+ ["Single-contract house-and-land","Growth corridors","Read whether land and build are one contract or two. Two contracts change your duty and your risk if the builder fails."],
+ ["Owners corporation on a house","Some newer estates have one for shared driveways or landscaping","Section 32. An OC on a freestanding house is an ongoing fee most buyers don't expect."],
+ ["Power easement / transmission line proximity","Parts of the outer west and north","Visible on site and on VicPlan. Affects resale more than most buyers assume."]
+];
+
+const ERAS = [
+ ["Before 1990","Asbestos is likely somewhere","Eaves and soffits, wet-area wall sheeting behind tiles, under vinyl flooring, fence sheeting, old shed roofing","Safe if bonded and undisturbed. Removal runs from a few thousand to well over $10k once you renovate."],
+ ["Before 1970","Lead paint as well as asbestos","Under later paint layers on window frames, doors, skirtings","Matters when you sand or heat-strip. Encapsulation is usually cheaper than removal."],
+ ["1960s – 1980s","Ageing electrical and plumbing","Ceramic fuses instead of circuit breakers, no RCDs, galvanised or early copper pipe, original switchboard","A full rewire on a 3-bedroom house is commonly $8k–$15k. A switchboard upgrade alone is far less."],
+ ["1990s – 2000s","Polybutylene and early plastic pipe in some builds","Under sinks, in wall cavities","Known failure history in some product lines. Ask the inspector to identify pipe type."],
+ ["Any era, western suburbs","Reactive clay movement","Slab edges, wall junctions, door frames","The dominant defect in your target suburbs. See the panel above."]
+];
+
+const AGENTQ = [
+ ["Why is the vendor selling, and how long have they owned it?","Divorce, deceased estate, relocation and a failed development all change urgency.","No"],
+ ["How long has it been on the market, including any earlier campaign?","Relisted properties reset the advertised days-on-market. A long true history is negotiating power.","No"],
+ ["Has it been passed in at auction before, and at what price?","Tells you the level the vendor already refused, and the level the market already rejected.","No"],
+ ["What is the vendor's price expectation, in writing?","In Victoria the statement of information must give an indicative range and three comparable sales.","Yes — the statement of information is regulated"],
+ ["Has there been any underpinning, restumping or crack repair?","Goes to the central risk in the western suburbs. A 'no' you can quote later is worth having.","Only in writing"],
+ ["Are all structures permitted — extension, deck, carport, shed?","Unapproved work becomes your problem on settlement.","Only via the Section 32 permit disclosure"],
+ ["Any building or planning notices, or orders on the property?","Must be disclosed, but asking directly sometimes produces more than the document.","Yes — disclosure is required"],
+ ["When was the roof last done, and the hot water unit replaced?","Both are five-figure or near-five-figure items with predictable lifespans.","No"],
+ ["Can I get the Section 32 and contract today?","Stalling here is the single most reliable warning sign in the whole process.","N/A"],
+ ["Can I do a second inspection, on a weekday?","Tests both the property and how much the vendor wants to sell.","N/A"]
+];
+
+/* ---------------- the scored checklist ---------------- */
+const O_BAD={label:"Bad",v:0,cls:"bad"}, O_POOR={label:"Poor",v:1,cls:"mid"},
+      O_OK={label:"OK",v:2,cls:""}, O_GOOD={label:"Good",v:3,cls:"good"};
+const STD=[O_BAD,O_POOR,O_OK,O_GOOD];
+const YN=(badFirst)=>badFirst?[{label:"Yes",v:0,cls:"bad"},{label:"No",v:3,cls:"good"}]
+                             :[{label:"No",v:0,cls:"bad"},{label:"Yes",v:3,cls:"good"}];
+
+const GROUPS = [
+ {id:"structure", name:"Structure & movement", w:22, note:"The expensive category. Take a spirit level and a crack gauge.", qs:[
+   {id:"crack", t:"Widest crack you can find, measured", h:"Check external brickwork above windows and doors, and internal cornice junctions. Diagonal cracks radiating from corners matter most.",
+    opts:[{label:">15 mm",v:0,cls:"bad",db:true},{label:"5–15 mm",v:0,cls:"bad"},{label:"1–5 mm",v:2,cls:"mid"},{label:"<1 mm",v:3,cls:"good"}]},
+   {id:"level", t:"Are the floors level?", h:"Put a marble or a level down in each room, especially at the back of the house and in later extensions.", opts:STD},
+   {id:"doors", t:"Do doors and windows open freely?", h:"Several binding on the same side of the house points to movement, not to swollen timber.", opts:STD},
+   {id:"stumps", t:"Slab edge or stump condition", h:"Look for a stepped or wavy slab edge. On stumps, check for rot, rust, packing timbers and previous restumping.", opts:STD},
+   {id:"repairs", t:"Any sign of previous crack repair or underpinning?", h:"Fresh filler or a single freshly painted wall. Ask the agent directly and get the answer in writing.", opts:YN(true)},
+   {id:"retain", t:"Retaining walls sound?", h:"Leaning, bulging or cracked retaining walls are expensive on clay and often the buyer's problem.", opts:[...STD,{label:"N/A",v:null,cls:""}]}
+ ]},
+ {id:"moisture", name:"Water & damp", w:14, note:"Water causes most of what structure doesn't.", qs:[
+   {id:"stormwater", t:"Do downpipes discharge well away from the slab?", h:"Follow every downpipe to its end. Discharge next to the footing is the single biggest driver of slab movement in the west.", opts:STD},
+   {id:"fall", t:"Does the ground fall away from the house?", h:"Walk the perimeter. Soil or paving above the damp course, or ground sloping inward, is a problem.", opts:STD},
+   {id:"damp", t:"Signs of rising damp?", h:"Tide marks low on walls, bubbling or flaking paint, salt deposits, a musty smell in one room.", opts:YN(true)},
+   {id:"wet", t:"Wet areas sound?", h:"Check the ceiling in the room below the bathroom. Look for lifting tiles, perished grout, soft floor at the shower base.", opts:STD},
+   {id:"subfloor", t:"Subfloor dry and ventilated?", h:"If there is a subfloor, look in. Blocked vents, damp soil or standing water are all costly.", opts:[...STD,{label:"N/A",v:null,cls:""}]},
+   {id:"roofleak", t:"Any ceiling stains?", h:"Look up in every room, and in the roof space through the manhole. Old stains may be repaired; ask when.", opts:YN(true)}
+ ]},
+ {id:"commute", name:"Commute & location", w:18, note:"The factor your whole strategy turns on. Measured, not guessed.", qs:[
+   {id:"drive", t:"Real peak-hour drive to work, each way", h:"Actually drive it on a Tuesday or Wednesday at your real departure time. Do not use the default map estimate.",
+    opts:[{label:">60 min",v:0,cls:"bad"},{label:"45–60",v:1,cls:"mid"},{label:"30–45",v:2,cls:""},{label:"<30 min",v:3,cls:"good"}]},
+   {id:"pt", t:"Public transport commute, door to door", h:"Include the walk at both ends and the wait. Check frequency at your hour, not just that a line exists.",
+    opts:[{label:">75 min",v:0,cls:"bad"},{label:"60–75",v:1,cls:"mid"},{label:"45–60",v:2,cls:""},{label:"<45 min",v:3,cls:"good"}]},
+   {id:"station", t:"Walk to station or main bus", h:"Under 10 minutes materially helps both livability and future rentability.",
+    opts:[{label:">25 min",v:0,cls:"bad"},{label:"15–25",v:1,cls:"mid"},{label:"10–15",v:2,cls:""},{label:"<10 min",v:3,cls:"good"}]},
+   {id:"noise", t:"Noise: road, rail, flight path", h:"Stand in the back yard and stay silent for two full minutes. Then check the flight path online.", opts:STD},
+   {id:"amenity", t:"Shops, schools, medical within a short drive", h:"Also check the actual school zone at findmyschool.vic.gov.au — not the agent's claim.", opts:STD},
+   {id:"street", t:"Street and immediate neighbours", h:"You are buying the three houses either side as well. Look at fences, cars, maintenance.", opts:STD}
+ ]},
+ {id:"legal", name:"Legal & planning", w:12, note:"Free to check, and the fastest way to kill a bad property.", qs:[
+   {id:"s32", t:"Section 32 obtained and read?", h:"Ask on day one. Your conveyancer reviews it properly before you bid.", opts:YN(false)},
+   {id:"flood", t:"Flood overlay over the dwelling?", h:"Check VicPlan yourself. Affects insurance, building rights and resale.",
+    opts:[{label:"Yes, over house",v:0,cls:"bad",db:true},{label:"Yes, part of lot",v:1,cls:"mid"},{label:"No",v:3,cls:"good"}]},
+   {id:"easement", t:"Easement through usable land?", h:"You generally cannot build over it. Kills extensions, sheds and pools.", opts:YN(true)},
+   {id:"covenant", t:"Restrictive covenant you can live with?", h:"Read the wording, not the summary. Covenants are very hard to remove.", opts:[...STD,{label:"None",v:3,cls:"good"}]},
+   {id:"permits", t:"All visible structures have permits?", h:"Compare the permit list against the extension, deck, shed and carport you can see.",
+    opts:[{label:"No — unapproved",v:0,cls:"bad",db:true},{label:"Unclear",v:1,cls:"mid"},{label:"Yes, all",v:3,cls:"good"}]},
+   {id:"oc", t:"Owners corporation fees acceptable?", h:"If one applies, check the sinking fund balance and the last two years of minutes.", opts:[...STD,{label:"None",v:3,cls:"good"}]}
+ ]},
+ {id:"services", name:"Electrical, plumbing, heating", w:10, note:"Predictable costs with predictable lifespans.", qs:[
+   {id:"board", t:"Switchboard: RCDs or ceramic fuses?", h:"Ceramic fuses and no safety switches mean an upgrade, and often signal original wiring throughout.",
+    opts:[{label:"Ceramic fuses",v:0,cls:"bad"},{label:"Breakers, no RCD",v:1,cls:"mid"},{label:"Some RCDs",v:2,cls:""},{label:"Modern, full RCD",v:3,cls:"good"}]},
+   {id:"wiring", t:"Any visible old wiring?", h:"Look in the roof space and under the house for cloth-covered or rubber-insulated cable.", opts:YN(true)},
+   {id:"hws", t:"Hot water unit age", h:"Read the nameplate. Storage units last roughly 10–15 years. Over 12 years, budget for replacement.",
+    opts:[{label:">12 yrs",v:0,cls:"bad"},{label:"8–12",v:1,cls:"mid"},{label:"4–8",v:2,cls:""},{label:"<4 yrs",v:3,cls:"good"}]},
+   {id:"water", t:"Water pressure and drainage", h:"Run the kitchen tap and shower together. Fill a basin and watch it drain.", opts:STD},
+   {id:"heat", t:"Heating and cooling", h:"Ducted, split systems, or nothing. Melbourne needs both ends. Check the age and that they actually run.", opts:STD},
+   {id:"insul", t:"Ceiling insulation present?", h:"Open the manhole and look. Missing or compressed insulation is cheap to fix and easy to negotiate on.", opts:STD}
+ ]},
+ {id:"hazards", name:"Hazards & pests", w:8, note:"Rarely a walk-away on their own — except one.", qs:[
+   {id:"termite", t:"Any termite evidence?", h:"Mud tubes on footings and piers, hollow-sounding skirtings, damaged timber in the subfloor or roof space.",
+    opts:[{label:"Active",v:0,cls:"bad",db:true},{label:"Past damage",v:1,cls:"mid"},{label:"None visible",v:3,cls:"good"}]},
+   {id:"asbestos", t:"Likely asbestos, given the era?", h:"Pre-1990 means assume yes. Safe if bonded and undisturbed; a cost the moment you renovate.",
+    opts:[{label:"Yes, damaged",v:0,cls:"bad"},{label:"Yes, stable",v:2,cls:"mid"},{label:"Unlikely (post-1990)",v:3,cls:"good"}]},
+   {id:"trees", t:"Large water-seeking trees near the house?", h:"Willows, poplars, liquidambars, eucalypts. Trouble if closer to the house than the tree's mature height.", opts:YN(true)},
+   {id:"cladding", t:"Any suspect cladding panels?", h:"Mostly an apartment issue, but check rendered panel sections on newer builds.", opts:[...YN(true),{label:"N/A",v:null,cls:""}]}
+ ]},
+ {id:"roof", name:"Roof & exterior", w:6, qs:[
+   {id:"roofcov", t:"Roof covering condition", h:"Look from the street and from the back. Broken or slipped tiles, rust on metal, a sagging ridge line.", opts:STD},
+   {id:"pointing", t:"Tile pointing and bedding", h:"Crumbling mortar at the ridge caps. Re-pointing a roof is a few thousand dollars.", opts:[...STD,{label:"N/A",v:null,cls:""}]},
+   {id:"eaves", t:"Fascia, eaves and gutters", h:"Rot, rust, sagging gutters, and gutters full of debris — which also causes the stormwater problem above.", opts:STD},
+   {id:"windows", t:"Window frames and glazing", h:"Rotten timber frames, failed seals, single glazing on a west-facing wall.", opts:STD}
+ ]},
+ {id:"interior", name:"Interior & livability", w:6, qs:[
+   {id:"orient", t:"Do living areas face north?", h:"North-facing living is the single biggest free comfort and energy difference in Melbourne. Take a compass.",
+    opts:[{label:"South",v:0,cls:"bad"},{label:"East/West",v:2,cls:"mid"},{label:"North",v:3,cls:"good"}]},
+   {id:"kitchen", t:"Kitchen condition and age", h:"A full kitchen replacement is commonly $15k–$30k. Original 1980s is a real cost, not a style preference.", opts:STD},
+   {id:"bath", t:"Bathroom condition", h:"A bathroom renovation is commonly $15k–$25k, and waterproofing failure is the expensive part.", opts:STD},
+   {id:"layout", t:"Layout and storage", h:"Bedrooms you can fit a real bed in, a usable second living space, somewhere to put things.", opts:STD}
+ ]},
+ {id:"rental", name:"Future rentability", w:4, note:"You plan to rent this out. Buy something that rents well, not just lives well.", qs:[
+   {id:"beds", t:"Three or more bedrooms?", h:"Three-bedroom houses have the deepest rental demand in the growth corridors.", opts:YN(false)},
+   {id:"yard", t:"Low-maintenance yard?", h:"You will be paying someone, or driving back. A huge lawn is a recurring cost once you move out.", opts:STD},
+   {id:"parking", t:"Off-street parking?", h:"Near-essential for rentability in the outer suburbs.", opts:STD},
+   {id:"landval", t:"Land size relative to the street", h:"More land means more capital growth but a bigger land tax bill once it's a rental. Site value drives the tax.", opts:STD}
+ ]}
+];
+const DB_LABEL = {
+  crack:"Cracking over 15 mm — severe structural damage",
+  flood:"Flood overlay sits over the dwelling",
+  permits:"Unapproved building work",
+  termite:"Active termite activity"
+};
+
+/* ---------------- state + storage ---------------- */
+let DB=null, UID=null, current={id:null, meta:{}, answers:{}}, saved=[];
+const LS="mbk-properties-v1";
+const newId = () => "p" + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+
+async function initStore(){
+  const chip = $("#store-state");
+  try{
+    const user = window.claude && await window.claude.use("user");
+    DB = window.claude && await window.claude.use("db");
+    UID = user ? await user.id() : null;
+  }catch(e){ DB=null; }
+  if (DB && UID){
+    chip.className="chip c-ok"; chip.textContent="Saved privately · syncs across your devices";
+  } else {
+    DB=null;
+    chip.className="chip c-warn"; chip.textContent="Saved in this browser only";
+  }
+  await loadAll();
+}
+function lsRead(){ try{ return JSON.parse(localStorage.getItem(LS)||"[]"); }catch(e){ return []; } }
+function lsWrite(a){ try{ localStorage.setItem(LS, JSON.stringify(a)); }catch(e){} }
+
+async function loadAll(){
+  if (DB && UID){
+    try{
+      const snap = await DB.collection("data/users/"+UID).get();
+      saved = snap.docs.map(d => Object.assign({id:d.id}, d.data()));
+    }catch(e){ saved = lsRead(); }
+  } else saved = lsRead();
+  saved.sort((a,b)=>(b.savedAt||"").localeCompare(a.savedAt||""));
+  renderShortlist();
+}
+async function saveCurrent(){
+  const meta = {
+    address: $("#p-address").value.trim(),
+    price: +$("#p-price").value || null,
+    built: +$("#p-built").value || null,
+    land: +$("#p-land").value || null,
+    commute: +$("#p-commute").value || null
+  };
+  if (!meta.address){ $("#save-state").textContent="Add an address first."; return; }
+  const r = computeScore();
+  const rec = {address:meta.address, price:meta.price, built:meta.built, land:meta.land,
+               commute:meta.commute, answers:current.answers, score:r.score,
+               walkAway:r.breakers.length>0, breakers:r.breakers, answered:r.answered,
+               savedAt:new Date().toISOString()};
+  const id = current.id || newId();
+  current.id = id;
+  $("#save-state").textContent="Saving…";
+  if (DB && UID){
+    try{ await DB.collection("data/users/"+UID).doc(id).set(rec); }
+    catch(e){ const a=lsRead().filter(x=>x.id!==id); a.push(Object.assign({id},rec)); lsWrite(a);
+              $("#save-state").textContent="Saved in this browser (sync unavailable)."; await loadAll(); return; }
+  } else { const a=lsRead().filter(x=>x.id!==id); a.push(Object.assign({id},rec)); lsWrite(a); }
+  $("#save-state").textContent="Saved · "+new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"});
+  await loadAll();
+}
+async function deleteProp(id){
+  if (!confirm("Delete this property from your shortlist? This cannot be undone.")) return;
+  if (DB && UID){ try{ await DB.collection("data/users/"+UID).doc(id).delete(); }catch(e){} }
+  lsWrite(lsRead().filter(x=>x.id!==id));
+  if (current.id===id) newProperty(true);
+  await loadAll();
+}
+function loadProp(p){
+  current = {id:p.id, meta:{}, answers:Object.assign({}, p.answers||{})};
+  $("#p-address").value=p.address||""; $("#p-price").value=p.price||"";
+  $("#p-built").value=p.built||""; $("#p-land").value=p.land||""; $("#p-commute").value=p.commute||"";
+  renderGroups(); showView("inspect");
+  $("#save-state").textContent="Loaded "+(p.address||"property");
+}
+function newProperty(quiet){
+  current={id:null, meta:{}, answers:{}};
+  ["p-address","p-price","p-built","p-land","p-commute"].forEach(i=>$("#"+i).value="");
+  renderGroups(); if(!quiet) $("#save-state").textContent="New property started.";
+}
+
+/* ---------------- scoring ---------------- */
+function computeScore(){
+  let num=0, den=0, answered=0, breakers=[];
+  GROUPS.forEach(g=>{
+    let sum=0, n=0;
+    g.qs.forEach(q=>{
+      const a = current.answers[g.id+"."+q.id];
+      if (a===undefined || a===null) return;
+      const opt = q.opts[a];
+      if (!opt || opt.v===null) return;
+      sum += opt.v; n++; answered++;
+      if (opt.db) breakers.push(DB_LABEL[q.id] || q.t);
+    });
+    if (n>0){ num += g.w * (sum/(n*3)); den += g.w; }
+  });
+  return {score: den>0 ? Math.round(num/den*100) : null, answered, breakers};
+}
+function verdictFor(s, breakers){
+  if (breakers.length) return {t:"WALK AWAY — a deal-breaker was found", c:"var(--crit-ink)", bar:"var(--critical)"};
+  if (s===null) return {t:"Answer some questions to see a score", c:"var(--text-muted)", bar:"var(--s1)"};
+  if (s<45) return {t:"Poor — don't spend $650 inspecting this", c:"var(--crit-ink)", bar:"var(--critical)"};
+  if (s<60) return {t:"Weak — only if the price reflects it", c:"var(--warn-ink)", bar:"var(--warning)"};
+  if (s<72) return {t:"Fair — worth a second look", c:"var(--warn-ink)", bar:"var(--warning)"};
+  if (s<84) return {t:"Good — book the building inspection", c:"var(--good-ink)", bar:"var(--good)"};
+  return {t:"Strong — inspect, and be ready to move", c:"var(--good-ink)", bar:"var(--good)"};
+}
+function refreshScore(){
+  const r = computeScore(), v = verdictFor(r.score, r.breakers);
+  $("#score-val").textContent = r.score===null ? "—" : r.score;
+  $("#score-val").style.color = v.c;
+  $("#score-bar").style.width = (r.score||0)+"%";
+  $("#score-bar").style.background = v.bar;
+  $("#score-verdict").textContent = v.t;
+  $("#score-verdict").style.color = v.c;
+  const total = GROUPS.reduce((a,g)=>a+g.qs.length,0);
+  $("#score-count").textContent = r.answered+" of "+total+" answered";
+  $("#deal-breaker-banner").innerHTML = r.breakers.length
+    ? '<div class="banner b-stop"><b>Deal-breaker found — the score no longer matters.</b><ul class="tight" style="margin-bottom:0">'+
+      r.breakers.map(b=>"<li>"+esc(b)+"</li>").join("")+
+      '</ul><div style="margin-top:7px">Any one of these can cost more to fix than you would save by buying at a discount. '+
+      'Unless an engineer or a licensed inspector tells you otherwise in writing, walk.</div></div>'
+    : "";
+}
+
+/* ---------------- rendering ---------------- */
+function renderGroups(){
+  $("#question-groups").innerHTML = GROUPS.map(g=>
+    '<div class="qgroup"><div class="qhead"><div><h3>'+esc(g.name)+'</h3>'+
+    (g.note?'<div style="font-size:12px;color:var(--text-muted)">'+esc(g.note)+'</div>':'')+
+    '</div><span class="wt">'+g.w+'% weight</span></div>'+
+    g.qs.map(q=>{
+      const key=g.id+"."+q.id, cur=current.answers[key];
+      return '<div class="q"><div class="qtext">'+esc(q.t)+
+        (q.opts.some(o=>o.db)?' <span class="chip c-stop">deal-breaker</span>':'')+'</div>'+
+        '<div class="qhint">'+esc(q.h||"")+'</div><div class="opts">'+
+        q.opts.map((o,i)=>'<button class="opt '+(o.cls||"")+'" data-k="'+key+'" data-i="'+i+
+          '" aria-pressed="'+(cur===i)+'">'+esc(o.label)+'</button>').join("")+
+        '</div></div>';
+    }).join("")+'</div>').join("");
+  $$("#question-groups .opt").forEach(b=>b.addEventListener("click",()=>{
+    const k=b.dataset.k, i=+b.dataset.i;
+    current.answers[k] = (current.answers[k]===i) ? undefined : i;
+    if (current.answers[k]===undefined) delete current.answers[k];
+    $$('.opt[data-k="'+k+'"]').forEach(x=>x.setAttribute("aria-pressed", String(+x.dataset.i===current.answers[k])));
+    refreshScore();
+  }));
+  refreshScore();
+}
+function renderShortlist(){
+  const body=$("#shortlist-body");
+  if (!saved.length){
+    body.innerHTML='<div class="card"><h3>Nothing saved yet</h3><p>Score a property on the <b>Inspect &amp; score</b> tab and press '+
+      '<b>Save to shortlist</b>. Properties you save appear here, ranked, so you can compare houses you saw months apart '+
+      '&mdash; which is exactly the problem when you are buying into a window that runs to 2028.</p></div>';
+    return;
+  }
+  const ranked = saved.slice().sort((a,b)=>(a.walkAway?1:0)-(b.walkAway?1:0) || (b.score||0)-(a.score||0));
+  body.innerHTML =
+   '<div class="grid g3" style="margin-bottom:13px">'+
+   '<div class="tile"><div class="lab">Saved</div><div class="val">'+saved.length+'</div><div class="sub">Properties scored</div></div>'+
+   '<div class="tile"><div class="lab">Still in the running</div><div class="val" style="color:var(--good-ink)">'+
+      ranked.filter(p=>!p.walkAway && (p.score||0)>=60).length+'</div><div class="sub">Score 60+ and no deal-breaker</div></div>'+
+   '<div class="tile"><div class="lab">Ruled out</div><div class="val" style="color:var(--crit-ink)">'+
+      ranked.filter(p=>p.walkAway).length+'</div><div class="sub">Deal-breaker found</div></div></div>'+
+   '<div class="card"><div class="twrap"><table><thead><tr><th>Property</th><th class="num">Score</th>'+
+   '<th class="num">Price</th><th class="num">$/m² land</th><th class="num">Commute</th><th>Status</th><th></th></tr></thead><tbody>'+
+   ranked.map(p=>{
+     const v=verdictFor(p.score,p.walkAway?["x"]:[]);
+     const ppm = (p.price&&p.land) ? "$"+Math.round(p.price/p.land).toLocaleString() : "—";
+     return '<tr><td><b>'+esc(p.address||"Untitled")+'</b><div style="font-size:11.5px;color:var(--text-muted)">'+
+       (p.built?"Built "+p.built+" · ":"")+(p.land?p.land+" m² · ":"")+
+       (p.savedAt?new Date(p.savedAt).toLocaleDateString():"")+'</div></td>'+
+       '<td class="num" style="font-weight:600;color:'+v.c+'">'+(p.score??"—")+'</td>'+
+       '<td class="num">'+(p.price?aud(p.price):"—")+'</td><td class="num">'+ppm+'</td>'+
+       '<td class="num">'+(p.commute?p.commute+" min":"—")+'</td>'+
+       '<td style="font-size:12.5px;color:'+v.c+'">'+esc(v.t)+'</td>'+
+       '<td><div class="row"><button class="btn-2" data-load="'+p.id+'">Open</button>'+
+       '<button class="btn-2 btn-danger" data-del="'+p.id+'">Delete</button></div></td></tr>';
+   }).join("")+'</tbody></table></div></div>';
+  $$("#shortlist-body [data-load]").forEach(b=>b.onclick=()=>{
+    const p=saved.find(x=>x.id===b.dataset.load); if(p) loadProp(p);
+  });
+  $$("#shortlist-body [data-del]").forEach(b=>b.onclick=()=>deleteProp(b.dataset.del));
+}
+
+/* ---------------- costs ---------------- */
+/* VIC transfer duty, calibrated against published SRO figures: $600k → $31,070, $700k → $37,070. */
+function dutyFull(v){ return 2870 + 0.06*(Math.max(v,130000)-130000); }
+function dutyFHB(v){
+  if (v<=600000) return 0;
+  if (v<=750000) return dutyFull(v)*(v-600000)/150000;
+  return dutyFull(v);
+}
+/* Land Services Victoria, from 1 July 2026: $104.30 + $2.34 per whole $1,000, capped at $3,614. */
+function regFee(v){ return Math.min(3614, 104.30 + 2.34*Math.floor(v/1000)); }
+const MORTGAGE_REG = 129.20;
+function landTax(site){
+  if (site<50000) return 0;
+  if (site<100000) return 500;
+  if (site<300000) return 975;
+  if (site<600000) return 1350 + 0.003*(site-300000);
+  if (site<1000000) return 2250 + 0.006*(site-600000);
+  if (site<1800000) return 4650 + 0.009*(site-1000000);
+  if (site<3000000) return 11850 + 0.0165*(site-1800000);
+  return 31650 + 0.0265*(site-3000000);
+}
+function refreshCosts(){
+  const price = +$("#c-price").value || 0;
+  const depPct = +$("#c-depositpct").value;
+  const fhb = $("#c-fhb").value === "1";
+  const repairs = +$("#c-repairs").value || 0;
+  const rented = $("#c-rented").value === "1";
+  const deposit = price*depPct/100;
+  const duty = fhb ? dutyFHB(price) : dutyFull(price);
+  const lmi = (depPct>=20 || (depPct===5 && fhb)) ? 0 : Math.round(price*0.012);
+  const up = [
+    ["Deposit", deposit, depPct+"% of the price. The First Home Guarantee allows 5% with no LMI."],
+    ["Stamp duty", duty, fhb ? (price<=600000 ? "Fully exempt under the $600,000 first-home threshold."
+        : (price<=750000 ? "In the taper. Full duty would be "+aud(dutyFull(price))+"." : "Above $750,000 — no concession."))
+      : "Full rate. No first-home concession."],
+    ["Land transfer registration", regFee(price), "$104.30 + $2.34 per $1,000, capped at $3,614. Rose on 1 July 2026 — the first increase in 20 years."],
+    ["Mortgage registration", MORTGAGE_REG, "Flat fee if you settle with a loan."],
+    ["Building & pest inspection", 650, "$450–$900. Apartments from ~$400; older or larger houses over $900. Pay it on every house you seriously want."],
+    ["Conveyancing", 1200, "$840–$1,500 + GST for a standard residential purchase. Solicitors charge more than licensed conveyancers."],
+    ["Conveyancing disbursements", 350, "$200–$500. Title, council, water and planning certificate searches."],
+    ["Lenders mortgage insurance", lmi, lmi===0 ? "Nil — either 20% deposit or the First Home Guarantee covers it." : "Rough estimate only. Under 20% without the guarantee, LMI can run $15,000–$35,000 — get a real quote."],
+    ["Loan application / settlement fees", 400, "$0–$800 depending on lender. Often waived — ask."],
+    ["Bank valuation", 0, "Usually free on a standard purchase. Budget $300 if the lender charges."],
+    ["Settlement adjustments", 600, "$300–$1,000. You reimburse the vendor for rates and water already paid past settlement."],
+    ["Moving", 900, "$600–$1,500 for a local move with a 3-bedroom load."],
+    ["Connections & immediate setup", 300, "Power, gas, internet, locks. Change the locks."],
+    ["Immediate repairs budget", repairs, "Whatever your inspection found. Never zero."]
+  ];
+  const extras = up.reduce((a,r)=>a+r[1],0) - deposit;
+  const total = deposit + extras;
+  const site = price*0.6;
+  const on = [
+    ["Council rates", 2100, "Roughly $1,700–$2,600 in the outer LGAs. The Section 32 gives the actual figure."],
+    ["Water (service + usage)", 1100, "Service charges apply even before usage."],
+    ["Home & contents insurance", 1500, "Higher with a flood overlay. Get a quote before you bid if one applies."],
+    ["Maintenance sinking fund", Math.round(price*0.004), "About 0.4% of value a year. Older stock needs more. Most buyers budget nothing and then borrow."],
+    ["Owners corporation", 0, "Only if one applies — some newer estates have one even on freestanding houses."]
+  ];
+  if (rented){
+    on.push(["VIC land tax (once rented)", Math.round(landTax(site)),
+      "On an assumed site value of "+aud(site)+" (60% of price). Your home is exempt; a rental is not. Threshold is $50,000 of site value."]);
+    on.push(["Landlord insurance uplift", 400, "Landlord cover costs more than home and contents."]);
+    on.push(["Agent management", Math.round(500*52*0.066), "About 6.6% of rent, plus letting fees. Assumes $500/week."]);
+  }
+  const ongoing = on.reduce((a,r)=>a+r[1],0);
+  const row = r => '<tr><td data-label="_"><b>'+esc(r[0])+'</b></td><td class="num" data-label="Amount">'+aud(r[1])+
+    '</td><td data-label="Note" style="font-size:12px;color:var(--text-muted)">'+esc(r[2])+'</td></tr>';
+  $("#upfront-rows").innerHTML = up.map(row).join("");
+  $("#ongoing-rows").innerHTML = on.map(row).join("");
+  $("#c-total").textContent = aud(total);
+  $("#c-totalsub").textContent = "Deposit "+aud(deposit)+" plus "+aud(extras)+" of costs.";
+  $("#c-extras").textContent = aud(extras);
+  $("#c-ongoing").textContent = aud(ongoing);
+  $("#c-ongoingsub").textContent = rented ? "Includes land tax and letting costs." : "Before mortgage repayments.";
+  $("#c-duty").textContent = aud(duty);
+  $("#c-dutysub").textContent = fhb && price>600000
+    ? "You save "+aud(dutyFull(price)-duty)+" against the full rate."
+    : (fhb ? "Fully exempt." : "No concession applied.");
+  $("#forgot-rows").innerHTML = [
+    ["Mortgage discharge fee","$150–$400","When you refinance or sell."],
+    ["Agent commission on sale","1.6%–2.5% of price","When you eventually sell — on a $650k sale that is $10,000–$16,000."],
+    ["Conveyancing on sale","$800–$1,500","When you sell."],
+    ["Vacant Residential Land Tax","1%+ of capital improved value","Only if you leave it empty more than six months in a year. Easy to trigger accidentally between tenants."],
+    ["Re-stumping or underpinning","$15,000–$40,000+","If reactive clay movement is worse than the inspection suggested. The reason section 2 exists."],
+    ["Full rewire","$8,000–$15,000","If the switchboard had ceramic fuses and the wiring is original."],
+    ["Roof restoration or replacement","$5,000–$25,000","Predictable from the roof's age — ask when it was last done."],
+    ["Pre-approval renewal","Free, but costs time","Lapses every 3–6 months. If you are waiting into 2027 you will renew several times."]
+  ].map(r=>'<tr><td data-label="_"><b>'+esc(r[0])+'</b></td><td class="num" data-label="Typical">'+esc(r[1])+
+    '</td><td data-label="When it lands" style="font-size:12px;color:var(--text-muted)">'+esc(r[2])+'</td></tr>').join("");
+}
+
+/* ---------------- static tables ---------------- */
+function renderStatic(){
+  $("#sources-rows").innerHTML = SOURCES.map(r=>
+    '<tr><td data-label="_"><b>'+esc(r[0])+'</b></td><td data-label="What you get" style="font-size:12.5px">'+esc(r[1])+'</td>'+
+    '<td data-label="What to do with it" style="font-size:12.5px">'+esc(r[2])+'</td>'+
+    '<td data-label="_"><span class="chip '+(r[3]==="Free"?"c-ok":"c-free")+'">'+esc(r[3])+'</span></td></tr>').join("");
+  $("#s32-rows").innerHTML = S32.map(r=>
+    '<tr><td data-label="_"><b>'+esc(r[0])+'</b></td><td data-label="Why it matters" style="font-size:12.5px">'+esc(r[1])+
+    '</td><td data-label="If you find it" style="font-size:12.5px">'+esc(r[2])+'</td></tr>').join("");
+  $("#crack-rows").innerHTML = CRACKS.map(r=>
+    '<tr><td data-label="_"><span class="chip c-'+r[4]+'">Cat '+r[0]+'</span> <b class="mono">'+esc(r[1])+'</b></td>'+
+    '<td class="num" data-label="_" style="display:none"></td>'+
+    '<td data-label="What it means" style="font-size:12.5px">'+esc(r[2])+'</td>'+
+    '<td data-label="Your move" style="font-size:12.5px">'+esc(r[3])+'</td></tr>').join("");
+  $("#traps-rows").innerHTML = TRAPS.map(r=>
+    '<tr><td data-label="_"><b>'+esc(r[0])+'</b></td><td data-label="Where it bites" style="font-size:12.5px">'+esc(r[1])+
+    '</td><td data-label="How to check, free" style="font-size:12.5px">'+esc(r[2])+'</td></tr>').join("");
+  $("#era-rows").innerHTML = ERAS.map(r=>
+    '<tr><td data-label="_"><b>'+esc(r[0])+'</b></td><td data-label="Assume" style="font-size:12.5px">'+esc(r[1])+
+    '</td><td data-label="Where it hides" style="font-size:12.5px">'+esc(r[2])+'</td>'+
+    '<td data-label="Cost reality" style="font-size:12.5px">'+esc(r[3])+'</td></tr>').join("");
+  $("#agent-rows").innerHTML = AGENTQ.map(r=>
+    '<tr><td data-label="_" style="font-size:13px"><b>'+esc(r[0])+'</b></td>'+
+    '<td data-label="Why" style="font-size:12.5px">'+esc(r[1])+'</td>'+
+    '<td data-label="Binding?"><span class="chip '+(r[2].indexOf("Yes")===0?"c-ok":(r[2]==="No"?"c-stop":"c-warn"))+'">'+esc(r[2])+'</span></td></tr>').join("");
+}
+
+/* ---------------- views + init ---------------- */
+function showView(v){
+  $$(".tab").forEach(t=>t.setAttribute("aria-selected", String(t.dataset.view===v)));
+  $$(".panelview").forEach(p=>{ p.hidden = (p.id !== "view-"+v); });
+  window.scrollTo({top:0, behavior:"instant"});
+}
+function exportCSV(){
+  const head="Address,Score,Status,Price,Land m2,$ per m2,Built,Commute min,Saved\n";
+  const rows = saved.map(p=>[
+    '"'+(p.address||"").replace(/"/g,'""')+'"', p.score??"", p.walkAway?"WALK AWAY":"in play",
+    p.price??"", p.land??"", (p.price&&p.land)?Math.round(p.price/p.land):"",
+    p.built??"", p.commute??"", (p.savedAt||"").slice(0,10)
+  ].join(",")).join("\n");
+  $("#export-card").hidden=false;
+  $("#export-text").value = head+rows;
+  $("#export-text").select();
+}
+function init(){
+  renderStatic(); renderGroups(); refreshCosts(); renderShortlist();
+  $$(".tab").forEach(t=>t.addEventListener("click",()=>showView(t.dataset.view)));
+  $("#btn-save").onclick=saveCurrent;
+  $("#btn-new").onclick=()=>newProperty();
+  $("#btn-export").onclick=exportCSV;
+  ["c-price","c-depositpct","c-fhb","c-repairs","c-rented"].forEach(id=>{
+    $("#"+id).addEventListener("input",refreshCosts);
+    $("#"+id).addEventListener("change",refreshCosts);
+  });
+  $("#theme-toggle").onclick=e=>{
+    const dark = document.documentElement.getAttribute("data-theme")==="dark";
+    document.documentElement.setAttribute("data-theme", dark?"light":"dark");
+    e.currentTarget.setAttribute("aria-pressed", String(!dark));
+  };
+  $$(".qhead").forEach(h=>{}); // groups stay open by design — field use, not desk use
+  initStore();
+}
+if (document.readyState==="loading") document.addEventListener("DOMContentLoaded",init); else init();
+</script>
