@@ -204,8 +204,8 @@ ul.tight li{margin-bottom:5px;}
   </div>
   <div class="stamp">
     <div>Model run <b id="run-stamp">&mdash;</b></div>
-    <div>Data vintage <b>7 Sep 2026</b></div>
-    <div>Newest input <b>1 Sep 2026</b> (Cotality HVI, Aug)</div>
+    <div>Data vintage <b>19 Sep 2026</b></div>
+    <div>Newest input <b>12 Sep 2026</b> (Domain auctions, w/e 12 Sep)</div>
     <div style="margin-top:8px"><button class="btn-ghost" id="theme-toggle" aria-pressed="false">Toggle theme</button></div>
   </div>
 </header>
@@ -221,7 +221,7 @@ ul.tight li{margin-bottom:5px;}
     <div class="eyebrow">The model's current call</div>
     <div class="verdict-call" id="verdict-call">WAIT</div>
     <div class="verdict-sub" id="verdict-sub">
-      Melbourne scores <b id="v-score">22</b>/100 on the bottom-proximity scale &mdash; the <b>&#128994; Before the bottom</b> band.
+      Melbourne scores <b id="v-score">23</b>/100 on the bottom-proximity scale &mdash; the <b>&#128994; Before the bottom</b> band.
       Every leading indicator that has marked past Melbourne troughs is still pointing the wrong way, and the one that matters most
       &mdash; the interest-rate cycle &mdash; has not turned at all.
     </div>
@@ -259,7 +259,7 @@ ul.tight li{margin-bottom:5px;}
 <section id="health">
   <div class="sec-head">
     <div><div class="eyebrow">Panel 1</div><h2>Market health right now</h2></div>
-    <div class="note" style="margin:0">Twelve readings that historically move before a bottom. Ten are still deteriorating.</div>
+    <div class="note" style="margin:0">Twelve readings that historically move before a bottom. Nine are still deteriorating; auction clearance has just turned.</div>
   </div>
   <div class="grid g4" id="health-tiles"></div>
   <p class="note">
@@ -401,7 +401,7 @@ ul.tight li{margin-bottom:5px;}
         <tbody id="factor-rows"></tbody>
         <tfoot><tr style="border-top:2px solid var(--axis)">
           <td style="font-weight:600">Weighted total</td><td class="num" id="tf-w">100</td><td class="num">&mdash;</td>
-          <td class="num" style="font-weight:600" id="tf-score">22.2</td>
+          <td class="num" style="font-weight:600" id="tf-score">23.3</td>
           <td colspan="2"><span class="band band-1" id="tf-band">&#128994; Before the bottom</span></td>
         </tr></tfoot>
       </table>
@@ -530,9 +530,174 @@ ul.tight li{margin-bottom:5px;}
   </p>
 </section>
 
+
+<!-- ================= STRATEGY: LIVE IN, MOVE, RENT OUT ================= -->
+<section id="strategy">
+  <div class="sec-head">
+    <div><div class="eyebrow">Panel 8</div><h2>Buy it, live in it, move for work, rent it out</h2></div>
+    <div class="note" style="margin:0">Two tax rules decide whether this plan works. One helps you, one hurts.</div>
+  </div>
+
+  <div class="grid g2">
+    <div class="panel" style="border-left:4px solid var(--critical)">
+      <div class="eyebrow">The rule that hurts</div>
+      <h3 style="margin-top:4px">Negative gearing is gone for your purchase</h3>
+      <p style="font-size:13.5px">From <b>1 July 2027</b>, negative gearing on <i>established</i> homes is abolished for properties
+      bought after 7:30pm on <b>12 May 2026</b>. Buy now and you are on the wrong side of that date. When you convert it to a rental,
+      rental losses can only be offset against rental income or future capital gains &mdash; <b>not against your salary</b>.</p>
+      <p style="font-size:13.5px">Properties <i>held</i> before 12 May 2026 are grandfathered. Yours wouldn't be. New builds keep
+      both concessions &mdash; which is the one legitimate reason to look at house-and-land over established stock for this plan.</p>
+      <div class="headline-find" style="margin-top:12px">
+        <div class="eyebrow" style="margin-bottom:4px">What it costs you</div>
+        <p style="margin:0; font-size:13.5px">On the worked example below, roughly <b class="mono" id="ng-cost">$6,600</b> a year in
+        tax refund you would have received under the old rules and now will not. Over a five-year rental period, about
+        <b class="mono" id="ng-cost5">$33,000</b>.</p>
+      </div>
+    </div>
+    <div class="panel" style="border-left:4px solid var(--good)">
+      <div class="eyebrow">The rule that helps</div>
+      <h3 style="margin-top:4px">The CGT six-year rule</h3>
+      <p style="font-size:13.5px">Live in it first as your genuine main residence, then move out and rent it, and you can generally
+      keep the <b>main-residence CGT exemption for up to six years</b> of renting. Sell inside that window and the capital gain is
+      generally fully exempt.</p>
+      <p style="font-size:13.5px">This matters far more after the 2026 Budget than before it. With the 50% CGT discount replaced by
+      indexation plus a 30% minimum tax on investment assets from 1 July 2027, <b>the family home is now the most tax-advantaged
+      appreciating asset in Australia</b>. The six-year rule is how you extend that treatment past the point you stop living there.</p>
+      <p style="font-size:13.5px"><b>The catch:</b> you can generally only nominate one property as your main residence at a time. Use
+      the six-year rule here and you cannot simultaneously treat a later purchase as your main residence for the same period.</p>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:14px">
+    <div class="panel-head"><h3>How long you live in it changes everything</h3>
+      <div class="ctlrow" style="margin:0" id="livein-btns"></div></div>
+    <div class="svgbox" style="margin-top:10px"><svg id="chart-livein" viewBox="0 0 1180 230" role="img" aria-labelledby="li-t"><title id="li-t">Timeline showing the live-in period, the move-out date and the six-year CGT exemption window</title></svg></div>
+    <div class="twrap" style="margin-top:12px">
+      <table>
+        <caption>Assumes you genuinely establish it as your main residence first (move in on settlement, redirect mail, electoral roll, utilities) and claim no other main residence for the same period. Tax outcomes are general in nature — confirm with a registered tax agent before acting.</caption>
+        <thead><tr><th>Pattern</th><th>Live in</th><th>Rented</th><th>CGT on sale</th><th>Negative gearing</th><th>VIC land tax</th><th>Verdict</th></tr></thead>
+        <tbody id="livein-rows"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:14px; border-left:4px solid var(--s1)">
+    <div class="eyebrow">The strategic point this whole dashboard has been building to</div>
+    <h3 style="margin-top:4px">Waiting for the bottom and solving the job-proximity problem are the same move</h3>
+    <div class="grid g2" style="margin-top:10px; align-items:start">
+      <div>
+        <p style="font-size:14.5px">You want to buy at $600k&ndash;$650k, then later move near your jobs and rent this one out. But the
+        reason you'd have to move is that $600k&ndash;$650k currently only reaches <b>Melton, Werribee and Broadmeadows &mdash; 16 to
+        35 km out</b>. The rentvest manoeuvre exists to solve a location problem that the price band itself creates.</p>
+        <p style="font-size:14.5px">On the base case, waiting to the bottom moves that same $600k&ndash;$650k into <b>Glenroy or
+        Sunshine West, ~9&ndash;13 km from the CBD</b> &mdash; inside the middle ring, close to far more of Melbourne's employment.
+        Buy <i>there</i> and you may never need to move out, never convert it to a rental, never lose negative gearing, never pay
+        land tax, and never touch the six-year rule.</p>
+      </div>
+      <div class="headline-find" style="margin:0">
+        <div class="eyebrow" style="margin-bottom:6px">What this is worth</div>
+        <p style="margin:0 0 10px; font-size:14.5px"><b>The cheapest version of your strategy is the one where you don't need the
+        strategy.</b></p>
+        <p style="margin:0; font-size:13.5px">Every cost in the next panel &mdash; land tax, agent fees, the lost tax refund, the gap
+        between rent received and rent paid &mdash; is a cost you only incur <i>because you bought too far from work</i>. On the
+        example figures that stack is roughly <b class="mono" id="stack-cost">&mdash;</b> a year, every year you hold it as a rental.
+        Buying closer, later, removes all of it at once.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MONEY MODEL ================= -->
+<section id="money">
+  <div class="sec-head">
+    <div><div class="eyebrow">Panel 9</div><h2>Your money model</h2></div>
+    <div class="ctlrow" style="margin:0"><button class="btn-ghost" id="btn-reset-money">Reset to example figures</button></div>
+  </div>
+  <div class="panel" style="margin-bottom:14px">
+    <p style="margin:0; font-size:13.5px"><span class="chip chip-assum">Example figures</span>
+    Every number below is a <b>placeholder you should overwrite</b>. Nothing here is your data and nothing is stored or sent
+    anywhere &mdash; the sliders run entirely in your browser. Type your real deposit, income and rent in and the whole panel recomputes.</p>
+  </div>
+
+  <div class="grid g2">
+    <div class="panel">
+      <h3>Your inputs</h3>
+      <div id="money-sliders" style="margin-top:8px"></div>
+      <div class="headline-find" style="margin-top:14px">
+        <div class="eyebrow" style="margin-bottom:5px">The three that move the answer most</div>
+        <ul class="tight" style="margin:0; font-size:13px">
+          <li><b>Months you'd wait</b> &mdash; set it to 0 and the case for waiting disappears. That is the honest stress test.</li>
+          <li><b>Purchase price</b> &mdash; cross $600,000 and stamp duty switches on hard. Watch the duty tile as you drag it.</li>
+          <li><b>Deposit saved</b> &mdash; this decides whether you are at 95% LVR (negative-equity risk) or 85% (safe).</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="grid g2" style="gap:12px">
+        <div class="tile"><div class="lab">Deposit needed &middot; 5% + costs</div><div class="val" id="m-dep5">&mdash;</div><div class="meta foot">With the First Home Guarantee: 5% deposit, no LMI, no income cap, Melbourne price cap $950k.</div></div>
+        <div class="tile"><div class="lab">You reach it in</div><div class="val" id="m-time5">&mdash;</div><div class="meta foot" id="m-time5m">&mdash;</div></div>
+        <div class="tile"><div class="lab">Stamp duty (first home buyer)</div><div class="val" id="m-duty">&mdash;</div><div class="meta foot" id="m-dutynote">&mdash;</div></div>
+        <div class="tile"><div class="lab">Monthly repayment</div><div class="val" id="m-repay">&mdash;</div><div class="meta foot" id="m-repaynote">&mdash;</div></div>
+      </div>
+      <div class="panel" style="margin-top:12px; border-left:4px solid var(--critical)">
+        <div class="eyebrow">Risk you must not skip</div>
+        <h3 style="margin-top:3px; font-size:15px">Negative equity at 95% LVR</h3>
+        <p style="margin:0; font-size:13px" id="m-negeq">&mdash;</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:14px">
+    <div class="panel-head"><h3>The $600,000 stamp-duty cliff &mdash; why your band starts where it does</h3></div>
+    <div class="svgbox" style="margin-top:8px"><svg id="chart-duty" viewBox="0 0 1180 330" role="img" aria-labelledby="duty-t"><title id="duty-t">First home buyer stamp duty in Victoria by purchase price, showing zero duty to $600,000 and the taper to $750,000</title></svg></div>
+    <p class="note">
+      <b>Read the slope, not the level.</b> At $600,000 you pay <b>nothing</b>. At $650,000 you pay about <b class="mono">$11,400</b>.
+      So the last $50,000 of your price band actually costs you roughly <b class="mono">$61,400</b> &mdash; an effective marginal rate
+      of about <b>123%</b> on that slice. Buying at $600,000 rather than $650,000 is worth far more than the $50,000 headline gap.
+      These thresholds have not moved since 1 July 2017.
+    </p>
+  </div>
+
+  <div class="grid g2" style="margin-top:14px">
+    <div class="panel">
+      <h3>When it becomes a rental &mdash; the real cost stack</h3>
+      <div class="twrap" style="margin-top:8px">
+        <table style="min-width:420px">
+          <thead><tr><th>Item</th><th class="num">Per year</th><th>Note</th></tr></thead>
+          <tbody id="rental-rows"></tbody>
+        </table>
+      </div>
+      <p class="note" id="rental-summary">&mdash;</p>
+    </div>
+    <div class="panel">
+      <h3>Rentvest reality check</h3>
+      <p style="font-size:13.5px">You receive rent on the house and pay rent near work. This is the number people forget:</p>
+      <div class="svgbox"><svg id="chart-rentvest" viewBox="0 0 560 300" role="img" aria-labelledby="rv-t"><title id="rv-t">Annual cash in and cash out when the house is rented and you rent elsewhere</title></svg></div>
+      <p class="note" id="rentvest-note">&mdash;</p>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:14px">
+    <div class="panel-head"><h3>Buy now, or wait for the bottom? The components, priced</h3>
+      <span class="mono" style="font-size:12px; color:var(--text-muted)">under scenario <span id="be-scen">B</span></span></div>
+    <div class="svgbox" style="margin-top:8px"><svg id="chart-breakeven" viewBox="0 0 1180 300" role="img" aria-labelledby="be-t"><title id="be-t">Waterfall of the financial components of waiting for the bottom versus buying today</title></svg></div>
+    <p class="note" id="be-note">&mdash;</p>
+  </div>
+
+  <div class="panel" style="margin-top:14px">
+    <h3>Savings strategy &mdash; in the order that actually matters</h3>
+    <div class="grid g2" style="margin-top:10px" id="savings-cards"></div>
+    <p class="note">
+      <b>Sequence matters more than product choice.</b> The single biggest lever is not which savings account you use &mdash; it is
+      not buying at 95% LVR into a falling market. Getting the deposit to 10&ndash;15% by the bottom does more for your position than
+      any interest rate you can chase on savings.
+    </p>
+  </div>
+</section>
+
 <!-- ================= DECISION ================= -->
 <section id="decision">
-  <div class="sec-head"><div><div class="eyebrow">Panel 8</div><h2>My $600k&ndash;$650k Melbourne buying window</h2></div></div>
+  <div class="sec-head"><div><div class="eyebrow">Panel 10</div><h2>My $600k&ndash;$650k Melbourne buying window</h2></div></div>
   <div class="panel">
     <div class="svgbox"><svg id="chart-window" viewBox="0 0 1180 250" role="img" aria-labelledby="win-t"><title id="win-t">Timeline from today through the expected bottom window, best buying window and expected recovery</title></svg></div>
     <div class="grid g2" style="margin-top:18px">
@@ -558,6 +723,15 @@ ul.tight li{margin-bottom:5px;}
           <tbody id="trigger-rows"></tbody>
         </table></div>
         <div class="headline-find" style="margin-top:14px">
+          <div class="eyebrow" style="margin-bottom:5px">If you plan to rent it out later &mdash; read Panel 8 first</div>
+          <p style="margin:0 0 10px; font-size:13.5px">
+            Buying now and converting to a rental later puts you on the wrong side of the 12 May 2026 negative-gearing cut-off,
+            costs you Victorian land tax, and only exists as a plan because $600k&ndash;$650k currently lands 16&ndash;35&nbsp;km from
+            the CBD. Waiting moves that same money to ~9&ndash;13&nbsp;km &mdash; which may remove the need to move out at all.
+            <b>The same decision solves both problems.</b>
+          </p>
+        </div>
+        <div class="headline-find" style="margin-top:12px">
           <div class="eyebrow" style="margin-bottom:5px">The practical move</div>
           <p style="margin:0; font-size:13.5px">
             Waiting costs you nothing in access &mdash; you can already buy in your band. It costs you rent, and it risks the
@@ -581,7 +755,7 @@ ul.tight li{margin-bottom:5px;}
 <!-- ================= SOURCES ================= -->
 <section id="sources">
   <div class="sec-head">
-    <div><div class="eyebrow">Panel 9</div><h2>Sources, disagreements and what this model cannot do</h2></div>
+    <div><div class="eyebrow">Panel 11</div><h2>Sources, disagreements and what this model cannot do</h2></div>
   </div>
   <div class="grid g2">
     <div class="panel">
@@ -642,8 +816,8 @@ const MODEL = {
       read:"Melbourne dwellings &minus;1.1% in Aug, &minus;3.9% over 3 months, &minus;4.7% over 12, &minus;6.3% year-to-date. Houses &minus;5.7% annually. Falls are accelerating, not decelerating &mdash; the opposite of a bottom." },
     { id:"listings", name:"Listings &amp; supply", w:15, s:10, tag:"recent",
       read:"50,867 listings in July 2026, +42.8% year-on-year &mdash; the highest since SQM's series began in 2010, and still rising. Bottoms form when listings peak and fall. The worst reading in the whole model." },
-    { id:"clearance", name:"Auction clearance rate", w:10, s:35, tag:"conflict",
-      read:"59% for the week ending 5 Sep 2026 (Domain) against 71% a year earlier; other commentary puts Melbourne in the low-to-mid 50s. Below the ~60% balanced line but not yet at the sub-50% washout that has marked past troughs." },
+    { id:"clearance", name:"Auction clearance rate", w:10, s:46, tag:"conflict",
+      read:"62.1% for houses in the week to 12 Sep 2026 (Domain), up from 59% a week earlier, against 71% a year ago. The first of the four triggers to move the right way — but a fortnight is not a turn, and other commentary still puts Melbourne in the low-to-mid 50s." },
     { id:"afford", name:"Mortgage affordability", w:8, s:20, tag:"recent",
       read:"Average owner-occupier variable ~6.20&ndash;6.25%. With the 3% serviceability buffer, borrowers are assessed near 9.2%, which is what actually caps a $600k purchase. No relief until the RBA moves." },
     { id:"discount", name:"Vendor discounting", w:7, s:30, tag:"recent",
@@ -751,7 +925,7 @@ const MODEL = {
     {lab:"RBA cash rate", val:"4.35%", meta:"Three hikes in 2026: Feb, Mar, May. Next decision 29 Sep 2026.", dir:"bad", note:"Cuts not expected before May 2027", tag:"recent"},
     {lab:"Variable mortgage rate", val:"~6.22%", meta:"Average owner-occupier, mid-2026. Assessed near 9.2% with the buffer.", dir:"bad", note:"Caps borrowing capacity", tag:"recent"},
     {lab:"Total listings", val:"50,867", meta:"July 2026. Highest since SQM's series began in 2010.", dir:"bad", note:"+42.8% y/y", tag:"recent"},
-    {lab:"Auction clearance", val:"59%", meta:"Week ending 5 Sep 2026 (Domain), vs 71% a year ago. Others say low-to-mid 50s.", dir:"bad", note:"Below the 60% balanced line", tag:"conflict"},
+    {lab:"Auction clearance", val:"62.1%", meta:"Houses, w/e 12 Sep 2026 (Domain) — up from 59% the week before. Other commentary still says low-to-mid 50s.", dir:"good", note:"Back above 60% — watch it", tag:"conflict"},
     {lab:"Days on market", val:"39 days", meta:"Up from 32 a year ago.", dir:"bad", note:"Slowing", tag:"recent"},
     {lab:"Vendor discount", val:"−3.8%", meta:"Widened from −3.2%. 35% of listings cut from original asking price.", dir:"bad", note:"Widening", tag:"recent"},
     {lab:"Unemployment", val:"4.5%", meta:"National, July 2026, drifting up. Victoria has the highest prime arrears at 1.0%.", dir:"bad", note:"Rising", tag:"recent"},
@@ -774,7 +948,7 @@ const MODEL = {
   triggers: [
     {t:"Listings peak and fall for 3 straight months", now:"Rising, +42.8% y/y", th:"3 consecutive monthly falls"},
     {t:"RBA cuts, or the market firmly prices a cut", now:"4.35%, hike risk still live", th:"First cut delivered"},
-    {t:"Auction clearance back above 60%", now:"59% and falling", th:"60%+ for 4 weeks"},
+    {t:"Auction clearance back above 60%", now:"62.1% — partially firing", th:"60%+ for 4 weeks"},
     {t:"Monthly price falls shrink below 0.3%", now:"−1.1% in August", th:"Two months under −0.3%"}
   ],
 
@@ -784,7 +958,9 @@ const MODEL = {
     {m:"Early-90s vs GFC decline", a:"−19% attributed to the early 1990s", b:"−19% also attributed to the GFC by one source", why:"Likely a citation error. The −19% belongs to the early-90s bust; Melbourne's GFC fall was closer to −8%."},
     {m:"Werribee median", a:"$610,000 (−0.8% y/y)", b:"$510,000", why:"Different providers and periods. The higher figure is used here — the conservative choice for a buyer."},
     {m:"Melton median", a:"$510,000–$512,000", b:"$430,000–$480,000", why:"Suburb vs SA3 boundaries, and house-only vs all-dwelling baskets."},
-    {m:"Cash-rate path from here", a:"Peaked at 4.35% (NAB, ANZ, CBA at points in 2026)", b:"Two more hikes to 4.85% (Westpac)", why:"Genuine forecaster disagreement on how sticky 3.6% trimmed-mean inflation proves."}
+    {m:"Cash-rate path from here", a:"Peaked at 4.35% (NAB, ANZ, CBA at points in 2026)", b:"Two more hikes to 4.85% (Westpac)", why:"Genuine forecaster disagreement on how sticky 3.6% trimmed-mean inflation proves."},
+    {m:"Auction clearance, Sep 2026", a:"62.1% houses, w/e 12 Sep (Domain)", b:"“Low-to-mid 50s” (market commentary)", why:"Weekly clearance is volatile and revises down as late results report. Two good weeks is not a turn."},
+    {m:"Outer-suburb rental yields", a:"Melton 7.7% on a $395k median", b:"“4.0%–4.7% range”; Werribee 3.84% at $610k", why:"The 7.7% figure pairs a current rent with a stale or unit median. The model uses the conservative ~4% house figure."}
   ],
 
   sources: [
@@ -820,6 +996,19 @@ const MODEL = {
     {d:"Suburb medians", v:"Melton $510k, Melton Sth $560k, Werribee $610k, Craigieburn $620k, Broadmeadows $621k, Glenroy $670k, Sunshine West $673.5k, Braybrook $695k", t:"2026", s:"OpenAgent, ProperEasy, agency data", tag:"recent"},
     {d:"SA3 medians", v:"Wyndham $692,464; Melton–Bacchus Marsh $665,848; Casey–North $847,981", t:"to Mar 2026", s:"Industry SA3 reporting", tag:"recent"},
     {d:"Entry price ≈ 85% of median", v:"25th-percentile assumption", t:"n/a", s:"My modelling assumption — not a published figure", tag:"assumption"},
+    {d:"Auction clearance (updated)", v:"62.1% houses", t:"w/e 12 Sep 2026", s:"Domain auction results", tag:"recent"},
+    {d:"CGT six-year rule", v:"Former home treated as main residence up to 6 yrs while rented", t:"Current; unchanged by the 2026–27 Budget", s:"ATO — treating a former home as your main residence", tag:"recent"},
+    {d:"Main residence CGT exemption", v:"Intact and uncapped after the 2026 Budget", t:"May 2026", s:"2026–27 Federal Budget commentary", tag:"recent"},
+    {d:"Negative gearing grandfathering", v:"Properties HELD at 7:30pm 12 May 2026 keep it; later purchases do not", t:"From 1 Jul 2027", s:"2026–27 Federal Budget; ATO new-legislation guidance", tag:"recent"},
+    {d:"VIC land tax threshold", v:"$50,000 site value; legislated to 30 Jun 2033", t:"2026 land tax year", s:"State Revenue Office Victoria", tag:"recent"},
+    {d:"VIC land tax scale", v:"$500 / $975 flat, then $1,350 + 0.3% over $300k; $2,250 + 0.6% over $600k", t:"2024–2033 scale", s:"SRO Victoria current rates", tag:"recent"},
+    {d:"VIC transfer duty calibration", v:"$600k → $31,070; $700k → $37,070", t:"2026", s:"SRO Victoria — used to fit the duty curve", tag:"recent"},
+    {d:"First Home Guarantee", v:"5% deposit, no LMI, no income cap, no place cap; Melbourne cap $950,000", t:"Cap from 1 Oct 2025", s:"Australian Government Home Guarantee Scheme", tag:"recent"},
+    {d:"First Home Super Saver", v:"$15,000/yr, $50,000 total per person", t:"2026", s:"ATO / super fund guidance", tag:"recent"},
+    {d:"Melbourne median rent", v:"Houses ~$600/wk; units ~$480–520/wk", t:"2026", s:"DFFH Victorian Rental Report / REIV", tag:"recent"},
+    {d:"Melbourne rental vacancy", v:"1.6%", t:"Jun 2026", s:"SQM Research / industry reporting", tag:"recent"},
+    {d:"Outer-suburb gross yields", v:"~3.8%–4.7% (houses)", t:"2026", s:"Agency and portal data — sources conflict sharply", tag:"conflict"},
+    {d:"Land value %, agent fee, maintenance, vacancy allowance", v:"60% / 6.6% / $1,500 / 2 weeks", t:"n/a", s:"My modelling assumptions — adjust with the sliders", tag:"assumption"},
     {d:"All scenario probabilities & confidence levels", v:"20/38/17/20/5%; 58% window confidence", t:"n/a", s:"My modelling judgement — not published forecasts", tag:"assumption"}
   ]
 };
@@ -1236,7 +1425,7 @@ function renderBacktest(){
 function renderTriggers(){
   $("#trigger-rows").innerHTML = MODEL.triggers.map((t,i)=>
     '<tr><td style="font-size:12.5px"><b>'+(i+1)+'.</b> '+t.t+'</td>'+
-    '<td class="mono" style="font-size:12px;color:var(--critical-ink)">'+t.now+'</td>'+
+    '<td class="mono" style="font-size:12px;color:'+(t.now.indexOf("firing")>-1?"var(--warning-ink)":"var(--critical-ink)")+'">'+t.now+'</td>'+
     '<td class="mono" style="font-size:12px">'+t.th+'</td></tr>').join("");
 }
 function renderConflicts(){
@@ -1283,7 +1472,7 @@ function renderScenarioBtns(){
     s.id+' · '+s.name+'</button>').join("") +
     '<span class="note" style="margin:0 0 0 6px">Scenario B is the base case.</span>';
   $$("#scenario-btns [data-sc]").forEach(b=>b.addEventListener("click",()=>{
-    MODEL.activeScenario=b.dataset.sc; renderScenarioBtns(); renderTargetTable(); drawTarget(); drawMap();
+    MODEL.activeScenario=b.dataset.sc; renderScenarioBtns(); renderTargetTable(); drawTarget(); drawMap(); refreshMoney();
   }));
 }
 function renderSliders(){
@@ -1319,7 +1508,7 @@ function refreshScore(){
 const INPUTS = {
   monthsToFirstCut:8, hikeRisk:1, cutsDelivered:0,
   price3mo:-3.9, priceYoY:-4.7,
-  listingsYoY:42.8, clearance:59, mortgageRate:6.22,
+  listingsYoY:42.8, clearance:62.1, mortgageRate:6.22,
   vendorDiscount:-3.8, daysOnMarket:39, unemployment:4.5,
   popGrowth:1.8, buildScore:55
 };
@@ -1467,7 +1656,7 @@ async function runFetch(){
   MODEL.meta.lastFetch = new Date();
   $("#lg-sum").innerHTML = '<b>'+ok+' of '+FEEDS.length+' sources answered.</b> '+
     (ok===0
-      ? '<span class="fail">No live data was retrieved, so <b>nothing on the dashboard changed.</b> Every figure you see is still the 7 Sep 2026 vintage. Use the paste-in box below — that is the working path.</span>'
+      ? '<span class="fail">No live data was retrieved, so <b>nothing on the dashboard changed.</b> Every figure you see is still the 19 Sep 2026 vintage. Use the paste-in box below — that is the working path.</span>'
       : '<span class="ok">Responses received. They are raw documents, not parsed values — read the number you need and enter it below rather than trusting an unverified auto-parse.</span>');
   stampRun(ok>0 ? ok+"/"+FEEDS.length+" sources answered" : "fetch blocked — data unchanged");
 }
@@ -1478,13 +1667,379 @@ function stampRun(extra){
   $("#run-stamp").textContent = s + (extra ? " · " + extra : "");
 }
 
+
+/* ============================================================
+   PANEL 8-9 — live-in strategy + money model
+   All figures are placeholders the user overwrites. Nothing is stored.
+   ============================================================ */
+
+const MONEY = {
+  price: 621000,        // Broadmeadows median — example only
+  deposit: 45000,
+  saveMonthly: 2200,
+  rentNow: 560,         // weekly, what you pay now
+  rentNearWork: 600,    // weekly, renting near work later
+  rentReceived: 500,    // weekly, what the house earns
+  rate: 6.22,           // owner-occupier variable
+  investRate: 6.52,     // investor loan premium
+  landPct: 60,          // land (site) value as % of price
+  marginalRate: 32.5,   // marginal tax rate incl. Medicare band
+  waitMonths: 16
+};
+const MONEY_DEFAULTS = Object.assign({}, MONEY);
+const MONEY_FIELDS = [
+  {k:"price",         lab:"Purchase price",              min:450000, max:900000, step:5000,  fmt:v=>"$"+(v/1000).toFixed(0)+"k"},
+  {k:"deposit",       lab:"Deposit saved today",         min:0,      max:250000, step:1000,  fmt:v=>"$"+(v/1000).toFixed(0)+"k"},
+  {k:"saveMonthly",   lab:"Saved per month",             min:0,      max:6000,   step:100,   fmt:v=>"$"+v.toLocaleString()},
+  {k:"rentNow",       lab:"Rent you pay now (weekly)",   min:0,      max:1200,   step:10,    fmt:v=>"$"+v},
+  {k:"rentNearWork",  lab:"Rent near work later (wkly)", min:0,      max:1200,   step:10,    fmt:v=>"$"+v},
+  {k:"rentReceived",  lab:"Rent the house earns (wkly)", min:0,      max:1200,   step:10,    fmt:v=>"$"+v},
+  {k:"rate",          lab:"Owner-occupier rate",         min:3,      max:10,     step:0.01,  fmt:v=>v.toFixed(2)+"%"},
+  {k:"landPct",       lab:"Land value as % of price",    min:30,     max:90,     step:1,     fmt:v=>v+"%"},
+  {k:"marginalRate",  lab:"Your marginal tax rate",      min:0,      max:47,     step:0.5,   fmt:v=>v+"%"},
+  {k:"waitMonths",    lab:"Months you'd wait",           min:0,      max:36,     step:1,     fmt:v=>v+" mo"}
+];
+
+const aud = v => "$" + Math.round(v).toLocaleString();
+const aud0 = v => (v<0?"−$":"$") + Math.abs(Math.round(v)).toLocaleString();
+
+/* VIC transfer duty. Validated against published figures at $600k ($31,070)
+   and $700k ($37,070). Reliable across roughly $130k–$960k. */
+function dutyFull(v){ return 2870 + 0.06*(Math.max(v,130000) - 130000); }
+function dutyFHB(v){
+  if (v <= 600000) return 0;
+  if (v <= 750000) return dutyFull(v) * (v - 600000) / 150000;
+  return dutyFull(v);
+}
+/* VIC general land tax, 2024–2033 scale. */
+function landTax(site){
+  if (site < 50000)   return 0;
+  if (site < 100000)  return 500;
+  if (site < 300000)  return 975;
+  if (site < 600000)  return 1350 + 0.003*(site-300000);
+  if (site < 1000000) return 2250 + 0.006*(site-600000);
+  if (site < 1800000) return 4650 + 0.009*(site-1000000);
+  if (site < 3000000) return 11850 + 0.0165*(site-1800000);
+  return 31650 + 0.0265*(site-3000000);
+}
+function repayment(principal, annualRate, years){
+  const r = annualRate/100/12, n = years*12;
+  if (r === 0) return principal/n;
+  return principal * r / (1 - Math.pow(1+r, -n));
+}
+
+const LIVEIN = [
+  {y:1, label:"1 year", cgt:"Fully exempt if sold within 6 years of moving out",
+   ng:"Lost — bought after 12 May 2026", lt:"Payable from the first full year it is not your home",
+   v:"Works, but one year is thin evidence of a genuine main residence", ok:"warn"},
+  {y:3, label:"3 years", cgt:"Fully exempt if sold by year 9",
+   ng:"Lost — bought after 12 May 2026", lt:"Payable once it stops being your home",
+   v:"The sweet spot — main residence clearly established, six-year window intact", ok:"good"},
+  {y:6, label:"6 years", cgt:"Fully exempt if sold by year 12",
+   ng:"Lost — bought after 12 May 2026", lt:"Payable once it stops being your home",
+   v:"Safe on CGT, but you carry six years of outer-suburb commuting first", ok:"warn"}
+];
+let liveInYears = 3;
+
+function renderLiveIn(){
+  document.querySelector("#livein-btns").innerHTML = LIVEIN.map(l =>
+    '<button class="btn-ghost" data-li="'+l.y+'" aria-pressed="'+(l.y===liveInYears)+'">'+l.label+'</button>').join("");
+  $$("#livein-btns [data-li]").forEach(b => b.addEventListener("click", () => {
+    liveInYears = +b.dataset.li; renderLiveIn(); drawLiveIn();
+  }));
+  document.querySelector("#livein-rows").innerHTML = LIVEIN.map(l =>
+    '<tr'+(l.y===liveInYears?' style="background:color-mix(in srgb,var(--s1) 8%,transparent)"':'')+'>'+
+    '<td style="font-weight:500">'+l.label+' then move</td><td class="num">'+l.y+' yr</td>'+
+    '<td class="num">then rented</td><td style="font-size:12.5px">'+l.cgt+'</td>'+
+    '<td style="font-size:12.5px;color:var(--critical-ink)">'+l.ng+'</td>'+
+    '<td style="font-size:12.5px">'+l.lt+'</td>'+
+    '<td style="font-size:12.5px"><span class="chip '+(l.ok==="good"?"chip-live":"chip-assum")+'">'+
+    (l.ok==="good"?"Best":"Caution")+'</span> '+l.v+'</td></tr>').join("");
+}
+
+function drawLiveIn(){
+  const svg = document.querySelector("#chart-livein"); clear(svg);
+  const L=50, R=1130, y=112, total=14;
+  const xs = t => L + (t/total)*(R-L);
+  svg.appendChild(el("line",{x1:L,y1:y,x2:R,y2:y,stroke:"var(--axis)","stroke-width":"2"}));
+  for(let t=0;t<=total;t++){
+    svg.appendChild(el("line",{x1:xs(t),y1:y-6,x2:xs(t),y2:y+6,stroke:"var(--axis)","stroke-width":"1"}));
+    svg.appendChild(el("text",{x:xs(t),y:y+24,"text-anchor":"middle","font-family":"IBM Plex Mono, monospace",
+      "font-size":"10.5",fill:"var(--text-muted)"}, t===0?"buy":"yr "+t));
+  }
+  const li = liveInYears, end = li + 6;
+  const seg = (a,b,col,lab,yy,sub) => {
+    const r = el("rect",{x:xs(a),y:yy-12,width:Math.max(3,xs(b)-xs(a)),height:24,rx:"5",fill:col,opacity:"0.9",tabindex:"0"});
+    hoverable(r,"<b>"+lab+"</b><br>"+sub);
+    svg.appendChild(r);
+    svg.appendChild(el("text",{x:xs(a)+9,y:yy+5,"font-size":"12","font-weight":"600",fill:"#fff",
+      "font-family":"IBM Plex Sans Condensed, sans-serif"}, lab));
+  };
+  seg(0, li, "var(--s3)", "You live in it", y-42, "Main residence. No land tax, no CGT, owner-occupier interest rate.");
+  seg(li, end, "var(--s1)", "Rented — CGT still exempt", y-42, "The six-year rule. Sell inside this window and the gain is generally exempt.");
+  seg(end, total, "var(--s8)", "CGT now applies pro-rata", y-42, "Past six years, the gain is apportioned across the period beyond the window.");
+  seg(li, total, "var(--s2)", "Land tax payable", y+42, "Victoria: general threshold is $50,000 of site value. Your home is exempt; a rental is not.");
+  [[li,"You move out"],[end,"Six-year window closes"]].forEach(m=>{
+    svg.appendChild(el("line",{x1:xs(m[0]),y1:y-78,x2:xs(m[0]),y2:y+78,stroke:"var(--text-primary)",
+      "stroke-width":"1.5","stroke-dasharray":"4 3"}));
+    svg.appendChild(el("text",{x:xs(m[0])+7,y:y-84,"font-family":"IBM Plex Sans Condensed, sans-serif",
+      "font-size":"12","font-weight":"600",fill:"var(--text-primary)"}, m[1]));
+  });
+  svg.appendChild(el("text",{x:L,y:y+92,"font-size":"11.5",fill:"var(--text-secondary)"},
+    "Sell any time before year "+end+" and the capital gain is generally fully exempt. Negative gearing is unavailable throughout."));
+}
+
+/* ---------- money model ---------- */
+function renderMoneySliders(){
+  document.querySelector("#money-sliders").innerHTML = MONEY_FIELDS.map(f =>
+    '<div class="slider-row"><label for="mf-'+f.k+'">'+f.lab+'</label>'+
+    '<input type="range" id="mf-'+f.k+'" min="'+f.min+'" max="'+f.max+'" step="'+f.step+'" value="'+MONEY[f.k]+'">'+
+    '<span class="wval" id="mfv-'+f.k+'">'+f.fmt(MONEY[f.k])+'</span></div>').join("");
+  MONEY_FIELDS.forEach(f => {
+    document.querySelector("#mf-"+f.k).addEventListener("input", e => {
+      MONEY[f.k] = +e.target.value;
+      if (f.k === "rate") MONEY.investRate = MONEY.rate + 0.30;
+      document.querySelector("#mfv-"+f.k).textContent = f.fmt(MONEY[f.k]);
+      refreshMoney();
+    });
+  });
+}
+
+function moneyCalc(){
+  const M = MONEY;
+  const dep5   = M.price*0.05;
+  const costs  = dutyFHB(M.price) + 3000;              // duty + conveyancing/inspections
+  const need5  = dep5 + costs;
+  const gap    = Math.max(0, need5 - M.deposit);
+  const months = M.saveMonthly > 0 ? gap / M.saveMonthly : Infinity;
+  const loan   = M.price - dep5;
+  const repayM = repayment(loan, M.rate, 30);
+  const site   = M.price * M.landPct/100;
+  const lt     = landTax(site);
+  const rentY  = M.rentReceived*52;
+  const agent  = rentY*0.066;
+  const interest = loan * M.investRate/100;
+  const rates=2000, ins=1200, maint=1500, vacancy = rentY*(2/52);
+  const outgo  = interest + lt + agent + rates + ins + maint + vacancy;
+  const shortfall = rentY - outgo;                      // negative = out of pocket
+  const lostNG = shortfall < 0 ? -shortfall * M.marginalRate/100 : 0;
+  const rentPaid = M.rentNearWork*52;
+  const netCash  = rentY - rentPaid - (outgo - interest) - interest;
+  const remPct = scen().rem;
+  const priceAtBottom = M.price * (1 + remPct/100);
+  const fall = M.price - priceAtBottom;
+  const dutySaved = dutyFHB(M.price) - dutyFHB(priceAtBottom);
+  const W = M.waitMonths;
+  const interestOO = loan * M.rate/100 * (W/12);
+  const holding = (rates+ins+maint) * (W/12);
+  const rentWhileWaiting = M.rentNow*52*(W/12);
+  const ownVsRent = interestOO + holding - rentWhileWaiting;
+  const extraSaved = M.saveMonthly * W;
+  const waitAdvantage = fall + dutySaved + ownVsRent;
+  const equityAtBottom = priceAtBottom - loan;
+  return {dep5,costs,need5,gap,months,loan,repayM,site,lt,rentY,agent,interest,rates,ins,maint,
+          vacancy,outgo,shortfall,lostNG,rentPaid,netCash,priceAtBottom,fall,dutySaved,
+          interestOO,holding,rentWhileWaiting,ownVsRent,extraSaved,waitAdvantage,equityAtBottom,W};
+}
+
+function refreshMoney(){
+  const M = MONEY, c = moneyCalc();
+  const set = (id,v) => { const n = document.querySelector(id); if(n) n.textContent = v; };
+  const setH = (id,v) => { const n = document.querySelector(id); if(n) n.innerHTML = v; };
+
+  set("#m-dep5", aud(c.need5));
+  setH("#m-time5m", "5% deposit "+aud(c.dep5)+" + "+aud(c.costs)+" costs. You have "+aud(M.deposit)+".");
+  if (c.gap <= 0){ set("#m-time5","Now"); }
+  else if (!isFinite(c.months)){ set("#m-time5","—"); }
+  else { const mo = Math.ceil(c.months);
+         set("#m-time5", mo < 24 ? mo+" mo" : (mo/12).toFixed(1)+" yr"); }
+
+  set("#m-duty", aud(dutyFHB(M.price)));
+  setH("#m-dutynote", M.price <= 600000
+    ? "<b>Fully exempt.</b> Under the $600,000 first-home threshold."
+    : (M.price <= 750000
+       ? "In the taper. Full duty would be "+aud(dutyFull(M.price))+" — you save "+aud(dutyFull(M.price)-dutyFHB(M.price))+"."
+       : "<b>Above $750,000 — no concession at all.</b> Full duty applies."));
+  set("#m-repay", aud(c.repayM)+"/mo");
+  setH("#m-repaynote", "Loan "+aud(c.loan)+" at "+M.rate.toFixed(2)+"% over 30 years. Assessed near "+(M.rate+3).toFixed(2)+"% with the serviceability buffer.");
+
+  const under = c.loan - c.priceAtBottom;
+  setH("#m-negeq", under > 0
+    ? "At a 5% deposit your loan is "+aud(c.loan)+". Under scenario "+scen().id+" the house is worth "+aud(c.priceAtBottom)+
+      " at the bottom — you would be <b>"+aud(under)+" in negative equity</b>. You could not sell without writing a cheque, and you could not refinance. "+
+      "<b>This is the strongest argument against using the 5% guarantee before the bottom.</b>"
+    : "Under scenario "+scen().id+" the house is worth "+aud(c.priceAtBottom)+" at the bottom against a "+aud(c.loan)+
+      " loan — equity of "+aud(-under)+". You stay above water, but the margin is thin at 95% LVR.");
+
+  setH("#ng-cost", aud(c.lostNG));
+  setH("#stack-cost", aud(c.lt + c.agent + c.ins + c.maint + c.lostNG));
+  setH("#ng-cost5", aud(c.lostNG*5));
+
+  document.querySelector("#rental-rows").innerHTML = [
+    ["Rent received", c.rentY, "At "+aud(M.rentReceived)+"/week, "+((c.rentY/M.price)*100).toFixed(2)+"% gross yield"],
+    ["Loan interest", -c.interest, "Investor rate "+MONEY.investRate.toFixed(2)+"% — lenders price investment loans higher"],
+    ["VIC land tax", -c.lt, "Site value "+aud(c.site)+" at "+M.landPct+"% of price. Your home is exempt; a rental is not"],
+    ["Agent management", -c.agent, "6.6% of rent — typical Melbourne full management"],
+    ["Council rates", -c.rates, "Payable either way, but now not offsettable against salary"],
+    ["Insurance", -c.ins, "Landlord insurance costs more than home-and-contents"],
+    ["Maintenance", -c.maint, "Rule of thumb. Older outer-suburb stock runs higher"],
+    ["Vacancy allowance", -c.vacancy, "Two weeks a year. Melbourne vacancy is 1.6%, so this is conservative"]
+  ].map(r => '<tr><td style="font-size:13px">'+r[0]+'</td><td class="num" style="color:'+
+      (r[1]>=0?"var(--good-ink)":"var(--text-primary)")+'">'+aud0(r[1])+'</td>'+
+      '<td style="font-size:11.5px;color:var(--text-muted)">'+r[2]+'</td></tr>').join("");
+  setH("#rental-summary", c.shortfall < 0
+    ? "<b>Out of pocket "+aud(-c.shortfall)+" a year</b> before any principal repayment. Under the old rules that loss would have "+
+      "returned roughly "+aud(c.lostNG)+" in tax. Bought after 12 May 2026, it returns <b>nothing against your salary</b> — it is "+
+      "carried forward against future rental income or capital gains instead."
+    : "<b>Positively geared by "+aud(c.shortfall)+" a year.</b> That income is taxable, but you are not funding the property from salary.");
+
+  drawRentvest(c); drawBreakeven(c); drawDutyCurve();
+  document.querySelector("#be-scen").textContent = scen().id;
+}
+
+function drawRentvest(c){
+  const svg = document.querySelector("#chart-rentvest"); clear(svg);
+  const L=150, R=530, T=30, rowH=46;
+  const items = [
+    {lab:"Rent you receive", v:c.rentY, col:"var(--s3)"},
+    {lab:"Rent you pay", v:-c.rentPaid, col:"var(--s2)"},
+    {lab:"Property costs", v:-(c.outgo), col:"var(--s8)"},
+    {lab:"Net position", v:c.rentY - c.rentPaid - c.outgo, col:"var(--s1)"}
+  ];
+  const max = Math.max(...items.map(i=>Math.abs(i.v)));
+  const xs = v => L + (Math.abs(v)/max)*(R-L-20);
+  items.forEach((it,i)=>{
+    const y = T + i*rowH;
+    svg.appendChild(el("text",{x:L-12,y:y+18,"text-anchor":"end","font-size":"12",fill:"var(--text-secondary)"}, it.lab));
+    const r = el("rect",{x:L,y:y+4,width:Math.max(3,xs(it.v)-L),height:22,rx:"4",fill:it.col,tabindex:"0"});
+    hoverable(r,"<b>"+it.lab+"</b><br>"+aud0(it.v)+" per year");
+    svg.appendChild(r);
+    svg.appendChild(el("text",{x:xs(it.v)+8,y:y+20,"font-family":"IBM Plex Mono, monospace","font-size":"12",
+      "font-weight":"500",fill:"var(--text-primary)"}, aud0(it.v)));
+  });
+  svg.appendChild(el("line",{x1:L,y1:T,x2:L,y2:T+items.length*rowH-8,stroke:"var(--axis)","stroke-width":"1.5"}));
+}
+
+function drawBreakeven(c){
+  const svg = document.querySelector("#chart-breakeven"); clear(svg);
+  const L=70, R=1130, T=30, B=228;
+  const parts = [
+    {lab:"Price fall you avoid", v:c.fall, col:"var(--s3)"},
+    {lab:"Stamp duty saved", v:c.dutySaved, col:"var(--s3)"},
+    {lab:"Ownership costs avoided, less rent paid", v:c.ownVsRent, col:c.ownVsRent>=0?"var(--s3)":"var(--s8)"},
+    {lab:"Net advantage of waiting", v:c.waitAdvantage, col:"var(--s1)", total:true}
+  ];
+  const max = Math.max(...parts.map(p=>Math.abs(p.v)), 1);
+  const ys = v => B - (Math.abs(v)/max)*(B-T);
+  const bw = (R-L)/parts.length;
+  svg.appendChild(el("line",{x1:L,y1:B,x2:R,y2:B,stroke:"var(--axis)","stroke-width":"1.5"}));
+  parts.forEach((p,i)=>{
+    const x = L + i*bw + bw*0.18, w = bw*0.64;
+    const neg = p.v < 0;
+    const h = Math.max(3, B - ys(p.v));
+    const r = el("rect",{x, y: neg ? B : ys(p.v), width:w, height:h, rx:"4",
+      fill:p.col, opacity: p.total?"1":"0.9", tabindex:"0"});
+    hoverable(r,"<b>"+p.lab+"</b><br>"+aud0(p.v)+(neg?"<br>This one counts <i>against</i> waiting.":""));
+    svg.appendChild(r);
+    svg.appendChild(el("text",{x:x+w/2, y: neg ? B+h+18 : ys(p.v)-9, "text-anchor":"middle",
+      "font-family":"IBM Plex Mono, monospace","font-size":"13","font-weight":"500",
+      fill: p.total?"var(--s1)":"var(--text-primary)"}, aud0(p.v)));
+    p.lab.split(", ").forEach((line,j)=>{
+      svg.appendChild(el("text",{x:x+w/2,y:B+42+j*14,"text-anchor":"middle","font-size":"11.5",
+        fill:"var(--text-secondary)"}, line));
+    });
+  });
+  svg.appendChild(el("text",{x:L,y:T-10,"font-family":"IBM Plex Mono, monospace","font-size":"10.5",
+    "letter-spacing":"1",fill:"var(--text-muted)"}, "WAITING "+c.W+" MONTHS, SCENARIO "+scen().id));
+  const note = document.querySelector("#be-note");
+  if (note) note.innerHTML =
+    "<b>Waiting "+c.W+" months is worth about "+aud0(c.waitAdvantage)+" on these inputs</b>, and you would also have "+
+    aud(c.extraSaved)+" more deposit. Set the wait to 0 months, or switch to scenario E, and the advantage collapses — "+
+    "which is the honest test of whether the recommendation survives your own assumptions. "+
+    "What this does <i>not</i> price: rents are rising (Melbourne vacancy 1.6%, house rents at record highs), the risk the bottom "+
+    "never arrives, and the value of simply living in your own home for "+c.W+" months.";
+}
+
+function drawDutyCurve(){
+  const svg = document.querySelector("#chart-duty"); clear(svg);
+  const L=76, R=1140, T=26, B=248;
+  const lo=450000, hi=800000, maxD=45000;
+  const xs = v => L + ((v-lo)/(hi-lo))*(R-L);
+  const ys = d => B - (d/maxD)*(B-T);
+  [0,15000,30000,45000].forEach(d=>{
+    svg.appendChild(el("line",{x1:L,y1:ys(d),x2:R,y2:ys(d),stroke:"var(--grid)","stroke-width":"1"}));
+    svg.appendChild(el("text",{x:L-9,y:ys(d)+4,"text-anchor":"end","font-family":"IBM Plex Mono, monospace",
+      "font-size":"10.5",fill:"var(--text-muted)"}, "$"+(d/1000)+"k"));
+  });
+  for(let v=lo; v<=hi; v+=50000){
+    svg.appendChild(el("text",{x:xs(v),y:B+20,"text-anchor":"middle","font-family":"IBM Plex Mono, monospace",
+      "font-size":"10.5",fill:"var(--text-muted)"}, "$"+(v/1000)+"k"));
+  }
+  svg.appendChild(el("rect",{x:xs(600000),y:T,width:xs(650000)-xs(600000),height:B-T,fill:"var(--s3)",opacity:"0.13"}));
+  svg.appendChild(el("text",{x:(xs(600000)+xs(650000))/2,y:T-8,"text-anchor":"middle",
+    "font-family":"IBM Plex Mono, monospace","font-size":"10.5",fill:"var(--s3)"},"YOUR BAND"));
+  const mk = fn => { let d=""; for(let v=lo; v<=hi; v+=2000){ d += (d?"L":"M")+xs(v)+" "+ys(fn(v)); } return d; };
+  svg.appendChild(el("path",{d:mk(dutyFull),fill:"none",stroke:"var(--text-muted)","stroke-width":"2","stroke-dasharray":"5 4"}));
+  svg.appendChild(el("path",{d:mk(dutyFHB),fill:"none",stroke:"var(--s1)","stroke-width":"2.5"}));
+  [[600000,"$0 — fully exempt"],[650000,"≈$11.4k"],[750000,"concession ends"]].forEach(m=>{
+    const dv = dutyFHB(m[0]);
+    const c = el("circle",{cx:xs(m[0]),cy:ys(dv),r:"6",fill:"var(--s1)",stroke:"var(--surface-1)","stroke-width":"2",tabindex:"0"});
+    hoverable(c,"<b>$"+(m[0]/1000)+"k purchase</b><br>First-home duty "+aud(dv)+"<br>Full duty "+aud(dutyFull(m[0])));
+    svg.appendChild(c);
+    svg.appendChild(el("text",{x:xs(m[0]),y:ys(dv)-14,"text-anchor":"middle","font-size":"11.5",
+      "font-weight":"500",fill:"var(--text-primary)"}, m[1]));
+  });
+  svg.appendChild(el("line",{x1:L,y1:B,x2:R,y2:B,stroke:"var(--axis)","stroke-width":"1"}));
+  svg.appendChild(el("text",{x:R-4,y:ys(dutyFull(790000))-12,"text-anchor":"end","font-size":"11.5",
+    fill:"var(--text-muted)"},"Standard duty (no concession)"));
+  svg.appendChild(el("text",{x:R-4,y:ys(dutyFHB(735000))+20,"text-anchor":"end","font-size":"11.5",
+    "font-weight":"500",fill:"var(--s1)"},"First home buyer — the two merge at $750k"));
+  svg.appendChild(el("text",{x:L+8,y:B+46,"font-size":"11.5",fill:"var(--text-secondary)"},
+    "First-home duty is approximate — confirm with the State Revenue Office calculator before you bid."));
+}
+
+const SAVINGS = [
+  {t:"1 · Don't buy at 95% LVR before the bottom", c:"good",
+   b:"The First Home Guarantee is a genuinely good scheme — 5% deposit, no LMI, no income cap, no place cap, Melbourne cap $950,000. "+
+     "But a 5% deposit into a market the model says has further to fall is how people end up in negative equity and trapped. "+
+     "Use the waiting period to get to 10–15%, then use the guarantee if you still need it."},
+  {t:"2 · First Home Super Saver — the highest-return savings account you have", c:"good",
+   b:"Salary-sacrifice into super, then withdraw it for the deposit. Contributions are taxed at 15% instead of your marginal rate, "+
+     "so at a 32.5% marginal rate you gain roughly 17.5c in the dollar before any earnings. Caps: $15,000 per financial year, "+
+     "$50,000 total per person — $100,000 for a couple. You withdraw 100% of after-tax and 85% of before-tax contributions, plus deemed earnings. "+
+     "One withdrawal only, so time it. Start now: the annual cap means you cannot backfill later."},
+  {t:"3 · Engineer the price to $600,000, not $650,000", c:"good",
+   b:"The duty taper means the last $50,000 of your band effectively costs about $61,400. If two houses are close, the cheaper one "+
+     "is worth materially more than the price gap suggests. This is the single easiest saving in the whole plan and it requires no forecasting."},
+  {t:"4 · Keep the deposit liquid and boring", c:"warn",
+   b:"You may need to move fast when three of the four triggers fire. Money that needs 30 days' notice, or that is in equities that "+
+     "could be down 15% on the day you need it, is not deposit money. A high-interest savings account is the right vehicle even when "+
+     "the return looks unexciting — you are buying optionality, not yield."},
+  {t:"5 · Get pre-approval, and renew it", c:"warn",
+   b:"Pre-approval typically lapses after three to six months. If you are waiting into late 2027, you will renew it several times. "+
+     "Each renewal re-tests your borrowing capacity against the rate of the day — which is exactly why a rate cut mechanically "+
+     "increases what you can borrow, and why the bottom and the capacity increase arrive together."},
+  {t:"6 · If you will rent it out, price the exit before you buy", c:"warn",
+   b:"Buy a house that rents well, not just one that lives well: three bedrooms, near transport and schools, low maintenance. "+
+     "And check the land value — Victorian land tax is charged on site value, so two houses at the same price can carry very "+
+     "different annual tax bills depending on land size."}
+];
+function renderSavings(){
+  document.querySelector("#savings-cards").innerHTML = SAVINGS.map(s =>
+    '<div class="tile" style="min-height:auto; border-left:3px solid '+(s.c==="good"?"var(--good)":"var(--warning)")+'">'+
+    '<div style="font-family:\'IBM Plex Sans Condensed\',sans-serif;font-weight:600;font-size:15px;margin-bottom:4px">'+s.t+'</div>'+
+    '<div class="meta" style="font-size:12.5px">'+s.b+'</div></div>').join("");
+}
+
 /* ===================== init ===================== */
 function drawAll(){
   drawGauge(); draw30y(); drawCycles(); drawProb(); drawFactors(); drawTarget(); drawMap(); drawWindow();
+  drawLiveIn(); refreshMoney();
 }
 function init(){
   renderHealth(); renderCycles(); renderBacktest(); renderTriggers();
   renderConflicts(); renderSources(); renderSliders(); renderScenarioBtns();
+  renderLiveIn(); renderMoneySliders(); renderSavings();
   renderFactorTable(); renderTargetTable(); drawAll(); refreshScore(); stampRun(null);
 
   $("#btn-update").onclick = openModal;
@@ -1497,6 +2052,9 @@ function init(){
   $("#btn-reset-w").onclick = () => {
     MODEL.factors.forEach(f => f.w = MODEL.defaultWeights[f.id]);
     renderSliders(); refreshScore();
+  };
+  $("#btn-reset-money").onclick = () => {
+    Object.assign(MONEY, MONEY_DEFAULTS); renderMoneySliders(); refreshMoney();
   };
   $("#theme-toggle").onclick = e => {
     const dark = document.documentElement.getAttribute("data-theme") === "dark";

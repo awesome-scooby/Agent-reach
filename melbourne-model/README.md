@@ -27,6 +27,32 @@ cycle is the only factor that has consistently *led* Melbourne troughs.
 Every score is derived from a published formula, listed in the update dialog. Change
 the weights with the sliders and the whole dashboard recomputes.
 
+## The ownership strategy (Panels 8–9)
+
+Models buying as an owner-occupier, living in it, then moving near work and renting it out.
+
+Two tax rules dominate and they pull in opposite directions:
+
+- **Negative gearing is lost.** Abolished for *established* homes bought after 7:30pm 12 May 2026,
+  effective 1 July 2027. Properties *held* before that date are grandfathered; a purchase today is
+  not. Rental losses can then only offset rental income or future capital gains — not salary.
+  New builds keep both concessions.
+- **The CGT six-year rule survives, and is worth more than before.** Live in it first as your genuine
+  main residence, move out, rent it, and the main-residence CGT exemption generally continues for up
+  to six years. With the 50% CGT discount replaced from 1 July 2027, the family home is now the most
+  tax-advantaged appreciating asset available.
+
+Panel 9 is a money model driven entirely by sliders — purchase price, deposit, savings rate, rents,
+interest rate, land value share, marginal rate, wait length. Every default is a clearly-labelled
+placeholder, nothing is stored, and it all runs in the browser. It computes VIC first-home stamp duty
+(calibrated against published SRO figures at $600k and $700k), VIC land tax on the 2024–2033 scale,
+repayments, negative-equity exposure at 95% LVR, the full rental cost stack, the rentvest cash gap,
+and a component-by-component breakdown of waiting versus buying today.
+
+**The conclusion the two panels share:** the rentvest manoeuvre only exists to solve a location
+problem that the price band creates. Waiting to the bottom moves $600k–$650k from 16–35 km out to
+~9–13 km out — which may remove the need to move at all, and with it every cost in the stack.
+
 ## Refreshing the data
 
 A standalone HTML page **cannot** fetch most Australian property data. Browsers block
