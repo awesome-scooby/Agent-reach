@@ -14,32 +14,61 @@
   --hazard:#b3261e; --hazard-soft:#fdecea;
   --caution:#8a6100; --caution-soft:#fdf5e2;
   --ok:#1e6b3a; --ok-soft:#eaf5ee;
+  --hover:#f2f6f7; --chip:#eef2f4; --th:#f0f4f6; --panel2:#fbfcfd;
+  --hdr-ink:#ffffff; --hdr-ink2:#b9ccd6; --hdr-eyebrow:#7fb7c4;
+  --chipbg:#1b3a4f; --chipline:#2c5570; --chipink:#cfe4ec;
+  --barbg:#23445a; --barfill:#4fb3c4; --sum-ink:#dbe8ee; --sum-key:#8fd7e3;
   --radius:10px;
   --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
   --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+
+/* ---------- dark theme ---------- */
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ink:#dce6ec; --ink2:#a2b4c0; --ink3:#7c8f9d;
+    --bg:#0c151c; --panel:#132029; --line:#283a47; --line2:#1e2d38;
+    --hdr:#081117; --hdr2:#14313f;
+    --accent:#58b9c9; --accent-soft:#102f39; --accent-line:#2c6a78;
+    --hazard:#f09088; --hazard-soft:#341715;
+    --caution:#e2ba55; --caution-soft:#2e2510;
+    --ok:#74cb94; --ok-soft:#102a1a;
+    --hover:#182935; --chip:#1b2a34; --th:#16242e; --panel2:#0f1c24;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#dce6ec; --ink2:#a2b4c0; --ink3:#7c8f9d;
+  --bg:#0c151c; --panel:#132029; --line:#283a47; --line2:#1e2d38;
+  --hdr:#081117; --hdr2:#14313f;
+  --accent:#58b9c9; --accent-soft:#102f39; --accent-line:#2c6a78;
+  --hazard:#f09088; --hazard-soft:#341715;
+  --caution:#e2ba55; --caution-soft:#2e2510;
+  --ok:#74cb94; --ok-soft:#102a1a;
+  --hover:#182935; --chip:#1b2a34; --th:#16242e; --panel2:#0f1c24;
+}
+
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--sans)}
 
 /* ---------- header ---------- */
-header{background:var(--hdr);color:#fff;padding:18px 16px 16px}
+header{background:var(--hdr);color:var(--hdr-ink);padding:18px 16px 16px}
 .hwrap{max-width:1180px;margin:0 auto}
-.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#7fb7c4;font-weight:700;margin:0 0 4px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--hdr-eyebrow);font-weight:700;margin:0 0 4px}
 header h1{margin:0;font-size:clamp(20px,3.4vw,30px);line-height:1.2;font-weight:800;letter-spacing:-.01em}
-.sub{margin:6px 0 0;color:#b9ccd6;font-size:14px;max-width:70ch}
+.sub{margin:6px 0 0;color:var(--hdr-ink2);font-size:14px;max-width:70ch}
 .flow{margin:14px 0 0;display:flex;flex-wrap:wrap;gap:6px;font-size:11px;font-weight:700;letter-spacing:.06em}
-.flow span{background:#1b3a4f;border:1px solid #2c5570;color:#cfe4ec;padding:4px 8px;border-radius:999px;white-space:nowrap}
+.flow span{background:var(--chipbg);border:1px solid var(--chipline);color:var(--chipink);padding:4px 8px;border-radius:999px;white-space:nowrap}
 .prog{margin:14px 0 0;display:flex;align-items:center;gap:10px}
-.bar{flex:1;height:7px;background:#23445a;border-radius:999px;overflow:hidden}
-.bar i{display:block;height:100%;width:0;background:#4fb3c4;transition:width .3s}
-.progtxt{font-size:12px;color:#b9ccd6;font-variant-numeric:tabular-nums;white-space:nowrap}
+.bar{flex:1;height:7px;background:var(--barbg);border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--barfill);transition:width .3s}
+.progtxt{font-size:12px;color:var(--hdr-ink2);font-variant-numeric:tabular-nums;white-space:nowrap}
 
 /* ---------- layout ---------- */
 .shell{max-width:1180px;margin:0 auto;padding:0 16px 64px;display:grid;grid-template-columns:250px 1fr;gap:24px;align-items:start}
 @media(max-width:900px){.shell{grid-template-columns:1fr;gap:0;padding-bottom:40px}}
 
-nav{position:sticky;top:12px;margin-top:20px}
+nav{position:sticky;top:calc(env(safe-area-inset-top, 0px) + 12px);margin-top:20px}
 @media(max-width:900px){nav{position:static;margin:14px 0 0}}
 .navtoggle{display:none;width:100%;min-height:46px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
   font:700 15px var(--sans);color:var(--ink);padding:10px 14px;text-align:left;cursor:pointer}
@@ -49,7 +78,7 @@ nav{position:sticky;top:12px;margin-top:20px}
 .navlist button{display:flex;gap:9px;align-items:baseline;width:100%;min-height:44px;background:none;border:0;
   border-bottom:1px solid var(--line2);padding:10px 12px;text-align:left;font:500 13.5px/1.35 var(--sans);color:var(--ink2);cursor:pointer}
 .navlist button:last-child{border-bottom:0}
-.navlist button:hover{background:#f2f6f7}
+.navlist button:hover{background:var(--hover)}
 .navlist button[aria-current="true"]{background:var(--accent-soft);color:var(--ink);font-weight:700;box-shadow:inset 3px 0 0 var(--accent)}
 .navnum{font:700 11px var(--mono);color:var(--ink3);min-width:20px}
 .navlist button[aria-current="true"] .navnum{color:var(--accent)}
@@ -70,7 +99,7 @@ p{margin:0 0 12px}
 ul,ol{margin:0 0 12px;padding-left:22px}
 li{margin:0 0 6px}
 strong{font-weight:700}
-code{font:13px var(--mono);background:#eef2f4;padding:1px 5px;border-radius:4px}
+code{font:13px var(--mono);background:var(--chip);padding:1px 5px;border-radius:4px}
 
 .obj{background:var(--accent-soft);border:1px solid var(--accent-line);border-left:4px solid var(--accent);
   border-radius:var(--radius);padding:14px 16px;margin:0 0 18px}
@@ -86,38 +115,39 @@ code{font:13px var(--mono);background:#eef2f4;padding:1px 5px;border-radius:4px}
 .b-cau .lbl{color:var(--caution)}
 .b-ok{background:var(--ok-soft);border-color:var(--ok)}
 .b-ok .lbl{color:var(--ok)}
-.b-say{background:#f0f4f7;border-color:var(--ink2)}
+.b-say{background:var(--th);border-color:var(--ink2)}
 .b-say .lbl{color:var(--ink2)}
 .b-say q{font-style:italic;display:block}
 
 .tw{overflow-x:auto;margin:14px 0;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:var(--radius)}
 table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:520px}
 th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line2);vertical-align:top}
-th{background:#f0f4f6;font-weight:700;font-size:12px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink2);white-space:nowrap}
+th{background:var(--th);font-weight:700;font-size:12px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink2);white-space:nowrap}
 tr:last-child td{border-bottom:0}
 td.no{color:var(--hazard);font-weight:700}
 td.yes{color:var(--ok);font-weight:700}
 td.mid{color:var(--caution);font-weight:700}
 
 /* ---------- drawings ---------- */
-.dwgwrap{margin:16px 0;border:1px solid var(--line);border-radius:var(--radius);background:#fff;overflow:hidden}
+.dwgwrap{margin:16px 0;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);overflow:hidden}
 .dwghead{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;
-  padding:10px 14px;background:#f0f4f6;border-bottom:1px solid var(--line)}
+  padding:10px 14px;background:var(--th);border-bottom:1px solid var(--line)}
 .dwghead b{font-size:13.5px}
 .dwghead .num{font:700 11.5px var(--mono);color:var(--ink3)}
-.dwgscroll{overflow:auto;-webkit-overflow-scrolling:touch;background:#fff}
-.dwg{min-width:900px;padding:8px}
+/* Drawings keep a white ground in BOTH themes: an inverted engineering drawing is wrong. */
+.dwgscroll{overflow:auto;-webkit-overflow-scrolling:touch;background:#ffffff}
+.dwg{min-width:900px;padding:8px;background:#ffffff;color:#16202a}
 .dwg svg{width:100%;height:auto;display:block}
-.dwgnote{padding:8px 14px;background:#fafbfc;border-top:1px solid var(--line2);font-size:12.5px;color:var(--ink2)}
+.dwgnote{padding:8px 14px;background:var(--panel2);border-top:1px solid var(--line2);font-size:12.5px;color:var(--ink2)}
 
 /* ---------- knowledge check ---------- */
-.kc{background:#fbfcfd;border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin:22px 0 0}
+.kc{background:var(--panel2);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin:22px 0 0}
 .kc>h3{margin-top:0}
 .q{border-top:1px solid var(--line2);padding:16px 0 4px}
 .q:first-of-type{border-top:0;padding-top:4px}
 .qtext{font-weight:600;margin:0 0 10px}
 .opts{display:grid;gap:7px}
-.opt{display:block;width:100%;min-height:44px;text-align:left;background:#fff;border:1px solid var(--line);
+.opt{display:block;width:100%;min-height:44px;text-align:left;background:var(--panel);border:1px solid var(--line);
   border-radius:8px;padding:10px 13px;font:14.5px/1.45 var(--sans);color:var(--ink);cursor:pointer}
 .opt:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
 .opt:disabled{cursor:default}
@@ -130,11 +160,11 @@ td.mid{color:var(--caution);font-weight:700}
 .fb.bad{background:var(--hazard-soft);border-color:var(--hazard)}
 .fb b{display:block;margin-bottom:3px}
 
-.sum{background:var(--hdr);color:#dbe8ee;border-radius:var(--radius);padding:18px 20px;margin:22px 0 0}
-.sum h3{color:#fff;margin:0 0 10px;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+.sum{background:var(--hdr);color:var(--sum-ink);border-radius:var(--radius);padding:18px 20px;margin:22px 0 0}
+.sum h3{color:var(--hdr-ink);margin:0 0 10px;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
 .sum ul{margin:0;padding-left:20px}
 .sum li{margin:0 0 7px}
-.sum strong{color:#8fd7e3}
+.sum strong{color:var(--sum-key)}
 
 .pager{display:flex;gap:10px;margin:22px 0 0}
 .pager button{flex:1;min-height:46px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
@@ -142,12 +172,14 @@ td.mid{color:var(--caution);font-weight:700}
 .pager button:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
 .pager button:disabled{opacity:.4;cursor:default}
 
-footer{background:var(--hdr);color:#9db7c4;padding:26px 16px 34px;font-size:12.5px;line-height:1.65}
+footer{background:var(--hdr);color:var(--hdr-ink2);padding:26px 16px 34px;font-size:12.5px;line-height:1.65}
 .fwrap{max-width:1180px;margin:0 auto}
-footer strong{color:#cfe4ec}
+footer strong{color:var(--chipink)}
 footer p{margin:0 0 10px;max-width:90ch}
 
 /* ---------- print ---------- */
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
 @media print{
   body{background:#fff;font-size:11pt}
   header{background:#fff;color:#000;border-bottom:2px solid #000}
@@ -2829,7 +2861,7 @@ footer p{margin:0 0 10px;max-width:90ch}
 
     <h3>The traceability chain &mdash; what &ldquo;checked&rdquo; actually means</h3>
     <p>For <strong>every</strong> I/O point this chain must close:</p>
-    <p style="font:13px/2 var(--mono);background:#f0f4f6;padding:12px 14px;border-radius:8px;overflow-x:auto">
+    <p style="font:13px/2 var(--mono);background:var(--th);padding:12px 14px;border-radius:8px;overflow-x:auto">
       field device tag &rarr; cable &rarr; core &rarr; terminal &rarr; internal wire &rarr; module + channel &rarr; PLC address &rarr; SCADA tag
     </p>
     <p>If any link is missing or inconsistent, the point is not signed off. Build the required list <strong>from the schematics</strong>, not from the termination drawing &mdash; otherwise you are only checking the drafter against themselves.</p>
