@@ -1,0 +1,442 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1587 1122" width="1587" height="1122">
+
+<style>
+  .bg{fill:#ffffff}
+  .brd{fill:none;stroke:#111;stroke-width:2}
+  .brd2{fill:none;stroke:#111;stroke-width:1}
+  .pw{fill:none;stroke:#111;stroke-width:2.2;stroke-linecap:square}
+  .w{fill:none;stroke:#111;stroke-width:1.6;stroke-linecap:square}
+  .wdc{fill:none;stroke:#1f4e9c;stroke-width:1.8;stroke-linecap:square}
+  .wsaf{fill:none;stroke:#c9a227;stroke-width:2.4;stroke-linecap:square}
+  .wana{fill:none;stroke:#7a3fa0;stroke-width:1.8;stroke-linecap:square}
+  .wext{fill:none;stroke:#d97706;stroke-width:1.8;stroke-linecap:square}
+  .wref{fill:none;stroke:#888;stroke-width:1.1;stroke-dasharray:4 3}
+  .rail{fill:none;stroke:#1f4e9c;stroke-width:3;stroke-linecap:square}
+  .sym{fill:none;stroke:#111;stroke-width:1.7}
+  .dev{fill:#ffffff;stroke:#111;stroke-width:1.7}
+  .devf{fill:#f2f4f7;stroke:#111;stroke-width:1.7}
+  .saf{fill:#fdf6e0;stroke:#a98207;stroke-width:1.8}
+  .plc{fill:#eef4fb;stroke:#111;stroke-width:1.7}
+  .fld{fill:#f4fbf4;stroke:#111;stroke-width:1.7}
+  .term{fill:#ffffff;stroke:#111;stroke-width:1.5}
+  .termy{fill:#fdf0b8;stroke:#a98207;stroke-width:1.5}
+  .terma{fill:#f3edfa;stroke:#7a3fa0;stroke-width:1.5}
+  .t{font-family:"DejaVu Sans",Arial,Helvetica,sans-serif;fill:#111}
+  .t8{font-size:8px}.t9{font-size:9px}.t10{font-size:10px}.t11{font-size:11px}
+  .t12{font-size:12px}.t14{font-size:14px}.t18{font-size:18px}
+  .b{font-weight:700}.mid{text-anchor:middle}.end{text-anchor:end}
+  .prov{fill:#b03a2e;font-weight:700}
+  .note{fill:#7a4b00}
+  .grn{fill:#1a7a3c}
+  .blu{fill:#1f4e9c}
+  .amb{fill:#8a6d00}
+  .pur{fill:#7a3fa0}
+</style>
+
+<rect class="bg" x="0" y="0" width="1587" height="1122"/>
+<rect class="brd" x="18" y="18" width="1551" height="1086"/>
+<rect class="brd2" x="30" y="30" width="1527" height="1062"/>
+<text x="125.4375" y="27" class="t t10 b mid">A</text>
+<text x="125.4375" y="1103" class="t t10 b mid">A</text>
+<text x="316.3125" y="27" class="t t10 b mid">B</text>
+<text x="316.3125" y="1103" class="t t10 b mid">B</text>
+<text x="507.1875" y="27" class="t t10 b mid">C</text>
+<text x="507.1875" y="1103" class="t t10 b mid">C</text>
+<text x="698.0625" y="27" class="t t10 b mid">D</text>
+<text x="698.0625" y="1103" class="t t10 b mid">D</text>
+<text x="888.9375" y="27" class="t t10 b mid">E</text>
+<text x="888.9375" y="1103" class="t t10 b mid">E</text>
+<text x="1079.8125" y="27" class="t t10 b mid">F</text>
+<text x="1079.8125" y="1103" class="t t10 b mid">F</text>
+<text x="1270.6875" y="27" class="t t10 b mid">G</text>
+<text x="1270.6875" y="1103" class="t t10 b mid">G</text>
+<text x="1461.5625" y="27" class="t t10 b mid">H</text>
+<text x="1461.5625" y="1103" class="t t10 b mid">H</text>
+<text x="24" y="118.5" class="t t10 b mid">1</text>
+<text x="1563" y="118.5" class="t t10 b mid">1</text>
+<text x="24" y="295.5" class="t t10 b mid">2</text>
+<text x="1563" y="295.5" class="t t10 b mid">2</text>
+<text x="24" y="472.5" class="t t10 b mid">3</text>
+<text x="1563" y="472.5" class="t t10 b mid">3</text>
+<text x="24" y="649.5" class="t t10 b mid">4</text>
+<text x="1563" y="649.5" class="t t10 b mid">4</text>
+<text x="24" y="826.5" class="t t10 b mid">5</text>
+<text x="1563" y="826.5" class="t t10 b mid">5</text>
+<text x="24" y="1003.5" class="t t10 b mid">6</text>
+<text x="1563" y="1003.5" class="t t10 b mid">6</text>
+<text x="46" y="58" class="t t18 b">PLC DIGITAL INPUTS &#8212; SLOT 2 (TYPICAL)</text>
+<text x="46" y="76" class="t t11">5069-IB16 &#183; 24 V DC sinking module, sourcing field devices &#183; every field input lands on a terminal, never directly on the module</text>
+<line x1="76" y1="134" x2="76" y2="782" class="wdc"/>
+<text x="68" y="124" class="t t10 b blu">+24 V DC</text>
+<text x="68" y="136" class="t t9 blu">(ECP2)</text>
+<rect x="790" y="120" width="190" height="660" rx="0" class="plc"/>
+<text x="885" y="138" class="t t11 b mid">5069-IB16   SLOT 2</text>
+<rect x="990" y="120" width="130" height="120" rx="0" class="plc"/>
+<text x="1055" y="140" class="t t10 b mid">5069-L306ER</text>
+<text x="1055" y="156" class="t t9 mid">CompactLogix</text>
+<text x="1055" y="170" class="t t9 mid">5380</text>
+<text x="1055" y="192" class="t t8 mid">Platform confirmed</text>
+<text x="1055" y="204" class="t t8 mid">TQ-007</text>
+<text x="1055" y="224" class="t t8 mid">Backplane</text>
+<line x1="980" y1="180" x2="990" y2="180" class="wdc"/>
+<text x="150" y="116" class="t t9 b">FIELD / INTERNAL DEVICE</text>
+<text x="540" y="116" class="t t9 b">TERMINAL</text>
+<text x="600" y="116" class="t t9 b">CABLE</text>
+<text x="800" y="158" class="t t9 b"></text>
+<circle cx="76" cy="158" r="3.2" fill="#111"/>
+<line x1="76" y1="158" x2="144" y2="158" class="wdc"/>
+<rect x="150" y="145" width="150" height="26" rx="0" class="fld"/>
+<text x="156" y="156" class="t t9 b">Q11 aux</text>
+<text x="156" y="167" class="t t8">Feeder available</text>
+<line x1="300" y1="158" x2="336" y2="158" class="wdc"/>
+<line x1="336" y1="158" x2="344" y2="158" class="wdc"/>
+<line x1="368" y1="158" x2="376" y2="158" class="wdc"/>
+<line x1="344" y1="148" x2="344" y2="168" class="sym"/>
+<line x1="368" y1="148" x2="368" y2="168" class="sym"/>
+<line x1="341" y1="168" x2="371" y2="148" class="sym"/>
+<text x="356" y="144" class="t t8 b mid prov">NC</text>
+<line x1="376" y1="158" x2="546" y2="158" class="wdc"/>
+<rect x="546" y="147" width="44" height="22" rx="0" class="term"/>
+<text x="568" y="161" class="t t9 b mid">020</text>
+<text x="602" y="156" class="t t8">internal</text>
+<line x1="590" y1="158" x2="790" y2="158" class="wdc"/>
+<text x="800" y="161" class="t t9 b">DI-00</text>
+<text x="860" y="161" class="t t8">Feeder available</text>
+<circle cx="76" cy="198" r="3.2" fill="#111"/>
+<line x1="76" y1="198" x2="144" y2="198" class="wdc"/>
+<rect x="150" y="185" width="150" height="26" rx="0" class="fld"/>
+<text x="156" y="196" class="t t9 b">VSD-101</text>
+<text x="156" y="207" class="t t8">Drive healthy</text>
+<line x1="300" y1="198" x2="336" y2="198" class="wdc"/>
+<line x1="336" y1="198" x2="344" y2="198" class="wdc"/>
+<line x1="368" y1="198" x2="376" y2="198" class="wdc"/>
+<line x1="344" y1="188" x2="344" y2="208" class="sym"/>
+<line x1="368" y1="188" x2="368" y2="208" class="sym"/>
+<line x1="341" y1="208" x2="371" y2="188" class="sym"/>
+<text x="356" y="184" class="t t8 b mid prov">NC</text>
+<line x1="376" y1="198" x2="546" y2="198" class="wdc"/>
+<rect x="546" y="187" width="44" height="22" rx="0" class="term"/>
+<text x="568" y="201" class="t t9 b mid">017</text>
+<text x="602" y="196" class="t t8">internal</text>
+<line x1="590" y1="198" x2="790" y2="198" class="wdc"/>
+<line x1="790" y1="185" x2="980" y2="185" class="brd2"/>
+<text x="800" y="201" class="t t9 b">DI-01</text>
+<text x="860" y="201" class="t t8">Drive healthy</text>
+<circle cx="76" cy="238" r="3.2" fill="#111"/>
+<line x1="76" y1="238" x2="144" y2="238" class="wdc"/>
+<rect x="150" y="225" width="150" height="26" rx="0" class="fld"/>
+<text x="156" y="236" class="t t9 b">VSD-101</text>
+<text x="156" y="247" class="t t8">Drive running</text>
+<line x1="300" y1="238" x2="336" y2="238" class="wdc"/>
+<line x1="336" y1="238" x2="344" y2="238" class="wdc"/>
+<line x1="368" y1="238" x2="376" y2="238" class="wdc"/>
+<line x1="344" y1="228" x2="344" y2="248" class="sym"/>
+<line x1="368" y1="228" x2="368" y2="248" class="sym"/>
+<text x="356" y="224" class="t t8 b mid">NO</text>
+<line x1="376" y1="238" x2="546" y2="238" class="wdc"/>
+<rect x="546" y="227" width="44" height="22" rx="0" class="term"/>
+<text x="568" y="241" class="t t9 b mid">018</text>
+<text x="602" y="236" class="t t8">internal</text>
+<line x1="590" y1="238" x2="790" y2="238" class="wdc"/>
+<line x1="790" y1="225" x2="980" y2="225" class="brd2"/>
+<text x="800" y="241" class="t t9 b">DI-02</text>
+<text x="860" y="241" class="t t8">Drive running</text>
+<circle cx="76" cy="278" r="3.2" fill="#111"/>
+<line x1="76" y1="278" x2="144" y2="278" class="wdc"/>
+<rect x="150" y="265" width="150" height="26" rx="0" class="fld"/>
+<text x="156" y="276" class="t t9 b">S101-LOR</text>
+<text x="156" y="287" class="t t8">Selector LOCAL</text>
+<line x1="300" y1="278" x2="336" y2="278" class="wdc"/>
+<line x1="336" y1="278" x2="344" y2="278" class="wdc"/>
+<line x1="368" y1="278" x2="376" y2="278" class="wdc"/>
+<line x1="344" y1="268" x2="344" y2="288" class="sym"/>
+<line x1="368" y1="268" x2="368" y2="288" class="sym"/>
+<text x="356" y="264" class="t t8 b mid">NO</text>
+<line x1="376" y1="278" x2="546" y2="278" class="wdc"/>
+<rect x="546" y="267" width="44" height="22" rx="0" class="term"/>
+<text x="568" y="281" class="t t9 b mid">005</text>
+<text x="602" y="276" class="t t8">C-0102 core 5</text>
+<line x1="590" y1="278" x2="790" y2="278" class="wdc"/>
+<line x1="790" y1="265" x2="980" y2="265" class="brd2"/>
+<text x="800" y="281" class="t t9 b">DI-03</text>
+<text x="860" y="281" class="t t8">Selector LOCAL</text>
+<circle cx="76" cy="318" r="3.2" fill="#111"/>
+<line x1="76" y1="318" x2="144" y2="318" class="wdc"/>
+<rect x="150" y="305" width="150" height="26" rx="0" class="fld"/>
+<text x="156" y="316" class="t t9 b">S101-LOR</text>
+<text x="156" y="327" class="t t8">Selector REMOTE</text>
+<line x1="300" y1="318" x2="336" y2="318" class="wdc"/>
+<line x1="336" y1="318" x2="344" y2="318" class="wdc"/>
+<line x1="368" y1="318" x2="376" y2="318" class="wdc"/>
+<line x1="344" y1="308" x2="344" y2="328" class="sym"/>
+<line x1="368" y1="308" x2="368" y2="328" class="sym"/>
+<text x="356" y="304" class="t t8 b mid">NO</text>
+<line x1="376" y1="318" x2="546" y2="318" class="wdc"/>
+<rect x="546" y="307" width="44" height="22" rx="0" class="term"/>
+<text x="568" y="321" class="t t9 b mid">006</text>
+<text x="602" y="316" class="t t8">C-0102 core 6</text>
+<line x1="590" y1="318" x2="790" y2="318" class="wdc"/>
+<line x1="790" y1="305" x2="980" y2="305" class="brd2"/>
+<text x="800" y="321" class="t t9 b">DI-04</text>
+<text x="860" y="321" class="t t8">Selector REMOTE</text>
+<circle cx="76" cy="358" r="3.2" fill="#111"/>
+<line x1="76" y1="358" x2="144" y2="358" class="wdc"/>
+<rect x="150" y="345" width="150" height="26" rx="0" class="fld"/>
+<text x="156" y="356" class="t t9 b">KT101</text>
+<text x="156" y="367" class="t t8">Thermistor healthy</text>
+<line x1="300" y1="358" x2="336" y2="358" class="wdc"/>
+<line x1="336" y1="358" x2="344" y2="358" class="wdc"/>
+<line x1="368" y1="358" x2="376" y2="358" class="wdc"/>
+<line x1="344" y1="348" x2="344" y2="368" class="sym"/>
+<line x1="368" y1="348" x2="368" y2="368" class="sym"/>
+<line x1="341" y1="368" x2="371" y2="348" class="sym"/>
+<text x="356" y="344" class="t t8 b mid prov">NC</text>
+<line x1="376" y1="358" x2="546" y2="358" class="wdc"/>
+<rect x="546" y="347" width="44" height="22" rx="0" class="term"/>
+<text x="568" y="361" class="t t9 b mid">013</text>
+<text x="602" y="356" class="t t8">C-0103</text>
+<line x1="590" y1="358" x2="790" y2="358" class="wdc"/>
+<line x1="790" y1="345" x2="980" y2="345" class="brd2"/>
+<text x="800" y="361" class="t t9 b">DI-05</text>
+<text x="860" y="361" class="t t8">Thermistor healthy</text>
+<circle cx="76" cy="398" r="3.2" fill="#111"/>
+<line x1="76" y1="398" x2="144" y2="398" class="wdc"/>
+<rect x="150" y="385" width="150" height="26" rx="0" class="fld"/>
+<text x="156" y="396" class="t t9 b">B101-SEAL</text>
+<text x="156" y="407" class="t t8">Seal water flow proven</text>
+<line x1="300" y1="398" x2="336" y2="398" class="wdc"/>
+<line x1="336" y1="398" x2="344" y2="398" class="wdc"/>
+<line x1="368" y1="398" x2="376" y2="398" class="wdc"/>
+<line x1="344" y1="388" x2="344" y2="408" class="sym"/>
+<line x1="368" y1="388" x2="368" y2="408" class="sym"/>
+<line x1="341" y1="408" x2="371" y2="388" class="sym"/>
+<text x="356" y="384" class="t t8 b mid prov">NC</text>
+<line x1="376" y1="398" x2="546" y2="398" class="wdc"/>
+<rect x="546" y="387" width="44" height="22" rx="0" class="term"/>
+<text x="568" y="401" class="t t9 b mid">015</text>
+<text x="602" y="396" class="t t8">C-0104</text>
+<line x1="590" y1="398" x2="790" y2="398" class="wdc"/>
+<line x1="790" y1="385" x2="980" y2="385" class="brd2"/>
+<text x="800" y="401" class="t t9 b">DI-06</text>
+<text x="860" y="401" class="t t8">Seal water flow proven</text>
+<circle cx="76" cy="438" r="3.2" fill="#111"/>
+<line x1="76" y1="438" x2="144" y2="438" class="wdc"/>
+<rect x="150" y="425" width="150" height="26" rx="0" class="fld"/>
+<text x="156" y="436" class="t t9 b">Q12 aux</text>
+<text x="156" y="447" class="t t8">Feeder available</text>
+<line x1="300" y1="438" x2="336" y2="438" class="wdc"/>
+<line x1="336" y1="438" x2="344" y2="438" class="wdc"/>
+<line x1="368" y1="438" x2="376" y2="438" class="wdc"/>
+<line x1="344" y1="428" x2="344" y2="448" class="sym"/>
+<line x1="368" y1="428" x2="368" y2="448" class="sym"/>
+<line x1="341" y1="448" x2="371" y2="428" class="sym"/>
+<text x="356" y="424" class="t t8 b mid prov">NC</text>
+<line x1="376" y1="438" x2="546" y2="438" class="wdc"/>
+<rect x="546" y="427" width="44" height="22" rx="0" class="term"/>
+<text x="568" y="441" class="t t9 b mid">050</text>
+<text x="602" y="436" class="t t8">internal</text>
+<line x1="590" y1="438" x2="790" y2="438" class="wdc"/>
+<line x1="790" y1="425" x2="980" y2="425" class="brd2"/>
+<text x="800" y="441" class="t t9 b">DI-07</text>
+<text x="860" y="441" class="t t8">Feeder available</text>
+<circle cx="76" cy="478" r="3.2" fill="#111"/>
+<line x1="76" y1="478" x2="144" y2="478" class="wdc"/>
+<rect x="150" y="465" width="150" height="26" rx="0" class="fld"/>
+<text x="156" y="476" class="t t9 b">VSD-102</text>
+<text x="156" y="487" class="t t8">Drive healthy</text>
+<line x1="300" y1="478" x2="336" y2="478" class="wdc"/>
+<line x1="336" y1="478" x2="344" y2="478" class="wdc"/>
+<line x1="368" y1="478" x2="376" y2="478" class="wdc"/>
+<line x1="344" y1="468" x2="344" y2="488" class="sym"/>
+<line x1="368" y1="468" x2="368" y2="488" class="sym"/>
+<line x1="341" y1="488" x2="371" y2="468" class="sym"/>
+<text x="356" y="464" class="t t8 b mid prov">NC</text>
+<line x1="376" y1="478" x2="546" y2="478" class="wdc"/>
+<rect x="546" y="467" width="44" height="22" rx="0" class="term"/>
+<text x="568" y="481" class="t t9 b mid">047</text>
+<text x="602" y="476" class="t t8">internal</text>
+<line x1="590" y1="478" x2="790" y2="478" class="wdc"/>
+<line x1="790" y1="465" x2="980" y2="465" class="brd2"/>
+<text x="800" y="481" class="t t9 b">DI-08</text>
+<text x="860" y="481" class="t t8">Drive healthy</text>
+<circle cx="76" cy="518" r="3.2" fill="#111"/>
+<line x1="76" y1="518" x2="144" y2="518" class="wdc"/>
+<rect x="150" y="505" width="150" height="26" rx="0" class="fld"/>
+<text x="156" y="516" class="t t9 b">VSD-102</text>
+<text x="156" y="527" class="t t8">Drive running</text>
+<line x1="300" y1="518" x2="336" y2="518" class="wdc"/>
+<line x1="336" y1="518" x2="344" y2="518" class="wdc"/>
+<line x1="368" y1="518" x2="376" y2="518" class="wdc"/>
+<line x1="344" y1="508" x2="344" y2="528" class="sym"/>
+<line x1="368" y1="508" x2="368" y2="528" class="sym"/>
+<text x="356" y="504" class="t t8 b mid">NO</text>
+<line x1="376" y1="518" x2="546" y2="518" class="wdc"/>
+<rect x="546" y="507" width="44" height="22" rx="0" class="term"/>
+<text x="568" y="521" class="t t9 b mid">048</text>
+<text x="602" y="516" class="t t8">internal</text>
+<line x1="590" y1="518" x2="790" y2="518" class="wdc"/>
+<line x1="790" y1="505" x2="980" y2="505" class="brd2"/>
+<text x="800" y="521" class="t t9 b">DI-09</text>
+<text x="860" y="521" class="t t8">Drive running</text>
+<circle cx="76" cy="558" r="3.2" fill="#111"/>
+<line x1="76" y1="558" x2="144" y2="558" class="wdc"/>
+<rect x="150" y="545" width="150" height="26" rx="0" class="fld"/>
+<text x="156" y="556" class="t t9 b">S102-LOR</text>
+<text x="156" y="567" class="t t8">Selector LOCAL</text>
+<line x1="300" y1="558" x2="336" y2="558" class="wdc"/>
+<line x1="336" y1="558" x2="344" y2="558" class="wdc"/>
+<line x1="368" y1="558" x2="376" y2="558" class="wdc"/>
+<line x1="344" y1="548" x2="344" y2="568" class="sym"/>
+<line x1="368" y1="548" x2="368" y2="568" class="sym"/>
+<text x="356" y="544" class="t t8 b mid">NO</text>
+<line x1="376" y1="558" x2="546" y2="558" class="wdc"/>
+<rect x="546" y="547" width="44" height="22" rx="0" class="term"/>
+<text x="568" y="561" class="t t9 b mid">035</text>
+<text x="602" y="556" class="t t8">C-0112 core 5</text>
+<line x1="590" y1="558" x2="790" y2="558" class="wdc"/>
+<line x1="790" y1="545" x2="980" y2="545" class="brd2"/>
+<text x="800" y="561" class="t t9 b">DI-10</text>
+<text x="860" y="561" class="t t8">Selector LOCAL</text>
+<circle cx="76" cy="598" r="3.2" fill="#111"/>
+<line x1="76" y1="598" x2="144" y2="598" class="wdc"/>
+<rect x="150" y="585" width="150" height="26" rx="0" class="fld"/>
+<text x="156" y="596" class="t t9 b">S102-LOR</text>
+<text x="156" y="607" class="t t8">Selector REMOTE</text>
+<line x1="300" y1="598" x2="336" y2="598" class="wdc"/>
+<line x1="336" y1="598" x2="344" y2="598" class="wdc"/>
+<line x1="368" y1="598" x2="376" y2="598" class="wdc"/>
+<line x1="344" y1="588" x2="344" y2="608" class="sym"/>
+<line x1="368" y1="588" x2="368" y2="608" class="sym"/>
+<text x="356" y="584" class="t t8 b mid">NO</text>
+<line x1="376" y1="598" x2="546" y2="598" class="wdc"/>
+<rect x="546" y="587" width="44" height="22" rx="0" class="term"/>
+<text x="568" y="601" class="t t9 b mid">036</text>
+<text x="602" y="596" class="t t8">C-0112 core 6</text>
+<line x1="590" y1="598" x2="790" y2="598" class="wdc"/>
+<line x1="790" y1="585" x2="980" y2="585" class="brd2"/>
+<text x="800" y="601" class="t t9 b">DI-11</text>
+<text x="860" y="601" class="t t8">Selector REMOTE</text>
+<circle cx="76" cy="638" r="3.2" fill="#111"/>
+<line x1="76" y1="638" x2="144" y2="638" class="wdc"/>
+<rect x="150" y="625" width="150" height="26" rx="0" class="fld"/>
+<text x="156" y="636" class="t t9 b">KT102</text>
+<text x="156" y="647" class="t t8">Thermistor healthy</text>
+<line x1="300" y1="638" x2="336" y2="638" class="wdc"/>
+<line x1="336" y1="638" x2="344" y2="638" class="wdc"/>
+<line x1="368" y1="638" x2="376" y2="638" class="wdc"/>
+<line x1="344" y1="628" x2="344" y2="648" class="sym"/>
+<line x1="368" y1="628" x2="368" y2="648" class="sym"/>
+<line x1="341" y1="648" x2="371" y2="628" class="sym"/>
+<text x="356" y="624" class="t t8 b mid prov">NC</text>
+<line x1="376" y1="638" x2="546" y2="638" class="wdc"/>
+<rect x="546" y="627" width="44" height="22" rx="0" class="term"/>
+<text x="568" y="641" class="t t9 b mid">043</text>
+<text x="602" y="636" class="t t8">C-0113</text>
+<line x1="590" y1="638" x2="790" y2="638" class="wdc"/>
+<line x1="790" y1="625" x2="980" y2="625" class="brd2"/>
+<text x="800" y="641" class="t t9 b">DI-12</text>
+<text x="860" y="641" class="t t8">Thermistor healthy</text>
+<circle cx="76" cy="678" r="3.2" fill="#111"/>
+<line x1="76" y1="678" x2="144" y2="678" class="wdc"/>
+<rect x="150" y="665" width="150" height="26" rx="0" class="fld"/>
+<text x="156" y="676" class="t t9 b">B102-SEAL</text>
+<text x="156" y="687" class="t t8">Seal water flow proven</text>
+<line x1="300" y1="678" x2="336" y2="678" class="wdc"/>
+<line x1="336" y1="678" x2="344" y2="678" class="wdc"/>
+<line x1="368" y1="678" x2="376" y2="678" class="wdc"/>
+<line x1="344" y1="668" x2="344" y2="688" class="sym"/>
+<line x1="368" y1="668" x2="368" y2="688" class="sym"/>
+<line x1="341" y1="688" x2="371" y2="668" class="sym"/>
+<text x="356" y="664" class="t t8 b mid prov">NC</text>
+<line x1="376" y1="678" x2="546" y2="678" class="wdc"/>
+<rect x="546" y="667" width="44" height="22" rx="0" class="term"/>
+<text x="568" y="681" class="t t9 b mid">045</text>
+<text x="602" y="676" class="t t8">C-0114</text>
+<line x1="590" y1="678" x2="790" y2="678" class="wdc"/>
+<line x1="790" y1="665" x2="980" y2="665" class="brd2"/>
+<text x="800" y="681" class="t t9 b">DI-13</text>
+<text x="860" y="681" class="t t8">Seal water flow proven</text>
+<rect x="546" y="707" width="44" height="22" rx="0" class="devf"/>
+<text x="568" y="721" class="t t9 b mid">031</text>
+<text x="602" y="716" class="t t8">&#8212;</text>
+<line x1="790" y1="705" x2="980" y2="705" class="brd2"/>
+<text x="800" y="721" class="t t9 b">DI-14</text>
+<text x="860" y="721" class="t t8">SPARE &#8212; terminated and labelled</text>
+<rect x="546" y="747" width="44" height="22" rx="0" class="devf"/>
+<text x="568" y="761" class="t t9 b mid">032</text>
+<text x="602" y="756" class="t t8">&#8212;</text>
+<line x1="790" y1="745" x2="980" y2="745" class="brd2"/>
+<text x="800" y="761" class="t t9 b">DI-15</text>
+<text x="860" y="761" class="t t8">SPARE &#8212; terminated and labelled</text>
+<line x1="790" y1="785" x2="980" y2="785" class="brd2"/>
+<line x1="76" y1="812" x2="980" y2="812" class="wdc"/>
+<text x="68" y="828" class="t t10 b blu">0 V</text>
+<line x1="885" y1="785" x2="885" y2="812" class="wdc"/>
+<rect x="1130" y="300" width="410" height="400" rx="0" class="devf"/>
+<text x="1142" y="322" class="t t11 b">WHY IT IS WIRED THIS WAY</text>
+<text x="1142" y="344" class="t t9 b blu">Every input lands on a terminal.</text>
+<text x="1142" y="357" class="t t8">No field wire goes directly onto the module. The module can</text>
+<text x="1142" y="368" class="t t8">then be replaced without disturbing field wiring, and every</text>
+<text x="1142" y="379" class="t t8">signal can be tested and disconnected at a terminal.</text>
+<text x="1142" y="398" class="t t9 b blu">Critical inputs are NORMALLY CLOSED.</text>
+<text x="1142" y="411" class="t t8">Drive healthy, thermistor, seal water, stop. A broken wire</text>
+<text x="1142" y="422" class="t t8">opens the circuit and reads as a FAULT, not as healthy.</text>
+<text x="1142" y="433" class="t t8">Fail-safe by wiring, not by programming.</text>
+<text x="1142" y="452" class="t t9 b blu">Both selector positions are read.</text>
+<text x="1142" y="465" class="t t8">Local AND Remote as separate inputs. One input can only tell</text>
+<text x="1142" y="476" class="t t8">you two things and cannot tell you it is broken. Two inputs</text>
+<text x="1142" y="487" class="t t8">distinguish Local, Remote, Off &#8212; and detect a selector</text>
+<text x="1142" y="498" class="t t8">fault if both read true.</text>
+<text x="1142" y="517" class="t t9 b blu">Spares are terminated and labelled.</text>
+<text x="1142" y="530" class="t t8">Grouped at the end of the block, not scattered. A contiguous</text>
+<text x="1142" y="541" class="t t8">block of spares is usable; scattered spares are not.</text>
+<text x="1142" y="560" class="t t9 b blu">Field power is ECP2.</text>
+<text x="1142" y="573" class="t t8">Separate from the analogue loop group (ECP4) so a field</text>
+<text x="1142" y="584" class="t t8">digital short cannot take every instrument reading down at</text>
+<text x="1142" y="595" class="t t8">the same moment.</text>
+<rect x="1130" y="150" width="410" height="128" rx="0" class="plc"/>
+<text x="1142" y="172" class="t t11 b">MODULE ALLOCATION</text>
+<text x="1142" y="192" class="t t8 b">SLOT</text>
+<text x="1196" y="192" class="t t8 b">MODULE</text>
+<text x="1272" y="192" class="t t8 b">RANGE</text>
+<text x="1352" y="192" class="t t8 b">GROUPING</text>
+<text x="1142" y="210" class="t t8">Slot 2</text>
+<text x="1196" y="210" class="t t8">5069-IB16</text>
+<text x="1272" y="210" class="t t8">DI-00 &#8211; DI-15</text>
+<text x="1352" y="210" class="t t8">P-101 / P-102</text>
+<text x="1142" y="225" class="t t8">Slot 3</text>
+<text x="1196" y="225" class="t t8">5069-IB16</text>
+<text x="1272" y="225" class="t t8">DI-16 &#8211; DI-31</text>
+<text x="1352" y="225" class="t t8">Small feeders, MOV, HVAC</text>
+<text x="1142" y="240" class="t t8">Slot 4</text>
+<text x="1196" y="240" class="t t8">5069-IB16</text>
+<text x="1272" y="240" class="t t8">DI-32 &#8211; DI-47</text>
+<text x="1352" y="240" class="t t8">Station common, floats, supplies</text>
+<text x="1142" y="258" class="t t8 b">40 points used &#183; 8 spare (20 %)</text>
+<text x="1142" y="270" class="t t8 b">Signals grouped by EQUIPMENT, not by module convenience</text>
+<rect x="46" y="880" width="1000" height="136" rx="0" class="devf"/>
+<text x="56" y="898" class="t t12 b">NOTES</text>
+<text x="56" y="914.0" class="t t9">1.  5069-IB16 is a sinking input module fed by sourcing field devices. Field power for this group comes from ECP2 (SCH-0030).</text>
+<text x="56" y="926.6" class="t t9 prov b">2.  NO FIELD WIRE LANDS DIRECTLY ON A PLC MODULE. Every input passes through a terminal on rail X3.</text>
+<text x="56" y="939.2" class="t t9 prov b">3.  Critical inputs are wired NORMALLY CLOSED so a broken wire reads as a fault rather than as healthy. Verified at FAT by test K-83:</text>
+<text x="56" y="951.8" class="t t9 prov b">     disconnect the field wire and confirm the signal reads FAULT.</text>
+<text x="56" y="964.4" class="t t9">4.  Volt-free contacts are used from the field wherever possible. Where a field device provides a voltage output, an interposing relay is used.</text>
+<text x="56" y="977.0" class="t t9">5.  Spare points are terminated, labelled and grouped at the end of the equipment block. FAT test K-82 verifies they are available.</text>
+<text x="56" y="989.6" class="t t9">6.  This sheet is the contract between the electrical package and the systems integrator. It must be issued on a transmittal at the SAME</text>
+<text x="56" y="1002.2" class="t t9">     revision as the board &#8212; FAT defect FD-004 was caused by the integrator working from an earlier I/O list revision.</text>
+<rect x="1072" y="930" width="469" height="158" rx="0" class="dev"/>
+<line x1="1072" y1="964" x2="1541" y2="964" class="brd2"/>
+<line x1="1072" y1="1004" x2="1541" y2="1004" class="brd2"/>
+<line x1="1072" y1="1038" x2="1541" y2="1038" class="brd2"/>
+<line x1="1372" y1="964" x2="1372" y2="1038" class="brd2"/>
+<text x="1082" y="946" class="t t11 b">NORTHFIELD WATER TREATMENT PLANT</text>
+<text x="1082" y="959" class="t t10">RAW WATER TRANSFER PUMP STATION &#8212; MCC-01</text>
+<text x="1082" y="982" class="t t14 b">PLC DIGITAL INPUTS</text>
+<text x="1082" y="998" class="t t9">Slot 2 typical &#183; slots 3 and 4 on sheets 2 and 3</text>
+<text x="1382" y="982" class="t t9">SHEET</text>
+<text x="1382" y="998" class="t t11 b">1 of 3</text>
+<text x="1082" y="1024" class="t t11 b">DRAWING No.  NFD-ELE-SCH-0201</text>
+<text x="1382" y="1024" class="t t12 b">REV  1</text>
+<text x="1082" y="1056" class="t t9 b prov">SELF-DIRECTED REFERENCE PROJECT &#8212; NOT A PRODUCTION DRAWING</text>
+<text x="1082" y="1070" class="t t9">Illustrative only. Not for construction. See notes.</text>
+</svg>

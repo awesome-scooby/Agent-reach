@@ -1,0 +1,373 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1587 1122" width="1587" height="1122">
+
+<style>
+  .bg{fill:#ffffff}
+  .brd{fill:none;stroke:#111;stroke-width:2}
+  .brd2{fill:none;stroke:#111;stroke-width:1}
+  .pw{fill:none;stroke:#111;stroke-width:2.2;stroke-linecap:square}
+  .w{fill:none;stroke:#111;stroke-width:1.6;stroke-linecap:square}
+  .wdc{fill:none;stroke:#1f4e9c;stroke-width:1.8;stroke-linecap:square}
+  .wsaf{fill:none;stroke:#c9a227;stroke-width:2.4;stroke-linecap:square}
+  .wana{fill:none;stroke:#7a3fa0;stroke-width:1.8;stroke-linecap:square}
+  .wext{fill:none;stroke:#d97706;stroke-width:1.8;stroke-linecap:square}
+  .wref{fill:none;stroke:#888;stroke-width:1.1;stroke-dasharray:4 3}
+  .rail{fill:none;stroke:#1f4e9c;stroke-width:3;stroke-linecap:square}
+  .sym{fill:none;stroke:#111;stroke-width:1.7}
+  .dev{fill:#ffffff;stroke:#111;stroke-width:1.7}
+  .devf{fill:#f2f4f7;stroke:#111;stroke-width:1.7}
+  .saf{fill:#fdf6e0;stroke:#a98207;stroke-width:1.8}
+  .plc{fill:#eef4fb;stroke:#111;stroke-width:1.7}
+  .fld{fill:#f4fbf4;stroke:#111;stroke-width:1.7}
+  .term{fill:#ffffff;stroke:#111;stroke-width:1.5}
+  .termy{fill:#fdf0b8;stroke:#a98207;stroke-width:1.5}
+  .terma{fill:#f3edfa;stroke:#7a3fa0;stroke-width:1.5}
+  .t{font-family:"DejaVu Sans",Arial,Helvetica,sans-serif;fill:#111}
+  .t8{font-size:8px}.t9{font-size:9px}.t10{font-size:10px}.t11{font-size:11px}
+  .t12{font-size:12px}.t14{font-size:14px}.t18{font-size:18px}
+  .b{font-weight:700}.mid{text-anchor:middle}.end{text-anchor:end}
+  .prov{fill:#b03a2e;font-weight:700}
+  .note{fill:#7a4b00}
+  .grn{fill:#1a7a3c}
+  .blu{fill:#1f4e9c}
+  .amb{fill:#8a6d00}
+  .pur{fill:#7a3fa0}
+</style>
+
+<rect class="bg" x="0" y="0" width="1587" height="1122"/>
+<rect class="brd" x="18" y="18" width="1551" height="1086"/>
+<rect class="brd2" x="30" y="30" width="1527" height="1062"/>
+<text x="125.4375" y="27" class="t t10 b mid">A</text>
+<text x="125.4375" y="1103" class="t t10 b mid">A</text>
+<text x="316.3125" y="27" class="t t10 b mid">B</text>
+<text x="316.3125" y="1103" class="t t10 b mid">B</text>
+<text x="507.1875" y="27" class="t t10 b mid">C</text>
+<text x="507.1875" y="1103" class="t t10 b mid">C</text>
+<text x="698.0625" y="27" class="t t10 b mid">D</text>
+<text x="698.0625" y="1103" class="t t10 b mid">D</text>
+<text x="888.9375" y="27" class="t t10 b mid">E</text>
+<text x="888.9375" y="1103" class="t t10 b mid">E</text>
+<text x="1079.8125" y="27" class="t t10 b mid">F</text>
+<text x="1079.8125" y="1103" class="t t10 b mid">F</text>
+<text x="1270.6875" y="27" class="t t10 b mid">G</text>
+<text x="1270.6875" y="1103" class="t t10 b mid">G</text>
+<text x="1461.5625" y="27" class="t t10 b mid">H</text>
+<text x="1461.5625" y="1103" class="t t10 b mid">H</text>
+<text x="24" y="118.5" class="t t10 b mid">1</text>
+<text x="1563" y="118.5" class="t t10 b mid">1</text>
+<text x="24" y="295.5" class="t t10 b mid">2</text>
+<text x="1563" y="295.5" class="t t10 b mid">2</text>
+<text x="24" y="472.5" class="t t10 b mid">3</text>
+<text x="1563" y="472.5" class="t t10 b mid">3</text>
+<text x="24" y="649.5" class="t t10 b mid">4</text>
+<text x="1563" y="649.5" class="t t10 b mid">4</text>
+<text x="24" y="826.5" class="t t10 b mid">5</text>
+<text x="1563" y="826.5" class="t t10 b mid">5</text>
+<text x="24" y="1003.5" class="t t10 b mid">6</text>
+<text x="1563" y="1003.5" class="t t10 b mid">6</text>
+<text x="46" y="58" class="t t18 b">TRANSFER PUMP P-101 &#8212; VSD POWER AND CONTROL</text>
+<text x="46" y="76" class="t t11">90 kW variable speed &#183; duty/assist with P-102 &#183; P-102 is identical, drawn on SCH-0111</text>
+<rect x="46" y="100" width="250" height="640" rx="0" class="devf"/>
+<text x="60" y="122" class="t t11 b">POWER (ref. SLD-0001)</text>
+<line x1="120" y1="140" x2="120" y2="170" class="pw"/>
+<text x="134" y="152" class="t t9">From 800 A busbar</text>
+<rect x="100" y="170" width="40" height="44" rx="0" class="dev"/>
+<line x1="106" y1="206" x2="134" y2="176" class="sym"/>
+<text x="148" y="186" class="t t10 b">Q11</text>
+<text x="148" y="198" class="t t9">MCCB 250 A</text>
+<text x="148" y="210" class="t t8">from drive manual</text>
+<line x1="120" y1="214" x2="120" y2="246" class="pw"/>
+<rect x="88" y="246" width="64" height="24" rx="0" class="dev"/>
+<text x="120" y="262" class="t t9 mid">REACTOR</text>
+<text x="160" y="258" class="t t8">3 %, provisional</text>
+<line x1="120" y1="270" x2="120" y2="300" class="pw"/>
+<rect x="74" y="300" width="92" height="90" rx="0" class="plc"/>
+<text x="120" y="322" class="t t12 b mid">VSD-101</text>
+<text x="120" y="338" class="t t10 b mid">90 kW</text>
+<text x="120" y="356" class="t t9 mid">FC202 AQUA</text>
+<path d="M 98 376 q 7 -14 14 0 q 7 14 14 0" class="sym"/>
+<line x1="120" y1="390" x2="120" y2="420" class="pw"/>
+<rect x="102" y="420" width="36" height="14" rx="0" class="devf"/>
+<text x="146" y="431" class="t t8">EMC gland 360&#176;</text>
+<text x="146" y="442" class="t t8">screen both ends</text>
+<line x1="120" y1="434" x2="120" y2="480" class="pw"/>
+<text x="108" y="456" class="t t9 b end">C-0101</text>
+<text x="108" y="468" class="t t8 end">3C+E 95 mm&#178;</text>
+<line x1="111" y1="496" x2="129" y2="490" class="sym"/>
+<circle cx="111" cy="496" r="2.5" fill="#111"/>
+<text x="138" y="494" class="t t8">Local isolator</text>
+<text x="138" y="505" class="t t8">(field)</text>
+<line x1="120" y1="496" x2="120" y2="530" class="pw"/>
+<circle cx="120" cy="552" r="20" class="dev"/>
+<text x="120" y="558" class="t t14 b mid">M</text>
+<text x="120" y="594" class="t t11 b mid">P-101</text>
+<text x="120" y="608" class="t t9 mid">90 kW &#183; ~160 A</text>
+<text x="120" y="626" class="t t9 mid">PTC thermistors</text>
+<line x1="140" y1="552" x2="180" y2="552" class="w"/>
+<line x1="180" y1="552" x2="180" y2="660" class="w"/>
+<rect x="140" y="660" width="110" height="40" rx="0" class="dev"/>
+<text x="195" y="678" class="t t10 b mid">KT101</text>
+<text x="195" y="692" class="t t8 mid">thermistor relay</text>
+<text x="60" y="722" class="t t8">KT101 measures actual winding temperature.</text>
+<text x="60" y="734" class="t t8 b">The drive's thermal model only infers it.</text>
+<line x1="340" y1="150" x2="1430" y2="150" class="wdc"/>
+<text x="1436" y="154" class="t t9 b blu">+24 V</text>
+<line x1="340" y1="560" x2="1430" y2="560" class="wdc"/>
+<text x="1436" y="564" class="t t9 b blu">0 V</text>
+<text x="340" y="128" class="t t11 b">CONTROL &#8212; 24 V DC (ECP2 / ECP3)</text>
+<text x="390" y="140" class="t t10 b mid">01</text>
+<text x="390" y="576" class="t t9 b mid">01</text>
+<line x1="390" y1="150" x2="390" y2="250" class="wdc"/>
+<text x="390" y="236" class="t t8 b mid blu">L / O / R</text>
+<line x1="390" y1="250" x2="390" y2="258" class="wdc"/>
+<line x1="390" y1="282" x2="390" y2="290" class="wdc"/>
+<line x1="380" y1="258" x2="400" y2="258" class="sym"/>
+<line x1="380" y1="282" x2="400" y2="282" class="sym"/>
+<line x1="390" y1="290" x2="390" y2="332" class="wdc"/>
+<rect x="371" y="332" width="38" height="18" rx="0" class="term"/>
+<text x="390" y="345" class="t t8 mid">005</text>
+<line x1="390" y1="350" x2="390" y2="392" class="wdc"/>
+<rect x="346" y="392" width="88" height="86" rx="0" class="fld"/>
+<text x="390" y="412" class="t t9 b mid">S101-LOR</text>
+<text x="390" y="426" class="t t8 mid">LOCAL</text>
+<line x1="354" y1="436" x2="426" y2="436" class="brd2"/>
+<text x="390" y="452" class="t t8 b mid">X3:005</text>
+<text x="390" y="466" class="t t8 mid">&#8594; PLC DI-03</text>
+<line x1="390" y1="478" x2="390" y2="560" class="wdc"/>
+<text x="470" y="140" class="t t10 b mid">02</text>
+<text x="470" y="576" class="t t9 b mid">02</text>
+<line x1="470" y1="150" x2="470" y2="250" class="wdc"/>
+<text x="470" y="236" class="t t8 b mid blu">L / O / R</text>
+<line x1="470" y1="250" x2="470" y2="258" class="wdc"/>
+<line x1="470" y1="282" x2="470" y2="290" class="wdc"/>
+<line x1="460" y1="258" x2="480" y2="258" class="sym"/>
+<line x1="460" y1="282" x2="480" y2="282" class="sym"/>
+<line x1="470" y1="290" x2="470" y2="332" class="wdc"/>
+<rect x="451" y="332" width="38" height="18" rx="0" class="term"/>
+<text x="470" y="345" class="t t8 mid">006</text>
+<line x1="470" y1="350" x2="470" y2="392" class="wdc"/>
+<rect x="426" y="392" width="88" height="86" rx="0" class="fld"/>
+<text x="470" y="412" class="t t9 b mid">S101-LOR</text>
+<text x="470" y="426" class="t t8 mid">REMOTE</text>
+<line x1="434" y1="436" x2="506" y2="436" class="brd2"/>
+<text x="470" y="452" class="t t8 b mid">X3:006</text>
+<text x="470" y="466" class="t t8 mid">&#8594; PLC DI-04</text>
+<line x1="470" y1="478" x2="470" y2="560" class="wdc"/>
+<text x="560" y="140" class="t t10 b mid">03</text>
+<text x="560" y="576" class="t t9 b mid">03</text>
+<line x1="560" y1="150" x2="560" y2="250" class="wdc"/>
+<text x="560" y="236" class="t t8 b mid blu">PERMISSIVE</text>
+<line x1="560" y1="250" x2="560" y2="258" class="wdc"/>
+<line x1="560" y1="282" x2="560" y2="290" class="wdc"/>
+<line x1="550" y1="258" x2="570" y2="258" class="sym"/>
+<line x1="550" y1="282" x2="570" y2="282" class="sym"/>
+<line x1="550" y1="285" x2="570" y2="255" class="sym"/>
+<line x1="560" y1="290" x2="560" y2="332" class="wdc"/>
+<rect x="541" y="332" width="38" height="18" rx="0" class="term"/>
+<text x="560" y="345" class="t t8 mid">013</text>
+<line x1="560" y1="350" x2="560" y2="392" class="wdc"/>
+<rect x="516" y="392" width="88" height="86" rx="0" class="fld"/>
+<text x="560" y="412" class="t t9 b mid">KT101</text>
+<text x="560" y="426" class="t t8 mid">thermistor</text>
+<line x1="524" y1="436" x2="596" y2="436" class="brd2"/>
+<text x="560" y="452" class="t t8 b mid">X3:013/14</text>
+<text x="560" y="466" class="t t8 mid">NC &#8212; fail-safe</text>
+<line x1="560" y1="478" x2="560" y2="560" class="wdc"/>
+<text x="650" y="140" class="t t10 b mid">04</text>
+<text x="650" y="576" class="t t9 b mid">04</text>
+<line x1="650" y1="150" x2="650" y2="250" class="wdc"/>
+<text x="650" y="236" class="t t8 b mid blu">PERMISSIVE</text>
+<line x1="650" y1="250" x2="650" y2="258" class="wdc"/>
+<line x1="650" y1="282" x2="650" y2="290" class="wdc"/>
+<line x1="640" y1="258" x2="660" y2="258" class="sym"/>
+<line x1="640" y1="282" x2="660" y2="282" class="sym"/>
+<line x1="640" y1="285" x2="660" y2="255" class="sym"/>
+<line x1="650" y1="290" x2="650" y2="332" class="wdc"/>
+<rect x="631" y="332" width="38" height="18" rx="0" class="term"/>
+<text x="650" y="345" class="t t8 mid">015</text>
+<line x1="650" y1="350" x2="650" y2="392" class="wdc"/>
+<rect x="606" y="392" width="88" height="86" rx="0" class="fld"/>
+<text x="650" y="412" class="t t9 b mid">B101-SEAL</text>
+<text x="650" y="426" class="t t8 mid">seal water</text>
+<line x1="614" y1="436" x2="686" y2="436" class="brd2"/>
+<text x="650" y="452" class="t t8 b mid">X3:015/16</text>
+<text x="650" y="466" class="t t8 mid">NC &#8212; bypass timer</text>
+<line x1="650" y1="478" x2="650" y2="560" class="wdc"/>
+<text x="740" y="140" class="t t10 b mid">05</text>
+<text x="740" y="576" class="t t9 b mid">05</text>
+<line x1="740" y1="150" x2="740" y2="250" class="wdc"/>
+<text x="740" y="236" class="t t8 b mid blu">TRIP</text>
+<line x1="740" y1="250" x2="740" y2="258" class="wsaf"/>
+<line x1="740" y1="282" x2="740" y2="290" class="wsaf"/>
+<line x1="730" y1="258" x2="750" y2="258" class="sym"/>
+<line x1="730" y1="282" x2="750" y2="282" class="sym"/>
+<line x1="730" y1="285" x2="750" y2="255" class="sym"/>
+<line x1="740" y1="290" x2="740" y2="332" class="wdc"/>
+<rect x="721" y="332" width="38" height="18" rx="0" class="term"/>
+<text x="740" y="345" class="t t8 mid">021</text>
+<line x1="740" y1="350" x2="740" y2="392" class="wdc"/>
+<rect x="696" y="392" width="88" height="86" rx="0" class="fld"/>
+<text x="740" y="412" class="t t9 b mid">LSLL-101</text>
+<text x="740" y="426" class="t t8 mid">low-low float</text>
+<line x1="704" y1="436" x2="776" y2="436" class="brd2"/>
+<text x="740" y="452" class="t t8 b mid">X3:021/22</text>
+<text x="740" y="466" class="t t8 mid">HARDWIRED to drive</text>
+<line x1="740" y1="478" x2="740" y2="560" class="wdc"/>
+<text x="840" y="140" class="t t10 b mid">06</text>
+<text x="840" y="576" class="t t9 b mid">06</text>
+<line x1="840" y1="150" x2="840" y2="250" class="wdc"/>
+<text x="840" y="236" class="t t8 b mid blu">START</text>
+<line x1="840" y1="250" x2="840" y2="258" class="wdc"/>
+<line x1="840" y1="282" x2="840" y2="290" class="wdc"/>
+<line x1="830" y1="258" x2="850" y2="258" class="sym"/>
+<line x1="830" y1="282" x2="850" y2="282" class="sym"/>
+<line x1="840" y1="290" x2="840" y2="332" class="wdc"/>
+<rect x="821" y="332" width="38" height="18" rx="0" class="term"/>
+<text x="840" y="345" class="t t8 mid">001</text>
+<line x1="840" y1="350" x2="840" y2="392" class="wdc"/>
+<rect x="796" y="392" width="88" height="86" rx="0" class="fld"/>
+<text x="840" y="412" class="t t9 b mid">S101-STR</text>
+<text x="840" y="426" class="t t8 mid">MCC / LCS</text>
+<line x1="804" y1="436" x2="876" y2="436" class="brd2"/>
+<text x="840" y="452" class="t t8 b mid">X3:001/02</text>
+<text x="840" y="466" class="t t8 mid">NO</text>
+<line x1="840" y1="478" x2="840" y2="560" class="wdc"/>
+<text x="930" y="140" class="t t10 b mid">07</text>
+<text x="930" y="576" class="t t9 b mid">07</text>
+<line x1="930" y1="150" x2="930" y2="250" class="wdc"/>
+<text x="930" y="236" class="t t8 b mid blu">STOP</text>
+<line x1="930" y1="250" x2="930" y2="258" class="wdc"/>
+<line x1="930" y1="282" x2="930" y2="290" class="wdc"/>
+<line x1="920" y1="258" x2="940" y2="258" class="sym"/>
+<line x1="920" y1="282" x2="940" y2="282" class="sym"/>
+<line x1="920" y1="285" x2="940" y2="255" class="sym"/>
+<line x1="930" y1="290" x2="930" y2="332" class="wdc"/>
+<rect x="911" y="332" width="38" height="18" rx="0" class="term"/>
+<text x="930" y="345" class="t t8 mid">003</text>
+<line x1="930" y1="350" x2="930" y2="392" class="wdc"/>
+<rect x="886" y="392" width="88" height="86" rx="0" class="fld"/>
+<text x="930" y="412" class="t t9 b mid">S101-STP</text>
+<text x="930" y="426" class="t t8 mid">MCC / LCS</text>
+<line x1="894" y1="436" x2="966" y2="436" class="brd2"/>
+<text x="930" y="452" class="t t8 b mid">X3:003/04</text>
+<text x="930" y="466" class="t t8 mid">NC &#8212; fail-safe</text>
+<line x1="930" y1="478" x2="930" y2="560" class="wdc"/>
+<text x="1030" y="140" class="t t10 b mid">08</text>
+<text x="1030" y="576" class="t t9 b mid">08</text>
+<line x1="1030" y1="150" x2="1030" y2="250" class="wdc"/>
+<text x="1030" y="236" class="t t8 b mid blu">COMMAND</text>
+<rect x="1004.0" y="250" width="52" height="30" rx="0" class="dev"/>
+<text x="1030" y="266" class="t t10 b mid">KA101</text>
+<line x1="1030" y1="280" x2="1030" y2="290" class="wdc"/>
+<line x1="1030" y1="290" x2="1030" y2="332" class="wdc"/>
+<rect x="1011" y="332" width="38" height="18" rx="0" class="term"/>
+<text x="1030" y="345" class="t t8 mid">019</text>
+<line x1="1030" y1="350" x2="1030" y2="392" class="wdc"/>
+<rect x="986" y="392" width="88" height="86" rx="0" class="fld"/>
+<text x="1030" y="412" class="t t9 b mid">KA101</text>
+<text x="1030" y="426" class="t t8 mid">run relay</text>
+<line x1="994" y1="436" x2="1066" y2="436" class="brd2"/>
+<text x="1030" y="452" class="t t8 b mid">X3:019</text>
+<text x="1030" y="466" class="t t8 mid">&#8594; VSD term 18</text>
+<line x1="1030" y1="478" x2="1030" y2="560" class="wdc"/>
+<text x="1130" y="140" class="t t10 b mid">09</text>
+<text x="1130" y="576" class="t t9 b mid">09</text>
+<line x1="1130" y1="150" x2="1130" y2="250" class="wdc"/>
+<text x="1130" y="236" class="t t8 b mid blu">FEEDBACK</text>
+<line x1="1130" y1="250" x2="1130" y2="258" class="wdc"/>
+<line x1="1130" y1="282" x2="1130" y2="290" class="wdc"/>
+<line x1="1120" y1="258" x2="1140" y2="258" class="sym"/>
+<line x1="1120" y1="282" x2="1140" y2="282" class="sym"/>
+<line x1="1130" y1="290" x2="1130" y2="332" class="wdc"/>
+<rect x="1111" y="332" width="38" height="18" rx="0" class="term"/>
+<text x="1130" y="345" class="t t8 mid">018</text>
+<line x1="1130" y1="350" x2="1130" y2="392" class="wdc"/>
+<rect x="1086" y="392" width="88" height="86" rx="0" class="fld"/>
+<text x="1130" y="412" class="t t9 b mid">VSD-101</text>
+<text x="1130" y="426" class="t t8 mid">running</text>
+<line x1="1094" y1="436" x2="1166" y2="436" class="brd2"/>
+<text x="1130" y="452" class="t t8 b mid">X3:018</text>
+<text x="1130" y="466" class="t t8 mid">&#8594; PLC DI-02</text>
+<line x1="1130" y1="478" x2="1130" y2="560" class="wdc"/>
+<text x="1230" y="140" class="t t10 b mid">10</text>
+<text x="1230" y="576" class="t t9 b mid">10</text>
+<line x1="1230" y1="150" x2="1230" y2="250" class="wdc"/>
+<text x="1230" y="236" class="t t8 b mid blu">FEEDBACK</text>
+<line x1="1230" y1="250" x2="1230" y2="258" class="wdc"/>
+<line x1="1230" y1="282" x2="1230" y2="290" class="wdc"/>
+<line x1="1220" y1="258" x2="1240" y2="258" class="sym"/>
+<line x1="1220" y1="282" x2="1240" y2="282" class="sym"/>
+<line x1="1220" y1="285" x2="1240" y2="255" class="sym"/>
+<line x1="1230" y1="290" x2="1230" y2="332" class="wdc"/>
+<rect x="1211" y="332" width="38" height="18" rx="0" class="term"/>
+<text x="1230" y="345" class="t t8 mid">017</text>
+<line x1="1230" y1="350" x2="1230" y2="392" class="wdc"/>
+<rect x="1186" y="392" width="88" height="86" rx="0" class="fld"/>
+<text x="1230" y="412" class="t t9 b mid">VSD-101</text>
+<text x="1230" y="426" class="t t8 mid">healthy</text>
+<line x1="1194" y1="436" x2="1266" y2="436" class="brd2"/>
+<text x="1230" y="452" class="t t8 b mid">X3:017</text>
+<text x="1230" y="466" class="t t8 mid">NC &#8594; PLC DI-01</text>
+<line x1="1230" y1="478" x2="1230" y2="560" class="wdc"/>
+<text x="1330" y="140" class="t t10 b mid">11</text>
+<text x="1330" y="576" class="t t9 b mid">11</text>
+<line x1="1330" y1="150" x2="1330" y2="250" class="wdc"/>
+<text x="1330" y="236" class="t t8 b mid blu">SPEED</text>
+<rect x="1300" y="250" width="60" height="30" rx="0" class="terma"/>
+<text x="1330" y="270" class="t t8 mid">4&#8211;20 mA</text>
+<line x1="1330" y1="280" x2="1330" y2="290" class="wana"/>
+<line x1="1330" y1="290" x2="1330" y2="332" class="wdc"/>
+<rect x="1311" y="332" width="38" height="18" rx="0" class="terma"/>
+<text x="1330" y="345" class="t t8 mid">031</text>
+<line x1="1330" y1="350" x2="1330" y2="392" class="wdc"/>
+<rect x="1286" y="392" width="88" height="86" rx="0" class="fld"/>
+<text x="1330" y="412" class="t t9 b mid">PLC AO-00</text>
+<text x="1330" y="426" class="t t8 mid">4&#8211;20 mA</text>
+<line x1="1294" y1="436" x2="1366" y2="436" class="brd2"/>
+<text x="1330" y="452" class="t t8 b mid">X4:031/32</text>
+<text x="1330" y="466" class="t t8 mid">&#8594; VSD term 53/55</text>
+<line x1="1330" y1="478" x2="1330" y2="560" class="wdc"/>
+<rect x="340" y="600" width="1090" height="200" rx="0" class="devf"/>
+<text x="352" y="622" class="t t11 b">INPUT &#8594; LOGIC &#8594; OUTPUT &#8594; FEEDBACK &#8594; FAILURE</text>
+<text x="352" y="644" class="t t9 b blu">INPUT</text>
+<text x="424" y="644" class="t t9">Start command (SCADA in Remote, pushbutton in Local); wet well level LIT-101; discharge flow FIT-101; valve position ZSO-101; seal flow; low-low</text>
+<text x="424" y="655.5" class="t t9">float; thermistor relay; drive healthy; E-stop healthy; feeder available; selector position.</text>
+<text x="352" y="671.0" class="t t9 b blu">LOGIC</text>
+<text x="424" y="671.0" class="t t9">If ALL permissives true AND start command present AND (this pump is duty OR assist is called) THEN energise run command. Speed from PID on discharge</text>
+<text x="424" y="682.5" class="t t9">flow against SCADA setpoint, clamped between min and max. Duty rotation on run hours.</text>
+<text x="352" y="698.0" class="t t9 b blu">OUTPUT</text>
+<text x="424" y="698.0" class="t t9">PLC DO &#8594; KA101 &#8594; hardwired run command to VSD-101 term 18. PLC AO 4&#8211;20 mA &#8594; speed reference. Hardwired dry-run trip &#8594;</text>
+<text x="424" y="709.5" class="t t9">drive external fault. Safety relay &#8594; STO.</text>
+<text x="352" y="725.0" class="t t9 b blu">FEEDBACK</text>
+<text x="424" y="725.0" class="t t9">Drive running and drive healthy hardwired; speed, current, power, fault codes and run hours over EtherNet/IP; running lamp at MCC and LCS; FIT-101</text>
+<text x="424" y="736.5" class="t t9">confirms the pump is actually moving water.</text>
+<text x="352" y="752.0" class="t t9 b blu">FAILURE</text>
+<text x="424" y="752.0" class="t t9">Drive trip &#8594; healthy DI drops, run command removed, standby called after delay. Motor over-temperature &#8594; KT101 opens, latched alarm.</text>
+<text x="424" y="763.5" class="t t9">Dry-run &#8594; hardwired float trips the drive DIRECTLY, independent of the PLC. Broken 4&#8211;20 mA &#8594; drive detects live-zero loss and holds</text>
+<text x="424" y="775.0" class="t t9">last speed with an alarm. Network failure &#8594; hardwired run/stop and speed reference still work.</text>
+<rect x="46" y="880" width="1000" height="136" rx="0" class="devf"/>
+<text x="56" y="898" class="t t12 b">NOTES</text>
+<text x="56" y="914.0" class="t t9 prov b">1.  LOCAL MODE ENFORCES EVERY PERMISSIVE AND EVERY TRIP. Local changes who gives the command, not what protects the machine. A Local mode that</text>
+<text x="56" y="926.6" class="t t9 prov b">     drops the dry-run and thermistor trips is how a 90 kW pump is destroyed by someone who reasonably assumed it was protected.</text>
+<text x="56" y="939.2" class="t t9 prov b">2.  The low-low float (path 05) is HARDWIRED into the drive's external fault input as well as being read by the PLC. Asset protection worth tens of thousands</text>
+<text x="56" y="951.8" class="t t9 prov b">     of dollars must not depend solely on software that can be forced during commissioning. Verified at FAT with the PLC in program-stop (test I-67).</text>
+<text x="56" y="964.4" class="t t9">3.  Critical inputs (drive healthy, thermistor, stop, seal water) are wired NORMALLY CLOSED so a broken wire reads as a fault, not as healthy.</text>
+<text x="56" y="977.0" class="t t9">4.  Both selector positions are read as separate digital inputs so the PLC can distinguish Local, Remote and Off &#8212; and detect a selector fault if both read true.</text>
+<text x="56" y="989.6" class="t t9">5.  The speed reference is hardwired 4&#8211;20 mA with monitoring over EtherNet/IP. A network fault must not leave a duty pump at an unknown speed. Trade-off:</text>
+<text x="56" y="1002.2" class="t t9">     all-comms is cheaper and gives richer diagnostics. This is a client standards question, not an absolute &#8212; see design basis 1.8.</text>
+<text x="56" y="1014.8" class="t t9">6.  Feeder breaker Q11 is selected from the DRIVE MANUAL, not from motor FLC. It protects the cable and the drive input, not the motor.</text>
+<rect x="1072" y="930" width="469" height="158" rx="0" class="dev"/>
+<line x1="1072" y1="964" x2="1541" y2="964" class="brd2"/>
+<line x1="1072" y1="1004" x2="1541" y2="1004" class="brd2"/>
+<line x1="1072" y1="1038" x2="1541" y2="1038" class="brd2"/>
+<line x1="1372" y1="964" x2="1372" y2="1038" class="brd2"/>
+<text x="1082" y="946" class="t t11 b">NORTHFIELD WATER TREATMENT PLANT</text>
+<text x="1082" y="959" class="t t10">RAW WATER TRANSFER PUMP STATION &#8212; MCC-01</text>
+<text x="1082" y="982" class="t t14 b">P-101 VSD POWER AND CONTROL</text>
+<text x="1082" y="998" class="t t9">Transfer pump 1 &#183; 90 kW &#183; P-102 identical on SCH-0111</text>
+<text x="1382" y="982" class="t t9">SHEET</text>
+<text x="1382" y="998" class="t t11 b">1 of 2</text>
+<text x="1082" y="1024" class="t t11 b">DRAWING No.  NFD-ELE-SCH-0101</text>
+<text x="1382" y="1024" class="t t12 b">REV  1</text>
+<text x="1082" y="1056" class="t t9 b prov">SELF-DIRECTED REFERENCE PROJECT &#8212; NOT A PRODUCTION DRAWING</text>
+<text x="1082" y="1070" class="t t9">Illustrative only. Not for construction. See notes.</text>
+</svg>

@@ -1,0 +1,408 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1587 1122" width="1587" height="1122" font-family="sans-serif">
+
+<style>
+  .bg{fill:#ffffff}
+  .brd{fill:none;stroke:#111;stroke-width:2}
+  .brd2{fill:none;stroke:#111;stroke-width:1}
+  .pw{fill:none;stroke:#111;stroke-width:2.2;stroke-linecap:square}
+  .pwn{fill:none;stroke:#111;stroke-width:1.2;stroke-dasharray:6 4}
+  .ctl{fill:none;stroke:#555;stroke-width:1.1;stroke-dasharray:4 3}
+  .bus{fill:none;stroke:#111;stroke-width:5;stroke-linecap:square}
+  .busn{fill:none;stroke:#111;stroke-width:2.4;stroke-linecap:square}
+  .buse{fill:none;stroke:#1a7a3c;stroke-width:3.4;stroke-linecap:square}
+  .dev{fill:#ffffff;stroke:#111;stroke-width:1.8}
+  .devf{fill:#f2f4f7;stroke:#111;stroke-width:1.8}
+  .vsd{fill:#eef4fb;stroke:#111;stroke-width:1.8}
+  .sp{fill:#fdf4e3;stroke:#111;stroke-width:1.8}
+  .sym{fill:none;stroke:#111;stroke-width:1.8}
+  .t{font-family:"DejaVu Sans",Arial,Helvetica,sans-serif;fill:#111}
+  .t9{font-size:9px}
+  .t10{font-size:10px}
+  .t11{font-size:11px}
+  .t12{font-size:12px}
+  .t14{font-size:14px}
+  .t18{font-size:18px}
+  .t24{font-size:24px}
+  .b{font-weight:700}
+  .mid{text-anchor:middle}
+  .end{text-anchor:end}
+  .prov{fill:#b03a2e;font-weight:700}
+  .note{fill:#7a4b00}
+  .grn{fill:#1a7a3c}
+</style>
+
+<rect class="bg" x="0" y="0" width="1587" height="1122"/>
+<rect class="brd" x="18" y="18" width="1551" height="1086"/>
+<rect class="brd2" x="30" y="30" width="1527" height="1062"/>
+<text x="125.4375" y="27" class="t t10 b mid">A</text>
+<text x="125.4375" y="1103" class="t t10 b mid">A</text>
+<text x="316.3125" y="27" class="t t10 b mid">B</text>
+<text x="316.3125" y="1103" class="t t10 b mid">B</text>
+<text x="507.1875" y="27" class="t t10 b mid">C</text>
+<text x="507.1875" y="1103" class="t t10 b mid">C</text>
+<text x="698.0625" y="27" class="t t10 b mid">D</text>
+<text x="698.0625" y="1103" class="t t10 b mid">D</text>
+<text x="888.9375" y="27" class="t t10 b mid">E</text>
+<text x="888.9375" y="1103" class="t t10 b mid">E</text>
+<text x="1079.8125" y="27" class="t t10 b mid">F</text>
+<text x="1079.8125" y="1103" class="t t10 b mid">F</text>
+<text x="1270.6875" y="27" class="t t10 b mid">G</text>
+<text x="1270.6875" y="1103" class="t t10 b mid">G</text>
+<text x="1461.5625" y="27" class="t t10 b mid">H</text>
+<text x="1461.5625" y="1103" class="t t10 b mid">H</text>
+<text x="24" y="118.5" class="t t10 b mid">1</text>
+<text x="1563" y="118.5" class="t t10 b mid">1</text>
+<text x="24" y="295.5" class="t t10 b mid">2</text>
+<text x="1563" y="295.5" class="t t10 b mid">2</text>
+<text x="24" y="472.5" class="t t10 b mid">3</text>
+<text x="1563" y="472.5" class="t t10 b mid">3</text>
+<text x="24" y="649.5" class="t t10 b mid">4</text>
+<text x="1563" y="649.5" class="t t10 b mid">4</text>
+<text x="24" y="826.5" class="t t10 b mid">5</text>
+<text x="1563" y="826.5" class="t t10 b mid">5</text>
+<text x="24" y="1003.5" class="t t10 b mid">6</text>
+<text x="1563" y="1003.5" class="t t10 b mid">6</text>
+<text x="46" y="58" class="t t18 b">SINGLE LINE DIAGRAM &#8212; MCC-01</text>
+<text x="46" y="76" class="t t11">Northfield WTP &#8212; Raw Water Transfer Pump Station  &#183;  415 V, 3 phase, 4 wire + earth, 50 Hz</text>
+<text x="110" y="108" class="t t10 b mid">11 kV NETWORK</text>
+<text x="110" y="120" class="t t9 mid">(network operator scope)</text>
+<line x1="110" y1="126" x2="110" y2="150" class="pw"/>
+<circle cx="110" cy="163" r="15" class="sym"/>
+<circle cx="110" cy="181" r="15" class="sym"/>
+<text x="134" y="160" class="t t10 b">TX-01  500 kVA</text>
+<text x="134" y="172" class="t t9">11 kV / 415 V  Dyn11</text>
+<text x="134" y="184" class="t t9">Z = 5 %  (nameplate)</text>
+<text x="134" y="196" class="t t9 note">EXISTING &#8212; client scope</text>
+<line x1="110" y1="196" x2="110" y2="232" class="pw"/>
+<line x1="70" y1="232" x2="150" y2="232" class="brd2"/>
+<circle cx="86" cy="232" r="4.0" fill="#fff" stroke="#111" stroke-width="1.6"/>
+<circle cx="102" cy="232" r="4.0" fill="#fff" stroke="#111" stroke-width="1.6"/>
+<circle cx="118" cy="232" r="4.0" fill="#fff" stroke="#111" stroke-width="1.6"/>
+<circle cx="134" cy="232" r="4.0" fill="#fff" stroke="#111" stroke-width="1.6"/>
+<text x="64" y="236" class="t t10 b end">X0</text>
+<text x="160" y="228" class="t t9">Incoming terminals / busbar links</text>
+<text x="160" y="240" class="t t9">Top entry, undrilled Al gland plate</text>
+<line x1="110" y1="236" x2="110" y2="268" class="pw"/>
+<rect x="92.0" y="268" width="36" height="50" rx="0" class="devf"/>
+<line x1="97.0" y1="311" x2="123.0" y2="275" class="sym"/>
+<line x1="123.0" y1="275" x2="117.0" y2="270" class="sym"/>
+<text x="136" y="282" class="t t12 b">Q1</text>
+<text x="136" y="295" class="t t10 b">630 A, 4 POLE MCCB</text>
+<text x="136" y="307" class="t t9">Electronic trip unit (L-S-I + G)</text>
+<text x="136" y="319" class="t t9 prov">Icu 50 kA @ 415 V</text>
+<text x="136" y="331" class="t t9 prov">PROVISIONAL &#8212; see Note 1</text>
+<line x1="110" y1="318" x2="110" y2="430" class="pw"/>
+<line x1="110" y1="348" x2="440" y2="348" class="pw"/>
+<rect x="440" y="334" width="128" height="30" rx="0" class="dev"/>
+<text x="446" y="346" class="t t10 b">SPD-01</text>
+<text x="446" y="358" class="t t9">Type 1+2 surge diverter</text>
+<path d="M 574 349 l 14 0 l -5 -5 m 5 5 l -5 5" class="sym"/>
+<text x="594" y="345" class="t t9">On dedicated protective device.</text>
+<text x="594" y="356" class="t t9">Status contact &#8594; PLC DI (X3:105)</text>
+<line x1="110" y1="382" x2="360" y2="382" class="pw"/>
+<circle cx="270" cy="382" r="8" class="sym"/>
+<circle cx="294" cy="382" r="8" class="sym"/>
+<circle cx="318" cy="382" r="8" class="sym"/>
+<text x="260" y="366" class="t t9">3 &#215; CT 600/5 A, Cl. 0.5</text>
+<rect x="360" y="368" width="118" height="30" rx="0" class="dev"/>
+<text x="366" y="380" class="t t10 b">PM-01</text>
+<text x="366" y="392" class="t t9">Power meter, EtherNet/IP</text>
+<text x="484" y="378" class="t t9 prov">NEVER open-circuit CT secondary.</text>
+<text x="484" y="390" class="t t9">Shorting links + warning label fitted.</text>
+<line x1="110" y1="410" x2="670" y2="410" class="pw"/>
+<rect x="670" y="396" width="128" height="28" rx="0" class="dev"/>
+<text x="676" y="414" class="t t9 b">KVP-01  Phase fail/seq</text>
+<text x="804" y="407" class="t t9">Permissive + alarm &#8212; not a trip. Protects DOL feeders and catches reversed rotation after a supply change.</text>
+<line x1="110" y1="440" x2="1452" y2="440" class="bus"/>
+<line x1="110" y1="452" x2="1452" y2="452" class="busn"/>
+<line x1="110" y1="464" x2="1452" y2="464" class="buse"/>
+<text x="1460" y="444" class="t t9 b">L1 L2 L3</text>
+<text x="1460" y="456" class="t t9 b">N (FULL SIZE)</text>
+<text x="1460" y="468" class="t t9 b grn">PE</text>
+<text x="110" y="428" class="t t10 b">800 A BUSBAR &#8212; 3P + FULL-SIZE N + SEPARATE PE (Notes 1, 7)</text>
+<line x1="230" y1="464" x2="230" y2="486" class="pw"/>
+<rect x="217.0" y="486" width="26" height="34" rx="0" class="dev"/>
+<line x1="222.0" y1="513" x2="238.0" y2="493" class="sym"/>
+<line x1="238.0" y1="493" x2="232.0" y2="488" class="sym"/>
+<text x="230" y="536" class="t t11 b mid">Q11</text>
+<text x="230" y="548" class="t t9 mid">MCCB 250 A</text>
+<line x1="230" y1="556" x2="230" y2="806" class="pw"/>
+<rect x="200" y="570" width="60" height="18" rx="0" class="dev"/>
+<text x="230" y="583" class="t t9 mid">REACTOR</text>
+<text x="184" y="578" class="t t9 end">3 % line reactor</text>
+<text x="184" y="590" class="t t9 end prov">PROVISIONAL (Note 4)</text>
+<rect x="192" y="618" width="76" height="58" rx="0" class="vsd"/>
+<path d="M 206 664 q 7 -15 14 0 q 7 15 14 0" class="sym"/>
+<text x="230" y="638" class="t t11 b mid">VSD-101</text>
+<text x="230" y="652" class="t t10 b mid">90 kW</text>
+<line x1="192" y1="632" x2="178" y2="632" class="ctl"/>
+<text x="176" y="628" class="t t9 b end">STO ch.1 + ch.2</text>
+<text x="176" y="640" class="t t9 end">from KS-01 (SCH-0040)</text>
+<rect x="215" y="698" width="30" height="12" rx="0" class="devf"/>
+<text x="184" y="702" class="t t9 end">EMC gland, 360&#176;</text>
+<text x="184" y="714" class="t t9 b end">SCREEN BOTH ENDS</text>
+<text x="184" y="742" class="t t9 b end">C-0101</text>
+<text x="184" y="754" class="t t9 end">3C+E 95 mm&#178;</text>
+<text x="184" y="766" class="t t9 end prov">PROVISIONAL (Note 5)</text>
+<line x1="221" y1="800" x2="239" y2="794" class="sym"/>
+<circle cx="221" cy="800" r="2.5" fill="#111"/>
+<text x="276" y="796" class="t t9">Local isolator</text>
+<text x="276" y="808" class="t t9">(field, others&#8217; scope)</text>
+<line x1="230" y1="806" x2="230" y2="840" class="pw"/>
+<circle cx="230" cy="857" r="18" class="dev"/>
+<text x="230" y="862" class="t t14 b mid">M</text>
+<text x="230" y="894" class="t t11 b mid">P-101</text>
+<text x="230" y="906" class="t t9 b mid">TRANSFER PUMP 1</text>
+<text x="230" y="918" class="t t9 mid">90 kW &#183; ~160 A (prov.)</text>
+<text x="230" y="930" class="t t9 mid">PTC thermistors &#8594; KT10x</text>
+<line x1="430" y1="464" x2="430" y2="486" class="pw"/>
+<rect x="417.0" y="486" width="26" height="34" rx="0" class="dev"/>
+<line x1="422.0" y1="513" x2="438.0" y2="493" class="sym"/>
+<line x1="438.0" y1="493" x2="432.0" y2="488" class="sym"/>
+<text x="430" y="536" class="t t11 b mid">Q12</text>
+<text x="430" y="548" class="t t9 mid">MCCB 250 A</text>
+<line x1="430" y1="556" x2="430" y2="806" class="pw"/>
+<rect x="400" y="570" width="60" height="18" rx="0" class="dev"/>
+<text x="430" y="583" class="t t9 mid">REACTOR</text>
+<text x="384" y="578" class="t t9 end">3 % line reactor</text>
+<text x="384" y="590" class="t t9 end prov">PROVISIONAL (Note 4)</text>
+<rect x="392" y="618" width="76" height="58" rx="0" class="vsd"/>
+<path d="M 406 664 q 7 -15 14 0 q 7 15 14 0" class="sym"/>
+<text x="430" y="638" class="t t11 b mid">VSD-102</text>
+<text x="430" y="652" class="t t10 b mid">90 kW</text>
+<line x1="392" y1="632" x2="378" y2="632" class="ctl"/>
+<text x="376" y="628" class="t t9 b end">STO ch.1 + ch.2</text>
+<text x="376" y="640" class="t t9 end">from KS-01 (SCH-0040)</text>
+<rect x="415" y="698" width="30" height="12" rx="0" class="devf"/>
+<text x="384" y="702" class="t t9 end">EMC gland, 360&#176;</text>
+<text x="384" y="714" class="t t9 b end">SCREEN BOTH ENDS</text>
+<text x="384" y="742" class="t t9 b end">C-0111</text>
+<text x="384" y="754" class="t t9 end">3C+E 95 mm&#178;</text>
+<text x="384" y="766" class="t t9 end prov">PROVISIONAL (Note 5)</text>
+<line x1="421" y1="800" x2="439" y2="794" class="sym"/>
+<circle cx="421" cy="800" r="2.5" fill="#111"/>
+<text x="476" y="796" class="t t9">Local isolator</text>
+<text x="476" y="808" class="t t9">(field, others&#8217; scope)</text>
+<line x1="430" y1="806" x2="430" y2="840" class="pw"/>
+<circle cx="430" cy="857" r="18" class="dev"/>
+<text x="430" y="862" class="t t14 b mid">M</text>
+<text x="430" y="894" class="t t11 b mid">P-102</text>
+<text x="430" y="906" class="t t9 b mid">TRANSFER PUMP 2</text>
+<text x="430" y="918" class="t t9 mid">90 kW &#183; ~160 A (prov.)</text>
+<text x="430" y="930" class="t t9 mid">PTC thermistors &#8594; KT10x</text>
+<line x1="560" y1="464" x2="560" y2="486" class="pw"/>
+<rect x="547.0" y="486" width="26" height="34" rx="0" class="dev"/>
+<line x1="552.0" y1="513" x2="568.0" y2="493" class="sym"/>
+<line x1="568.0" y1="493" x2="562.0" y2="488" class="sym"/>
+<text x="560" y="536" class="t t11 b mid">Q13</text>
+<text x="560" y="548" class="t t9 mid">MCCB 80 A</text>
+<line x1="560" y1="556" x2="560" y2="592" class="pw"/>
+<circle cx="560" cy="596" r="4.0" fill="#fff" stroke="#111" stroke-width="1.6"/>
+<text x="560" y="616" class="t t11 b mid">DB-01</text>
+<text x="560" y="628" class="t t9 b mid">L&amp;P BOARD</text>
+<text x="560" y="640" class="t t9 mid">C-0501</text>
+<line x1="652" y1="464" x2="652" y2="486" class="pw"/>
+<rect x="639.0" y="486" width="26" height="34" rx="0" class="dev"/>
+<line x1="644.0" y1="513" x2="660.0" y2="493" class="sym"/>
+<line x1="660.0" y1="493" x2="654.0" y2="488" class="sym"/>
+<text x="652" y="536" class="t t11 b mid">Q14</text>
+<text x="652" y="548" class="t t9 mid">MCCB 32 A</text>
+<line x1="652" y1="556" x2="652" y2="592" class="pw"/>
+<circle cx="652" cy="596" r="4.0" fill="#fff" stroke="#111" stroke-width="1.6"/>
+<text x="652" y="616" class="t t11 b mid">PKG-201</text>
+<text x="652" y="628" class="t t9 b mid">DOSING SKID</text>
+<text x="652" y="640" class="t t9 mid">C-0502</text>
+<line x1="744" y1="464" x2="744" y2="486" class="pw"/>
+<rect x="731.0" y="486" width="26" height="34" rx="0" class="dev"/>
+<line x1="736.0" y1="513" x2="752.0" y2="493" class="sym"/>
+<line x1="752.0" y1="493" x2="746.0" y2="488" class="sym"/>
+<text x="744" y="536" class="t t11 b mid">Q15</text>
+<text x="744" y="548" class="t t9 mid">MPCB 6.3-10 A</text>
+<line x1="744" y1="556" x2="744" y2="566" class="pw"/>
+<path d="M 733 586 A 11 11 0 0 1 755 586" class="sym"/>
+<line x1="744" y1="566" x2="744" y2="575" class="pw"/>
+<line x1="744" y1="586" x2="744" y2="596" class="pw"/>
+<text x="759" y="582" class="t t9">KM</text>
+<line x1="744" y1="596" x2="744" y2="628" class="pw"/>
+<text x="735" y="614" class="t t9 b end">C-0121</text>
+<circle cx="744" cy="644" r="15" class="dev"/>
+<text x="744" y="649" class="t t14 b mid">M</text>
+<text x="744" y="678" class="t t11 b mid">P-103</text>
+<text x="744" y="690" class="t t9 b mid">SUMP PUMP</text>
+<text x="744" y="702" class="t t9 mid">4 kW</text>
+<line x1="836" y1="464" x2="836" y2="486" class="pw"/>
+<rect x="823.0" y="486" width="26" height="34" rx="0" class="dev"/>
+<line x1="828.0" y1="513" x2="844.0" y2="493" class="sym"/>
+<line x1="844.0" y1="493" x2="838.0" y2="488" class="sym"/>
+<text x="836" y="536" class="t t11 b mid">Q16</text>
+<text x="836" y="548" class="t t9 mid">MPCB 9-14 A</text>
+<line x1="836" y1="556" x2="836" y2="566" class="pw"/>
+<path d="M 825 586 A 11 11 0 0 1 847 586" class="sym"/>
+<line x1="836" y1="566" x2="836" y2="575" class="pw"/>
+<line x1="836" y1="586" x2="836" y2="596" class="pw"/>
+<text x="851" y="582" class="t t9">KM</text>
+<line x1="836" y1="596" x2="836" y2="628" class="pw"/>
+<text x="827" y="614" class="t t9 b end">C-0131</text>
+<circle cx="836" cy="644" r="15" class="dev"/>
+<text x="836" y="649" class="t t14 b mid">M</text>
+<text x="836" y="678" class="t t11 b mid">C-101</text>
+<text x="836" y="690" class="t t9 b mid">COMPRESSOR</text>
+<text x="836" y="702" class="t t9 mid">5.5 kW</text>
+<line x1="928" y1="464" x2="928" y2="486" class="pw"/>
+<rect x="915.0" y="486" width="26" height="34" rx="0" class="dev"/>
+<line x1="920.0" y1="513" x2="936.0" y2="493" class="sym"/>
+<line x1="936.0" y1="493" x2="930.0" y2="488" class="sym"/>
+<text x="928" y="536" class="t t11 b mid">Q17</text>
+<text x="928" y="548" class="t t9 mid">MPCB 1.6-2.5 A</text>
+<line x1="928" y1="556" x2="928" y2="566" class="pw"/>
+<path d="M 917 586 A 11 11 0 0 1 939 586" class="sym"/>
+<line x1="928" y1="566" x2="928" y2="575" class="pw"/>
+<line x1="928" y1="586" x2="928" y2="596" class="pw"/>
+<text x="943" y="582" class="t t9">KM</text>
+<line x1="928" y1="596" x2="928" y2="628" class="pw"/>
+<text x="919" y="614" class="t t9 b end">C-0141</text>
+<rect x="896" y="628" width="64" height="34" rx="0" class="devf"/>
+<text x="928" y="644" class="t t9 b mid">VENDOR</text>
+<text x="928" y="656" class="t t9 b mid">ACTUATOR</text>
+<text x="928" y="680" class="t t11 b mid">MOV-101</text>
+<text x="928" y="692" class="t t9 b mid">ISOL VALVE</text>
+<text x="928" y="704" class="t t9 mid">0.75 kW</text>
+<text x="928" y="720" class="t t9 mid">Integral reversing</text>
+<text x="928" y="731" class="t t9 mid">starter + limits</text>
+<line x1="1020" y1="464" x2="1020" y2="486" class="pw"/>
+<rect x="1007.0" y="486" width="26" height="34" rx="0" class="dev"/>
+<line x1="1012.0" y1="513" x2="1028.0" y2="493" class="sym"/>
+<line x1="1028.0" y1="493" x2="1022.0" y2="488" class="sym"/>
+<text x="1020" y="536" class="t t11 b mid">Q18</text>
+<text x="1020" y="548" class="t t9 mid">MCB 3P C20</text>
+<line x1="1020" y1="556" x2="1020" y2="592" class="pw"/>
+<circle cx="1020" cy="596" r="4.0" fill="#fff" stroke="#111" stroke-width="1.6"/>
+<text x="1020" y="616" class="t t11 b mid">HVAC-01</text>
+<text x="1020" y="628" class="t t9 b mid">HVAC UNIT</text>
+<text x="1020" y="640" class="t t9 mid">C-0503</text>
+<line x1="1112" y1="464" x2="1112" y2="486" class="pw"/>
+<rect x="1099.0" y="486" width="26" height="34" rx="0" class="dev"/>
+<line x1="1104.0" y1="513" x2="1120.0" y2="493" class="sym"/>
+<line x1="1120.0" y1="493" x2="1114.0" y2="488" class="sym"/>
+<text x="1112" y="536" class="t t11 b mid">Q19</text>
+<text x="1112" y="548" class="t t9 mid">MCB 1P C10</text>
+<line x1="1112" y1="556" x2="1112" y2="592" class="pw"/>
+<circle cx="1112" cy="596" r="4.0" fill="#fff" stroke="#111" stroke-width="1.6"/>
+<text x="1112" y="616" class="t t11 b mid">UPS-01</text>
+<text x="1112" y="628" class="t t9 b mid">CONTROL SYS</text>
+<text x="1112" y="640" class="t t9 mid">internal</text>
+<text x="1112" y="656" class="t t9 mid">&#8594; PSU-1 / PSU-2</text>
+<text x="1112" y="667" class="t t9 mid">&#8594; 24 V DC bus</text>
+<text x="1112" y="678" class="t t9 b mid">SCH-0030</text>
+<line x1="1204" y1="464" x2="1204" y2="486" class="pw"/>
+<rect x="1191.0" y="486" width="26" height="34" rx="0" class="dev"/>
+<line x1="1196.0" y1="513" x2="1212.0" y2="493" class="sym"/>
+<line x1="1212.0" y1="493" x2="1206.0" y2="488" class="sym"/>
+<text x="1204" y="536" class="t t11 b mid">Q20</text>
+<text x="1204" y="548" class="t t9 mid">MCB 1P C16</text>
+<line x1="1204" y1="556" x2="1204" y2="592" class="pw"/>
+<circle cx="1204" cy="596" r="4.0" fill="#fff" stroke="#111" stroke-width="1.6"/>
+<text x="1204" y="616" class="t t11 b mid">SVC</text>
+<text x="1204" y="628" class="t t9 b mid">SERVICES</text>
+<text x="1204" y="640" class="t t9 mid">internal</text>
+<text x="1204" y="656" class="t t9 mid">Lighting, GPO,</text>
+<text x="1204" y="667" class="t t9 mid">anti-cond. heaters</text>
+<line x1="1300" y1="464" x2="1300" y2="486" class="pw"/>
+<rect x="1287.0" y="486" width="26" height="34" rx="0" class="sp"/>
+<line x1="1292.0" y1="513" x2="1308.0" y2="493" class="sym"/>
+<line x1="1308.0" y1="493" x2="1302.0" y2="488" class="sym"/>
+<text x="1300" y="536" class="t t11 b mid">Q21</text>
+<text x="1300" y="548" class="t t9 mid">MCCB 63 A</text>
+<line x1="1300" y1="556" x2="1300" y2="592" class="pw"/>
+<circle cx="1300" cy="596" r="4.0" fill="#fff" stroke="#111" stroke-width="1.6"/>
+<text x="1300" y="616" class="t t11 b mid">SPARE</text>
+<text x="1300" y="628" class="t t9 b mid">SPARE FDR 1</text>
+<text x="1300" y="644" class="t t9 mid">Fitted AND wired</text>
+<text x="1300" y="655" class="t t9 mid">to terminals</text>
+<text x="1300" y="671" class="t t9 mid note">Adding a feeder</text>
+<text x="1300" y="682" class="t t9 mid note">later costs a</text>
+<text x="1300" y="693" class="t t9 mid note">shutdown</text>
+<line x1="1396" y1="464" x2="1396" y2="486" class="pw"/>
+<rect x="1383.0" y="486" width="26" height="34" rx="0" class="sp"/>
+<line x1="1388.0" y1="513" x2="1404.0" y2="493" class="sym"/>
+<line x1="1404.0" y1="493" x2="1398.0" y2="488" class="sym"/>
+<text x="1396" y="536" class="t t11 b mid">Q22</text>
+<text x="1396" y="548" class="t t9 mid">MCCB 32 A</text>
+<line x1="1396" y1="556" x2="1396" y2="592" class="pw"/>
+<circle cx="1396" cy="596" r="4.0" fill="#fff" stroke="#111" stroke-width="1.6"/>
+<text x="1396" y="616" class="t t11 b mid">SPARE</text>
+<text x="1396" y="628" class="t t9 b mid">SPARE FDR 2</text>
+<text x="1396" y="644" class="t t9 mid">Fitted AND wired</text>
+<text x="1396" y="655" class="t t9 mid">to terminals</text>
+<text x="1396" y="671" class="t t9 mid note">Adding a feeder</text>
+<text x="1396" y="682" class="t t9 mid note">later costs a</text>
+<text x="1396" y="693" class="t t9 mid note">shutdown</text>
+<line x1="110" y1="464" x2="70" y2="464" class="buse"/>
+<line x1="70" y1="464" x2="70" y2="472" class="sym"/>
+<line x1="59" y1="472" x2="81" y2="472" class="sym"/>
+<line x1="63" y1="476" x2="77" y2="476" class="sym"/>
+<line x1="67" y1="480" x2="73" y2="480" class="sym"/>
+<text x="64" y="492" class="t t9 b end">MEB</text>
+<rect x="600" y="760" width="940" height="160" rx="0" class="devf"/>
+<text x="610" y="778" class="t t11 b">MCC-01 CUBICLE ARRANGEMENT (indicative &#8212; refer NFD-ELE-GA-0020)</text>
+<text x="610.0" y="802" class="t t10 b">C1  INCOMER</text>
+<text x="610.0" y="818" class="t t9">&#183; Q1 630 A 4P MCCB</text>
+<text x="610.0" y="832" class="t t9">&#183; SPD-01 Type 1+2</text>
+<text x="610.0" y="846" class="t t9">&#183; PM-01 + 3 &#215; CT</text>
+<text x="610.0" y="860" class="t t9">&#183; KVP-01 phase relay</text>
+<text x="610.0" y="874" class="t t9">&#183; Main earth bar</text>
+<line x1="788.0" y1="786" x2="788.0" y2="920" class="brd2"/>
+<text x="798.0" y="802" class="t t10 b">C2  VSD-101</text>
+<text x="798.0" y="818" class="t t9">&#183; Q11 MCCB 250 A</text>
+<text x="798.0" y="832" class="t t9">&#183; Line reactor</text>
+<text x="798.0" y="846" class="t t9">&#183; VSD-101  90 kW</text>
+<text x="798.0" y="860" class="t t9">&#183; EMC gland plate</text>
+<text x="798.0" y="874" class="t t9">&#183; KT101 thermistor relay</text>
+<line x1="976.0" y1="786" x2="976.0" y2="920" class="brd2"/>
+<text x="986.0" y="802" class="t t10 b">C3  VSD-102</text>
+<text x="986.0" y="818" class="t t9">&#183; Q12 MCCB 250 A</text>
+<text x="986.0" y="832" class="t t9">&#183; Line reactor</text>
+<text x="986.0" y="846" class="t t9">&#183; VSD-102  90 kW</text>
+<text x="986.0" y="860" class="t t9">&#183; EMC gland plate</text>
+<text x="986.0" y="874" class="t t9">&#183; KT102 thermistor relay</text>
+<line x1="1164.0" y1="786" x2="1164.0" y2="920" class="brd2"/>
+<text x="1174.0" y="802" class="t t10 b">C4  DISTRIBUTION</text>
+<text x="1174.0" y="818" class="t t9">&#183; Q13 &#8211; Q18 feeders</text>
+<text x="1174.0" y="832" class="t t9">&#183; Q19 / Q20 control</text>
+<text x="1174.0" y="846" class="t t9">&#183; Q21 / Q22 SPARE</text>
+<text x="1174.0" y="860" class="t t9">&#183; 20 % spare chassis</text>
+<text x="1174.0" y="874" class="t t9">&#183; Outgoing terminals X1</text>
+<line x1="1352.0" y1="786" x2="1352.0" y2="920" class="brd2"/>
+<text x="1362.0" y="802" class="t t10 b">C5  CONTROL</text>
+<text x="1362.0" y="818" class="t t9">&#183; PLC + I/O (9 slots)</text>
+<text x="1362.0" y="832" class="t t9">&#183; UPS-01, PSU-1/2, ECPs</text>
+<text x="1362.0" y="846" class="t t9">&#183; KS-01 safety relay</text>
+<text x="1362.0" y="860" class="t t9">&#183; SW-01 + fibre LIU</text>
+<text x="1362.0" y="874" class="t t9">&#183; Terminals X2&#8211;X6, XE, XS</text>
+<rect x="46" y="942" width="1010" height="146" rx="0" class="devf"/>
+<text x="56" y="960" class="t t12 b">NOTES</text>
+<text x="56" y="976.0" class="t t9 prov b">1.  PROSPECTIVE FAULT LEVEL IS AN ASSUMPTION: 25 kA for 1 s. Not confirmed. All device Icu/Ics and busbar Icw are PROVISIONAL. TQ-002 open.</text>
+<text x="56" y="988.4" class="t t9 prov b">2.  Protection settings are NOT shown. No coordination study has been performed. Discrimination between Q1 and the feeder devices is UNVERIFIED. TQ-004 open.</text>
+<text x="56" y="1000.8" class="t t9">3.  Earthing shown as TN-S &#8212; ASSUMED, TQ-001. Separate N and PE bars. Instrument screen earth bar (not shown) is insulated and single-point bonded to the MEB.</text>
+<text x="56" y="1013.2" class="t t9">4.  Line reactors are provisional pending the harmonic assessment (TQ-006) and confirmation of actual motor cable route length against the drive manual limit.</text>
+<text x="56" y="1025.6" class="t t9">5.  VSD feeder breakers are selected from the DRIVE MANUAL, not from motor FLC. The breaker protects the cable and the drive input; the motor is protected by the</text>
+<text x="56" y="1038.0" class="t t9">     drive thermal model plus an independent PTC thermistor relay. Cable sizes are provisional &#8212; no AS/NZS 3008.1.1 calculation has been performed.</text>
+<text x="56" y="1050.4" class="t t9">6.  Assembly design verification (temperature rise, short-circuit withstand, IP) is the MANUFACTURER&#8217;S responsibility under AS/NZS 61439.1, not the designer&#8217;s.</text>
+<text x="56" y="1062.8" class="t t9">7.  Full-size neutral: triplen harmonic currents from the six-pulse drives and switch-mode supplies ADD in the neutral rather than cancelling.</text>
+<text x="56" y="1075.2" class="t t9">8.  Rev 1 incorporates CR-001 &#8212; transfer pump motors uprated 75 kW to 90 kW following client hydraulic re-modelling. See NFD-ELE-CHG-0001.</text>
+<rect x="1072" y="946" width="469" height="142" rx="0" class="dev"/>
+<line x1="1072" y1="980" x2="1541" y2="980" class="brd2"/>
+<line x1="1072" y1="1016" x2="1541" y2="1016" class="brd2"/>
+<line x1="1072" y1="1046" x2="1541" y2="1046" class="brd2"/>
+<line x1="1372" y1="980" x2="1372" y2="1046" class="brd2"/>
+<text x="1082" y="962" class="t t11 b">NORTHFIELD WATER TREATMENT PLANT</text>
+<text x="1082" y="975" class="t t10">RAW WATER TRANSFER PUMP STATION &#8212; MCC-01</text>
+<text x="1082" y="996" class="t t14 b">SINGLE LINE DIAGRAM</text>
+<text x="1082" y="1010" class="t t9">415 V MOTOR CONTROL CENTRE</text>
+<text x="1382" y="994" class="t t9">SHEET</text>
+<text x="1382" y="1008" class="t t11 b">1 of 1</text>
+<text x="1082" y="1032" class="t t11 b">DRAWING No.  NFD-ELE-SLD-0001</text>
+<text x="1382" y="1032" class="t t12 b">REV  1</text>
+<text x="1082" y="1062" class="t t9 b prov">SELF-DIRECTED REFERENCE PROJECT &#8212; NOT A PRODUCTION DRAWING</text>
+<text x="1082" y="1076" class="t t9">Illustrative only. Not for construction. Ratings provisional. See notes 1&#8211;7.</text>
+</svg>

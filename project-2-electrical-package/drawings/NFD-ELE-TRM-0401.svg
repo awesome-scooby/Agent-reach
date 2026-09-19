@@ -1,0 +1,510 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1587 1122" width="1587" height="1122">
+
+<style>
+  .bg{fill:#ffffff}
+  .brd{fill:none;stroke:#111;stroke-width:2}
+  .brd2{fill:none;stroke:#111;stroke-width:1}
+  .pw{fill:none;stroke:#111;stroke-width:2.2;stroke-linecap:square}
+  .w{fill:none;stroke:#111;stroke-width:1.6;stroke-linecap:square}
+  .wdc{fill:none;stroke:#1f4e9c;stroke-width:1.8;stroke-linecap:square}
+  .wsaf{fill:none;stroke:#c9a227;stroke-width:2.4;stroke-linecap:square}
+  .wana{fill:none;stroke:#7a3fa0;stroke-width:1.8;stroke-linecap:square}
+  .wext{fill:none;stroke:#d97706;stroke-width:1.8;stroke-linecap:square}
+  .wref{fill:none;stroke:#888;stroke-width:1.1;stroke-dasharray:4 3}
+  .rail{fill:none;stroke:#1f4e9c;stroke-width:3;stroke-linecap:square}
+  .sym{fill:none;stroke:#111;stroke-width:1.7}
+  .dev{fill:#ffffff;stroke:#111;stroke-width:1.7}
+  .devf{fill:#f2f4f7;stroke:#111;stroke-width:1.7}
+  .saf{fill:#fdf6e0;stroke:#a98207;stroke-width:1.8}
+  .plc{fill:#eef4fb;stroke:#111;stroke-width:1.7}
+  .fld{fill:#f4fbf4;stroke:#111;stroke-width:1.7}
+  .term{fill:#ffffff;stroke:#111;stroke-width:1.5}
+  .termy{fill:#fdf0b8;stroke:#a98207;stroke-width:1.5}
+  .terma{fill:#f3edfa;stroke:#7a3fa0;stroke-width:1.5}
+  .t{font-family:"DejaVu Sans",Arial,Helvetica,sans-serif;fill:#111}
+  .t8{font-size:8px}.t9{font-size:9px}.t10{font-size:10px}.t11{font-size:11px}
+  .t12{font-size:12px}.t14{font-size:14px}.t18{font-size:18px}
+  .b{font-weight:700}.mid{text-anchor:middle}.end{text-anchor:end}
+  .prov{fill:#b03a2e;font-weight:700}
+  .note{fill:#7a4b00}
+  .grn{fill:#1a7a3c}
+  .blu{fill:#1f4e9c}
+  .amb{fill:#8a6d00}
+  .pur{fill:#7a3fa0}
+</style>
+
+<rect class="bg" x="0" y="0" width="1587" height="1122"/>
+<rect class="brd" x="18" y="18" width="1551" height="1086"/>
+<rect class="brd2" x="30" y="30" width="1527" height="1062"/>
+<text x="125.4375" y="27" class="t t10 b mid">A</text>
+<text x="125.4375" y="1103" class="t t10 b mid">A</text>
+<text x="316.3125" y="27" class="t t10 b mid">B</text>
+<text x="316.3125" y="1103" class="t t10 b mid">B</text>
+<text x="507.1875" y="27" class="t t10 b mid">C</text>
+<text x="507.1875" y="1103" class="t t10 b mid">C</text>
+<text x="698.0625" y="27" class="t t10 b mid">D</text>
+<text x="698.0625" y="1103" class="t t10 b mid">D</text>
+<text x="888.9375" y="27" class="t t10 b mid">E</text>
+<text x="888.9375" y="1103" class="t t10 b mid">E</text>
+<text x="1079.8125" y="27" class="t t10 b mid">F</text>
+<text x="1079.8125" y="1103" class="t t10 b mid">F</text>
+<text x="1270.6875" y="27" class="t t10 b mid">G</text>
+<text x="1270.6875" y="1103" class="t t10 b mid">G</text>
+<text x="1461.5625" y="27" class="t t10 b mid">H</text>
+<text x="1461.5625" y="1103" class="t t10 b mid">H</text>
+<text x="24" y="118.5" class="t t10 b mid">1</text>
+<text x="1563" y="118.5" class="t t10 b mid">1</text>
+<text x="24" y="295.5" class="t t10 b mid">2</text>
+<text x="1563" y="295.5" class="t t10 b mid">2</text>
+<text x="24" y="472.5" class="t t10 b mid">3</text>
+<text x="1563" y="472.5" class="t t10 b mid">3</text>
+<text x="24" y="649.5" class="t t10 b mid">4</text>
+<text x="1563" y="649.5" class="t t10 b mid">4</text>
+<text x="24" y="826.5" class="t t10 b mid">5</text>
+<text x="1563" y="826.5" class="t t10 b mid">5</text>
+<text x="24" y="1003.5" class="t t10 b mid">6</text>
+<text x="1563" y="1003.5" class="t t10 b mid">6</text>
+<text x="46" y="58" class="t t18 b">TERMINATION DRAWING &#8212; RAIL X3 (24 V DC DIGITAL)</text>
+<text x="46" y="76" class="t t11">P-101 equipment block, terminals X3:001&#8211;030 &#183; field side left, internal side right &#183; 20 % spare terminals grouped at the end of the block</text>
+<rect x="46" y="142" width="1060" height="595" rx="0" class="devf"/>
+<text x="60" y="160" class="t t9 b">CABLE No.</text>
+<text x="150" y="160" class="t t9 b">CORE</text>
+<text x="210" y="160" class="t t9 b">FIELD SIDE &#8212; SIGNAL</text>
+<text x="452" y="160" class="t t9 b">TERM</text>
+<text x="530" y="160" class="t t9 b">INTERNAL DESTINATION</text>
+<text x="760" y="160" class="t t9 b">VOLTAGE</text>
+<text x="840" y="160" class="t t9 b">DRAWING REF</text>
+<text x="950" y="160" class="t t9 b">NOTE</text>
+<line x1="46" y1="168" x2="1106" y2="168" class="brd2"/>
+<text x="60" y="188" class="t t8">C-0102</text>
+<text x="150" y="188" class="t t8 mid">1</text>
+<text x="210" y="188" class="t t8 b">LCS-101 Start PB &#8212; 24 V DC out</text>
+<rect x="434" y="175" width="52" height="19" rx="0" class="term"/>
+<text x="460" y="188" class="t t8 b mid">001</text>
+<text x="530" y="188" class="t t8">S101-STR</text>
+<text x="760" y="188" class="t t8">24 V DC</text>
+<text x="840" y="188" class="t t8">SCH-0101/12</text>
+<text x="950" y="188" class="t t8"></text>
+<line x1="430" y1="184" x2="434" y2="184" class="wdc"/>
+<line x1="486" y1="184" x2="522" y2="184" class="wdc"/>
+<line x1="400" y1="184" x2="434" y2="184" class="wdc"/>
+<line x1="46" y1="191" x2="1106" y2="191" class="wref"/>
+<text x="60" y="209" class="t t8">C-0102</text>
+<text x="150" y="209" class="t t8 mid">2</text>
+<text x="210" y="209" class="t t8 b">LCS-101 Start PB &#8212; return</text>
+<rect x="434" y="196" width="52" height="19" rx="0" class="term"/>
+<text x="460" y="209" class="t t8 b mid">002</text>
+<text x="530" y="209" class="t t8">S101-STR</text>
+<text x="760" y="209" class="t t8">24 V DC</text>
+<text x="840" y="209" class="t t8">SCH-0101/12</text>
+<text x="950" y="209" class="t t8"></text>
+<line x1="430" y1="205" x2="434" y2="205" class="wdc"/>
+<line x1="486" y1="205" x2="522" y2="205" class="wdc"/>
+<line x1="400" y1="205" x2="434" y2="205" class="wdc"/>
+<line x1="46" y1="212" x2="1106" y2="212" class="wref"/>
+<text x="60" y="230" class="t t8">C-0102</text>
+<text x="150" y="230" class="t t8 mid">3</text>
+<text x="210" y="230" class="t t8 b">LCS-101 Stop PB &#8212; 24 V DC out</text>
+<rect x="434" y="217" width="52" height="19" rx="0" class="term"/>
+<text x="460" y="230" class="t t8 b mid">003</text>
+<text x="530" y="230" class="t t8">S101-STP</text>
+<text x="760" y="230" class="t t8">24 V DC</text>
+<text x="840" y="230" class="t t8">SCH-0101/13</text>
+<text x="950" y="230" class="t t8"></text>
+<line x1="430" y1="226" x2="434" y2="226" class="wdc"/>
+<line x1="486" y1="226" x2="522" y2="226" class="wdc"/>
+<line x1="400" y1="226" x2="434" y2="226" class="wdc"/>
+<line x1="46" y1="233" x2="1106" y2="233" class="wref"/>
+<text x="60" y="251" class="t t8">C-0102</text>
+<text x="150" y="251" class="t t8 mid">4</text>
+<text x="210" y="251" class="t t8 b">LCS-101 Stop PB &#8212; return</text>
+<rect x="434" y="238" width="52" height="19" rx="0" class="term"/>
+<text x="460" y="251" class="t t8 b mid">004</text>
+<text x="530" y="251" class="t t8">S101-STP</text>
+<text x="760" y="251" class="t t8">24 V DC</text>
+<text x="840" y="251" class="t t8">SCH-0101/13</text>
+<text x="950" y="251" class="t t8">NC &#8212; fail-safe</text>
+<line x1="430" y1="247" x2="434" y2="247" class="wdc"/>
+<line x1="486" y1="247" x2="522" y2="247" class="wdc"/>
+<line x1="400" y1="247" x2="434" y2="247" class="wdc"/>
+<line x1="46" y1="254" x2="1106" y2="254" class="wref"/>
+<text x="60" y="272" class="t t8">C-0102</text>
+<text x="150" y="272" class="t t8 mid">5</text>
+<text x="210" y="272" class="t t8 b">Selector &#8212; LOCAL position</text>
+<rect x="434" y="259" width="52" height="19" rx="0" class="term"/>
+<text x="460" y="272" class="t t8 b mid">005</text>
+<text x="530" y="272" class="t t8">PLC DI-03</text>
+<text x="760" y="272" class="t t8">24 V DC</text>
+<text x="840" y="272" class="t t8">SCH-0201/04</text>
+<text x="950" y="272" class="t t8"></text>
+<line x1="430" y1="268" x2="434" y2="268" class="wdc"/>
+<line x1="486" y1="268" x2="522" y2="268" class="wdc"/>
+<line x1="400" y1="268" x2="434" y2="268" class="wdc"/>
+<line x1="46" y1="275" x2="1106" y2="275" class="wref"/>
+<text x="60" y="293" class="t t8">C-0102</text>
+<text x="150" y="293" class="t t8 mid">6</text>
+<text x="210" y="293" class="t t8 b">Selector &#8212; REMOTE position</text>
+<rect x="434" y="280" width="52" height="19" rx="0" class="term"/>
+<text x="460" y="293" class="t t8 b mid">006</text>
+<text x="530" y="293" class="t t8">PLC DI-04</text>
+<text x="760" y="293" class="t t8">24 V DC</text>
+<text x="840" y="293" class="t t8">SCH-0201/05</text>
+<text x="950" y="293" class="t t8"></text>
+<line x1="430" y1="289" x2="434" y2="289" class="wdc"/>
+<line x1="486" y1="289" x2="522" y2="289" class="wdc"/>
+<line x1="400" y1="289" x2="434" y2="289" class="wdc"/>
+<line x1="46" y1="296" x2="1106" y2="296" class="wref"/>
+<text x="60" y="314" class="t t8">C-0102</text>
+<text x="150" y="314" class="t t8 mid">7</text>
+<text x="210" y="314" class="t t8 b">LCS-101 Running lamp &#8212; supply</text>
+<rect x="434" y="301" width="52" height="19" rx="0" class="term"/>
+<text x="460" y="314" class="t t8 b mid">007</text>
+<text x="530" y="314" class="t t8">H101L-RUN</text>
+<text x="760" y="314" class="t t8">24 V DC</text>
+<text x="840" y="314" class="t t8">SCH-0101/22</text>
+<text x="950" y="314" class="t t8"></text>
+<line x1="430" y1="310" x2="434" y2="310" class="wdc"/>
+<line x1="486" y1="310" x2="522" y2="310" class="wdc"/>
+<line x1="400" y1="310" x2="434" y2="310" class="wdc"/>
+<line x1="46" y1="317" x2="1106" y2="317" class="wref"/>
+<text x="60" y="335" class="t t8">C-0102</text>
+<text x="150" y="335" class="t t8 mid">8</text>
+<text x="210" y="335" class="t t8 b">LCS-101 Running lamp &#8212; return</text>
+<rect x="434" y="322" width="52" height="19" rx="0" class="term"/>
+<text x="460" y="335" class="t t8 b mid">008</text>
+<text x="530" y="335" class="t t8">H101L-RUN</text>
+<text x="760" y="335" class="t t8">24 V DC</text>
+<text x="840" y="335" class="t t8">SCH-0101/22</text>
+<text x="950" y="335" class="t t8"></text>
+<line x1="430" y1="331" x2="434" y2="331" class="wdc"/>
+<line x1="486" y1="331" x2="522" y2="331" class="wdc"/>
+<line x1="400" y1="331" x2="434" y2="331" class="wdc"/>
+<line x1="46" y1="338" x2="1106" y2="338" class="wref"/>
+<text x="60" y="356" class="t t8">C-0102</text>
+<text x="150" y="356" class="t t8 mid">9&#8211;16</text>
+<text x="210" y="356" class="t t8">SPARE CORES (8)</text>
+<rect x="434" y="343" width="52" height="19" rx="0" class="devf"/>
+<text x="460" y="356" class="t t8 b mid">009</text>
+<text x="530" y="356" class="t t8">&#8212;</text>
+<text x="760" y="356" class="t t8">&#8212;</text>
+<text x="840" y="356" class="t t8">&#8212;</text>
+<text x="950" y="356" class="t t8">16C cable, 8 spare</text>
+<line x1="46" y1="359" x2="1106" y2="359" class="wref"/>
+<text x="60" y="377" class="t t8">C-0103</text>
+<text x="150" y="377" class="t t8 mid">1</text>
+<text x="210" y="377" class="t t8 b">P-101 PTC thermistor leg 1</text>
+<rect x="434" y="364" width="52" height="19" rx="0" class="term"/>
+<text x="460" y="377" class="t t8 b mid">013</text>
+<text x="530" y="377" class="t t8">KT101</text>
+<text x="760" y="377" class="t t8">ELV</text>
+<text x="840" y="377" class="t t8">SCH-0101/08</text>
+<text x="950" y="377" class="t t8"></text>
+<line x1="430" y1="373" x2="434" y2="373" class="wdc"/>
+<line x1="486" y1="373" x2="522" y2="373" class="wdc"/>
+<line x1="400" y1="373" x2="434" y2="373" class="wdc"/>
+<line x1="46" y1="380" x2="1106" y2="380" class="wref"/>
+<text x="60" y="398" class="t t8">C-0103</text>
+<text x="150" y="398" class="t t8 mid">2</text>
+<text x="210" y="398" class="t t8 b">P-101 PTC thermistor leg 2</text>
+<rect x="434" y="385" width="52" height="19" rx="0" class="term"/>
+<text x="460" y="398" class="t t8 b mid">014</text>
+<text x="530" y="398" class="t t8">KT101</text>
+<text x="760" y="398" class="t t8">ELV</text>
+<text x="840" y="398" class="t t8">SCH-0101/08</text>
+<text x="950" y="398" class="t t8"></text>
+<line x1="430" y1="394" x2="434" y2="394" class="wdc"/>
+<line x1="486" y1="394" x2="522" y2="394" class="wdc"/>
+<line x1="400" y1="394" x2="434" y2="394" class="wdc"/>
+<line x1="46" y1="401" x2="1106" y2="401" class="wref"/>
+<text x="60" y="419" class="t t8">C-0104</text>
+<text x="150" y="419" class="t t8 mid">1</text>
+<text x="210" y="419" class="t t8 b">Seal water flow switch &#8212; 24 V DC out</text>
+<rect x="434" y="406" width="52" height="19" rx="0" class="term"/>
+<text x="460" y="419" class="t t8 b mid">015</text>
+<text x="530" y="419" class="t t8">B101-SEAL</text>
+<text x="760" y="419" class="t t8">24 V DC</text>
+<text x="840" y="419" class="t t8">SCH-0201/08</text>
+<text x="950" y="419" class="t t8"></text>
+<line x1="430" y1="415" x2="434" y2="415" class="wdc"/>
+<line x1="486" y1="415" x2="522" y2="415" class="wdc"/>
+<line x1="400" y1="415" x2="434" y2="415" class="wdc"/>
+<line x1="46" y1="422" x2="1106" y2="422" class="wref"/>
+<text x="60" y="440" class="t t8">C-0104</text>
+<text x="150" y="440" class="t t8 mid">2</text>
+<text x="210" y="440" class="t t8 b">Seal water flow switch &#8212; return</text>
+<rect x="434" y="427" width="52" height="19" rx="0" class="term"/>
+<text x="460" y="440" class="t t8 b mid">016</text>
+<text x="530" y="440" class="t t8">B101-SEAL</text>
+<text x="760" y="440" class="t t8">24 V DC</text>
+<text x="840" y="440" class="t t8">SCH-0201/08</text>
+<text x="950" y="440" class="t t8">NC</text>
+<line x1="430" y1="436" x2="434" y2="436" class="wdc"/>
+<line x1="486" y1="436" x2="522" y2="436" class="wdc"/>
+<line x1="400" y1="436" x2="434" y2="436" class="wdc"/>
+<line x1="46" y1="443" x2="1106" y2="443" class="wref"/>
+<text x="60" y="461" class="t t8">internal</text>
+<text x="150" y="461" class="t t8 mid">&#8212;</text>
+<text x="210" y="461" class="t t8 b">VSD-101 drive healthy</text>
+<rect x="434" y="448" width="52" height="19" rx="0" class="term"/>
+<text x="460" y="461" class="t t8 b mid">017</text>
+<text x="530" y="461" class="t t8">PLC DI-01</text>
+<text x="760" y="461" class="t t8">24 V DC</text>
+<text x="840" y="461" class="t t8">SCH-0201/02</text>
+<text x="950" y="461" class="t t8">NC &#8212; fail-safe</text>
+<line x1="430" y1="457" x2="434" y2="457" class="wdc"/>
+<line x1="486" y1="457" x2="522" y2="457" class="wdc"/>
+<line x1="400" y1="457" x2="434" y2="457" class="wdc"/>
+<line x1="46" y1="464" x2="1106" y2="464" class="wref"/>
+<text x="60" y="482" class="t t8">internal</text>
+<text x="150" y="482" class="t t8 mid">&#8212;</text>
+<text x="210" y="482" class="t t8 b">VSD-101 drive running</text>
+<rect x="434" y="469" width="52" height="19" rx="0" class="term"/>
+<text x="460" y="482" class="t t8 b mid">018</text>
+<text x="530" y="482" class="t t8">PLC DI-02</text>
+<text x="760" y="482" class="t t8">24 V DC</text>
+<text x="840" y="482" class="t t8">SCH-0201/03</text>
+<text x="950" y="482" class="t t8"></text>
+<line x1="430" y1="478" x2="434" y2="478" class="wdc"/>
+<line x1="486" y1="478" x2="522" y2="478" class="wdc"/>
+<line x1="400" y1="478" x2="434" y2="478" class="wdc"/>
+<line x1="46" y1="485" x2="1106" y2="485" class="wref"/>
+<text x="60" y="503" class="t t8">internal</text>
+<text x="150" y="503" class="t t8 mid">&#8212;</text>
+<text x="210" y="503" class="t t8 b">Run command &#8594; VSD-101 term 18</text>
+<rect x="434" y="490" width="52" height="19" rx="0" class="term"/>
+<text x="460" y="503" class="t t8 b mid">019</text>
+<text x="530" y="503" class="t t8">KA101</text>
+<text x="760" y="503" class="t t8">24 V DC</text>
+<text x="840" y="503" class="t t8">SCH-0101/18</text>
+<text x="950" y="503" class="t t8"></text>
+<line x1="430" y1="499" x2="434" y2="499" class="wdc"/>
+<line x1="486" y1="499" x2="522" y2="499" class="wdc"/>
+<line x1="400" y1="499" x2="434" y2="499" class="wdc"/>
+<line x1="46" y1="506" x2="1106" y2="506" class="wref"/>
+<text x="60" y="524" class="t t8">internal</text>
+<text x="150" y="524" class="t t8 mid">&#8212;</text>
+<text x="210" y="524" class="t t8 b">Q11 auxiliary &#8212; feeder available</text>
+<rect x="434" y="511" width="52" height="19" rx="0" class="term"/>
+<text x="460" y="524" class="t t8 b mid">020</text>
+<text x="530" y="524" class="t t8">PLC DI-00</text>
+<text x="760" y="524" class="t t8">24 V DC</text>
+<text x="840" y="524" class="t t8">SCH-0201/01</text>
+<text x="950" y="524" class="t t8">NC</text>
+<line x1="430" y1="520" x2="434" y2="520" class="wdc"/>
+<line x1="486" y1="520" x2="522" y2="520" class="wdc"/>
+<line x1="400" y1="520" x2="434" y2="520" class="wdc"/>
+<line x1="46" y1="527" x2="1106" y2="527" class="wref"/>
+<text x="60" y="545" class="t t8">C-0210</text>
+<text x="150" y="545" class="t t8 mid">1</text>
+<text x="210" y="545" class="t t8 b">Low-low float &#8212; 24 V DC out</text>
+<rect x="434" y="532" width="52" height="19" rx="0" class="term"/>
+<text x="460" y="545" class="t t8 b mid">021</text>
+<text x="530" y="545" class="t t8">LSLL-101</text>
+<text x="760" y="545" class="t t8">24 V DC</text>
+<text x="840" y="545" class="t t8">SCH-0101/09</text>
+<text x="950" y="545" class="t t8"></text>
+<line x1="430" y1="541" x2="434" y2="541" class="wdc"/>
+<line x1="486" y1="541" x2="522" y2="541" class="wdc"/>
+<line x1="400" y1="541" x2="434" y2="541" class="wdc"/>
+<line x1="46" y1="548" x2="1106" y2="548" class="wref"/>
+<text x="60" y="566" class="t t8">C-0210</text>
+<text x="150" y="566" class="t t8 mid">2</text>
+<text x="210" y="566" class="t t8 b">Low-low float &#8212; return</text>
+<rect x="434" y="553" width="52" height="19" rx="0" class="term"/>
+<text x="460" y="566" class="t t8 b mid">022</text>
+<text x="530" y="566" class="t t8">VSD-101 ext. fault</text>
+<text x="760" y="566" class="t t8">24 V DC</text>
+<text x="840" y="566" class="t t8">SCH-0101/09</text>
+<text x="950" y="566" class="t t8 b prov">HARDWIRED TRIP</text>
+<line x1="430" y1="562" x2="434" y2="562" class="wdc"/>
+<line x1="486" y1="562" x2="522" y2="562" class="wdc"/>
+<line x1="400" y1="562" x2="434" y2="562" class="wdc"/>
+<line x1="46" y1="569" x2="1106" y2="569" class="wref"/>
+<text x="60" y="587" class="t t8">internal</text>
+<text x="150" y="587" class="t t8 mid">&#8212;</text>
+<text x="210" y="587" class="t t8 b">PLC DO &#8212; VSD-101 fault reset</text>
+<rect x="434" y="574" width="52" height="19" rx="0" class="term"/>
+<text x="460" y="587" class="t t8 b mid">023</text>
+<text x="530" y="587" class="t t8">VSD-101</text>
+<text x="760" y="587" class="t t8">24 V DC</text>
+<text x="840" y="587" class="t t8">SCH-0202/02</text>
+<text x="950" y="587" class="t t8"></text>
+<line x1="430" y1="583" x2="434" y2="583" class="wdc"/>
+<line x1="486" y1="583" x2="522" y2="583" class="wdc"/>
+<line x1="400" y1="583" x2="434" y2="583" class="wdc"/>
+<line x1="46" y1="590" x2="1106" y2="590" class="wref"/>
+<text x="60" y="608" class="t t8">internal</text>
+<text x="150" y="608" class="t t8 mid">&#8212;</text>
+<text x="210" y="608" class="t t8 b">PLC DO &#8212; remote reference enable</text>
+<rect x="434" y="595" width="52" height="19" rx="0" class="term"/>
+<text x="460" y="608" class="t t8 b mid">024</text>
+<text x="530" y="608" class="t t8">VSD-101</text>
+<text x="760" y="608" class="t t8">24 V DC</text>
+<text x="840" y="608" class="t t8">SCH-0202/13</text>
+<text x="950" y="608" class="t t8"></text>
+<line x1="430" y1="604" x2="434" y2="604" class="wdc"/>
+<line x1="486" y1="604" x2="522" y2="604" class="wdc"/>
+<line x1="400" y1="604" x2="434" y2="604" class="wdc"/>
+<line x1="46" y1="611" x2="1106" y2="611" class="wref"/>
+<text x="60" y="629" class="t t8">&#8212;</text>
+<text x="150" y="629" class="t t8 mid">&#8212;</text>
+<text x="210" y="629" class="t t8">SPARE</text>
+<rect x="434" y="616" width="52" height="19" rx="0" class="devf"/>
+<text x="460" y="629" class="t t8 b mid">025</text>
+<text x="530" y="629" class="t t8">&#8212;</text>
+<text x="760" y="629" class="t t8">&#8212;</text>
+<text x="840" y="629" class="t t8">&#8212;</text>
+<text x="950" y="629" class="t t8"></text>
+<line x1="46" y1="632" x2="1106" y2="632" class="wref"/>
+<text x="60" y="650" class="t t8">&#8212;</text>
+<text x="150" y="650" class="t t8 mid">&#8212;</text>
+<text x="210" y="650" class="t t8">SPARE</text>
+<rect x="434" y="637" width="52" height="19" rx="0" class="devf"/>
+<text x="460" y="650" class="t t8 b mid">026</text>
+<text x="530" y="650" class="t t8">&#8212;</text>
+<text x="760" y="650" class="t t8">&#8212;</text>
+<text x="840" y="650" class="t t8">&#8212;</text>
+<text x="950" y="650" class="t t8"></text>
+<line x1="46" y1="653" x2="1106" y2="653" class="wref"/>
+<text x="60" y="671" class="t t8">&#8212;</text>
+<text x="150" y="671" class="t t8 mid">&#8212;</text>
+<text x="210" y="671" class="t t8">SPARE</text>
+<rect x="434" y="658" width="52" height="19" rx="0" class="devf"/>
+<text x="460" y="671" class="t t8 b mid">027</text>
+<text x="530" y="671" class="t t8">&#8212;</text>
+<text x="760" y="671" class="t t8">&#8212;</text>
+<text x="840" y="671" class="t t8">&#8212;</text>
+<text x="950" y="671" class="t t8"></text>
+<line x1="46" y1="674" x2="1106" y2="674" class="wref"/>
+<text x="60" y="692" class="t t8">&#8212;</text>
+<text x="150" y="692" class="t t8 mid">&#8212;</text>
+<text x="210" y="692" class="t t8">SPARE</text>
+<rect x="434" y="679" width="52" height="19" rx="0" class="devf"/>
+<text x="460" y="692" class="t t8 b mid">028</text>
+<text x="530" y="692" class="t t8">&#8212;</text>
+<text x="760" y="692" class="t t8">&#8212;</text>
+<text x="840" y="692" class="t t8">&#8212;</text>
+<text x="950" y="692" class="t t8"></text>
+<line x1="46" y1="695" x2="1106" y2="695" class="wref"/>
+<text x="60" y="713" class="t t8">&#8212;</text>
+<text x="150" y="713" class="t t8 mid">&#8212;</text>
+<text x="210" y="713" class="t t8">SPARE</text>
+<rect x="434" y="700" width="52" height="19" rx="0" class="devf"/>
+<text x="460" y="713" class="t t8 b mid">029</text>
+<text x="530" y="713" class="t t8">&#8212;</text>
+<text x="760" y="713" class="t t8">&#8212;</text>
+<text x="840" y="713" class="t t8">&#8212;</text>
+<text x="950" y="713" class="t t8"></text>
+<line x1="46" y1="716" x2="1106" y2="716" class="wref"/>
+<text x="60" y="734" class="t t8">&#8212;</text>
+<text x="150" y="734" class="t t8 mid">&#8212;</text>
+<text x="210" y="734" class="t t8">SPARE</text>
+<rect x="434" y="721" width="52" height="19" rx="0" class="devf"/>
+<text x="460" y="734" class="t t8 b mid">030</text>
+<text x="530" y="734" class="t t8">&#8212;</text>
+<text x="760" y="734" class="t t8">&#8212;</text>
+<text x="840" y="734" class="t t8">&#8212;</text>
+<text x="950" y="734" class="t t8"></text>
+<rect x="46" y="763" width="520" height="96" rx="0" class="dev"/>
+<text x="60" y="783" class="t t11 b">SCREEN EARTH BAR  XS  (rail X3 block)</text>
+<text x="64" y="803" class="t t8 b">XS:01</text>
+<text x="120" y="803" class="t t8">C-0102 overall screen</text>
+<text x="64" y="816" class="t t8 b">XS:02</text>
+<text x="120" y="816" class="t t8">C-0103 screen</text>
+<text x="64" y="829" class="t t8 b">XS:03</text>
+<text x="120" y="829" class="t t8">C-0104 screen</text>
+<text x="64" y="842" class="t t8 b">XS:04</text>
+<text x="120" y="842" class="t t8">C-0210 screen</text>
+<text x="300" y="807" class="t t9 b grn">INSULATED BAR</text>
+<text x="300" y="821" class="t t8">Single-point bonded to the main</text>
+<text x="300" y="833" class="t t8">earth bar. FAT test E-35 verifies</text>
+<text x="300" y="845" class="t t8 b">it is NOT bonded elsewhere.</text>
+<rect x="586" y="763" width="520" height="96" rx="0" class="plc"/>
+<text x="600" y="783" class="t t10 b">SCREEN EARTHING &#8212; PUT THIS ON THE DRAWING, NOT ONLY IN THE SPEC</text>
+<text x="600" y="803" class="t t10 b prov">SCREEN EARTHED AT MCC END ONLY &#8212; DO NOT EARTH AT FIELD END</text>
+<text x="600" y="821" class="t t8">The installer reads the termination drawing. They will probably never read the</text>
+<text x="600" y="833" class="t t8">specification. One line of text on the drawing face prevents an entire class of</text>
+<text x="600" y="845" class="t t8">commissioning fault &#8212; noisy, drifting analogue readings from earth loops.</text>
+<rect x="1130" y="146" width="410" height="560" rx="0" class="devf"/>
+<text x="1142" y="168" class="t t11 b">RAIL ALLOCATION</text>
+<text x="1142" y="190" class="t t9 b">X0</text>
+<text x="1172" y="190" class="t t8">Incoming supply</text>
+<text x="1348" y="190" class="t t8">415 V AC</text>
+<text x="1428" y="190" class="t t8">busbar links</text>
+<text x="1142" y="210" class="t t9 b">X1</text>
+<text x="1172" y="210" class="t t8">Outgoing power feeders</text>
+<text x="1348" y="210" class="t t8">415 V AC</text>
+<text x="1428" y="210" class="t t8">grey</text>
+<text x="1142" y="230" class="t t9 b">X2</text>
+<text x="1172" y="230" class="t t8">AC control and services</text>
+<text x="1348" y="230" class="t t8">240 V AC</text>
+<text x="1428" y="230" class="t t8">grey</text>
+<text x="1142" y="250" class="t t9 b">X3</text>
+<text x="1172" y="250" class="t t8">Digital I/O &#8212; THIS SHEET</text>
+<text x="1348" y="250" class="t t8">24 V DC</text>
+<text x="1428" y="250" class="t t8">grey</text>
+<text x="1142" y="270" class="t t9 b">X4</text>
+<text x="1172" y="270" class="t t8">Analogue signals</text>
+<text x="1348" y="270" class="t t8">4&#8211;20 mA</text>
+<text x="1428" y="270" class="t t8 b">DISCONNECT type</text>
+<text x="1142" y="290" class="t t9 b">X5</text>
+<text x="1172" y="290" class="t t8">Safety circuit</text>
+<text x="1348" y="290" class="t t8">24 V DC</text>
+<text x="1428" y="290" class="t t8 b">YELLOW</text>
+<text x="1142" y="310" class="t t9 b">X6</text>
+<text x="1172" y="310" class="t t8">Communications</text>
+<text x="1348" y="310" class="t t8">&#8212;</text>
+<text x="1428" y="310" class="t t8">RJ45 + fibre</text>
+<text x="1142" y="330" class="t t9 b">XE</text>
+<text x="1172" y="330" class="t t8">Protective earth</text>
+<text x="1348" y="330" class="t t8">&#8212;</text>
+<text x="1428" y="330" class="t t8">green/yellow</text>
+<text x="1142" y="350" class="t t9 b">XS</text>
+<text x="1172" y="350" class="t t8">Instrument screen earth</text>
+<text x="1348" y="350" class="t t8">&#8212;</text>
+<text x="1428" y="350" class="t t8">insulated bar</text>
+<text x="1142" y="386" class="t t9 b blu">Numbering</text>
+<text x="1142" y="399" class="t t8">Sequential from 001. No gaps, no re-use. Grouped by</text>
+<text x="1142" y="410" class="t t8">equipment in the same order as the schematic sheets.</text>
+<text x="1142" y="429" class="t t9 b blu">Never re-use a number</text>
+<text x="1142" y="442" class="t t8">A deleted circuit's terminal becomes a SPARE and keeps its</text>
+<text x="1142" y="453" class="t t8">number. Re-using a number means an old drawing and a new</text>
+<text x="1142" y="464" class="t t8">drawing disagree, and someone will eventually work from the</text>
+<text x="1142" y="475" class="t t8">old one.</text>
+<text x="1142" y="494" class="t t9 b blu">Spares grouped, not scattered</text>
+<text x="1142" y="507" class="t t8">20 % minimum, contiguous at the end of each equipment block.</text>
+<text x="1142" y="518" class="t t8">Distributed spares look tidy and are nearly useless &#8212;</text>
+<text x="1142" y="529" class="t t8">you can never fit a new multicore's cores together.</text>
+<text x="1142" y="548" class="t t9 b blu">Wire numbering</text>
+<text x="1142" y="561" class="t t8">SHEET-PATH, e.g. 0101-14 = sheet SCH-0101, current path 14.</text>
+<text x="1142" y="572" class="t t8">Ferruled both ends. Any wire in the board tells you which</text>
+<text x="1142" y="583" class="t t8">drawing to open.</text>
+<text x="1142" y="602" class="t t9 b blu">Partition plates</text>
+<text x="1142" y="615" class="t t8">Fitted between voltage groups. Routinely forgotten &#8212;</text>
+<text x="1142" y="626" class="t t8">it is part of the segregation design, not decoration.</text>
+<rect x="46" y="880" width="1000" height="124" rx="0" class="devf"/>
+<text x="56" y="898" class="t t12 b">NOTES</text>
+<text x="56" y="914.0" class="t t9 prov b">1.  SCREEN EARTHED AT MCC END ONLY. Do NOT earth instrument or control screens at the field end. This note is repeated on the drawing face</text>
+<text x="56" y="926.6" class="t t9 prov b">     because the installer reads the drawing, not the specification.</text>
+<text x="56" y="939.2" class="t t9">2.  VSD motor cable screens are the EXCEPTION &#8212; they are terminated 360&#176; at BOTH ends via EMC glands. Different problem, different solution.</text>
+<text x="56" y="951.8" class="t t9">3.  Terminal markers are printed FROM this schedule, never hand-written. FAT defect FD-006b was two transposed markers, which would have</text>
+<text x="56" y="964.4" class="t t9">     caused future wiring errors by someone who correctly followed the schedule.</text>
+<text x="56" y="977.0" class="t t9">4.  C-0102 was changed from 12 core to 16 core at Rev B. The schedule used all 12 cores, leaving no spares. Four extra cores cost almost nothing;</text>
+<text x="56" y="989.6" class="t t9">     a second cable pull through an operating plant costs a variation and an access permit.</text>
+<text x="56" y="1002.2" class="t t9">5.  Maximum two conductors per terminal, and only where the terminal is rated for it. Verified at FAT test D-33.</text>
+<rect x="1072" y="930" width="469" height="158" rx="0" class="dev"/>
+<line x1="1072" y1="964" x2="1541" y2="964" class="brd2"/>
+<line x1="1072" y1="1004" x2="1541" y2="1004" class="brd2"/>
+<line x1="1072" y1="1038" x2="1541" y2="1038" class="brd2"/>
+<line x1="1372" y1="964" x2="1372" y2="1038" class="brd2"/>
+<text x="1082" y="946" class="t t11 b">NORTHFIELD WATER TREATMENT PLANT</text>
+<text x="1082" y="959" class="t t10">RAW WATER TRANSFER PUMP STATION &#8212; MCC-01</text>
+<text x="1082" y="982" class="t t14 b">TERMINATION &#8212; RAIL X3</text>
+<text x="1082" y="998" class="t t9">24 V DC digital &#183; P-101 equipment block</text>
+<text x="1382" y="982" class="t t9">SHEET</text>
+<text x="1382" y="998" class="t t11 b">1 of 5</text>
+<text x="1082" y="1024" class="t t11 b">DRAWING No.  NFD-ELE-TRM-0401</text>
+<text x="1382" y="1024" class="t t12 b">REV  1</text>
+<text x="1082" y="1056" class="t t9 b prov">SELF-DIRECTED REFERENCE PROJECT &#8212; NOT A PRODUCTION DRAWING</text>
+<text x="1082" y="1070" class="t t9">Illustrative only. Not for construction. See notes.</text>
+</svg>

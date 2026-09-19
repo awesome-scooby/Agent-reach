@@ -1,0 +1,263 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1587 1122" width="1587" height="1122">
+
+<style>
+  .bg{fill:#ffffff}
+  .brd{fill:none;stroke:#111;stroke-width:2}
+  .brd2{fill:none;stroke:#111;stroke-width:1}
+  .pw{fill:none;stroke:#111;stroke-width:2.2;stroke-linecap:square}
+  .w{fill:none;stroke:#111;stroke-width:1.6;stroke-linecap:square}
+  .wdc{fill:none;stroke:#1f4e9c;stroke-width:1.8;stroke-linecap:square}
+  .wsaf{fill:none;stroke:#c9a227;stroke-width:2.4;stroke-linecap:square}
+  .wana{fill:none;stroke:#7a3fa0;stroke-width:1.8;stroke-linecap:square}
+  .wext{fill:none;stroke:#d97706;stroke-width:1.8;stroke-linecap:square}
+  .wref{fill:none;stroke:#888;stroke-width:1.1;stroke-dasharray:4 3}
+  .rail{fill:none;stroke:#1f4e9c;stroke-width:3;stroke-linecap:square}
+  .sym{fill:none;stroke:#111;stroke-width:1.7}
+  .dev{fill:#ffffff;stroke:#111;stroke-width:1.7}
+  .devf{fill:#f2f4f7;stroke:#111;stroke-width:1.7}
+  .saf{fill:#fdf6e0;stroke:#a98207;stroke-width:1.8}
+  .plc{fill:#eef4fb;stroke:#111;stroke-width:1.7}
+  .fld{fill:#f4fbf4;stroke:#111;stroke-width:1.7}
+  .term{fill:#ffffff;stroke:#111;stroke-width:1.5}
+  .termy{fill:#fdf0b8;stroke:#a98207;stroke-width:1.5}
+  .terma{fill:#f3edfa;stroke:#7a3fa0;stroke-width:1.5}
+  .t{font-family:"DejaVu Sans",Arial,Helvetica,sans-serif;fill:#111}
+  .t8{font-size:8px}.t9{font-size:9px}.t10{font-size:10px}.t11{font-size:11px}
+  .t12{font-size:12px}.t14{font-size:14px}.t18{font-size:18px}
+  .b{font-weight:700}.mid{text-anchor:middle}.end{text-anchor:end}
+  .prov{fill:#b03a2e;font-weight:700}
+  .note{fill:#7a4b00}
+  .grn{fill:#1a7a3c}
+  .blu{fill:#1f4e9c}
+  .amb{fill:#8a6d00}
+  .pur{fill:#7a3fa0}
+</style>
+
+<rect class="bg" x="0" y="0" width="1587" height="1122"/>
+<rect class="brd" x="18" y="18" width="1551" height="1086"/>
+<rect class="brd2" x="30" y="30" width="1527" height="1062"/>
+<text x="125.4375" y="27" class="t t10 b mid">A</text>
+<text x="125.4375" y="1103" class="t t10 b mid">A</text>
+<text x="316.3125" y="27" class="t t10 b mid">B</text>
+<text x="316.3125" y="1103" class="t t10 b mid">B</text>
+<text x="507.1875" y="27" class="t t10 b mid">C</text>
+<text x="507.1875" y="1103" class="t t10 b mid">C</text>
+<text x="698.0625" y="27" class="t t10 b mid">D</text>
+<text x="698.0625" y="1103" class="t t10 b mid">D</text>
+<text x="888.9375" y="27" class="t t10 b mid">E</text>
+<text x="888.9375" y="1103" class="t t10 b mid">E</text>
+<text x="1079.8125" y="27" class="t t10 b mid">F</text>
+<text x="1079.8125" y="1103" class="t t10 b mid">F</text>
+<text x="1270.6875" y="27" class="t t10 b mid">G</text>
+<text x="1270.6875" y="1103" class="t t10 b mid">G</text>
+<text x="1461.5625" y="27" class="t t10 b mid">H</text>
+<text x="1461.5625" y="1103" class="t t10 b mid">H</text>
+<text x="24" y="118.5" class="t t10 b mid">1</text>
+<text x="1563" y="118.5" class="t t10 b mid">1</text>
+<text x="24" y="295.5" class="t t10 b mid">2</text>
+<text x="1563" y="295.5" class="t t10 b mid">2</text>
+<text x="24" y="472.5" class="t t10 b mid">3</text>
+<text x="1563" y="472.5" class="t t10 b mid">3</text>
+<text x="24" y="649.5" class="t t10 b mid">4</text>
+<text x="1563" y="649.5" class="t t10 b mid">4</text>
+<text x="24" y="826.5" class="t t10 b mid">5</text>
+<text x="1563" y="826.5" class="t t10 b mid">5</text>
+<text x="24" y="1003.5" class="t t10 b mid">6</text>
+<text x="1563" y="1003.5" class="t t10 b mid">6</text>
+<text x="46" y="58" class="t t18 b">CONTROL POWER DISTRIBUTION &#8212; 240 V AC AND 24 V DC</text>
+<text x="46" y="76" class="t t11">Redundant supplies &#183; decoupled &#183; grouped DC protection so one field fault cannot take down the control system</text>
+<rect x="60" y="130" width="150" height="60" rx="0" class="dev"/>
+<text x="135" y="152" class="t t12 b mid">Q19</text>
+<text x="135" y="168" class="t t9 mid">MCB 1P C10</text>
+<text x="135" y="182" class="t t8 mid">240 V AC from busbar</text>
+<line x1="210" y1="160" x2="260" y2="160" class="pw"/>
+<rect x="260" y="118" width="150" height="84" rx="0" class="devf"/>
+<text x="335" y="140" class="t t12 b mid">UPS-01</text>
+<text x="335" y="156" class="t t9 mid">1 kVA online</text>
+<text x="335" y="170" class="t t9 mid">~15 min autonomy</text>
+<text x="335" y="186" class="t t8 mid">status contacts &#8594; PLC</text>
+<text x="335" y="224" class="t t9 mid">Two jobs: ride through a supply dip so the PLC does not</text>
+<text x="335" y="236" class="t t9 mid">reboot, AND stay alive long enough on a real outage to</text>
+<text x="335" y="248" class="t t9 b mid">tell SCADA the station has lost power.</text>
+<line x1="410" y1="160" x2="460" y2="160" class="pw"/>
+<circle cx="460" cy="160" r="3.2" fill="#111"/>
+<line x1="460" y1="120" x2="460" y2="200" class="pw"/>
+<line x1="460" y1="120" x2="500" y2="120" class="pw"/>
+<rect x="500" y="102" width="96" height="36" rx="0" class="dev"/>
+<text x="548" y="124" class="t t9 b mid">F1  MCB 10 A</text>
+<line x1="596" y1="120" x2="636" y2="120" class="pw"/>
+<line x1="460" y1="200" x2="500" y2="200" class="pw"/>
+<rect x="500" y="182" width="96" height="36" rx="0" class="dev"/>
+<text x="548" y="204" class="t t9 b mid">F2  MCB 10 A</text>
+<line x1="596" y1="200" x2="636" y2="200" class="pw"/>
+<text x="548" y="88" class="t t9 b mid">SEPARATE MCBs &#8212; one trip cannot</text>
+<text x="548" y="100" class="t t9 b mid">take out both supplies</text>
+<rect x="636" y="94" width="150" height="52" rx="0" class="dev"/>
+<text x="711" y="112" class="t t11 b mid">PSU-1</text>
+<text x="711" y="126" class="t t9 mid">QUINT4 24 V DC 20 A</text>
+<text x="711" y="138" class="t t8 mid">healthy contact &#8594; PLC</text>
+<line x1="786" y1="120" x2="830" y2="120" class="wdc"/>
+<rect x="636" y="174" width="150" height="52" rx="0" class="dev"/>
+<text x="711" y="192" class="t t11 b mid">PSU-2</text>
+<text x="711" y="206" class="t t9 mid">QUINT4 24 V DC 20 A</text>
+<text x="711" y="218" class="t t8 mid">healthy contact &#8594; PLC</text>
+<line x1="786" y1="200" x2="830" y2="200" class="wdc"/>
+<text x="711" y="258" class="t t9 b mid prov">EACH PSU IS SIZED FOR THE FULL LOAD, NOT HALF.</text>
+<text x="711" y="270" class="t t9 mid">Two 10 A supplies for a 15 A load is not redundancy.</text>
+<rect x="830" y="118" width="150" height="84" rx="0" class="devf"/>
+<text x="905" y="142" class="t t10 b mid">REDUNDANCY</text>
+<text x="905" y="156" class="t t10 b mid">(O-RING) MODULE</text>
+<text x="905" y="174" class="t t9 mid">QUINT4-ORING</text>
+<text x="905" y="190" class="t t8 mid">decouples the supplies</text>
+<text x="905" y="224" class="t t9 mid">NOT a direct parallel connection &#8212; paralleling</text>
+<text x="905" y="236" class="t t9 mid">switch-mode supplies causes sharing problems and</text>
+<text x="905" y="248" class="t t9 mid">lets a failed supply drag the bus down.</text>
+<line x1="980" y1="160" x2="1030" y2="160" class="wdc"/>
+<line x1="1030" y1="160" x2="1030" y2="330" class="wdc"/>
+<line x1="120" y1="330" x2="1450" y2="330" class="rail"/>
+<text x="120" y="320" class="t t12 b blu">24 V DC BUS</text>
+<line x1="120" y1="580" x2="1450" y2="580" class="rail"/>
+<text x="120" y="572" class="t t12 b blu">0 V</text>
+<line x1="190" y1="330" x2="190" y2="350" class="wdc"/>
+<rect x="110" y="350" width="160" height="46" rx="0" class="dev"/>
+<text x="190" y="368" class="t t11 b mid">ECP1</text>
+<text x="190" y="384" class="t t8 mid">electronic circuit protector</text>
+<line x1="190" y1="396" x2="190" y2="416" class="wdc"/>
+<rect x="110" y="416" width="160" height="80" rx="0" class="devf"/>
+<text x="190" y="434" class="t t10 b mid">PLC &amp; NETWORK</text>
+<text x="190" y="450" class="t t8 mid">&#183; PLC 5069-L306ER</text>
+<text x="190" y="463" class="t t8 mid">&#183; I/O modules</text>
+<text x="190" y="476" class="t t8 mid">&#183; SW-01 managed switch</text>
+<text x="190" y="489" class="t t8 mid">&#183; Fibre LIU</text>
+<line x1="190" y1="496" x2="190" y2="580" class="wdc"/>
+<text x="196" y="526" class="t t8">status &#8594; PLC DI</text>
+<line x1="190" y1="522" x2="160" y2="522" class="wref"/>
+<line x1="400" y1="330" x2="400" y2="350" class="wdc"/>
+<rect x="320" y="350" width="160" height="46" rx="0" class="dev"/>
+<text x="400" y="368" class="t t11 b mid">ECP2</text>
+<text x="400" y="384" class="t t8 mid">electronic circuit protector</text>
+<line x1="400" y1="396" x2="400" y2="416" class="wdc"/>
+<rect x="320" y="416" width="160" height="80" rx="0" class="devf"/>
+<text x="400" y="434" class="t t10 b mid">DIGITAL INPUTS</text>
+<text x="400" y="450" class="t t8 mid">&#183; Field DI loop supply</text>
+<text x="400" y="463" class="t t8 mid">&#183; LCS-101 / LCS-102</text>
+<text x="400" y="476" class="t t8 mid">&#183; Field switches, floats</text>
+<line x1="400" y1="496" x2="400" y2="580" class="wdc"/>
+<text x="406" y="526" class="t t8">status &#8594; PLC DI</text>
+<line x1="400" y1="522" x2="370" y2="522" class="wref"/>
+<line x1="610" y1="330" x2="610" y2="350" class="wdc"/>
+<rect x="530" y="350" width="160" height="46" rx="0" class="dev"/>
+<text x="610" y="368" class="t t11 b mid">ECP3</text>
+<text x="610" y="384" class="t t8 mid">electronic circuit protector</text>
+<line x1="610" y1="396" x2="610" y2="416" class="wdc"/>
+<rect x="530" y="416" width="160" height="80" rx="0" class="devf"/>
+<text x="610" y="434" class="t t10 b mid">DIGITAL OUTPUTS</text>
+<text x="610" y="450" class="t t8 mid">&#183; Interposing relays</text>
+<text x="610" y="463" class="t t8 mid">&#183; Contactor coils</text>
+<text x="610" y="476" class="t t8 mid">&#183; Field DO</text>
+<line x1="610" y1="496" x2="610" y2="580" class="wdc"/>
+<text x="616" y="526" class="t t8">status &#8594; PLC DI</text>
+<line x1="610" y1="522" x2="580" y2="522" class="wref"/>
+<line x1="820" y1="330" x2="820" y2="350" class="wdc"/>
+<rect x="740" y="350" width="160" height="46" rx="0" class="dev"/>
+<text x="820" y="368" class="t t11 b mid">ECP4</text>
+<text x="820" y="384" class="t t8 mid">electronic circuit protector</text>
+<line x1="820" y1="396" x2="820" y2="416" class="wdc"/>
+<rect x="740" y="416" width="160" height="80" rx="0" class="devf"/>
+<text x="820" y="434" class="t t10 b mid">ANALOGUE LOOPS</text>
+<text x="820" y="450" class="t t8 mid">&#183; 4&#8211;20 mA loop power</text>
+<text x="820" y="463" class="t t8 mid">&#183; 6 instrument loops</text>
+<text x="820" y="476" class="t t8 mid">&#183; Speed references</text>
+<line x1="820" y1="496" x2="820" y2="580" class="wdc"/>
+<text x="826" y="526" class="t t8">status &#8594; PLC DI</text>
+<line x1="820" y1="522" x2="790" y2="522" class="wref"/>
+<line x1="1030" y1="330" x2="1030" y2="350" class="wdc"/>
+<rect x="950" y="350" width="160" height="46" rx="0" class="saf"/>
+<text x="1030" y="368" class="t t11 b mid">ECP5</text>
+<text x="1030" y="384" class="t t8 mid">electronic circuit protector</text>
+<line x1="1030" y1="396" x2="1030" y2="416" class="wdc"/>
+<rect x="950" y="416" width="160" height="80" rx="0" class="devf"/>
+<text x="1030" y="434" class="t t10 b mid">SAFETY CIRCUIT</text>
+<text x="1030" y="450" class="t t8 mid">&#183; KS-01 safety relay</text>
+<text x="1030" y="463" class="t t8 mid">&#183; E-stop chain</text>
+<text x="1030" y="476" class="t t8 mid">&#183; STO outputs</text>
+<line x1="1030" y1="496" x2="1030" y2="580" class="wdc"/>
+<text x="1036" y="526" class="t t8">status &#8594; PLC DI</text>
+<line x1="1030" y1="522" x2="1000" y2="522" class="wref"/>
+<line x1="1240" y1="330" x2="1240" y2="350" class="wdc"/>
+<rect x="1160" y="350" width="160" height="46" rx="0" class="dev"/>
+<text x="1240" y="368" class="t t11 b mid">ECP6</text>
+<text x="1240" y="384" class="t t8 mid">electronic circuit protector</text>
+<line x1="1240" y1="396" x2="1240" y2="416" class="wdc"/>
+<rect x="1160" y="416" width="160" height="80" rx="0" class="devf"/>
+<text x="1240" y="434" class="t t10 b mid">INDICATION</text>
+<text x="1240" y="450" class="t t8 mid">&#183; Pilot lights</text>
+<text x="1240" y="463" class="t t8 mid">&#183; Beacon and sounder</text>
+<text x="1240" y="476" class="t t8 mid">&#183; Lamp test</text>
+<line x1="1240" y1="496" x2="1240" y2="580" class="wdc"/>
+<text x="1246" y="526" class="t t8">status &#8594; PLC DI</text>
+<line x1="1240" y1="522" x2="1210" y2="522" class="wref"/>
+<rect x="120" y="600" width="1330" height="66" rx="0" class="devf"/>
+<text x="135" y="622" class="t t11 b">WHY GROUPED PROTECTION, NOT ONE DEVICE:</text>
+<text x="135" y="640" class="t t9">If everything sits behind a single 20 A device, one shorted field cable pulls down the whole control system &#8212; including the PLC that was going to tell SCADA what happened.</text>
+<text x="135" y="656" class="t t9 b">Grouping means a shorted field cable trips one group, the PLC stays up, and the alarm reaches the operator. The safety circuit (ECP5) has its own group so an ordinary control fault cannot disable it.</text>
+<rect x="120" y="700" width="620" height="162" rx="0" class="dev"/>
+<text x="135" y="722" class="t t11 b">240 V AC CUBICLE SERVICES  (Q20, MCB 1P C16)</text>
+<text x="140" y="746" class="t t9">&#183; Cubicle lighting with door switches</text>
+<text x="720" y="746" class="t t9 b">5 off</text>
+<text x="140" y="764" class="t t9">&#183; GPO, double 10 A &#8212; laptop at FAT and at site</text>
+<text x="720" y="764" class="t t9 b">2 off</text>
+<text x="140" y="782" class="t t9">&#183; Anti-condensation heaters, 50 W, via hygrostat</text>
+<text x="720" y="782" class="t t9 b">5 off</text>
+<text x="140" y="800" class="t t9">&#183; UPS-01 input (via Q19)</text>
+<text x="720" y="800" class="t t9 b">1 off</text>
+<text x="135" y="826" class="t t8">Heaters are fitted even in an air-conditioned room: the HVAC will fail eventually and</text>
+<text x="135" y="838" class="t t8">condensation on busbars is a slow, expensive failure. They are also a heat source and are</text>
+<text x="135" y="850" class="t t8">counted in the declared thermal load issued to the HVAC designer.</text>
+<rect x="770" y="700" width="680" height="162" rx="0" class="plc"/>
+<text x="785" y="722" class="t t11 b">MONITORED POINTS &#8212; redundancy you cannot see the state of is not redundancy</text>
+<text x="790" y="744" class="t t9 b">SIGNAL</text>
+<text x="1120" y="744" class="t t9 b">TERMINAL</text>
+<text x="1240" y="744" class="t t9 b">SENSE</text>
+<text x="790" y="762" class="t t9">PSU-1 healthy</text>
+<text x="1120" y="762" class="t t9 b">X3:106</text>
+<text x="1240" y="762" class="t t9">NC</text>
+<text x="790" y="778" class="t t9">PSU-2 healthy</text>
+<text x="1120" y="778" class="t t9 b">X3:107</text>
+<text x="1240" y="778" class="t t9">NC</text>
+<text x="790" y="794" class="t t9">UPS on battery</text>
+<text x="1120" y="794" class="t t9 b">X3:108</text>
+<text x="1240" y="794" class="t t9">NO</text>
+<text x="790" y="810" class="t t9">UPS fault</text>
+<text x="1120" y="810" class="t t9 b">X3:109</text>
+<text x="1240" y="810" class="t t9">NO</text>
+<text x="790" y="826" class="t t9">ECP group trip (common)</text>
+<text x="1120" y="826" class="t t9 b">X3:110</text>
+<text x="1240" y="826" class="t t9">NC</text>
+<text x="785" y="846" class="t t8 b">Without these you get two failures separated by months instead of one failure and an alarm.</text>
+<rect x="46" y="880" width="1000" height="124" rx="0" class="devf"/>
+<text x="56" y="898" class="t t12 b">NOTES</text>
+<text x="56" y="914.0" class="t t9 prov b">1.  24 V DC circuits are protected by DC-RATED electronic circuit protectors. Standard AC MCBs must NOT be used on DC circuits &#8212; DC has no natural</text>
+<text x="56" y="926.6" class="t t9 prov b">     current zero, so the arc does not self-extinguish. This is a genuine fault, not a technicality.</text>
+<text x="56" y="939.2" class="t t9">2.  PSU-1 and PSU-2 are each fed from a separate MCB and each sized for the FULL control load.</text>
+<text x="56" y="951.8" class="t t9">3.  The O-ring module decouples the two supplies. Outputs are not directly paralleled.</text>
+<text x="56" y="964.4" class="t t9">4.  ECP5 (safety circuit) is a dedicated group. An ordinary control fault on any other group cannot de-energise the safety function.</text>
+<text x="56" y="977.0" class="t t9">5.  ECP4 (analogue loop power) is separate from ECP2/ECP3 so a field digital fault cannot take every instrument reading down at the same moment.</text>
+<text x="56" y="989.6" class="t t9">6.  On total loss of 24 V: run commands drop, contactors drop out (24 V DC coils), the drives stop per their configured response, and the PLC remains</text>
+<text x="56" y="1002.2" class="t t9">     alive on UPS long enough to report the loss. The E-stop circuit de-energises to its safe state.</text>
+<rect x="1072" y="930" width="469" height="158" rx="0" class="dev"/>
+<line x1="1072" y1="964" x2="1541" y2="964" class="brd2"/>
+<line x1="1072" y1="1004" x2="1541" y2="1004" class="brd2"/>
+<line x1="1072" y1="1038" x2="1541" y2="1038" class="brd2"/>
+<line x1="1372" y1="964" x2="1372" y2="1038" class="brd2"/>
+<text x="1082" y="946" class="t t11 b">NORTHFIELD WATER TREATMENT PLANT</text>
+<text x="1082" y="959" class="t t10">RAW WATER TRANSFER PUMP STATION &#8212; MCC-01</text>
+<text x="1082" y="982" class="t t14 b">CONTROL POWER DISTRIBUTION</text>
+<text x="1082" y="998" class="t t9">240 V AC services and 24 V DC control system</text>
+<text x="1382" y="982" class="t t9">SHEET</text>
+<text x="1382" y="998" class="t t11 b">1 of 1</text>
+<text x="1082" y="1024" class="t t11 b">DRAWING No.  NFD-ELE-SCH-0030</text>
+<text x="1382" y="1024" class="t t12 b">REV  1</text>
+<text x="1082" y="1056" class="t t9 b prov">SELF-DIRECTED REFERENCE PROJECT &#8212; NOT A PRODUCTION DRAWING</text>
+<text x="1082" y="1070" class="t t9">Illustrative only. Not for construction. See notes.</text>
+</svg>

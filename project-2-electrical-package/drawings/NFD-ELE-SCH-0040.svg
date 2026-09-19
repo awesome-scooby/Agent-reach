@@ -1,0 +1,290 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1587 1122" width="1587" height="1122">
+
+<style>
+  .bg{fill:#ffffff}
+  .brd{fill:none;stroke:#111;stroke-width:2}
+  .brd2{fill:none;stroke:#111;stroke-width:1}
+  .pw{fill:none;stroke:#111;stroke-width:2.2;stroke-linecap:square}
+  .w{fill:none;stroke:#111;stroke-width:1.6;stroke-linecap:square}
+  .wdc{fill:none;stroke:#1f4e9c;stroke-width:1.8;stroke-linecap:square}
+  .wsaf{fill:none;stroke:#c9a227;stroke-width:2.4;stroke-linecap:square}
+  .wana{fill:none;stroke:#7a3fa0;stroke-width:1.8;stroke-linecap:square}
+  .wext{fill:none;stroke:#d97706;stroke-width:1.8;stroke-linecap:square}
+  .wref{fill:none;stroke:#888;stroke-width:1.1;stroke-dasharray:4 3}
+  .rail{fill:none;stroke:#1f4e9c;stroke-width:3;stroke-linecap:square}
+  .sym{fill:none;stroke:#111;stroke-width:1.7}
+  .dev{fill:#ffffff;stroke:#111;stroke-width:1.7}
+  .devf{fill:#f2f4f7;stroke:#111;stroke-width:1.7}
+  .saf{fill:#fdf6e0;stroke:#a98207;stroke-width:1.8}
+  .plc{fill:#eef4fb;stroke:#111;stroke-width:1.7}
+  .fld{fill:#f4fbf4;stroke:#111;stroke-width:1.7}
+  .term{fill:#ffffff;stroke:#111;stroke-width:1.5}
+  .termy{fill:#fdf0b8;stroke:#a98207;stroke-width:1.5}
+  .terma{fill:#f3edfa;stroke:#7a3fa0;stroke-width:1.5}
+  .t{font-family:"DejaVu Sans",Arial,Helvetica,sans-serif;fill:#111}
+  .t8{font-size:8px}.t9{font-size:9px}.t10{font-size:10px}.t11{font-size:11px}
+  .t12{font-size:12px}.t14{font-size:14px}.t18{font-size:18px}
+  .b{font-weight:700}.mid{text-anchor:middle}.end{text-anchor:end}
+  .prov{fill:#b03a2e;font-weight:700}
+  .note{fill:#7a4b00}
+  .grn{fill:#1a7a3c}
+  .blu{fill:#1f4e9c}
+  .amb{fill:#8a6d00}
+  .pur{fill:#7a3fa0}
+</style>
+
+<rect class="bg" x="0" y="0" width="1587" height="1122"/>
+<rect class="brd" x="18" y="18" width="1551" height="1086"/>
+<rect class="brd2" x="30" y="30" width="1527" height="1062"/>
+<text x="125.4375" y="27" class="t t10 b mid">A</text>
+<text x="125.4375" y="1103" class="t t10 b mid">A</text>
+<text x="316.3125" y="27" class="t t10 b mid">B</text>
+<text x="316.3125" y="1103" class="t t10 b mid">B</text>
+<text x="507.1875" y="27" class="t t10 b mid">C</text>
+<text x="507.1875" y="1103" class="t t10 b mid">C</text>
+<text x="698.0625" y="27" class="t t10 b mid">D</text>
+<text x="698.0625" y="1103" class="t t10 b mid">D</text>
+<text x="888.9375" y="27" class="t t10 b mid">E</text>
+<text x="888.9375" y="1103" class="t t10 b mid">E</text>
+<text x="1079.8125" y="27" class="t t10 b mid">F</text>
+<text x="1079.8125" y="1103" class="t t10 b mid">F</text>
+<text x="1270.6875" y="27" class="t t10 b mid">G</text>
+<text x="1270.6875" y="1103" class="t t10 b mid">G</text>
+<text x="1461.5625" y="27" class="t t10 b mid">H</text>
+<text x="1461.5625" y="1103" class="t t10 b mid">H</text>
+<text x="24" y="118.5" class="t t10 b mid">1</text>
+<text x="1563" y="118.5" class="t t10 b mid">1</text>
+<text x="24" y="295.5" class="t t10 b mid">2</text>
+<text x="1563" y="295.5" class="t t10 b mid">2</text>
+<text x="24" y="472.5" class="t t10 b mid">3</text>
+<text x="1563" y="472.5" class="t t10 b mid">3</text>
+<text x="24" y="649.5" class="t t10 b mid">4</text>
+<text x="1563" y="649.5" class="t t10 b mid">4</text>
+<text x="24" y="826.5" class="t t10 b mid">5</text>
+<text x="1563" y="826.5" class="t t10 b mid">5</text>
+<text x="24" y="1003.5" class="t t10 b mid">6</text>
+<text x="1563" y="1003.5" class="t t10 b mid">6</text>
+<text x="46" y="58" class="t t18 b">EMERGENCY STOP AND SAFETY CIRCUIT</text>
+<text x="46" y="76" class="t t11">Dual channel &#183; monitored &#183; safety relay KS-01 &#183; Safe Torque Off to both drives &#183; contactor coil drop to DOL feeders</text>
+<text x="46" y="112" class="t t10 b">24 V DC from ECP5 &#8212; a DEDICATED circuit protector group (SCH-0030). An ordinary control fault cannot disable the safety function.</text>
+<line x1="74" y1="142" x2="846" y2="142" class="wsaf"/>
+<text x="854" y="146" class="t t10 b amb">+24 V DC (ECP5)</text>
+<line x1="74" y1="142" x2="74" y2="430" class="wsaf"/>
+<circle cx="74" cy="220" r="3.2" fill="#111"/>
+<line x1="74" y1="220" x2="118" y2="220" class="wsaf"/>
+<circle cx="74" cy="320" r="3.2" fill="#111"/>
+<line x1="74" y1="320" x2="118" y2="320" class="wsaf"/>
+<circle cx="74" cy="430" r="3.2" fill="#111"/>
+<line x1="74" y1="430" x2="118" y2="430" class="wsaf"/>
+<text x="46" y="206" class="t t10 b amb">CH. A</text>
+<text x="46" y="306" class="t t10 b amb">CH. B</text>
+<text x="46" y="416" class="t t10 b amb">RESET</text>
+<line x1="118" y1="220" x2="126" y2="220" class="wsaf"/>
+<line x1="170" y1="220" x2="178" y2="220" class="wsaf"/>
+<line x1="126" y1="210" x2="126" y2="230" class="sym"/>
+<line x1="170" y1="210" x2="170" y2="230" class="sym"/>
+<line x1="123" y1="230" x2="173" y2="210" class="sym"/>
+<line x1="118" y1="320" x2="126" y2="320" class="wsaf"/>
+<line x1="170" y1="320" x2="178" y2="320" class="wsaf"/>
+<line x1="126" y1="310" x2="126" y2="330" class="sym"/>
+<line x1="170" y1="310" x2="170" y2="330" class="sym"/>
+<line x1="123" y1="330" x2="173" y2="310" class="sym"/>
+<line x1="148.0" y1="230" x2="148.0" y2="310" class="wref"/>
+<line x1="148.0" y1="210" x2="148.0" y2="190" class="wref"/>
+<circle cx="148.0" cy="180" r="10" class="dev"/>
+<circle cx="148.0" cy="180" r="6.5" fill="#c62828"/>
+<text x="148.0" y="162" class="t t10 b mid">S-ES-MCC</text>
+<text x="148.0" y="150" class="t t9 b mid">E-STOP</text>
+<text x="148.0" y="346" class="t t9 b mid">MCC door</text>
+<text x="148.0" y="358" class="t t8 mid">internal</text>
+<text x="148.0" y="370" class="t t8 mid">2 &#215; NC contacts</text>
+<line x1="178" y1="220" x2="306" y2="220" class="wsaf"/>
+<line x1="178" y1="320" x2="306" y2="320" class="wsaf"/>
+<line x1="306" y1="220" x2="314" y2="220" class="wsaf"/>
+<line x1="358" y1="220" x2="366" y2="220" class="wsaf"/>
+<line x1="314" y1="210" x2="314" y2="230" class="sym"/>
+<line x1="358" y1="210" x2="358" y2="230" class="sym"/>
+<line x1="311" y1="230" x2="361" y2="210" class="sym"/>
+<line x1="306" y1="320" x2="314" y2="320" class="wsaf"/>
+<line x1="358" y1="320" x2="366" y2="320" class="wsaf"/>
+<line x1="314" y1="310" x2="314" y2="330" class="sym"/>
+<line x1="358" y1="310" x2="358" y2="330" class="sym"/>
+<line x1="311" y1="330" x2="361" y2="310" class="sym"/>
+<line x1="336.0" y1="230" x2="336.0" y2="310" class="wref"/>
+<line x1="336.0" y1="210" x2="336.0" y2="190" class="wref"/>
+<circle cx="336.0" cy="180" r="10" class="dev"/>
+<circle cx="336.0" cy="180" r="6.5" fill="#c62828"/>
+<text x="336.0" y="162" class="t t10 b mid">S-ES-101</text>
+<text x="336.0" y="150" class="t t9 b mid">E-STOP</text>
+<text x="336.0" y="346" class="t t9 b mid">LCS-101 at P-101</text>
+<text x="336.0" y="358" class="t t8 mid">X5:005&#8211;008 &#183; C-0105</text>
+<text x="336.0" y="370" class="t t8 mid">2 &#215; NC contacts</text>
+<line x1="366" y1="220" x2="494" y2="220" class="wsaf"/>
+<line x1="366" y1="320" x2="494" y2="320" class="wsaf"/>
+<line x1="494" y1="220" x2="502" y2="220" class="wsaf"/>
+<line x1="546" y1="220" x2="554" y2="220" class="wsaf"/>
+<line x1="502" y1="210" x2="502" y2="230" class="sym"/>
+<line x1="546" y1="210" x2="546" y2="230" class="sym"/>
+<line x1="499" y1="230" x2="549" y2="210" class="sym"/>
+<line x1="494" y1="320" x2="502" y2="320" class="wsaf"/>
+<line x1="546" y1="320" x2="554" y2="320" class="wsaf"/>
+<line x1="502" y1="310" x2="502" y2="330" class="sym"/>
+<line x1="546" y1="310" x2="546" y2="330" class="sym"/>
+<line x1="499" y1="330" x2="549" y2="310" class="sym"/>
+<line x1="524.0" y1="230" x2="524.0" y2="310" class="wref"/>
+<line x1="524.0" y1="210" x2="524.0" y2="190" class="wref"/>
+<circle cx="524.0" cy="180" r="10" class="dev"/>
+<circle cx="524.0" cy="180" r="6.5" fill="#c62828"/>
+<text x="524.0" y="162" class="t t10 b mid">S-ES-102</text>
+<text x="524.0" y="150" class="t t9 b mid">E-STOP</text>
+<text x="524.0" y="346" class="t t9 b mid">LCS-102 at P-102</text>
+<text x="524.0" y="358" class="t t8 mid">X5:009&#8211;012 &#183; C-0115</text>
+<text x="524.0" y="370" class="t t8 mid">2 &#215; NC contacts</text>
+<line x1="554" y1="220" x2="682" y2="220" class="wsaf"/>
+<line x1="554" y1="320" x2="682" y2="320" class="wsaf"/>
+<line x1="682" y1="220" x2="690" y2="220" class="wsaf"/>
+<line x1="734" y1="220" x2="742" y2="220" class="wsaf"/>
+<line x1="690" y1="210" x2="690" y2="230" class="sym"/>
+<line x1="734" y1="210" x2="734" y2="230" class="sym"/>
+<line x1="687" y1="230" x2="737" y2="210" class="sym"/>
+<line x1="682" y1="320" x2="690" y2="320" class="wsaf"/>
+<line x1="734" y1="320" x2="742" y2="320" class="wsaf"/>
+<line x1="690" y1="310" x2="690" y2="330" class="sym"/>
+<line x1="734" y1="310" x2="734" y2="330" class="sym"/>
+<line x1="687" y1="330" x2="737" y2="310" class="sym"/>
+<line x1="712.0" y1="230" x2="712.0" y2="310" class="wref"/>
+<line x1="712.0" y1="210" x2="712.0" y2="190" class="wref"/>
+<circle cx="712.0" cy="180" r="10" class="dev"/>
+<circle cx="712.0" cy="180" r="6.5" fill="#c62828"/>
+<text x="712.0" y="162" class="t t10 b mid">S-ES-PH</text>
+<text x="712.0" y="150" class="t t9 b mid">E-STOP</text>
+<text x="712.0" y="346" class="t t9 b mid">Pump hall entry</text>
+<text x="712.0" y="358" class="t t8 mid">X5:013&#8211;016 &#183; C-0301</text>
+<text x="712.0" y="370" class="t t8 mid">2 &#215; NC contacts</text>
+<line x1="742" y1="220" x2="870" y2="220" class="wsaf"/>
+<line x1="742" y1="320" x2="870" y2="320" class="wsaf"/>
+<line x1="118" y1="430" x2="660" y2="430" class="wsaf"/>
+<line x1="660" y1="430" x2="668" y2="430" class="wsaf"/>
+<line x1="696" y1="430" x2="704" y2="430" class="wsaf"/>
+<line x1="668" y1="420" x2="668" y2="440" class="sym"/>
+<line x1="696" y1="420" x2="696" y2="440" class="sym"/>
+<line x1="682.0" y1="420" x2="682.0" y2="410" class="sym"/>
+<line x1="674.0" y1="410" x2="690.0" y2="410" class="sym"/>
+<text x="682" y="398" class="t t10 b mid">S-RST</text>
+<text x="682" y="460" class="t t9 b mid">Monitored reset, MCC door</text>
+<text x="682" y="472" class="t t9 mid">Acts on RELEASE, not on press &#8212; a stuck or shorted</text>
+<text x="682" y="484" class="t t9 b mid">reset button will NOT reset the circuit</text>
+<line x1="704" y1="430" x2="870" y2="430" class="wsaf"/>
+<rect x="870" y="150" width="172" height="336" rx="0" class="saf"/>
+<text x="956.0" y="174" class="t t14 b mid">KS-01</text>
+<text x="956.0" y="190" class="t t10 b mid">SAFETY RELAY</text>
+<text x="956.0" y="204" class="t t9 mid">Dual channel &#183; monitored</text>
+<text x="878" y="224" class="t t9 b">S11 / S12</text>
+<text x="878" y="236" class="t t8">ch. A input</text>
+<text x="878" y="324" class="t t9 b">S21 / S22</text>
+<text x="878" y="336" class="t t8">ch. B input</text>
+<text x="878" y="434" class="t t9 b">S33 / S34</text>
+<text x="878" y="446" class="t t8">reset input</text>
+<text x="1034" y="254" class="t t9 b end">13 / 14</text>
+<text x="1034" y="304" class="t t9 b end">23 / 24</text>
+<text x="1034" y="354" class="t t9 b end">33 / 34</text>
+<text x="1034" y="404" class="t t9 b end">41 / 42</text>
+<text x="1034" y="412" class="t t8 end">aux</text>
+<line x1="956.0" y1="486" x2="956.0" y2="508" class="wsaf"/>
+<line x1="956.0" y1="508" x2="956.0" y2="515" class="sym"/>
+<line x1="946.0" y1="515" x2="966.0" y2="515" class="sym"/>
+<line x1="950.0" y1="519" x2="962.0" y2="519" class="sym"/>
+<line x1="953.0" y1="523" x2="959.0" y2="523" class="sym"/>
+<text x="970.0" y="500" class="t t8">A2 &#8594; 0 V</text>
+<line x1="74" y1="142" x2="74" y2="142" class="wsaf"/>
+<line x1="846" y1="142" x2="890" y2="142" class="wsaf"/>
+<line x1="890" y1="142" x2="890" y2="150" class="wsaf"/>
+<text x="896" y="144" class="t t8">A1</text>
+<rect x="870" y="532" width="172" height="34" rx="0" class="devf"/>
+<text x="956.0" y="546" class="t t9 b mid prov">PROVISIONAL SELECTION</text>
+<text x="956.0" y="559" class="t t8 mid prov">Required PL not determined &#8212; Note 2</text>
+<text x="46" y="584" class="t t12 b">SAFETY OUTPUTS</text>
+<line x1="1042" y1="250" x2="1068" y2="250" class="wsaf"/>
+<path d="M 1068 250 l 10 0 l -5 -4 m 5 4 l -5 4" class="sym"/>
+<text x="1084" y="254" class="t t9">&#8594; VSD-101 STO ch.1 + ch.2</text>
+<line x1="1042" y1="300" x2="1068" y2="300" class="wsaf"/>
+<path d="M 1068 300 l 10 0 l -5 -4 m 5 4 l -5 4" class="sym"/>
+<text x="1084" y="304" class="t t9">&#8594; VSD-102 STO + DOL contactor coils</text>
+<line x1="1042" y1="350" x2="1068" y2="350" class="wsaf"/>
+<path d="M 1068 350 l 10 0 l -5 -4 m 5 4 l -5 4" class="sym"/>
+<text x="1084" y="354" class="t t9">&#8594; SPARE (wired to X5 spare terminals)</text>
+<line x1="1042" y1="400" x2="1068" y2="400" class="wref"/>
+<path d="M 1068 400 l 10 0 l -5 -4 m 5 4 l -5 4" class="sym"/>
+<text x="1084" y="404" class="t t9">&#8594; PLC DI X3:101 &#8216;E-stop healthy&#8217;</text>
+<text x="1068" y="434" class="t t9 b">Cross-referenced &#8212; see</text>
+<text x="1068" y="446" class="t t9 b">output paths below.</text>
+<rect x="140" y="600" width="170" height="104" rx="0" class="plc"/>
+<text x="225" y="618" class="t t8 b mid amb">FROM KS-01  13/14 + 23/24</text>
+<text x="225" y="638" class="t t12 b mid">VSD-101</text>
+<text x="225" y="656" class="t t9 mid">STO ch.1 &#8594; terminal 37</text>
+<text x="225" y="670" class="t t9 mid">STO ch.2 &#8594; terminal 38</text>
+<text x="225" y="688" class="t t9 b mid">X5:017 / X5:018</text>
+<text x="225" y="720" class="t t9 mid">Ref: SCH-0101</text>
+<rect x="360" y="600" width="170" height="104" rx="0" class="plc"/>
+<text x="445" y="618" class="t t8 b mid amb">FROM KS-01  13/14 + 23/24</text>
+<text x="445" y="638" class="t t12 b mid">VSD-102</text>
+<text x="445" y="656" class="t t9 mid">STO ch.1 &#8594; terminal 37</text>
+<text x="445" y="670" class="t t9 mid">STO ch.2 &#8594; terminal 38</text>
+<text x="445" y="688" class="t t9 b mid">X5:019 / X5:020</text>
+<text x="445" y="720" class="t t9 mid">Ref: SCH-0111</text>
+<rect x="140" y="714" width="460" height="52" rx="0" class="dev"/>
+<text x="370" y="730" class="t t11 b mid">DOL CONTACTOR COIL CIRCUIT   (FROM KS-01  23/24)</text>
+<text x="370" y="750" class="t t9 mid">KS-01 23/24 in series with the 24 V DC coil supply to KM103 and KM101C &#183; SCH-0121 / SCH-0131</text>
+<rect x="140" y="810" width="460" height="48" rx="0" class="plc"/>
+<text x="370" y="828" class="t t11 b mid">KS-01 aux 41/42 &#8594; PLC DI  X3:101</text>
+<text x="370" y="844" class="t t9 mid">&#8220;E-stop circuit healthy&#8221; &#183; wired NC so a broken wire reads as a fault</text>
+<rect x="640" y="586" width="420" height="296" rx="0" class="devf"/>
+<text x="650" y="606" class="t t11 b">INPUT &#8594; LOGIC &#8594; OUTPUT &#8594; FEEDBACK &#8594; FAILURE</text>
+<text x="650" y="628" class="t t9 b blu">INPUT</text>
+<text x="718" y="628" class="t t9">Any of four E-stop devices, each with two independent NC</text>
+<text x="718" y="640" class="t t9">contacts.</text>
+<text x="650" y="658" class="t t9 b blu">LOGIC</text>
+<text x="718" y="658" class="t t9">Both channels must be closed AND must agree within the</text>
+<text x="718" y="670" class="t t9">relay's discrepancy time. Reset is manual and monitored.</text>
+<text x="650" y="688" class="t t9 b blu">OUTPUT</text>
+<text x="718" y="688" class="t t9">STO to both drives. DOL contactor coil circuit opened.</text>
+<text x="650" y="706" class="t t9 b blu">FEEDBACK</text>
+<text x="718" y="706" class="t t9">KS-01 aux 41/42 to PLC DI X3:101. Drive STO status also</text>
+<text x="718" y="718" class="t t9">reported over EtherNet/IP.</text>
+<text x="650" y="736" class="t t9 b blu">FAILURE</text>
+<text x="718" y="736" class="t t9">E-stop pressed: both channels open, STO active, contactors</text>
+<text x="718" y="748" class="t t9">drop, alarm to SCADA. No restart until released AND reset.</text>
+<text x="718" y="766" class="t t9">ONE CHANNEL ONLY (broken wire, welded contact): relay</text>
+<text x="718" y="778" class="t t9">detects the discrepancy, goes to the safe state, will NOT</text>
+<text x="718" y="790" class="t t9">reset until cleared.</text>
+<text x="718" y="808" class="t t9">Loss of 24 V on ECP5: circuit de-energises. That IS the</text>
+<text x="718" y="820" class="t t9">safe state. The circuit is fail-safe by design.</text>
+<rect x="46" y="922" width="1000" height="166" rx="0" class="devf"/>
+<text x="56" y="940" class="t t12 b">NOTES</text>
+<text x="56" y="956.0" class="t t9 prov b">1.  SAFE TORQUE OFF REMOVES TORQUE. IT DOES NOT ISOLATE. The drive output, and therefore the motor terminals, may still be at a hazardous potential</text>
+<text x="56" y="968.6" class="t t9 prov b">     after an E-stop is pressed. STO is NOT an isolation method and does not replace the lockable local isolator at the motor.</text>
+<text x="56" y="981.2" class="t t9 prov b">2.  The REQUIRED Performance Level for this safety function has NOT been determined &#8212; that needs a machinery risk assessment (AS 4024.1 / ISO 12100).</text>
+<text x="56" y="993.8" class="t t9 prov b">     The ACHIEVED PL has NOT been calculated &#8212; that needs an ISO 13849-1 calculation. This is the architecture normally built for PLd, PENDING</text>
+<text x="56" y="1006.4" class="t t9 prov b">     VERIFICATION. It must not be described as PLd until both are done. TQ-003 open.</text>
+<text x="56" y="1019.0" class="t t9">3.  Stop category shown is Category 0 (immediate removal of power). Category 1 (controlled stop, then remove power) may be preferable to limit hydraulic</text>
+<text x="56" y="1031.6" class="t t9">     surge on an abrupt stop of a 90 kW pump. That decision requires the risk assessment and a surge assessment, neither of which is ours. TQ-003.</text>
+<text x="56" y="1044.2" class="t t9">4.  All safety circuit wiring lands on YELLOW terminals on rail X5, used for no other purpose. Four spare yellow terminals (X5:021&#8211;024) are provided so a</text>
+<text x="56" y="1056.8" class="t t9">     future E-stop can be looped into the chain properly rather than improvised in a junction box.</text>
+<text x="56" y="1069.4" class="t t9">5.  The safety function is independent of the PLC. Verified at FAT with the PLC in program-stop mode (FAT test M-95). Single-channel fault detection</text>
+<text x="56" y="1082.0" class="t t9">     verified by FAT tests M-93a and M-93b &#8212; the tests that actually prove the circuit is dual channel rather than two parallel single channels.</text>
+<rect x="1072" y="930" width="469" height="158" rx="0" class="dev"/>
+<line x1="1072" y1="964" x2="1541" y2="964" class="brd2"/>
+<line x1="1072" y1="1004" x2="1541" y2="1004" class="brd2"/>
+<line x1="1072" y1="1038" x2="1541" y2="1038" class="brd2"/>
+<line x1="1372" y1="964" x2="1372" y2="1038" class="brd2"/>
+<text x="1082" y="946" class="t t11 b">NORTHFIELD WATER TREATMENT PLANT</text>
+<text x="1082" y="959" class="t t10">RAW WATER TRANSFER PUMP STATION &#8212; MCC-01</text>
+<text x="1082" y="982" class="t t14 b">EMERGENCY STOP CIRCUIT</text>
+<text x="1082" y="998" class="t t9">Safety-related control circuit</text>
+<text x="1382" y="982" class="t t9">SHEET</text>
+<text x="1382" y="998" class="t t11 b">1 of 1</text>
+<text x="1082" y="1024" class="t t11 b">DRAWING No.  NFD-ELE-SCH-0040</text>
+<text x="1382" y="1024" class="t t12 b">REV  1</text>
+<text x="1082" y="1056" class="t t9 b prov">SELF-DIRECTED REFERENCE PROJECT &#8212; NOT A PRODUCTION DRAWING</text>
+<text x="1082" y="1070" class="t t9">Illustrative only. Not for construction. See notes.</text>
+</svg>
