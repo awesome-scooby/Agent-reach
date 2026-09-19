@@ -820,6 +820,140 @@ hr.rule{border:none; border-top:1px solid var(--rule); margin:1rem 0}
   </div>
 </section>
 
+<section id="rentvest">
+  <div class="sec-head"><h2>The third option: rentvesting</h2><span class="pill acc"><span class="dot"></span>New</span></div>
+  <p class="sec-sub">Keep renting where you want to live, and buy where the numbers work. It's a real strategy — but for you specifically it carries a hidden cost most people miss.</p>
+
+  <div class="card">
+    <div class="bl crit">
+      <span class="bl-k">The hidden cost, for you</span>
+      <p>Buying an investment property first generally ends your first home buyer status. That forfeits your <strong>First Home Super Saver</strong> (up to $50,000 each — and your partner is also a first home buyer, so ~$15,300 of tax saved between you), the <strong>stamp duty concession</strong>, and the <strong>5% deposit guarantee</strong>. You'd also pay full investor stamp duty on the purchase. Before any rent arrives, rentvesting starts you roughly <strong id="rv-forfeit">$50,000</strong> behind.</p>
+    </div>
+
+    <div class="grid g2">
+      <div>
+        <div class="ctl">
+          <div class="ctl-top"><span class="ctl-lab">Investment property price</span><span class="ctl-val" id="v-ipprice">$500,000</span></div>
+          <input type="range" id="s-ipprice" min="250000" max="900000" step="25000" value="500000" aria-label="Investment property price">
+          <span class="ctl-sub">Cheaper than where you'd live — that's the point. Outer suburb or regional.</span>
+        </div>
+        <div class="ctl">
+          <div class="ctl-top"><span class="ctl-lab">Rental yield</span><span class="ctl-val" id="v-ipyield">5.5%</span></div>
+          <input type="range" id="s-ipyield" min="2" max="9" step="0.1" value="5.5" aria-label="Investment property rental yield">
+          <span class="ctl-sub" id="ip-yield-note">Gross rent as a share of price, before costs.</span>
+        </div>
+        <div class="ctl">
+          <div class="ctl-top"><span class="ctl-lab">Deposit</span><span class="ctl-val" id="v-ipdep">20%</span></div>
+          <input type="range" id="s-ipdep" min="10" max="35" step="5" value="20" aria-label="Investment property deposit">
+          <span class="ctl-sub">Under 20% means lenders mortgage insurance — no guarantee scheme for investors.</span>
+        </div>
+      </div>
+      <div>
+        <div class="tiles">
+          <div class="tile"><span class="tile-k">Cash to get in</span><span class="tile-v num" id="rv-upfront">—</span><span class="tile-n">deposit + full investor duty</span></div>
+          <div class="tile"><span class="tile-k">Wealth at 10 yrs</span><span class="tile-v num" id="rv-10">—</span><span class="tile-n">after selling costs and CGT</span></div>
+          <div class="tile"><span class="tile-k">Negatively geared</span><span class="tile-v" id="rv-ng">—</span><span class="tile-n">years running at a tax loss</span></div>
+        </div>
+        <div id="rv-flag" style="margin-top:.8rem"></div>
+      </div>
+    </div>
+
+    <hr class="rule">
+    <div class="grid g2">
+      <div>
+        <h4 style="margin-bottom:.4rem; color:var(--accent)">What makes it work</h4>
+        <ul class="tight" style="font-size:.92rem">
+          <li><strong>You get on the ladder without moving.</strong> Stay in Perth or Melbourne, own where yields are better.</li>
+          <li><strong>The tenant pays most of the mortgage.</strong> At a yield above your mortgage rate it can be cash-flow positive.</li>
+          <li><strong>Negative gearing and depreciation.</strong> Losses offset your salary at 32%, and the building write-off is a deduction you never actually pay.</li>
+          <li><strong>It travels better than a home.</strong> If you leave Australia you were always going to be a remote landlord — that was the plan, not a failure of it.</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="margin-bottom:.4rem; color:var(--crit)">What makes it fail</h4>
+        <ul class="tight" style="font-size:.92rem">
+          <li><strong>No capital gains exemption.</strong> Your home is CGT-free. An investment property is not, and depreciation you claimed gets added back on sale.</li>
+          <li><strong>You forfeit the first-home benefits</strong> listed above — the single biggest number in this section.</li>
+          <li><strong>You still pay rent.</strong> Two housing costs, one income.</li>
+          <li><strong>Negative gearing is a loss.</strong> Getting 32c back on a dollar you lost is still losing 68c. It only works if capital growth shows up.</li>
+          <li><strong>Vacancy, bad tenants, special levies, interest rate rises</strong> — all yours, from another city.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="verdict" style="margin-top:.9rem"><span class="vk">My recommendation</span><p>For most people rentvesting is a reasonable strategy. For you, right now, I'd say no — and the reason is timing, not principle. You and your partner are both first home buyers sitting on roughly $15,300 of First Home Super Saver benefit plus duty concessions and a 5% no-LMI guarantee. Spending that status on an investment property is an expensive way to start. If you decide in a year that you're never buying a home to live in, rentvesting becomes a genuinely sensible next conversation — the benefits you'd be forfeiting only matter if you were going to use them.</p></div>
+  </div>
+</section>
+
+<section id="tree">
+  <div class="sec-head"><h2>Your three unknowns, weighed together</h2><span class="pill acc"><span class="dot"></span>12 futures</span></div>
+  <p class="sec-sub">Everywhere else this page answers one question at a time. But your partner decision, your staying-in-Australia decision and your housing decision resolve together — and some combinations are much worse than the parts suggest.</p>
+
+  <div class="card">
+    <div class="grid g3">
+      <div class="ctl">
+        <div class="ctl-top"><span class="ctl-lab">Partner buys with you</span><span class="ctl-val" id="v-pp">50%</span></div>
+        <input type="range" id="s-pp" min="0" max="100" step="5" value="50" aria-label="Probability partner joins">
+      </div>
+      <div class="ctl">
+        <div class="ctl-top"><span class="ctl-lab">You stay in Australia</span><span class="ctl-val" id="v-ps">75%</span></div>
+        <input type="range" id="s-ps" min="0" max="100" step="5" value="75" aria-label="Probability of staying">
+      </div>
+      <div class="ctl">
+        <div class="ctl-top"><span class="ctl-lab">Horizon</span><span class="ctl-val" id="v-th">10 years</span></div>
+        <input type="range" id="s-th" min="5" max="25" step="1" value="10" aria-label="Decision tree horizon">
+      </div>
+    </div>
+    <div class="grid g3" style="margin-top:.3rem">
+      <div class="ctl">
+        <div class="ctl-top"><span class="ctl-lab">You buy a home</span><span class="ctl-val" id="v-pb">45%</span></div>
+        <input type="range" id="s-pb" min="0" max="100" step="5" value="45" aria-label="Probability of buying a home">
+      </div>
+      <div class="ctl">
+        <div class="ctl-top"><span class="ctl-lab">You rentvest</span><span class="ctl-val" id="v-pv">20%</span></div>
+        <input type="range" id="s-pv" min="0" max="100" step="5" value="20" aria-label="Probability of rentvesting">
+      </div>
+      <div class="ctl">
+        <div class="ctl-top"><span class="ctl-lab">You keep renting</span><span class="ctl-val" id="v-pr">35%</span></div>
+        <div style="height:22px; display:flex; align-items:center"><div style="height:6px; width:100%; border-radius:3px; background:var(--card-2); border:1px solid var(--rule); overflow:hidden"><div id="pr-bar" style="height:100%; background:var(--accent); width:35%"></div></div></div>
+        <span class="ctl-sub">Whatever's left over.</span>
+      </div>
+    </div>
+    <div class="ctl" style="margin-top:.4rem">
+      <div class="ctl-top"><span class="ctl-lab">If you leave, you leave in year</span><span class="ctl-val" id="v-ly">3</span></div>
+      <input type="range" id="s-ly" min="1" max="15" step="1" value="3" aria-label="Year of leaving">
+      <span class="ctl-sub">Leaving forces a property sale, and a foreign resident loses the main-residence exemption — the whole gain becomes taxable at 30% from the first dollar.</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="chartwrap"><div id="tip-tree" class="tip"></div><svg id="chart-tree" role="img" aria-label="Decision tree across partner, location and housing strategy"></svg></div>
+    <p class="note" style="margin-top:.5rem">Each row is one complete future, simulated month by month with mortgages, tax, rent and contributions. Bar length is wealth at your horizon; the percentage is how likely you said it is.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:.5rem">What the weighting says</h3>
+    <div class="tiles">
+      <div class="tile"><span class="tile-k">Expected outcome</span><span class="tile-v num" id="tr-ev">—</span><span class="tile-n">probability-weighted across all 12</span></div>
+      <div class="tile"><span class="tile-k">If you buy a home</span><span class="tile-v num" id="tr-buy">—</span><span class="tile-n">average across those worlds</span></div>
+      <div class="tile"><span class="tile-k">If you rentvest</span><span class="tile-v num" id="tr-vest">—</span><span class="tile-n">average across those worlds</span></div>
+      <div class="tile"><span class="tile-k">If you keep renting</span><span class="tile-v num" id="tr-rent">—</span><span class="tile-n">average across those worlds</span></div>
+    </div>
+    <div class="tiles" style="margin-top:.7rem">
+      <div class="tile"><span class="tile-k">Partner in vs solo</span><span class="tile-v num" id="tr-partner">—</span><span class="tile-n">difference that one decision makes</span></div>
+      <div class="tile"><span class="tile-k">Staying vs leaving</span><span class="tile-v num" id="tr-leave">—</span><span class="tile-n">cost of the 1-in-4</span></div>
+      <div class="tile"><span class="tile-k">Best to worst</span><span class="tile-v num" id="tr-spread">—</span><span class="tile-n">full range across futures</span></div>
+    </div>
+    <div id="tr-flag" style="margin-top:.85rem"></div>
+    <div class="twrap" style="margin-top:.8rem">
+      <table id="tbl-tree">
+        <thead><tr><th>Future</th><th>Likelihood</th><th>Wealth at horizon</th><th>vs expected</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="note" style="margin-top:.55rem">Simplification worth knowing: if you leave, I assume you sell and stop contributing to this plan. In reality you might keep the property and rent it out, or keep saving from overseas. Both are modellable — this is the conservative reading.</p>
+  </div>
+</section>
+
 <section id="waiting">
   <div class="sec-head"><h2>What waiting actually costs</h2></div>
   <p class="sec-sub">You asked about delaying the decision — say, investing for 14 months and revisiting. This prices that choice in both directions rather than assuming it goes badly.</p>
@@ -1160,6 +1294,8 @@ var S = {
   exp:2800, bufm:5, sav:2000, dial:25, hedge:0, hz:14,
   rent:520, city:"perth", hold:10, mrate:6.0, hgrowth:5.0, rentg:3.0, owncost:1.2,
   couple:false, hecs:0, hem:2200, hvol:9.0, superBal:35000,
+  ipPrice:500000, ipYield:5.5, ipDep:20,
+  pPartner:50, pStay:75, pBuy:45, pRentvest:20, leaveYear:3, treeHz:10,
   cash:4.0, eq:7.3, inf:2.8,
   price:850000, dep:5, costs:3,
   partner:false, shariah:true, fhss:true,
@@ -1574,15 +1710,17 @@ function goalOdds(ret, vol){
 var NET_SOLO = 86050/12, NET_PARTNER = 70680/12;
 function rentMonthly(){ return S.rent*52/12; }
 /* living costs once you own: rent disappears, but the lender floors you at HEM */
-function assessedExpenses(){
+function assessedExpenses(isCouple){
+  if(isCouple === undefined) isCouple = S.couple;
   var declared = Math.max(0, S.exp - rentMonthly());
-  var floor = S.hem * (S.couple ? 1.45 : 1);
+  var floor = S.hem * (isCouple ? 1.45 : 1);
   return { declared:declared, floor:floor, used:Math.max(declared, floor) };
 }
-function borrow(){
-  var net = NET_SOLO + (S.couple ? NET_PARTNER : 0);
-  var ae = assessedExpenses();
-  var hecsM = S.hecs/12 * (S.couple ? 2 : 1);
+function borrow(isCouple){
+  if(isCouple === undefined) isCouple = S.couple;
+  var net = NET_SOLO + (isCouple ? NET_PARTNER : 0);
+  var ae = assessedExpenses(isCouple);
+  var hecsM = S.hecs/12 * (isCouple ? 2 : 1);
   var avail = Math.max(0, net - ae.used - 250 - hecsM);
   var ar = (S.mrate + 3)/100/12, n = 360;
   var maxLoan = avail * (1 - Math.pow(1+ar, -n)) / ar;
@@ -1691,6 +1829,211 @@ function rentBuy(){
   return { rows:rows, be:be, upfront:upfront, duty:duty, pay:pay,
            affordable: upfront <= POT, strain:strainMonths, negYears:negYears,
            wipe:Math.max(0, wipe), netEq:netEq, loan:loan };
+}
+
+/* ---------- rentvesting ----------
+   You keep paying your own rent and buy an investment property instead.
+   Rent is taxable, costs are deductible, losses offset your salary, and the
+   gain is NOT exempt — so this is taxed at both ends, unlike a home. */
+function rentvest(){
+  var YEARS = 20, c = CITY[S.city];
+  var price = S.ipPrice;
+  var dep = price*S.ipDep/100;
+  var duty = c.duty(price);                    /* investors get no first-home concession */
+  var lmi  = S.ipDep < 20 ? (price-dep)*0.02 : 0;
+  var upfront = dep + duty + 3000 + lmi;
+  var loan = price - dep;
+  var r = S.mrate/100/12, n = 360;
+  var pay = loan*r/(1 - Math.pow(1+r,-n));
+
+  var EQ_FEE = 0.18, EQ_YIELD = 1.8;
+  var netEq = S.eq - EQ_FEE - EQ_YIELD*0.32 - 2.0*0.16;
+  var invM = Math.pow(1 + netEq/100, 1/12) - 1;
+  var hgM  = Math.pow(1 + S.hgrowth/100, 1/12) - 1;
+  var rgM  = Math.pow(1 + S.rentg/100, 1/12) - 1;
+  var msav = S.sav*(S.partner?2:1);
+  var MTR = 0.32, CGT_D = 0.16;
+
+  var inv = POT - upfront, invBasis = Math.max(0, POT - upfront);
+  var bal = loan, val = price, myRent = rentMonthly();
+  var ipRent = price*(S.ipYield/100)/12;
+  var costBase = price + duty;
+  var depnTotal = 0;
+  var rows = [], negGearYears = 0;
+
+  function equityAfterTax(v, b, base, cb, deprec){
+    var gross = v*0.975 - b;
+    var gain = Math.max(0, v*0.975 - (cb - deprec));
+    return gross - gain*CGT_D + (v*0.975 - b > 0 ? 0 : 0);
+  }
+
+  for(var y=0; y<=YEARS; y++){
+    if(y > 0){
+      for(var m=0;m<12;m++){
+        var interest = bal*r;
+        var mgmt = ipRent*0.08;
+        var running = val*(S.owncost/100)/12;
+        var deprec = price*0.6*0.025/12;        /* building write-off, non-cash */
+        depnTotal += deprec;
+        var taxable = ipRent - mgmt - running - interest - deprec;
+        var taxEffect = -taxable*MTR;           /* a loss becomes a refund at your rate */
+        var cash = ipRent - mgmt - running - pay + taxEffect;
+        if(taxable < 0) negGearYears += 1/12;
+        var surplus = msav + cash;              /* your own rent is unchanged, so it nets out */
+        inv = inv*(1+invM) + surplus;
+        if(surplus > 0) invBasis += surplus;
+        bal = Math.max(0, bal*(1+r) - pay);
+        val *= (1+hgM);
+        myRent *= (1+rgM);
+        ipRent *= (1+rgM);
+      }
+    }
+    var portfolio = inv - Math.max(0, inv - invBasis)*CGT_D;
+    rows.push({ y:y, rentvest: equityAfterTax(val, bal, invBasis, costBase, depnTotal) + portfolio });
+  }
+  return { rows:rows, upfront:upfront, duty:duty, pay:pay, loan:loan,
+           affordable: upfront <= POT, negGearYears:Math.round(negGearYears),
+           yieldGap: S.ipYield - S.mrate };
+}
+
+/* ---------- decision tree ----------
+   Three things you genuinely don't know yet — whether your partner is in,
+   whether you stay in Australia, and which housing strategy you pick.
+   Twelve worlds. Each gets simulated properly, then weighted by how likely
+   you think it is. The page models these separately everywhere else; your
+   life resolves them together. */
+/* What you give up by buying an investment property first: both of you are first
+   home buyers, so it is two lots of First Home Super Saver plus the duty concession
+   on the home you would otherwise have bought. */
+function fhbForfeit(partner){
+  var c = CITY[S.city];
+  var homePrice = Math.floor(Math.min(S.price, borrow(partner).ceiling)/25000)*25000;
+  var dutyConcession = Math.max(0, c.duty(homePrice) - fhbDuty(c, homePrice));
+  return 7650*(partner ? 2 : 1) + dutyConcession;
+}
+
+var STRATS = [
+  {k:"buy",      n:"Buy a home"},
+  {k:"rentvest", n:"Rentvest"},
+  {k:"rent",     n:"Rent & invest"}
+];
+
+function pathOutcome(partner, stay, strat){
+  var years = S.treeHz, L = Math.min(S.leaveYear, years);
+  var msav = S.sav*(partner ? 2 : 1);
+  var netEq = S.eq - 0.18 - 1.8*0.32 - 2.0*0.16;
+  var invM = Math.pow(1 + netEq/100, 1/12) - 1;
+  var hgM  = Math.pow(1 + S.hgrowth/100, 1/12) - 1;
+  var rgM  = Math.pow(1 + S.rentg/100, 1/12) - 1;
+  var r = S.mrate/100/12, nMort = 360;
+  var CGT_D = 0.16;        /* resident, held over 12 months */
+  var CGT_F = 0.30;        /* foreign resident: no main-residence exemption, no discount */
+  var MTR = 0.32;
+  var c = CITY[S.city];
+  var b = borrow(partner);
+
+  var note = "", mode = strat, price = 0, dep = 0, duty = 0, upfront = 0, loan = 0, pay = 0;
+  var ipRent = 0, costBase = 0, depnTotal = 0;
+
+  if(strat === "buy"){
+    price = Math.floor(Math.min(S.price, b.ceiling)/25000)*25000;
+    dep = price*S.dep/100; duty = fhbDuty(c, price); upfront = dep + duty + 3000;
+    if(price < 250000 || upfront > POT){ mode = "rent"; note = "couldn't buy — fell back to renting"; }
+    else { loan = price - dep; pay = loan*r/(1 - Math.pow(1+r,-nMort)); costBase = price + duty; }
+  } else if(strat === "rentvest"){
+    price = S.ipPrice;
+    dep = price*S.ipDep/100;
+    duty = c.duty(price);                                   /* no first-home concession */
+    upfront = dep + duty + 3000 + (S.ipDep < 20 ? (price-dep)*0.02 : 0);
+    if(upfront > POT){ mode = "rent"; note = "couldn't fund the investment property"; }
+    else { loan = price - dep; pay = loan*r/(1 - Math.pow(1+r,-nMort));
+           ipRent = price*(S.ipYield/100)/12; costBase = price + duty; }
+  }
+
+  var inv = (mode === "rent") ? POT : POT - upfront;
+  if(mode === "rentvest") inv -= fhbForfeit(partner);   /* first-home status, spent */
+  var invBasis = Math.max(0, inv);
+  var bal = loan, val = price, rentM = rentMonthly(), sold = false, forcedSale = false;
+
+  for(var m = 1; m <= years*12; m++){
+    var gone = !stay && m > L*12;
+    if(gone){
+      inv = inv*(1+invM);
+    } else {
+      var surplus = msav;
+      if(mode === "buy"){
+        var own = pay + val*(S.owncost/100)/12;
+        surplus = msav - (own - rentM);
+      } else if(mode === "rentvest"){
+        var interest = bal*r;
+        var mgmt = ipRent*0.08;
+        var running = val*(S.owncost/100)/12;
+        var deprec = price*0.6*0.025/12;
+        depnTotal += deprec;
+        var taxable = ipRent - mgmt - running - interest - deprec;
+        surplus = msav + (ipRent - mgmt - running - pay) + (-taxable*MTR);
+      }
+      inv = inv*(1+invM) + surplus;
+      if(surplus > 0) invBasis += surplus;
+      if(mode !== "rent") bal = Math.max(0, bal*(1+r) - pay);
+      val *= (1+hgM);
+      rentM *= (1+rgM);
+      ipRent *= (1+rgM);
+    }
+    /* leaving forces a sale, and a foreign resident loses the main-residence exemption */
+    if(!stay && m === L*12 && mode !== "rent" && !sold){
+      var gain = Math.max(0, val - (costBase - depnTotal));
+      var proceeds = val*0.975 - bal - gain*CGT_F;
+      inv += proceeds;
+      invBasis += Math.max(0, proceeds);
+      sold = true; forcedSale = true;
+    }
+  }
+
+  var wealth = inv - Math.max(0, inv - invBasis)*CGT_D;
+  if(mode !== "rent" && !sold){
+    if(mode === "buy"){
+      wealth += val*0.975 - bal;                                   /* main residence: exempt */
+    } else {
+      var g = Math.max(0, val*0.975 - (costBase - depnTotal));
+      wealth += val*0.975 - bal - g*CGT_D;                         /* investment: taxed */
+    }
+  }
+  return { wealth:wealth, note:note, mode:mode, forcedSale:forcedSale, price:price };
+}
+
+function decisionTree(){
+  var pP = S.pPartner/100, pS = S.pStay/100;
+  var pB = S.pBuy/100, pV = S.pRentvest/100, pR = Math.max(0, 1 - pB - pV);
+  var sp = { buy:pB, rentvest:pV, rent:pR };
+  var leaves = [];
+  [[true,"Partner in"],[false,"Solo"]].forEach(function(P){
+    [[true,"Stay"],[false,"Leave"]].forEach(function(T){
+      STRATS.forEach(function(st){
+        var o = pathOutcome(P[0], T[0], st.k);
+        leaves.push({
+          partner:P[0], pLab:P[1], stay:T[0], sLab:T[1], strat:st.k, stLab:st.n,
+          p: (P[0]?pP:1-pP) * (T[0]?pS:1-pS) * sp[st.k],
+          wealth:o.wealth, note:o.note, forcedSale:o.forcedSale, price:o.price
+        });
+      });
+    });
+  });
+  var ev = 0; leaves.forEach(function(l){ ev += l.p*l.wealth; });
+  function condEV(key, val){
+    var w = 0, tot = 0;
+    leaves.forEach(function(l){ if(l[key] === val){ w += l.p*l.wealth; tot += l.p; } });
+    return tot > 0 ? w/tot : 0;
+  }
+  var sorted = leaves.slice().sort(function(a,b){ return b.wealth - a.wealth; });
+  return {
+    leaves:leaves, sorted:sorted, ev:ev,
+    evBuy: condEV("strat","buy"), evVest: condEV("strat","rentvest"), evRent: condEV("strat","rent"),
+    evStay: condEV("stay",true), evLeave: condEV("stay",false),
+    evPartner: condEV("partner",true), evSolo: condEV("partner",false),
+    best: sorted[0], worst: sorted[sorted.length-1],
+    spread: sorted[0].wealth - sorted[sorted.length-1].wealth
+  };
 }
 
 /* ---------- renders ---------- */
@@ -2181,6 +2524,164 @@ function chartRB(rb){
   hit.addEventListener("mouseleave", function(){ tip.style.opacity="0"; cross.setAttribute("opacity","0"); });
 }
 
+function renderRentvest(){
+  var rv = rentvest();
+  $("v-ipprice").textContent = money(S.ipPrice);
+  $("v-ipyield").textContent = pct(S.ipYield);
+  $("v-ipdep").textContent = S.ipDep + "%";
+  $("rv-upfront").textContent = money(rv.upfront);
+  $("rv-10").textContent = moneyK(rv.rows[10].rentvest);
+  $("rv-ng").textContent = rv.negGearYears + " of 20";
+  $("ip-yield-note").textContent = "Gross rent as a share of price, before costs. Your mortgage rate is " + pct(S.mrate) +
+    ", so this property runs " + (rv.yieldGap >= 0 ? "cash-flow positive before costs." : "at a shortfall you fund from salary.");
+
+  /* what first-home status is worth, and therefore what rentvesting forfeits */
+  $("rv-forfeit").textContent = money(fhbForfeit(true));
+
+  var f = $("rv-flag");
+  if(!rv.affordable){
+    f.innerHTML = '<div class="bl crit" style="margin:0"><span class="bl-k">Not fundable</span><p>Deposit plus investor stamp duty comes to ' +
+      money(rv.upfront) + ', more than your ' + money(POT) + '. Lower the price or the deposit.</p></div>';
+  } else if(rv.yieldGap >= 0){
+    f.innerHTML = '<div class="bl" style="margin:0"><span class="bl-k">Roughly self-funding</span><p>At ' + pct(S.ipYield) +
+      ' yield against a ' + pct(S.mrate) + ' mortgage, the rent covers most of the interest. It is still negatively geared for ' +
+      rv.negGearYears + ' years once depreciation is counted — which is the point of depreciation.</p></div>';
+  } else {
+    f.innerHTML = '<div class="bl brass" style="margin:0"><span class="bl-k">You fund the gap</span><p>A ' + pct(S.ipYield) +
+      ' yield against a ' + pct(S.mrate) + ' mortgage means you top it up from salary every month. That is fine if prices rise, and expensive if they do not — you are betting on growth, not income.</p></div>';
+  }
+}
+
+function renderTree(){
+  var t = decisionTree();
+  $("v-pp").textContent = S.pPartner + "%";
+  $("v-ps").textContent = S.pStay + "%";
+  $("v-pb").textContent = S.pBuy + "%";
+  $("v-pv").textContent = S.pRentvest + "%";
+  var pr = Math.max(0, 100 - S.pBuy - S.pRentvest);
+  $("v-pr").textContent = pr + "%";
+  $("pr-bar").style.width = pr + "%";
+  $("v-th").textContent = S.treeHz + " years";
+  $("v-ly").textContent = String(S.leaveYear);
+
+  $("tr-ev").textContent = moneyK(t.ev);
+  $("tr-buy").textContent = moneyK(t.evBuy);
+  $("tr-vest").textContent = moneyK(t.evVest);
+  $("tr-rent").textContent = moneyK(t.evRent);
+  $("tr-partner").textContent = moneyK(t.evPartner - t.evSolo);
+  $("tr-leave").textContent = moneyK(t.evLeave - t.evStay);
+  $("tr-spread").textContent = moneyK(t.spread);
+
+  var tb = $("tbl-tree").querySelector("tbody");
+  tb.innerHTML = "";
+  t.sorted.forEach(function(l){
+    var d = l.wealth - t.ev;
+    var tr = document.createElement("tr");
+    if(l === t.sorted[0]) tr.style.background = "var(--good-soft)";
+    if(l === t.sorted[t.sorted.length-1]) tr.style.background = "var(--crit-soft)";
+    tr.innerHTML = "<td>" + l.pLab + " · " + l.sLab + " · " + l.stLab +
+        (l.note ? '<div style="font-size:.76em;color:var(--ink-3)">' + l.note + "</div>" : "") + "</td>" +
+      '<td class="n">' + (l.p*100).toFixed(1) + "%</td>" +
+      '<td class="n">' + money(l.wealth) + "</td>" +
+      '<td class="n ' + (d>=0?"pos":"neg") + '">' + (d>=0?"+":"−") + moneyK(Math.abs(d)) + "</td>" +
+      "<td>" + (l.forcedSale ? '<span class="pill crit"><span class="dot"></span>Forced sale</span>' : "") + "</td>";
+    tb.appendChild(tr);
+  });
+
+  var best = t.sorted[0], worst = t.sorted[t.sorted.length-1];
+  var lead = Math.max(t.evBuy, t.evVest, t.evRent);
+  var leadName = lead === t.evBuy ? "buying a home" : (lead === t.evVest ? "rentvesting" : "renting and investing");
+  var gap = lead - Math.min(t.evBuy, t.evVest, t.evRent);
+  $("tr-flag").innerHTML =
+    '<div class="bl" style="margin:0"><span class="bl-k">Reading this</span><p>On your own probabilities, <strong>' + leadName +
+    '</strong> comes out ahead on average — but by ' + moneyK(gap) + ' across a spread of ' + moneyK(t.spread) +
+    ' between best and worst futures. The strategy choice is worth less than the spread, which means <em>which</em> future you land in matters more than which strategy you pick.</p></div>' +
+    (lead === t.evVest ? '<div class="bl brass" style="margin:.6rem 0 0"><span class="bl-k">Rentvesting leads — with a caveat</span><p>It wins here on leverage into a cheaper, higher-yielding property, and the model now charges it the ' +
+      moneyK(fhbForfeit(true)) + ' of first-home benefits you would be spending. But averages hide concentration: it puts your whole net worth into one property in one market, run from another city, funded by debt, and taxed at both ends. I would still not do it before you have settled the partner question — see the section above for why.</p></div>' : '') +
+    '<div class="bl brass" style="margin:.6rem 0 0"><span class="bl-k">The lever that actually moves</span><p>Having your partner in is worth about <strong>' +
+    moneyK(t.evPartner - t.evSolo) + '</strong> on average. Leaving Australia costs about <strong>' + moneyK(Math.abs(t.evLeave - t.evStay)) +
+    '</strong>. Both dwarf the housing decision. Best case is ' + best.pLab.toLowerCase() + ', ' + best.sLab.toLowerCase() + ', ' +
+    best.stLab.toLowerCase() + ' at ' + moneyK(best.wealth) + '; worst is ' + worst.pLab.toLowerCase() + ', ' + worst.sLab.toLowerCase() +
+    ', ' + worst.stLab.toLowerCase() + ' at ' + moneyK(worst.wealth) + '.</p></div>';
+  return t;
+}
+
+function chartTree(t){
+  var svg = $("chart-tree"), tip = $("tip-tree");
+  var host = svg.parentElement;
+  var W = Math.max(300, host.clientWidth);
+  var compact = W < 640;
+  var rowH = compact ? 30 : 34, mT = 34, mB = 26;
+  var H = mT + 12*rowH + mB;
+  var xRoot = 10, x1 = 58, x2 = 132, x3 = 196;
+  var barX = compact ? 118 : Math.min(330, W*0.38);
+  var barMax = W - barX - (compact ? 66 : 92);
+  var ink = cvar("--ink"), ink2 = cvar("--ink-2"), ink3 = cvar("--ink-3"), rule = cvar("--rule"), acc = cvar("--accent");
+  var maxW = 0; t.leaves.forEach(function(l){ maxW = Math.max(maxW, l.wealth); });
+  if(maxW <= 0) maxW = 1;
+  var rowY = function(i){ return mT + i*rowH + rowH/2; };
+  var out = '';
+
+  if(compact){
+    out += '<text x="'+xRoot+'" y="16" font-size="9.5" font-weight="700" letter-spacing="1" fill="'+ink3+'" font-family="Figtree, sans-serif">FUTURE</text>';
+    out += '<text x="'+barX+'" y="16" font-size="9.5" font-weight="700" letter-spacing="1" fill="'+ink3+'" font-family="Figtree, sans-serif">WEALTH AT '+S.treeHz+' YEARS</text>';
+  } else {
+    out += '<text x="'+xRoot+'" y="16" font-size="10" font-weight="700" letter-spacing="1" fill="'+ink3+'" font-family="Figtree, sans-serif">PARTNER</text>';
+    out += '<text x="'+x2+'" y="16" font-size="10" font-weight="700" letter-spacing="1" fill="'+ink3+'" font-family="Figtree, sans-serif">WHERE</text>';
+    out += '<text x="'+x3+'" y="16" font-size="10" font-weight="700" letter-spacing="1" fill="'+ink3+'" font-family="Figtree, sans-serif">STRATEGY</text>';
+    out += '<text x="'+barX+'" y="16" font-size="10" font-weight="700" letter-spacing="1" fill="'+ink3+'" font-family="Figtree, sans-serif">WEALTH AT '+S.treeHz+' YEARS — bar opacity shows how likely you said it is</text>';
+  }
+
+  /* branch spines — the tree structure only fits on a wide screen */
+  if(!compact) [0,1].forEach(function(a){
+    var top = rowY(a*6), bot = rowY(a*6+5), mid = (top+bot)/2;
+    out += '<path d="M'+(xRoot+6)+' '+rowY(5.5).toFixed(1)+' L'+(x1-14)+' '+mid.toFixed(1)+'" stroke="'+rule+'" fill="none" stroke-width="1.5"/>';
+    out += '<text x="'+(x1-10)+'" y="'+(mid+4).toFixed(1)+'" font-size="11.5" font-weight="700" fill="'+ink+'" font-family="Figtree, sans-serif">'+(a===0?"Partner":"Solo")+'</text>';
+    [0,1].forEach(function(b){
+      var i0 = a*6 + b*3, t2 = rowY(i0), b2 = rowY(i0+2), m2 = (t2+b2)/2;
+      out += '<path d="M'+(x1-14)+' '+mid.toFixed(1)+' L'+(x2-8)+' '+m2.toFixed(1)+'" stroke="'+rule+'" fill="none" stroke-width="1.2"/>';
+      out += '<text x="'+(x2-6)+'" y="'+(m2+4).toFixed(1)+'" font-size="11" fill="'+ink2+'" font-family="Figtree, sans-serif">'+(b===0?"Stay":"Leave")+'</text>';
+    });
+  });
+
+  var evX = barX + t.ev/maxW*barMax;
+  out += '<line x1="'+evX.toFixed(1)+'" x2="'+evX.toFixed(1)+'" y1="'+(mT-4)+'" y2="'+(mT+12*rowH)+'" stroke="'+ink+'" stroke-width="1.5" stroke-dasharray="4 3"/>';
+  out += '<text x="'+evX.toFixed(1)+'" y="'+(H-10)+'" text-anchor="middle" font-size="10.5" font-weight="700" fill="'+ink+'" font-family="Figtree, sans-serif">expected '+moneyK(t.ev)+'</text>';
+
+  var SHORT = { buy:"Buy", rentvest:"Rentvest", rent:"Rent" };
+  t.leaves.forEach(function(l, i){
+    var y = rowY(i), w = Math.max(2, l.wealth/maxW*barMax);
+    var op = 0.28 + 0.72*Math.min(1, l.p/0.18);
+    if(compact){
+      out += '<text x="'+xRoot+'" y="'+(y+4).toFixed(1)+'" font-size="10" fill="'+ink2+'" font-family="Figtree, sans-serif">'+
+             (l.partner?"Partner":"Solo")+'·'+l.sLab+'·'+SHORT[l.strat]+'</text>';
+    } else {
+      out += '<text x="'+x3+'" y="'+(y+4).toFixed(1)+'" font-size="11" fill="'+ink2+'" font-family="Figtree, sans-serif">'+l.stLab+'</text>';
+      out += '<line x1="'+(x3-6)+'" x2="'+(barX-6)+'" y1="'+y.toFixed(1)+'" y2="'+y.toFixed(1)+'" stroke="'+rule+'" stroke-dasharray="2 3"/>';
+    }
+    out += '<rect class="tbar" data-i="'+i+'" x="'+barX+'" y="'+(y-10).toFixed(1)+'" width="'+w.toFixed(1)+'" height="20" rx="3" fill="'+acc+'" fill-opacity="'+op.toFixed(2)+'"/>';
+    out += '<text x="'+(barX+w+6).toFixed(1)+'" y="'+(y+4).toFixed(1)+'" font-size="'+(compact?10:11.5)+'" font-weight="700" fill="'+ink+'" font-family="JetBrains Mono, monospace">'+moneyK(l.wealth)+'</text>';
+    if(l.forcedSale && !compact) out += '<circle cx="'+(barX-13)+'" cy="'+y.toFixed(1)+'" r="3" fill="'+cvar("--crit")+'"/>';
+  });
+
+  svg.setAttribute("viewBox","0 0 "+W+" "+H);
+  svg.setAttribute("width",W); svg.setAttribute("height",H);
+  svg.innerHTML = out;
+
+  Array.prototype.forEach.call(svg.querySelectorAll(".tbar"), function(el){
+    el.addEventListener("mouseenter", function(){
+      var l = t.leaves[+el.getAttribute("data-i")];
+      var r = svg.getBoundingClientRect(), br = el.getBoundingClientRect();
+      tip.innerHTML = "<b>"+l.pLab+" · "+l.sLab+" · "+l.stLab+"</b><br>likelihood&nbsp; "+(l.p*100).toFixed(1)+"%<br>wealth&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "+money(l.wealth)+
+        (l.forcedSale ? "<br>forced sale, exemption lost" : "") + (l.note ? "<br>"+l.note : "");
+      tip.style.opacity = "1";
+      tip.style.left = Math.min(Math.max(4, br.left - r.left), r.width-230) + "px";
+      tip.style.top = Math.max(2, br.top - r.top - 62) + "px";
+    });
+    el.addEventListener("mouseleave", function(){ tip.style.opacity="0"; });
+  });
+}
+
 /* ---------- wiring ---------- */
 function update(){
   if(!S.custom) S.w = lerpW(S.dial);
@@ -2219,8 +2720,10 @@ function update(){
 
   renderAlloc(); renderSliders(); renderMetrics(); renderLayers(); renderStress(); renderHouse();
   renderHorizon(); renderCases(); renderOdds(); renderMortgage(); renderCity(); renderWait();
+  renderRentvest();
+  var tr = renderTree();
   var rb = renderRentBuy();
-  chartProj(); chartStress(); chartDist(); chartRB(rb);
+  chartProj(); chartStress(); chartDist(); chartRB(rb); chartTree(tr);
 
   Array.prototype.forEach.call(document.querySelectorAll(".preset.hz"), function(b){
     b.setAttribute("aria-pressed", +b.dataset.hz === S.hz ? "true" : "false");
@@ -2237,6 +2740,18 @@ bind("s-price","price"); bind("s-dep","dep"); bind("s-costs","costs");
 bind("s-hz","hz"); bind("s-rent","rent"); bind("s-mrate","mrate");
 bind("s-hgrowth","hgrowth"); bind("s-owncost","owncost");
 bind("s-hvol","hvol"); bind("s-hem","hem");
+bind("s-ipprice","ipPrice"); bind("s-ipyield","ipYield"); bind("s-ipdep","ipDep");
+bind("s-pp","pPartner"); bind("s-ps","pStay"); bind("s-th","treeHz"); bind("s-ly","leaveYear");
+$("s-pb").addEventListener("input", function(e){
+  S.pBuy = +e.target.value;
+  if(S.pBuy + S.pRentvest > 100){ S.pRentvest = 100 - S.pBuy; $("s-pv").value = S.pRentvest; }
+  update();
+});
+$("s-pv").addEventListener("input", function(e){
+  S.pRentvest = +e.target.value;
+  if(S.pBuy + S.pRentvest > 100){ S.pBuy = 100 - S.pRentvest; $("s-pb").value = S.pBuy; }
+  update();
+});
 
 Array.prototype.forEach.call(document.querySelectorAll(".preset.hz"), function(b){
   b.addEventListener("click", function(){ S.hz = +b.dataset.hz; $("s-hz").value = S.hz; update(); });
@@ -2265,13 +2780,13 @@ $("t-shariah").addEventListener("change", function(e){ S.shariah = e.target.chec
 $("t-fhss").addEventListener("change", function(e){ S.fhss = e.target.checked; update(); });
 
 var rt;
-window.addEventListener("resize", function(){ clearTimeout(rt); rt = setTimeout(function(){ chartProj(); chartStress(); chartDist(); chartRB(rentBuy()); }, 140); });
+window.addEventListener("resize", function(){ clearTimeout(rt); rt = setTimeout(function(){ chartProj(); chartStress(); chartDist(); chartRB(rentBuy()); chartTree(decisionTree()); }, 140); });
 if(window.matchMedia){
   var mq = window.matchMedia("(prefers-color-scheme: dark)");
-  if(mq.addEventListener) mq.addEventListener("change", function(){ setTimeout(function(){ chartProj(); chartStress(); chartDist(); chartRB(rentBuy()); }, 60); });
+  if(mq.addEventListener) mq.addEventListener("change", function(){ setTimeout(function(){ chartProj(); chartStress(); chartDist(); chartRB(rentBuy()); chartTree(decisionTree()); }, 60); });
 }
 
 update();
-if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ chartProj(); chartStress(); chartDist(); chartRB(rentBuy()); });
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ chartProj(); chartStress(); chartDist(); chartRB(rentBuy()); chartTree(decisionTree()); });
 })();
 </script>
