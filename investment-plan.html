@@ -275,13 +275,14 @@ hr.rule{border:none; border-top:1px solid var(--rule); margin:1rem 0}
 
     <div class="grid g2">
       <div>
-        <h3 style="margin-bottom:.5rem">The seven things</h3>
+        <h3 style="margin-bottom:.5rem">The eight things</h3>
         <ul class="tight">
+          <li><strong>Protect the income before growing the capital.</strong> No emergency fund and no income protection, with everything resting on one salary. Fixing that outranks every allocation decision on this page — and your tailbone makes the timing urgent, because insurers underwrite on medical history and yours only grows.</li>
           <li><strong>Build a $15k emergency fund first.</strong> Right now $130k is all you have. Without a buffer, one bad month forces you to sell investments at the worst moment.</li>
           <li><strong>The First Home Super Saver is the best return available to you.</strong> Salary-sacrificing into it converts 32c tax into 15c tax. That's roughly a <strong>15% guaranteed gain</strong>. No market beats that reliably over 12 months.</li>
           <li><strong>You may already have enough deposit.</strong> Under the expanded Home Guarantee Scheme, an eligible first home buyer can buy with 5% down and no LMI. On an $850k place that's ~$42.5k, not $170k.</li>
           <li><strong>Franked dividends are genuinely special for you.</strong> At a 32% marginal rate, a fully franked Australian dividend arrives essentially tax-free. Foreign dividends don't do this.</li>
-          <li><strong>Your deposit isn't the constraint — your borrowing power is.</strong> On $113k alone you can likely borrow around $510k, so a Perth median house at $850k is out of reach no matter how well you invest. Applying with your partner roughly doubles that ceiling. That one decision matters more than every allocation choice here.</li>
+          <li><strong>Your deposit isn't the constraint — your borrowing power is.</strong> On $113k alone you can likely borrow around <strong>$587k</strong>, putting your price ceiling near $600k. A Perth median house at $850k is out of reach solo no matter how well you invest. Applying with your partner takes the ceiling past <strong>$1.2m</strong>. That one decision matters more than every allocation choice here.</li>
           <li><strong>If you buy, an offset account beats shares.</strong> A dollar in offset saves you the mortgage rate, tax-free — worth about 8.8% pre-tax at your marginal rate. That's more than shares are expected to return, with none of the risk.</li>
           <li><strong>The Pakistan sleeve is a no for this money.</strong> Not because it's bad, but because the currency drag and your Australian tax residency remove nearly all the benefit. Detail in its own section below.</li>
         </ul>
@@ -326,8 +327,9 @@ hr.rule{border:none; border-top:1px solid var(--rule); margin:1rem 0}
         <div class="ctl">
           <div class="ctl-top"><span class="ctl-lab">Saving each month</span><span class="ctl-val" id="v-sav">$2,000</span></div>
           <input type="range" id="s-sav" min="0" max="4500" step="100" value="2000" aria-label="Monthly savings">
-          <span class="ctl-sub">Take-home on $113k is roughly $7,150/mo. At $2,800 of costs, $2,000 may be understating you.</span>
+          <span class="ctl-sub">Your $2,800 of costs includes the $520/week rent, so this is what is left over.</span>
         </div>
+        <div id="sav-rec"></div>
       </div>
       <div>
         <div class="tiles" style="margin-bottom:.7rem">
@@ -373,7 +375,11 @@ hr.rule{border:none; border-top:1px solid var(--rule); margin:1rem 0}
         </div>
         <div class="bl brass" style="margin:.75rem 0 0">
           <span class="bl-k">Watch out</span>
-          <p>You must apply to the ATO for a determination <em>before</em> you sign a contract to buy, and release takes a couple of weeks. Also: if you never buy a home, that money is stuck in super until you're 60. Given you're unsure about the house, that's a real cost — which is why I'd fund it from salary, not from the $130k.</p>
+          <p>You must apply to the ATO for a determination <em>before</em> you sign a contract to buy, and release takes a couple of weeks. If you never buy a home, that money is stuck in super until you're 60 — a real cost given you're unsure, which is why I'd fund it from salary rather than the $130k. And your employer's ~$13,560 of contributions eat into the same $30,000 cap, leaving only about $16,440 of salary-sacrifice room.</p>
+        </div>
+        <div class="bl" style="margin:.6rem 0 0">
+          <span class="bl-k">Sized honestly</span>
+          <p>The headline benefit is about $7,650 each — but that needs 3⅓ years at the $15,000 annual cap to reach the $50,000 limit. At a <span id="fh-hz">14-month</span> horizon you'd realistically capture around <strong id="fh-real">$2,700</strong>. Still the best risk-free return available to you, but I oversold the ceiling in the first version. <strong>Your partner is also a first home buyer</strong>, so as a couple the full scheme is worth up to $100,000 of contributions and roughly $15,300 of tax saved.</p>
         </div>
       </div>
     </div>
@@ -385,6 +391,82 @@ hr.rule{border:none; border-top:1px solid var(--rule); margin:1rem 0}
         <p style="color:var(--ink-2); font-size:.94rem; margin-top:.25rem">Most people sit in the default "Balanced" option and never look. On a 30+ year horizon, a high-growth option has historically added roughly 1–2% a year. On a balance that will run for decades, that difference is measured in hundreds of thousands. It takes ten minutes and costs nothing.</p>
         <p style="color:var(--ink-2); font-size:.94rem; margin-top:.5rem">If you want the Shariah-compliant route here: <strong>Crescent Wealth</strong> and <strong>Hejaz</strong> both run Islamic super funds in Australia. Their fees run higher than an industry fund's, so compare the fee against the screening benefit before switching.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="protect">
+  <div class="sec-head"><h2>Protect the income first</h2><span class="pill crit"><span class="dot"></span>Higher priority than any investment</span></div>
+  <p class="sec-sub">I left this out of the first version and I shouldn't have. Every number on this page is funded by one salary, and right now that salary isn't protected.</p>
+
+  <div class="card">
+    <div class="bl crit">
+      <span class="bl-k">The gap</span>
+      <p>No emergency fund, no income protection, and a plan that depends entirely on you being able to work. Six months off and the deposit, the investments and the borrowing capacity all disappear together. An investment plan built on an unprotected income is built on sand — and fixing this costs far less than the growth sleeve is likely to earn.</p>
+    </div>
+
+    <div class="step">
+      <div class="stepn">1</div>
+      <div>
+        <h3>Find out what Hostplus already gives you</h3>
+        <p style="color:var(--ink-2); font-size:.94rem; margin-top:.25rem">You said your insurance is "default on Hostplus and they never asked any questions." That's actually useful news: default cover inside super is issued <strong>without health underwriting</strong>, which is why nobody asked about your tailbone. Log in and write down three things: whether you have <strong>income protection</strong> (many funds make it opt-in, not default), the <strong>waiting period</strong>, and the <strong>benefit period</strong>.</p>
+        <p style="color:var(--ink-2); font-size:.94rem; margin-top:.5rem">Typical default cover in super is 75% of salary after a 90-day wait, paid for only 2 years. That is much weaker than it sounds — a 90-day wait with no emergency fund means three months with no income at all, and a 2-year benefit period doesn't cover a career-ending injury.</p>
+      </div>
+    </div>
+    <hr class="rule">
+    <div class="step brass">
+      <div class="stepn">2</div>
+      <div>
+        <h3>Your tailbone makes timing urgent</h3>
+        <p style="color:var(--ink-2); font-size:.94rem; margin-top:.25rem">If you apply for a <em>retail</em> income protection policy, you will be underwritten — and back and coccyx conditions are among the most commonly excluded or loaded. You have a Medicare care plan on file, so it's documented.</p>
+        <p style="color:var(--ink-2); font-size:.94rem; margin-top:.5rem"><strong>This argues for applying sooner rather than later.</strong> Medical history only accumulates. An exclusion on your coccyx still leaves you covered for the other 95% of things that stop people working — cancer, mental health, an accident. A policy with one exclusion is worth vastly more than no policy.</p>
+      </div>
+    </div>
+    <hr class="rule">
+    <div class="step">
+      <div class="stepn">3</div>
+      <div>
+        <h3>Roughly what it costs</h3>
+        <p style="color:var(--ink-2); font-size:.94rem; margin-top:.25rem">Income protection on a $113k salary typically runs <strong>$80–150 a month</strong> for a 30-day wait and benefits to age 65, and premiums are generally tax-deductible when held outside super — so at your 32% rate the real cost is closer to $55–100. Get quotes from two or three insurers, because underwriting decisions on back conditions vary a lot between them.</p>
+      </div>
+    </div>
+
+    <div class="verdict" style="margin-top:.9rem"><span class="vk">My recommendation</span><p>Do this before you buy a single share. In order: build the emergency fund, check what Hostplus actually covers, then get income protection quoted with the coccyx disclosed honestly — never hide it, because a non-disclosed condition voids the claim you'll most likely make. Also take out basic private hospital cover: at $113k you're already paying the Medicare Levy Surcharge for nothing, a basic policy costs about the same, and it starts both the Lifetime Health Cover clock and the 12-month pre-existing waiting period for your tailbone.</p></div>
+  </div>
+</section>
+
+<section id="super">
+  <div class="sec-head"><h2>Your $35k of super</h2><span class="pill acc"><span class="dot"></span>Biggest long-run lever</span></div>
+  <p class="sec-sub">You have more invested here than you're planning to put in the growth sleeve, and you've probably never chosen how it's invested.</p>
+
+  <div class="card">
+    <div class="grid g2">
+      <div>
+        <h3 style="margin-bottom:.5rem">What $35k becomes</h3>
+        <div class="twrap">
+          <table>
+            <thead><tr><th>Over 30 years</th><th>Balance alone</th><th>With contributions</th></tr></thead>
+            <tbody>
+              <tr><td>At 6% (conservative option)</td><td class="n">$201k</td><td class="n">$1.28m</td></tr>
+              <tr class="total"><td>At 8% (growth option)</td><td class="n">$352k</td><td class="n">$1.97m</td></tr>
+              <tr><td>Difference</td><td class="n" style="color:var(--good)">+$151k</td><td class="n" style="color:var(--good)">+$690k</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note" style="margin-top:.5rem">Assumes employer contributions of 12% on $113k, rising with wages. Illustrative — the point is the size of the gap, not the exact figures.</p>
+      </div>
+      <div>
+        <h3 style="margin-bottom:.5rem">Three things to check</h3>
+        <ul class="tight" style="font-size:.93rem">
+          <li><strong>Your investment option.</strong> If you're in the default Balanced option and you're decades from retirement, a high-growth or indexed option has historically returned more. Free to change.</li>
+          <li><strong>Your fees.</strong> Hostplus offers a low-cost indexed option alongside its actively managed ones. The fee difference is often close to 1% a year — which compounds into tens of thousands over your working life. Compare them side by side in your account.</li>
+          <li><strong>Whether you have multiple funds.</strong> Old accounts from previous jobs quietly charge fees and insurance premiums. Consolidating is a ten-minute job through myGov — but check the insurance in the old fund before you close it, because closing cancels cover you might not get back.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="bl brass" style="margin:.9rem 0 0">
+      <span class="bl-k">A cap you could trip over</span>
+      <p>Your employer already puts roughly <strong>$13,560</strong> a year into super (12% of $113k). That counts toward the same <strong>$30,000</strong> concessional cap as your First Home Super Saver contributions — leaving only about <strong>$16,440</strong> of salary-sacrifice room. A $15,000 contribution fits, but barely. A pay rise or a bonus could tip you over, and excess concessional contributions are taxed at your marginal rate plus an interest charge. Recalculate before you set the amount.</p>
     </div>
   </div>
 </section>
@@ -558,10 +640,12 @@ hr.rule{border:none; border-top:1px solid var(--rule); margin:1rem 0}
       </div>
       <div>
         <div class="tiles">
-          <div class="tile"><span class="tile-k">Cash needed</span><span class="tile-v num" id="h-need">—</span><span class="tile-n">deposit + upfront costs</span></div>
+          <div class="tile"><span class="tile-k">Gate 1 — cash needed</span><span class="tile-v num" id="h-need">—</span><span class="tile-n">deposit + upfront costs</span></div>
           <div class="tile"><span class="tile-k">You have now</span><span class="tile-v num" id="h-have">—</span><span class="tile-n">safe money only</span></div>
-          <div class="tile"><span class="tile-k">Ready</span><span class="tile-v" id="h-when">—</span><span class="tile-n" id="h-when-n">at current savings rate</span></div>
+          <div class="tile"><span class="tile-k">Gate 2 — loan needed</span><span class="tile-v num" id="h-loan">—</span><span class="tile-n" id="h-loan-n">against your capacity</span></div>
+          <div class="tile"><span class="tile-k">Ready</span><span class="tile-v" id="h-when">—</span><span class="tile-n" id="h-when-n">both gates must pass</span></div>
         </div>
+        <div id="h-gates" style="margin-top:.7rem"></div>
         <div id="h-flag" style="margin-top:.8rem"></div>
       </div>
     </div>
@@ -614,13 +698,19 @@ hr.rule{border:none; border-top:1px solid var(--rule); margin:1rem 0}
           <input type="range" id="s-mrate" min="3" max="10" step="0.1" value="6" aria-label="Mortgage rate">
           <span class="ctl-sub">Lenders assess you at this rate plus a 3% buffer, which is why capacity feels low.</span>
         </div>
-        <label class="toggle"><input type="checkbox" id="t-couple"> Apply with your partner ($90k + super)</label>
+        <div class="ctl">
+          <div class="ctl-top"><span class="ctl-lab">Lender's expense floor (HEM)</span><span class="ctl-val" id="v-hem">$2,200</span></div>
+          <input type="range" id="s-hem" min="1200" max="4000" step="100" value="2200" aria-label="HEM expense floor">
+          <span class="ctl-sub">Lenders won't accept implausibly low declared expenses — they substitute a benchmark. This is the number that actually gets used.</span>
+        </div>
+        <label class="toggle"><input type="checkbox" id="t-couple"> Apply with your partner ($90k + super, also a first home buyer)</label>
         <p class="note">Turning this on changes almost every number below.</p>
+        <div id="mg-exp" class="note" style="margin-top:.5rem"></div>
       </div>
       <div>
         <div class="tiles">
           <div class="tile"><span class="tile-k">Max loan</span><span class="tile-v num" id="mg-loan">—</span><span class="tile-n">assessed with the buffer</span></div>
-          <div class="tile"><span class="tile-k">Price ceiling</span><span class="tile-v num" id="mg-ceil">—</span><span class="tile-n">loan + your deposit</span></div>
+          <div class="tile"><span class="tile-k">Price ceiling</span><span class="tile-v num" id="mg-ceil">—</span><span class="tile-n" id="mg-ceil-n">whichever binds first</span></div>
           <div class="tile"><span class="tile-k">Repayment</span><span class="tile-v num" id="mg-rep">—</span><span class="tile-n">per month, 30 years</span></div>
           <div class="tile"><span class="tile-k">Total interest</span><span class="tile-v num" id="mg-int">—</span><span class="tile-n">over the full term</span></div>
         </div>
@@ -658,6 +748,10 @@ hr.rule{border:none; border-top:1px solid var(--rule); margin:1rem 0}
       </table>
     </div>
     <p class="note" style="margin-top:.55rem">Approximate figures — median prices, duty thresholds and yields all move, so verify before acting. The relocation row is my estimate of a realistic interstate move including a gap between jobs.</p>
+    <div class="bl brass" style="margin:.8rem 0 0">
+      <span class="bl-k">Read the growth rows carefully</span>
+      <p>Perth's 13% a year over three years is <em>not</em> a reason to buy there — if anything it's a caution. Perth is historically Australia's most cyclical capital because it tracks the mining cycle, and its last boom was followed by roughly five flat-to-falling years. Melbourne's 0.5% is the mirror image: weak recent performance is the closest thing to a value signal in property, though it has never been a reliable one. My first version presented these as a scoreboard. They're closer to a warning label.</p>
+    </div>
   </div>
 
   <div class="card">
@@ -672,6 +766,11 @@ hr.rule{border:none; border-top:1px solid var(--rule); margin:1rem 0}
           <div class="ctl-top"><span class="ctl-lab">House price growth</span><span class="ctl-val" id="v-hgrowth">5.0%</span></div>
           <input type="range" id="s-hgrowth" min="0" max="10" step="0.25" value="5" aria-label="House price growth">
           <span class="ctl-sub">The single most sensitive assumption here. Long-run Australian growth has been around 5–7%, but Melbourne has been near flat for years while Perth ran hard.</span>
+        </div>
+        <div class="ctl">
+          <div class="ctl-top"><span class="ctl-lab">House price volatility</span><span class="ctl-val" id="v-hvol">9.0%</span></div>
+          <input type="range" id="s-hvol" min="0" max="20" step="0.5" value="9" aria-label="House price volatility">
+          <span class="ctl-sub">How much prices wobble around that growth rate. Perth has historically been the most cyclical capital — set this higher there than for Melbourne.</span>
         </div>
         <div class="ctl">
           <div class="ctl-top"><span class="ctl-lab">Ownership costs</span><span class="ctl-val" id="v-owncost">1.2%</span></div>
@@ -689,7 +788,7 @@ hr.rule{border:none; border-top:1px solid var(--rule); margin:1rem 0}
       </div>
     </div>
     <div class="chartwrap" style="margin-top:1rem"><div id="tip-rb" class="tip"></div><svg id="chart-rb" role="img" aria-label="Wealth over twenty years, buying versus renting and investing"></svg></div>
-    <p class="note" style="margin-top:.5rem">Both paths start from the same $130k and the same monthly savings. The renter invests the deposit, the stamp duty and any month where owning would have cost more than renting. The buyer's wealth is home equity net of 2.5% selling costs, plus anything they could still save.</p>
+    <p class="note" style="margin-top:.5rem">Both paths start from the same $130k and the same monthly savings. The renter invests the deposit, the stamp duty and any month where owning would have cost more than renting. <strong>The renter's portfolio is taxed</strong> — fees, tax on distributions, and capital gains tax at the discounted rate — while the buyer's home is exempt from capital gains tax. The shaded band is property price uncertainty at <span id="rb-vol">9%</span> volatility; the buy line is the middle of it, not a promise.</p>
   </div>
 
   <div class="card">
@@ -937,6 +1036,10 @@ hr.rule{border:none; border-top:1px solid var(--rule); margin:1rem 0}
       <li><strong>High-yield funds have a cost.</strong> Funds like VHY yield 5–6% mostly franked, but they concentrate into banks and miners and have generally lagged the broad index on total return. You're trading growth for income.</li>
       <li><strong>For a 12-month horizon it's not worth it.</strong> A savings account pays a similar headline rate with zero chance of capital loss. Chasing a 5% franked yield while risking a 20% capital fall is a bad trade when the money is spoken for.</li>
     </ul>
+    <div class="bl crit" style="margin:.9rem 0 0">
+      <span class="bl-k">If you leave Australia</span>
+      <p>Franking credits are worth little to a non-resident — you generally can't claim the refund. Since you put your chance of leaving at one in four, the single strongest argument for holding Australian shares has a 25% chance of evaporating. Weight the franking benefit accordingly rather than treating it as certain.</p>
+    </div>
     <div class="verdict" style="margin-top:.8rem"><span class="vk">My recommendation</span><p>Don't build an income portfolio yet. If the house doesn't happen and this becomes long-term money, then adding an Australian index fund for the franking makes real sense — perhaps a quarter of the growth sleeve. Reinvest the dividends automatically; at your stage you want compounding, not cash flow. Note that franking has no Shariah-compliant equivalent, since compliant funds screen out the banks that generate most of it — that's a genuine cost of the compliant route, worth roughly 1% a year after tax.</p></div>
   </div>
 </section>
@@ -986,11 +1089,23 @@ hr.rule{border:none; border-top:1px solid var(--rule); margin:1rem 0}
 
     <p style="color:var(--ink-2); margin-bottom:.8rem">On never buying: it's a real option and I've modelled it properly rather than treating it as the fallback. Renting and investing wins on the numbers more often than people expect, especially at Melbourne's growth rates and your $520 a week rent. It fails for one reason only — most people don't actually invest the difference. If you'd genuinely automate it and leave it alone for twenty years, renting and investing is defensible. If you know you'd spend it, the mortgage is a savings mechanism disguised as a house.</p>
 
-    <p style="color:var(--ink-2); margin-bottom:.8rem">The single most useful thing this expansion turned up: at $113k on your own, you can borrow roughly $510k. Perth's median house is around $850k. That gap doesn't close by picking better investments — it closes by applying with your partner, buying something cheaper, or waiting for rates to fall. Any plan that ignores it is fiction, however good the portfolio looks.</p>
+    <p style="color:var(--ink-2); margin-bottom:.8rem">The single most useful thing this turned up: at $113k on your own, you can borrow roughly <strong>$587k</strong>, giving a ceiling near $600k. Perth's median house is around $850k. That gap doesn't close by picking better investments — it closes by applying with your partner, which takes the ceiling past $1.2m. Any plan that ignores that is fiction, however good the portfolio looks.</p>
+
+    <p style="color:var(--ink-2); margin-bottom:.8rem">Two things I got wrong in earlier versions and have now corrected. First, I was double-counting your rent against a mortgage repayment — your $2,800 includes the $520 a week, and that rent stops when you own, so your real borrowing capacity is about $75,000 higher than I first told you. Second, I was comparing an untaxed rental portfolio against a taxed one, which quietly favoured renting; your home's capital gain is genuinely tax-free and the renter's is not. Correcting both moved break-even from "never" to roughly year three.</p>
+
+    <p style="color:var(--ink-2); margin-bottom:.8rem">And the number I'd most want you to look at before anything else: <strong>$2,371 a month is unaccounted for</strong> between your take-home pay and your stated savings. That's $28,000 a year. It might mean your real expenses are higher than $2,800, or it might mean you can save far more than you think. Either way it dwarfs every optimisation on this page, and one month of tracking would settle it.</p>
 
     <p style="color:var(--ink-2)">And the thing I'd most want you to act on isn't an investment at all: find out what your super is invested in this week. On a 30-year horizon that single decision will very likely outweigh everything else discussed here.</p>
 
     <hr class="rule">
+    <h3 style="margin-bottom:.4rem">What this model still can't do</h3>
+    <ul class="tight" style="font-size:.92rem; margin-bottom:.9rem">
+      <li><strong>Correlations stay constant.</strong> In a real crash, assets that normally move independently fall together — so the diversification benefit shown here is probably flattering, exactly when it matters most.</li>
+      <li><strong>Returns are assumptions, not forecasts.</strong> Cash at 4% for a decade is not how interest rates behave, and the bond return is pegged naively to cash. Change them and watch how much the conclusions move.</li>
+      <li><strong>Historical figures are approximate</strong> and were labelled to end-2025 — they are now stale by the better part of a year. Verify before acting on any of them.</li>
+      <li><strong>Lender policy varies more than any model.</strong> Two banks will give you borrowing numbers hundreds of thousands apart on identical inputs. Treat $587k as an indication and get a broker to run it properly.</li>
+      <li><strong>The biggest risk isn't modelled at all</strong> — that you sell in a panic at the bottom. No simulation captures that, and it has cost investors more than every fee and tax on this page combined.</li>
+    </ul>
     <div class="bl crit" style="margin:0">
       <span class="bl-k">Please read</span>
       <p>This is general information, not personal financial advice, and I'm not licensed to give it. It doesn't account for everything about your circumstances. The return figures are estimates and the historical numbers are approximate — verify them before acting. Rules for the First Home Super Saver, the Home Guarantee Scheme, stamp duty concessions and tax rates change, and eligibility conditions apply that I can't confirm for you. Before committing $130,000, a one-off session with a licensed financial adviser is worth the few hundred dollars — and given the FHSS timing traps, so is a quick word with an accountant.</p>
@@ -1044,7 +1159,7 @@ var SCEN = [
 var S = {
   exp:2800, bufm:5, sav:2000, dial:25, hedge:0, hz:14,
   rent:520, city:"perth", hold:10, mrate:6.0, hgrowth:5.0, rentg:3.0, owncost:1.2,
-  couple:false,
+  couple:false, hecs:0, hem:2200, hvol:9.0, superBal:35000,
   cash:4.0, eq:7.3, inf:2.8,
   price:850000, dep:5, costs:3,
   partner:false, shariah:true, fhss:true,
@@ -1075,7 +1190,12 @@ function lerpW(d){
 
 var SHARIAH_FEE = {cash:0.10, bond:0.55, glob:0.50, au:0.10, pk:1.75, ndx:0.55, spx:0.49, oth:0.55};
 function assetFee(i){
-  return S.shariah ? SHARIAH_FEE[A[i].k] : A[i].fee;
+  var base = S.shariah ? SHARIAH_FEE[A[i].k] : A[i].fee;
+  return base + A[i].fx * (S.hedge/100) * 0.20;   /* hedging is not free */
+}
+/* unhedged foreign equity is calmer in AUD: the currency falls when markets fall */
+function assetVol(i){
+  return A[i].vol * (1 + A[i].fx * (S.hedge/100) * 0.18);
 }
 
 function assetRet(i){
@@ -1096,7 +1216,7 @@ function portfolio(){
     var wi = w[i]/100;
     r += wi*assetRet(i); y += wi*A[i].yld; f += wi*assetFee(i);
     if(A[i].safe) safe += wi;
-    for(j=0;j<8;j++) vol2 += wi*(w[j]/100)*A[i].vol*A[j].vol*CORR[i][j];
+    for(j=0;j<8;j++) vol2 += wi*(w[j]/100)*assetVol(i)*assetVol(j)*CORR[i][j];
   }
   return { ret:r, yld:y, fee:f, vol:Math.sqrt(Math.max(0,vol2)), safeFrac:safe };
 }
@@ -1130,7 +1250,10 @@ function layers(t){
   var afterFee = project(t, p.ret - p.fee);
 
   var taxInc = incomeTaxRate();
-  var netRate = p.yld*(1-taxInc) + (p.ret - p.fee - p.yld);
+  /* equity funds distribute realised gains annually — roughly 2% of value, taxed at the
+     discounted rate. Ignoring this was understating the tax drag on the growth sleeve. */
+  var distDrag = (1 - p.safeFrac) * 0.02 * 0.16 * 100;
+  var netRate = p.yld*(1-taxInc) + (p.ret - p.fee - p.yld) - distDrag;
   var v = project(t, netRate);
   var basis = pool() + contributed(t);
   var gain = Math.max(0, v - basis);
@@ -1176,6 +1299,12 @@ function fhssNet(months){
   var perYear = 12495 * (S.partner ? 2 : 1);
   var capTotal = 41650 * (S.partner ? 2 : 1);
   return Math.min(capTotal, perYear * months/12);
+}
+/* the benefit you actually capture by your horizon, versus the headline maximum */
+function fhssBenefit(){
+  var years = Math.min(S.hz/12, 50000/15000);
+  var per = S.partner ? 2 : 1;
+  return { real: 2295*years*per, max: 7650*per, years:years };
 }
 
 function houseCalc(){
@@ -1338,10 +1467,22 @@ function renderStress(){
 }
 
 function renderHouse(){
-  var h = houseCalc();
+  var h = houseCalc(), b = borrow();
+  var loanNeeded = S.price * (1 - S.dep/100);
+  var gate1 = h.have >= h.need, gate2 = loanNeeded <= b.max;
   $("h-need").textContent = money(h.need);
   $("h-have").textContent = money(h.have);
-  if(h.months === 0){ $("h-when").textContent = "Now"; $("h-when-n").textContent = "you already have enough"; }
+  $("h-loan").textContent = moneyK(loanNeeded);
+  $("h-loan-n").textContent = "capacity " + moneyK(b.max);
+  $("h-gates").innerHTML =
+    '<div class="pills">' +
+    (gate1 ? '<span class="pill good"><span class="dot"></span>Gate 1 passed — you have the cash</span>'
+           : '<span class="pill crit"><span class="dot"></span>Gate 1 failed — short ' + moneyK(h.need-h.have) + ' of cash</span>') +
+    (gate2 ? '<span class="pill good"><span class="dot"></span>Gate 2 passed — you can borrow it</span>'
+           : '<span class="pill crit"><span class="dot"></span>Gate 2 failed — short ' + moneyK(loanNeeded-b.max) + ' of borrowing</span>') +
+    '</div>';
+  if(h.months === 0 && !gate2){ $("h-when").textContent = "Blocked"; $("h-when-n").textContent = "cash is fine, the loan is not"; }
+  else if(h.months === 0){ $("h-when").textContent = "Now"; $("h-when-n").textContent = "both gates pass"; }
   else if(h.months < 0){ $("h-when").textContent = "10+ yrs"; $("h-when-n").textContent = "not reachable at this savings rate"; }
   else {
     $("h-when").textContent = h.months < 12 ? h.months + " mo" : (h.months/12).toFixed(1) + " yrs";
@@ -1349,8 +1490,12 @@ function renderHouse(){
   }
 
   var f = $("h-flag"), html;
-  if(h.months === 0){
-    html = '<div class="bl" style="margin:0"><span class="bl-k">You are there</span><p>Your safe money already covers the deposit and costs. The question is no longer "how do I grow this" — it is whether you want to buy at this price. Investing the deposit from here adds risk without adding much.</p></div>';
+  if(h.months === 0 && !gate2){
+    html = '<div class="bl crit" style="margin:0"><span class="bl-k">Two gates, and you only pass one</span><p>You have the cash — ' + money(h.have) + ' against ' + money(h.need) +
+      ' needed. But this purchase needs a ' + moneyK(loanNeeded) + ' loan and your capacity is about ' + moneyK(b.max) +
+      '. Saving harder does not fix this; it is an income and commitments problem, not a deposit problem. Applying with your partner, or lowering the price, does fix it.</p></div>';
+  } else if(h.months === 0){
+    html = '<div class="bl" style="margin:0"><span class="bl-k">You are there</span><p>Both gates pass: you have the cash and you can borrow the rest. The question is no longer "how do I grow this" — it is whether you want to buy at this price. Investing the deposit from here adds risk without adding much.</p></div>';
   } else if(h.months > 0 && h.months <= 18){
     html = '<div class="bl brass" style="margin:0"><span class="bl-k">Close</span><p>About ' + h.months + ' months away. Over that window markets are a coin flip, so keep this money in cash and let the savings rate do the work. Investing to close an 18-month gap is how people end up buying nothing.</p></div>';
   } else {
@@ -1374,11 +1519,19 @@ function gauss(){
   return r*Math.cos(2*Math.PI*u2);
 }
 
+/* real markets have fatter tails than a normal: a t(4) shock, rescaled to the same
+   variance, makes extreme months roughly as common as history says they are */
+function shock(){
+  var u1 = Math.random() || 1e-12, u2 = Math.random() || 1e-12;
+  var chi = -2*Math.log(u1*u2);            /* chi-square, 4 d.o.f. */
+  return gauss() / Math.sqrt(chi/4) * 0.7071;
+}
+
 var _mcCache = null, _mcKey = "";
 function mc(){
   var p = portfolio();
   var months = S.hz;
-  var key = [months, p.ret.toFixed(3), p.vol.toFixed(3), pool(), S.sav, S.partner].join("|");
+  var key = [months, p.ret.toFixed(3), p.vol.toFixed(3), pool(), S.sav, S.partner, S.hedge].join("|");
   if(_mcKey === key && _mcCache) return _mcCache;
   var PATHS = 5000;
   var mu = Math.log(1 + (p.ret - p.fee)/100)/12;
@@ -1388,7 +1541,7 @@ function mc(){
   for(var i=0;i<PATHS;i++){
     var v = P0;
     for(var m=0;m<months;m++){
-      v = v*Math.exp(mu - sg*sg/2 + sg*gauss()) + c;
+      v = v*Math.exp(mu - sg*sg/2 + sg*shock()) + c;
     }
     out[i] = v;
   }
@@ -1411,7 +1564,7 @@ function goalOdds(ret, vol){
   var PATHS = 2000, P0 = pool(), c = S.sav*(S.partner?2:1), hit = 0;
   for(var i=0;i<PATHS;i++){
     var v = P0;
-    for(var m=0;m<months;m++) v = v*Math.exp(mu - sg*sg/2 + sg*gauss()) + c;
+    for(var m=0;m<months;m++) v = v*Math.exp(mu - sg*sg/2 + sg*shock()) + c;
     if(v >= need) hit++;
   }
   return hit/PATHS;
@@ -1419,18 +1572,30 @@ function goalOdds(ret, vol){
 
 /* ---------- mortgage ---------- */
 var NET_SOLO = 86050/12, NET_PARTNER = 70680/12;
+function rentMonthly(){ return S.rent*52/12; }
+/* living costs once you own: rent disappears, but the lender floors you at HEM */
+function assessedExpenses(){
+  var declared = Math.max(0, S.exp - rentMonthly());
+  var floor = S.hem * (S.couple ? 1.45 : 1);
+  return { declared:declared, floor:floor, used:Math.max(declared, floor) };
+}
 function borrow(){
   var net = NET_SOLO + (S.couple ? NET_PARTNER : 0);
-  var exp = S.exp * (S.couple ? 1.55 : 1);
-  var avail = Math.max(0, net - exp - 250);
+  var ae = assessedExpenses();
+  var hecsM = S.hecs/12 * (S.couple ? 2 : 1);
+  var avail = Math.max(0, net - ae.used - 250 - hecsM);
   var ar = (S.mrate + 3)/100/12, n = 360;
   var maxLoan = avail * (1 - Math.pow(1+ar, -n)) / ar;
   var D = safeMoney() + fhssNet(0);
-  var ceiling = (maxLoan + D) / (1 + S.costs/100);
+  var byLoan = maxLoan / (1 - S.dep/100);
+  var byCash = D / ((S.dep + S.costs)/100);
+  var ceiling = Math.min(byLoan, byCash);
   var loan = Math.max(0, Math.min(maxLoan, S.price - S.price*S.dep/100));
   var r = S.mrate/100/12;
   var pay = loan > 0 ? loan*r/(1 - Math.pow(1+r,-n)) : 0;
-  return { max:maxLoan, ceiling:ceiling, loan:loan, pay:pay, interest:pay*n - loan, avail:avail };
+  return { max:maxLoan, ceiling:ceiling, loan:loan, pay:pay, interest:pay*n - loan, avail:avail,
+           ae:ae, net:net, stress: pay/net, byLoan:byLoan, byCash:byCash,
+           bind: (byLoan < byCash ? "borrowing" : "cash") };
 }
 
 /* ---------- cities ---------- */
@@ -1470,14 +1635,28 @@ function rentBuy(){
   var loan = price - dep;
   var r = S.mrate/100/12, n = 360;
   var pay = loan*r/(1 - Math.pow(1+r,-n));
-  var invM = Math.pow(1 + S.eq/100, 1/12) - 1;
+
+  /* A renter's portfolio is taxed; a main residence is not. Leaving that out was the
+     single biggest bias in the old model, and it all ran one way — in favour of renting.
+     Fees, tax on distributions and tax on distributed gains come off the compounding
+     rate; CGT on the unrealised gain comes off at the end. */
+  var EQ_FEE = 0.18, EQ_YIELD = 1.8;
+  var netEq = S.eq - EQ_FEE - EQ_YIELD*0.32 - 2.0*0.16;
+  var invM = Math.pow(1 + netEq/100, 1/12) - 1;
   var hgM  = Math.pow(1 + S.hgrowth/100, 1/12) - 1;
   var rgM  = Math.pow(1 + S.rentg/100, 1/12) - 1;
   var msav = S.sav*(S.partner?2:1);
+  var CGT = 0.16;
 
   var buyInv = POT - upfront, rentInv = POT;
-  var bal = loan, val = price, rentM = S.rent*52/12;
-  var rows = [{y:0, buy: val*0.975 - bal + buyInv, rent: rentInv, strain:0}];
+  var buyBasis = Math.max(0, POT - upfront), rentBasis = POT;
+  var bal = loan, val = price, rentM = rentMonthly();
+  var sg = (S.hvol/100);
+
+  function afterCGT(v, basis){ return v - Math.max(0, v - basis)*CGT; }
+
+  var rows = [{ y:0, buy: val*0.975 - bal + afterCGT(buyInv, buyBasis),
+                rent: afterCGT(rentInv, rentBasis), lo: val*0.975 - bal, hi: val*0.975 - bal, neg:false }];
   var strainMonths = 0;
   for(var y=1; y<=YEARS; y++){
     for(var m=0;m<12;m++){
@@ -1485,16 +1664,33 @@ function rentBuy(){
       var surplus = msav - (own - rentM);
       if(surplus < 0) strainMonths++;
       buyInv  = buyInv*(1+invM) + surplus;
+      if(surplus > 0) buyBasis += surplus;
       rentInv = rentInv*(1+invM) + msav;
+      rentBasis += msav;
       bal = Math.max(0, bal*(1+r) - pay);
       val *= (1+hgM);
       rentM *= (1+rgM);
     }
-    rows.push({ y:y, buy: val*0.975 - bal + buyInv, rent: rentInv, strain:strainMonths });
+    /* property is not a smooth line — band the price path the same way we band shares */
+    var t = y, z = 1.2816*sg*Math.sqrt(t);
+    var valLo = val*Math.exp(-z), valHi = val*Math.exp(z);
+    rows.push({
+      y:y,
+      buy:  val*0.975 - bal + afterCGT(buyInv, buyBasis),
+      rent: afterCGT(rentInv, rentBasis),
+      lo:   valLo*0.975 - bal + afterCGT(buyInv, buyBasis),
+      hi:   valHi*0.975 - bal + afterCGT(buyInv, buyBasis),
+      neg:  (valLo*0.975 - bal) < 0
+    });
   }
   var be = -1;
   for(var i=1;i<rows.length;i++){ if(rows[i].buy >= rows[i].rent){ be = i; break; } }
-  return { rows:rows, be:be, upfront:upfront, duty:duty, pay:pay, affordable: upfront <= POT, strain:strainMonths };
+  var negYears = rows.filter(function(x){ return x.neg; }).length;
+  /* how far prices can fall before the deposit is gone */
+  var wipe = (dep - price*0.025) / price;
+  return { rows:rows, be:be, upfront:upfront, duty:duty, pay:pay,
+           affordable: upfront <= POT, strain:strainMonths, negYears:negYears,
+           wipe:Math.max(0, wipe), netEq:netEq, loan:loan };
 }
 
 /* ---------- renders ---------- */
@@ -1549,7 +1745,8 @@ function renderCases(){
     {n:"Bad",       f:0.10,  lab:"1 in 10",  w:"An ordinary bad run. Expect this sometimes."},
     {n:"Base",      f:0.50,  lab:"50/50",    w:"The middle outcome. Half of paths do better, half worse."},
     {n:"Good",      f:0.90,  lab:"1 in 10",  w:"A strong run. Pleasant, but do not plan around it."},
-    {n:"Dream",     f:0.975, lab:"1 in 40",  w:"Everything goes right. Treat as a bonus, never a forecast."}
+    {n:"Dream",     f:0.975, lab:"1 in 40",  w:"Everything goes right. Treat as a bonus, never a forecast."},
+    {n:"Worst path seen", f:0.0002, lab:"1 in 5,000", w:"The single worst of five thousand simulated runs. This is what the tail actually looks like."}
   ];
   var tb = $("tbl-cases").querySelector("tbody");
   tb.innerHTML = "";
@@ -1557,6 +1754,7 @@ function renderCases(){
     var v = q(arr, c.f), d = v - inMoney;
     var tr = document.createElement("tr");
     if(c.f === 0.5) tr.className = "total";
+    if(c.f === 0.0002) tr.style.background = "var(--crit-soft)";
     tr.innerHTML = "<td>" + c.n + "</td>" +
       '<td class="n">' + c.lab + "</td>" +
       '<td class="n">' + money(v) + "</td>" +
@@ -1591,9 +1789,19 @@ function renderMortgage(){
   var b = borrow();
   $("mg-loan").textContent = moneyK(b.max);
   $("mg-ceil").textContent = moneyK(b.ceiling);
+  $("mg-ceil-n").textContent = b.bind === "borrowing"
+    ? "limited by borrowing, not cash"
+    : "limited by your deposit, not income";
   $("mg-rep").textContent = money(b.pay);
   $("mg-int").textContent = moneyK(b.interest);
   $("v-mrate").textContent = pct(S.mrate);
+  $("v-hem").textContent = money(S.hem);
+  var ae = b.ae;
+  $("mg-exp").innerHTML = "Your $" + S.exp.toLocaleString("en-AU") + "/mo includes " + money(rentMonthly()) +
+    " of rent. Once you own, that rent stops — so the lender assesses you on " + money(ae.declared) +
+    " of other living costs" + (ae.floor > ae.declared
+      ? ", except that is below their " + money(ae.floor) + " benchmark, so <strong>" + money(ae.used) + "</strong> is used."
+      : ", which is above their benchmark, so <strong>" + money(ae.used) + "</strong> is used.");
 
   var f = $("mg-flag"), gap = S.price - b.ceiling;
   if(gap > 0){
@@ -1654,6 +1862,8 @@ function renderRentBuy(){
   $("rent-note").textContent = money(S.rent*52) + " a year, rising " + pct(S.rentg) + " a year.";
   $("v-hgrowth").textContent = pct(S.hgrowth);
   $("v-owncost").textContent = pct(S.owncost);
+  $("v-hvol").textContent = pct(S.hvol);
+  $("rb-vol").textContent = pct(S.hvol);
   var r10 = rb.rows[10];
   $("rb-be").textContent = rb.be < 0 ? "Never" : "Year " + rb.be;
   $("rb-b10").textContent = moneyK(r10.buy);
@@ -1680,6 +1890,13 @@ function renderRentBuy(){
   if(rb.strain > 0 && rb.affordable){
     html += '<p class="note" style="margin-top:.5rem"><strong>Note:</strong> for ' + Math.round(rb.strain/12) +
       ' of the 20 years, owning costs more per month than renting plus your savings target — so the buyer saves nothing and draws down.</p>';
+  }
+  if(rb.affordable){
+    html += '<div class="bl crit" style="margin:.6rem 0 0"><span class="bl-k">Leverage cuts both ways</span><p>A price fall of just <strong>' +
+      pct(rb.wipe*100) + '</strong> wipes out your entire deposit, because you are controlling ' + moneyK(S.price) +
+      ' of property with ' + moneyK(S.price*S.dep/100) + ' of your own money.' +
+      (rb.negYears > 0 ? ' In the lower band of the chart you are in negative equity for ' + rb.negYears + ' of the 20 years — owing more than the place is worth.' : '') +
+      ' The shaded band is that risk; the old version of this page drew property as a smooth line and hid it.</p></div>';
   }
   f.innerHTML = html;
   return rb;
@@ -1895,9 +2112,14 @@ function chartRB(rb){
   var mL = 56, mR = 62, mT = 28, mB = 38;
   var iw = W-mL-mR, ih = H-mT-mB;
   var rows = rb.rows;
-  var maxV = 0, minV = 0;
-  rows.forEach(function(r){ maxV = Math.max(maxV, r.buy, r.rent); minV = Math.min(minV, r.buy, r.rent); });
-  maxV *= 1.06;
+  var maxV = -Infinity, minV = Infinity;
+  rows.forEach(function(r){
+    maxV = Math.max(maxV, r.buy, r.rent, r.hi);
+    minV = Math.min(minV, r.buy, r.rent, r.lo);
+  });
+  if(!isFinite(maxV) || !isFinite(minV) || maxV === minV){ maxV = 1; minV = 0; }
+  minV = Math.min(0, minV);
+  maxV += Math.abs(maxV)*0.06;
   var x = function(y){ return mL + y/20*iw; };
   var yy = function(v){ return mT + ih - (v-minV)/(maxV-minV)*ih; };
   var acc = cvar("--accent"), s2 = cvar("--s2"), ink3 = cvar("--ink-3"), ink = cvar("--ink"), rule = cvar("--rule");
@@ -1922,6 +2144,10 @@ function chartRB(rb){
     out += '<line x1="'+x(rb.be).toFixed(1)+'" x2="'+x(rb.be).toFixed(1)+'" y1="'+mT+'" y2="'+(mT+ih)+'" stroke="'+ink3+'" stroke-dasharray="3 3"/>';
     out += '<text x="'+(x(rb.be)+6).toFixed(1)+'" y="'+(mT+12)+'" font-size="10.5" font-weight="700" fill="'+ink+'" font-family="Figtree, sans-serif">break-even</text>';
   }
+  var up = "", dn = "";
+  rows.forEach(function(r,i){ up += (i?"L":"M") + x(r.y).toFixed(1) + " " + yy(r.hi).toFixed(1) + " "; });
+  for(var k=rows.length-1;k>=0;k--){ dn += "L" + x(rows[k].y).toFixed(1) + " " + yy(rows[k].lo).toFixed(1) + " "; }
+  out += '<path d="'+up+dn+'Z" fill="'+acc+'" fill-opacity="0.13"/>';
   out += '<path d="'+path("rent")+'" fill="none" stroke="'+s2+'" stroke-width="2" stroke-linejoin="round"/>';
   out += '<path d="'+path("buy")+'" fill="none" stroke="'+acc+'" stroke-width="2" stroke-linejoin="round"/>';
   var last = rows[rows.length-1];
@@ -1970,8 +2196,21 @@ function update(){
   $("v-dep").textContent = S.dep + "%";
   $("v-costs").textContent = S.costs.toFixed(1) + "%";
   $("t-investable").textContent = moneyK(pool());
+  var capacity = NET_SOLO - S.exp;
+  var recEl = $("sav-rec");
+  if(recEl){
+    var gap = capacity - S.sav;
+    recEl.innerHTML = gap > 600
+      ? '<div class="bl brass" style="margin:.6rem 0 0"><span class="bl-k">Check this</span><p>Take-home of about ' + money(NET_SOLO) +
+        ' minus ' + money(S.exp) + ' of costs leaves ' + money(capacity) + ' a month, but you are saving ' + money(S.sav) +
+        '. That is <strong>' + money(gap) + ' a month unaccounted for</strong> — roughly ' + money(gap*12) +
+        ' a year. Either your real costs are higher than $' + S.exp.toLocaleString("en-AU") + ', or you could be saving considerably more. Worth a month of tracking, because it is the largest single number on this page.</p></div>'
+      : '<div class="bl" style="margin:.6rem 0 0"><span class="bl-k">Consistent</span><p>Your stated costs and savings reconcile against take-home pay of about ' + money(NET_SOLO) + ' a month.</p></div>';
+  }
   $("f-buf").textContent = money(buffer());
   $("f-bufm").textContent = S.bufm;
+  var fb = fhssBenefit();
+  if($("fh-real")){ $("fh-real").textContent = money(fb.real); $("fh-hz").textContent = hzLabel(S.hz); }
   $("c-buf").textContent = money(buffer());
 
   Array.prototype.forEach.call(document.querySelectorAll(".preset[data-dial]"), function(b){
@@ -1997,6 +2236,7 @@ bind("s-hedge","hedge"); bind("s-cash","cash"); bind("s-eq","eq"); bind("s-inf",
 bind("s-price","price"); bind("s-dep","dep"); bind("s-costs","costs");
 bind("s-hz","hz"); bind("s-rent","rent"); bind("s-mrate","mrate");
 bind("s-hgrowth","hgrowth"); bind("s-owncost","owncost");
+bind("s-hvol","hvol"); bind("s-hem","hem");
 
 Array.prototype.forEach.call(document.querySelectorAll(".preset.hz"), function(b){
   b.addEventListener("click", function(){ S.hz = +b.dataset.hz; $("s-hz").value = S.hz; update(); });
@@ -2011,7 +2251,7 @@ Array.prototype.forEach.call(document.querySelectorAll(".preset.city"), function
 });
 $("t-couple").addEventListener("change", function(e){ S.couple = e.target.checked; update(); });
 $("btn-afford").addEventListener("click", function(){
-  S.price = Math.max(400000, Math.min(1600000, Math.round(borrow().ceiling/25000)*25000));
+  S.price = Math.max(400000, Math.min(1600000, Math.floor(borrow().ceiling/25000)*25000));
   $("s-price").value = S.price;
   update();
 });
