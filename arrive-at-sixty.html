@@ -123,6 +123,24 @@ section:last-of-type{border-bottom:0}
 .chip.soon{background:var(--amber-soft);color:var(--amber)}
 .chip.hold{background:var(--accent-soft);color:var(--accent-ink)}
 .chip.done{background:var(--surface-2);color:var(--ink-3)}
+.chip.grade{font-weight:600}
+.grade-a{background:var(--accent-soft);color:var(--accent-ink)}
+.grade-b{background:var(--surface-2);color:var(--ink-2);box-shadow:inset 0 0 0 1px var(--line-strong)}
+.grade-c{background:var(--amber-soft);color:var(--amber)}
+.grade-d{background:var(--clay-soft);color:var(--clay)}
+
+.models{display:flex;flex-direction:column;gap:12px}
+.model{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:18px 20px;display:flex;flex-direction:column;gap:11px}
+.model-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px}
+.model-head h3{font-size:1.04rem}
+.model-src{font-family:var(--f-mono);font-size:.67rem;color:var(--ink-3);letter-spacing:.03em}
+.model p{font-size:.93rem;color:var(--ink-2);line-height:1.55}
+.model .maps{border-left:2px solid var(--accent);padding-left:14px;font-size:.9rem;color:var(--ink);line-height:1.5}
+.model .maps b{font-family:var(--f-display);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent-ink);display:block;margin-bottom:3px;font-weight:600}
+.key{display:flex;flex-wrap:wrap;gap:14px;font-size:.84rem;color:var(--ink-2)}
+.key > span{display:flex;align-items:center;gap:7px}
+.corr{border:1px solid var(--line);border-left:3px solid var(--clay);background:var(--surface);border-radius:2px;padding:14px 16px;font-size:.9rem;line-height:1.55;color:var(--ink-2)}
+.corr b{font-family:var(--f-display);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--clay);display:block;margin-bottom:5px}
 
 /* ---------- console ---------- */
 .console{background:var(--surface);border:1px solid var(--line-strong);border-radius:3px;box-shadow:var(--shadow);overflow:hidden}
@@ -275,8 +293,10 @@ footer{padding:40px 0 0;color:var(--ink-3);font-size:.86rem;line-height:1.55;max
     <li><a href="#bloods">The one medical thing</a></li>
     <li><a href="#convergence">The convergence</a></li>
     <li><a href="#plan">The five levers</a></li>
+    <li><a href="#evidence">Evidence grades</a></li>
     <li><a href="#ramp">Four-week ramp</a></li>
     <li><a href="#collapse">When it collapses</a></li>
+    <li><a href="#models">The models</a></li>
     <li><a href="#checkin">Weekly check-in</a></li>
     <li><a href="#flags">Red flags</a></li>
   </ol>
@@ -358,6 +378,13 @@ footer{padding:40px 0 0;color:var(--ink-3);font-size:.86rem;line-height:1.55;max
         <div class="menu" id="menu"></div>
       </div>
 
+      <!-- implementation intentions -->
+      <div class="panel">
+        <h3>Your three if-thens</h3>
+        <p style="font-size:.9rem;color:var(--ink-2);max-width:62ch">The best-evidenced technique on this whole page. Across 642 tests, if-then plans worked best when three things were true: the plan had a genuine <em>if X, then Y</em> shape, the person actually wanted the goal, and the plan had been rehearsed at least once. Write these in your own words &mdash; a vague one does nothing.</p>
+        <div class="stack-sm" id="plansForm"></div>
+      </div>
+
       <!-- 30 day -->
       <div class="panel">
         <h3>The last thirty days</h3>
@@ -405,8 +432,8 @@ footer{padding:40px 0 0;color:var(--ink-3);font-size:.86rem;line-height:1.55;max
             <thead><tr><th>Test</th><th>Why you're asking for it</th></tr></thead>
             <tbody>
               <tr><td><strong>Fasting lipid panel</strong></td><td>Total cholesterol, LDL, HDL, triglycerides, and <em>non-HDL</em>. Non-HDL is the number to actually watch &mdash; it captures all the atherogenic particles, not just LDL.</td></tr>
-              <tr><td><strong>ApoB</strong></td><td>A direct count of atherogenic particles. Better than LDL-C at predicting risk, especially if triglycerides are raised. Not always standard &mdash; worth asking whether it's available.</td></tr>
-              <tr><td><strong>Lipoprotein(a)</strong></td><td>Genetic, largely unchangeable by lifestyle, and measured <em>once in your life</em>. Roughly one in five people carry a raised level and never find out. It doesn't change what you do day to day, but it changes how aggressively you and your GP treat everything else. If you ask for one unusual test, ask for this one.</td></tr>
+              <tr><td><strong>ApoB</strong> <span class="chip grade grade-b">selective</span></td><td>A direct count of atherogenic particles, standardised and unaffected by whether you fasted. The 2026 ACC/AHA multisociety guideline positions it as a <em>selective</em> test rather than a routine one &mdash; most useful once LDL-C and non-HDL are known, and particularly if your triglycerides are raised, you have diabetes, or your LDL-C is already low. So ask whether it applies to you rather than asking for it flatly.</td></tr>
+              <tr><td><strong>Lipoprotein(a)</strong> <span class="chip grade grade-a">ask for this one</span></td><td>Genetic, largely unchangeable by lifestyle, and roughly one in five people carry a raised level without ever finding out. This has moved from niche to mainstream: the 2026 ACC/AHA multisociety dyslipidemia guideline and the updated ESC/EAS guidance now both recommend measuring it <em>at least once in every adult</em>. It won't change your daily habits, but it changes how aggressively you and your GP treat everything else. <em>Caveat worth knowing: the "once in a lifetime" framing is being questioned &mdash; a recent study found about two thirds of people's levels shifted by 10% or more on repeat testing. One measurement is still far better than none.</em></td></tr>
               <tr><td><strong>HbA1c</strong></td><td>Three-month average blood sugar. Insulin resistance is the quiet partner in most cardiovascular disease, and ten hours of sitting is a direct contributor.</td></tr>
               <tr><td><strong>Blood pressure</strong></td><td>Seated, after five minutes of rest, and ideally both arms. Given both parents developed blood pressure abnormalities, ask whether home monitoring is worth starting now as a baseline rather than at fifty.</td></tr>
               <tr><td><strong>TSH (thyroid)</strong></td><td>An underactive thyroid raises cholesterol and is frequently missed as the cause.</td></tr>
@@ -440,7 +467,8 @@ footer{padding:40px 0 0;color:var(--ink-3);font-size:.86rem;line-height:1.55;max
       <li><strong>Your eyes</strong> dry out because sustained screen focus cuts your blink rate substantially and, worse, produces <em>incomplete</em> blinks that never fully resurface the eye. Looking away and blinking properly is the treatment.</li>
       <li><strong>Your cardiovascular system</strong> responds to uninterrupted stillness with worse glucose handling and worse lipid clearance. Notably, breaking up sitting appears to matter partly on its own &mdash; a gym session in the evening does not fully undo ten unbroken hours.</li>
     </ul>
-    <p>So the anchor habit of this entire plan is not exercise, or diet, or anything that requires a decision. It is <strong>a three-minute interruption, roughly every forty-five minutes</strong>. It costs you close to zero additional time, because it replaces a break you were already taking &mdash; you were just taking it on your phone, seated, staring at a screen at the same distance.</p>
+    <p>So the anchor habit of this entire plan is not exercise, or diet, or anything that requires a decision. It is <strong>five minutes of walking every thirty minutes</strong> &mdash; and that specific dose is not a guess. Diaz and colleagues ran a randomised crossover trial testing five different break patterns against uninterrupted sitting. Of every combination tried, <strong>only five minutes every thirty minutes significantly reduced the post-meal glucose spike</strong>. Every break pattern they tested, including the smaller ones, significantly lowered systolic blood pressure compared with sitting still.</p>
+        <p>That gives you two honest tiers rather than one rule. Five-every-thirty is the dose that buys both benefits. Anything less frequent still buys you the blood pressure effect, and still gets you out of the chair &mdash; so a worse version is genuinely worth doing, which is the whole point of having a floor.</p>
 
     <div class="card stack-sm">
       <h3>The interruption itself</h3>
@@ -476,7 +504,7 @@ footer{padding:40px 0 0;color:var(--ink-3);font-size:.86rem;line-height:1.55;max
       <div class="det-body">
         <div class="prose stack">
           <p>Late nights that are hard to stop is not laziness, and it is not a willpower deficit. It has a name in the literature &mdash; <em>revenge bedtime procrastination</em> &mdash; and it is disproportionately common with ADHD, for a reason that is worth stating plainly: after a day of doing what other people needed, the late evening is often the only stretch of time that feels genuinely yours. Going to bed feels like surrendering the last autonomous hours of the day. Any plan that treats this as a discipline problem will fail, because it is not one.</p>
-          <p><strong>Why it belongs in a heart plan at all:</strong> consistently short sleep is associated with higher blood pressure, worse insulin sensitivity and disrupted appetite regulation. It is also the reason every other item on this page feels impossible the next day. It's the multiplier.</p>
+          <p><strong>Why it belongs in a heart plan at all:</strong> in 2022 the American Heart Association formally added sleep duration to its core cardiovascular health metrics, turning Life's Simple 7 into <strong>Life's Essential 8</strong> &mdash; the first change to that framework in over a decade. The target it sets for adults is <strong>seven to nine hours</strong>. Both ends matter: under seven and over nine are each associated with raised blood pressure, worse insulin sensitivity and higher cardiometabolic risk. Sleep is also the reason every other item on this page feels impossible the next day. It is the multiplier, and it is now officially scored as one of the eight things that decide your cardiovascular health.</p>
           <h4>What actually works, none of which is &ldquo;go to bed earlier&rdquo;</h4>
           <ul class="plain">
             <li><strong>Anchor the wake time, not the bedtime.</strong> This is the single highest-leverage change on this page. Your wake time is what actually shifts your body clock; bedtime follows it downstream. Pick one wake time and hold it within about an hour, weekends included. Trying to force an earlier bedtime directly almost never works &mdash; you just lie there.</li>
@@ -525,6 +553,7 @@ footer{padding:40px 0 0;color:var(--ink-3);font-size:.86rem;line-height:1.55;max
       <div class="det-body">
         <div class="prose stack">
           <p>Also already assessed, so again: management. Most of what works here costs nothing and takes no time, which makes it unusually good value for a brain that resists effortful obligations.</p>
+          <p>The current global reference is <strong>TFOS DEWS III</strong> (2025) &mdash; eighty experts across eighteen countries, published in the <em>American Journal of Ophthalmology</em>. It names your exact situation directly: screen use reduces both <em>blink rate</em> and <em>blink completeness</em>, and that combination destabilises the tear film and increases evaporation. Its lifestyle recommendations are screen breaks, raising indoor humidity, and improving blink quality &mdash; which is the list below.</p>
           <ul class="plain">
             <li><strong>Drop your monitor below eye level.</strong> Top of the screen at or slightly under eye height, so your gaze angles downward. Looking down narrows the eyelid opening, exposes less ocular surface, and slows evaporation. It is the single largest free improvement available to you and it takes ninety seconds to do once.</li>
             <li><strong>Train the blink, not just the break.</strong> Ten deliberate, fully-closed blinks per break, squeezed shut. Incomplete blinking &mdash; where the lids never quite meet &mdash; is the actual mechanism, so a fast partial blink doesn't count.</li>
@@ -547,7 +576,8 @@ footer{padding:40px 0 0;color:var(--ink-3);font-size:.86rem;line-height:1.55;max
         <div class="prose stack">
           <p>You have fifteen to twenty minutes. That is genuinely enough, provided it isn't spread across five different ambitions. Two things:</p>
           <h4>Walking volume</h4>
-          <p>The mortality benefit curve for daily steps rises steeply from around 2,500 and flattens out somewhere near 7,000. <strong>Ten thousand is a marketing number from a 1960s pedometer campaign</strong>, not a clinical threshold. Your target is simply to move from wherever you currently are toward roughly seven thousand, by whatever route annoys you least.</p>
+          <p>The mortality benefit curve for daily steps rises steeply from around 2,500 and then flattens — but <em>where</em> it flattens depends on your age, and this is where the popular advice gets it wrong for you. Paluch's meta-analysis of fifteen international cohorts found risk kept falling until roughly <strong>6,000&ndash;8,000 steps for adults over 60, but until 8,000&ndash;10,000 for adults under 60</strong>. You are in the second group. The 2025 dose-response review puts 7,000 steps at 6&ndash;47% lower risk than 2,000 across every outcome examined, which makes 7,000 the realistic working target &mdash; but for someone in their thirties the curve has not finished improving there.</p>
+        <p><strong>Ten thousand is still a marketing number</strong> &mdash; it came from a 1960s Japanese pedometer campaign, not a trial. It just happens to land near the top of your age group's actual range by coincidence. Treat 7,000 as the target that earns most of the benefit and 10,000 as the ceiling worth having, not as a pass mark you failed.</p>
           <ul class="plain">
             <li><strong>Bundle it with something you actually want.</strong> Pick one podcast, audiobook or show and make it walk-only &mdash; you don't get it sitting down. This is a well-evidenced technique and it works especially well when the barrier is boredom rather than time.</li>
             <li><strong>Walk after dinner specifically.</strong> Ten to fifteen minutes after your largest meal blunts the post-meal glucose rise more than the same walk taken at another time of day. Same effort, two benefits, no extra minutes.</li>
@@ -590,6 +620,54 @@ footer{padding:40px 0 0;color:var(--ink-3);font-size:.86rem;line-height:1.55;max
   </div>
 </section>
 
+<!-- ============ EVIDENCE ============ -->
+<section id="evidence">
+  <div class="sec-head">
+    <span class="eyebrow">What is actually known, and how well</span>
+    <h2>Evidence grades</h2>
+    <p class="lede">Health advice is usually delivered flat &mdash; every claim in the same confident voice, whether it rests on forty trials or on somebody's reasonable guess. Here is the same plan with the confidence made visible, including the parts that are weaker than I'd like.</p>
+  </div>
+
+  <div class="stack">
+    <div class="card-flat key">
+      <span><span class="chip grade grade-a">A</span> Randomised trials or meta-analyses of them</span>
+      <span><span class="chip grade grade-b">B</span> Large prospective cohorts, consistent observational data</span>
+      <span><span class="chip grade grade-c">C</span> Small trials, mechanism, or expert consensus only</span>
+      <span><span class="chip grade grade-d">D</span> Plausible, but genuinely thin</span>
+    </div>
+
+    <div class="scroll-x">
+      <table class="swap">
+        <thead><tr><th>The claim</th><th>What it actually rests on</th><th>Grade</th></tr></thead>
+        <tbody>
+          <tr><td><strong>No tobacco, no alcohol beats everything else you could do</strong></td><td>The most consistent finding in cardiovascular epidemiology, reproduced across every major guideline and every population studied. Nothing else on this page comes close for effect size.</td><td><span class="chip grade grade-a">A</span></td></tr>
+          <tr><td><strong>Soluble fibre lowers LDL cholesterol</strong></td><td>Randomised feeding trials and meta-analyses, with a well-characterised mechanism: soluble fibre binds bile acids, so the liver pulls cholesterol from circulation to replace them. This is your single highest-yield food change.</td><td><span class="chip grade grade-a">A</span></td></tr>
+          <tr><td><strong>Replacing saturated fat with unsaturated fat lowers LDL</strong></td><td>Controlled feeding trials, consistently. Note the verb is <em>replacing</em> &mdash; removing saturated fat and substituting refined carbohydrate does not produce the same benefit.</td><td><span class="chip grade grade-a">A</span></td></tr>
+          <tr><td><strong>Walking after a meal blunts the glucose spike</strong></td><td>Multiple small randomised crossover trials, consistent direction, clear mechanism. Timing relative to the meal genuinely matters.</td><td><span class="chip grade grade-a">A</span></td></tr>
+          <tr><td><strong>Five minutes of walking every thirty minutes improves glucose and blood pressure</strong></td><td>A randomised crossover trial comparing five break patterns against uninterrupted sitting. Strong design &mdash; but the outcomes measured were glucose and blood pressure over hours, not heart attacks over decades. The inference to long-term risk is reasonable, not proven.</td><td><span class="chip grade grade-a">A</span></td></tr>
+          <tr><td><strong>Omega-3 supplements do <em>not</em> help dry eye</strong></td><td>The DREAM trial &mdash; a large randomised controlled trial &mdash; found no meaningful benefit over placebo. This is a well-evidenced <em>negative</em>, which is why it's here: don't spend the money.</td><td><span class="chip grade grade-a">A</span></td></tr>
+          <tr><td><strong>Everyone should have Lp(a) measured once</strong></td><td>A guideline recommendation rather than a trial result &mdash; but now a convergent one, carried by both the 2026 ACC/AHA multisociety guideline and updated ESC/EAS guidance.</td><td><span class="chip grade grade-a">A</span></td></tr>
+          <tr><td><strong>7,000&ndash;10,000 steps a day lowers mortality risk</strong></td><td>Meta-analysis of fifteen international cohorts plus a 2025 dose-response review. Large and consistent &mdash; but observational. Reverse causation (sick people walk less) is partly, not fully, handled by the analyses.</td><td><span class="chip grade grade-b">B</span></td></tr>
+          <tr><td><strong>Seven to nine hours of sleep protects your heart</strong></td><td>Consistent enough that the AHA added sleep duration to its core cardiovascular metrics in 2022. Still largely observational, and self-reported sleep is a noisy measurement.</td><td><span class="chip grade grade-b">B</span></td></tr>
+          <tr><td><strong>Resistance training improves insulin sensitivity</strong></td><td>Good trial evidence for the metabolic effect; the extrapolation to <em>your</em> long-term cardiac events is inference rather than demonstration.</td><td><span class="chip grade grade-b">B</span></td></tr>
+          <tr><td><strong>Warm compresses help blocked oil glands</strong></td><td>Reasonable trial evidence for meibomian gland dysfunction specifically. Which is why it matters whether that's actually your diagnosis &mdash; ask.</td><td><span class="chip grade grade-b">B</span></td></tr>
+          <tr><td><strong>Deliberate, complete blinking helps screen-related dry eye</strong></td><td>TFOS DEWS III (2025) consensus, built on the mechanism: screens reduce both blink rate and blink completeness. Strong expert agreement, thinner trial base than you'd expect for advice this universal.</td><td><span class="chip grade grade-c">C</span></td></tr>
+          <tr><td><strong>Lowering your monitor below eye level reduces dry eye</strong></td><td>Sound mechanism &mdash; a downward gaze narrows the eyelid opening and exposes less surface to evaporate &mdash; supported by small studies rather than large ones. It costs ninety seconds and nothing else, so the weak evidence barely matters here.</td><td><span class="chip grade grade-c">C</span></td></tr>
+          <tr><td><strong>Shorter sitting bouts help tailbone pain</strong></td><td>Clinical consensus and mechanism. Coccydynia is genuinely under-researched &mdash; there is no large trial telling you the right bout length, and anyone who claims otherwise is guessing with confidence.</td><td><span class="chip grade grade-c">C</span></td></tr>
+          <tr><td><strong>A wedge cushion with a cut-out beats a donut ring</strong></td><td>Standard clinical advice with a sensible rationale, and very little comparative trial data. Try it; if it doesn't help you within a fortnight, it isn't going to.</td><td><span class="chip grade grade-d">D</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="corr">
+      <b>Three things I got wrong in the first version of this plan</b>
+      <p style="margin-bottom:8px"><strong>The step target.</strong> I said the curve flattens near 7,000. That's true for people over 60 &mdash; for adults under 60 it keeps improving to 8,000&ndash;10,000. You're in the second group, so I under-set your target.</p>
+      <p style="margin-bottom:8px"><strong>The break interval.</strong> I said three minutes every forty-five. The trial that actually tested this found five minutes every thirty was the only pattern that moved glucose. I'd picked round numbers instead of looking up the dose.</p>
+      <p><strong>ApoB.</strong> I told you to ask for it outright. The 2026 guideline treats it as a selective test, most useful in specific situations &mdash; so ask whether it applies to you instead. Asking flatly for tests a guideline doesn't recommend for you is a good way to lose a GP's patience early.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ============ RAMP ============ -->
 <section id="ramp">
   <div class="sec-head">
@@ -605,7 +683,7 @@ footer{padding:40px 0 0;color:var(--ink-3);font-size:.86rem;line-height:1.55;max
     </div>
     <div class="rung">
       <div class="wk"><b>02</b><span>+ anchor</span></div>
-      <div class="what"><span class="t">The three-minute interruption</span><span class="d">Stand, look far, ten full blinks, change rooms. Pick your trigger from the three options. Still nothing else added.</span></div>
+      <div class="what"><span class="t">The break: five minutes, every half hour</span><span class="d">Stand, look far, ten full blinks, change rooms. Pick your trigger from the three options. Fewer breaks still counts &mdash; only the glucose effect needs the full dose. Still nothing else added.</span></div>
     </div>
     <div class="rung">
       <div class="wk"><b>03</b><span>+ movement</span></div>
@@ -637,6 +715,85 @@ footer{padding:40px 0 0;color:var(--ink-3);font-size:.86rem;line-height:1.55;max
       <li><strong>If you drop the whole thing for three weeks:</strong> restart at the week one row. Book the test, lower the monitor, nothing else. Not as punishment &mdash; because that's the entry point that works, and it worked the first time.</li>
       <li><strong>You are permitted to renegotiate any of this with me.</strong> It's a draft, not a prescription. If an item is stupid, or doesn't fit your life, say so and it comes out. A plan you had a hand in editing is one you're far more likely to still be running in March.</li>
     </ul>
+  </div>
+</section>
+
+<!-- ============ MODELS ============ -->
+<section id="models">
+  <div class="sec-head">
+    <span class="eyebrow">The scaffolding, made visible</span>
+    <h2>The models this is built on</h2>
+    <p class="lede">Every odd design choice in this plan came from somewhere. Here is the somewhere &mdash; ten behavioural models, what each one claims, and the exact feature of your plan it produced. Read it if you want to argue with the design, which is a legitimate thing to want to do.</p>
+  </div>
+
+  <div class="models">
+
+    <div class="model">
+      <div class="model-head"><h3>1 &middot; COM-B and the Behaviour Change Wheel</h3><span class="model-src">Michie, van Stralen &amp; West, 2011</span></div>
+      <p>The diagnostic layer, and the reason this plan doesn't open with health facts. COM-B says a behaviour happens only when three things are present: <strong>Capability</strong> (you can do it), <strong>Opportunity</strong> (your environment and social world permit it), and <strong>Motivation</strong> &mdash; split into <em>reflective</em> (what you've decided) and <em>automatic</em> (habit, impulse, emotion). Run your own situation through it and the answer is unusually clear. Capability: intact, you know all of this. Opportunity: intact, you already own a standing desk. Reflective motivation: intact, you asked me for this unprompted.</p>
+      <div class="maps"><b>What it produced</b>The gap is <em>automatic</em> motivation alone. That single diagnosis rules out most of what health advice normally offers &mdash; more information, more reasons, more warnings &mdash; because all of it targets capability and reflective motivation, which you have plenty of. It's why this plan spends its effort on cues, environment and immediate reward instead of on explaining cholesterol to you again.</div>
+    </div>
+
+    <div class="model">
+      <div class="model-head"><h3>2 &middot; Self-Determination Theory</h3><span class="model-src">Deci &amp; Ryan</span></div>
+      <p>Motivation isn't one quantity that you have more or less of &mdash; it differs in kind. Behaviour driven by <em>autonomous</em> motivation (this is mine, I chose it, it fits who I am) persists dramatically longer than behaviour driven by <em>controlled</em> motivation (I was told to, I'd feel guilty otherwise). The theory names three needs that feed the autonomous kind: autonomy, competence, relatedness.</p>
+      <div class="maps"><b>What it produced</b>Every daily item is a menu you pick two from, rather than a checklist you complete. The difference sounds cosmetic and isn't: a chosen action and an assigned action are different behaviours psychologically, even when they look identical from outside.</div>
+    </div>
+
+    <div class="model">
+      <div class="model-head"><h3>3 &middot; Psychological reactance</h3><span class="model-src">Brehm, 1966</span></div>
+      <p>When people perceive a threat to their behavioural freedom, they experience an aversive state that motivates them to restore it &mdash; often by doing the opposite of what was urged. This is the formal name for the thing you described as &ldquo;feels like being ordered around&rdquo;, and it is a normal mechanism rather than a defect. It fires on self-imposed rules too, which is why the rules <em>you</em> set also collapse.</p>
+      <div class="maps"><b>What it produced</b>The absence of imperatives. There is no &ldquo;you must&rdquo; anywhere in this plan, the restart protocol explicitly grants permission to be bored of it, and you're told outright that you can delete any part you've gone off. A plan you're allowed to reject is one you have no reason to rebel against.</div>
+    </div>
+
+    <div class="model">
+      <div class="model-head"><h3>4 &middot; Externalising at the point of performance</h3><span class="model-src">Barkley &mdash; ADHD as an executive function disorder</span></div>
+      <p>The most load-bearing model here. Barkley's argument is that ADHD is not a disorder of <em>knowing</em> what to do &mdash; it's a disorder of <em>doing what you know</em> at the moment it matters. Internally generated motivation is weak at initiating and sustaining goal-directed behaviour, so the fix is to move motivation and information out of your head and into the physical environment, at the point and time the behaviour is needed.</p>
+      <div class="maps"><b>What it produced</b>Nearly every physical instruction in this plan. Phone charging across the room. Shoes where you'll trip over them. The cushion left on the chair, not in a drawer. Above all the monitor change &mdash; a one-time physical adjustment that then works forever and costs zero executive function per day. That is the ideal shape for an intervention aimed at you: pay once, benefit daily, never rely on remembering.</div>
+    </div>
+
+    <div class="model">
+      <div class="model-head"><h3>5 &middot; The Fogg Behavior Model &mdash; B = MAP</h3><span class="model-src">BJ Fogg</span></div>
+      <p>Behaviour occurs when Motivation, Ability and a Prompt arrive at the same moment. The practical consequence is that motivation and ability trade off against each other: when motivation is low, the behaviour still happens if the ability demand is small enough. And nothing happens at all without a prompt, however motivated and able you are.</p>
+      <div class="maps"><b>What it produced</b>The floor day &mdash; a five-minute walk counting as complete. On a bad day your motivation is genuinely low, and the model says the correct response is to lower the ability demand rather than to manufacture motivation you don't have. It also produced the insistence on picking a trigger: an item with no prompt attached is one you've decided to do and won't.</div>
+    </div>
+
+    <div class="model">
+      <div class="model-head"><h3>6 &middot; Implementation intentions</h3><span class="model-src">Gollwitzer; meta-analysed across 642 tests</span></div>
+      <p>Specifying <em>if situation X arises, then I will do Y</em> reliably outperforms holding the same goal without a plan. The original 94-test meta-analysis found a medium-to-large effect (d&nbsp;=&nbsp;0.65); a much larger 642-test analysis found effects ranging from small to large depending on conditions. Three conditions raised the effect: a genuine if-then contingent format, real motivation for the goal, and the plan being rehearsed at least once. The mechanism is that the plan makes the situational cue more cognitively accessible, so the behaviour fires closer to automatically when the cue appears.</p>
+      <div class="maps"><b>What it produced</b>The three-if-then panel in the console, and the fact that it asks you to write them rather than offering you pre-written ones. Rehearsal is a named condition for the effect, so having them sit somewhere you re-read is part of the intervention, not decoration.</div>
+    </div>
+
+    <div class="model">
+      <div class="model-head"><h3>7 &middot; Habit formation through context-stable repetition</h3><span class="model-src">Lally, Gardner and colleagues</span></div>
+      <p>Habits form when a behaviour is repeated in a <em>stable context</em> until the context alone triggers it. The widely-quoted average is around 66 days, but the honest version of that finding is the spread around it: in the original study individuals ranged from about 18 days to over 250. There is no fixed timeline, and yours is unknowable in advance.</p>
+      <div class="maps"><b>What it produced</b>Two things. First, the instruction to judge this at day 60 rather than day 10. Second &mdash; and this is a real tension I should name rather than hide &mdash; <strong>the fortnightly rotation works against automaticity.</strong> Habit formation wants the behaviour identical every time; your boredom wants it different. The compromise is that the <em>cue</em> never rotates (after dinner, every day) while the <em>content</em> does. You'll get weaker automaticity than a rigid plan would produce, in exchange for still being here in March. For someone who has abandoned rigid plans repeatedly, that is the correct trade &mdash; but it is a trade.</div>
+    </div>
+
+    <div class="model">
+      <div class="model-head"><h3>8 &middot; Temptation bundling</h3><span class="model-src">Milkman, Minson &amp; Volpp</span></div>
+      <p>Pair a behaviour you should do with one you want to do, and make the wanted one available <em>only</em> during the should. This shifts the reward from delayed and abstract (arteries, decades away) to immediate and concrete (the next episode, now) &mdash; which is precisely the axis on which an ADHD reward system is least patient.</p>
+      <div class="maps"><b>What it produced</b>The walk-only podcast, and the rule that you don't get it sitting down. The restriction isn't puritanism &mdash; it's the entire mechanism. A show you also listen to on the sofa exerts no pull toward the walk.</div>
+    </div>
+
+    <div class="model">
+      <div class="model-head"><h3>9 &middot; The fresh start effect</h3><span class="model-src">Dai, Milkman &amp; Riis</span></div>
+      <p>People pursue aspirational behaviour more readily right after a temporal landmark &mdash; a Monday, a month's start, a birthday. The landmark creates a psychological break from an imperfect past self, which makes the new attempt feel like a genuinely new attempt rather than a continuation of failure.</p>
+      <div class="maps"><b>What it produced</b>Restarts being explicitly scheduled rather than shamed, and the restart entry point being the Week One row every time. It's also why the check-in moved to the first of the month rather than a random date &mdash; the landmark is doing work.</div>
+    </div>
+
+    <div class="model">
+      <div class="model-head"><h3>10 &middot; Episodic future thinking</h3><span class="model-src">Delay discounting literature</span></div>
+      <p>Vividly imagining a specific personal future event reduces delay discounting &mdash; the steep devaluation of rewards that arrive later. Abstract future benefits (&ldquo;lower cardiovascular risk&rdquo;) discount almost to zero; concrete imagined scenes discount far less.</p>
+      <div class="maps"><b>What it produced</b>The name of this document, and the decision to frame the goal as arriving at sixty with clean arteries and a spine that tolerates a chair &mdash; rather than as avoiding a heart attack. A specific imagined future is a usable motivator. A statistical risk reduction is not.</div>
+    </div>
+
+    <div class="model">
+      <div class="model-head"><h3>The one I deliberately didn't use</h3><span class="model-src">Transtheoretical Model &mdash; &ldquo;stages of change&rdquo;</span></div>
+      <p>You will meet this everywhere: precontemplation, contemplation, preparation, action, maintenance. It's the most famous behaviour-change model in existence and I've left it out on purpose. It describes change reasonably well after the fact, but interventions built on staging people have repeatedly underperformed expectations, and the stage boundaries don't hold up well under scrutiny. If a health app or a coach ever asks which stage you're in, that's a reasonable prompt for reflection and a poor basis for a plan.</p>
+      <div class="maps"><b>Why you're being told this</b>So that when you encounter it &mdash; and you will &mdash; you know it was considered and rejected, rather than missed.</div>
+    </div>
+
   </div>
 </section>
 
@@ -715,7 +872,7 @@ footer{padding:40px 0 0;color:var(--ink-3);font-size:.86rem;line-height:1.55;max
   ];
 
   var ITEMS = [
-    {id:"brk",  lab:"Broke up sitting",   sub:"Three or more stand-and-blink interruptions", cost:"0 min"},
+    {id:"brk",  lab:"Broke up sitting",   sub:"Stand-and-blink breaks — five min per half hour is the full dose", cost:"0 min"},
     {id:"walk", lab:"Walked",             sub:"Any amount over five minutes",                cost:"5–20 min"},
     {id:"str",  lab:"Strength",           sub:"Glutes, hip flexors, dead bugs — twice a week",  cost:"10 min"},
     {id:"slp",  lab:"Protected sleep",    sub:"Held the wake time, or phone across the room", cost:"0 min"},
@@ -730,7 +887,7 @@ footer{padding:40px 0 0;color:var(--ink-3);font-size:.86rem;line-height:1.55;max
   }
 
   function blank(){
-    return {v:1, test:{booked:false, done:false, date:""}, days:{}, season:{idx:0, started:todayKey()}, checkin:{moved:"",worst:"",bored:""}};
+    return {v:1, test:{booked:false, done:false, date:""}, days:{}, season:{idx:0, started:todayKey()}, checkin:{moved:"",worst:"",bored:""}, plans:{p1:"",p2:"",p3:""}};
   }
 
   var state = blank();
@@ -743,6 +900,7 @@ footer{padding:40px 0 0;color:var(--ink-3);font-size:.86rem;line-height:1.55;max
         state.test = Object.assign(blank().test, p.test||{});
         state.season = Object.assign(blank().season, p.season||{});
         state.checkin = Object.assign(blank().checkin, p.checkin||{});
+        state.plans = Object.assign(blank().plans, p.plans||{});
         state.days = p.days || {};
       }
     }
@@ -880,6 +1038,26 @@ footer{padding:40px 0 0;color:var(--ink-3);font-size:.86rem;line-height:1.55;max
     if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
   });
 
+  /* ---------- implementation intentions ---------- */
+  var plansForm = document.getElementById("plansForm");
+  var PLAN_HINTS = [
+    {k:"p1", cue:"The sitting break",  ph:"If my water runs out, then I stand up and take five minutes before refilling it"},
+    {k:"p2", cue:"The walk",           ph:"If the dinner plates are in the sink, then I put my shoes on and start the podcast"},
+    {k:"p3", cue:"The evening ending", ph:"If it hits 11pm, then my phone goes on the dresser across the room"}
+  ];
+  function renderPlans(){
+    plansForm.innerHTML = PLAN_HINTS.map(function(h){
+      return '<label class="fld"><span>'+h.cue+'</span>'+
+        '<input type="text" data-plan="'+h.k+'" value="'+esc(state.plans[h.k])+'" placeholder="'+esc(h.ph)+'"></label>';
+    }).join("");
+    plansForm.querySelectorAll("[data-plan]").forEach(function(el){
+      el.addEventListener("input", function(){
+        state.plans[el.getAttribute("data-plan")] = el.value;
+        save();
+      });
+    });
+  }
+
   /* ---------- check-in form ---------- */
   var cf = document.getElementById("checkinForm");
   function renderCheckin(){
@@ -925,6 +1103,7 @@ footer{padding:40px 0 0;color:var(--ink-3);font-size:.86rem;line-height:1.55;max
           state.test = Object.assign(blank().test, p.test||{});
           state.season = Object.assign(blank().season, p.season||{});
           state.checkin = Object.assign(blank().checkin, p.checkin||{});
+          state.plans = Object.assign(blank().plans, p.plans||{});
           state.days = p.days || {};
           save(); renderAll();
           ioZone.innerHTML = '<p class="mono" style="font-size:.75rem;color:var(--good)">Imported.</p>';
@@ -960,7 +1139,7 @@ footer{padding:40px 0 0;color:var(--ink-3);font-size:.86rem;line-height:1.55;max
   function renderAll(){
     var d = new Date();
     todayLabel.textContent = d.toLocaleDateString(undefined,{weekday:"long", day:"numeric", month:"long"});
-    renderTest(); renderMenu(); renderDayState(); renderGrid(); renderSeason(); renderCheckin();
+    renderTest(); renderMenu(); renderPlans(); renderDayState(); renderGrid(); renderSeason(); renderCheckin();
   }
   renderAll();
 })();
