@@ -1,0 +1,32 @@
+ID,Category,Assumption,Value,Basis,Impact if wrong,Verification method,Owner,Status
+A-001,Load,Average rack design density,8 kW/rack,Typical mixed enterprise/colo hall,Changes rack count and RPP quantity,IT equipment schedule,Engineer,Open
+A-002,Load,Number of data halls,2,Assumed for distribution segregation,Changes RPP and CRAH distribution,Architectural brief,Engineer,Open
+A-003,Load,High-density zone capability,15 kW/rack over 10% of racks,Allowance for future HPC/AI racks,Changes rack PDU and RPP sizing,IT roadmap,Engineer,Open
+A-004,Load,Single-corded IT load proportion,5% = 100 kW,Guess with no basis,Drives STS quantity and a real 2N gap,IT equipment schedule,Engineer,Open - see TQ-006
+A-005,Load,IT power factor,0.99,Modern PSU with active PFC,Minor effect on kVA sizing,Vendor data,Engineer,Open
+A-006,Load,Diversity factor on IT load,1.0,2000 kW stated as already diversified design load,Would change all upstream sizing,Client brief clarification,Engineer,Open
+A-007,Mechanical,Envelope/lighting/people heat gain,150 kW(th),Allowance,Changes chiller selection,Mechanical thermal model,Mech engineer,Open
+A-008,Mechanical,Chiller COP at design ambient,2.9,Air-cooled screw at 38 degC,Directly changes 780 kW chiller load and generator sizing,Vendor selection data,Engineer,Open - see TQ-005
+A-009,Mechanical,CHW primary pump power,15 kW each,Assumed,Minor,Mechanical hydraulic design,Mech engineer,Open
+A-010,Mechanical,CHW secondary pump power,30 kW each,Assumed,Minor,Mechanical hydraulic design,Mech engineer,Open
+A-011,Mechanical,CRAH fan power,8 kW each EC fan,Assumed,Moderate - 24 units,Vendor selection data,Engineer,Open
+A-012,Mechanical,Mechanical controls/valves/humidity load,25 kW,Allowance,Minor,Mechanical design,Mech engineer,Open
+A-013,House,Total house and ancillary load,235 kW,Itemised allowance,Moderate - affects generator sizing,Detailed design,Engineer,Open
+A-014,Electrical,Utility supply voltage,11 kV,Typical Australian metro distribution,Changes MV switchgear and transformer ratio,DNSP supply offer,Engineer,Open - see TQ-007
+A-015,Electrical,Two utility feeders from separate zone substations,Available,Assumed for 2N intake,If unavailable the utility becomes a single point of failure,DNSP supply application,Engineer,Open - see TQ-007
+A-016,Electrical,Utility feeder capacity,5000 kVA each,Assumed available,Limits site capacity,DNSP supply offer,Engineer,Open
+A-017,Electrical,Transformer impedance,6.0%,Typical for 2500 kVA cast resin,Changes fault level 58 kA and switchboard rating,Vendor data,Engineer,Open - see TQ-002
+A-018,Electrical,Transformer losses,1.0% at operating load,Typical,Minor,Vendor data,Engineer,Open
+A-019,Electrical,LV switchboard Icw,65 kA 1 s,Judgement vs 58 kA calculated,Under-rating is a safety issue,Formal fault level study,Engineer,Open - see TQ-004
+A-020,Electrical,UPS efficiency in double conversion,96% at ~40% load,Modern transformerless modular,Changes UPS losses 85 kW,Vendor efficiency curves,Engineer,Open
+A-021,Electrical,UPS inverter efficiency for battery sizing,96%,As above,Changes battery kWh,Vendor data,Engineer,Open
+A-022,Electrical,Battery end-of-life derating,80%,Industry convention,Changes installed battery kWh,Vendor warranty data,Engineer,Open
+A-023,Electrical,Battery usable depth of discharge,90%,LFP with BMS limits,Changes installed battery kWh,Vendor/BMS data,Engineer,Open - see TQ-012
+A-024,Electrical,Generator specific fuel consumption,0.25 L/kWh at ~70% load,Typical 2.4 MW class diesel,Changes bulk fuel tank volume,Vendor fuel consumption curves,Engineer,Open - see TQ-010
+A-025,Electrical,Generator start to on-load time,<=15 s,Typical standby set,If longer battery autonomy still ample,Vendor data and site test,Engineer,Open
+A-026,Electrical,Non-linear load allowance on generator,10%,Modern IGBT rectifier THDi <5%,Changes generator sizing,Harmonic analysis and vendor data,Engineer,Open
+A-027,Environmental,External design ambient,38 degC DB,Australian metro temperate,Changes chiller COP and generator derating,AIRAH/ASHRAE design day data,Engineer,Open - see TQ-005
+A-028,Environmental,Electrical room design ambient,40 degC,Assumed,Equipment derating,Mechanical design,Engineer,Open
+A-029,Environmental,Altitude,<100 m AHD no derating,Assumed metro site,Generator and switchgear derating,Site survey,Engineer,Open
+A-030,Operational,Utility stable time before retransfer,5 minutes,Assumed,Operational only,Operating philosophy,Engineer,Open - see TQ-014
+A-031,Performance,Annualised PUE,1.40,Assumed for temperate air-cooled CHW,Energy reporting only - not used in sizing,Energy model,Engineer,Open
