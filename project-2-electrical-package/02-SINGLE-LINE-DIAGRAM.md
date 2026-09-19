@@ -156,7 +156,20 @@ Full device list is on the drawing. What follows is why each block exists.
 
 **Why 800 A when the incomer is 630 A.** The busbar is rated above the incomer so the incomer is always the limiting device, the board tolerates future load growth into the spare feeders, and there is thermal margin at the top of the board where the cubicles are hottest. Busbar is cheap relative to the cost of being wrong.
 
-**Why the neutral is full size, not half size.** Non-linear loads — and two six-pulse drives, plus switch-mode power supplies, plus any single-phase electronic load — generate triplen (3rd, 9th, 15th) harmonic currents. Triplen currents in a three-phase four-wire system **do not cancel in the neutral; they add.** A reduced-size neutral on a harmonic-rich board can overheat while every phase reads comfortably within rating. This is a genuinely common and genuinely dangerous error.
+**Why the neutral is full size, not half size.** Two effects, and they are worth separating because they get conflated constantly.
+
+**Triplen harmonics add in the neutral.** Third-harmonic currents are **zero-sequence**. The three phase fundamentals are 120° apart, which is 3 × 120° = 360° at the third harmonic — so all three phases' third harmonics are *in phase with each other*. The fundamentals cancel in the neutral of a balanced system; the triplens do not. They sum arithmetically. A reduced-size neutral on a triplen-rich board can overheat while every phase reads comfortably within rating.
+
+**But the drives are not the source of the triplens.** A balanced three-phase six-pulse rectifier produces *characteristic* harmonics of order **6k ± 1** — 5th, 7th, 11th, 13th. Those are positive- and negative-sequence and they do **not** add in the neutral. (Supply unbalance produces some non-characteristic triplen content, but it is small.) The triplens on this board come from the **single-phase** non-linear loads: the switch-mode power supplies, the UPS input, and above all whatever sits on DB-01 — lighting drivers, electronic ballasts, and every device plugged into a GPO.
+
+So the two arguments are different and both are real:
+
+| Concern | Source | Consequence |
+|---|---|---|
+| 5th, 7th, 11th, 13th | The two six-pulse drives | Distortion injected back at the point of connection → **harmonic assessment, TQ-006** |
+| 3rd, 9th (triplens) | Single-phase electronic load, mostly via DB-01 | Additive neutral current → **full-size neutral** |
+
+Getting this the wrong way round is a common error and an easy one for an interviewer to catch.
 
 **Design verification is the manufacturer's, not mine.** Temperature rise verification, short-circuit withstand verification and the mechanical bracing design all sit with the assembly manufacturer under AS/NZS 61439.1. As PE, what I do is **ask for the evidence** — the manufacturer's design verification documentation for this enclosure system, this busbar arrangement and this form of separation — and put it in the MDR. I do not calculate it and I do not certify it.
 

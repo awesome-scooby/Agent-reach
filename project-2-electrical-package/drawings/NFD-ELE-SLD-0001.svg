@@ -388,8 +388,9 @@
 <text x="56" y="1025.6" class="t t9">5.  VSD feeder breakers are selected from the DRIVE MANUAL, not from motor FLC. The breaker protects the cable and the drive input; the motor is protected by the</text>
 <text x="56" y="1038.0" class="t t9">     drive thermal model plus an independent PTC thermistor relay. Cable sizes are provisional &#8212; no AS/NZS 3008.1.1 calculation has been performed.</text>
 <text x="56" y="1050.4" class="t t9">6.  Assembly design verification (temperature rise, short-circuit withstand, IP) is the MANUFACTURER&#8217;S responsibility under AS/NZS 61439.1, not the designer&#8217;s.</text>
-<text x="56" y="1062.8" class="t t9">7.  Full-size neutral: triplen harmonic currents from the six-pulse drives and switch-mode supplies ADD in the neutral rather than cancelling.</text>
-<text x="56" y="1075.2" class="t t9">8.  Rev 1 incorporates CR-001 &#8212; transfer pump motors uprated 75 kW to 90 kW following client hydraulic re-modelling. See NFD-ELE-CHG-0001.</text>
+<text x="56" y="1062.8" class="t t9">7.  Full-size neutral: TRIPLEN (3rd, 9th) harmonics are ZERO-SEQUENCE and ADD in the neutral instead of cancelling. Their source is the SINGLE-PHASE electronic load</text>
+<text x="56" y="1075.2" class="t t9">     (switch-mode supplies, UPS input, DB-01 lighting and GPOs) &#8212; NOT the six-pulse drives, which produce 6k&#177;1 (5th, 7th, 11th, 13th). Those do not add in the neutral.</text>
+<text x="56" y="1087.6" class="t t9">8.  Rev 1 incorporates CR-001 &#8212; transfer pump motors uprated 75 kW to 90 kW following client hydraulic re-modelling. See NFD-ELE-CHG-0001.</text>
 <rect x="1072" y="946" width="469" height="142" rx="0" class="dev"/>
 <line x1="1072" y1="980" x2="1541" y2="980" class="brd2"/>
 <line x1="1072" y1="1016" x2="1541" y2="1016" class="brd2"/>

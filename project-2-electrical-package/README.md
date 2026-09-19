@@ -39,6 +39,10 @@ A regional water utility is upgrading the raw water transfer pump station at the
 | 11 | [`11-PORTFOLIO-SUMMARY.md`](11-PORTFOLIO-SUMMARY.md) | Stage-by-stage portfolio view: inputs, responsibilities, decisions, risks, documents, interfaces, quality checks, lessons, employer value |
 | 12 | [`12-INTERVIEW-PACK.md`](12-INTERVIEW-PACK.md) | 60-second / 3-minute / 10-minute explanations, 10 manager questions with model answers, 5 questions that expose bluffing |
 | 13 | [`13-STUDY-GAPS.md`](13-STUDY-GAPS.md) | What you must study before claiming competency, in priority order |
+| **14** | [**`14-CORE-CONCEPTS.md`**](14-CORE-CONCEPTS.md) | **The physics behind the decisions** — three-phase power and where current figures come from, fault current, the induction motor, how a VSD actually works, the affinity laws, harmonics, switching vs protecting vs isolating, earthing, the 4–20 mA loop, the PLC scan, what destroys a pump, IP and Forms decoded |
+| **15** | [**`15-GLOSSARY.md`**](15-GLOSSARY.md) | **Every term and abbreviation in plain English**, with why it matters here — plus the terms that sound similar and are not |
+| **16** | [**`16-START-COMMAND-TRACE.md`**](16-START-COMMAND-TRACE.md) | **One command traced end to end**, from rising water level to water moving, touching every document — then run backwards as a fault-finding method |
+| **17** | [**`17-EXPLAINING-TO-OTHERS.md`**](17-EXPLAINING-TO-OTHERS.md) | **Five audiences** from recruiter to principal engineer, analogies that work and analogies that mislead, twelve hostile follow-ups, the teach-back protocol, and recall drills |
 
 ## Drawings (`drawings/`)
 
@@ -72,9 +76,23 @@ Opens straight from `file://`, works at phone width, and prints with the navigat
 ## How to use this to get a job
 
 1. Read `00-CLAIM-INTEGRITY.md`. Learn the boundary.
-2. Work through documents 01–10 **in order**, in your own time, until you can redraw the SLD on a whiteboard from memory and explain why each device is there.
-3. Do the exposure questions in `12-INTERVIEW-PACK.md` out loud. If you cannot answer one without reading, you do not own that part yet.
-4. Close the gaps in `13-STUDY-GAPS.md`.
-5. Then, and only then, put it on your CV as *"Self-directed reference project: full industrial electrical package, design basis through FAT and handover."*
+2. Read `14-CORE-CONCEPTS.md`. **Do this before the stage documents, not after.** It is the physics that makes everything else derivable rather than memorised, and it is the layer an interviewer reaches within about two questions.
+3. Work through documents 01–10 **in order**, keeping `15-GLOSSARY.md` open beside you.
+4. Read `16-START-COMMAND-TRACE.md`. If you can narrate that, you understand the package as a system rather than as a stack of drawings.
+5. Do the recall drills in `17-EXPLAINING-TO-OTHERS.md` §5 — whiteboard and numbers, no notes. Recognition is not recall.
+6. Do the exposure questions in `12-INTERVIEW-PACK.md` out loud. If you cannot answer one without reading, you do not own that part yet.
+7. Rehearse the audience ladder in `17-EXPLAINING-TO-OTHERS.md` §1. A recruiter screens you before an engineer ever does.
+8. Close the remaining gaps in `13-STUDY-GAPS.md`.
+9. Then, and only then, put it on your CV as *"Self-directed reference project: full industrial electrical package, design basis through FAT and handover."*
 
 The point of this package is not the documents. It is that you can explain them.
+
+---
+
+## Errata
+
+Errors found and corrected are recorded here rather than quietly fixed, because the correction is more instructive than the original.
+
+| Date | Error | Correction |
+|---|---|---|
+| Rev 2 | The full-size neutral was justified by "triplen harmonics from the six-pulse drives". **Wrong.** A balanced six-pulse rectifier produces characteristic harmonics of order 6k ± 1 (5th, 7th, 11th, 13th), which are positive- and negative-sequence and do **not** add in the neutral. | The conclusion stands — the neutral is full size — but the source is the **single-phase** non-linear load: switch-mode supplies, the UPS input, and the lighting and GPO circuits on DB-01. The drives justify the *harmonic assessment*; the single-phase load justifies the *neutral*. Corrected on the SLD face, in `02`, `11`, `12`, `13` and the portfolio. See `14-CORE-CONCEPTS.md` §6.2. |

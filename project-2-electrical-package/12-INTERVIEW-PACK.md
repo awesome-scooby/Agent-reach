@@ -1,5 +1,7 @@
 # INTERVIEW PACK
 
+> **This pack assumes a technical interviewer.** For recruiters, HR screeners and non-electrical hiring managers — who filter you first — use [`17-EXPLAINING-TO-OTHERS.md`](17-EXPLAINING-TO-OTHERS.md) §1. For the physics under any answer here, see [`14-CORE-CONCEPTS.md`](14-CORE-CONCEPTS.md).
+
 **Rule before anything else:** you may not use any of this until you can explain the underlying document without reading it. A polished answer you do not understand is worse than a rough answer you do, because the follow-up question exposes it immediately — and then everything else you said becomes suspect.
 
 ---
@@ -28,7 +30,7 @@ Use when they say "tell me more" or "walk me through the technical side".
 >
 > **Design basis first.** I built a design input register — every requirement, its source, our engineering response, which document it affects, and its status. What that exposed was how much of the design rests on inputs nobody had supplied: the fault level, the earthing system, the client's own electrical standard, the motor nameplate data, the PLC platform, even the cable entry direction. All of those became technical queries, with dates and with a stated consequence if they weren't answered.
 >
-> **The single line.** Six-thirty-amp incomer, four-pole, electronic trip so the settings can be tuned once a coordination study exists. Eight-hundred-amp busbar with a full-size neutral — that one matters, because with two six-pulse drives on the board you get triplen harmonics, and triplen currents add in the neutral rather than cancelling. The drafter's first revision had a half-size neutral copied from a project template and I had it changed.
+> **The single line.** Six-thirty-amp incomer, four-pole, electronic trip so the settings can be tuned once a coordination study exists. Eight-hundred-amp busbar with a full-size neutral — and I'd be specific about why, because people get this backwards. Triplen harmonics are zero-sequence, so they add in the neutral instead of cancelling. But the triplens don't come from the drives — a six-pulse rectifier makes 5th, 7th, 11th, 13th, which don't add in the neutral. The triplens come from the single-phase electronic load, mostly the lighting and GPO board. The drives are why I raised the harmonic assessment; the single-phase load is why the neutral is full size. The drafter's first revision had a half-size neutral copied from a project template and I had it changed.
 >
 > On the drive feeders, the breaker is selected from the drive manual, not from motor full-load current, because that breaker protects the cable and the drive input. The motor is protected by the drive's thermal model plus an independent thermistor relay — the drive's model infers temperature from current, the thermistors measure it.
 >
@@ -69,7 +71,7 @@ The station, the loads, what is in scope and — more importantly — what is ex
 **Have it in front of them.** Do not narrate everything. Pick four things and explain *why*:
 
 1. Four-pole incomer with an electronic trip unit — isolation, and adjustability for a coordination study you don't have yet.
-2. Full-size neutral — triplen harmonics add in the neutral. Mention that you caught this from a template.
+2. Full-size neutral — triplens are zero-sequence so they add; and they come from the single-phase load, **not** from the drives. Mention that you caught the half-size neutral from a template.
 3. VSD feeder breaker from the drive manual, not motor FLC — because it protects the cable and drive, not the motor.
 4. The separate insulated instrument screen earth bar — and why it is different from the VSD cable screen.
 
@@ -254,11 +256,13 @@ Then explain: one channel opens, the safety relay detects a discrepancy between 
 
 ### E2. "Why is the neutral full-size? Talk me through the physics."
 
-Third harmonic currents in a three-phase system are in phase with each other across all three phases — they're 120° apart in the fundamental, which is 360° apart at the third harmonic, so they're co-phasal. The fundamental currents cancel in the neutral of a balanced system; the triplens don't. They add.
+Third harmonic currents are **zero-sequence**. The three phase fundamentals are 120° apart, which is 3 × 120° = 360° at the third harmonic — so all three phases' third harmonics are in phase with each other. The fundamentals cancel in the neutral of a balanced system; the triplens don't. They add arithmetically, so the neutral can carry more current than any phase, and a reduced neutral can overheat while every phase reads comfortably within rating.
 
-So on a board with significant non-linear load — six-pulse drives, switch-mode power supplies, electronic ballasts — the neutral can carry substantially more current than any phase. A reduced-size neutral on a harmonic-rich board can overheat while every phase reads comfortably within rating.
+**Then say the thing that separates you from everyone who has memorised that paragraph:**
 
-**If you say "because of harmonics" and cannot explain why triplens add, you have memorised a phrase.**
+> "The drives aren't the source, though. A balanced six-pulse rectifier produces 6k ± 1 — fifth, seventh, eleventh, thirteenth — and those are positive- and negative-sequence, so they don't add in the neutral. The triplens come from the single-phase electronic load: the switch-mode supplies, the UPS input, and the lighting and GPO circuits on the distribution board. So the drives are why I raised the harmonic assessment, and the single-phase load is why the neutral is full size. Two different problems."
+
+**If you say "because of harmonics" and cannot explain why triplens add, you have memorised a phrase. If you blame the drives for the triplens, you have memorised the wrong phrase.**
 
 ---
 

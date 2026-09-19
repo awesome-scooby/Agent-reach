@@ -35,12 +35,12 @@
 |---|---|
 | **ENGINEERING INPUTS** | Design basis · load schedule · assumed fault level · earthing assumption · client SLD · vendor data |
 | **MY RESPONSIBILITIES** | Brief the designer · review the SLD against a written check list · require provisional ratings to be annotated **on the drawing face** · issue for approval with the assumptions listed in the transmittal |
-| **TECHNICAL DECISIONS** | 4-pole incomer with electronic trip for adjustability · full-size neutral for triplen harmonics · SPD on its own protective device with status monitoring · VSD feeder breakers selected from the drive manual, not motor FLC · independent thermistor relay alongside the drive's thermal model · separate insulated instrument screen earth bar |
+| **TECHNICAL DECISIONS** | 4-pole incomer with electronic trip for adjustability · full-size neutral for zero-sequence triplen current from single-phase load · SPD on its own protective device with status monitoring · VSD feeder breakers selected from the drive manual, not motor FLC · independent thermistor relay alongside the drive's thermal model · separate insulated instrument screen earth bar |
 | **KEY RISKS** | Every device rating provisional against an assumed fault level · no coordination study · harmonic mitigation unresolved · motor cable length unconfirmed *(drives whether an output filter is needed)* |
 | **DOCUMENTS PRODUCED** | SLD · feeder schedule · earthing arrangement · SLD review check list |
 | **INTERFACES** | Network operator *(fault level)* · protection specialist · drive vendor · installation contractor *(cable interface)* |
 | **QUALITY CHECKS** | 13-point SLD review · rating consistency up the chain · tag consistency against schematics and BOM · assumptions annotated on the drawing |
-| **LESSONS LEARNED** | Caught a half-size neutral inherited from a project template. On a harmonic-rich board that is a genuine overheating hazard, and it was invisible until someone asked why. **Drawing templates carry other projects' assumptions.** |
+| **LESSONS LEARNED** | Caught a half-size neutral inherited from a project template. On a board with significant single-phase electronic load that is a genuine overheating hazard, and it was invisible until someone asked why. **Drawing templates carry other projects' assumptions** — and so do half-remembered rules of thumb: the first version of this note blamed the six-pulse drives for the triplens, which is wrong. |
 | **EMPLOYER VALUE** | Can read an SLD as an argument about fault clearance and isolation, not as a connection diagram — and can defend every device on it. |
 
 ---

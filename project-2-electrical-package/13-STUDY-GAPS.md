@@ -2,6 +2,8 @@
 
 Ordered by what will hurt you fastest in an interview or on a job.
 
+> **Read [`14-CORE-CONCEPTS.md`](14-CORE-CONCEPTS.md) first.** It now covers the *understanding* side of most of Tier 1 — the derivations, the mechanisms and the worked numbers. What remains below is the part that needs a standard in front of you, a manufacturer's tables, or time in a workshop: things you have to *do*, not just understand.
+
 ---
 
 ## Tier 1 — Close these before your next interview
@@ -96,7 +98,7 @@ You do not need to be able to perform an ISO 13849 calculation. You need to unde
 **Why.** You raised it as a risk in this package and did not drive it to closure, and you said so in your Q10 answer. Be able to talk about it properly.
 
 - Why six-pulse rectifiers produce 5th, 7th, 11th, 13th harmonics
-- Why triplens add in the neutral — **be able to explain the phase relationship, not just state the fact**
+- Why triplens add in the neutral — **be able to explain the phase relationship, not just state the fact** — and know that the triplens come from **single-phase** non-linear load, not from a balanced six-pulse rectifier (which makes 6k ± 1)
 - THDi vs THDv and why the distinction matters
 - Mitigation options and their trade-offs: line reactors, DC link chokes, 12-pulse, passive filters, active harmonic filters, low-harmonic drives
 - Why a harmonic assessment needs the actual network impedance and cannot be done from the board alone

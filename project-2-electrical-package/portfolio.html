@@ -786,8 +786,9 @@ footer p{margin:0 0 10px;max-width:90ch}
 <text x="56" y="1025.6" class="dg0-t dg0-t9">5.  VSD feeder breakers are selected from the DRIVE MANUAL, not from motor FLC. The breaker protects the cable and the drive input; the motor is protected by the</text>
 <text x="56" y="1038.0" class="dg0-t dg0-t9">     drive thermal model plus an independent PTC thermistor relay. Cable sizes are provisional &#8212; no AS/NZS 3008.1.1 calculation has been performed.</text>
 <text x="56" y="1050.4" class="dg0-t dg0-t9">6.  Assembly design verification (temperature rise, short-circuit withstand, IP) is the MANUFACTURER&#8217;S responsibility under AS/NZS 61439.1, not the designer&#8217;s.</text>
-<text x="56" y="1062.8" class="dg0-t dg0-t9">7.  Full-size neutral: triplen harmonic currents from the six-pulse drives and switch-mode supplies ADD in the neutral rather than cancelling.</text>
-<text x="56" y="1075.2" class="dg0-t dg0-t9">8.  Rev 1 incorporates CR-001 &#8212; transfer pump motors uprated 75 kW to 90 kW following client hydraulic re-modelling. See NFD-ELE-CHG-0001.</text>
+<text x="56" y="1062.8" class="dg0-t dg0-t9">7.  Full-size neutral: TRIPLEN (3rd, 9th) harmonics are ZERO-SEQUENCE and ADD in the neutral instead of cancelling. Their source is the SINGLE-PHASE electronic load</text>
+<text x="56" y="1075.2" class="dg0-t dg0-t9">     (switch-mode supplies, UPS input, DB-01 lighting and GPOs) &#8212; NOT the six-pulse drives, which produce 6k&#177;1 (5th, 7th, 11th, 13th). Those do not add in the neutral.</text>
+<text x="56" y="1087.6" class="dg0-t dg0-t9">8.  Rev 1 incorporates CR-001 &#8212; transfer pump motors uprated 75 kW to 90 kW following client hydraulic re-modelling. See NFD-ELE-CHG-0001.</text>
 <rect x="1072" y="946" width="469" height="142" rx="0" class="dg0-dev"/>
 <line x1="1072" y1="980" x2="1541" y2="980" class="dg0-brd2"/>
 <line x1="1072" y1="1016" x2="1541" y2="1016" class="dg0-brd2"/>
@@ -813,8 +814,9 @@ footer p{margin:0 0 10px;max-width:90ch}
     <h4>2 &middot; Full-size neutral</h4>
     <div class="box b-cau">
       <span class="lbl">Know the physics, not just the rule</span>
-      <p>Third harmonic currents in a three-phase system are <strong>co-phasal</strong> &mdash; 120&deg; apart at the fundamental is 360&deg; apart at the third. Fundamental currents cancel in the neutral of a balanced system; triplens do not, <strong>they add</strong>. On a board with two six-pulse drives plus switch-mode supplies, a reduced-size neutral can overheat while every phase reads comfortably within rating.</p>
-      <p>The drafter's first revision had a half-size neutral, copied from a project template. Drawing templates carry other projects' assumptions.</p>
+      <p>Third harmonic currents are <strong>zero-sequence</strong> &mdash; 120&deg; apart at the fundamental is 3 &times; 120&deg; = 360&deg; at the third, so all three phases' third harmonics sit in phase with each other. Fundamental currents cancel in the neutral of a balanced system; triplens do not, <strong>they add arithmetically</strong>. A reduced-size neutral can then overheat while every phase reads comfortably within rating.</p>
+      <p><strong>But the drives are not the source of the triplens.</strong> A balanced six-pulse rectifier produces characteristic harmonics of order <strong>6k &plusmn; 1</strong> &mdash; 5th, 7th, 11th, 13th &mdash; which are positive- and negative-sequence and do <em>not</em> add in the neutral. The triplens here come from the <strong>single-phase</strong> electronic load: the switch-mode power supplies, the UPS input, and the lighting and GPO circuits on DB-01. The drives are why the harmonic assessment was raised; the single-phase load is why the neutral is full size. Two different problems, two different sources.</p>
+      <p>The drafter's first revision had a half-size neutral, copied from a project template. Drawing templates carry other projects' assumptions &mdash; and so do half-remembered rules of thumb: the first version of this note blamed the drives for the triplens, which is wrong.</p>
     </div>
 
     <h4>3 &middot; VSD feeder breaker selected from the drive manual, not motor FLC</h4>
@@ -3449,7 +3451,7 @@ footer p{margin:0 0 10px;max-width:90ch}
       <thead><tr><th>#</th><th>Question</th><th>What it tests</th></tr></thead>
       <tbody>
         <tr><td>E1</td><td>&ldquo;Draw me the E-stop circuit on this whiteboard and show me what happens if one wire breaks.&rdquo;</td><td>If you can't draw this, <strong>remove every safety claim from your CV</strong>.</td></tr>
-        <tr><td>E2</td><td>&ldquo;Why is the neutral full-size? Talk me through the physics.&rdquo;</td><td>If you say &ldquo;because of harmonics&rdquo; and can't explain why triplens <em>add</em>, you've memorised a phrase.</td></tr>
+        <tr><td>E2</td><td>&ldquo;Why is the neutral full-size? Talk me through the physics.&rdquo;</td><td>If you say &ldquo;because of harmonics&rdquo; and can't explain why triplens <em>add</em>, you've memorised a phrase. If you blame the <em>drives</em> for them, you've memorised the wrong phrase.</td></tr>
         <tr><td>E3</td><td>&ldquo;A fitter says your Local mode is inconvenient &mdash; he can't test the pump with the wet well low. What do you say?&rdquo;</td><td>Argue it on merits, not by citing a rule &mdash; then acknowledge his problem is real and propose a <em>proper</em> key-switched, alarmed, time-limited bypass.</td></tr>
         <tr><td>E4</td><td>&ldquo;Which of these could you not do on a real job, and who does it?&rdquo;</td><td><strong>Hesitating is worse than getting one wrong.</strong> It suggests you haven't thought about the boundary at all.</td></tr>
         <tr><td>E5</td><td>&ldquo;Why should I believe you'd cope with a real one, where the client is difficult and the programme is late?&rdquo;</td><td>There is no clever answer. Refuse the premise of bluffing.</td></tr>
@@ -3516,7 +3518,7 @@ footer p{margin:0 0 10px;max-width:90ch}
     <h3>Tier 2 &mdash; within a month</h3>
     <ul>
       <li><strong>Functional safety fundamentals</strong> &mdash; not to perform an ISO 13849 calculation, but to know when to escalate. Risk assessment &rarr; required PL; categories B/1/2/3/4; stop categories; what STO certifies.</li>
-      <li><strong>Harmonics</strong> &mdash; you raised it as a risk and didn't drive it to closure, and you said so. Be able to talk about it properly: why six-pulse produces 5th/7th/11th/13th, why triplens add, THDi vs THDv, and the mitigation options with their trade-offs.</li>
+      <li><strong>Harmonics</strong> &mdash; you raised it as a risk and didn't drive it to closure, and you said so. Be able to talk about it properly: why six-pulse produces 5th/7th/11th/13th, why triplens are zero-sequence and add, <strong>why those are two different sources</strong>, THDi vs THDv, and the mitigation options with their trade-offs.</li>
       <li><strong>Earthing systems</strong> &mdash; TN-S, TN-C-S, TT; earth fault loop impedance and disconnection times; functional vs protective vs screen earth.</li>
       <li><strong>Australian industry documents</strong> &mdash; WSAA codes, and <strong>read one water utility's electrical design standard end to end</strong>. It will change how you think about TQ-001.</li>
     </ul>
@@ -3678,11 +3680,12 @@ var QUIZ = {
 ],
 2:[
  {q:"Why is the neutral on this busbar full size rather than reduced?",
-  o:["To carry unbalanced single-phase load","Because triplen harmonic currents are co-phasal and ADD in the neutral rather than cancelling",
+  o:["Because the six-pulse drives inject triplen harmonics that add in the neutral",
+     "Because triplens are zero-sequence and add in the neutral &mdash; sourced from the single-phase electronic load, not from the drives",
      "Because AS/NZS 3000 requires it for all switchboards","To provide a fault return path for earth faults"],
   a:1,
-  e:["Unbalance matters, but on a board with two six-pulse drives it is not the governing reason.",
-     "Correct. Third harmonic currents are 120&deg; apart at the fundamental, which is 360&deg; apart at the third &mdash; so they are in phase and add in the neutral. On a harmonic-rich board a reduced neutral can overheat while every phase reads within rating.",
+  e:["This is the common wrong answer and it is worth knowing why. A BALANCED six-pulse rectifier produces characteristic harmonics of order 6k &plusmn; 1 &mdash; 5th, 7th, 11th, 13th. Those are positive- and negative-sequence and they do NOT add in the neutral.",
+     "Correct, and the second half is what separates you. Triplens are zero-sequence: 120&deg; apart at the fundamental is 360&deg; at the third, so all three phases sit in phase and sum arithmetically. The source here is the single-phase electronic load &mdash; switch-mode supplies, the UPS input, and the lighting and GPO circuits on DB-01. The drives are why the harmonic assessment was raised; the single-phase load is why the neutral is full size.",
      "There is no blanket rule of that kind; it is a design decision driven by the load characteristics.",
      "That is the protective earth conductor's job, not the neutral's."]},
  {q:"The MCCB on a VSD feeder is selected from the drive manual rather than from motor FLC. What does it actually protect?",
