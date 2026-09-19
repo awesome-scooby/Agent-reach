@@ -61,7 +61,7 @@ CSV and XLSX versions of the working documents, so they can be opened, sorted an
 
 ## Interactive portfolio
 
-`portfolio.html` — single-file offline HTML portfolio covering the whole package with the drawings inline, the registers browsable, and the interview pack built in. Opens from `file://`, works on a phone, prints.
+`portfolio.html` — single-file offline HTML portfolio (305 KB, no external requests) covering the whole package with the drawings inline, the registers browsable, and the interview pack built in. Opens from `file://`, works on a phone, prints.
 
 ---
 
