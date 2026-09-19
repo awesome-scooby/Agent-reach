@@ -322,7 +322,7 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
   <div class="topbar-in">
     <div class="brand">
       <b>📊 Market Signal Board</b>
-      <span>Snapshot: <span class="mono" id="stamp">Sat 22 Aug 2026, 09:00 AEST</span> · <span class="mono" id="age">calculating…</span></span>
+      <span>Snapshot: <span class="mono" id="stamp">Sat 19 Sept 2026, 18:00 AEST</span> · <span class="mono" id="age">calculating…</span></span>
     </div>
     <button class="btn" id="focusBtn" aria-pressed="true" title="Hide all the deep detail and show only the essentials">🎯 Focus mode: <b id="focusState">ON</b></button>
     <button class="btn btn-primary" id="refreshBtn">🔄 Refresh / update data</button>
@@ -335,6 +335,7 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
     <a href="#brief">📰 Full briefing</a>
     <a href="#snapshot">📊 Snapshot</a>
     <a href="#changed">🔄 What changed</a>
+    <a href="#scorecard">📋 Scorecard</a>
     <a href="#history">📈 5-yr history</a>
     <a href="#calc">🧮 My numbers</a>
     <a href="#gold">🥇 Gold</a>
@@ -364,7 +365,7 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
   <div class="card">
     <div class="eyebrow">Start here · 60 seconds</div>
     <h2 style="font-size:clamp(24px,4.6vw,34px);margin-bottom:10px">Read this board in five minutes.</h2>
-    <p class="oneline" style="max-width:62ch">Everything is a snapshot taken on <span class="mono">22 August 2026</span>. Nothing here updates by itself. Press <b>🔄 Refresh</b> for the honest explanation of how to get fresh numbers.</p>
+    <p class="oneline" style="max-width:62ch">Everything is a snapshot taken on <span class="mono">19 September 2026</span>. Nothing here updates by itself. Press <b>🔄 Refresh</b> for the honest explanation of how to get fresh numbers.</p>
 
     <div class="grid g3" style="margin-top:16px">
       <div class="tile">
@@ -417,7 +418,7 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
     <div style="flex:1">
       <div class="eyebrow">Priority order · highest first</div>
       <h2>🎯 What should I be watching?</h2>
-      <p class="sec-sub">Five things, ranked by how much they could actually change a decision you might make in the next 6–12 months.</p>
+      <p class="sec-sub">Five things, ranked by how much they could change a decision you might make in the next 6–12 months. <b>This list changed materially since the last update</b> — the rate story stopped being a risk and became an event.</p>
     </div>
   </div>
 
@@ -426,67 +427,65 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
     <div class="card">
       <div class="sighead">
         <span class="mono" style="font-size:26px;font-weight:600;color:var(--ink3)">1</span>
-        <h3>Melbourne is falling while its rents rise</h3>
-        <span class="sig sig-watch"><i class="gl"></i>Watch</span>
+        <h3>The RBA meets in 10 days and is 82% priced to hike</h3>
+        <span class="sig sig-risk"><i class="gl"></i>Act on nothing until this lands</span>
       </div>
-      <p class="oneline">The one market on this board that is getting cheaper for a buyer — and you said you might buy there.</p>
-      <p class="claim"><span class="tag t-data">DATA</span>Melbourne dwelling values −1.2% in July, −3.4% over the quarter, −2.8% over the year, −4.9% so far in 2026, and 5.5% below the previous peak.<span class="src">Cotality / CoreLogic Home Value Index, July 2026 (via propertyupdate.com.au housing market update, Aug 2026)</span></p>
-      <p class="claim"><span class="tag t-data">DATA</span>Gross rental yield 4.0%, rents +5.1% over the year — above Sydney and above the combined-capitals average.<span class="src">Cotality, quoted Aug 2026</span></p>
-      <p class="claim"><span class="tag t-read">READ</span>Falling prices plus rising rents means yields are repairing from both ends at once. That is the mechanical setup that historically precedes a floor — but "historically precedes" is not "will".</p>
-      <div class="focus-note">Detail hidden. Full Melbourne section is further down and always visible: <a href="#melb">jump to Melbourne 🏠</a></div>
+      <p class="oneline">29 September. Every one of the big four banks now forecasts a hike before year end. This single decision matters more to you than everything else on this board combined.</p>
+      <p class="claim"><span class="tag t-data">DATA</span>Market-implied probability of a 25bp hike on 29 September: <b>82%</b>. NAB forecasts a September hike to <b>4.60%</b>; ANZ, CBA and Westpac expect November instead — but <b>all four expect one</b>. Markets price the cash rate reaching <b>4.85% by early 2027</b>.<span class="src">OrbitRemit / Finder / Aussie expert surveys, Sept 2026; Hudson Financial Planning (NAB call); Canstar rate forecasts</span></p>
+      <p class="claim"><span class="tag t-fact">FACT</span>Headline CPI fell to <b>3.5%</b> over the year to July (from 3.8%), but the trimmed mean the RBA actually targets was <b>unchanged at 3.6%</b>. Underlying inflation has stopped improving.<span class="src">ABS monthly CPI indicator, released 26 Aug 2026</span></p>
+      <p class="claim"><span class="tag t-read">READ</span>A hike does two things to you at once: it cuts your borrowing capacity by roughly $15,000 per 0.25% (see the calculator), and it extends the property downturn that is making Melbourne cheaper. Those pull in opposite directions, which is exactly why the honest answer this month is <b>wait ten days</b>.</p>
     </div>
 
     <div class="card">
       <div class="sighead">
         <span class="mono" style="font-size:26px;font-weight:600;color:var(--ink3)">2</span>
-        <h3>Rates went <em>up</em> this year, not down</h3>
-        <span class="sig sig-risk"><i class="gl"></i>High impact</span>
+        <h3>The US Fed already hiked</h3>
+        <span class="sig sig-risk"><i class="gl"></i>Global turn</span>
       </div>
-      <p class="oneline">If you were mentally planning around rate cuts, that plan is out of date.</p>
-      <p class="claim"><span class="tag t-fact">FACT</span>The RBA held the cash rate at 4.35% in August 2026 — its second straight hold, after <b>three hikes</b> in the first half of 2026.<span class="src">RBA decision, Aug 2026 (Domain, Forbes Australia, Finder)</span></p>
-      <p class="claim"><span class="tag t-data">DATA</span>Governor Bullock said inflation "remains too high" and the board "remains concerned" about the outlook. Headline CPI is 3.9% over the year to the June quarter; trimmed mean 3.6%.<span class="src">RBA statement Aug 2026; ABS Consumer Price Index, June quarter 2026 (released 29 Jul 2026)</span></p>
-      <p class="claim"><span class="tag t-read">READ</span>Inflation above the 2–3% target band is what keeps the door open to another hike. The next decision is 29 September 2026 — the single most important date on this board for a property buyer.</p>
+      <p class="oneline">On 16 September the Fed raised rates for the first time since 2023 — and 16 of its 18 officials expect another one this year.</p>
+      <p class="claim"><span class="tag t-fact">FACT</span>The FOMC voted <b>12–0</b> to raise the federal funds target to <b>3.75%–4.00%</b>, the first increase in three years, citing persistent inflation driven partly by high energy prices. Chair Kevin Warsh said inflation is "still too high" and promised a "timelier return" to 2%.<span class="src">CNBC, Fox Business, Yahoo Finance, Kiplinger — FOMC decision 16 Sept 2026</span></p>
+      <p class="claim"><span class="tag t-data">DATA</span><b>16 of 18</b> participants expect another hike this year; year-end projections cluster at <b>4.1%–4.4%</b>.<span class="src">FOMC Summary of Economic Projections, Sept 2026</span></p>
+      <p class="claim"><span class="tag t-read">READ</span>This is the single biggest change since the last update. A month ago the debate was whether the easing cycle would resume. It is over: <b>the world's two most important central banks are now both tightening.</b> That reprices every asset on this board at once — which is precisely what the numbers below show.</p>
     </div>
 
     <div class="card">
       <div class="sighead">
         <span class="mono" style="font-size:26px;font-weight:600;color:var(--ink3)">3</span>
-        <h3>Cash finally beats inflation</h3>
-        <span class="sig sig-good"><i class="gl"></i>Attractive</span>
+        <h3>Australian property is now falling almost everywhere</h3>
+        <span class="sig sig-watch"><i class="gl"></i>Broad downturn</span>
       </div>
-      <p class="oneline">Doing nothing is now a real strategy that pays you, not a penalty. This changes the maths on everything else.</p>
-      <p class="claim"><span class="tag t-data">DATA</span>Best advertised term deposit 5.55% p.a. (Unity Bank, 24 months, $1,000+). 12-month rates to ~5.40%. Australian 10-year government bond yield 5.04% on 21 Aug 2026.<span class="src">Money.com.au / Mozo / Finder term-deposit tables, Aug 2026; Trading Economics AU 10Y, 21 Aug 2026</span></p>
-      <p class="claim"><span class="tag t-read">READ</span>5.55% against 3.9% inflation is roughly <b>+1.6% real, before tax</b>. That is your hurdle rate: any riskier asset has to plausibly beat it, after tax, to be worth the risk. The ASX's 3.34% dividend yield does not clear it on income alone.</p>
-      <p class="claim"><span class="tag t-call">CALL</span>If you're saving a house deposit on a 1–3 year horizon, this is the boring answer and it is a good one.</p>
+      <p class="oneline">Not a Melbourne story any more. In August, 93% of capital-city suburbs fell and every capital except Darwin went backwards.</p>
+      <p class="claim"><span class="tag t-data">DATA</span>National Home Value Index <b>−0.9%</b> in August. Melbourne <b>−1.1%</b> (−3.9% quarter, <b>−4.7% year</b>, −6.3% year to date, about 6% below its November 2025 cyclical peak). Perth <b>−0.8%</b> — and <b>July was revised from +0.1% to −1.3%</b>.<span class="src">Cotality Home Value Index, as at 31 Aug 2026</span></p>
+      <p class="claim"><span class="tag t-data">DATA</span>National rental vacancy rose to <b>1.9%</b> in August, its highest since January 2025, against a record low of 1.5% in February.<span class="src">Cotality, Aug 2026</span></p>
+      <p class="claim"><span class="tag t-read">READ</span>Two things here cut against the "fast recovery" argument this board made last month. Rentals are <b>loosening</b>, not tightening. And Perth — the market that was supposed to be structurally short of housing — turned negative anyway. When 93% of suburbs fall together, that is the cost of credit doing the work, not local fundamentals.</p>
     </div>
 
     <div class="card">
       <div class="sighead">
         <span class="mono" style="font-size:26px;font-weight:600;color:var(--ink3)">4</span>
-        <h3>Gold is running — and it already crashed once this year</h3>
-        <span class="sig sig-watch"><i class="gl"></i>Watch</span>
+        <h3>Bonds at a 15-year high — and that cuts both ways</h3>
+        <span class="sig sig-watch"><i class="gl"></i>Better yield, real losses</span>
       </div>
-      <p class="oneline">Up about 6.5% in under three weeks. Also down more than 20% in a single quarter earlier in 2026. Both are true.</p>
-      <p class="claim"><span class="tag t-data">DATA</span>Gold in AUD moved from ~$6,016/oz on 5 Aug 2026 to ~$6,410/oz by 21 Aug 2026 — about <b>+6.5%</b> in 16 days.<span class="src">150currency.com (5 Aug 2026); goldrate24.com weekly range (19–21 Aug 2026)</span></p>
-      <p class="claim"><span class="tag t-fact">FACT</span>Gold set a record near US$5,600 in January 2026, then fell more than 20% — its worst quarter since 2013 — before rebounding.<span class="src">TheStreet / BingX market commentary, Aug 2026</span></p>
-      <p class="claim"><span class="tag t-read">READ</span>Gold produces no income, so it has no valuation anchor — you cannot say it is "cheap" the way you can with a bond yield or a rental yield. Anyone buying it after a 6.5% fortnight is buying momentum. That is the opposite of what this board is for.</p>
+      <p class="oneline">The Australian 10-year yield hit 5.36%, the highest since May 2011. Great if you are buying. Painful if you already did.</p>
+      <p class="claim"><span class="tag t-data">DATA</span>The 10-year government bond yield added 16 basis points to <b>5.36%</b> on 10 September — the highest level across the curve since <b>May 2011</b> — tracking a surge in global bond yields.<span class="src">YieldReport, 10 Sept 2026; Trading Economics</span></p>
+      <p class="claim"><span class="tag t-read">READ</span>This board rated bonds 🟢 attractive last month at 5.04%, and <b>that call lost money</b>. Yields rose, so prices fell — exactly the mechanism the section described while still rating it green. A 5.36% yield is genuinely better value than 5.04% was, but only for money going in now, and only if you can hold to maturity. See the scorecard below.</p>
     </div>
 
     <div class="card" style="grid-column:1/-1">
       <div class="sighead">
         <span class="mono" style="font-size:26px;font-weight:600;color:var(--ink3)">5</span>
-        <h3>The ASX is near a record and priced like it</h3>
-        <span class="sig sig-watch"><i class="gl"></i>Watch, leaning expensive</span>
+        <h3>Cash quietly got better while everything else got worse</h3>
+        <span class="sig sig-good"><i class="gl"></i>Attractive</span>
       </div>
-      <p class="oneline">A record high three weeks ago, a six-day losing streak since, and a valuation at the top of its five-year range.</p>
+      <p class="oneline">Deposit rates held steady, inflation fell. The real return on doing nothing improved from about 1.6% to about 2.05% — and it was the only thing on this board that didn't lose money this month.</p>
       <div class="grid g2" style="margin-top:4px">
         <div>
-          <p class="claim"><span class="tag t-data">DATA</span>ASX 200 at 9,006 on 21 Aug 2026, after a record 9,296.70 earlier in the month — about <b>3.1% below the peak</b>. Month-to-date +2.07%.<span class="src">Trading Economics (21 Aug 2026); IG afternoon reports, Aug 2026</span></p>
-          <p class="claim"><span class="tag t-data">DATA</span>Trailing P/E around 20×, at the top of a five-year range of roughly 14.9×–20×. Dividend yield down to 3.34% from a 4–4.5% historic average. Morningstar's coverage sits at ~1.23× price-to-fair-value.<span class="src">Morningstar Australia market data; J.P. Morgan Guide to the Markets Australia, Aug 2026</span></p>
+          <p class="claim"><span class="tag t-data">DATA</span>Best advertised term deposits: <b>5.55%</b> for 24 months (Unity Bank), <b>5.50%</b> (Judo Bank), <b>5.40%</b> for 12 months (Heartland Bank, AMP Bank). Rates have been <b>climbing</b> through 2026, not falling.<span class="src">Canstar, Mozo, Finder, Money.com.au term deposit tables, Sept 2026</span></p>
+          <p class="claim"><span class="tag t-data">DATA</span>Headline inflation 3.5%. So <b>5.55% − 3.5% ≈ +2.05% real, before tax.</b></p>
         </div>
         <div>
-          <p class="claim"><span class="tag t-read">READ</span>Paying 20× for a market yielding 3.34% while a term deposit pays 5.55% is a bet on earnings growth, not on income. Banks — the market's largest sector — sold off in August on housing worries, which is the same story as item 1 seen from the other side.</p>
-          <p class="claim"><span class="tag t-call">CALL</span>Not a reason to sell what you hold. It is a reason to be unexcited about deploying a large lump sum into the index at this level, and to prefer spreading entries over time.</p>
+          <p class="claim"><span class="tag t-read">READ</span>Over the last four weeks the ASX fell 4.1%, gold fell 3.9%, bond prices fell, and property fell in 93% of suburbs. A term deposit returned about 0.43% and could not fall. That is not an argument that cash is a good long-term investment — it is not. It is an argument that <b>for money with a deadline, capital certainty is the whole product.</b></p>
+          <p class="claim"><span class="tag t-call">CALL</span>Unchanged from last month, and strengthened. If you are saving a Melbourne deposit, this is still where it belongs. Note the tax qualifier in the costs section — at a 37% marginal rate the after-tax return is close to zero real.</p>
         </div>
       </div>
     </div>
@@ -504,12 +503,17 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
   </div>
 
   <div class="brief">
-    <p class="lede">Almost everything on this board comes back to one thing: the Reserve Bank cut interest rates through 2025, then reversed and raised them three times in the first half of 2026. Every other number is downstream of that.</p>
+    <p class="lede">Almost everything on this board comes back to one thing: the Reserve Bank cut rates through 2025, reversed and raised them three times in early 2026, and is now 82% priced to raise them again on 29 September. On 16 September the US Federal Reserve hiked too — its first increase since 2023. Every other number here is downstream of that.</p>
+    <div class="callout stop" style="margin:14px 0">
+      <h4>What changed since the last version of this briefing</h4>
+      <p style="margin:0;font-size:15px">Four weeks ago the open question was whether rates would rise. <b>It is now settled in one direction.</b> The Fed has moved, all four big Australian banks forecast an RBA hike before year end, and markets price 4.85% by early 2027. In the same four weeks the ASX fell 4.1%, gold fell 3.9%, bond prices fell, and Australian home values fell in <b>93% of capital-city suburbs</b>. Cash was the only thing that held. One of this board's August ratings — bonds at 🟢 — was simply wrong, and is corrected in the <a href="#scorecard">scorecard</a>.</p>
+    </div>
 
     <h3>1. The rate cycle is the engine. Everything else is a gear.</h3>
     <p>Here is the sequence, because the order matters. Through the pandemic the cash rate sat at <b>0.10%</b> — effectively free money. From May 2022 the RBA raised it thirteen times in eighteen months to <b>4.35%</b>, the fastest tightening in a generation. It held there through 2024. Then, with inflation apparently beaten, it began cutting: <b>4.10%</b> in February 2025, <b>3.85%</b> in May, <b>3.60%</b> in August.</p>
     <p>That easing cycle did what easing cycles do. Borrowing capacity rose, buyers came back, and Australian property recovered through late 2025 — Perth spectacularly so, with a 9.9% jump in the final quarter of 2025 alone, its sharpest in twenty years.</p>
-    <p>Then inflation refused to finish dying. The RBA reversed course and hiked in <b>February, March and May 2026</b>, taking the cash rate straight back to 4.35%. It has held there twice since, most recently in August, with Governor Bullock saying inflation "remains too high" and the board "remains concerned".</p>
+    <p>Then inflation refused to finish dying. The RBA reversed course and hiked in <b>February, March and May 2026</b>, taking the cash rate straight back to 4.35%. It has held there since — but that pause looks like it is ending. Headline inflation has fallen to <b>3.5%</b>, yet the <b>trimmed mean the RBA actually targets is stuck at 3.6%</b>, and underlying inflation that refuses to fall is exactly what keeps a central bank hiking.</p>
+    <p>The rest of the world moved first. On 16 September the US Federal Reserve raised its target range to <b>3.75%–4.00%</b> on a 12–0 vote, its first hike in three years, with Chair Kevin Warsh saying inflation is "still too high" and promising a "timelier return" to 2%. Sixteen of the eighteen participants expect another increase this year. When the world's most important central bank starts tightening again, it drags global bond yields with it — which is why the Australian 10-year now sits at <b>5.36%</b>, the highest since May 2011, without the RBA having done anything at all.</p>
     <div class="pull">This is why the board's ratings look upside-down compared to recent performance. The assets that did best were the ones that benefited most from cheap money — and money stopped being cheap in February.</div>
     <p>Inflation is the reason it has not finished. Headline CPI ran at <b>3.9% over the year to the June quarter</b>, with the underlying trimmed-mean measure at <b>3.6%</b>. Both sit above the RBA's 2–3% target band. Until they are inside it, another hike stays on the table — which is why the 29 September meeting matters more to you than any share price on this page.</p>
 
@@ -517,7 +521,9 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
     <p>Two cities, the same interest rate, opposite outcomes. The reason is that they entered 2026 at completely different points in their own cycles.</p>
     <p><b>Melbourne never really recovered from the last downturn.</b> Its dwelling values peaked in March 2022, fell 8.6% to a trough in January 2023, clawed back to roughly 4.9% below that peak by mid-2024 — and then went sideways for two years. As of July 2026 it sits <b>5.5% below a peak set four and a half years ago</b>. In nominal terms Melbourne property has gone nowhere since early 2022. Adjusted for the inflation of that period, it has gone meaningfully backwards.</p>
     <p><b>Perth did the opposite.</b> Its median house price was around $600,000 at the end of 2023. By July 2026 it was <b>$1,073,500</b> — a rise of roughly 79% in two and a half years. Perth was cheap, under-supplied, and riding a resources-linked income boom. It ran the entire cycle Melbourne skipped, and compressed it into thirty months.</p>
-    <p>So when the 2026 hikes landed, they hit two very different markets. Melbourne, already flat and stretched on affordability, rolled over: <b>−1.2% in July, −3.4% for the quarter, −2.8% over the year, −4.9% year to date</b>. Perth, with vacancy at 0.6% and a genuine shortage of homes, simply stopped: <b>+0.1% for the month, −0.3% for the quarter</b>, on top of a +20.5% year.</p>
+    <p>So when the 2026 hikes landed, they hit two very different markets — but a month later that difference is disappearing. Melbourne rolled over first and keeps going: <b>−1.1% in August, −3.9% for the quarter, −4.7% over the year, −6.3% year to date</b>. Perth held out for a while and has now given way: <b>−0.8% in August, −3.2% for the quarter</b>, with its median dwelling back below $1 million at <b>$999,987</b> and annual growth cut from +20.5% to +15.6%.</p>
+    <p>One detail there is worth pausing on. Perth's July figure was originally published as <b>+0.1%</b> and later revised to <b>−1.3%</b>. The previous version of this board built an argument on that +0.1%. <b>Fresh data is an estimate, not a fact</b>, and any conclusion resting on a single new data point is fragile — including the ones on this page today.</p>
+    <p>The broader August picture makes the point better than either city does: <b>93% of capital-city suburbs fell</b>, and every capital except Darwin went backwards. When almost everything falls together, local fundamentals are not doing the work. The price of credit is.</p>
     <p>The mechanism connecting rates to prices is worth stating plainly, because it is the single most useful thing to understand about Australian property. <b>House prices are set mainly by how much buyers can borrow, not by what houses are worth.</b> When the assessment rate a bank uses goes up, the maximum loan every buyer at every auction can carry goes down, all at once. Prices follow within months. Nothing about the house changed. The credit did.</p>
 
     <h3>3. Why cash suddenly matters again</h3>
@@ -528,7 +534,7 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
     <p>None of that means those assets are bad. It means the free ride is over, and each of them now has to justify itself on something other than "the alternative pays nothing".</p>
 
     <h3>4. Why shares and gold are where they are</h3>
-    <p>The ASX 200 hit a record 9,296.70 in early August, then fell for six straight sessions to 9,006. The interesting part is not the fall — it is <b>what fell</b>. Financials led the decline, and financials are the largest sector on the Australian market.</p>
+    <p>The ASX 200 hit a record 9,296.70 in early August and has fallen to <b>8,639</b> — down 7.1% from the peak and 4.1% in the four weeks since the last version of this board. The interesting part is not the fall — it is <b>what fell</b>. Financials led the decline, and financials are the largest sector on the Australian market.</p>
     <p>Banks are, functionally, a leveraged bet on Australian housing. Their loan books are mortgages; their profits depend on people making repayments and on collateral values holding. So a falling Melbourne market and a wobbling bank sector are not two stories — <b>they are one story seen from opposite sides.</b> If you own a broad Australian share fund like VAS and you are also planning to buy a Melbourne house, you have more concentrated exposure to Australian residential property than you probably realise.</p>
     <p>Valuation compounds the caution. The ASX trades near <b>20× trailing earnings</b>, at the very top of its five-year range of about 14.9× to 20×. Morningstar's aggregate price-to-fair-value sits at <b>1.23×</b> — roughly 23% above their analysts' combined estimates — with financials and materials flagged as the most stretched. That is not a crash warning. It is a thin-cushion warning: the market is priced for things going well, so it has little room if they don't.</p>
     <p><b>Gold's story is simpler and more violent.</b> It set a record near US$5,600 in January 2026, then fell more than 20% — its worst quarter since 2013 — before rebounding to around US$4,400 by August. In Australian dollars it moved from roughly $6,016 an ounce on 5 August to <b>$6,410 by the 21st, up 6.5% in sixteen days.</b></p>
@@ -538,11 +544,13 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
     <h3>5. What this actually means for you</h3>
     <p>You have told me one concrete thing about your situation: you may buy a property in Melbourne. That makes most of this page context, and one part of it the actual decision.</p>
     <p>The honest summary is that <b>Melbourne is the most buyer-friendly it has been in years, and you still cannot obviously afford to rush.</b> Both halves are true simultaneously, and holding both is the difficult part.</p>
-    <p>On the friendly side: prices are falling on every timeframe, the auction clearance rate is <b>57.4%</b> against roughly 65% for a balanced market, homes are sitting unsold longer, vendors are discounting more than a year ago, and rental yields are repairing from both directions as rents rise 5.1% while values fall. Melbourne is also the most affordable major capital on price-to-income at <b>7.1×</b>, against Sydney's roughly 10×. Underneath, the demand case has not broken: Victoria has passed seven million people and grows about 1.8% a year, while Greater Melbourne's building approvals run <b>18% below their ten-year average.</b></p>
+    <p>On the friendly side: prices are falling on every timeframe, the auction clearance rate is <b>63.4%</b> against roughly 65% for a balanced market, homes are sitting unsold longer, vendors are discounting more than a year ago, and rental yields are repairing from both directions as rents rise 5.1% while values fall. Melbourne is also the most affordable major capital on price-to-income at <b>7.1×</b>, against Sydney's roughly 10× — though that figure has not been re-verified since August. Underneath, the demand case has not broken: Victoria has passed seven million people and grows about 1.8% a year, while Greater Melbourne's building approvals run <b>18% below their ten-year average.</b></p>
     <p>On the unfriendly side sits one wall. Servicing a new mortgage on the median dwelling nationally takes <b>45.9% of gross household income</b>, against a long-run average of 34.3% and a stress threshold of 30%. Typical variable rates are around 5.9–6.3%, and every lender must assess you <b>3 percentage points above that</b> under APRA's serviceability buffer — so a 6% loan is tested at 9%. A cheaper house financed with dearer money is not automatically a better deal, and the arithmetic in the calculator below will show you exactly where that trade lands for your numbers.</p>
     <div class="pull">The genuinely useful move in a market like this is not "buy" or "wait". It is get completely ready — finance pre-approved, deposit earning 5.55%, suburbs shortlisted — so that when a condition flips you can move in days instead of months.</div>
-    <p>Because the condition that flips it is identifiable. Melbourne's problem is the cost of credit, not an oversupply of houses. A supply glut takes years to clear. A credit problem can reverse in a single RBA meeting. With vacancy under 1.8%, population growing 1.8% a year and approvals 18% below average, the ingredients for a fast recovery are already in place — waiting only on rates. That is the asymmetry to plan around: the downside is gradual, and the upside arrives all at once, at which point everyone who was waiting for the bottom shows up on the same weekend.</p>
-    <p>One last thing worth internalising, because it is the most useful pattern on this entire board. The three best-performing assets of the past year were the Nasdaq (+26.4%), gold (+22.3%) and Perth property (+20.5%). They are also the three this board rates <b>least</b> favourably. That is not contrarianism for its own sake — it is what buying after the move looks like from the inside. The asset sitting at the bottom of the performance table, Melbourne property at −2.8%, is the one the analysis likes most. If that feels uncomfortable, that discomfort is the entire reason a board like this exists.</p>
+    <p>Because the condition that flips it is identifiable. Melbourne's problem is the cost of credit, not an oversupply of houses. A supply glut takes years to clear; a credit problem can reverse in a single RBA meeting. Population is still growing about 1.8% a year and Greater Melbourne's building approvals still run <b>18% below their ten-year average</b>, so the ingredients for a recovery remain.</p>
+    <p><b>But I need to walk one thing back.</b> Last month I argued that rental vacancy under 1.8% made a fast, violent rebound likely — "everyone who was waiting for the bottom shows up on the same weekend". National vacancy has since risen to <b>1.9%</b>, its highest since January 2025, against a record low of 1.5% in February. The rental squeeze that would have powered that rebound is easing. The recovery case still stands on population and undersupply; it no longer stands on a rental crisis. Treat the "upside arrives all at once" warning as weaker than I put it, which means <b>you have more time than the August board implied.</b></p>
+    <p>One last thing worth internalising, because four weeks have now tested it. In August this board noted that the three best-performing assets of the year — the Nasdaq, gold and Perth property — were the three it rated least favourably, while the worst performer, Melbourne property, was the one it liked most. Since then <b>gold has fallen 3.9%, the ASX 4.1%, and Perth has turned negative with its July gain revised away.</b> Buying after the move is a reliable way to arrive late, and that pattern held.</p>
+    <p>Which is exactly why the <a href="#scorecard">scorecard</a> matters more than any rating on this page. Five of the August calls were right, one was clearly wrong, and two were too optimistic — and <b>both errors were optimistic ones</b>. If that bias is systematic rather than luck, the correction is simple: read this board's green ratings more sceptically than its red ones, including everything written today.</p>
     <label class="done"><input type="checkbox" data-sec="brief"> Got it — briefing read</label>
   </div>
 </section>
@@ -552,112 +560,114 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
     <div style="flex:1">
       <div class="eyebrow">The whole board on one screen</div>
       <h2>📊 Market snapshot</h2>
-      <p class="sec-sub">Empty cells are deliberate. Where I could not verify a number from a reputable source, it says so instead of guessing.</p>
+      <p class="sec-sub">Empty cells are deliberate. Where I could not verify a number from a reputable source, it says so instead of guessing. The <b>prev</b> column is this board's own figure from 22 August.</p>
     </div>
   </div>
 
   <div class="card">
     <div class="scroll">
-      <table>
+      <table style="min-width:900px">
         <caption>All figures as at the date in the source column. Percentages are price change only — they exclude dividends, rent and costs.</caption>
         <thead>
-          <tr><th>Asset</th><th class="num">Current</th><th class="num">1&nbsp;month</th><th class="num">6&nbsp;months</th><th class="num">1&nbsp;year</th><th>Status</th><th>Source &amp; date</th></tr>
+          <tr><th>Asset</th><th class="num">Current</th><th class="num">Prev<br>(22 Aug)</th><th class="num">4 weeks</th><th class="num">6&nbsp;months</th><th class="num">1&nbsp;year</th><th>Status</th><th>Source &amp; date</th></tr>
         </thead>
         <tbody>
           <tr>
             <td><b>🥇 Gold</b><br><span style="font-size:12.5px;color:var(--ink2)">AUD per ounce</span></td>
-            <td class="num">$6,410.23</td>
-            <td class="num up">+6.5%<br><span style="font-size:11px;color:var(--ink3)">16 days</span></td>
-            <td class="num na">not verified</td>
-            <td class="num na">not verified</td>
+            <td class="num">$6,160.01</td><td class="num" style="color:var(--ink3)">$6,410.23</td>
+            <td class="num dn">−3.9%</td><td class="num na">not verified</td><td class="num na">not verified</td>
             <td><span class="sig sig-watch"><i class="gl"></i>Watch</span></td>
-            <td style="font-size:12px">goldrate24.com, 21 Aug 2026; 5 Aug base from 150currency.com</td>
+            <td style="font-size:12px">melbournegoldcompany.com.au / goodreturns AUD series, 18 Sept 2026</td>
           </tr>
           <tr>
             <td><b>📈 ASX 200</b><br><span style="font-size:12.5px;color:var(--ink2)">Australian shares</span></td>
-            <td class="num">9,006</td>
-            <td class="num up">+2.07%</td>
-            <td class="num na">not verified</td>
-            <td class="num na">not verified</td>
+            <td class="num">8,639</td><td class="num" style="color:var(--ink3)">9,006</td>
+            <td class="num dn">−4.1%</td><td class="num na">not verified</td><td class="num na">not verified</td>
             <td><span class="sig sig-watch"><i class="gl"></i>Watch</span></td>
-            <td style="font-size:12px">Trading Economics, 21 Aug 2026</td>
+            <td style="font-size:12px">Trading Economics, 18 Sept 2026 (−1.07% that session)</td>
           </tr>
           <tr>
             <td><b>🇺🇸 S&amp;P 500</b><br><span style="font-size:12.5px;color:var(--ink2)">US shares</span></td>
-            <td class="num">7,681</td>
-            <td class="num dn">−0.7%<br><span style="font-size:11px;color:var(--ink3)">since 4 Aug</span></td>
-            <td class="num na">not verified</td>
-            <td class="num na">not verified</td>
+            <td class="num">7,650.50</td><td class="num" style="color:var(--ink3)">7,681</td>
+            <td class="num dn">−0.4%</td><td class="num na">not verified</td><td class="num na">not verified</td>
             <td><span class="sig sig-watch"><i class="gl"></i>Watch</span></td>
-            <td style="font-size:12px">Trading Economics, 21 Aug 2026; record close 7,737 on 4 Aug 2026 (CNN, CNBC)</td>
+            <td style="font-size:12px">Yahoo Finance / Trading Economics, 18 Sept 2026</td>
           </tr>
           <tr>
             <td><b>🏠 Melbourne property</b><br><span style="font-size:12.5px;color:var(--ink2)">median dwelling value</span></td>
-            <td class="num">$797,354</td>
-            <td class="num dn">−1.2%</td>
-            <td class="num dn">−4.9%<br><span style="font-size:11px;color:var(--ink3)">2026 to date</span></td>
-            <td class="num dn">−2.8%</td>
-            <td><span class="sig sig-watch"><i class="gl"></i>Watch → improving</span></td>
-            <td style="font-size:12px">Cotality / CoreLogic HVI, July 2026</td>
+            <td class="num">~$788,600<br><span style="font-size:11px;color:var(--ink3)">derived</span></td><td class="num" style="color:var(--ink3)">$797,354</td>
+            <td class="num dn">−1.1%<br><span style="font-size:11px;color:var(--ink3)">August</span></td>
+            <td class="num dn">−6.3%<br><span style="font-size:11px;color:var(--ink3)">2026 to date</span></td>
+            <td class="num dn">−4.7%</td>
+            <td><span class="sig sig-watch"><i class="gl"></i>Watch</span></td>
+            <td style="font-size:12px">Cotality HVI, 31 Aug 2026. Median is my arithmetic on the July figure and the August move, not a published number.</td>
           </tr>
           <tr>
             <td><b>🌅 Perth property</b><br><span style="font-size:12.5px;color:var(--ink2)">median dwelling value</span></td>
-            <td class="num">~$1,030,000</td>
-            <td class="num flat">+0.1%</td>
-            <td class="num dn">−0.3%<br><span style="font-size:11px;color:var(--ink3)">quarter</span></td>
-            <td class="num up">+20.5%</td>
-            <td><span class="sig sig-risk"><i class="gl"></i>Late cycle</span></td>
-            <td style="font-size:12px">Cotality / CoreLogic HVI, July 2026</td>
+            <td class="num">$999,987</td><td class="num" style="color:var(--ink3)">~$1,030,000</td>
+            <td class="num dn">−0.8%<br><span style="font-size:11px;color:var(--ink3)">August</span></td>
+            <td class="num dn">−3.2%<br><span style="font-size:11px;color:var(--ink3)">quarter</span></td>
+            <td class="num up">+15.6%</td>
+            <td><span class="sig sig-risk"><i class="gl"></i>Rolling over</span></td>
+            <td style="font-size:12px">Cotality HVI, 31 Aug 2026. July revised from +0.1% to −1.3%.</td>
           </tr>
           <tr>
             <td><b>💵 Cash (term deposit)</b><br><span style="font-size:12.5px;color:var(--ink2)">best advertised, 24mth</span></td>
-            <td class="num">5.55% p.a.</td>
-            <td class="num flat">—</td>
-            <td class="num flat">—</td>
-            <td class="num flat">—</td>
+            <td class="num">5.55% p.a.</td><td class="num" style="color:var(--ink3)">5.55%</td>
+            <td class="num flat">unchanged</td><td class="num flat">—</td><td class="num flat">—</td>
             <td><span class="sig sig-good"><i class="gl"></i>Attractive</span></td>
-            <td style="font-size:12px">Money.com.au / Mozo tables, Aug 2026 (Unity Bank, $1,000+)</td>
+            <td style="font-size:12px">Canstar / Mozo / Finder, Sept 2026 (Unity Bank; 12mth best 5.40%)</td>
           </tr>
           <tr>
             <td><b>🏛️ AU 10-year bond</b><br><span style="font-size:12.5px;color:var(--ink2)">government yield</span></td>
-            <td class="num">5.04%</td>
-            <td class="num up">rising</td>
-            <td class="num na">not verified</td>
-            <td class="num na">not verified</td>
-            <td><span class="sig sig-good"><i class="gl"></i>Attractive yield</span></td>
-            <td style="font-size:12px">Trading Economics, 21 Aug 2026</td>
+            <td class="num">5.36%</td><td class="num" style="color:var(--ink3)">5.04%</td>
+            <td class="num dn">+32bp<br><span style="font-size:11px;color:var(--ink3)">prices fell</span></td><td class="num na">not verified</td><td class="num na">not verified</td>
+            <td><span class="sig sig-watch"><i class="gl"></i>Good yield, falling prices</span></td>
+            <td style="font-size:12px">YieldReport, 10 Sept 2026 — highest since May 2011</td>
+          </tr>
+          <tr>
+            <td><b>🏦 RBA cash rate</b><br><span style="font-size:12.5px;color:var(--ink2)">next call 29 Sept</span></td>
+            <td class="num">4.35%</td><td class="num" style="color:var(--ink3)">4.35%</td>
+            <td class="num flat">held</td><td class="num flat">—</td><td class="num flat">—</td>
+            <td><span class="sig sig-risk"><i class="gl"></i>82% priced to hike</span></td>
+            <td style="font-size:12px">RBA; market pricing via OrbitRemit / Finder, Sept 2026</td>
+          </tr>
+          <tr>
+            <td><b>🇺🇸 US Fed funds</b><br><span style="font-size:12.5px;color:var(--ink2)">target range</span></td>
+            <td class="num">3.75–4.00%</td><td class="num" style="color:var(--ink3)">3.50–3.75%</td>
+            <td class="num dn">+0.25<br><span style="font-size:11px;color:var(--ink3)">HIKED</span></td><td class="num flat">—</td><td class="num flat">—</td>
+            <td><span class="sig sig-risk"><i class="gl"></i>Tightening</span></td>
+            <td style="font-size:12px">FOMC, 16 Sept 2026 — first hike since 2023, 12–0</td>
           </tr>
           <tr>
             <td><b>💱 AUD / USD</b><br><span style="font-size:12.5px;color:var(--ink2)">exchange rate</span></td>
-            <td class="num">0.7169</td>
-            <td class="num up">+2.45%</td>
-            <td class="num na">not verified</td>
-            <td class="num up">+10.80%</td>
-            <td><span class="sig sig-watch"><i class="gl"></i>Headwind offshore</span></td>
-            <td style="font-size:12px">Trading Economics, 21 Aug 2026</td>
+            <td class="num">0.7121</td><td class="num" style="color:var(--ink3)">0.7169</td>
+            <td class="num dn">−0.7%</td><td class="num na">not verified</td><td class="num up">+10.8%<br><span style="font-size:11px;color:var(--ink3)">as at 21 Aug</span></td>
+            <td><span class="sig sig-watch"><i class="gl"></i>Headwind easing</span></td>
+            <td style="font-size:12px">Trading Economics, 18 Sept 2026</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="callout" style="margin-top:14px">
-      <h4>💱 One number that quietly affects half this page</h4>
-      <p style="margin:0;font-size:14.5px">The Australian dollar is up <b>10.8% over the year</b> against the US dollar (0.7169, Trading Economics, 21 Aug 2026 — so <b class="mono">1 USD ≈ 1.395 AUD</b>). A rising AUD <b>subtracts</b> from the Australian-dollar return on every unhedged overseas holding — US shares, global ETFs, gold priced in USD. When you see a US index at a record but your VGS or IVV balance looks flat, this is usually why.</p>
+    <div class="callout warn" style="margin-top:14px">
+      <h4>📉 The pattern in this table is the story</h4>
+      <p style="margin:0;font-size:14.5px">Shares down, gold down, bond prices down, property down, currency down. <b>Only cash held.</b> When almost everything falls together, it usually means one cause rather than many — and here that cause is named twice in the table: the Fed hiked, and the RBA is priced to. Diversification across assets does not protect you from a change in the price of money, because the price of money is an input to all of them.</p>
     </div>
   </div>
 
   <div class="figure">
-    <h4>Where the ASX 200 sits in its own recent range</h4>
-    <p style="font-size:13.5px;color:var(--ink2);margin:4px 0 0">Range of the 31 days to 21 August 2026. Roughly halfway — neither a crash nor a melt-up.</p>
+    <h4>Where the ASX 200 sits now</h4>
+    <p style="font-size:13.5px;color:var(--ink2);margin:4px 0 0">Against the range of the last two months. It has given back the entire August rally and then some.</p>
     <div class="strip">
       <div class="track"></div>
       <div class="fill" style="left:0;right:0"></div>
-      <div class="now" style="left:48.4%"></div>
-      <div class="nowlab" style="left:48.4%">9,006 now</div>
-      <div class="end" style="left:0">8,733 low</div>
-      <div class="end" style="right:0">9,296.70 high</div>
+      <div class="now" style="left:0%"></div>
+      <div class="nowlab" style="left:2%">8,639 now — at the bottom of the range</div>
+      <div class="end" style="left:0">8,639 low</div>
+      <div class="end" style="right:0">9,296.70 high (Aug record)</div>
     </div>
-    <p class="fig-note">Source: Trading Economics / IG afternoon reports, 21 Jul – 21 Aug 2026. Record high 9,296.70 set early August 2026.</p>
+    <p class="fig-note">Source: Trading Economics, 18 Sept 2026; record high 9,296.70 set early August 2026. The index is 7.1% below that peak.</p>
   </div>
   <label class="done"><input type="checkbox" data-sec="snapshot"> Got it — snapshot read</label>
 </section>
@@ -665,40 +675,166 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
 <section id="changed">
   <div class="sec-head">
     <div style="flex:1">
-      <div class="eyebrow">Only material moves · noise filtered out</div>
-      <h2>🔄 What has changed?</h2>
-      <p class="sec-sub" id="lastVisitNote">Changes captured during August 2026, versus where things sat at the start of the month.</p>
+      <div class="eyebrow">Real comparison · 22 Aug → 19 Sept 2026</div>
+      <h2>🔄 What has changed in four weeks</h2>
+      <p class="sec-sub">Every figure below is measured against the previous version of this board, not described from memory. Moves I judge <b>material</b> are marked; the rest are noise.</p>
     </div>
   </div>
 
-  <div class="grid g2">
-    <div class="card">
-      <h3 style="font-size:17px;margin-bottom:10px">🔺 Moved enough to matter</h3>
-      <ul style="font-size:15px">
-        <li><b>Gold +6.5% in 16 days</b> (AUD $6,016 → $6,410/oz). Driven by softer US inflation shifting Fed expectations.</li>
-        <li><b>ASX 200 set a record then gave back 3.1%</b> — 9,296.70 high, six-day losing streak, 9,006 on 21 Aug.</li>
-        <li><b>Melbourne houses fell 1.4% in one month</b> — the steepest monthly decline across all Australian property types in July.</li>
-        <li><b>AU 10-year bond yield pushed above 5%</b> (5.04%), near multi-month highs, tracking a global bond selloff.</li>
-        <li><b>AUD strengthened to 0.7169</b>, +2.45% on the month — quietly eroding unhedged offshore returns.</li>
-        <li><b>US inflation cooled to 3.4%</b> headline / 2.5% core in July, both down 0.1pp — the trigger for gold's run.</li>
-      </ul>
+  <div class="card">
+    <div class="scroll">
+      <table style="min-width:800px">
+        <caption>28 days. Sorted by how much the change should affect your thinking, not by size of the move.</caption>
+        <thead><tr><th>What</th><th class="num">22 Aug</th><th class="num">19 Sept</th><th class="num">Change</th><th>Why it matters</th></tr></thead>
+        <tbody>
+          <tr style="background:var(--risk-bg)">
+            <td><b>🇺🇸 US Fed funds rate</b></td><td class="num">3.50–3.75%</td><td class="num"><b>3.75–4.00%</b></td><td class="num dn">+0.25</td>
+            <td style="font-size:13.5px"><b>MATERIAL — the biggest change.</b> First US hike since 2023, voted 12–0. The global easing cycle is formally over.</td>
+          </tr>
+          <tr style="background:var(--risk-bg)">
+            <td><b>🏦 RBA hike odds, next meeting</b></td><td class="num">open question</td><td class="num"><b>82%</b></td><td class="num dn">priced in</td>
+            <td style="font-size:13.5px"><b>MATERIAL.</b> All four big banks now forecast a hike before year end. Markets price 4.85% by early 2027.</td>
+          </tr>
+          <tr style="background:var(--risk-bg)">
+            <td><b>🏛️ AU 10-year bond yield</b></td><td class="num">5.04%</td><td class="num"><b>5.36%</b></td><td class="num dn">+32bp</td>
+            <td style="font-size:13.5px"><b>MATERIAL.</b> Highest since May 2011. Better entry yield; capital loss for anyone already holding.</td>
+          </tr>
+          <tr style="background:var(--risk-bg)">
+            <td><b>🌅 Perth, monthly</b></td><td class="num">+0.1%</td><td class="num"><b>−0.8%</b></td><td class="num dn">turned</td>
+            <td style="font-size:13.5px"><b>MATERIAL.</b> And <b>July was revised from +0.1% to −1.3%</b>. The strongest capital has joined the downturn.</td>
+          </tr>
+          <tr style="background:var(--watch-bg)">
+            <td><b>🌅 Perth, annual</b></td><td class="num">+20.5%</td><td class="num"><b>+15.6%</b></td><td class="num dn">−4.9pp</td>
+            <td style="font-size:13.5px"><b>MATERIAL.</b> Decelerating fast. Median dwelling back below $1m at <b>$999,987</b>.</td>
+          </tr>
+          <tr style="background:var(--watch-bg)">
+            <td><b>🏠 Melbourne, annual</b></td><td class="num">−2.8%</td><td class="num"><b>−4.7%</b></td><td class="num dn">−1.9pp</td>
+            <td style="font-size:13.5px"><b>MATERIAL.</b> −6.3% year to date, about 6% below the November 2025 cyclical peak.</td>
+          </tr>
+          <tr style="background:var(--watch-bg)">
+            <td><b>🏘️ National vacancy rate</b></td><td class="num">tightening</td><td class="num"><b>1.9%</b></td><td class="num dn">loosening</td>
+            <td style="font-size:13.5px"><b>MATERIAL — and it cuts against last month's argument.</b> Highest since Jan 2025, against a 1.5% record low in February. Rentals are easing, not tightening.</td>
+          </tr>
+          <tr>
+            <td><b>📈 ASX 200</b></td><td class="num">9,006</td><td class="num"><b>8,639</b></td><td class="num dn">−4.1%</td>
+            <td style="font-size:13.5px">Now <b>7.1% below</b> the 9,296.70 record set in early August. The valuation warning played out.</td>
+          </tr>
+          <tr>
+            <td><b>🥇 Gold, AUD/oz</b></td><td class="num">$6,410</td><td class="num"><b>$6,160</b></td><td class="num dn">−3.9%</td>
+            <td style="font-size:13.5px">Gave back most of the August spike, as a Fed hike is gold's worst environment.</td>
+          </tr>
+          <tr>
+            <td><b>🏠 Melbourne clearance rate</b></td><td class="num">57.4%</td><td class="num"><b>63.4%</b></td><td class="num up">+6.0pp</td>
+            <td style="font-size:13.5px">The one property number that improved. Still under the ~65% balanced level, so you retain negotiating power — but less of it.</td>
+          </tr>
+          <tr>
+            <td><b>📊 AU headline CPI</b></td><td class="num">3.9%</td><td class="num"><b>3.5%</b></td><td class="num up">−0.4pp</td>
+            <td style="font-size:13.5px">Good news — but the <b>trimmed mean the RBA targets was unchanged at 3.6%</b>, which is why a hike is still priced.</td>
+          </tr>
+          <tr>
+            <td><b>💵 Best term deposit</b></td><td class="num">5.55%</td><td class="num">5.55%</td><td class="num flat">unchanged</td>
+            <td style="font-size:13.5px">With inflation down, the <b>real</b> return improved from ~1.6% to ~2.05%.</td>
+          </tr>
+          <tr>
+            <td><b>🇺🇸 S&amp;P 500</b></td><td class="num">7,681</td><td class="num">7,650</td><td class="num dn">−0.4%</td>
+            <td style="font-size:13.5px">Barely moved — notably resilient through a Fed hike.</td>
+          </tr>
+          <tr>
+            <td><b>💱 AUD / USD</b></td><td class="num">0.7169</td><td class="num">0.7121</td><td class="num dn">−0.7%</td>
+            <td style="font-size:13.5px">Slight easing. A small tailwind for unhedged offshore holdings, reversing a little of the year's headwind.</td>
+          </tr>
+          <tr>
+            <td><b>🏠 Melbourne gross yield</b></td><td class="num">4.0%</td><td class="num">4.0%</td><td class="num flat">unchanged</td>
+            <td style="font-size:13.5px">Falling values and rising rents continue to offset each other.</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="card">
-      <h3 style="font-size:17px;margin-bottom:10px">➖ Held steady (still important)</h3>
-      <ul style="font-size:15px">
-        <li><b>RBA held at 4.35%</b> for a second consecutive meeting. No change is still a decision.</li>
-        <li><b>US Fed held at 3.50–3.75%</b> in July — but with <b>three dissents wanting a hike</b>, which is unusual and worth noting.</li>
-        <li><b>Perth essentially flat</b> at +0.1% for the month after a year of +20.5%. The engine is idling.</li>
-        <li><b>Melbourne vacancy</b> remains slightly below the 1.8% of a year ago — still tight despite falling prices.</li>
-      </ul>
-      <div class="callout warn" style="margin-top:6px">
-        <h4>The single most important sentence on this page</h4>
-        <p style="margin:0;font-size:14.5px">Australian house prices are falling in Melbourne <b>while interest rates are going up</b>. That combination is rarer than it sounds, and it is the whole reason the Melbourne buy-signal section below exists.</p>
-      </div>
+
+    <div class="mech" style="margin-top:14px">
+      <h4>What the month actually means, in three sentences</h4>
+      <p><b>One.</b> The question changed from "will rates fall again?" to "how many more hikes?" — the Fed has moved, the RBA is 82% priced, and all four big banks agree on direction.</p>
+      <p><b>Two.</b> Everything that depends on cheap money fell together: shares −4.1%, gold −3.9%, bond prices down, property down in 93% of capital-city suburbs. That correlation is the tell — it was one cause, not nine separate stories.</p>
+      <p><b>Three.</b> For you specifically, the Melbourne buying case got <b>better on price and worse on financing</b>, and those two moved by similar amounts. That is why the buy signal below has not changed colour despite a month of falling prices.</p>
+    </div>
+    <p style="font-size:13px;color:var(--ink3);margin-top:12px" id="visitLine"></p>
+    <label class="done"><input type="checkbox" data-sec="changed"> Got it — changes read</label>
+  </div>
+</section>
+
+<section id="scorecard">
+  <div class="sec-head">
+    <div style="flex:1">
+      <div class="eyebrow">Accountability · marking my own homework</div>
+      <h2>📋 How did last month's calls hold up?</h2>
+      <p class="sec-sub">A dashboard that only ever tells you what it thinks now, and never what it got wrong, is not worth trusting. Here is every rating from the 22 August board, scored against what actually happened. <b>One was clearly wrong.</b></p>
     </div>
   </div>
-  <p style="font-size:13px;color:var(--ink3);margin-top:12px" id="visitLine"></p>
-  <label class="done"><input type="checkbox" data-sec="changed"> Got it — changes read</label>
+
+  <div class="card">
+    <div class="scroll">
+      <table style="min-width:780px">
+        <thead><tr><th>What I said on 22 Aug</th><th>Rating</th><th>What happened</th><th>Verdict</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>"Rates are going the wrong way for borrowers."</b> Named as the #2 thing to watch.</td>
+            <td><span class="sig sig-risk"><i class="gl"></i>High impact</span></td>
+            <td style="font-size:13.5px">The Fed hiked on 16 Sept; the RBA is now 82% priced to follow on 29 Sept; all four big banks forecast a hike.</td>
+            <td><b style="color:var(--good)">✅ Right</b><br><span style="font-size:12.5px">The most important call, and it landed.</span></td>
+          </tr>
+          <tr>
+            <td><b>Perth: "high risk of buying late in the cycle."</b> The board's only 🔴 on an asset.</td>
+            <td><span class="sig sig-risk"><i class="gl"></i>High risk</span></td>
+            <td style="font-size:13.5px">July revised from +0.1% to <b>−1.3%</b>, August <b>−0.8%</b>, quarter −3.2%, annual growth cut from +20.5% to +15.6%, median back under $1m.</td>
+            <td><b style="color:var(--good)">✅ Right</b><br><span style="font-size:12.5px">The strongest call on the board.</span></td>
+          </tr>
+          <tr>
+            <td><b>Gold: "anyone buying after a 6.5% fortnight is buying momentum."</b></td>
+            <td><span class="sig sig-watch"><i class="gl"></i>Watch</span></td>
+            <td style="font-size:13.5px">Gold fell <b>3.9%</b> in AUD over the following four weeks, as the Fed hiked.</td>
+            <td><b style="color:var(--good)">✅ Right</b></td>
+          </tr>
+          <tr>
+            <td><b>ASX: "unexcited about deploying a large lump sum at this level."</b> P/E at the top of its range.</td>
+            <td><span class="sig sig-watch"><i class="gl"></i>Watch</span></td>
+            <td style="font-size:13.5px">ASX 200 fell <b>4.1%</b>, to 7.1% below its record.</td>
+            <td><b style="color:var(--good)">✅ Right</b></td>
+          </tr>
+          <tr>
+            <td><b>Cash: "the hurdle rate everything else must beat."</b></td>
+            <td><span class="sig sig-good"><i class="gl"></i>Attractive</span></td>
+            <td style="font-size:13.5px">Rates held at 5.55%; inflation fell to 3.5%, improving the real return to ~2.05%. The only asset here that could not lose money.</td>
+            <td><b style="color:var(--good)">✅ Right</b></td>
+          </tr>
+          <tr style="background:var(--risk-bg)">
+            <td><b>Bonds at 5.04%: rated "attractive yield".</b> The section correctly explained that bond prices fall when yields rise — and then rated it green anyway.</td>
+            <td><span class="sig sig-good"><i class="gl"></i>Attractive</span></td>
+            <td style="font-size:13.5px">The 10-year yield rose to <b>5.36%</b>. Yields up means prices down. <b>Anyone who bought on that rating is holding a capital loss.</b></td>
+            <td><b style="color:var(--risk)">❌ Wrong</b><br><span style="font-size:12.5px">I described the risk and then didn't price it into the rating.</span></td>
+          </tr>
+          <tr style="background:var(--watch-bg)">
+            <td><b>Scenario weights: "rates rise ~1 in 4, hold ~1 in 2, fall ~1 in 4."</b></td>
+            <td><span class="sig sig-watch"><i class="gl"></i>Judgement</span></td>
+            <td style="font-size:13.5px">The market now prices a hike at <b>82%</b> for the very next meeting. My 25% was far too sanguine.</td>
+            <td><b style="color:var(--watch)">⚠️ Too optimistic</b><br><span style="font-size:12.5px">Reweighted below, and now anchored to market pricing rather than my judgement.</span></td>
+          </tr>
+          <tr style="background:var(--watch-bg)">
+            <td><b>Melbourne: "vacancy under 1.8% means the ingredients for a fast recovery are in place."</b></td>
+            <td><span class="sig sig-watch"><i class="gl"></i>Watch → improving</span></td>
+            <td style="font-size:13.5px">Directionally right that prices kept falling (−1.1% in August). But <b>national vacancy rose to 1.9%</b>, its highest since January 2025 — the rental market is loosening, not tightening.</td>
+            <td><b style="color:var(--watch)">⚠️ Partly wrong</b><br><span style="font-size:12.5px">One of the pillars of the recovery argument weakened.</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout stop">
+      <h4>What I'd take from my own scorecard</h4>
+      <p style="font-size:14.5px;margin-bottom:8px"><b>Five right, one wrong, two too optimistic.</b> That is a reasonable month, and it is also exactly the kind of record that should stop you treating any of this as authoritative. Note the pattern in the misses: <b>both errors were optimistic ones.</b> I under-weighted a rate rise and over-weighted a property recovery. If that bias is systematic rather than luck, the correction is to read this board's green ratings more sceptically than its red ones.</p>
+      <p style="font-size:14.5px;margin-bottom:0">The bond call is the instructive failure. The analysis was <em>correct</em> — the section explicitly said "bond prices fall when yields rise" — but the <b>rating didn't follow the analysis</b>. A high yield looked attractive in isolation, and I rated the yield instead of the position. That is a very common way to lose money, and it is worth watching for elsewhere on this page, including in what I have written today.</p>
+    </div>
+    <label class="done"><input type="checkbox" data-sec="scorecard"> Got it — scorecard read</label>
+  </div>
 </section>
 <section id="history">
   <div class="sec-head">
@@ -748,8 +884,8 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
 
   <div class="grid g2">
     <div class="figure" style="margin-top:0">
-      <h4>Melbourne: four and a half years of going nowhere</h4>
-      <p style="font-size:13.5px;color:var(--ink2);margin:4px 0 0">Distance below the March 2022 peak. This is the context that makes −2.8% look like something other than a collapse.</p>
+      <h4>Melbourne: still below where it was in March 2022</h4>
+      <p style="font-size:13.5px;color:var(--ink2);margin:4px 0 0">Distance below the March 2022 all-time peak. Values recovered during the 2025 rate cuts to a <b>cyclical</b> peak in November 2025, then turned down again when the 2026 hikes landed.</p>
       <div class="scroll">
       <svg class="chart" viewBox="0 0 640 250" role="img" aria-label="Melbourne dwelling values relative to the March 2022 peak. Fell to minus 8.6 percent by January 2023, recovered to minus 4.9 percent by August 2024, then minus 5.4 percent in April 2026 and minus 5.5 percent in July 2026.">
         <line class="grid-l" x1="60" y1="70" x2="610" y2="70"></line>
@@ -773,16 +909,16 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
         <text class="val" x="60" y="30" text-anchor="start" font-size="10.5">peak Mar 2022</text>
         <text class="val" x="154.8" y="185" text-anchor="middle" font-size="10.5">−8.6% trough</text>
         <text class="val" x="335" y="105" text-anchor="middle" font-size="10.5">−4.9%</text>
-        <text class="val" x="553.1" y="140" text-anchor="end" font-size="10.5">−5.5% now</text>
+        <text class="val" x="553.1" y="140" text-anchor="end" font-size="10.5">falling again</text>
         <text x="60" y="215" text-anchor="start" font-size="11">2022</text>
         <text x="240" y="215" text-anchor="middle" font-size="11">2023</text>
         <text x="360" y="215" text-anchor="middle" font-size="11">2024</text>
         <text x="470" y="215" text-anchor="middle" font-size="11">2025</text>
         <text x="580" y="215" text-anchor="middle" font-size="11">2026</text>
-        <text x="335" y="238" text-anchor="middle" font-size="10.5" fill="var(--ink3)">flat for roughly two years between these two points</text>
+        <text x="335" y="238" text-anchor="middle" font-size="10.5" fill="var(--ink3)">recovered through 2025, peaked Nov 2025, falling again since</text>
       </svg>
       </div>
-      <p class="fig-note">Sources: Cotality / CoreLogic — peak March 2022; −8.6% peak-to-trough to January 2023; −4.9% below peak as at August 2024; −5.4% as at April 2026; −5.5% as at July 2026. Only these five points are verified; the line between them is drawn straight and the real path wobbled.</p>
+      <p class="fig-note"><b>Corrected since the last version of this board.</b> Sources: Cotality / CoreLogic — all-time peak March 2022; −8.6% peak-to-trough to January 2023; −4.9% below peak as at August 2024; −5.4% as at April 2026; −5.5% as at July 2026. Cotality now also reports Melbourne as about <b>6% below a cyclical peak set in November 2025</b>, and −6.3% year to date in 2026. The August 2026 board framed this as "four and a half years of going nowhere"; that undersold a real 2025 recovery driven by the rate cuts, which the 2026 hikes have since unwound. Only the plotted points are verified; the line between them is drawn straight and the real path wobbled.</p>
     </div>
 
     <div class="figure" style="margin-top:0">
@@ -825,7 +961,7 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
           <tr><td class="num"><b>2023</b></td><td>Reaches 4.35% in November</td><td><b>Trough January, −8.6%</b> from peak</td><td>Median ~$600,000 at year end</td><td>ASX 200 +12.2%</td></tr>
           <tr><td class="num"><b>2024</b></td><td>Held at 4.35% all year</td><td>−4.9% below peak by August; drifting</td><td>$668,000 by June — running hot</td><td>ASX 200 +11.5% · gold +38.2% in AUD</td></tr>
           <tr><td class="num"><b>2025</b></td><td><b>Three cuts</b> — 4.10%, 3.85%, 3.60%</td><td>Recovering with the easing cycle</td><td><b>$1,087,762</b> — +9.9% in Q4 alone, sharpest in 20 years</td><td>ASX 200 +10.2% · gold <b>+53.5%</b> in AUD</td></tr>
-          <tr style="background:var(--watch-bg)"><td class="num"><b>2026</b><br><span style="font-size:12px">to date</span></td><td><b>Three hikes</b> — back to 4.35%, held twice</td><td><b>−4.9% year to date</b>, −5.5% below peak</td><td>+20.5% over the year but <b>now stalled</b></td><td>ASX 200 at a record then −3.1% · gold record then −20% then rebound</td></tr>
+          <tr style="background:var(--watch-bg)"><td class="num"><b>2026</b><br><span style="font-size:12px">to 19 Sept</span></td><td><b>Three RBA hikes</b> to 4.35%, held since; <b>US Fed hiked 16 Sept</b> to 3.75–4.00%; RBA 82% priced for 29 Sept</td><td><b>−6.3% year to date</b>, −4.7% over the year, ~6% below the Nov 2025 cyclical peak</td><td>+15.6% over the year but <b>now falling</b> — August −0.8%, July revised to −1.3%, median back under $1m</td><td>ASX 200 record 9,296.70 then <b>−7.1%</b> to 8,639 · gold record, −20%, rebound, then −3.9% on the Fed hike · AU 10yr 5.36%, highest since 2011</td></tr>
         </tbody>
       </table>
     </div>
@@ -834,9 +970,10 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
       <ol>
         <li><b>The rate cycle leads everything by six to twelve months.</b> Cuts in early 2025 produced the property recovery of late 2025. Hikes in early 2026 produced the falls you are looking at now. If you learn to watch one thing, watch the RBA.</li>
         <li><b>Melbourne and Perth are not correlated the way you would expect.</b> Same country, same central bank, opposite outcomes — because they were at different points in their own local cycles. "Australian property" is not one market.</li>
-        <li><b>Shares were boringly reliable and property was not.</b> Four positive years out of five for the ASX, and the bad one cost 1.3%. Melbourne property, over the same period, went nowhere at all.</li>
+        <li><b>Shares were boringly reliable and property was not</b> — until 2026, when both fell together. Four positive years out of five for the ASX, the bad one costing just 1.3%, while Melbourne property round-tripped a whole cycle and ended below where it started.</li>
         <li><b>Gold's best years came in clusters</b> — +38.2% then +53.5% in AUD — and were immediately followed by a 20% quarterly drawdown in early 2026. Big gold years tend to arrive together and end abruptly.</li>
-        <li><b>Nobody saw the 2026 reversal coming.</b> In mid-2025 the consensus was that the cutting cycle would continue. It did not. This is the strongest available argument for not betting everything on any forecast, mine included.</li>
+        <li><b>Nobody saw the 2026 reversal coming.</b> In mid-2025 the consensus was that the cutting cycle would continue. It did not — and in September 2026 the US Fed hiked for the first time in three years. This is the strongest available argument for not betting everything on any forecast, mine included; see the <a href="#scorecard">scorecard</a> for how this board's own calls have fared.</li>
+        <li><b>Published data gets revised.</b> Perth's July 2026 figure was first reported as +0.1% and later restated as <b>−1.3%</b>. A number you read on the first of the month is an estimate, not a fact, and conclusions built on a single fresh data point are fragile.</li>
       </ol>
     </div>
     <label class="done"><input type="checkbox" data-sec="history"> Got it — history read</label>
@@ -861,10 +998,10 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
         <div class="rowv"><span class="hint">per year</span><b id="incV">$140,000</b></div>
       </div>
       <div class="field">
-        <label for="take">Take-home percentage
-          <span class="hint">Your after-tax pay as a share of gross. Check a payslip — this default is only a placeholder.</span></label>
-        <div class="rowv"><input type="range" id="take" min="55" max="95" step="1" value="75"></div>
-        <div class="rowv"><span class="hint">of gross</span><b id="takeV">75%</b></div>
+        <label for="earners">Split across how many incomes?
+          <span class="hint">Tax is per person, so two people earning $70k pay far less than one earning $140k. Assumes an even split.</span></label>
+        <div class="rowv"><input type="range" id="earners" min="1" max="2" step="1" value="1"></div>
+        <div class="rowv"><span class="hint">earner(s)</span><b id="earnersV">1</b></div>
       </div>
       <div class="field">
         <label for="exp">Living expenses
@@ -892,15 +1029,21 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
       </div>
       <div class="field">
         <label for="rate">Variable mortgage rate
-          <span class="hint">Typical rates were around 5.9–6.3% in mid-2026 (Mozo). Lenders then test you 3% above this.</span></label>
+          <span class="hint">Typical rates were ~5.9–6.3% in mid-2026 (Mozo). A 29 Sept RBA hike would add ~0.25%. Lenders test you 3% above whatever you pick.</span></label>
         <div class="rowv"><input type="range" id="rate" min="4" max="10" step="0.05" value="6.1"></div>
         <div class="rowv"><span class="hint">per year</span><b id="rateV">6.10%</b></div>
       </div>
       <div class="field">
         <label for="target">Target purchase price
-          <span class="hint">Melbourne medians: house $936,528, dwelling $797,354, unit $632,021</span></label>
-        <div class="rowv"><input type="range" id="target" min="300000" max="2000000" step="10000" value="800000"></div>
-        <div class="rowv"><span class="hint">purchase price</span><b id="targetV">$800,000</b></div>
+          <span class="hint">Melbourne median dwelling is about $788,600 after August's fall; Perth $999,987</span></label>
+        <div class="rowv"><input type="range" id="target" min="300000" max="2000000" step="10000" value="790000"></div>
+        <div class="rowv"><span class="hint">purchase price</span><b id="targetV">$790,000</b></div>
+      </div>
+      <div class="field">
+        <label for="fhb">First home buyer?
+          <span class="hint">Victoria: no duty up to $600,000, a sliding concession to $750,000, full duty above that</span></label>
+        <div class="rowv"><input type="range" id="fhb" min="0" max="1" step="1" value="0"></div>
+        <div class="rowv"><span class="hint">0 = no, 1 = yes</span><b id="fhbV">No</b></div>
       </div>
     </div>
     <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:4px">
@@ -934,9 +1077,9 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
       </div>
       <details open><summary>🔍 Show me the full working</summary><div class="det-body">
         <div class="working" id="wDep"></div>
-        <div class="callout stop" style="margin-top:10px">
-          <h4>⚠️ The stamp duty figure is a placeholder</h4>
-          <p style="margin:0;font-size:14px">I only verified <b>two</b> points of Victoria's duty schedule: standard duty on a $700,000 property is <b>$37,070</b> (5.30%), and a first home buyer pays <b>$0 up to $600,000</b> with a sliding concession to $750,000. I do not have the full rate table, so the calculator applies a flat 5.30% as a rough stand-in. <b>Get your real number from sro.vic.gov.au before relying on it</b> — the schedule is progressive, so the flat rate will be wrong at the edges.<span class="src">Victorian State Revenue Office thresholds via Lagos Financial / Clarity FS / IFG summaries, 2026 — verify at sro.vic.gov.au</span></p>
+        <div class="callout" style="margin-top:10px">
+          <h4>✅ Stamp duty is now calculated, not estimated</h4>
+          <p style="margin:0;font-size:14px">This uses Victoria's actual general land transfer duty schedule — 1.4%, 2.4%, 6%, a flat 5.5% between $960,000 and $2,000,000, then 6.5% — which reproduces all three figures I could verify independently: <b>$25,070 on $500,000, $37,070 on $700,000 and $55,000 on $1,000,000</b>. First home buyers pay nothing up to $600,000. The one gap left is the sliding concession between $600,000 and $750,000, whose exact formula I could not verify; the calculator flags it rather than guessing. <b>Confirm your figure at sro.vic.gov.au.</b><span class="src">Victorian State Revenue Office schedule via austax.tools / Money.com.au / stampdutycalcs, 2026-27 — unchanged in the 2026-27 state budget</span></p>
         </div>
       </div></details>
     </div>
@@ -997,13 +1140,13 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
   </div>
 
   <div class="card">
-    <p class="oneline">Gold has done its job brilliantly for five years and is doing it violently right now. That is exactly when it is easiest to overpay.</p>
+    <p class="oneline">Gold gave back 3.9% in four weeks when the Fed hiked — which is the whole mechanism working in reverse, on schedule. Still up enormously over five years, still with no valuation anchor.</p>
 
     <div class="tiles" style="margin:14px 0">
-      <div class="tile"><div class="k">Per ounce (AUD)</div><div class="v">$6,410.23</div><div class="n">21 Aug 2026</div></div>
-      <div class="tile"><div class="k">Per gram (AUD)</div><div class="v">$206.09</div><div class="n">derived: ÷ 31.1035</div></div>
-      <div class="tile"><div class="k">This week's range</div><div class="v" style="font-size:16px">$6,101 – $6,410</div><div class="n">19–21 Aug 2026</div></div>
-      <div class="tile"><div class="k">USD spot area</div><div class="v">~$4,400</div><div class="n">Aug 2026, approx.</div></div>
+      <div class="tile"><div class="k">Per ounce (AUD)</div><div class="v">$6,160.01</div><div class="n">18 Sept 2026</div></div>
+      <div class="tile"><div class="k">Per gram (AUD)</div><div class="v">$198.05</div><div class="n">derived: ÷ 31.1035</div></div>
+      <div class="tile"><div class="k">Since 22 Aug</div><div class="v dn">−3.9%</div><div class="n">was $6,410.23</div></div>
+      <div class="tile"><div class="k">Mid-Sept range</div><div class="v" style="font-size:16px">$5,968 – $6,160</div><div class="n">16–18 Sept 2026</div></div>
     </div>
 
     <div class="scroll">
@@ -1012,7 +1155,8 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
         <thead><tr><th>Window</th><th class="num">Change</th><th>Basis &amp; source</th></tr></thead>
         <tbody>
           <tr><td>1 day</td><td class="num na">not verified</td><td style="font-size:13px">No single-session AUD close found from a reputable source</td></tr>
-          <tr><td>1 month (16 days)</td><td class="num up">+6.5%</td><td style="font-size:13px">AUD spot $6,016.25 (5 Aug) → $6,410.23 (21 Aug 2026). goldrate24 / 150currency</td></tr>
+          <tr style="background:var(--risk-bg)"><td><b>4 weeks (to 18 Sept)</b></td><td class="num dn">−3.9%</td><td style="font-size:13px">AUD spot $6,410.23 (21 Aug) → $6,160.01 (18 Sept 2026). The Fed hike reversed August's spike, exactly as the rate mechanism predicts.</td></tr>
+          <tr><td>Aug spike, for context</td><td class="num up">+6.5%</td><td style="font-size:13px">$6,016.25 (5 Aug) → $6,410.23 (21 Aug 2026) — since given back</td></tr>
           <tr><td>6 months</td><td class="num na">not verified</td><td style="font-size:13px">Includes the Q1 2026 crash — see the warning below</td></tr>
           <tr><td>1 year</td><td class="num up">+22.3%</td><td style="font-size:13px">GOLD ETF total return, 12 months to May 2026 (Stockspot / Global X)</td></tr>
           <tr><td>3 years</td><td class="num up">+105.6%</td><td style="font-size:13px">GOLD ETF total return to May 2026</td></tr>
@@ -1154,11 +1298,12 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
   </div>
 
   <div class="card">
-    <p class="oneline">Record high three weeks ago, valuation at the top of its five-year range, and the biggest sector — banks — selling off on the same housing story you're watching for your own purchase.</p>
+    <p class="oneline">Down 7.1% from its August record. The valuation warning this board made four weeks ago played out — but a P/E near 20× on falling earnings expectations is not obviously cheaper just because the price fell.</p>
 
     <div class="tiles" style="margin:14px 0">
-      <div class="tile"><div class="k">ASX 200</div><div class="v">9,006</div><div class="n">21 Aug 2026</div></div>
-      <div class="tile"><div class="k">From record</div><div class="v dn">−3.1%</div><div class="n">peak 9,296.70</div></div>
+      <div class="tile"><div class="k">ASX 200</div><div class="v">8,639</div><div class="n">18 Sept 2026</div></div>
+      <div class="tile"><div class="k">4 weeks</div><div class="v dn">−4.1%</div><div class="n">was 9,006</div></div>
+      <div class="tile"><div class="k">From record</div><div class="v dn">−7.1%</div><div class="n">peak 9,296.70</div></div>
       <div class="tile"><div class="k">Trailing P/E</div><div class="v">~20×</div><div class="n">5yr range 14.9–20×</div></div>
       <div class="tile"><div class="k">Dividend yield</div><div class="v">3.34%</div><div class="n">was 4–4.5% avg</div></div>
       <div class="tile"><div class="k">Price / fair value</div><div class="v">1.23×</div><div class="n">Morningstar coverage</div></div>
@@ -1232,7 +1377,7 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
         <li>Yield of 3.34% loses outright to a 5.55% government-guaranteed term deposit.</li>
         <li>Extreme concentration: banks and miners dominate. You are not buying "Australia", you are buying a housing-credit bet and an iron-ore/gold bet.</li>
         <li>Falling house prices pressure bank earnings and bad-debt provisions.</li>
-        <li>10-year bond at 5.04% raises the discount rate on every share price.</li>
+        <li>10-year bond at <b>5.36%</b> — the highest since 2011 — raises the discount rate on every share price.</li>
       </ul></div></details>
     </div>
 
@@ -1270,7 +1415,7 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
       <g class="hit" data-t="IVV · S&amp;P 500" data-v="0.03% p.a." data-s="iShares · cheapest on this board"><rect x="0" y="30" width="600" height="24" fill="transparent"></rect><rect class="bar" x="150" y="34" width="20.5" height="16" rx="4" fill="var(--s1)"></rect><text class="lab" x="142" y="46" text-anchor="end">IVV</text><text class="val" x="176.5" y="46">0.03%</text></g>
       <g class="hit" data-t="VAS · ASX 300" data-v="0.07% p.a." data-s="Vanguard"><rect x="0" y="60" width="600" height="24" fill="transparent"></rect><rect class="bar" x="150" y="64" width="47.8" height="16" rx="4" fill="var(--s1)"></rect><text class="lab" x="142" y="76" text-anchor="end">VAS</text><text class="val" x="203.8" y="76">0.07%</text></g>
       <g class="hit" data-t="PMGOLD · physical gold" data-v="0.15% p.a." data-s="Cheapest gold exposure on the ASX"><rect x="0" y="90" width="600" height="24" fill="transparent"></rect><rect class="bar" x="150" y="94" width="102.5" height="16" rx="4" fill="var(--s2)"></rect><text class="lab" x="142" y="106" text-anchor="end">PMGOLD</text><text class="val" x="258.5" y="106">0.15%</text></g>
-      <g class="hit" data-t="VGS · global developed shares" data-v="0.18% p.a." data-s="Vanguard · $16.87bn fund"><rect x="0" y="120" width="600" height="24" fill="transparent"></rect><rect class="bar" x="150" y="124" width="123" height="16" rx="4" fill="var(--s1)"></rect><text class="lab" x="142" y="136" text-anchor="end">VGS</text><text class="val" x="279" y="136">0.18%</text></g>
+      <g class="hit" data-t="VGS · global developed shares" data-v="0.18% p.a." data-s="Vanguard · $16.87bn fund"><rect x="0" y="120" width="600" height="24" fill="transparent"></rect><rect class="bar" x="150" y="124" width="123" height="16" rx="4" fill="var(--s1)"></rect><text class="lab" x="130" y="136" text-anchor="end">VGS</text><text class="val" x="279" y="136">0.18%</text></g>
       <g class="hit" data-t="MVA · Australian property" data-v="0.35% p.a." data-s="VanEck · $792.5m fund"><rect x="0" y="150" width="600" height="24" fill="transparent"></rect><rect class="bar" x="150" y="154" width="239.2" height="16" rx="4" fill="var(--s3)"></rect><text class="lab" x="142" y="166" text-anchor="end">MVA</text><text class="val" x="395.2" y="166">0.35%</text></g>
       <g class="hit" data-t="GOLD · physical gold" data-v="0.40% p.a." data-s="Global X · $5.4bn, most liquid"><rect x="0" y="180" width="600" height="24" fill="transparent"></rect><rect class="bar" x="150" y="184" width="273.3" height="16" rx="4" fill="var(--s2)"></rect><text class="lab" x="142" y="196" text-anchor="end">GOLD</text><text class="val" x="429.3" y="196">0.40%</text></g>
       <g class="hit" data-t="NDQ · Nasdaq 100" data-v="0.48% p.a." data-s="Betashares · $9.01bn fund"><rect x="0" y="210" width="600" height="24" fill="transparent"></rect><rect class="bar" x="150" y="214" width="328" height="16" rx="4" fill="var(--s4)"></rect><text class="lab" x="142" y="226" text-anchor="end">NDQ</text><text class="val" x="484" y="226">0.48%</text></g>
@@ -1293,7 +1438,7 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
     <h4>One-year change — and why you must read the dates</h4>
     <p style="font-size:13.5px;color:var(--ink2);margin:4px 0 0">These six numbers come from three different "as at" dates. They are <b>not</b> strictly comparable. Shown together anyway because the spread is the point: the same twelve months produced +26% and −3% depending purely on which asset you held.</p>
     <div class="scroll">
-    <svg class="chart" viewBox="0 0 600 250" role="img" aria-label="Diverging bar chart of one-year changes. NDQ plus 26.37 percent, GOLD ETF plus 22.3, Perth dwellings plus 20.5, VGS plus 14.96, MVA plus 0.66, Melbourne dwellings minus 2.8.">
+    <svg class="chart" viewBox="0 0 600 250" role="img" aria-label="Diverging bar chart of one-year changes. NDQ plus 26.37 percent, GOLD ETF plus 22.3, Perth dwellings plus 15.6, VGS plus 14.96, MVA plus 0.66, Melbourne dwellings minus 4.7.">
       <line class="grid-l" x1="150" y1="28" x2="150" y2="208"></line>
       <line class="grid-l" x1="330" y1="28" x2="330" y2="208"></line>
       <line class="grid-l" x1="450" y1="28" x2="450" y2="208"></line>
@@ -1304,16 +1449,16 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
       <text x="330" y="224" text-anchor="middle" font-size="11">+10%</text>
       <text x="450" y="224" text-anchor="middle" font-size="11">+20%</text>
       <text x="570" y="224" text-anchor="middle" font-size="11">+30%</text>
-      <g class="hit" data-t="NDQ · Nasdaq 100 ETF" data-v="+26.37%" data-s="12 months to 30 Jun 2026 · ETFinfo"><rect x="0" y="30" width="600" height="24" fill="transparent"></rect><rect class="bar" x="210" y="34" width="316.4" height="16" rx="4" fill="var(--good)"></rect><text class="lab" x="142" y="46" text-anchor="end">NDQ</text><text class="val" x="532.4" y="46">+26.4%</text></g>
-      <g class="hit" data-t="GOLD · physical gold ETF" data-v="+22.3%" data-s="12 months to May 2026 · Stockspot"><rect x="0" y="60" width="600" height="24" fill="transparent"></rect><rect class="bar" x="210" y="64" width="267.6" height="16" rx="4" fill="var(--good)"></rect><text class="lab" x="142" y="76" text-anchor="end">GOLD</text><text class="val" x="483.6" y="76">+22.3%</text></g>
-      <g class="hit" data-t="Perth dwellings" data-v="+20.5%" data-s="12 months to July 2026 · Cotality HVI"><rect x="0" y="90" width="600" height="24" fill="transparent"></rect><rect class="bar" x="210" y="94" width="246" height="16" rx="4" fill="var(--good)"></rect><text class="lab" x="142" y="106" text-anchor="end">Perth property</text><text class="val" x="462" y="106">+20.5%</text></g>
+      <g class="hit" data-t="NDQ · Nasdaq 100 ETF" data-v="+26.37%" data-s="12 months to 30 Jun 2026 · ETFinfo"><rect x="0" y="30" width="600" height="24" fill="transparent"></rect><rect class="bar" x="210" y="34" width="316.4" height="16" rx="4" fill="var(--good)"></rect><text class="lab" x="130" y="46" text-anchor="end">NDQ</text><text class="val" x="532.4" y="46">+26.4%</text></g>
+      <g class="hit" data-t="GOLD · physical gold ETF" data-v="+22.3%" data-s="12 months to May 2026 · Stockspot"><rect x="0" y="60" width="600" height="24" fill="transparent"></rect><rect class="bar" x="210" y="64" width="267.6" height="16" rx="4" fill="var(--good)"></rect><text class="lab" x="130" y="76" text-anchor="end">GOLD</text><text class="val" x="483.6" y="76">+22.3%</text></g>
+      <g class="hit" data-t="Perth dwellings" data-v="+15.6%" data-s="12 months to 31 Aug 2026 · Cotality HVI — was +20.5%"><rect x="0" y="90" width="600" height="24" fill="transparent"></rect><rect class="bar" x="210" y="94" width="187.2" height="16" rx="4" fill="var(--good)"></rect><text class="lab" x="130" y="106" text-anchor="end">Perth property</text><text class="val" x="403.2" y="106">+15.6%</text></g>
       <g class="hit" data-t="VGS · global developed shares" data-v="+14.96%" data-s="12 months to 30 Jun 2026 · ETFinfo"><rect x="0" y="120" width="600" height="24" fill="transparent"></rect><rect class="bar" x="210" y="124" width="179.5" height="16" rx="4" fill="var(--good)"></rect><text class="lab" x="142" y="136" text-anchor="end">VGS</text><text class="val" x="395.5" y="136">+15.0%</text></g>
-      <g class="hit" data-t="MVA · Australian property ETF" data-v="+0.66%" data-s="12-month total return to 30 Jun 2026 · VanEck"><rect x="0" y="150" width="600" height="24" fill="transparent"></rect><rect class="bar" x="210" y="154" width="7.9" height="16" rx="3" fill="var(--ink3)"></rect><text class="lab" x="142" y="166" text-anchor="end">MVA (A-REITs)</text><text class="val" x="223.9" y="166">+0.7%</text></g>
-      <g class="hit" data-t="Melbourne dwellings" data-v="−2.8%" data-s="12 months to July 2026 · Cotality HVI"><rect x="0" y="180" width="600" height="24" fill="transparent"></rect><rect class="bar" x="176.4" y="184" width="33.6" height="16" rx="4" fill="var(--risk)"></rect><text class="lab" x="142" y="196" text-anchor="end">Melbourne property</text><text class="val" x="170.4" y="196" text-anchor="end">−2.8%</text></g>
+      <g class="hit" data-t="MVA · Australian property ETF" data-v="+0.66%" data-s="12-month total return to 30 Jun 2026 · VanEck"><rect x="0" y="150" width="600" height="24" fill="transparent"></rect><rect class="bar" x="210" y="154" width="7.9" height="16" rx="3" fill="var(--ink3)"></rect><text class="lab" x="130" y="166" text-anchor="end">MVA (A-REITs)</text><text class="val" x="223.9" y="166">+0.7%</text></g>
+      <g class="hit" data-t="Melbourne dwellings" data-v="−4.7%" data-s="12 months to 31 Aug 2026 · Cotality HVI — was −2.8%"><rect x="0" y="180" width="600" height="24" fill="transparent"></rect><rect class="bar" x="153.6" y="184" width="56.4" height="16" rx="4" fill="var(--risk)"></rect><text class="lab" x="130" y="196" text-anchor="end">Melbourne property</text><text class="val" x="147.6" y="196" text-anchor="end">−4.7%</text></g>
     </svg>
     </div>
     <div class="legend"><span><i style="background:var(--good)"></i>Gained</span><span><i style="background:var(--ink3)"></i>Roughly flat</span><span><i style="background:var(--risk)"></i>Fell</span></div>
-    <p class="fig-note">Property figures are capital values only and exclude rent; ETF figures are total returns including distributions. Past performance says nothing about future returns — and the asset at the bottom of this chart is the one this board rates most favourably for a buyer.</p>
+    <p class="fig-note">Property figures are to <b>31 August 2026</b> and are capital values only, excluding rent; ETF figures are total returns to 30 June 2026 including distributions, so the windows do not line up. Past performance says nothing about future returns — note that Perth's bar has shrunk from +20.5% to +15.6% in four weeks, and the ETF bars are now nearly three months stale.</p>
   </div>
 </section>
 <section id="etf2">
@@ -1458,21 +1603,21 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
   </div>
 
   <div class="card">
-    <p class="oneline">Melbourne is doing something unusual: getting cheaper to buy and more expensive to rent, at the same time. For someone who wants to buy and does not have to rush, that is the friendliest combination on this entire board.</p>
+    <p class="oneline">Still getting cheaper — another 1.1% in August, now 4.7% down over the year. But two things weakened since last month: the annual fall accelerated <em>and</em> rental vacancy started loosening, so the "rents will force a fast recovery" argument is softer than I put it four weeks ago.</p>
 
     <div class="tiles" style="margin:14px 0">
-      <div class="tile"><div class="k">Median house</div><div class="v">$936,528</div><div class="n">July 2026</div></div>
-      <div class="tile"><div class="k">Median unit</div><div class="v">$632,021</div><div class="n">July 2026</div></div>
-      <div class="tile"><div class="k">Median dwelling</div><div class="v">$797,354</div><div class="n">houses + units</div></div>
-      <div class="tile"><div class="k">1 month</div><div class="v dn">−1.2%</div><div class="n">houses −1.4%</div></div>
-      <div class="tile"><div class="k">Quarter</div><div class="v dn">−3.4%</div><div class="n">to July 2026</div></div>
-      <div class="tile"><div class="k">1 year</div><div class="v dn">−2.8%</div><div class="n">−4.9% YTD</div></div>
-      <div class="tile"><div class="k">Below peak</div><div class="v dn">−5.5%</div><div class="n">previous cycle high</div></div>
-      <div class="tile"><div class="k">Gross rental yield</div><div class="v up">4.0%</div><div class="n">rents +5.1% y/y</div></div>
-      <div class="tile"><div class="k">Auction clearance</div><div class="v">57.4%</div><div class="n">w/e 16 Aug 2026</div></div>
-      <div class="tile"><div class="k">Price to income</div><div class="v">7.1×</div><div class="n">Sydney ~10×</div></div>
-      <div class="tile"><div class="k">Vacancy rate</div><div class="v">&lt;1.8%</div><div class="n">tighter than a year ago</div></div>
-      <div class="tile"><div class="k">Vic population</div><div class="v">7.0M+</div><div class="n">+1.8% per year</div></div>
+      <div class="tile"><div class="k">Median dwelling</div><div class="v">~$788,600</div><div class="n">derived from Aug move</div></div>
+      <div class="tile"><div class="k">Median house</div><div class="v">$936,528</div><div class="n">July 2026 — Aug n/v</div></div>
+      <div class="tile"><div class="k">Median unit</div><div class="v">$632,021</div><div class="n">July 2026 — Aug n/v</div></div>
+      <div class="tile"><div class="k">1 month</div><div class="v dn">−1.1%</div><div class="n">August 2026</div></div>
+      <div class="tile"><div class="k">Quarter</div><div class="v dn">−3.9%</div><div class="n">was −3.4%</div></div>
+      <div class="tile"><div class="k">1 year</div><div class="v dn">−4.7%</div><div class="n">was −2.8%</div></div>
+      <div class="tile"><div class="k">2026 to date</div><div class="v dn">−6.3%</div><div class="n">was −4.9%</div></div>
+      <div class="tile"><div class="k">Below cyclical peak</div><div class="v dn">~−6%</div><div class="n">peak Nov 2025</div></div>
+      <div class="tile"><div class="k">Gross rental yield</div><div class="v up">4.0%</div><div class="n">unchanged</div></div>
+      <div class="tile"><div class="k">Auction clearance</div><div class="v up">63.4%</div><div class="n">w/e 6 Sept — was 57.4%</div></div>
+      <div class="tile"><div class="k">Price to income</div><div class="v">7.1×</div><div class="n">not re-verified</div></div>
+      <div class="tile"><div class="k">National vacancy</div><div class="v dn">1.9%</div><div class="n">highest since Jan 2025</div></div>
     </div>
     <p class="src">Sources: Cotality / CoreLogic Home Value Index July 2026; Cotality final clearance rates w/e 16 Aug 2026; ABS population statistics; ABS building approvals Q1 2026; Fenro / Australian housing affordability analysis 2026.</p>
 
@@ -1480,8 +1625,8 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
       <div>
         <h4 style="font-size:16px;margin-bottom:8px">✅ Working in a buyer's favour</h4>
         <ul style="font-size:14.5px">
-          <li><b>Prices falling on every timeframe</b> — month, quarter, year and year-to-date all negative.</li>
-          <li><b>Clearance rate 57.4%</b>, well under the ~65% historically associated with balanced conditions. Below 65% means sellers, not buyers, are the ones under pressure at auction.</li>
+          <li><b>Prices falling on every timeframe</b> — month (−1.1%), quarter (−3.9%), year (−4.7%) and year-to-date (−6.3%) all negative, and all worse than a month ago.</li>
+          <li><b>Clearance rate 63.4%</b> (week ending 6 September), still under the ~65% historically associated with balanced conditions — but <b>up from 57.4% in August</b>, so your negotiating edge has narrowed.</li>
           <li><b>Stock is building and homes are sitting longer.</b> Vendors are accepting larger discounts than a year ago.</li>
           <li><b>Yields repairing from both ends</b> — 4.0% gross, now above Sydney and above the combined-capitals average, with rents up 5.1%.</li>
           <li><b>Cheapest major capital on price-to-income</b> at 7.1× versus Sydney's ~10×.</li>
@@ -1501,7 +1646,7 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
 
     <div class="callout stop">
       <h4>💵 The arithmetic nobody enjoys</h4>
-      <p style="margin:0 0 8px;font-size:14.5px">A 20% deposit on the <b>median house</b> ($936,528) is <b class="mono">$187,306</b>. On the <b>median dwelling</b> ($797,354) it is <b class="mono">$159,471</b>. These are pure arithmetic on the sourced medians above.</p>
+      <p style="margin:0 0 8px;font-size:14.5px">A 20% deposit on the <b>median house</b> ($936,528, July — August not published) is <b class="mono">$187,306</b>. On the <b>median dwelling</b> (about $788,600 after August's fall) it is <b class="mono">$157,720</b>. These are pure arithmetic on the medians above. <b>The calculator does this properly for your target price, including real Victorian stamp duty.</b></p>
       <p style="margin:0;font-size:14.5px"><span class="na">On top of that:</span> Victorian stamp duty, conveyancing, building and pest inspection, and lenders mortgage insurance if you go below 20%. I do not have verified current figures for those, so I have not estimated them — get them from the State Revenue Office Victoria and a broker. <b>Current variable mortgage rates: <span class="na">not verified</span></b> — the 4.35% figure is the RBA cash rate, and what a bank actually charges you sits meaningfully above it.</p>
     </div>
 
@@ -1546,7 +1691,8 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
       <div class="gz3">🟢 Increasingly attractive</div>
       <div class="gz4">🟢🟢 Strong opportunity</div>
     </div>
-    <p style="font-size:14.5px;margin:10px 0 0"><span class="tag t-call">CALL</span><b>Why here and not further right:</b> eight of the fourteen conditions below already favour a buyer, and the price, yield and negotiating-power indicators are all moving your way. The gauge is held back by one wall — <b>the cost of borrowing</b>. Until rates stop rising, a cheaper house financed with dearer money is not obviously a better deal, and the affordability numbers say most buyers are already stretched. The moment the RBA signals it is done, several of these amber and red rows flip together.</p>
+    <p style="font-size:14.5px;margin:10px 0 0"><span class="tag t-call">CALL</span><b>Unchanged from last month, despite four more weeks of falling prices</b> — and that is the point worth understanding. Melbourne got roughly 1.1% cheaper in August, which helps you. But the Fed hiked, the RBA is 82% priced to follow, and one 0.25% hike cuts your borrowing capacity by more than 1.1% of the purchase price gives back. <b>The two moved by similar amounts in opposite directions, so the net position barely shifted.</b></p>
+    <p style="font-size:14.5px;margin:10px 0 0">Two rows got worse since August: vacancy is <b>loosening</b> nationally (1.9%, highest since January 2025), which weakens the fast-recovery case, and clearance firmed to 63.4%, which slightly reduces your negotiating power. One got better: prices fell again. <b>Do not act before 29 September</b> — the single biggest input to this gauge resolves in ten days.</p>
   </div>
 
   <div class="card">
@@ -1555,34 +1701,34 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
       <table style="min-width:760px">
         <thead><tr><th>Condition</th><th>Where it sits now</th><th>For a buyer</th><th>Direction</th></tr></thead>
         <tbody>
-          <tr><td><b>Price direction</b></td><td class="num">−1.2% month, −2.8% year</td><td><span class="sig sig-good"><i class="gl"></i>Good</span></td><td style="font-size:13.5px">↘ Improving for you</td></tr>
-          <tr><td><b>Distance below peak</b></td><td class="num">−5.5%</td><td><span class="sig sig-good"><i class="gl"></i>Good</span></td><td style="font-size:13.5px">↘ Widening</td></tr>
-          <tr><td><b>Auction clearance rate</b></td><td class="num">57.4% (balanced ≈ 65%)</td><td><span class="sig sig-good"><i class="gl"></i>Good</span></td><td style="font-size:13.5px">→ You hold the negotiating power</td></tr>
+          <tr><td><b>Price direction</b></td><td class="num">−1.1% month, −4.7% year</td><td><span class="sig sig-good"><i class="gl"></i>Good</span></td><td style="font-size:13.5px">↘ Improving for you</td></tr>
+          <tr><td><b>Distance below peak</b></td><td class="num">~−6% (Nov 2025 peak)</td><td><span class="sig sig-good"><i class="gl"></i>Good</span></td><td style="font-size:13.5px">↘ Widening</td></tr>
+          <tr><td><b>Auction clearance rate</b></td><td class="num">63.4% (balanced ≈ 65%)</td><td><span class="sig sig-good"><i class="gl"></i>Good</span></td><td style="font-size:13.5px">↗ Firmed from 57.4% — still your market, but less so</td></tr>
           <tr><td><b>Days on market</b></td><td>Rising — homes taking longer to sell</td><td><span class="sig sig-good"><i class="gl"></i>Good</span></td><td style="font-size:13.5px">↗ More time to think</td></tr>
           <tr><td><b>Listings / supply of stock</b></td><td>Total stock building; larger vendor discounts than a year ago</td><td><span class="sig sig-good"><i class="gl"></i>Good</span></td><td style="font-size:13.5px">↗ More choice</td></tr>
           <tr><td><b>Rental yield</b></td><td class="num">4.0% gross, rents +5.1%</td><td><span class="sig sig-good"><i class="gl"></i>Good</span></td><td style="font-size:13.5px">↗ Repairing from both ends</td></tr>
           <tr><td><b>Population growth</b></td><td class="num">Vic +1.8%/yr, Melbourne ~+100k/yr</td><td><span class="sig sig-good"><i class="gl"></i>Good</span></td><td style="font-size:13.5px">→ Underlying demand intact</td></tr>
           <tr><td><b>Construction pipeline</b></td><td class="num">Approvals 18% below 10-yr average</td><td><span class="sig sig-good"><i class="gl"></i>Good</span></td><td style="font-size:13.5px">→ Constrained future supply</td></tr>
-          <tr><td><b>Vacancy rate</b></td><td class="num">&lt;1.8% — very tight</td><td><span class="sig sig-watch"><i class="gl"></i>Mixed</span></td><td style="font-size:13.5px">Supports prices later; makes waiting expensive now</td></tr>
+          <tr style="background:var(--watch-bg)"><td><b>Vacancy rate</b></td><td class="num">National 1.9% — loosening</td><td><span class="sig sig-watch"><i class="gl"></i>Worsened</span></td><td style="font-size:13.5px">↗ Highest since Jan 2025. <b>Weakens the fast-recovery argument</b> this board made in August</td></tr>
           <tr><td><b>Price to income</b></td><td class="num">7.1× (best of the majors, still high)</td><td><span class="sig sig-watch"><i class="gl"></i>Mixed</span></td><td style="font-size:13.5px">↘ Slowly improving</td></tr>
-          <tr style="background:var(--risk-bg)"><td><b>Mortgage rates</b></td><td class="num">Cash rate 4.35%, three hikes in H1 2026</td><td><span class="sig sig-risk"><i class="gl"></i>Bad</span></td><td style="font-size:13.5px"><b>↗ The binding constraint</b></td></tr>
+          <tr style="background:var(--risk-bg)"><td><b>Mortgage rates</b></td><td class="num">4.35%, <b>82% priced to hike 29 Sept</b></td><td><span class="sig sig-risk"><i class="gl"></i>Bad</span></td><td style="font-size:13.5px"><b>↗ Still the binding constraint — and now imminent</b></td></tr>
           <tr style="background:var(--risk-bg)"><td><b>Serviceability</b></td><td class="num">45.9% of gross income nationally (long-run 34.3%)</td><td><span class="sig sig-risk"><i class="gl"></i>Bad</span></td><td style="font-size:13.5px">→ Deep in stress territory</td></tr>
           <tr><td><b>Unemployment</b></td><td class="num">4.4%, steady — underemployment rising</td><td><span class="sig sig-watch"><i class="gl"></i>Mixed</span></td><td style="font-size:13.5px">Watch this: job losses are what turns a soft market into a genuinely cheap one, and also what removes your ability to buy</td></tr>
           <tr><td><b>Government policy</b></td><td colspan="3"><span class="na">Data unavailable / unable to verify</span> — I did not retrieve current first-home-buyer schemes, stamp duty concessions or Victorian land tax settings. These can be worth tens of thousands. Check the State Revenue Office Victoria and the federal Housing Australia site directly.</td></tr>
         </tbody>
       </table>
     </div>
-    <p style="font-size:13.5px;color:var(--ink2);margin-top:10px"><b>Tally:</b> 8 green · 3 mixed · 2 red · 1 unknown. <span class="tag t-read">READ</span>The greens are numerous but soft; the reds are few but decisive. That is precisely what "neutral, improving" looks like.</p>
+    <p style="font-size:13.5px;color:var(--ink2);margin-top:10px"><b>Tally:</b> 7 green · 4 mixed · 2 red · 1 unknown — <b>one green moved to mixed since August</b> (vacancy). The greens remain numerous but soft; the reds are few but decisive, and one of them resolves on 29 September.</p>
   </div>
 
   <div class="grid g2" style="margin-top:14px">
     <div class="card">
       <h3 style="font-size:17px;margin-bottom:8px">⏳ If you wait 6–12 months, what could <span style="color:var(--good)">improve</span>?</h3>
       <ul style="font-size:14.5px">
-        <li><b>Prices keep drifting down.</b> At the current run rate, another 3–6% is plausible — that is roughly $28,000–$56,000 off the median house.</li>
+        <li><b>Prices keep drifting down.</b> Melbourne has fallen 6.3% in 2026 so far. Another 3–6% over a year is plausible on the current run rate — roughly $24,000–$47,000 off the median dwelling.</li>
         <li><b>The RBA stops hiking, or starts cutting.</b> This is the big one. It would improve your borrowing capacity far more than a price fall does.</li>
         <li><b>Yields keep improving</b> as rents rise and prices fall, making the numbers stack up better whether you live in it or rent it out.</li>
-        <li><b>You save more deposit</b> at 5.55% in a term deposit while you wait — roughly $8,300 a year on a $150,000 balance, before tax.</li>
+        <li><b>You save more deposit</b> at 5.55% while you wait — roughly $8,300 a year on a $150,000 balance, before tax. With inflation now 3.5%, that is a better real return than it was in August.</li>
         <li><b>Vendor motivation increases</b> the longer stock sits unsold.</li>
       </ul>
     </div>
@@ -1590,7 +1736,7 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
       <h3 style="font-size:17px;margin-bottom:8px">⏳ What could <span style="color:var(--risk)">get worse</span>?</h3>
       <ul style="font-size:14.5px">
         <li><b>Another rate hike.</b> Inflation at 3.9% keeps this live. Your borrowing capacity falls, so a cheaper house becomes less affordable, not more.</li>
-        <li><b>The market turns before you do.</b> Vacancy under 1.8%, population +1.8% a year and approvals 18% below average is a recipe for a fast recovery once rates ease. Everyone waiting for the bottom arrives at the same time.</li>
+        <li><b>The market turns before you do.</b> Population +1.8% a year and approvals 18% below average still point to a sharp recovery once rates ease. <b>Weaker than I argued in August, though</b> — national vacancy has risen to 1.9%, so the rental squeeze that would have fuelled it has eased.</li>
         <li><b>Rents keep rising 5%+</b> — waiting has a running cost that compounds.</li>
         <li><b>Your own circumstances.</b> Job security matters more than any number on this page.</li>
       </ul>
@@ -1667,23 +1813,23 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
   </div>
 
   <div class="card">
-    <p class="oneline">Perth just delivered the strongest year of any Australian capital — and then stopped. Both halves of that sentence matter, and the second half matters more.</p>
+    <p class="oneline">Perth has now turned. Last month this board rated it 🔴 "high risk of buying late"; since then July was revised from +0.1% to −1.3%, August fell 0.8%, the quarter is −3.2% and the median has dropped back below $1 million.</p>
 
     <div class="tiles" style="margin:14px 0">
-      <div class="tile"><div class="k">Median house</div><div class="v">$1,073,500</div><div class="n">July 2026</div></div>
-      <div class="tile"><div class="k">Median dwelling</div><div class="v">~$1.03M</div><div class="n">July 2026</div></div>
-      <div class="tile"><div class="k">1 month</div><div class="v flat">+0.1%</div><div class="n">essentially flat</div></div>
-      <div class="tile"><div class="k">Quarter</div><div class="v dn">−0.3%</div><div class="n">first negative</div></div>
-      <div class="tile"><div class="k">1 year</div><div class="v up">+20.5%</div><div class="n">strongest capital</div></div>
-      <div class="tile"><div class="k">Gross rental yield</div><div class="v">3.8%</div><div class="n">capitals avg 3.6%</div></div>
-      <div class="tile"><div class="k">Vacancy rate</div><div class="v">0.6%</div><div class="n">national 1.3%</div></div>
+      <div class="tile"><div class="k">Median dwelling</div><div class="v">$999,987</div><div class="n">31 Aug 2026 — back under $1m</div></div>
+      <div class="tile"><div class="k">1 month</div><div class="v dn">−0.8%</div><div class="n">August 2026</div></div>
+      <div class="tile"><div class="k">July, revised</div><div class="v dn">−1.3%</div><div class="n">first reported as +0.1%</div></div>
+      <div class="tile"><div class="k">Quarter</div><div class="v dn">−3.2%</div><div class="n">was −0.3%</div></div>
+      <div class="tile"><div class="k">1 year</div><div class="v up">+15.6%</div><div class="n">was +20.5%</div></div>
+      <div class="tile"><div class="k">Gross rental yield</div><div class="v">3.9%</div><div class="n">Aug 2026</div></div>
+      <div class="tile"><div class="k">Vacancy rate</div><div class="v">0.6%</div><div class="n">July — Aug n/v</div></div>
       <div class="tile"><div class="k">Days on market</div><div class="v" style="font-size:16px">~14 days</div><div class="n">April 2026 — stale</div></div>
     </div>
     <p class="src">Sources: Cotality / CoreLogic Home Value Index July 2026; propertyupdate.com.au vacancy rate tracker; REIWA Perth metro data (days on market, April 2026 — the most recent verified figure, four months old).</p>
 
     <div class="callout stop">
       <h4>📉 The pattern worth naming out loud</h4>
-      <p style="margin:0;font-size:14.5px"><span class="tag t-read">READ</span>Perth's annual number (+20.5%) describes a year that has already happened. Its <b>monthly</b> number is +0.1% and its <b>quarterly</b> number is <b>−0.3%</b>. When the short-term readings go flat-to-negative while the annual figure is still spectacular, the annual figure is a rear-view mirror. Commentary describes a market "entering a more measured phase shaped by affordability pressures, higher borrowing costs and a persistent shortage of housing."</p>
+      <p style="margin:0;font-size:14.5px"><span class="tag t-read">READ</span><b>This played out within four weeks.</b> In August this board warned that Perth's +20.5% annual figure was a rear-view mirror while its monthly (+0.1%) and quarterly (−0.3%) readings had gone flat. Since then July was <b>revised to −1.3%</b>, August came in at <b>−0.8%</b>, the quarter is <b>−3.2%</b>, and the annual figure has fallen to +15.6%. The annual number is still the most impressive on this board and it is still describing a year that has finished.</p>
     </div>
 
     <div class="grid g2">
@@ -1715,7 +1861,7 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
     <div style="flex:1">
       <div class="eyebrow">Head to head</div>
       <h2>⚖️ Melbourne vs Perth</h2>
-      <p class="sec-sub">Two markets at opposite ends of the same cycle. Teal is Melbourne, ochre is Perth, throughout.</p>
+      <p class="sec-sub">A month ago these were two markets at opposite ends of the same cycle. <b>They are converging</b> — Perth has now turned negative too, and its annual growth has fallen from +20.5% to +15.6%. Teal is Melbourne, ochre is Perth, throughout.</p>
     </div>
   </div>
 
@@ -1724,38 +1870,38 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
     <div class="legend"><span><i style="background:var(--s1)"></i>Melbourne</span><span><i style="background:var(--s2)"></i>Perth</span></div>
     <div style="display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin-top:8px">
 
-      <svg class="chart" viewBox="0 0 194 130" role="img" aria-label="Median house price: Melbourne $936,528, Perth $1,073,500.">
-        <text x="8" y="13" font-size="11.5" font-weight="600" fill="var(--ink)">Median house price</text>
+      <svg class="chart" viewBox="0 0 194 130" role="img" aria-label="Median dwelling value: Melbourne about $788,600, Perth $999,987.">
+        <text x="8" y="13" font-size="11.5" font-weight="600" fill="var(--ink)">Median dwelling value</text>
         <line class="axis" x1="30" y1="100" x2="164" y2="100"></line>
-        <g class="hit" data-t="Melbourne median house" data-v="$936,528" data-s="Cotality HVI, July 2026"><path class="bar" d="M40,100 L40,48.2 Q40,44.2 44,44.2 L80,44.2 Q84,44.2 84,48.2 L84,100 Z" fill="var(--s1)"></path><text class="val" x="62" y="38" text-anchor="middle" font-size="10.5">$937k</text><text x="62" y="115" text-anchor="middle" font-size="10.5">Melb</text></g>
-        <g class="hit" data-t="Perth median house" data-v="$1,073,500" data-s="Cotality HVI, July 2026"><path class="bar" d="M110,100 L110,40 Q110,36 114,36 L150,36 Q154,36 154,40 L154,100 Z" fill="var(--s2)"></path><text class="val" x="132" y="30" text-anchor="middle" font-size="10.5">$1.07m</text><text x="132" y="115" text-anchor="middle" font-size="10.5">Perth</text></g>
-        <text x="97" y="127" text-anchor="middle" font-size="9.5">Perth is 14.6% dearer</text>
+        <g class="hit" data-t="Melbourne median dwelling" data-v="about $788,600" data-s="Derived from the July figure and August's −1.1% move"><path class="bar" d="M40,100 L40,53.5 Q40,49.5 44,49.5 L80,49.5 Q84,49.5 84,53.5 L84,100 Z" fill="var(--s1)"></path><text class="val" x="62" y="43" text-anchor="middle" font-size="10.5">$789k</text><text x="62" y="115" text-anchor="middle" font-size="10.5">Melb</text></g>
+        <g class="hit" data-t="Perth median dwelling" data-v="$999,987" data-s="Cotality HVI, 31 Aug 2026"><path class="bar" d="M110,100 L110,40 Q110,36 114,36 L150,36 Q154,36 154,40 L154,100 Z" fill="var(--s2)"></path><text class="val" x="132" y="30" text-anchor="middle" font-size="10.5">$1.00m</text><text x="132" y="115" text-anchor="middle" font-size="10.5">Perth</text></g>
+        <text x="97" y="127" text-anchor="middle" font-size="9.5">Perth is 26.8% dearer</text>
       </svg>
 
-      <svg class="chart" viewBox="0 0 194 130" role="img" aria-label="One-year dwelling value change: Melbourne minus 2.8 percent, Perth plus 20.5 percent.">
+      <svg class="chart" viewBox="0 0 194 130" role="img" aria-label="One-year dwelling value change: Melbourne minus 4.7 percent, Perth plus 15.6 percent.">
         <text x="8" y="13" font-size="11.5" font-weight="600" fill="var(--ink)">1-year value change</text>
         <line class="axis" x1="30" y1="88" x2="164" y2="88"></line>
-        <g class="hit" data-t="Melbourne dwellings, 1 year" data-v="−2.8%" data-s="Cotality HVI, July 2026"><path class="bar" d="M40,88 L40,91 Q40,95 44,95 L80,95 Q84,95 84,91 L84,88 Z" fill="var(--risk)"></path><text class="val" x="62" y="109" text-anchor="middle" font-size="10.5">−2.8%</text><text x="62" y="124" text-anchor="middle" font-size="10.5">Melb</text></g>
-        <g class="hit" data-t="Perth dwellings, 1 year" data-v="+20.5%" data-s="Cotality HVI, July 2026"><path class="bar" d="M110,88 L110,42 Q110,38 114,38 L150,38 Q154,38 154,42 L154,88 Z" fill="var(--s2)"></path><text class="val" x="132" y="32" text-anchor="middle" font-size="10.5">+20.5%</text><text x="132" y="124" text-anchor="middle" font-size="10.5">Perth</text></g>
+        <g class="hit" data-t="Melbourne dwellings, 1 year" data-v="−4.7%" data-s="Cotality HVI, 31 Aug 2026 — was −2.8%"><path class="bar" d="M40,88 L40,99.1 Q40,103.1 44,103.1 L80,103.1 Q84,103.1 84,99.1 L84,88 Z" fill="var(--risk)"></path><text class="val" x="62" y="115" text-anchor="middle" font-size="10.5">−4.7%</text><text x="62" y="127" text-anchor="middle" font-size="10.5">Melb</text></g>
+        <g class="hit" data-t="Perth dwellings, 1 year" data-v="+15.6%" data-s="Cotality HVI, 31 Aug 2026 — was +20.5%"><path class="bar" d="M110,88 L110,42 Q110,38 114,38 L150,38 Q154,38 154,42 L154,88 Z" fill="var(--s2)"></path><text class="val" x="132" y="32" text-anchor="middle" font-size="10.5">+15.6%</text><text x="132" y="127" text-anchor="middle" font-size="10.5">Perth</text></g>
       </svg>
 
-      <svg class="chart" viewBox="0 0 194 130" role="img" aria-label="Gross rental yield: Melbourne 4.0 percent, Perth 3.8 percent.">
+      <svg class="chart" viewBox="0 0 194 130" role="img" aria-label="Gross rental yield: Melbourne 4.0 percent, Perth 3.9 percent.">
         <text x="8" y="13" font-size="11.5" font-weight="600" fill="var(--ink)">Gross rental yield</text>
         <line class="axis" x1="30" y1="100" x2="164" y2="100"></line>
         <g class="hit" data-t="Melbourne gross yield" data-v="4.0%" data-s="Cotality, Aug 2026 · rents +5.1%"><path class="bar" d="M40,100 L40,40 Q40,36 44,36 L80,36 Q84,36 84,40 L84,100 Z" fill="var(--s1)"></path><text class="val" x="62" y="30" text-anchor="middle" font-size="10.5">4.0%</text><text x="62" y="115" text-anchor="middle" font-size="10.5">Melb</text></g>
-        <g class="hit" data-t="Perth gross yield" data-v="3.8%" data-s="Cotality, Aug 2026"><path class="bar" d="M110,100 L110,43.2 Q110,39.2 114,39.2 L150,39.2 Q154,39.2 154,43.2 L154,100 Z" fill="var(--s2)"></path><text class="val" x="132" y="33" text-anchor="middle" font-size="10.5">3.8%</text><text x="132" y="115" text-anchor="middle" font-size="10.5">Perth</text></g>
+        <g class="hit" data-t="Perth gross yield" data-v="3.9%" data-s="Cotality, Aug 2026 — was 3.8%"><path class="bar" d="M110,100 L110,41.5 Q110,37.6 114,37.6 L150,37.6 Q154,37.6 154,41.5 L154,100 Z" fill="var(--s2)"></path><text class="val" x="132" y="31" text-anchor="middle" font-size="10.5">3.9%</text><text x="132" y="115" text-anchor="middle" font-size="10.5">Perth</text></g>
         <text x="97" y="127" text-anchor="middle" font-size="9.5">higher is better for a landlord</text>
       </svg>
 
       <svg class="chart" viewBox="0 0 194 130" role="img" aria-label="Rental vacancy rate: Melbourne below 1.8 percent, Perth 0.6 percent.">
-        <text x="8" y="13" font-size="11.5" font-weight="600" fill="var(--ink)">Rental vacancy rate</text>
+        <text x="8" y="13" font-size="11.5" font-weight="600" fill="var(--ink)">Vacancy (latest verified)</text>
         <line class="axis" x1="30" y1="100" x2="164" y2="100"></line>
-        <g class="hit" data-t="Melbourne vacancy" data-v="just under 1.8%" data-s="Cotality, Aug 2026 · tighter than a year ago"><path class="bar" d="M40,100 L40,40 Q40,36 44,36 L80,36 Q84,36 84,40 L84,100 Z" fill="var(--s1)"></path><text class="val" x="62" y="30" text-anchor="middle" font-size="10.5">&lt;1.8%</text><text x="62" y="115" text-anchor="middle" font-size="10.5">Melb</text></g>
-        <g class="hit" data-t="Perth vacancy" data-v="0.6%" data-s="propertyupdate.com.au, 2026 · national 1.3%"><path class="bar" d="M110,100 L110,82.7 Q110,78.7 114,78.7 L150,78.7 Q154,78.7 154,82.7 L154,100 Z" fill="var(--s2)"></path><text class="val" x="132" y="73" text-anchor="middle" font-size="10.5">0.6%</text><text x="132" y="115" text-anchor="middle" font-size="10.5">Perth</text></g>
-        <text x="97" y="127" text-anchor="middle" font-size="9.5">lower = scarcer rentals</text>
+        <g class="hit" data-t="Melbourne vacancy" data-v="just under 1.8%" data-s="July 2026 · national vacancy has since risen to 1.9%"><path class="bar" d="M40,100 L40,40 Q40,36 44,36 L80,36 Q84,36 84,40 L84,100 Z" fill="var(--s1)"></path><text class="val" x="62" y="30" text-anchor="middle" font-size="10.5">&lt;1.8%</text><text x="62" y="115" text-anchor="middle" font-size="10.5">Melb</text></g>
+        <g class="hit" data-t="Perth vacancy" data-v="0.6%" data-s="July 2026 · August figure not verified"><path class="bar" d="M110,100 L110,82.7 Q110,78.7 114,78.7 L150,78.7 Q154,78.7 154,82.7 L154,100 Z" fill="var(--s2)"></path><text class="val" x="132" y="73" text-anchor="middle" font-size="10.5">0.6%</text><text x="132" y="115" text-anchor="middle" font-size="10.5">Perth</text></g>
+        <text x="97" y="127" text-anchor="middle" font-size="9.5">national rose to 1.9% in Aug</text>
       </svg>
     </div>
-    <p class="fig-note">All from Cotality / CoreLogic Home Value Index, July 2026, except vacancy (propertyupdate.com.au tracker, 2026). Price panel compares median <b>house</b> values; the change panel compares median <b>dwelling</b> values (houses and units combined) — the basis each source reports.</p>
+    <p class="fig-note">Price, change and yield panels: Cotality / CoreLogic Home Value Index as at <b>31 August 2026</b>. Melbourne's median dwelling value is my arithmetic on the July figure and August's −1.1% move, not a published number. The vacancy panel is <b>July</b> data — the only city-level figures I could verify — and is the weakest panel here: national vacancy has since risen to 1.9%, its highest since January 2025, so both bars are probably understated.</p>
   </div>
 
   <div class="card">
@@ -1764,25 +1910,26 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
         <caption>The full comparison. "Winner" means better <b>for you as a prospective buyer</b>, which is often the opposite of better for an existing owner.</caption>
         <thead><tr><th>Measure</th><th class="num">Melbourne</th><th class="num">Perth</th><th>Better for a buyer</th></tr></thead>
         <tbody>
-          <tr><td><b>Median house price</b></td><td class="num">$936,528</td><td class="num">$1,073,500</td><td><b style="color:var(--s1)">Melbourne</b> — 14.6% cheaper</td></tr>
-          <tr><td><b>Median dwelling</b></td><td class="num">$797,354</td><td class="num">~$1,030,000</td><td><b style="color:var(--s1)">Melbourne</b> — ~29% cheaper</td></tr>
-          <tr><td><b>1-year growth</b></td><td class="num dn">−2.8%</td><td class="num up">+20.5%</td><td><b style="color:var(--s1)">Melbourne</b> — you want to buy <em>before</em> growth, not after</td></tr>
-          <tr><td><b>Latest month</b></td><td class="num dn">−1.2%</td><td class="num flat">+0.1%</td><td><b style="color:var(--s1)">Melbourne</b></td></tr>
-          <tr><td><b>Latest quarter</b></td><td class="num dn">−3.4%</td><td class="num dn">−0.3%</td><td><b style="color:var(--s1)">Melbourne</b> — both softening, Melbourne faster</td></tr>
-          <tr><td><b>Gross rental yield</b></td><td class="num">4.0%</td><td class="num">3.8%</td><td><b style="color:var(--s1)">Melbourne</b> — narrowly</td></tr>
+          <tr><td><b>Median dwelling</b></td><td class="num">~$788,600</td><td class="num">$999,987</td><td><b style="color:var(--s1)">Melbourne</b> — 26.8% cheaper</td></tr>
+          <tr><td><b>Median house</b></td><td class="num">$936,528 <span style="font-size:11px;color:var(--ink3)">(Jul)</span></td><td class="num na">Aug not verified</td><td><b style="color:var(--s1)">Melbourne</b></td></tr>
+          <tr><td><b>1-year growth</b></td><td class="num dn">−4.7%</td><td class="num up">+15.6%</td><td><b style="color:var(--s1)">Melbourne</b> — and Perth's lead is shrinking fast</td></tr>
+          <tr style="background:var(--surface2)"><td><b>Latest month (Aug)</b></td><td class="num dn">−1.1%</td><td class="num dn">−0.8%</td><td><b>Neither</b> — both now falling</td></tr>
+          <tr><td><b>Latest quarter</b></td><td class="num dn">−3.9%</td><td class="num dn">−3.2%</td><td><b>Neither</b> — the gap has nearly closed</td></tr>
+          <tr><td><b>Gross rental yield</b></td><td class="num">4.0%</td><td class="num">3.9%</td><td><b style="color:var(--s1)">Melbourne</b> — narrowly</td></tr>
           <tr><td><b>Affordability (price/income)</b></td><td class="num">7.1×</td><td class="num na">not verified</td><td><b style="color:var(--s1)">Melbourne</b> — best of the majors</td></tr>
           <tr><td><b>Supply / listings</b></td><td>Stock building, discounts widening</td><td>Persistent shortage</td><td><b style="color:var(--s1)">Melbourne</b> — more choice, more leverage</td></tr>
           <tr><td><b>Demand pressure</b></td><td>Vic +1.8%/yr population</td><td>Resources-driven inflow</td><td><b style="color:var(--s2)">Perth</b> — hotter, which is bad for a buyer</td></tr>
-          <tr><td><b>Vacancy rate</b></td><td class="num">&lt;1.8%</td><td class="num">0.6%</td><td><b style="color:var(--s2)">Perth</b> for a landlord; irrelevant to your purchase price</td></tr>
-          <tr><td><b>Auction clearance</b></td><td class="num">57.4%</td><td class="num na">not meaningful</td><td><b style="color:var(--s1)">Melbourne</b> — and you can actually measure it there</td></tr>
+          <tr><td><b>Vacancy rate</b> <span style="font-size:11px;color:var(--ink3)">(July)</span></td><td class="num">&lt;1.8%</td><td class="num">0.6%</td><td><b style="color:var(--s2)">Perth</b> for a landlord — but national vacancy rose to 1.9% in August</td></tr>
+          <tr><td><b>Auction clearance</b></td><td class="num">63.4%</td><td class="num na">not meaningful</td><td><b style="color:var(--s1)">Melbourne</b> — firmer than August's 57.4%, still under balanced</td></tr>
           <tr><td><b>Days on market</b></td><td>Rising</td><td class="num">~14 days <span style="font-size:11px;color:var(--ink3)">(April 2026)</span></td><td><b style="color:var(--s1)">Melbourne</b> — time to negotiate</td></tr>
-          <tr style="background:var(--surface2)"><td><b>Where in the cycle?</b></td><td><b style="color:var(--good)">Correction / trough-hunting</b><br><span style="font-size:13px">5.5% below peak, falling</span></td><td><b style="color:var(--risk)">Late boom, losing momentum</b><br><span style="font-size:13px">after +20.5%, now flat</span></td><td><b style="color:var(--s1)">Melbourne</b> decisively</td></tr>
+          <tr style="background:var(--surface2)"><td><b>Where in the cycle?</b></td><td><b style="color:var(--watch)">Deep in correction</b><br><span style="font-size:13px">~6% below the Nov 2025 peak, still falling</span></td><td><b style="color:var(--risk)">Boom over, now turning</b><br><span style="font-size:13px">−3.2% quarter, median back under $1m</span></td><td><b style="color:var(--s1)">Melbourne</b> — but on price, not on timing</td></tr>
         </tbody>
       </table>
     </div>
     <div class="callout">
       <h4>🎯 The one-line verdict</h4>
-      <p style="margin:0;font-size:15px"><span class="tag t-call">CALL</span>On this data, <b>Melbourne is the better buyer's market and Perth is the better seller's market.</b> You said you're a potential Melbourne buyer — the data agrees with your instinct, not because Melbourne is "going up" but precisely because it isn't. The risk in Perth isn't that it falls; it's that you'd be paying 29% more per dwelling for a market that has already delivered its move.</p>
+      <p style="margin:0 0 8px;font-size:15px"><span class="tag t-call">CALL</span><b>Melbourne remains the better buy of the two</b> — 26.8% cheaper per dwelling, a slightly better yield, and the only one of the pair where you can actually measure auction conditions. That is unchanged.</p>
+      <p style="margin:0;font-size:15px"><b>What changed is the framing.</b> Four weeks ago this was "a correcting market versus a booming one". It is now "a correcting market versus a market that has just started correcting". Perth fell 0.8% in August, its quarter is −3.2%, and its July gain was revised away entirely. The argument for Melbourne is no longer that it is early in a downturn while Perth is late in a boom — it is simply that Melbourne is cheaper, and that both are now falling for the same reason: the price of credit.</p>
     </div>
     <label class="done"><input type="checkbox" data-sec="versus"> Got it — comparison read</label>
   </div>
@@ -1790,9 +1937,9 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
 <section id="scenarios">
   <div class="sec-head">
     <div style="flex:1">
-      <div class="eyebrow">What could happen next · not predictions</div>
+      <div class="eyebrow">What could happen next · reweighted 19 Sept</div>
       <h2>🔮 Three ways the next year could go</h2>
-      <p class="sec-sub">Everything hinges on one decision, made eight times a year, by nine people in Sydney. These are the three branches and what each does to your money. The likelihoods are <b>my judgement, not market pricing</b> — treat them as rough weights, not odds you could bet on.</p>
+      <p class="sec-sub">Last month I weighted these from my own judgement and <b>got it wrong</b> — I put a rate rise at 1 in 4 when the market now prices the very next meeting at 82%. So these weights are now anchored to <b>market pricing and published bank forecasts</b>, with the source shown. That is a better input than my opinion.</p>
     </div>
   </div>
 
@@ -1800,67 +1947,67 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
 
     <div class="scen sc-up">
       <div class="scen-head" style="background:var(--risk-bg)">
-        <h3>🔴 Rates rise again</h3>
-        <div class="odds" style="color:var(--risk)">Roughly 1 in 4 · my judgement</div>
+        <h3>🔴 Rates keep rising</h3>
+        <div class="odds" style="color:var(--risk)">82% for 29 Sept · market-implied</div>
       </div>
       <div class="scen-body">
-        <p style="font-size:14px;margin-bottom:10px"><b>What triggers it:</b> the September-quarter CPI comes in above expectations, or the trimmed mean refuses to fall below 3.5%. The RBA has already shown in 2026 that it will reverse course.</p>
+        <p style="font-size:14px;margin-bottom:10px"><b>Now the base case, not the tail.</b> The Fed hiked on 16 September with 16 of 18 officials expecting another. NAB forecasts an RBA hike to 4.60% this month; ANZ, CBA and Westpac expect November. Markets price 4.85% by early 2027. Trimmed-mean inflation is stuck at 3.6%.</p>
         <dl>
-          <dt>🏠 Melbourne</dt><dd>Falls extend. Your borrowing capacity drops faster than prices do — the house gets cheaper and <b>less</b> affordable at the same time.</dd>
-          <dt>🌅 Perth</dt><dd>Stalls properly, possibly turns negative. It has the furthest to fall.</dd>
-          <dt>📈 ASX</dt><dd>Under pressure. Banks worst hit — higher rates plus falling collateral values.</dd>
-          <dt>🥇 Gold</dt><dd>Weak. Higher real rates are gold's worst environment.</dd>
-          <dt>💵 Cash</dt><dd><b>The winner.</b> Term deposits push higher still.</dd>
-          <dt>🏛️ Bonds</dt><dd>Capital values fall further; new buyers get better yields.</dd>
+          <dt>🏠 Melbourne</dt><dd>Falls extend. Your borrowing capacity drops ~$15,000 per 0.25% — <b>faster than prices fall</b>, so the house gets cheaper and less affordable together.</dd>
+          <dt>🌅 Perth</dt><dd>Already turned. More downside, from a much higher base.</dd>
+          <dt>📈 ASX</dt><dd>Further pressure. Already −7.1% from the record.</dd>
+          <dt>🥇 Gold</dt><dd>Weak. Already gave back 3.9% on the Fed hike.</dd>
+          <dt>💵 Cash</dt><dd><b>The winner.</b> Deposit rates have been climbing all year.</dd>
+          <dt>🏛️ Bonds</dt><dd>More capital loss for holders; better yields for new buyers.</dd>
         </dl>
-        <p style="font-size:14px;margin:11px 0 0"><b>What you'd do:</b> nothing fast. Keep saving at 5.55%, keep watching. This scenario extends your window rather than closing it.</p>
+        <p style="font-size:14px;margin:11px 0 0"><b>What you'd do:</b> nothing fast. Keep saving at 5.55%. This scenario <b>widens</b> your buying window rather than closing it — but it also shrinks the loan you can get, so track both.</p>
       </div>
     </div>
 
     <div class="scen sc-flat">
       <div class="scen-head" style="background:var(--watch-bg)">
-        <h3>🟡 Rates stay put</h3>
-        <div class="odds" style="color:var(--watch)">Roughly 1 in 2 · my judgement</div>
+        <h3>🟡 One hike, then a long pause</h3>
+        <div class="odds" style="color:var(--watch)">The consensus bank view</div>
       </div>
       <div class="scen-body">
-        <p style="font-size:14px;margin-bottom:10px"><b>What triggers it:</b> inflation grinds slowly toward the target band without getting there. The RBA holds and waits. This is simply the current situation continuing — and it is the single most likely outcome, because it requires nothing to change.</p>
+        <p style="font-size:14px;margin-bottom:10px"><b>What it looks like:</b> the RBA hikes once (September or November), inflation finally rolls over, and rates sit at 4.60% well into 2027. CommBank's economists already describe the RBA as "in a holding pattern, with cuts still a 2027 story."</p>
         <dl>
-          <dt>🏠 Melbourne</dt><dd>Keeps drifting down slowly. Clearance rates stay in the 50s. <b>Your best negotiating environment, extended.</b></dd>
-          <dt>🌅 Perth</dt><dd>Flat. The 20% year recedes into history.</dd>
-          <dt>📈 ASX</dt><dd>Rangebound, driven by company results rather than rates. Valuation stays stretched.</dd>
-          <dt>🥇 Gold</dt><dd>Choppy, no clear direction. Central-bank buying provides a floor.</dd>
-          <dt>💵 Cash</dt><dd>Still excellent. 5.55% against 3.9% inflation.</dd>
-          <dt>🏛️ Bonds</dt><dd>Stable. You collect the 5.04% coupon.</dd>
+          <dt>🏠 Melbourne</dt><dd>Keeps drifting down through 2026, then flattens. <b>The longest buyer's window of the three.</b></dd>
+          <dt>🌅 Perth</dt><dd>Grinds sideways to slightly lower.</dd>
+          <dt>📈 ASX</dt><dd>Rangebound; earnings, not rates, do the work.</dd>
+          <dt>🥇 Gold</dt><dd>Choppy. Central-bank buying still provides a floor.</dd>
+          <dt>💵 Cash</dt><dd>Still excellent through 2026.</dd>
+          <dt>🏛️ Bonds</dt><dd>Stabilise near 5.36% — the best entry point since 2011.</dd>
         </dl>
-        <p style="font-size:14px;margin:11px 0 0"><b>What you'd do:</b> this is the scenario where "get completely ready" pays off. Time to inspect, shortlist and get pre-approved without pressure.</p>
+        <p style="font-size:14px;margin:11px 0 0"><b>What you'd do:</b> this is the scenario where "get completely ready" pays best. Time to inspect, shortlist and get pre-approved <b>at the post-hike rate</b>, without pressure.</p>
       </div>
     </div>
 
     <div class="scen sc-down">
       <div class="scen-head" style="background:var(--good-bg)">
         <h3>🟢 Rates start falling</h3>
-        <div class="odds" style="color:var(--good)">Roughly 1 in 4 · my judgement</div>
+        <div class="odds" style="color:var(--good)">Not a 2026 story on current pricing</div>
       </div>
       <div class="scen-body">
-        <p style="font-size:14px;margin-bottom:10px"><b>What triggers it:</b> inflation returns to the 2–3% band, or unemployment rises sharply from 4.4%. Note that the second trigger is bad news arriving disguised as good news.</p>
+        <p style="font-size:14px;margin-bottom:10px"><b>What would trigger it:</b> trimmed-mean inflation finally breaking below 3%, or unemployment rising sharply from 4.4%. <b>Note that the second trigger is bad news disguised as good news</b> — a recession that makes your mortgage cheaper can also remove your ability to get one.</p>
         <dl>
-          <dt>🏠 Melbourne</dt><dd><b>Turns, and probably fast.</b> Vacancy under 1.8%, population +1.8% a year, approvals 18% below average — the tinder is already stacked.</dd>
-          <dt>🌅 Perth</dt><dd>Re-accelerates from an already high base.</dd>
-          <dt>📈 ASX</dt><dd>Rallies, banks first. But it is starting from 20× earnings.</dd>
+          <dt>🏠 Melbourne</dt><dd>Turns. <b>But less explosively than I argued last month</b> — national vacancy rose to 1.9%, so the rental squeeze that would have fuelled a fast rebound has eased.</dd>
+          <dt>🌅 Perth</dt><dd>Re-accelerates from a high base.</dd>
+          <dt>📈 ASX</dt><dd>Rallies, banks first.</dd>
           <dt>🥇 Gold</dt><dd><b>Strong.</b> Falling real rates is exactly what gold wants.</dd>
-          <dt>💵 Cash</dt><dd>Deteriorates. Term deposit rates fall as they roll over.</dd>
-          <dt>🏛️ Bonds</dt><dd><b>Capital gains.</b> Yields down means prices up.</dd>
+          <dt>💵 Cash</dt><dd>Deteriorates as deposits roll over at lower rates.</dd>
+          <dt>🏛️ Bonds</dt><dd><b>Capital gains</b> — and you would have locked 5.36%.</dd>
         </dl>
-        <p style="font-size:14px;margin:11px 0 0"><b>What you'd do:</b> this is the scenario that punishes waiting. Every other buyer who was watching arrives at once, and your buyer's market disappears in a couple of months.</p>
+        <p style="font-size:14px;margin:11px 0 0"><b>What you'd do:</b> this is the scenario that punishes waiting. But on current market pricing it is a 2027 question, not a 2026 one — which buys you time you did not obviously have a month ago.</p>
       </div>
     </div>
   </div>
 
   <div class="mech">
-    <h4>The asymmetry worth planning around</h4>
-    <p>Look at the three columns and notice something: <b>the bad scenario for a buyer unfolds slowly, and the good one arrives suddenly.</b> If rates rise, Melbourne grinds down over quarters and you have plenty of time to react. If rates fall, the market can turn within weeks because the demand is already there and only the credit is missing.</p>
-    <p>That asymmetry argues against trying to time the exact bottom, and in favour of being <b>pre-approved and ready</b> so you can act inside the narrow window when conditions flip. Readiness costs you nothing and is the only variable here you fully control.</p>
-    <p>Notice also that <b>no scenario is good for everything.</b> Cash wins when rates rise; bonds and gold win when they fall; property wins on the way down in rates and loses on the way up. That is not a flaw in the analysis — it is the entire argument for holding more than one thing.</p>
+    <h4>What I got wrong last month, and what it changes</h4>
+    <p>My August weights said a rate rise was roughly 1 in 4. The market now prices the next meeting alone at <b>82%</b>, and every major Australian bank forecasts a hike before year end. <b>That was a real error, not bad luck</b> — the information was available and I under-weighted it.</p>
+    <p>The correction is not just new numbers, it is a changed method: <b>these weights now come from market pricing and published forecasts</b>, which are at least a record of what people are betting real money on. Where I still add judgement — the per-asset consequences — treat it as judgement.</p>
+    <p>The substantive change for you: <b>the asymmetry I described last month has weakened.</b> I argued the downside was gradual and the upside sudden, because tight rentals and undersupply would fuel a fast rebound. National vacancy has since risen to its highest since January 2025. The rebound case is still real — population growth and low approvals have not changed — but one of its three legs is now shakier, and you should discount the "everyone arrives at once" warning accordingly.</p>
   </div>
   <label class="done"><input type="checkbox" data-sec="scenarios"> Got it — scenarios read</label>
 </section>
@@ -1877,9 +2024,9 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
 
   <div class="figure">
     <h4>Income yields versus inflation</h4>
-    <p style="font-size:13.5px;color:var(--ink2);margin:4px 0 0">Anything left of the red line is losing purchasing power on income alone, before tax. Anything right of it is keeping up — before considering whether the capital value moves.</p>
+    <p style="font-size:13.5px;color:var(--ink2);margin:4px 0 0">Anything left of the red line is losing purchasing power on income alone, before tax. <b>Inflation fell to 3.5% since the last update, so the line moved left</b> — more things clear it now, without any of them having improved.</p>
     <div class="scroll">
-    <svg class="chart" viewBox="0 0 600 300" role="img" aria-label="Bar chart of income yields against inflation of 3.9 percent. MVA 5.56, term deposit 5.55, 10-year bond 5.04, cash rate 4.35, Melbourne rental yield 4.0, Perth rental yield 3.8, ASX 200 dividend yield 3.34, VAP 3.2.">
+    <svg class="chart" viewBox="0 0 600 300" role="img" aria-label="Bar chart of income yields against inflation of 3.5 percent. MVA 5.56, term deposit 5.55, 10-year bond 5.36, cash rate 4.35, Melbourne rental yield 4.0, Perth rental yield 3.9, ASX 200 dividend yield 3.34, VAP 3.2.">
       <line class="grid-l" x1="239.2" y1="28" x2="239.2" y2="268"></line>
       <line class="grid-l" x1="303.3" y1="28" x2="303.3" y2="268"></line>
       <line class="grid-l" x1="367.5" y1="28" x2="367.5" y2="268"></line>
@@ -1892,17 +2039,17 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
       <text x="560" y="284" text-anchor="middle" font-size="11">6%</text>
       <g class="hit" data-t="MVA · Australian property ETF" data-v="5.56%" data-s="Trailing 12-month distribution yield · VanEck"><rect x="0" y="30" width="600" height="24" fill="transparent"></rect><rect class="bar" x="175" y="34" width="356.8" height="16" rx="4" fill="var(--s1)"></rect><text class="lab" x="167" y="46" text-anchor="end">MVA (A-REITs)</text><text class="val" x="537.8" y="46">5.56%</text></g>
       <g class="hit" data-t="Term deposit, 24 months" data-v="5.55%" data-s="Unity Bank, $1,000+ · Money.com.au, Aug 2026"><rect x="0" y="60" width="600" height="24" fill="transparent"></rect><rect class="bar" x="175" y="64" width="356.1" height="16" rx="4" fill="var(--s1)"></rect><text class="lab" x="167" y="76" text-anchor="end">Term deposit 2yr</text><text class="val" x="537.1" y="76">5.55%</text></g>
-      <g class="hit" data-t="Australian 10-year government bond" data-v="5.04%" data-s="Trading Economics, 21 Aug 2026"><rect x="0" y="90" width="600" height="24" fill="transparent"></rect><rect class="bar" x="175" y="94" width="323.4" height="16" rx="4" fill="var(--s1)"></rect><text class="lab" x="167" y="106" text-anchor="end">AU 10yr bond</text><text class="val" x="504.4" y="106">5.04%</text></g>
+      <g class="hit" data-t="Australian 10-year government bond" data-v="5.36%" data-s="YieldReport, 10 Sept 2026 — highest since May 2011"><rect x="0" y="90" width="600" height="24" fill="transparent"></rect><rect class="bar" x="175" y="94" width="344" height="16" rx="4" fill="var(--s1)"></rect><text class="lab" x="167" y="106" text-anchor="end">AU 10yr bond</text><text class="val" x="525" y="106">5.36%</text></g>
       <g class="hit" data-t="RBA cash rate" data-v="4.35%" data-s="RBA, held August 2026"><rect x="0" y="120" width="600" height="24" fill="transparent"></rect><rect class="bar" x="175" y="124" width="279.1" height="16" rx="4" fill="var(--s1)"></rect><text class="lab" x="167" y="136" text-anchor="end">RBA cash rate</text><text class="val" x="460.1" y="136">4.35%</text></g>
       <g class="hit" data-t="Melbourne gross rental yield" data-v="4.0%" data-s="Cotality, Aug 2026 · gross, before costs"><rect x="0" y="150" width="600" height="24" fill="transparent"></rect><rect class="bar" x="175" y="154" width="256.7" height="16" rx="4" fill="var(--s1)"></rect><text class="lab" x="167" y="166" text-anchor="end">Melbourne rent</text><text class="val" x="437.7" y="166">4.00%</text></g>
-      <g class="hit" data-t="Perth gross rental yield" data-v="3.8%" data-s="Cotality, Aug 2026 · gross, before costs"><rect x="0" y="180" width="600" height="24" fill="transparent"></rect><rect class="bar" x="175" y="184" width="243.8" height="16" rx="4" fill="var(--ink3)"></rect><text class="lab" x="167" y="196" text-anchor="end">Perth rent</text><text class="val" x="424.8" y="196">3.80%</text></g>
+      <g class="hit" data-t="Perth gross rental yield" data-v="3.9%" data-s="Cotality, 31 Aug 2026 · gross, before costs"><rect x="0" y="180" width="600" height="24" fill="transparent"></rect><rect class="bar" x="175" y="184" width="250.3" height="16" rx="4" fill="var(--s1)"></rect><text class="lab" x="167" y="196" text-anchor="end">Perth rent</text><text class="val" x="431.3" y="196">3.90%</text></g>
       <g class="hit" data-t="ASX 200 dividend yield" data-v="3.34%" data-s="Trailing cash yield · J.P. Morgan GTM Australia"><rect x="0" y="210" width="600" height="24" fill="transparent"></rect><rect class="bar" x="175" y="214" width="214.3" height="16" rx="4" fill="var(--ink3)"></rect><text class="lab" x="167" y="226" text-anchor="end">ASX 200 dividends</text><text class="val" x="395.3" y="226">3.34%</text></g>
       <g class="hit" data-t="VAP · Vanguard Australian Property" data-v="3.2%" data-s="Trailing 12-month yield · Morningstar"><rect x="0" y="240" width="600" height="24" fill="transparent"></rect><rect class="bar" x="175" y="244" width="205.3" height="16" rx="4" fill="var(--ink3)"></rect><text class="lab" x="167" y="256" text-anchor="end">VAP (A-REITs)</text><text class="val" x="386.3" y="256">3.20%</text></g>
-      <line class="refline" x1="425.3" y1="24" x2="425.3" y2="268"></line>
-      <text x="425.3" y="19" text-anchor="middle" font-size="11" font-weight="600" fill="var(--risk)">inflation 3.9%</text>
+      <line class="refline" x1="399.6" y1="24" x2="399.6" y2="268"></line>
+      <text x="399.6" y="19" text-anchor="middle" font-size="11" font-weight="600" fill="var(--risk)">inflation 3.5%</text>
     </svg>
     </div>
-    <div class="legend"><span><i style="background:var(--s1)"></i>Keeping up with inflation</span><span><i style="background:var(--ink3)"></i>Losing to inflation on income alone</span><span><i style="background:var(--risk);width:14px;height:3px;border-radius:0"></i>CPI 3.9% (ABS, June qtr 2026)</span></div>
+    <div class="legend"><span><i style="background:var(--s1)"></i>Keeping up with inflation</span><span><i style="background:var(--ink3)"></i>Losing to inflation on income alone</span><span><i style="background:var(--risk);width:14px;height:3px;border-radius:0"></i>CPI 3.5% (ABS, 12 months to July 2026)</span></div>
     <p class="fig-note">Yields are not like-for-like. A term deposit's 5.55% is contractual and government-guaranteed. Rental yield is <b>gross</b> — before rates, insurance, management, maintenance and vacancy, which typically consume a quarter to a third of it. Share and REIT yields can be cut at any time; Australian dividends may carry franking credits that raise their after-tax value. Read this chart as a starting comparison, not a ranking.</p>
   </div>
 
@@ -1911,25 +2058,30 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
       <div class="sighead"><h3>💵 Term deposits &amp; cash</h3><span class="sig sig-good"><i class="gl"></i>Attractive</span><span class="conf"><i><b class="on"></b><b class="on"></b><b class="on"></b></i> High</span></div>
       <p class="oneline">The strongest risk-adjusted proposition on this board, and it requires no skill.</p>
       <ul style="font-size:14.5px">
-        <li>Best rates found: <b>5.55%</b> (Unity Bank, 24 months, $1,000+), <b>5.40%</b> for 12 months, <b>5.70%</b> from Rabobank for 60 months on $500,000–$2,000,000.</li>
+        <li>Best rates found: <b>5.55%</b> (Unity Bank, 24 months), <b>5.50%</b> (Judo Bank), <b>5.40%</b> for 12 months (Heartland Bank, AMP Bank). NAB's best is 5.25%.</li>
         <li>Government-guaranteed to <b>$250,000 per person per institution</b> under the Financial Claims Scheme.</li>
-        <li>Beats inflation by ~1.6% before tax.</li>
+        <li>Beats inflation by <b>~2.05%</b> before tax — improved from ~1.6% in August, because inflation fell while rates held.</li>
+        <li><b>Rates have been climbing through 2026, not falling</b>, so the pressure to lock in before they drop has eased.</li>
       </ul>
-      <p style="font-size:14.5px"><span class="tag t-read">READ</span>Commentary suggests this may be near the peak: "there's a chance this is as high as term deposit rates go in 2026." If you believe that, locking a longer term has more appeal than rolling short ones.</p>
+      <p style="font-size:14.5px"><span class="tag t-read">READ</span>August's commentary suggested rates were near their peak. <b>That looks wrong now</b> — with the Fed hiking and the RBA 82% priced, deposit rates more likely drift higher than lower into 2027. That argues for <b>not</b> locking every dollar into a long term right now: laddering across maturities lets you capture rises as they come.</p>
       <p style="font-size:14px"><b>Shariah note:</b> <span class="halal h-no">NOT compliant</span> — interest is <em>riba</em>. Compliant alternatives are Islamic bank profit-sharing accounts and sukuk (see SKUK below).</p>
-      <p class="src">Money.com.au, Mozo, Finder term deposit tables, Aug 2026</p>
+      <p class="src">Canstar, Mozo, Finder, Money.com.au term deposit tables, Sept 2026</p>
     </div>
 
     <div class="card">
-      <div class="sighead"><h3>🏛️ Australian government bonds</h3><span class="sig sig-good"><i class="gl"></i>Attractive yield</span><span class="conf"><i><b class="on"></b><b class="on"></b><b></b></i> Medium</span></div>
-      <p class="oneline">5.04% from the Commonwealth for ten years — the best on offer in well over a decade.</p>
+      <div class="sighead"><h3>🏛️ Australian government bonds</h3><span class="sig sig-watch"><i class="gl"></i>Good yield, keep falling</span><span class="conf"><i><b class="on"></b><b class="on"></b><b></b></i> Medium</span></div>
+      <div class="callout stop" style="margin-top:0">
+        <h4>📉 Downgraded from 🟢 — I got this one wrong last month</h4>
+        <p style="margin:0;font-size:14px">On 22 August this board rated bonds <b>attractive at 5.04%</b>. Yields then rose to <b>5.36%</b>, which means prices fell — anyone who acted on that rating is holding a capital loss. The section even explained the mechanism and then rated the yield instead of the position. See the <a href="#scorecard">scorecard</a>.</p>
+      </div>
+      <p class="oneline">5.36% is the best entry yield since May 2011 — genuinely attractive for new money. But the same force pushing yields up is still running, so "attractive" does not mean "won't fall further".</p>
       <ul style="font-size:14.5px">
-        <li>10-year yield <b>5.04%</b> (21 Aug 2026), above 5% and near multi-month highs, tracking a global bond selloff.</li>
+        <li>10-year yield <b>5.36%</b> (10 Sept 2026), up 16bp in a session, the highest across the curve since <b>May 2011</b>.</li>
         <li>Available to retail buyers as exchange-traded Australian Government Bonds on the ASX, or through bond ETFs.</li>
       </ul>
-      <p style="font-size:14.5px"><span class="tag t-read">READ</span>The catch most people miss: <b>bond prices fall when yields rise.</b> If you buy at 5.04% and yields go to 5.5%, your capital value drops — you only lock the 5.04% if you hold to maturity. Yields rising is why bonds have been a poor investment recently and why they are an attractive one now.</p>
+      <p style="font-size:14.5px"><span class="tag t-read">READ</span><b>Bond prices fall when yields rise</b> — and yields are rising because both the Fed and the RBA are tightening. You only lock in 5.36% if you <b>hold to maturity</b>; sell early in a rising-yield market and you crystallise a loss. The honest framing: a 5.36% yield held for ten years against 3.5% inflation is a solid real return, and everything in between is noise you must be able to sit through.</p>
       <p style="font-size:14px"><b>Shariah note:</b> <span class="halal h-no">NOT compliant</span> — interest-bearing. Sukuk are the structured alternative.</p>
-      <p class="src">Trading Economics AU 10Y, 21 Aug 2026</p>
+      <p class="src">YieldReport 10 Sept 2026; Trading Economics AU 10Y</p>
     </div>
 
     <div class="card">
@@ -1948,9 +2100,9 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
       <div class="sighead"><h3>🌍 International &amp; emerging equities</h3><span class="sig sig-watch"><i class="gl"></i>Watch</span><span class="conf"><i><b class="on"></b><b></b><b></b></i> Low-Med</span></div>
       <p class="oneline">Records offshore, but a 10.8% stronger Australian dollar has been quietly taking your share.</p>
       <ul style="font-size:14.5px">
-        <li>S&amp;P 500 at 7,681 after a record 7,737 on 4 Aug; Dow crossed 54,000.</li>
+        <li>S&amp;P 500 at <b>7,650</b> (18 Sept) — remarkably resilient, down just 0.4% in four weeks despite the Fed hiking.</li>
         <li>VGS +14.96%, NDQ +26.37% over the year to 30 June 2026.</li>
-        <li>AUD +10.80% over 12 months — a direct subtraction from unhedged returns.</li>
+        <li>AUD eased to <b>0.7121</b>, down 0.7% in four weeks — a small tailwind after a year in which its 10.8% rise was a persistent drag.</li>
       </ul>
       <p style="font-size:14.5px"><span class="tag t-read">READ</span>Diversifying away from Australia's bank-and-miner concentration is genuinely sensible. Doing it right after a record high, in the highest-fee, most concentrated vehicle available (NDQ at 0.48%), is the part to think about. VGS at 0.18% or IVV at 0.03% does more diversification for less money.</p>
       <p style="font-size:14px"><b>Emerging markets:</b> <span class="na">Data unavailable / unable to verify</span> — no assessment made.</p>
@@ -2036,9 +2188,24 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
       </div>
       <p style="font-size:14.5px;margin-top:12px"><b>Capital gains tax</b> — the rules are changing. Today a 50% discount applies to assets held over twelve months. From <b>1 July 2027</b> that is replaced by CPI indexation of your cost base plus a minimum 30% tax on gains accruing after that date. <b>Your own home remains exempt.</b></p>
       <p style="font-size:14.5px"><b>Crypto</b> — crypto-to-crypto transactions are generally CGT events for Australian residents, including stablecoin swaps. This is why "just park it in USDC" is not the simple move it appears to be.</p>
-      <p style="font-size:14.5px"><b>Interest income</b> — term deposit and bond interest is taxed at your full marginal rate with no discount and no franking. A 5.55% term deposit at a 37% marginal rate nets about 3.50%, which is <em>below</em> the 3.9% inflation rate. <span class="tag t-read">READ</span>That is an important qualifier on this board's most confident call: cash beats inflation <b>before tax</b>, and for a higher earner it may not after tax. It is still the right home for a deposit you will spend within three years — capital certainty is the point, not the yield.</p>
-      <div class="callout warn" style="margin-bottom:0">
-        <p style="margin:0;font-size:14px"><b>Marginal tax rates:</b> <span class="na">not verified for 2026–27</span> — I did not retrieve the current bracket table, so the 37% used above is illustrative. Check ato.gov.au for your actual rate before relying on any after-tax figure here.</p>
+      <p style="font-size:14.5px"><b>Interest income</b> — term deposit and bond interest is taxed at your full marginal rate, with no discount and no franking. Worked through at the verified rates: a <b>5.55%</b> deposit nets about <b>3.38%</b> at a 37% marginal rate plus 2% Medicare, or about <b>3.83%</b> at 30% plus Medicare. Against inflation of <b>3.5%</b>, that is roughly break-even for a high earner and modestly positive for a middle earner. <span class="tag t-read">READ</span>This is the honest qualifier on the board's most confident call: cash beats inflation <b>before tax</b>, and after tax it only just does. It is still the right home for a deposit you will spend within three years, because <b>capital certainty is the product, not the yield</b> — and in the four weeks to 19 September it was the only thing here that did not lose money.</p>
+      <h4 style="font-size:15.5px;margin:16px 0 6px">Australian income tax rates, 2026–27 — now verified</h4>
+      <div class="scroll">
+        <table style="min-width:380px">
+          <thead><tr><th>Taxable income</th><th class="num">Rate on that slice</th></tr></thead>
+          <tbody>
+            <tr><td>$0 – $18,200</td><td class="num">0%</td></tr>
+            <tr><td>$18,201 – $45,000</td><td class="num">15%</td></tr>
+            <tr><td>$45,001 – $135,000</td><td class="num">30%</td></tr>
+            <tr><td>$135,001 – $190,000</td><td class="num">37%</td></tr>
+            <tr><td>$190,001 +</td><td class="num">45%</td></tr>
+            <tr style="background:var(--surface2)"><td><b>Medicare levy</b></td><td class="num"><b>+2%</b> flat</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:14px;margin-top:8px">The 15% bracket fell from 16% on <b>1 July 2026</b>, and drops again to 14% on 1 July 2027 — the last step of a three-year legislated cut. Australia is progressive, so only the slice inside each band is taxed at that rate. The top effective rate including Medicare is 47%.<span class="src">ATO resident tax rates 2026–27, via superguide / sleek / austax summaries</span></p>
+      <div class="callout" style="margin-bottom:0">
+        <p style="margin:0;font-size:14px"><b>✅ The calculator now uses these rates directly</b> instead of the take-home percentage it guessed at last month. It also lets you split income across one or two earners, which matters a lot: on $140,000, one earner takes home 74.5% and two earners take home 81.5% — worth about <b>$100,000 of extra borrowing capacity</b>. Simplifications that remain: it ignores the low-income Medicare reduction, tax offsets, HECS repayments and the Medicare levy surcharge.</p>
       </div>
     </div>
   </div>
@@ -2147,7 +2314,7 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
       <p style="font-size:14.5px"><b>How does it make money?</b> Interest payments (the "coupon"), plus a capital gain if you sell when yields have fallen.</p>
       <p style="font-size:14.5px"><b>What moves the price?</b> The single most counter-intuitive rule in investing: <b>bond prices move opposite to yields.</b> If you hold a bond paying 5% and new bonds start paying 6%, nobody wants yours at full price — so its value falls. This is why bonds lost money while rates rose, and why they're attractive now that yields are high.</p>
       <p style="font-size:14.5px"><b>Risks?</b> Rising rates cut the value of what you hold. Inflation erodes fixed payments. Company bonds can default; Australian government bonds effectively don't.</p>
-      <p style="font-size:14.5px"><b>Beginner should look at:</b> whether you'll hold to maturity (if yes, price swings don't matter — you get your 5.04%), and the yield versus inflation.</p>
+      <p style="font-size:14.5px"><b>Beginner should look at:</b> whether you'll hold to maturity (if yes, price swings don't matter — you get the yield you bought at, currently 5.36%), and that yield versus inflation.</p>
     </div></details>
 
     <details><summary>🪙 Stablecoins</summary><div class="det-body">
@@ -2200,7 +2367,7 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
 
     <div class="card">
       <h3 style="font-size:17px;margin-bottom:8px">🏠 Melbourne vs 🌅 Perth</h3>
-      <p style="font-size:14.5px">Fully covered above — Melbourne −2.8% and 5.5% below peak; Perth +20.5% but flat for the month and −0.3% for the quarter. Perth's median dwelling is ~29% dearer.</p>
+      <p style="font-size:14.5px">Fully covered above — Melbourne −4.7% over the year and about 6% below its November 2025 peak; Perth <b>now falling too</b> at −0.8% for August and −3.2% for the quarter, with annual growth down to +15.6%. Perth's median dwelling is still ~26.8% dearer.</p>
       <p style="font-size:14.5px"><a href="#versus">Jump to the full comparison ⚖️</a></p>
     </div>
 
@@ -2240,17 +2407,23 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
       <table style="min-width:700px">
         <thead><tr><th>Date</th><th>Event</th><th>Why it matters to you</th><th>Watch level</th></tr></thead>
         <tbody>
-          <tr style="background:var(--watch-bg)">
-            <td class="num"><b>15–16 Sep 2026</b></td>
-            <td><b>US Federal Reserve (FOMC)</b><br><span style="font-size:13px">with Summary of Economic Projections</span></td>
-            <td style="font-size:13.5px">Currently 3.50–3.75%. <b>Three members dissented in July wanting a hike.</b> Traders have trimmed hike odds after July's soft CPI, but commentators call September "finely balanced". A hike would likely hit gold hard and lift global bond yields further.</td>
-            <td><span class="sig sig-risk"><i class="gl"></i>High</span></td>
-          </tr>
           <tr style="background:var(--risk-bg)">
-            <td class="num"><b>29 Sep 2026</b></td>
+            <td class="num"><b>29 Sep 2026</b><br><span style="font-size:12px;color:var(--risk);font-weight:700">10 days away</span></td>
             <td><b>RBA cash rate decision</b></td>
-            <td style="font-size:13.5px"><b>The single most important date on this board for you.</b> Cash rate 4.35% after three hikes and two holds. Bullock says inflation "remains too high". A hike worsens Melbourne affordability; a clear signal that hiking is over would flip several rows of the buy-signal scorecard at once.</td>
+            <td style="font-size:13.5px"><b>The single most important date on this board for you, and it is imminent.</b> Market-implied probability of a 25bp hike: <b>82%</b>. NAB forecasts a hike to 4.60% at this meeting; ANZ, CBA and Westpac expect November instead — but all four expect one before year end. A hike cuts your borrowing capacity by roughly $15,000 per 0.25%. <b>This board's advice is to make no property decision until this lands.</b></td>
             <td><span class="sig sig-risk"><i class="gl"></i>Critical</span></td>
+          </tr>
+          <tr style="background:var(--surface2)">
+            <td class="num"><b>16 Sep 2026</b><br><span style="font-size:12px;color:var(--ink3)">done</span></td>
+            <td><b>US Federal Reserve — HIKED</b></td>
+            <td style="font-size:13.5px"><b>Resolved.</b> The FOMC voted 12–0 to raise the target range to <b>3.75%–4.00%</b>, the first US hike since 2023. Chair Kevin Warsh said inflation is "still too high". <b>16 of 18 officials expect another hike this year</b>, with year-end projections of 4.1%–4.4%. Gold fell and global bond yields rose, as expected.</td>
+            <td><span class="sig sig-good"><i class="gl"></i>Happened</span></td>
+          </tr>
+          <tr>
+            <td class="num">Late Oct / Nov 2026</td>
+            <td><b>Next FOMC meetings</b></td>
+            <td style="font-size:13.5px">With 16 of 18 participants projecting a further hike, the question is when, not whether. Each one adds pressure to Australian bond yields and to gold.</td>
+            <td><span class="sig sig-watch"><i class="gl"></i>High</span></td>
           </tr>
           <tr>
             <td class="num">Monthly</td>
@@ -2261,31 +2434,31 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
           <tr>
             <td class="num">Monthly</td>
             <td><b>ABS Monthly CPI Indicator</b></td>
-            <td style="font-size:13.5px">3.8% in the 12 months to June, down from 4.0% to May. Each print moves the odds of the next RBA move. Housing (6.8%) is the largest contributor to annual inflation — which is its own uncomfortable feedback loop.</td>
+            <td style="font-size:13.5px">Now <b>3.5%</b> in the 12 months to July, down from 3.8% — but the <b>trimmed mean the RBA actually targets was unchanged at 3.6%</b>. That gap is precisely why a hike is still 82% priced despite the headline improving.</td>
             <td><span class="sig sig-risk"><i class="gl"></i>High</span></td>
           </tr>
           <tr>
             <td class="num">Late Oct 2026</td>
             <td><b>ABS CPI, September quarter</b></td>
-            <td style="font-size:13.5px">The full quarterly read. June quarter was +0.6% for the quarter, 3.9% through the year, trimmed mean 3.6% — all above the RBA's 2–3% target band. This is the number that decides whether hiking resumes.</td>
+            <td style="font-size:13.5px">The full quarterly read, and Westpac's stated reason for expecting a November move rather than September — it wants this data first. June quarter was 3.9% through the year with a 3.6% trimmed mean, both above the 2–3% target band.</td>
             <td><span class="sig sig-risk"><i class="gl"></i>Critical</span></td>
           </tr>
           <tr>
             <td class="num">Monthly</td>
             <td><b>US CPI</b></td>
-            <td style="font-size:13.5px">3.4% headline / 2.5% core in July, both down 0.1pp. Commentators say Fed action depends on "the next two CPI prints". This is the direct driver of gold.</td>
+            <td style="font-size:13.5px">3.4% headline / 2.5% core in July. The Fed hiked anyway on 16 September, citing persistent inflation driven partly by high energy prices. Still the most direct driver of the gold price.</td>
             <td><span class="sig sig-watch"><i class="gl"></i>Medium-high</span></td>
           </tr>
           <tr>
             <td class="num">Weekly (Sat)</td>
             <td><b>Cotality auction clearance rates</b></td>
-            <td style="font-size:13.5px">Melbourne at 57.4% (w/e 16 Aug). A sustained move back above 65% would be your earliest signal that the buyer's window is closing.</td>
+            <td style="font-size:13.5px">Melbourne at <b>63.4%</b> (w/e 6 Sept), up from 57.4% in August. A sustained move above 65% is your earliest signal that the buyer's window is closing — it is now close.</td>
             <td><span class="sig sig-good"><i class="gl"></i>Your early warning</span></td>
           </tr>
           <tr>
             <td class="num">Monthly (1st)</td>
             <td><b>Cotality / CoreLogic Home Value Index</b></td>
-            <td style="font-size:13.5px">The monthly Melbourne and Perth numbers this whole board runs on. Released at the start of each month for the month prior.</td>
+            <td style="font-size:13.5px">The monthly Melbourne and Perth numbers this whole board runs on. Released at the start of each month. <b>Note that Cotality revises:</b> Perth's July figure was restated from +0.1% to −1.3%, which flipped a conclusion on this board.</td>
             <td><span class="sig sig-good"><i class="gl"></i>Your core data</span></td>
           </tr>
           <tr>
@@ -2344,7 +2517,7 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
     </div>
     <div class="card">
       <h3 style="font-size:17px;margin-bottom:8px">🟠 The risk inside your own head</h3>
-      <p style="font-size:14.5px">The three assets that went up most in the last year (Nasdaq +26%, gold +22%, Perth +20.5%) are the three this board is <b>least</b> enthusiastic about. That is not a coincidence — it's what buying after the move looks like.</p>
+      <p style="font-size:14.5px">In August the three best performers of the year (Nasdaq +26%, gold +22%, Perth +20.5%) were the three this board was <b>least</b> enthusiastic about. In the four weeks since, <b>gold fell 3.9%, the ASX fell 4.1%, and Perth turned negative with its July gain revised away.</b> That is what buying after the move looks like from the inside.</p>
       <p style="font-size:14.5px"><b>The tell:</b> if you find yourself wanting to act because of a number that already happened, that's the moment to close the tab and come back tomorrow. Nothing on this board needs a decision today.</p>
     </div>
   </div>
@@ -2421,11 +2594,23 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
   <div class="card">
     <div class="callout stop">
       <h4>🚫 This page is a snapshot, not a live feed</h4>
-      <p style="margin:0 0 8px;font-size:15px">Every number was gathered on <b>22 August 2026</b> and written into this page. <b>Nothing updates by itself.</b> A published page cannot reach out to data providers — the security sandbox blocks external network requests, and there is no market-data connector available to it. Anyone who tells you otherwise is describing a fake refresh button.</p>
+      <p style="margin:0 0 8px;font-size:15px">Every number was gathered on <b>19 September 2026</b> and written into this page. <b>Nothing updates by itself.</b> A published page cannot reach out to data providers — the security sandbox blocks external network requests, and there is no market-data connector available to it. Anyone who tells you otherwise is describing a fake refresh button.</p>
       <p style="margin:0;font-size:15px">The 🔄 button in the top bar is honest about this: it tells you exactly how old the data is and gives you the words to get a real update. It does not pretend to fetch anything.</p>
     </div>
 
-    <h3 style="font-size:18px;margin:18px 0 8px">⚔️ Where sources disagreed — and what I did</h3>
+    <h3 style="font-size:18px;margin:18px 0 8px">🕓 Version history</h3>
+    <div class="scroll">
+      <table style="min-width:520px">
+        <thead><tr><th>Version</th><th>What changed</th></tr></thead>
+        <tbody>
+          <tr style="background:var(--surface2)"><td class="num"><b>19 Sept 2026</b><br><span style="font-size:12px;color:var(--ink3)">current</span></td><td style="font-size:13.5px">Full data refresh. US Fed hike (16 Sept) added; RBA hike odds (82%) added; August Cotality property data; bond yield 5.36%; Perth's July revision. <b>Bonds downgraded 🟢→🟡 after a wrong call.</b> Added the <a href="#scorecard">scorecard</a> and this history. Calculator now uses real ATO 2026–27 tax brackets and the real Victorian duty schedule instead of two placeholders. Melbourne's peak framing corrected to reflect the November 2025 cyclical peak. Scenario weights re-anchored to market pricing.</td></tr>
+          <tr><td class="num"><b>22 Aug 2026</b></td><td style="font-size:13.5px">Added the full briefing, personal calculators, five-year history, three scenarios, costs &amp; tax (including the May 2026 negative gearing reform), Melbourne suburbs, and the execution guide.</td></tr>
+          <tr><td class="num"><b>22 Aug 2026</b><br><span style="font-size:12px;color:var(--ink3)">initial</span></td><td style="font-size:13.5px">First build: snapshot, Top 5, gold, stablecoins, ASX, ETFs, Melbourne and Perth property, buy signal, allocations, learning mode, events and risks.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-size:18px;margin:20px 0 8px">⚔️ Where sources disagreed — and what I did</h3>
     <div class="focus-note">Detail hidden by Focus mode. Turn Focus mode off in the top bar to see it.</div>
     <div class="scroll deep">
       <table style="min-width:660px">
@@ -2435,6 +2620,21 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
             <td><b>Melbourne median house price.</b> Cotality-derived reporting says $936,528 and falling. A mortgage-broker blog forecasts "around $1.17 million by end of 2026".</td>
             <td>$936,528</td>
             <td style="font-size:13.5px">The $1.17m figure is a <b>forecast</b>, not a measurement, from a commercially interested source, and it is irreconcilable with a market that fell 4.9% year to date. Forecasts are not data.</td>
+          </tr>
+          <tr style="background:var(--watch-bg)">
+            <td><b>Perth's July 2026 figure — a revision, not a disagreement.</b> First published as <b>+0.1%</b>; Cotality later restated it as <b>−1.3%</b>.</td>
+            <td>−1.3%</td>
+            <td style="font-size:13.5px">The restated figure, and I have flagged it prominently because the previous version of this board built an argument on the original. This is the clearest illustration on the page of why fresh data deserves less confidence than old data: <b>the number did not just change, it changed sign.</b> Cotality revises as late sales settle, so first-of-month figures are estimates.</td>
+          </tr>
+          <tr>
+            <td><b>Melbourne's cyclical peak.</b> Earlier sources framed the drawdown against the <b>March 2022</b> all-time peak; Cotality's August release measures it against a <b>November 2025</b> cyclical peak.</td>
+            <td>Both, labelled</td>
+            <td style="font-size:13.5px">They are different peaks and both are real. Melbourne peaked in March 2022, fell, recovered during the 2025 rate cuts to a lower cyclical high in November 2025, and has fallen since. The August board's "four and a half years of going nowhere" undersold that 2025 recovery; the history chart is corrected and now says so.</td>
+          </tr>
+          <tr>
+            <td><b>Melbourne auction clearance, September.</b> Cotality-derived reporting gives <b>63.4%</b> for the week ending 6 September and 63.4% for houses to 12 September. One aggregator reports a <b>73% statewide</b> rate with houses at 72%.</td>
+            <td>63.4%</td>
+            <td style="font-size:13.5px">The 63.4% figure appears twice from separate weeks and is consistent with a market falling 1.1% a month. A 73% clearance rate would imply a strongly rising market, which nothing else in the data supports. "Statewide" also mixes in regional Victoria on tiny volumes.</td>
           </tr>
           <tr>
             <td><b>Melbourne's annual direction.</b> Cotality-derived reporting for July 2026 says dwelling values are <b>−2.8% over the year</b>. Several property-industry sites say <b>+4.2% year-on-year, "the strongest annual gain since 2021"</b>.</td>
@@ -2491,11 +2691,14 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
       <li>Sector index returns for the ASX (only individual stock moves)</li>
       <li>Islamic home finance rates and providers</li>
       <li>Perth days on market since April 2026</li>
-      <li>The full Victorian stamp duty rate schedule (only two points verified)</li>
-      <li>Australian marginal income tax brackets for 2026–27</li>
+      <li>The Victorian first home buyer concession formula between $600,000 and $750,000 <span style="font-size:12px;color:var(--ink3)">(the rest of the duty schedule is now verified)</span></li>
       <li>Conveyancing and building inspection costs</li>
       <li>Gold's AUD returns for calendar 2021 and 2023</li>
       <li>Melbourne suburb data of Cotality quality (industry sites only)</li>
+      <li>Melbourne median house and unit values for August 2026 (only the −1.1% dwelling move was published)</li>
+      <li>Melbourne-specific vacancy for August (only the national 1.9% figure)</li>
+      <li>Perth days on market and vacancy for August 2026</li>
+      <li>6-month and 1-year returns for the ASX 200 and S&amp;P 500 — still unverified after two attempts</li>
       <li>Perth 2021 and 2022 median prices</li>
       <li>Detail on the build-to-rent negative gearing exemptions</li>
     </ul>
@@ -2529,10 +2732,10 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
 </section>
 
 <div class="footer">
-  <p style="font-size:15px;max-width:74ch"><b>What this is.</b> An investment research and decision-support board built from publicly available data on 22 August 2026. It is designed to help you understand what is happening, spot opportunities, avoid reacting emotionally to a number that already happened, and make better long-term decisions.</p>
+  <p style="font-size:15px;max-width:74ch"><b>What this is.</b> An investment research and decision-support board built from publicly available data on 19 September 2026, replacing a 22 August version whose calls are scored in the <a href="#scorecard">scorecard</a>. It is designed to help you understand what is happening, spot opportunities, avoid reacting emotionally to a number that already happened, and make better long-term decisions.</p>
   <p style="font-size:15px;max-width:74ch"><b>What this is not.</b> Personal financial advice. It does not know your income, debts, tax position, dependants, job security, goals or timeline — and every one of those matters more than anything on this page. It cannot predict prices, and it will never tell you something "will" go up or "will" crash. Where it has an opinion, it is labelled <span class="tag t-call">CALL</span> and comes with a confidence level and the conditions that would change it.</p>
   <p style="font-size:15px;max-width:74ch">Before acting on anything here, verify the number at its source and speak to a licensed Australian financial adviser, and a registered tax agent for anything tax-related. For Shariah questions, speak to a qualified scholar — nothing here is a religious ruling.</p>
-  <p style="font-size:13.5px;color:var(--ink3);margin-top:14px">Snapshot compiled 22 August 2026 · Every important figure on this page carries its source and date · Empty cells are deliberate</p>
+  <p style="font-size:13.5px;color:var(--ink3);margin-top:14px">Snapshot compiled 19 September 2026 · Every important figure on this page carries its source and date · Empty cells are deliberate</p>
 </div>
 
 </main>
@@ -2547,7 +2750,7 @@ svg.chart .refline{stroke:var(--risk);stroke-width:1.5;stroke-dasharray:5 4}
 
     <div class="callout" style="margin-top:6px">
       <h4>How old is this data?</h4>
-      <p style="margin:0;font-size:15px"><b id="ageBig">…</b> since the snapshot of <span class="mono">22 Aug 2026, 09:00 AEST</span>.</p>
+      <p style="margin:0;font-size:15px"><b id="ageBig">…</b> since the snapshot of <span class="mono">19 Sept 2026, 18:00 AEST</span>.</p>
       <p style="margin:8px 0 0;font-size:14px" id="ageAdvice"></p>
     </div>
 
@@ -2571,10 +2774,12 @@ Refresh every figure and re-do the analysis:
 
 Then:
 - Re-do the Top 5 "what should I watch" list.
-- Tell me specifically what has MATERIALLY changed since 22 August 2026 and what it means for me.
+- Tell me specifically what has MATERIALLY changed since 19 September 2026 and what it means for me.
 - Re-rate every asset green / amber / red with a confidence level, and re-score the Melbourne buy signal.
 - Fill in anything that was marked "not verified" last time if you can now source it.
 - Update the 5-year history charts and re-check the three rate scenarios.
+- Score my previous calls in the accountability scorecard against what actually happened, and say plainly which ones were wrong.
+- Check the outcome of the 29 September RBA meeting and what it did to borrowing capacity.
 - Keep my saved calculator inputs working.
 - Keep every number tagged with its source and date. If you cannot verify something, say "data unavailable" rather than estimating it.
 
@@ -2591,7 +2796,7 @@ Republish it to the same artifact link so my bookmark keeps working.</div>
 <script>
 (function(){
   "use strict";
-  var SNAP = new Date("2026-08-22T09:00:00+10:00");
+  var SNAP = new Date("2026-09-19T18:00:00+10:00");
   var LS = "msb.v1.";
 
   function get(k, d){ try{ var v = localStorage.getItem(LS+k); return v===null?d:v; }catch(e){ return d; } }
@@ -2847,189 +3052,207 @@ Republish it to the same artifact link so my bookmark keeps working.</div>
 <script>
 (function(){
   "use strict";
-  var LS = "msb.v1.calc.";
-  var BUFFER = 3.0;        /* APRA serviceability buffer, percentage points */
-  var TERM = 30;           /* years */
-  var DUTY = 0.0530;       /* placeholder: $37,070 on $700,000, VIC standard */
-  var TD = 5.55;           /* best advertised 2-year term deposit, % p.a. */
+  var LS = "msb.v2.calc.";
+  var BUFFER = 3.0;
+  var TERM = 30;
+  var TD = 5.55;
 
-  var DEF = {inc:140000, take:75, exp:3200, debt:0, sav:90000, save:2000, rate:6.1, target:800000, rent:620, fall:4};
+  /* Australian resident income tax, 2026-27 brackets (ATO), plus a flat 2% Medicare levy.
+     Simplified: ignores the low-income Medicare reduction, offsets, HECS and the levy surcharge. */
+  var BRACKETS = [[18200,45000,0.15],[45000,135000,0.30],[135000,190000,0.37],[190000,Infinity,0.45]];
+  function incomeTax(i){
+    var t = 0;
+    for(var k=0;k<BRACKETS.length;k++){
+      var lo=BRACKETS[k][0], hi=BRACKETS[k][1], r=BRACKETS[k][2];
+      if(i > lo) t += (Math.min(i,hi) - lo) * r;
+    }
+    return t + i * 0.02;
+  }
+
+  /* Victorian land transfer duty, general rate (SRO schedule).
+     Reproduces all three verified points: $500k=$25,070, $700k=$37,070, $1m=$55,000. */
+  function vicDuty(v){
+    if(v <= 25000) return v*0.014;
+    if(v <= 130000) return 350 + (v-25000)*0.024;
+    if(v <= 960000) return 2870 + (v-130000)*0.06;
+    if(v <= 2000000) return v*0.055;
+    return 110000 + (v-2000000)*0.065;
+  }
+  /* First home buyer: exempt to $600k, sliding concession $600k-$750k, full duty above. */
+  function dutyFor(v, isFhb){
+    var full = vicDuty(v);
+    if(!isFhb) return {amt: full, note: "general rate"};
+    if(v <= 600000) return {amt: 0, note: "first home buyer — fully exempt"};
+    if(v <= 750000) return {amt: null, note: "first home buyer concession applies — sliding scale I could not verify. At $700,000 it is about $24,747 against $37,070 full duty. Get the exact figure from sro.vic.gov.au."};
+    return {amt: full, note: "above the $750,000 first home buyer threshold — full duty"};
+  }
+
+  var DEF = {inc:140000, earners:1, exp:3200, debt:0, sav:90000, save:2000, rate:6.1, target:790000, fhb:0, rent:620, fall:4};
   var ids = Object.keys(DEF);
   var el = {};
   ids.forEach(function(k){ el[k] = document.getElementById(k); });
   if(!el.inc) return;
 
-  function g(k, d){ try{ var v = localStorage.getItem(LS+k); return v===null?d:v; }catch(e){ return d; } }
-  function s(k, v){ try{ localStorage.setItem(LS+k, v); }catch(e){} }
+  function g(k,d){ try{ var v=localStorage.getItem(LS+k); return v===null?d:v; }catch(e){ return d; } }
+  function st(k,v){ try{ localStorage.setItem(LS+k,v); }catch(e){} }
 
-  var money = new Intl.NumberFormat("en-AU", {style:"currency", currency:"AUD", maximumFractionDigits:0});
-  var money2 = new Intl.NumberFormat("en-AU", {style:"currency", currency:"AUD", maximumFractionDigits:0, signDisplay:"always"});
-  function $(v){ return money.format(Math.round(v)); }
-  function $s(v){ return money2.format(Math.round(v)); }
-  function pc(v, d){ return v.toFixed(d===undefined?2:d) + "%"; }
+  var mf = new Intl.NumberFormat("en-AU",{style:"currency",currency:"AUD",maximumFractionDigits:0});
+  var ms = new Intl.NumberFormat("en-AU",{style:"currency",currency:"AUD",maximumFractionDigits:0,signDisplay:"always"});
+  function $(v){ return mf.format(Math.round(v)); }
+  function $s(v){ return ms.format(Math.round(v)); }
+  function pc(v,d){ return v.toFixed(d===undefined?2:d)+"%"; }
 
-  /* present value of an annuity: what monthly repayment M supports over n months at monthly rate r */
   function loanFromRepayment(M, annualPct, years){
-    var r = (annualPct/100)/12, n = years*12;
-    if(r <= 0) return M*n;
-    return M * (1 - Math.pow(1+r, -n)) / r;
+    var r=(annualPct/100)/12, n=years*12;
+    if(r<=0) return M*n;
+    return M*(1-Math.pow(1+r,-n))/r;
   }
-  /* monthly repayment on principal P */
   function repayment(P, annualPct, years){
-    var r = (annualPct/100)/12, n = years*12;
-    if(r <= 0) return P/n;
-    return P * r / (1 - Math.pow(1+r, -n));
+    var r=(annualPct/100)/12, n=years*12;
+    if(r<=0) return P/n;
+    return P*r/(1-Math.pow(1+r,-n));
   }
-
   function val(k){ return parseFloat(el[k].value); }
 
   function render(){
-    var inc = val("inc"), take = val("take"), exp = val("exp"), debt = val("debt");
-    var sav = val("sav"), save = val("save"), rate = val("rate"), target = val("target");
-    var rent = val("rent"), fall = val("fall");
+    var inc=val("inc"), earners=val("earners"), exp=val("exp"), debt=val("debt");
+    var sav=val("sav"), save=val("save"), rate=val("rate"), target=val("target");
+    var isFhb=val("fhb")===1, rent=val("rent"), fall=val("fall");
 
-    /* live labels */
-    document.getElementById("incV").textContent = $(inc);
-    document.getElementById("takeV").textContent = take + "%";
-    document.getElementById("expV").textContent = $(exp);
-    document.getElementById("debtV").textContent = $(debt);
-    document.getElementById("savV").textContent = $(sav);
-    document.getElementById("saveV").textContent = $(save);
-    document.getElementById("rateV").textContent = pc(rate);
-    document.getElementById("targetV").textContent = $(target);
-    document.getElementById("rentV").textContent = $(rent);
-    document.getElementById("fallV").textContent = (fall<0?"+":"−") + Math.abs(fall).toFixed(1) + "%";
+    document.getElementById("incV").textContent=$(inc);
+    document.getElementById("earnersV").textContent=earners;
+    document.getElementById("expV").textContent=$(exp);
+    document.getElementById("debtV").textContent=$(debt);
+    document.getElementById("savV").textContent=$(sav);
+    document.getElementById("saveV").textContent=$(save);
+    document.getElementById("rateV").textContent=pc(rate);
+    document.getElementById("targetV").textContent=$(target);
+    document.getElementById("fhbV").textContent=isFhb?"Yes":"No";
+    document.getElementById("rentV").textContent=$(rent);
+    document.getElementById("fallV").textContent=(fall<0?"+":"−")+Math.abs(fall).toFixed(1)+"%";
 
-    /* ---- borrowing capacity ---- */
-    var netMonthly = inc * (take/100) / 12;
+    /* ---- tax + borrowing capacity ---- */
+    var perPerson = inc/earners;
+    var totalTax = incomeTax(perPerson)*earners;
+    var netAnnual = inc - totalTax;
+    var netMonthly = netAnnual/12;
+    var takePct = inc>0 ? (netAnnual/inc)*100 : 0;
     var surplus = Math.max(0, netMonthly - exp - debt);
     var assessed = rate + BUFFER;
     var cap = loanFromRepayment(surplus, assessed, TERM);
     var maxBuy = cap + sav;
 
-    document.getElementById("oCap").textContent = $(cap);
-    document.getElementById("oBuy").textContent = $(maxBuy);
+    document.getElementById("oCap").textContent=$(cap);
+    document.getElementById("oBuy").textContent=$(maxBuy);
 
     document.getElementById("wCap").innerHTML =
-      '<span class="lbl">Household income (gross, per year)</span><br>' + $(inc) + '<hr>' +
-      '<span class="lbl">× take-home ' + take + '% ÷ 12 = net monthly income</span><br>' + $(netMonthly) + '<hr>' +
-      '<span class="lbl">− living expenses ' + $(exp) + '</span><br>' +
-      '<span class="lbl">− other repayments ' + $(debt) + '</span><br>' +
-      '<span class="eq">= monthly surplus ' + $(surplus) + '</span><hr>' +
-      '<span class="lbl">Assessment rate = your rate ' + pc(rate) + ' + APRA buffer 3.00%</span><br>' +
-      '<span class="eq">= ' + pc(assessed) + ' (this is what the bank tests you at)</span><hr>' +
-      '<span class="lbl">Loan that ' + $(surplus) + '/month supports over ' + TERM + ' years at ' + pc(assessed) + '</span><br>' +
-      '<span class="eq">≈ ' + $(cap) + '</span><hr>' +
-      (surplus <= 0 ? '<span style="color:var(--risk)">⚠ Your expenses and repayments use up all your take-home pay, so this model gives you nothing to service a loan with. A lender would decline. Check the expense figure.</span><hr>' : '') +
-      (save > surplus ? '<span style="color:var(--watch)">⚠ You say you save ' + $(save) + '/month, but this model only leaves ' + $(surplus) + '/month spare. One of the two inputs is off — most likely your living expenses, which should exclude rent and saving.</span><hr>' : '') +
-      '<span class="lbl">+ your savings ' + $(sav) + ' (before costs)</span><br>' +
-      '<span class="eq">≈ ' + $(maxBuy) + ' rough maximum purchase price</span>';
+      '<span class="lbl">Household income (gross)</span><br>'+$(inc)+' across '+earners+' earner'+(earners>1?'s':'')+' = '+$(perPerson)+' each<hr>'+
+      '<span class="lbl">Income tax + 2% Medicare levy (ATO 2026-27 rates)</span><br>'+
+      '<span class="lbl">15% over $18,200 · 30% over $45,000 · 37% over $135,000 · 45% over $190,000</span><br>'+
+      '− '+$(totalTax)+'<br>'+
+      '<span class="eq">= net '+$(netAnnual)+' per year ('+takePct.toFixed(1)+'% take-home) = '+$(netMonthly)+'/month</span><hr>'+
+      '<span class="lbl">− living expenses '+$(exp)+'</span><br>'+
+      '<span class="lbl">− other repayments '+$(debt)+'</span><br>'+
+      '<span class="eq">= monthly surplus '+$(surplus)+'</span><hr>'+
+      '<span class="lbl">Assessment rate = your rate '+pc(rate)+' + APRA buffer 3.00%</span><br>'+
+      '<span class="eq">= '+pc(assessed)+' (what the bank tests you at)</span><hr>'+
+      '<span class="lbl">Loan that '+$(surplus)+'/month supports over '+TERM+' years at '+pc(assessed)+'</span><br>'+
+      '<span class="eq">≈ '+$(cap)+'</span><hr>'+
+      (surplus<=0 ? '<span style="color:var(--risk)">⚠ Expenses and repayments use up all your take-home pay, so there is nothing left to service a loan. A lender would decline.</span><hr>' : '')+
+      (save>surplus ? '<span style="color:var(--watch)">⚠ You say you save '+$(save)+'/month but this leaves only '+$(surplus)+' spare. One input is off — most likely living expenses, which should exclude rent and saving.</span><hr>' : '')+
+      '<span class="lbl">+ your savings '+$(sav)+' (before costs)</span><br>'+
+      '<span class="eq">≈ '+$(maxBuy)+' rough maximum purchase price</span>';
 
-    /* ---- deposit progress ---- */
-    var deposit20 = target * 0.20;
-    var duty = target * DUTY;
+    /* ---- deposit ---- */
+    var deposit20 = target*0.20;
+    var d = dutyFor(target, isFhb);
+    var dutyAmt = d.amt===null ? vicDuty(target)*0.667 : d.amt;   /* mid-band FHB: rough, flagged in the note */
     var otherCosts = 3000;
-    var needed = deposit20 + duty + otherCosts;
+    var needed = deposit20 + dutyAmt + otherCosts;
     var gap = Math.max(0, needed - sav);
-    var pct = needed > 0 ? Math.min(100, (sav/needed)*100) : 0;
+    var pctDone = needed>0 ? Math.min(100,(sav/needed)*100) : 0;
 
-    document.getElementById("mFill").style.width = pct + "%";
-    document.getElementById("mLabel").textContent = pct.toFixed(0) + "% of " + $(needed);
-    document.getElementById("oGap").textContent = gap <= 0 ? "You're there" : $(gap);
+    document.getElementById("mFill").style.width = pctDone+"%";
+    document.getElementById("mLabel").textContent = pctDone.toFixed(0)+"% of "+$(needed);
+    document.getElementById("oGap").textContent = gap<=0 ? "You're there" : $(gap);
 
-    /* months to close the gap, with 5.55% p.a. compounding on the balance */
-    var months = 0, bal = sav, mrate = (TD/100)/12;
-    while(bal < needed && months < 600){ bal = bal*(1+mrate) + save; months++; }
-    var whenTxt;
-    if(gap <= 0) whenTxt = "Now";
-    else if(months >= 600) whenTxt = "20+ yrs";
-    else if(months < 24) whenTxt = months + " months";
-    else whenTxt = (months/12).toFixed(1) + " years";
+    var months=0, bal=sav, mr=(TD/100)/12;
+    while(bal<needed && months<600){ bal=bal*(1+mr)+save; months++; }
+    var whenTxt = gap<=0 ? "Now" : (months>=600 ? "20+ yrs" : (months<24 ? months+" months" : (months/12).toFixed(1)+" years"));
     document.getElementById("oWhen").textContent = whenTxt;
 
-    var lvrNote = sav >= deposit20
-      ? '<span class="eq">Your savings cover the 20% deposit — no LMI.</span>'
-      : '<span class="lbl">Below a 20% deposit, so LMI would apply (1–5% of the loan, capitalised).</span>';
-
     document.getElementById("wDep").innerHTML =
-      '<span class="lbl">Target purchase price</span><br>' + $(target) + '<hr>' +
-      '<span class="lbl">20% deposit</span><br>' + $(deposit20) + '<br>' +
-      '<span class="lbl">+ stamp duty @ 5.30% placeholder</span><br>' + $(duty) + '<br>' +
-      '<span class="lbl">+ conveyancing, inspections, misc (rough)</span><br>' + $(otherCosts) + '<hr>' +
-      '<span class="eq">= total cash needed ' + $(needed) + '</span><hr>' +
-      '<span class="lbl">You have</span><br>' + $(sav) + '<br>' +
-      '<span class="eq">Still to find: ' + (gap<=0 ? "nothing" : $(gap)) + '</span><hr>' +
-      '<span class="lbl">Saving ' + $(save) + '/month, plus ' + pc(TD) + ' p.a. on the balance</span><br>' +
-      '<span class="eq">≈ ' + whenTxt + '</span><hr>' + lvrNote;
+      '<span class="lbl">Target purchase price</span><br>'+$(target)+'<hr>'+
+      '<span class="lbl">20% deposit</span><br>'+$(deposit20)+'<br>'+
+      '<span class="lbl">+ Victorian stamp duty ('+d.note+')</span><br>'+$(dutyAmt)+
+      (d.amt===null ? '<br><span style="color:var(--watch)">⚠ '+d.note+' The figure above is a rough two-thirds-of-full-duty stand-in.</span>' : '')+'<br>'+
+      '<span class="lbl">+ conveyancing, inspections, misc (rough)</span><br>'+$(otherCosts)+'<hr>'+
+      '<span class="eq">= total cash needed '+$(needed)+'</span><hr>'+
+      '<span class="lbl">You have</span><br>'+$(sav)+'<br>'+
+      '<span class="eq">Still to find: '+(gap<=0?"nothing":$(gap))+'</span><hr>'+
+      '<span class="lbl">Saving '+$(save)+'/month plus '+pc(TD)+' p.a. on the balance</span><br>'+
+      '<span class="eq">≈ '+whenTxt+'</span><hr>'+
+      (sav>=deposit20 ? '<span class="eq">Your savings cover the 20% deposit — no LMI.</span>'
+                      : '<span class="lbl">Below a 20% deposit, so LMI applies (1–5% of the loan, capitalised, and it jumps at 85%, 90% and 95% LVR).</span>');
 
     /* ---- rate shock ---- */
     var loan = Math.max(0, target - Math.min(sav, deposit20));
+    var base = repayment(loan, rate, TERM);
     var rows = [
       {lab:"…fall 0.25%", d:-0.25, cls:"up"},
-      {lab:"…stay the same", d:0, cls:"flat"},
-      {lab:"…rise 0.25%", d:0.25, cls:"dn"},
+      {lab:"…stay at 4.35%", d:0, cls:"flat"},
+      {lab:"…rise 0.25% (82% priced)", d:0.25, cls:"dn"},
       {lab:"…rise 0.50%", d:0.50, cls:"dn"}
     ];
-    var base = repayment(loan, rate, TERM);
-    var baseCap = cap;
-    var html = "";
+    var html="";
     rows.forEach(function(r){
-      var nr = rate + r.d;
-      var m = repayment(loan, nr, TERM);
-      var yr = (m - base) * 12;
-      var c = loanFromRepayment(surplus, nr + BUFFER, TERM);
-      var cd = c - baseCap;
-      html += '<tr' + (r.d===0?' style="background:var(--surface2)"':'') + '>' +
-        '<td><b>' + r.lab + '</b></td>' +
-        '<td class="num">' + pc(nr) + '</td>' +
-        '<td class="num">' + $(m) + '</td>' +
-        '<td class="num ' + (r.d===0?"flat":r.cls) + '">' + (r.d===0 ? "—" : $s(yr)) + '</td>' +
-        '<td class="num ' + (r.d===0?"flat":r.cls) + '">' + (r.d===0 ? $(c) : $s(cd)) + '</td></tr>';
+      var nr=rate+r.d, m=repayment(loan,nr,TERM), yr=(m-base)*12;
+      var c=loanFromRepayment(surplus, nr+BUFFER, TERM), cd=c-cap;
+      html += '<tr'+(r.d===0?' style="background:var(--surface2)"':(r.d===0.25?' style="background:var(--risk-bg)"':''))+'>'+
+        '<td><b>'+r.lab+'</b></td><td class="num">'+pc(nr)+'</td><td class="num">'+$(m)+'</td>'+
+        '<td class="num '+(r.d===0?"flat":r.cls)+'">'+(r.d===0?"—":$s(yr))+'</td>'+
+        '<td class="num '+(r.d===0?"flat":r.cls)+'">'+(r.d===0?$(c):$s(cd))+'</td></tr>';
     });
     document.getElementById("tShock").innerHTML = html;
 
-    var capDrop = baseCap - loanFromRepayment(surplus, rate + 0.25 + BUFFER, TERM);
-    var yrCost = (repayment(loan, rate+0.25, TERM) - base) * 12;
+    var capDrop = cap - loanFromRepayment(surplus, rate+0.25+BUFFER, TERM);
+    var yrCost = (repayment(loan, rate+0.25, TERM)-base)*12;
     document.getElementById("shockRead").innerHTML =
-      'A single 0.25% hike costs you about <b>' + $(yrCost) + ' a year</b> on this loan — and cuts what you can borrow by roughly <b>' + $(capDrop) +
-      '</b>. That capacity hit is the one that matters: it is worth more than a ' + ((capDrop/Math.max(target,1))*100).toFixed(1) +
-      '% fall in the price of your target property. <b>This is why a cheaper house financed at a higher rate can leave you worse off.</b>';
+      'The 29 September meeting is <b>82% priced for exactly this</b>. A 0.25% hike costs about <b>'+$(yrCost)+' a year</b> on this loan and cuts your borrowing capacity by roughly <b>'+$(capDrop)+
+      '</b> — equivalent to a <b>'+((capDrop/Math.max(target,1))*100).toFixed(1)+'% fall</b> in the price of your target property. Melbourne fell 1.1% last month. <b>On these numbers one hike undoes several months of price falls.</b>';
 
     /* ---- wait or buy ---- */
-    var priceSaving = target * (fall/100);
-    var rentCost = rent * 52;
-    var interest = sav * (TD/100);
-    var extraSaved = save * 12;
+    var priceSaving = target*(fall/100);
+    var rentCost = rent*52;
+    var interest = sav*(TD/100);
     var net = priceSaving + interest - rentCost;
-
-    document.getElementById("oWait").textContent = $s(net);
-    document.getElementById("oWait").className = "v " + (net > 0 ? "up" : "dn");
-    document.getElementById("oWaitN").textContent = net > 0 ? "waiting looks better, on these inputs" : "buying sooner looks better, on these inputs";
+    var oW = document.getElementById("oWait");
+    oW.textContent = $s(net);
+    oW.className = "v "+(net>0?"up":"dn");
+    document.getElementById("oWaitN").textContent = net>0 ? "waiting looks better, on these inputs" : "buying sooner looks better, on these inputs";
 
     document.getElementById("wWait").innerHTML =
-      '<span class="lbl">If you wait 12 months…</span><hr>' +
-      '<span class="lbl">Price change ' + (fall<0?"+":"−") + Math.abs(fall).toFixed(1) + '% on ' + $(target) + '</span><br>' +
-      '<span class="' + (priceSaving>0?"eq":"") + '">' + $s(priceSaving) + ' saved on the purchase</span><br>' +
-      '<span class="lbl">+ interest on ' + $(sav) + ' at ' + pc(TD) + '</span><br>' + $s(interest) + '<br>' +
-      '<span class="lbl">− rent for 12 months (' + $(rent) + '/week × 52)</span><br>' + $s(-rentCost) + '<hr>' +
-      '<span class="eq">= net ' + $s(net) + '</span><hr>' +
-      '<span class="lbl">You would also add ' + $(extraSaved) + ' of new savings — that helps your deposit either way, so it is not counted above.</span><br>' +
-      '<span class="lbl">Not counted: any rate move. A 0.25% hike cuts your borrowing power by about ' + $(capDrop) + ', which can swamp everything on this list.</span>';
+      '<span class="lbl">If you wait 12 months…</span><hr>'+
+      '<span class="lbl">Price change '+(fall<0?"+":"−")+Math.abs(fall).toFixed(1)+'% on '+$(target)+'</span><br>'+
+      '<span class="'+(priceSaving>0?"eq":"")+'">'+$s(priceSaving)+' saved on the purchase</span><br>'+
+      '<span class="lbl">+ interest on '+$(sav)+' at '+pc(TD)+'</span><br>'+$s(interest)+'<br>'+
+      '<span class="lbl">− rent for 12 months ('+$(rent)+'/week × 52)</span><br>'+$s(-rentCost)+'<hr>'+
+      '<span class="eq">= net '+$s(net)+'</span><hr>'+
+      '<span class="lbl">Not counted: the '+$(save*12)+' of new savings you would add (it helps either way), and any rate move. '+
+      'A 0.25% hike cuts borrowing power by about '+$(capDrop)+', which can swamp everything above.</span>';
   }
 
   ids.forEach(function(k){
     el[k].value = g(k, DEF[k]);
-    el[k].addEventListener("input", function(){ s(k, el[k].value); render(); });
+    el[k].addEventListener("input", function(){ st(k, el[k].value); render(); });
   });
-
   var reset = document.getElementById("calcReset");
   if(reset) reset.addEventListener("click", function(){
-    ids.forEach(function(k){ el[k].value = DEF[k]; s(k, DEF[k]); });
+    ids.forEach(function(k){ el[k].value=DEF[k]; st(k,DEF[k]); });
     render();
-    reset.textContent = "↺ Reset done";
-    setTimeout(function(){ reset.textContent = "↺ Reset to defaults"; }, 2000);
+    reset.textContent="↺ Reset done";
+    setTimeout(function(){ reset.textContent="↺ Reset to defaults"; },2000);
   });
-
   render();
 })();
 </script>
