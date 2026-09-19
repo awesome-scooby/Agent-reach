@@ -17,7 +17,7 @@ The scenario, client and site are fictional. The engineering logic, the document
 
 ## Scenario in one paragraph
 
-A regional water utility is upgrading the raw water transfer pump station at the Northfield Water Treatment Plant. Two ageing fixed-speed 55 kW transfer pumps are being replaced with two 75 kW variable-speed pumps in duty/assist configuration, and the existing switchboard is being replaced with a new Form 3b 415 V motor control centre. The MCC also feeds a sump pump, an instrument air compressor, a motorised isolation valve, a vendor-supplied chemical dosing skid, switchroom services and a light-and-power distribution board. Control is by a plant PLC in the MCC with a remote I/O node at the intake screen kiosk, reporting to the existing plant SCADA over fibre. The package scope is design, supply, fabrication, factory test and delivery of MCC-01 and the associated field control stations. Installation, termination in the field, and commissioning are others' scope.
+A regional water utility is upgrading the raw water transfer pump station at the Northfield Water Treatment Plant. Two ageing fixed-speed 55 kW transfer pumps are being replaced with two variable-speed pumps in duty/assist configuration — specified at 75 kW, then **uprated to 90 kW by a late client change after the design freeze** (Stage 9) — and the existing switchboard is being replaced with a new Form 3b 415 V motor control centre. The MCC also feeds a sump pump, an instrument air compressor, a motorised isolation valve, a vendor-supplied chemical dosing skid, switchroom services and a light-and-power distribution board. Control is by a plant PLC in the MCC with a remote I/O node at the intake screen kiosk, reporting to the existing plant SCADA over fibre. The package scope is design, supply, fabrication, factory test and delivery of MCC-01 and the associated field control stations. Installation, termination in the field, and commissioning are others' scope.
 
 ---
 
@@ -57,11 +57,15 @@ These are drawn to communicate engineering intent and to be readable in an inter
 
 CSV and XLSX versions of the working documents, so they can be opened, sorted and edited the way real registers are:
 
-`design-input-register` · `io-list` · `bom` · `termination-schedule` · `cable-schedule` · `tq-register` · `fat-sheet` · `punch-list` · `mdr-index`
+`design-input-register` · `tq-register` · `io-list` · `cable-schedule` · `termination-schedule` · `bom` · `fat-sheet` · `punch-list` · `inspection-checklist` · `mdr-index`
+
+`project-2-registers.xlsx` contains all ten as formatted, filterable sheets with a cover page carrying the same claim-integrity warnings.
 
 ## Interactive portfolio
 
-`portfolio.html` — single-file offline HTML portfolio (305 KB, no external requests) covering the whole package with the drawings inline, the registers browsable, and the interview pack built in. Opens from `file://`, works on a phone, prints.
+`portfolio.html` — single-file offline HTML portfolio (305 KB, no external requests). Thirteen modules covering claim integrity, all ten stages, interview preparation and study gaps, with all six drawings embedded as scalable SVG and 47 knowledge-check questions that explain *why* each wrong answer is wrong.
+
+Opens straight from `file://`, works at phone width, and prints with the navigation stripped and all answer feedback expanded. Progress is stored in your browser only. The registers are **not** duplicated inside it — open the CSV/XLSX for those.
 
 ---
 
