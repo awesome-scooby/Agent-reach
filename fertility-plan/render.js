@@ -1,6 +1,6 @@
 const { chromium } = require('/opt/node22/lib/node_modules/playwright');
 (async () => {
-  const b = await chromium.launch({ } }).catch(()=>chromium.launch());
+  const b = await chromium.launch();
   const p = await b.newPage();
   await p.goto('file://' + __dirname + '/Pregnancy-Optimisation-Plan.html', { waitUntil: 'load' });
   await p.pdf({ path: __dirname + '/Pregnancy-Optimisation-Plan-Perth.pdf', format: 'A4', printBackground: true,
