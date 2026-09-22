@@ -1,0 +1,1172 @@
+<title>Kwinana Drop-In Index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;600&family=Public+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap">
+
+<style>
+:root{
+  --ground:#F1F4F2; --surface:#FFFFFF; --surface2:#E8EDEB; --raise:#FBFCFC;
+  --ink:#101D1B; --muted:#5A6B68; --line:#D2DBD8; --line-soft:#E3EAE8;
+  --accent:#0C6B60; --accent-ink:#0C6B60; --accent-soft:#D8EDE9; --on-accent:#FFFFFF;
+  --ochre:#A9531D; --ochre-soft:#F7E5D6;
+  --free:#1C7048; --free-soft:#D6EFE2;
+  --warn:#8A6410; --warn-soft:#F8EDD2;
+  --shadow:0 1px 2px rgba(16,29,27,.06), 0 8px 24px -16px rgba(16,29,27,.28);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#09100F; --surface:#121D1C; --surface2:#1B2726; --raise:#162221;
+    --ink:#E4EBE9; --muted:#93A6A2; --line:#253432; --line-soft:#1D2A29;
+    --accent:#47C2B0; --accent-ink:#5FD3C1; --accent-soft:#0F3531; --on-accent:#08201D;
+    --ochre:#E5934F; --ochre-soft:#36230F;
+    --free:#4FCB8D; --free-soft:#0D2E1D;
+    --warn:#D9AE4C; --warn-soft:#31270D;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#09100F; --surface:#121D1C; --surface2:#1B2726; --raise:#162221;
+  --ink:#E4EBE9; --muted:#93A6A2; --line:#253432; --line-soft:#1D2A29;
+  --accent:#47C2B0; --accent-ink:#5FD3C1; --accent-soft:#0F3531; --on-accent:#08201D;
+  --ochre:#E5934F; --ochre-soft:#36230F;
+  --free:#4FCB8D; --free-soft:#0D2E1D;
+  --warn:#D9AE4C; --warn-soft:#31270D;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:"Public Sans", ui-sans-serif, system-ui, sans-serif;
+  font-size:15px; line-height:1.55; margin:0;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px; margin:0 auto; padding-inline:18px; padding-block:0}
+h1,h2,h3,h4{font-family:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif; text-wrap:balance; margin:0}
+.mono{font-family:"IBM Plex Mono", ui-monospace, monospace; font-variant-numeric:tabular-nums}
+
+/* ---------- masthead ---------- */
+.mast{padding-block:44px 28px; border-bottom:1px solid var(--line)}
+.eyebrow{
+  font-family:"IBM Plex Mono", monospace; font-size:11px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--accent-ink); margin-bottom:14px;
+}
+h1{font-size:clamp(34px,7vw,60px); line-height:1.02; font-weight:800; letter-spacing:-.02em}
+.dek{margin-top:14px; max-width:60ch; font-size:17px; color:var(--muted)}
+.dek strong{color:var(--ink); font-weight:600}
+
+.brief{
+  display:flex; flex-wrap:wrap; gap:8px 26px; margin-top:22px;
+  font-size:13px; color:var(--muted);
+}
+.brief span{display:flex; gap:7px; align-items:baseline}
+.brief b{color:var(--ink); font-weight:600; font-family:"IBM Plex Mono",monospace; font-size:12px}
+
+.caveat{
+  margin-top:26px; border-left:3px solid var(--ochre); background:var(--ochre-soft);
+  padding:14px 16px; border-radius:0 8px 8px 0; font-size:13.5px; max-width:72ch;
+}
+.caveat b{font-weight:700}
+
+/* ---------- section frames ---------- */
+section{padding-block:46px; border-bottom:1px solid var(--line-soft)}
+.sec-head{margin-bottom:24px}
+.sec-num{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.12em;
+  color:var(--muted); text-transform:uppercase;
+}
+h2{font-size:clamp(23px,3.6vw,31px); font-weight:700; letter-spacing:-.015em; margin-top:6px}
+.sec-head p{margin:10px 0 0; color:var(--muted); max-width:66ch; font-size:14.5px}
+
+/* ---------- filters ---------- */
+.filters{
+  position:sticky; top:env(safe-area-inset-top, 0px); z-index:20;
+  background:color-mix(in srgb, var(--ground) 94%, transparent);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line); padding-block:12px; margin-bottom:26px;
+}
+.frow{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:8px}
+.frow:last-child{margin-bottom:0}
+.flabel{
+  font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted); min-width:64px;
+}
+.chip{
+  font:inherit; font-size:12.5px; cursor:pointer; border:1px solid var(--line);
+  background:var(--surface); color:var(--ink); padding:5px 11px; border-radius:999px;
+  transition:background .12s, border-color .12s, color .12s;
+}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:var(--on-accent)}
+.chip:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.count{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--muted); margin-left:auto}
+
+/* ---------- cards ---------- */
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(310px,1fr)); gap:14px}
+.card{
+  background:var(--surface); border:1px solid var(--line); border-radius:10px;
+  padding:16px 16px 14px; display:flex; flex-direction:column; gap:10px;
+  box-shadow:var(--shadow);
+}
+.card.hero{border-color:var(--accent); border-width:1.5px}
+.ctop{display:flex; justify-content:space-between; gap:10px; align-items:flex-start}
+.cname{font-size:17px; font-weight:700; line-height:1.2; font-family:"Bricolage Grotesque",sans-serif}
+.cvenue{font-size:13px; color:var(--muted); margin-top:3px}
+.price{
+  font-family:"IBM Plex Mono",monospace; font-size:13px; font-weight:600;
+  white-space:nowrap; padding:3px 8px; border-radius:6px;
+  background:var(--surface2); color:var(--ink);
+}
+.price.free{background:var(--free-soft); color:var(--free)}
+.price.cheap{background:var(--accent-soft); color:var(--accent-ink)}
+.geo{
+  font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--muted);
+  display:flex; gap:12px; flex-wrap:wrap;
+}
+.tags{display:flex; flex-wrap:wrap; gap:5px}
+.tag{
+  font-size:11px; padding:2.5px 7px; border-radius:5px; background:var(--surface2);
+  color:var(--muted); font-family:"IBM Plex Mono",monospace; letter-spacing:.02em;
+}
+.tag.on{background:var(--accent-soft); color:var(--accent-ink); font-weight:600}
+.tag.solo{background:var(--free-soft); color:var(--free); font-weight:600}
+.tag.flag{background:var(--warn-soft); color:var(--warn); font-weight:600}
+.pitch{font-size:13.5px; color:var(--ink); margin:0}
+.pitch em{color:var(--muted); font-style:normal}
+
+details.more{margin-top:2px; border-top:1px dashed var(--line); padding-top:10px}
+details.more summary{
+  cursor:pointer; font-size:12px; font-family:"IBM Plex Mono",monospace;
+  color:var(--accent-ink); letter-spacing:.04em; list-style:none;
+}
+details.more summary::-webkit-details-marker{display:none}
+details.more summary::before{content:"▸ "; }
+details.more[open] summary::before{content:"▾ "}
+details.more summary:focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:3px}
+dl.fields{display:grid; grid-template-columns:auto 1fr; gap:5px 12px; margin:12px 0 0; font-size:12.5px}
+dl.fields dt{
+  color:var(--muted); font-family:"IBM Plex Mono",monospace; font-size:10.5px;
+  letter-spacing:.06em; text-transform:uppercase; padding-top:2px;
+}
+dl.fields dd{margin:0}
+dl.fields dd a{color:var(--accent-ink)}
+.unconf{color:var(--warn); font-weight:600}
+
+/* ---------- weekend board ---------- */
+.board{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:14px}
+.slot{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:16px}
+.slot h3{
+  font-size:12px; font-family:"IBM Plex Mono",monospace; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--accent-ink); margin-bottom:12px;
+  padding-bottom:9px; border-bottom:1px solid var(--line-soft);
+}
+.pick{display:flex; gap:10px; padding:8px 0; border-bottom:1px dotted var(--line-soft)}
+.pick:last-child{border-bottom:0; padding-bottom:0}
+.rank{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:600;
+  color:var(--muted); min-width:14px; padding-top:2px;
+}
+.pick.win .rank{color:var(--ochre)}
+.pick b{display:block; font-size:14px; font-weight:600; line-height:1.3}
+.pick span{display:block; font-size:12px; color:var(--muted); margin-top:2px}
+.pick .when{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--accent-ink); margin-top:3px}
+
+/* ---------- awards ---------- */
+.awards{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:10px; overflow:hidden}
+.award{background:var(--surface); padding:15px 16px}
+.award h4{font-size:11px; font-family:"IBM Plex Mono",monospace; letter-spacing:.09em; text-transform:uppercase; color:var(--muted); margin-bottom:6px}
+.award b{font-size:15px; font-weight:700; font-family:"Bricolage Grotesque",sans-serif; display:block; line-height:1.25}
+.award p{margin:5px 0 0; font-size:12.5px; color:var(--muted)}
+
+/* ---------- plans ---------- */
+.plans{display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:16px}
+.plan{background:var(--surface); border:1px solid var(--line); border-radius:10px; overflow:hidden; display:flex; flex-direction:column}
+.plan-top{padding:16px; border-bottom:1px solid var(--line-soft)}
+.plan h3{font-size:19px; font-weight:700}
+.plan-cost{
+  font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent-ink);
+  margin-top:5px; font-weight:600;
+}
+.plan-top p{margin:8px 0 0; font-size:13px; color:var(--muted)}
+.days{padding:6px 16px 16px; flex:1}
+.day{display:grid; grid-template-columns:52px 1fr; gap:10px; padding:9px 0; border-bottom:1px dotted var(--line-soft)}
+.day:last-child{border-bottom:0}
+.day .dn{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--muted);
+  text-transform:uppercase; letter-spacing:.06em; padding-top:2px;
+}
+.day .dv{font-size:13.5px}
+.day .dv b{font-weight:600}
+.day .dv span{display:block; color:var(--muted); font-size:12px; font-family:"IBM Plex Mono",monospace; margin-top:1px}
+.day.rest .dv{color:var(--muted)}
+
+/* ---------- table ---------- */
+.tscroll{overflow-x:auto; border:1px solid var(--line); border-radius:10px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; min-width:900px; font-size:12.5px}
+th,td{padding:9px 12px; text-align:left; border-bottom:1px solid var(--line-soft); vertical-align:top}
+thead th{
+  position:sticky; top:0; background:var(--surface2); font-family:"IBM Plex Mono",monospace;
+  font-size:10.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--muted);
+  font-weight:600; white-space:nowrap; z-index:2;
+}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--raise)}
+td.n{font-weight:600}
+td.mono{font-family:"IBM Plex Mono",monospace; white-space:nowrap}
+.yes{color:var(--free); font-weight:700}
+.no{color:var(--muted)}
+.part{color:var(--warn); font-weight:600}
+
+/* ---------- misc ---------- */
+.callout{
+  background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--accent);
+  border-radius:0 10px 10px 0; padding:16px 18px; margin-top:18px;
+}
+.callout h4{font-size:15px; font-weight:700; margin-bottom:7px}
+.callout p{margin:0 0 9px; font-size:13.5px}
+.callout p:last-child{margin-bottom:0}
+.callout ul{margin:0; padding-left:18px; font-size:13.5px}
+.callout li{margin-bottom:5px}
+
+.legend{display:flex; flex-wrap:wrap; gap:14px; margin-top:16px; font-size:12px; color:var(--muted)}
+.legend span{display:flex; align-items:center; gap:6px}
+.sw{width:11px; height:11px; border-radius:3px; display:inline-block}
+
+footer{padding-block:34px 46px; color:var(--muted); font-size:12.5px}
+footer p{margin:0 0 8px; max-width:70ch}
+a{color:var(--accent-ink)}
+
+.empty{padding:40px 16px; text-align:center; color:var(--muted); font-size:14px}
+
+@media (max-width:560px){
+  .flabel{min-width:100%}
+  dl.fields{grid-template-columns:1fr; gap:2px 0}
+  dl.fields dt{padding-top:7px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important; animation:none !important}}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="eyebrow">Kwinana WA 6167 · researched 22 Sep 2026</div>
+  <h1>Kwinana Drop-In Index</h1>
+  <p class="dek">Sport and social activity within reach of Kwinana, filtered on one question: <strong>can you walk in alone on the night and actually end up playing with people?</strong> Court hire where you must supply your own four is marked as such, not counted as social.</p>
+  <div class="brief">
+    <span>Radius <b>~30 min weeknight / 90 min weekend</b></span>
+    <span>Budget <b>free → $50/wk</b></span>
+    <span>Slots <b>weeknights 6–9pm · Sat · Sun</b></span>
+    <span>Age fit <b>30s</b></span>
+  </div>
+  <div class="caveat">
+    <b>What's verified and what isn't.</b> Prices, times and session formats marked <span class="unconf">UNCONFIRMED</span> were not published anywhere current — phone or DM before you drive. Everything else came from the club, council or venue's own live pages. Distances and drive times are approximate road estimates from Kwinana Town Centre. Community clubs change nights and fold without updating anything, so treat this as a call list, not a timetable.
+  </div>
+</header>
+
+<section id="finder">
+  <div class="sec-head">
+    <div class="sec-num">01 — The options</div>
+    <h2>Everything worth your time, filtered</h2>
+    <p>38 options across racket sports, team sport, outdoor and group fitness. Filter by what you can afford, when you're free, and whether turning up alone actually works.</p>
+  </div>
+
+  <div class="filters">
+    <div class="frow">
+      <span class="flabel">Cost</span>
+      <button class="chip" data-f="cost" data-v="all" aria-pressed="true">All</button>
+      <button class="chip" data-f="cost" data-v="free" aria-pressed="false">Free</button>
+      <button class="chip" data-f="cost" data-v="u10" aria-pressed="false">Under $10</button>
+      <button class="chip" data-f="cost" data-v="10-20" aria-pressed="false">$10–20</button>
+      <button class="chip" data-f="cost" data-v="20-30" aria-pressed="false">$20–30</button>
+      <button class="chip" data-f="cost" data-v="30plus" aria-pressed="false">$30+</button>
+      <button class="chip" data-f="cost" data-v="member" aria-pressed="false">Membership</button>
+    </div>
+    <div class="frow">
+      <span class="flabel">When</span>
+      <button class="chip" data-f="day" data-v="all" aria-pressed="true">Any</button>
+      <button class="chip" data-f="day" data-v="sat" aria-pressed="false">Saturday</button>
+      <button class="chip" data-f="day" data-v="sun" aria-pressed="false">Sunday</button>
+      <button class="chip" data-f="day" data-v="night" aria-pressed="false">Weeknight</button>
+    </div>
+    <div class="frow">
+      <span class="flabel">Solo</span>
+      <button class="chip" data-f="solo" data-v="all" aria-pressed="true">Any</button>
+      <button class="chip" data-f="solo" data-v="yes" aria-pressed="false">Turn up alone, guaranteed a game</button>
+      <button class="chip" data-f="solo" data-v="part" aria-pressed="false">Alone works, some effort</button>
+    </div>
+    <div class="frow">
+      <span class="flabel">Type</span>
+      <button class="chip" data-f="cat" data-v="all" aria-pressed="true">All</button>
+      <button class="chip" data-f="cat" data-v="racket" aria-pressed="false">Racket</button>
+      <button class="chip" data-f="cat" data-v="team" aria-pressed="false">Team</button>
+      <button class="chip" data-f="cat" data-v="outdoor" aria-pressed="false">Outdoor</button>
+      <button class="chip" data-f="cat" data-v="water" aria-pressed="false">Water</button>
+      <button class="chip" data-f="cat" data-v="fitness" aria-pressed="false">Group fitness</button>
+      <span class="count" id="count"></span>
+    </div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" hidden>Nothing matches that combination. Loosen a filter.</div>
+
+  <div class="legend">
+    <span><i class="sw" style="background:var(--free-soft); border:1px solid var(--free)"></i> Solo-proof: organiser puts you in a game</span>
+    <span><i class="sw" style="background:var(--warn-soft); border:1px solid var(--warn)"></i> Caveat worth reading</span>
+    <span><i class="sw" style="background:var(--accent-soft); border:1px solid var(--accent)"></i> Runs on the day filtered</span>
+  </div>
+</section>
+
+<section id="racket">
+  <div class="sec-head">
+    <div class="sec-num">02 — Racket sports, answered properly</div>
+    <h2>Where you'll actually get a hit</h2>
+    <p>You asked not to be sent to court-hire listings. Here is the straight answer for each of the four you named.</p>
+  </div>
+
+  <div class="callout">
+    <h4>Tennis — yes, three genuine options, one of them 5 minutes away</h4>
+    <p><b>Kwinana Tennis Club</b> runs organised social tennis on <b>Monday evenings</b> and Thursday mornings in mixed-doubles format, explicitly "accessible for all levels", plus a <b>Thursday evening round robin</b> for intermediate/advanced. Mixed doubles social = partners rotate; you arrive alone and the session allocates you. Book online through ClubSpark or pay cash on the day. This is your single best proximity play at roughly 3 km.</p>
+    <p><b>Rockingham Tennis Club</b> is the weekend answer: <b>Saturday 1:30–4:00pm</b>, play from 2pm, <b>$5 for non-members</b> (free to members). Eight courts, four lit. Mon/Wed/Fri 8:30am socials too at $8 non-member.</p>
+    <p><b>Melville Palmyra</b> is the most structured: timed 22-minute sets run by a Set Captain who rotates the draw, so you play four different sets with four different combinations. $10 non-member. Worth the 28-minute drive if you want the rotation done for you.</p>
+  </div>
+
+  <div class="callout">
+    <h4>Pickleball — the cheapest organised racket sport near you, and it runs Sunday</h4>
+    <p><b>Baldivis Indoor Sports Complex</b> (13 min) runs organised games <b>Wednesday 8:30–10:30am and Sunday 4:30–6:30pm at $12</b>, pay on arrival, plus <b>casual sessions Tuesday and Friday 9:30–11:30am at $5.50</b>. Pickleball's social format is rotational by default — you queue, you're paired, you rotate off. It is the most beginner-forgiving racket sport on this list and the Sunday slot fits your schedule exactly. <b>Kung Fu Paddle</b> also runs Saturday afternoon sessions at Cockburn ARC.</p>
+  </div>
+
+  <div class="callout">
+    <h4>Padel — solves the partner problem by design, but it's the priciest</h4>
+    <p><b>Padel 360 Cockburn</b> (Yangebup, ~15 min) runs <b>Padel Socials</b>: 1.5-hour sessions where <b>you sign up as an individual and the club builds the matches</b> — three games, then a coffee together. That is exactly the format you asked for. The catch: padel court economics are expensive, and Padel 360 does not publish social pricing publicly. Expect $25–40 per head based on comparable Perth clubs. Confirm before booking.</p>
+  </div>
+
+  <div class="callout">
+    <h4>Badminton — the weak link. Be honest about this one.</h4>
+    <p>Near Kwinana, badminton is mostly <b>court hire</b>, which is the exact model you said you don't want. <b>SSBA in Armadale</b> charges $16.50/court/hour for non-members — you need to bring three people. <b>Baldivis Badminton Club</b> at Baldivis Indoor Sports Complex does advertise social play for all levels and is only 13 minutes away, but publishes no times or prices; call 9591 0840 before assuming. The genuinely social badminton scene in Perth sits north and east (Dianella, Willetton, Parkwood), which is a 35–50 minute drive. <b>Recommendation: don't lead with badminton.</b> Put pickleball in that slot instead — same rotational social feel, quarter the price, twenty minutes closer.</p>
+  </div>
+</section>
+
+<section id="weekend">
+  <div class="sec-head">
+    <div class="sec-num">03 — The weekend board</div>
+    <h2>Saturday and Sunday, ranked by slot</h2>
+    <p>You have four weekend slots. Here's what wins each one, and why.</p>
+  </div>
+  <div class="board" id="board"></div>
+</section>
+
+<section id="awards">
+  <div class="sec-head">
+    <div class="sec-num">04 — Verdicts</div>
+    <h2>Best in category</h2>
+    <p>One winner each, chosen on your criteria rather than on how good the activity is in the abstract.</p>
+  </div>
+  <div class="awards" id="awardgrid"></div>
+</section>
+
+<section id="plans">
+  <div class="sec-head">
+    <div class="sec-num">05 — Weekly routines</div>
+    <h2>Three ways to run your week</h2>
+    <p>Each includes at least one weekend activity. Costs are per week at the listed casual rates.</p>
+  </div>
+  <div class="plans" id="planwrap"></div>
+
+  <div class="callout" style="margin-top:22px">
+    <h4>Bringing a partner or friends along</h4>
+    <p>Everything below takes a guest with no membership, no season commitment and no notice beyond a booking:</p>
+    <ul>
+      <li><b>parkrun</b> (Tamworth Wetlands / Rockingham / Bibra Lake) — free, they just register once online. The single easiest thing to drag someone to.</li>
+      <li><b>Rockingham Tennis Saturday social</b> — $5 a head, walk in.</li>
+      <li><b>Baldivis pickleball</b> — $12 (or $5.50 casual), pay on arrival. Pickleball is the best "I've never played" sport on this list.</li>
+      <li><b>The Casual Football Co at Murdoch</b> — their first game is free with code <span class="mono">FirstGameFree</span>.</li>
+      <li><b>Adrenaline Vault bouldering</b>, Cockburn Central — $22 day pass, no booking, no belay partner needed.</li>
+      <li><b>Padel 360 socials</b> — bookable individually, so two of you can join the same social without being a pair.</li>
+      <li><b>Sunday hikes</b> with South of the Border / BOWA — guest walks are normal practice; HikeWest clubs typically charge ~$10 for an intro walk.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="master">
+  <div class="sec-head">
+    <div class="sec-num">06 — Master comparison</div>
+    <h2>The strongest options, side by side</h2>
+    <p>Sorted cheapest first. "Solo" answers whether you get a game without knowing anyone.</p>
+  </div>
+  <div class="tscroll">
+    <table>
+      <thead><tr>
+        <th>Activity</th><th>Where</th><th>Km</th><th>Drive</th><th>Cost</th>
+        <th>Sat</th><th>Sun</th><th>Wknight</th><th>Solo</th><th>Beginner</th><th>Intensity</th><th>Commitment</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</section>
+
+<section id="honest" style="border-bottom:0">
+  <div class="sec-head">
+    <div class="sec-num">07 — Read this before you commit</div>
+    <h2>Four things that will trip you up</h2>
+  </div>
+  <div class="callout">
+    <h4>1. Seasonality will break half this list</h4>
+    <p><b>Touch football at Tompkins Park is summer only.</b> <b>Hiking clubs stop running Perth day walks from November to March</b> — South of the Border explicitly pauses and resumes March/April. <b>Rockingham Triathlon Club's series runs October to April.</b> Conversely, social tennis and outdoor sport are at their best right now (September). Build the plan you can run this quarter, not a generic year-round one.</p>
+  </div>
+  <div class="callout">
+    <h4>2. "Social" at a tennis club is not the same as "social" at a drop-in</h4>
+    <p>Club social tennis assumes you'll join eventually. You'll get two or three visitor sessions of genuine welcome, then a gentle conversation about membership. That's fine and membership is usually cheap, but don't plan to freeload for six months. Drop-ins (parkrun, pickleball casual, Casual Football Co, bouldering) have no such expectation at all.</p>
+  </div>
+  <div class="callout">
+    <h4>3. The Cockburn ARC team-fee maths is per team, not per player</h4>
+    <p>$81.80 per game is the <b>team</b> fee. Split across 8–10 players that's roughly $8–11 each — genuinely cheap. But if your team is short one week, the fee doesn't shrink. Going through <b>Just Play</b>, which places individuals into teams that need bodies, is how you avoid ever carrying that.</p>
+  </div>
+  <div class="callout">
+    <h4>4. The single highest-yield thing you can do is the cheapest</h4>
+    <p>Two parkruns sit inside 15 minutes of you, both free, both 8:00am Saturday, both with coffee afterwards — and the coffee is the actual point. It costs nothing, needs no booking, no equipment, no partner, and you'll see the same faces weekly, which is the mechanism by which strangers become people you know. Start there in week one regardless of which plan you pick.</p>
+  </div>
+</section>
+
+<footer>
+  <p><b>Sources:</b> club, council and venue pages current as at 22 September 2026 — City of Rockingham, City of Kwinana, Cockburn ARC, Tennis Australia ClubSpark, parkrun Australia, Pickleball Association WA, Blue Gum Squash Club, Perth Scorpions Volleyball, The Casual Football Co, Urban Rec Perth, HikeWest, Meetup.</p>
+  <p>Anything marked <span class="unconf">UNCONFIRMED</span> was not published at the time of research. Call first. Every phone number and email in this index came from the organisation's own listing.</p>
+</footer>
+
+</div>
+
+<script>
+const A = [
+ // ---------------- RACKET ----------------
+ {n:"Social tennis (Mon night + Thu)",v:"Kwinana Tennis Club",s:"Kwinana",km:3,dr:"5 min",cat:"racket",cost:"u10",
+  price:"Approx $5–10 visitor",unconf:"exact visitor fee",hero:true,
+  casual:"Yes — book online via ClubSpark or pay cash on the day",mem:"Club membership available; visitors welcome",
+  trial:"Visitors explicitly welcomed at social sessions",sat:false,sun:false,night:true,
+  times:"Mon evening social (mixed doubles, all levels) · Thu morning social · Thu evening round robin, singles/doubles, intermediate–advanced",
+  solo:"yes",match:"Yes — mixed doubles social rotates partners; round robin allocates opponents",
+  beg:"High — Mon session stated as accessible for all levels",age:"Broad adult mix, 20s–60s",
+  social:"Club social, friendly, regulars know each other",int:"Moderate",dur:"~2 hrs",
+  eq:"Racquet and balls; non-marking shoes",hire:"Unconfirmed — ask when booking",book:"Online or turn up",
+  commit:"None for socials",link:"play.tennis.com.au/KwinanaTennisClub",contact:"enquiries@kwinanatennisclub.com.au",
+  pitch:"Your closest real social sport, full stop. Organised mixed doubles 5 minutes from home, all levels, rotating partners."},
+
+ {n:"Saturday afternoon social tennis",v:"Rockingham Tennis Club",s:"Rockingham",km:15,dr:"17 min",cat:"racket",cost:"u10",
+  price:"$5 non-member (Sat)",hero:true,
+  casual:"Yes — $5 Sat, $8 Wed/Fri mornings. Members free Sat, $4 Wed/Fri",mem:"Membership makes Saturday free",
+  trial:"No formal trial; $5 is effectively the trial",sat:true,sun:false,night:false,
+  times:"Sat 1:30–4:00pm, play from 2:00pm · Mon/Wed/Fri 8:30am",
+  solo:"yes",match:"Yes — club social, draws made on the day",
+  beg:"Good — mixed standard social",age:"Wide, skews 40s+ on weekday mornings, broader Saturday",
+  social:"Relaxed club atmosphere",int:"Moderate",dur:"2.5 hrs",
+  eq:"Racquet, balls provided at socials",hire:"Unconfirmed",book:"Turn up",
+  commit:"None",link:"play.tennis.com.au/rockinghamtennisclub/SocialTennis",contact:"0435 306 985",
+  pitch:"Five dollars for two and a half hours of organised Saturday tennis on eight courts. Nothing else on this list beats that on value per hour."},
+
+ {n:"Social tennis — timed rotating sets",v:"Melville Palmyra Tennis Club",s:"Melville",km:30,dr:"28 min",cat:"racket",cost:"10-20",
+  price:"$10 non-member",
+  casual:"Yes — $10 adult non-member, pay by card or ClubSpark; free to members",mem:"Membership available",
+  trial:"No — flat $10 visitor rate",sat:false,sun:false,night:false,
+  times:"Thu 8:30am–12:00pm · afternoon session 2:00–5:00pm year-round",
+  solo:"yes",match:"Yes — Set Captain runs timed 22-minute sets and rotates the draw, typically four sets",
+  beg:"Moderate — organised standard, but rotation absorbs mixed abilities",age:"Broad adult",
+  social:"Structured and welcoming; the rotation forces you to meet people",int:"Moderate",dur:"3–3.5 hrs",
+  eq:"Racquet",hire:"Unconfirmed",book:"Turn up / ClubSpark",
+  commit:"None",link:"melvilletenniscentre.com.au/social-tennis",contact:"Via website",
+  pitch:"The most systematically social tennis format found: a Set Captain rotates you through four different pairings. Daytime only, which limits it for you."},
+
+ {n:"Organised pickleball — Sunday session",v:"Baldivis Indoor Sports Complex",s:"Baldivis",km:13,dr:"13 min",cat:"racket",cost:"10-20",
+  price:"$12 per session",hero:true,
+  casual:"Yes — pay on arrival, no booking, no membership",mem:"None required",
+  trial:"No formal trial; $12 drop-in is the entry point",sat:false,sun:true,night:false,
+  times:"Sun 4:30–6:30pm · Wed 8:30–10:30am (organised games, $12)",
+  solo:"yes",match:"Yes — pickleball social play is rotational by default; you queue, get paired, rotate off",
+  beg:"Very high — easiest racket sport to pick up in one session",age:"Mixed, traditionally skews older but broadening fast",
+  social:"High — constant partner rotation and short games mean you meet everyone",int:"Moderate",dur:"2 hrs",
+  eq:"Paddle (bring if you have one), sports attire",hire:"Paddles generally available — confirm on 9591 0840",book:"Turn up and pay",
+  commit:"None",link:"rockingham.wa.gov.au — Baldivis Indoor Sports Complex",contact:"9591 0840 · baldivisindoorsc@rockingham.wa.gov.au",
+  pitch:"The best Sunday-afternoon slot on this list. Rotational, cheap, 13 minutes away, and you cannot be bad enough at it to have a bad time."},
+
+ {n:"Casual pickleball (weekday mornings)",v:"Baldivis Indoor Sports Complex",s:"Baldivis",km:13,dr:"13 min",cat:"racket",cost:"u10",
+  price:"$5.50 per session",
+  casual:"Yes — pay on arrival",mem:"None",trial:"n/a",sat:false,sun:false,night:false,
+  times:"Tue & Fri 9:30–11:30am",
+  solo:"yes",match:"Yes — open rotational play",beg:"Very high",age:"Skews retirees at this time slot",
+  social:"High",int:"Light–moderate",dur:"2 hrs",eq:"Paddle",hire:"Confirm on 9591 0840",book:"Turn up",
+  commit:"None",link:"rockingham.wa.gov.au — Baldivis Indoor Sports Complex",contact:"9591 0840",
+  pitch:"Cheapest organised racket sport within 15 minutes at $5.50. Weekday mornings only, so it only works if your hours ever flex."},
+
+ {n:"Kung Fu Paddle pickleball",v:"Cockburn ARC",s:"Success / Cockburn Central",km:17,dr:"15 min",cat:"racket",cost:"10-20",
+  price:"Unconfirmed",unconf:"price",
+  casual:"Listed as social play — confirm drop-in terms",mem:"Unconfirmed",trial:"Unconfirmed",
+  sat:true,sun:false,night:false,times:"Saturday afternoons",
+  solo:"yes",match:"Rotational open play format",beg:"Very high",age:"Mixed adult",
+  social:"High",int:"Moderate",dur:"Unconfirmed",eq:"Paddle",hire:"Unconfirmed",book:"Contact organisers first",
+  commit:"None",link:"pickleballwa.org.au — Perth Metro South of River",contact:"Joseph 0416 061 308 · Ray 0466 657 355 · jtvec1412@gmail.com",
+  pitch:"Fills the Saturday-afternoon pickleball slot that Baldivis leaves empty. Run by individuals rather than a council, so ring first."},
+
+ {n:"Padel Socials — individual sign-up",v:"Padel 360 Cockburn",s:"Yangebup",km:15,dr:"15 min",cat:"racket",cost:"30plus",
+  price:"Unconfirmed — expect $25–40",unconf:"social session price",
+  casual:"Yes — socials are sold as individual places, not court hire",mem:"Membership exists with tournament/social discounts + Playtomic credit",
+  trial:"None advertised",sat:true,sun:true,night:true,
+  times:"Check the socials calendar; sessions run across the week including weekends",
+  solo:"yes",match:"Yes, explicitly — you sign up alone and the club builds the matches. Three games then a coffee together",
+  beg:"High — padel is the easiest racket sport to rally in on day one",age:"Skews 25–45",
+  social:"Very high — the format ends with a scheduled social catch-up",int:"Moderate",dur:"1.5 hrs",
+  eq:"Padel racquet and balls",hire:"Racquet hire standard at padel clubs — confirm",book:"Playtomic, essential",
+  commit:"None",link:"padel360clubs.com.au/socials",contact:"Via Playtomic / website",
+  pitch:"The single best answer to 'I have no partner': you book as one person and they assemble the games. The only thing wrong with it is the price."},
+
+ {n:"Social Round Robin squash",v:"Blue Gum Squash Club @ Squashworld Brentwood",s:"Brentwood",km:30,dr:"25 min",cat:"racket",cost:"10-20",
+  price:"$16 non-member / $14 member",
+  casual:"Yes — no membership required to play the round robin",mem:"Optional; saves $2/session plus pennant access",
+  trial:"None advertised",sat:true,sun:false,night:true,
+  times:"Social Round Robin from 7:30pm · Thu in-house club night from 6:30pm (leagues of four by ability) · Saturday social · Wednesday night social",
+  solo:"yes",match:"Yes — round robin pairs you against a rotating field; in-house night groups you into a league of four at your level",
+  beg:"Moderate — squash punishes beginners physically but the grading-by-ability format protects you",age:"Broad adult, competitive lean",
+  social:"Good — small club, high repeat contact",int:"High — hardest cardio on this list",dur:"1.5–2 hrs",
+  eq:"Racquet, eyewear recommended, non-marking shoes",hire:"Pro shop on site; hire unconfirmed",book:"Contact club",
+  commit:"None for socials",link:"bluegumsquash.org/what-we-offer",contact:"9364 2874 · committee@bluegumsquash.org",
+  pitch:"Explicitly 'no membership required', graded by ability, and the best cardiovascular hit available. 25 minutes is the price of admission."},
+
+ {n:"Social table tennis",v:"Fremantle Table Tennis Club",s:"Palmyra",km:30,dr:"28 min",cat:"racket",cost:"u10",
+  price:"Unconfirmed — typically $5–10",unconf:"price",
+  casual:"Yes — described as friendly, social, relaxed sessions",mem:"Club membership available",
+  trial:"Unconfirmed",sat:false,sun:false,night:true,
+  times:"Wed 9–11am & 6–8pm · Thu 6–8pm · Fri 3–5pm",
+  solo:"yes",match:"Yes — social sessions rotate tables and opponents",
+  beg:"Very high — stated as ideal for beginners and intermediates",age:"All ages",
+  social:"High",int:"Light–moderate",dur:"2 hrs",
+  eq:"Nothing — bats and balls provided",hire:"Provided free",book:"Turn up",
+  commit:"None",link:"tabletennis.org.au club finder",contact:"1 Carrington St, Palmyra",
+  pitch:"Lowest-friction racket sport here: no equipment, no partner, no booking, beginner-explicit. Let down only by the 28-minute drive."},
+
+ {n:"Social badminton (court-hire model)",v:"South Suburban Badminton Association",s:"Armadale",km:30,dr:"30 min",cat:"racket",cost:"10-20",
+  price:"$16.50/court/hr non-member",flag:"You must bring your own players",
+  casual:"Court hire only — not an organised social you can join alone",mem:"$11/court/hr member rate",
+  trial:"None",sat:false,sun:false,night:true,times:"Social badminton Wed mornings; casual club court hire otherwise",
+  solo:"no",match:"No — you supply the four",beg:"n/a",age:"Mixed",
+  social:"Low unless you arrive with people",int:"Moderate–high",dur:"By the hour",
+  eq:"Racquet, shuttles, non-marking shoes",hire:"Unconfirmed",book:"Book courts",
+  commit:"None",link:"ssba.net.au",contact:"Townley St, Armadale",
+  pitch:"Listed for completeness and flagged honestly: this is the court-hire model you said you didn't want. Not recommended as a first move."},
+
+ {n:"Badminton club social play",v:"Baldivis Badminton Club",s:"Baldivis",km:13,dr:"13 min",cat:"racket",cost:"10-20",
+  price:"Unconfirmed",unconf:"times, price and format",flag:"Publishes no schedule — ring before driving",
+  casual:"Unconfirmed",mem:"Club-based",trial:"Unconfirmed",sat:false,sun:false,night:true,
+  times:"Unconfirmed — described as regular sessions for social and competitive play",
+  solo:"part",match:"Club structure suggests yes, but unverified",
+  beg:"Advertised as all ages and skill levels",age:"All ages",social:"Unconfirmed",
+  int:"Moderate–high",dur:"Unconfirmed",eq:"Racquet",hire:"Unconfirmed",book:"Call first",
+  commit:"Unconfirmed",link:"rockingham.wa.gov.au — Baldivis Indoor Sports Complex",contact:"9591 0840",
+  pitch:"The only close badminton with a genuine club structure. Everything about it needs a phone call — but it's 13 minutes away, so make the call."},
+
+ // ---------------- TEAM ----------------
+ {n:"Social sport via Just Play (solo placement)",v:"Cockburn ARC",s:"Success / Cockburn Central",km:17,dr:"15 min",cat:"team",cost:"u10",
+  price:"~$8–11/player ($81.80 per team per game)",hero:true,
+  casual:"Via Just Play, which places individuals into teams that need players",mem:"None; ARC entry $8.25 casual",
+  trial:"No, but Just Play placement is free to register",sat:false,sun:false,night:true,
+  times:"Mon–Thu evenings · additional Friday competitions in term time",
+  solo:"yes",match:"Yes — Just Play exists specifically to place solo players. You fill a profile and they slot you into a suitable team",
+  beg:"High — men's, women's and mixed divisions across all skill levels",age:"Mostly 20s–40s",
+  social:"High — same team for a 10+ week season, which is how acquaintances become friends",int:"Moderate–high",dur:"~45 min game + warm-up",
+  eq:"Court shoes; balls and bibs provided",hire:"n/a",book:"Register via Just Play or ARC",
+  commit:"Season-long (~10 weeks), weekly",link:"justplay.com.au/partners/cockburn-arc",contact:"cockburnarc.com.au/sport",
+  pitch:"Basketball, futsal, volleyball or netball with the team-finding problem solved for you. Best value social sport within 20 minutes — but it is a season commitment, not a drop-in."},
+
+ {n:"Casual 5-a-side football",v:"The Casual Football Co — Murdoch University",s:"Murdoch",km:25,dr:"22 min",cat:"team",cost:"10-20",
+  price:"$15 per session ($11.50 in multi-game packs)",hero:true,
+  casual:"Yes — pure drop-in, no team, no contract",mem:"None; packs available for regulars",
+  trial:"Yes — first game free with code FirstGameFree",sat:true,sun:true,night:true,
+  times:"Multiple sessions weekly across five venues; Murdoch synthetic pitches is the southern one",
+  solo:"yes",match:"Yes — teams are assembled on the night from whoever booked",
+  beg:"Good — sessions are graded and explicitly casual",age:"Strongly 20s–30s",
+  social:"High — 90 minutes of shared effort, same regulars each week",int:"High",dur:"90 min non-stop",
+  eq:"Boots or trainers, shin pads recommended",hire:"Bibs provided",book:"Essential — sessions sell out and walk-ins get turned away",
+  commit:"Zero — book week to week",link:"thecasualfootballco.com/bookcasuals",contact:"Via website",
+  pitch:"The purest expression of what you asked for: turn up alone, get put in a team, play 90 minutes, owe nothing next week. First one's free."},
+
+ {n:"Saturday social volleyball",v:"Perth Scorpions Volleyball Club",s:"Perth metro",km:40,dr:"35 min",cat:"team",cost:"10-20",
+  price:"~$11 per session",unconf:"exact fee and venue address",
+  casual:"Yes — weekly drop-in, all levels",mem:"Volleyball WA membership required after first session (for injury cover)",
+  trial:"First session before membership; free beginner skills coaching offered",
+  sat:true,sun:true,night:false,times:"Sat 10:00am–12:00pm · Sunday socials also run",
+  solo:"yes",match:"Yes — players placed into skill-matched teams on the day",
+  beg:"Very high — free beginner-level skills development offered to anyone",age:"20s–40s",
+  social:"Very high — explicitly inclusive club, safe space for LGBTQIA+ players",int:"Moderate",dur:"2 hrs",
+  eq:"Court shoes",hire:"Balls provided",book:"Register online",
+  commit:"None beyond the VWA membership",link:"perthscorpionsvolleyball.com.au/play",contact:"Via website",
+  pitch:"Skill-matched teams built on the day plus free beginner coaching. The welcome is the whole point of this club. Confirm the venue before committing to the drive."},
+
+ {n:"Saturday social volleyball (drop-in)",v:"Fremantle Volleyball Club",s:"Fremantle",km:30,dr:"28 min",cat:"team",cost:"10-20",
+  price:"Unconfirmed",unconf:"price",
+  casual:"Yes — advertised as drop-in Saturday social",mem:"Unconfirmed",trial:"Unconfirmed",
+  sat:true,sun:false,night:false,times:"Saturday — exact time unconfirmed",
+  solo:"yes",match:"Yes — casual round robin across multiple courts",
+  beg:"High — stated as welcoming everyone regardless of skill",age:"Mixed adult",
+  social:"High",int:"Moderate",dur:"Unconfirmed",eq:"Court shoes",hire:"Balls provided",book:"Check website",
+  commit:"None",link:"fremantlevolleyballclub.com/saturday-social.html",contact:"Via website",
+  pitch:"Round robin across multiple courts with an explicit all-welcome line. Closer than Scorpions; less published detail."},
+
+ {n:"Social drop-in indoor beach volleyball",v:"Ossie Indoor Beach Volleyball",s:"Osborne Park",km:45,dr:"40 min",cat:"team",cost:"10-20",
+  price:"Unconfirmed",unconf:"price",
+  casual:"Yes — Friday and Saturday social drop-in",mem:"None",trial:"Unconfirmed",
+  sat:true,sun:false,night:true,times:"Friday and Saturday sessions",
+  solo:"yes",match:"Drop-in social format",beg:"High",age:"20s–30s",
+  social:"High — beach volleyball venues run hot on atmosphere",int:"High — sand is punishing",dur:"~2 hrs",
+  eq:"Nothing; play barefoot",hire:"n/a",book:"Check website",
+  commit:"None",link:"ossieindoorbeachvolleyball.com.au/social",contact:"Via website",
+  pitch:"Sand volleyball indoors, Friday and Saturday nights. Genuinely fun rather than merely good exercise — but it's a 40-minute drive, so make it a deliberate outing."},
+
+ {n:"Multisport social league (individual entry)",v:"Urban Rec Perth",s:"Leederville / Northbridge / Subiaco / Vic Park",km:40,dr:"35 min",cat:"team",cost:"20-30",
+  price:"Per-season registration, unconfirmed",unconf:"individual price",
+  casual:"Register as an individual; the Urban Rec Draft places you on a team for free",
+  mem:"Season registration",trial:"Promo discounts appear periodically",
+  sat:false,sun:true,night:true,times:"Varies by league and venue; weeknight and weekend fixtures",
+  solo:"yes",match:"Yes — individuals are explicitly matched with teammates via the Draft",
+  beg:"Very high — the whole brand is built on fun over competitiveness",age:"Strongly 25–40, heavily social",
+  social:"Very high — post-game venue culture is central to the format",int:"Moderate",dur:"~1 hr + social",
+  eq:"Minimal, sport-dependent",hire:"Equipment provided",book:"Online registration",
+  commit:"10-week season",link:"perth.urbanrec.com.au/leagues",contact:"Via website",
+  pitch:"Multisport rotates you through eleven sports across a season — soccer, dodgeball, hockey, handball, touch, basketball, AFL, volleyball and more. Best pure meet-people play on the list. All venues are north of the river."},
+
+ {n:"Monday night social dodgeball",v:"Dodgeball Perth @ Striker Leeming",s:"Leeming",km:22,dr:"20 min",cat:"team",cost:"u10",
+  price:"~$7.50/player/game ($750 per team, 10 games)",unconf:"individual entry option",
+  casual:"Team-based league; individual placement unconfirmed",mem:"Season registration",
+  trial:"Unconfirmed",sat:false,sun:false,night:true,
+  times:"Monday nights, one 40-minute game per week, 12-week season",
+  solo:"part",match:"Unconfirmed — welcomes teams and individuals, but placement process unpublished",
+  beg:"Very high — nobody has a dodgeball background",age:"20s–30s",
+  social:"Very high — it is a fundamentally silly sport, which helps",int:"High — short, explosive",dur:"40 min",
+  eq:"None",hire:"Balls provided",book:"Nominate via Dodgeball Perth",
+  commit:"12-week season",link:"dodgeballperth.com.au/striker",contact:"Via website",
+  pitch:"The underrated pick. Cheap per game, genuinely funny, only 20 minutes away, and everyone is equally bad at it. Ask them directly about solo placement."},
+
+ {n:"Perth Ultimate League (mixed)",v:"WA Ultimate — UWA Sports Park",s:"Mount Claremont",km:40,dr:"35 min",cat:"team",cost:"20-30",
+  price:"Season registration, unconfirmed",unconf:"price",
+  casual:"League format; short 2–5 week beginner leagues also run",mem:"League registration",
+  trial:"Beginner-specific leagues act as the entry point",sat:false,sun:false,night:true,
+  times:"Wednesday evenings",solo:"yes",match:"Yes — individuals are drafted onto teams",
+  beg:"Very high — mixed leagues exist specifically for new players",age:"20s–30s",
+  social:"Very high — ultimate's self-refereed culture makes it unusually welcoming",int:"High",dur:"~1.5 hrs",
+  eq:"Cleats or trainers",hire:"Discs provided",book:"Register online",
+  commit:"2–5 week beginner league, or a full season",link:"waultimate.com/play/pul",contact:"Via website",
+  pitch:"Ultimate has the friendliest culture of any sport here — self-refereed, no officials, 'Spirit of the Game' is a scored category. The 2–5 week beginner league is a low-risk way in."},
+
+ {n:"Summer mixed touch football",v:"Tompkins Park Touch",s:"Alfred Cove",km:30,dr:"27 min",cat:"team",cost:"10-20",
+  price:"Season fee, unconfirmed",unconf:"price and free-agent process",flag:"Summer season only",
+  casual:"Team-based; free-agent process unconfirmed",mem:"Season registration",trial:"Unconfirmed",
+  sat:false,sun:false,night:true,times:"Tuesday nights, summer season only",
+  solo:"part",match:"Unconfirmed — small family-friendly association, worth asking",
+  beg:"High — welcomes all ages, skill levels, experience and abilities",age:"Broad",
+  social:"High — small association, strong repeat contact",int:"High",dur:"~40 min game",
+  eq:"Boots or trainers",hire:"n/a",book:"Nominate a team or ask about placement",
+  commit:"Summer season",link:"tompkinsparktouch.com.au",contact:"Via website",
+  pitch:"Genuinely good summer cardio in a small, friendly association. You'd need to ask about joining as a free agent — with a small club, that usually works."},
+
+ // ---------------- OUTDOOR ----------------
+ {n:"parkrun — 5km timed run/walk",v:"Tamworth Wetlands parkrun",s:"Baldivis",km:12,dr:"13 min",cat:"outdoor",cost:"free",
+  price:"FREE",hero:true,
+  casual:"Yes — turn up any Saturday, forever",mem:"None, ever",trial:"Every week is free",
+  sat:true,sun:false,night:false,times:"Every Saturday, 8:00am sharp",
+  solo:"yes",match:"n/a — but the volunteer team and post-run coffee are the social mechanism",
+  beg:"Total — walkers explicitly welcome, there is always a tail walker so nobody finishes last alone",
+  age:"Every age, genuinely",social:"High if you stay for coffee; that is the whole trick",
+  int:"Whatever you choose",dur:"25–50 min + coffee",
+  eq:"Running shoes and a printed barcode",hire:"n/a",book:"Register once online, free, then never again",
+  commit:"Zero",link:"parkrun.com.au/tamworthwetlands",contact:"Via website",
+  pitch:"Your closest parkrun at 13 minutes. Free, weekly, same faces, coffee after. If you do one thing off this entire document, do this."},
+
+ {n:"parkrun — beachfront 5km",v:"Rockingham parkrun",s:"Rockingham foreshore",km:16,dr:"18 min",cat:"outdoor",cost:"free",
+  price:"FREE",
+  casual:"Yes",mem:"None",trial:"Always free",sat:true,sun:false,night:false,
+  times:"Every Saturday, 8:00am",
+  solo:"yes",match:"n/a — volunteering is the fastest way in socially",
+  beg:"Total — walkers and all abilities welcome",age:"All ages",
+  social:"High — larger, busier event than Tamworth",int:"Your choice",dur:"25–50 min + coffee",
+  eq:"Shoes and barcode",hire:"n/a",book:"One free online registration",
+  commit:"Zero",link:"parkrun.com.au/rockingham",contact:"Churchill Park, cnr Railway Tce & Rockingham Beach Rd",
+  pitch:"Out-and-back along the beachfront path through Bell Park and the dunes. The nicest course of the three and the biggest crowd."},
+
+ {n:"parkrun — lakeside 5km",v:"Bibra Lake parkrun",s:"Bibra Lake",km:22,dr:"20 min",cat:"outdoor",cost:"free",
+  price:"FREE",
+  casual:"Yes",mem:"None",trial:"Always free",sat:true,sun:false,night:false,
+  times:"Every Saturday, 8:00am",solo:"yes",match:"n/a",
+  beg:"Total",age:"All ages",social:"High — described as one of the more relaxed, community-feel metro events",
+  int:"Your choice",dur:"25–50 min + coffee",eq:"Shoes and barcode",hire:"n/a",
+  book:"One free registration",commit:"Zero",link:"parkrun.com.au/bibralake",contact:"Progress Drive, Bibra Lake",
+  pitch:"The third option, 20 minutes away by Adventure World. Rotating between all three parkruns is a legitimate way to widen your circle."},
+
+ {n:"Social running group",v:"Secret Rocky Runners",s:"Rockingham / Secret Harbour",km:16,dr:"18 min",cat:"outdoor",cost:"member",
+  price:"$30/year membership",unconf:"weekly run times and meeting points",
+  casual:"Group runs; membership is $30/yr for the season Mar 1 – Feb 28",
+  mem:"$30/year — discounts on club events, merch, exclusive training sessions",
+  trial:"Unconfirmed — most run clubs let you try before joining",sat:true,sun:true,night:true,
+  times:"Weekly runs — schedule not published publicly, check Facebook",
+  solo:"yes",match:"Yes — run clubs group by pace, and this one states beginner to ultra",
+  beg:"High — explicitly welcomes beginner athletes",age:"Broad adult",
+  social:"Very high — stated purpose is fun, encouragement and team spirit",
+  int:"Your choice — pace groups",dur:"45–90 min",eq:"Running shoes",hire:"n/a",
+  book:"Join via TidyHQ",commit:"Annual membership, but no attendance obligation",
+  link:"secretrockyrunners.org.au",contact:"secretrockyrunners@gmail.com",
+  pitch:"$30 for a year of social running with people in your own suburb. Cheapest membership on this list by a wide margin. Message them for the current run schedule."},
+
+ {n:"Heart Foundation walking group",v:"Heart Foundation Walking",s:"Kwinana Town Centre (1 group) + Rockingham (4 groups)",km:2,dr:"4 min",cat:"outdoor",cost:"free",
+  price:"FREE",
+  casual:"Yes — free, no membership",mem:"None",trial:"Free always",sat:false,sun:false,night:false,
+  times:"Varies by group — contact City of Rockingham for schedules",unconf:"times",
+  solo:"yes",match:"Yes — groups walk together, led by a volunteer walk organiser",
+  beg:"Total",age:"Skews 50+ — worth knowing at 30s",
+  social:"High but age-mismatched for you",int:"Light",dur:"30–60 min",
+  eq:"Shoes",hire:"n/a",book:"Register with the group",commit:"Zero",
+  link:"walking.heartfoundation.org.au",contact:"City of Rockingham 9528 0333 · customer@rockingham.wa.gov.au",
+  pitch:"Free and literally in your town centre, but be realistic: these groups skew well above your age bracket. Listed because it's free and close, not because it's your best fit."},
+
+ {n:"Sunday day hikes",v:"South of the Border Hiking Club (Meetup)",s:"Perth Hills & outskirts",km:60,dr:"50–70 min to trailheads",cat:"outdoor",cost:"u10",
+  price:"Typically ~$10 intro walk (HikeWest norm)",unconf:"this club's exact walk fee",flag:"Paused Nov–Mar; resumes Mar/Apr",
+  casual:"Yes — Meetup RSVP per walk",mem:"HikeWest clubs typically $35–45/year",
+  trial:"HikeWest member groups generally charge ~$10 for an introductory walk",
+  sat:true,sun:true,night:false,times:"Sunday hikes, commonly 8:00am starts",
+  solo:"yes",match:"Yes — group hikes, everyone walks together, all levels welcome",
+  beg:"High — introductory walks exist for newcomers",age:"Broad, 30s well represented",
+  social:"Very high — hours of walking side by side is the best conversation format there is",
+  int:"Moderate–high depending on the walk",dur:"Half day",
+  eq:"Boots, 2L water, hat, snacks",hire:"n/a",book:"RSVP via Meetup",
+  commit:"Per walk",link:"meetup.com/south-of-the-border-hiking-club",contact:"Via Meetup",
+  pitch:"Day hikes within an hour of the CBD, all levels welcome. The best weekend activity on this list for actually talking to people — but check it's in season before you plan around it."},
+
+ {n:"Sunday bushwalks",v:"Bushwalkers of WA (BOWA)",s:"Wild areas around Perth",km:60,dr:"50–80 min",cat:"outdoor",cost:"u10",
+  price:"Club membership typically $35–45/yr + small walk fees",unconf:"current fees",
+  casual:"Introductory walks available",mem:"Annual club membership",
+  trial:"Yes — newcomer walks are standard practice",sat:true,sun:true,night:false,
+  times:"Almost every Sunday of the year",
+  solo:"yes",match:"Yes — organised group walks with a leader",
+  beg:"Good — graded walks, introductory options",age:"Broad, skews older than SOTB",
+  social:"High",int:"Moderate–high",dur:"Full or half day",
+  eq:"Boots, water, pack",hire:"n/a",book:"Via club",commit:"Annual membership",
+  link:"bushwalkerswa.asn.au",contact:"Via website",
+  pitch:"Runs almost every Sunday of the year, which makes it the most reliable Sunday outdoor option when the Meetup clubs go quiet over summer."},
+
+ {n:"Social bunch rides",v:"Rockingham & Baldivis cycling groups",s:"Rockingham / Baldivis",km:15,dr:"17 min",cat:"outdoor",cost:"free",
+  price:"FREE (after the bike)",flag:"High equipment cost to start",unconf:"current ride schedules",
+  casual:"Yes — informal bunch rides",mem:"None for informal bunches; Peel Districts CC for club racing",
+  trial:"Just turn up",sat:true,sun:true,night:false,
+  times:"Sunday ~8:00am from the Masonic Hall, Rockingham, approx 50km · Tuesday 7:00am from Safety Bay Rd",
+  solo:"yes",match:"Bunch rides absorb newcomers by default, but the pace can be unforgiving",
+  beg:"Moderate — these are riding groups, not learn-to-ride groups",age:"30s–50s",
+  social:"High — coffee stop is mandatory culture",int:"High",dur:"2–3 hrs",
+  eq:"Road bike, helmet, kit — $800+ entry cost",hire:"No",book:"Turn up",
+  commit:"Zero",link:"westcycle.org.au/perth-south",contact:"K&D Cycles Rockingham also runs small group rides",
+  pitch:"Free every week once you own the bike, and the Sunday 50km from Rockingham is a proper social ride with a coffee stop. The equipment cost is the real barrier."},
+
+ {n:"Free council fitness programs",v:"City of Kwinana Healthy Lifestyles",s:"Kwinana / Medina",km:3,dr:"5 min",cat:"fitness",cost:"free",
+  price:"FREE",
+  casual:"10-week program blocks — book a place",mem:"None",trial:"Entire program is free",
+  sat:false,sun:false,night:false,times:"Program-dependent; 10-week blocks. Community Yoga, dance-based fitness, outdoor fitness",
+  unconf:"current 2026 block timetable",
+  solo:"yes",match:"Group classes — you attend alone and everyone else does too",
+  beg:"Total — designed for community participation, not fitness enthusiasts",
+  age:"Varies sharply by program; several are 50+ or parent-specific, so check which block suits you",
+  social:"Moderate–high — 10 weeks with the same cohort builds familiarity",
+  int:"Light–moderate",dur:"~1 hr",eq:"None",hire:"n/a",
+  book:"Essential — places book out fast",commit:"10-week block",
+  link:"kwinana.wa.gov.au — Healthy Lifestyles",contact:"City of Kwinana",
+  pitch:"Free, 5 minutes away, run in 10-week cohorts. Check which blocks are open to your age bracket — several are explicitly for over-50s or parents."},
+
+ {n:"Free outdoor gym equipment",v:"City of Kwinana parks and ovals",s:"Kwinana (multiple parks)",km:2,dr:"4 min",cat:"fitness",cost:"free",
+  price:"FREE",flag:"Solo by default — not a social activity",
+  casual:"Always open",mem:"None",trial:"n/a",sat:true,sun:true,night:true,
+  times:"Any time",solo:"part",match:"No — this is you, alone, on a park frame",
+  beg:"Total",age:"All",social:"Low — listed only as a supplement",
+  int:"Your choice",dur:"Your choice",eq:"None",hire:"n/a",book:"None",
+  commit:"Zero",link:"kwinana.wa.gov.au",contact:"City of Kwinana",
+  pitch:"Free and everywhere, but it's solo exercise, which is the thing you explicitly said you don't want. Use it as filler between real sessions, not as a plan."},
+
+ // ---------------- WATER ----------------
+ {n:"Dragon boating — free trial + free first month",v:"Perth Pirates Dragon Boat Club",s:"Maylands",km:45,dr:"40 min",cat:"water",cost:"free",
+  price:"FREE trial + first month free, then club fees",hero:true,
+  casual:"Trial free, no obligation; club membership after",mem:"Club fees after the free month — unconfirmed",unconf:"ongoing membership cost",
+  trial:"Yes — free tryout plus a full free first month, explicitly no obligation",
+  sat:true,sun:true,night:true,times:"Trains several times a week, year round",
+  solo:"yes",match:"Yes — you are one of twenty in a boat; there is no partner to find",
+  beg:"Total — explicitly regardless of fitness or experience",age:"Broad adult, strong 30s cohort",
+  social:"Extremely high — twenty people paddling in unison is the most forcibly bonding activity on this list",
+  int:"High — serious upper body and core",dur:"~1.5 hrs",
+  eq:"Comfortable clothes, shoes that can get wet, water bottle",hire:"Everything provided",
+  book:"Email to arrange a tryout",commit:"None for the first month",
+  link:"perthpiratesdragonboatclub.com.au",contact:"getpaddling@perthpiratesdragonboatclub.com.au",
+  pitch:"The most underrated thing found in this whole search. Free trial, free first month, zero equipment, zero skill required, and twenty people who have to synchronise with you. 40 minutes is worth it."},
+
+ {n:"Outrigger canoeing and kayak racing",v:"Rockingham Outrigger Canoe Club",s:"Point Peron",km:20,dr:"22 min",cat:"water",cost:"member",
+  price:"Club membership — unconfirmed",unconf:"fees, session times, come-and-try policy",
+  casual:"Unconfirmed — most outrigger clubs run free come-and-try",mem:"Club-based",
+  trial:"Unconfirmed — ask",sat:true,sun:true,night:false,times:"Unconfirmed — call",
+  solo:"yes",match:"Yes — six-person canoes, crews assembled by the club",
+  beg:"High — outrigger clubs generally take complete beginners",age:"Broad adult",
+  social:"Very high — crew boat, same six people",int:"High",dur:"1.5–2 hrs",
+  eq:"Provided by club",hire:"Club boats",book:"Call first",commit:"Club membership",
+  link:"paddlewa.asn.au — Our Clubs",contact:"0467 791 010 · Pt Peron Rd, Rockingham",
+  pitch:"Dragon boating's local equivalent, 22 minutes away on the Shoalwater coast instead of 40 on the Swan. Everything needs a phone call, but the location is spectacular."},
+
+ {n:"Masters swimming — fitness, fun and friendship",v:"Rockingham Masters Swimming Club",s:"Warnbro (Aqua Jetty)",km:20,dr:"20 min",cat:"water",cost:"member",
+  price:"Club membership + pool entry (~$5.90 casual swim)",unconf:"membership fee",
+  casual:"Squad training twice weekly",mem:"Masters Swimming WA membership",
+  trial:"Most Masters clubs offer trial swims — ask",sat:false,sun:false,night:true,
+  times:"Tuesday and Thursday evenings at Aqua Jetty",
+  solo:"yes",match:"Yes — lane-based squad, grouped by pace",
+  beg:"Moderate — you need to be able to swim laps, but Masters is explicitly not elite",
+  age:"Adults 18+, broad, welcoming",social:"High — the club motto is literally fitness, fun and friendship",
+  int:"Moderate–high",dur:"1 hr",eq:"Bathers, goggles, cap",hire:"n/a",
+  book:"Contact club",commit:"Annual membership",
+  link:"rockinghammasters.com.au",contact:"Aqua Jetty 9591 0888",
+  pitch:"Two weeknights, coached, social, and the lane structure means you're never swimming alone even though you're swimming alone. Good fit for your evening slots."},
+
+ {n:"Club triathlon series and Splash & Dash",v:"Rockingham Triathlon Club",s:"Safety Bay",km:20,dr:"22 min",cat:"water",cost:"member",
+  price:"Triathlon Australia membership + race fees",unconf:"cost",flag:"Season runs Oct–Apr only",
+  casual:"Race entries per event",mem:"Join via Triathlon Australia, selecting Rockingham TC",
+  trial:"Monthly Splash & Dash is the low-barrier entry point",sat:true,sun:true,night:false,
+  times:"Race series October–April · monthly Splash & Dash · club training through the season",
+  solo:"yes",match:"Yes — club events, everyone arrives alone",
+  beg:"High — explicitly mixes first-timers with professionals, all levels welcome",
+  age:"Broad, strong 30s–40s",social:"High — small club, race-day culture",
+  int:"High",dur:"1–3 hrs",eq:"Bike, helmet, wetsuit optional — high entry cost",
+  hire:"No",book:"Via EntryBoss",commit:"Season membership",
+  link:"trirockingham.asn.au",contact:"rockytri.enquiries@gmail.com",
+  pitch:"Starting in October, which is right now. The monthly Splash & Dash (swim + run, no bike) is the cheap way to test whether you like it before buying anything."},
+
+ // ---------------- FITNESS ----------------
+ {n:"Bouldering — no partner required",v:"Adrenaline Vault",s:"Cockburn Central",km:17,dr:"15 min",cat:"fitness",cost:"20-30",
+  price:"$22 day pass",hero:true,
+  casual:"Yes — no booking, walk in",mem:"Memberships available; day pass needs none",
+  trial:"No formal trial; $22 is walk-up",sat:true,sun:true,night:true,
+  times:"Mon–Fri 10:00am–9:30pm; weekend hours vary — check before a weekend trip",
+  solo:"yes",match:"No formal matching, but bouldering has the strongest stranger-talks-to-stranger culture of any indoor activity — people share beta unprompted",
+  beg:"Very high — graded problems start genuinely easy",age:"Strongly 20s–30s",
+  social:"High in practice, informal in structure — you have to be willing to talk first",
+  int:"High — upper body and grip",dur:"1–2 hrs, self-paced",
+  eq:"Climbing shoes and chalk",hire:"Yes — shoe hire standard",book:"None needed",
+  commit:"Zero",link:"adrenalinevault.com.au",contact:"Cockburn Central",
+  pitch:"Bouldering is the only solo-entry activity where strangers routinely start conversations with you. No belay partner, no booking, no roped-in commitment. 15 minutes away."},
+
+ {n:"Martial arts — BJJ, Muay Thai, boxing",v:"Roar MMA Rockingham",s:"Rockingham",km:15,dr:"17 min",cat:"fitness",cost:"member",
+  price:"Membership-based",unconf:"ongoing membership cost",
+  casual:"Membership model, not drop-in",mem:"Unconfirmed — ask",
+  trial:"Yes — free 7-day trial, all classes",sat:true,sun:false,night:true,
+  times:"Multiple evening classes across BJJ, Muay Thai and boxing",unconf2:"timetable",
+  solo:"yes",match:"Yes — partner drilling is assigned by the coach, so you always have someone",
+  beg:"High — beginner classes and a structured curriculum",age:"Strongly 20s–40s",
+  social:"Very high — grappling with someone twice a week creates fast familiarity",
+  int:"Very high",dur:"1–1.5 hrs",eq:"Gi or shorts and gloves depending on discipline",
+  hire:"Loan gear usually available during trial",book:"Book the trial online",
+  commit:"Membership after the trial",link:"roarmma.com.au/locations/rockingham",contact:"Commodore Drive, Rockingham",
+  pitch:"The free 7-day trial is genuinely free and covers everything. Use it even if you don't join — it's the cheapest week of training available and partner drilling means you're never sitting out."},
+
+ {n:"Group fitness classes",v:"Cockburn ARC",s:"Success / Cockburn Central",km:17,dr:"15 min",cat:"fitness",cost:"10-20",
+  price:"$19.25 casual class · $8.25 pool/facility entry",
+  casual:"Yes — casual class rate, no membership",mem:"Memberships available",trial:"No",
+  sat:true,sun:true,night:true,times:"Extensive timetable across 3 studios, mornings to evenings, 7 days",
+  solo:"yes",match:"No — group classes, you work alongside people rather than with them",
+  beg:"High — all levels catered",age:"Broad",
+  social:"Moderate — regulars recognise each other, but classes don't force interaction",
+  int:"Varies by class",dur:"45–60 min",eq:"None",hire:"Equipment provided",
+  book:"Book classes online",commit:"None on casual rate",
+  link:"cockburnarc.com.au/About/Fees-and-Charges",contact:"31 Veterans Pde, Cockburn",
+  pitch:"Good facility, fair casual rate, seven days. But be clear-eyed: group fitness is parallel exercise, not social sport. It won't give you what a team or a rotation format does."},
+
+ {n:"Group fitness and aquatics",v:"Kwinana Recquatic",s:"Medina / Kwinana",km:3,dr:"5 min",cat:"fitness",cost:"member",
+  price:"Unconfirmed",unconf:"casual class and membership prices",
+  casual:"Casual entry available",mem:"Premium (gym + unlimited classes + pool + spa/steam) and Standard Aquatics tiers",
+  trial:"Unconfirmed — most council centres offer one",sat:true,sun:true,night:true,
+  times:"Classes morning and evening, 7 days. Also hosts basketball, netball and indoor soccer clubs",
+  solo:"yes",match:"For club sport, the centre can point you to clubs; classes are individual",
+  beg:"High",age:"Broad community mix",social:"Moderate",
+  int:"Varies",dur:"45–60 min",eq:"None",hire:"Provided",book:"Via centre",
+  commit:"Membership or casual",link:"recquatic.com.au",contact:"9236 4700 · recquatic@kwinana.wa.gov.au",
+  pitch:"Five minutes from home and hosts basketball, netball and indoor soccer clubs — worth one phone call to ask which of those take individual players. That call is the highest-value thing on this page relative to effort."},
+
+ {n:"Group fitness and aqua classes",v:"Aqua Jetty",s:"Warnbro",km:20,dr:"20 min",cat:"fitness",cost:"10-20",
+  price:"$5.90 adult swim · class price unconfirmed",unconf:"casual class price",
+  casual:"Yes — pay per session by card",mem:"Gold / Silver / LiveWell tiers",trial:"Unconfirmed",
+  sat:true,sun:true,night:true,times:"80+ classes per week, early morning to mid-evening",
+  solo:"yes",match:"No — class format",beg:"High",age:"Broad",
+  social:"Moderate",int:"Varies",dur:"45–60 min",eq:"None",hire:"Provided",
+  book:"Essential — online or phone, between 72 hrs and 2 hrs before class",
+  commit:"None casually",link:"rockingham.wa.gov.au — Aqua Jetty group fitness",contact:"9591 0888",
+  pitch:"Over 80 classes a week including aqua fitness, plus a 50m outdoor and 25m indoor pool. Book ahead — they enforce the 2-hour cutoff."}
+];
+
+const WEEKEND = [
+ {slot:"Best Saturday morning", picks:[
+   {n:"Tamworth Wetlands parkrun", w:"Sat 8:00am · Baldivis · FREE", d:"Closest of the three, free forever, walkers welcome, coffee after. Nothing on this list has a better effort-to-payoff ratio.", win:true},
+   {n:"Rockingham parkrun", w:"Sat 8:00am · Churchill Park · FREE", d:"Bigger crowd, beachfront course. Rotate between the two."},
+   {n:"Perth Scorpions social volleyball", w:"Sat 10am–12pm · ~$11", d:"Skill-matched teams built on the day, free beginner coaching. Confirm the venue first."}
+ ]},
+ {slot:"Best Saturday afternoon", picks:[
+   {n:"Rockingham Tennis Club social", w:"Sat 1:30–4:00pm · $5 non-member", d:"Two and a half hours of organised social tennis for five dollars, seventeen minutes away. Best value on the entire list.", win:true},
+   {n:"Kung Fu Paddle pickleball @ Cockburn ARC", w:"Sat afternoon · price unconfirmed", d:"Rotational open play. Ring Joseph or Ray before you drive."},
+   {n:"Adrenaline Vault bouldering", w:"Any time · $22 day pass", d:"No booking, no partner. Check weekend hours before going."}
+ ]},
+ {slot:"Best Saturday evening", picks:[
+   {n:"Ossie Indoor Beach Volleyball", w:"Fri & Sat social drop-in · Osborne Park", d:"Sand volleyball indoors, genuinely fun, strong atmosphere. 40 minutes, so treat it as an outing.", win:true},
+   {n:"Blue Gum Squash social round robin", w:"From 7:30pm · $16 non-member", d:"No membership required, rotating field, hardest workout available."},
+   {n:"The Casual Football Co @ Murdoch", w:"$15, first game free", d:"Check which evening sessions run at Murdoch — the schedule varies."}
+ ]},
+ {slot:"Best Sunday morning", picks:[
+   {n:"South of the Border Hiking Club", w:"Sun ~8:00am · ~$10 intro walk", d:"Half a day walking and talking with a group. Best conversation format here. Season is Mar/Apr–Nov only.", win:true},
+   {n:"Rockingham Sunday bunch ride", w:"Sun 8:00am, Masonic Hall · ~50km · FREE", d:"Free every week once you own a road bike. Mandatory coffee stop."},
+   {n:"Bushwalkers of WA", w:"Almost every Sunday, year round", d:"The reliable option when the Meetup clubs pause over summer."}
+ ]},
+ {slot:"Best Sunday afternoon", picks:[
+   {n:"Baldivis pickleball", w:"Sun 4:30–6:30pm · $12 · 13 min", d:"The standout Sunday slot. Organised, rotational, close, cheap, and impossible to be too bad at.", win:true},
+   {n:"Padel 360 socials", w:"Weekend sessions · individual sign-up", d:"They build the matches for you. Confirm pricing first."},
+   {n:"Perth Scorpions Sunday socials", w:"Sunday · ~$11", d:"Second volleyball option if Saturday doesn't suit."}
+ ]},
+ {slot:"Best weekend racket sport", picks:[
+   {n:"Baldivis pickleball, Sunday 4:30pm", w:"$12 · 13 min · rotational", d:"Beats tennis on beginner-friendliness, beats padel on price, beats badminton on actually existing nearby.", win:true},
+   {n:"Rockingham Tennis, Saturday 2pm", w:"$5 · 17 min", d:"Cheaper, longer, more courts. Slightly steeper learning curve."}
+ ]},
+ {slot:"Best weekend team sport", picks:[
+   {n:"Perth Scorpions Saturday volleyball", w:"Sat 10am–12pm · skill-matched on the day", d:"Free beginner coaching plus teams assembled for you. The most deliberately welcoming club found.", win:true},
+   {n:"The Casual Football Co", w:"$15, 90 min, first game free", d:"Higher intensity, zero commitment, teams made on the night."}
+ ]},
+ {slot:"Best weekend outdoor activity", picks:[
+   {n:"Sunday hikes (SOTB / BOWA)", w:"~$10/walk · half day", d:"Hours of side-by-side conversation in the Perth Hills. Seasonal.", win:true},
+   {n:"parkrun", w:"Sat 8:00am · FREE", d:"Weekly, free, closest, and it builds a habit rather than an event."}
+ ]},
+ {slot:"Best for meeting people", picks:[
+   {n:"Perth Pirates dragon boating", w:"FREE trial + free first month · Maylands", d:"Twenty people who must synchronise with you. No equipment, no skill, no partner. The most forcibly social activity found.", win:true},
+   {n:"Sunday hiking clubs", w:"~$10 · half day", d:"Conversation is the actual activity."},
+   {n:"Urban Rec multisport", w:"10-week season · individual draft", d:"Built entirely around the social side. North of the river though."}
+ ]},
+ {slot:"Best for beginners", picks:[
+   {n:"Baldivis pickleball", w:"$12 · Sun 4:30pm", d:"You can rally in your first ten minutes. Nothing else here is this forgiving.", win:true},
+   {n:"parkrun", w:"FREE · walkers welcome", d:"There is always a tail walker, so nobody finishes last alone."},
+   {n:"Dragon boating", w:"FREE trial", d:"Explicitly welcomes any fitness level and any experience."}
+ ]},
+ {slot:"Best weekend under $10", picks:[
+   {n:"Rockingham Tennis Saturday social", w:"$5 · 2.5 hrs · Sat 1:30pm", d:"Two dollars an hour for organised social tennis. Unbeatable.", win:true},
+   {n:"Baldivis casual pickleball", w:"$5.50 · Tue & Fri mornings", d:"Weekday only, but the same rotational format."}
+ ]},
+ {slot:"Best completely free", picks:[
+   {n:"parkrun — any of three within 22 km", w:"Sat 8:00am · FREE forever", d:"Free, weekly, no booking, walkers welcome, same faces every week. The coffee afterwards is the actual product.", win:true},
+   {n:"Perth Pirates free trial month", w:"FREE for a month", d:"Free is time-limited here, but a month of dragon boating costs nothing."},
+   {n:"Rockingham Sunday bunch ride", w:"FREE after the bike", d:"Free ongoing — the bike is the catch."}
+ ]},
+ {slot:"Worth travelling 20 km+ for", picks:[
+   {n:"Perth Pirates Dragon Boat Club", w:"45 km · 40 min · free trial + free month", d:"Nothing within 20 km matches it for forced social contact at zero cost and zero skill barrier. Make the drive.", win:true},
+   {n:"Blue Gum Squash social round robin", w:"30 km · 25 min · $16, no membership", d:"Ability-graded rotating field. Best cardio on the list."},
+   {n:"The Casual Football Co @ Murdoch", w:"25 km · 22 min · $15, first free", d:"Turn up alone, get a team, play 90 minutes, owe nothing."}
+ ]}
+];
+
+const AWARDS = [
+ {k:"Cheapest ongoing", v:"parkrun", d:"Free forever, three locations within 22 km, every Saturday 8:00am."},
+ {k:"Best for meeting people", v:"Perth Pirates Dragon Boating", d:"Twenty people in one boat. Free trial, free first month, everything provided."},
+ {k:"Best for attending alone", v:"The Casual Football Co", d:"Book one place, get put in a team, play 90 minutes. First game free."},
+ {k:"Best beginner activity", v:"Baldivis pickleball", d:"$12, rotational, 13 minutes away, and genuinely playable on day one."},
+ {k:"Best after-work option", v:"Kwinana Tennis Monday social", d:"Organised mixed doubles, all levels, five minutes from home."},
+ {k:"Best Saturday", v:"parkrun 8am → Rockingham Tennis 2pm", d:"Free morning, $5 afternoon, both organised, both social. Total cost: $5."},
+ {k:"Best Sunday", v:"Baldivis pickleball, 4:30pm", d:"The best-fitting single session on this entire list for your constraints."},
+ {k:"Best cardio", v:"Blue Gum squash round robin", d:"Squash is the most brutal hour here. Graded by ability so it stays survivable."},
+ {k:"Best fun-to-exercise ratio", v:"Dodgeball Perth, Monday", d:"~$7.50 a game, 20 minutes away, and nobody takes it seriously. That's the point."},
+ {k:"Lowest commitment", v:"Adrenaline Vault bouldering", d:"$22, no booking, no partner, no season, walk in whenever."},
+ {k:"Best just-turn-up", v:"Rockingham Tennis, Sat 2pm", d:"No booking, no membership, five dollars, they sort the draw."},
+ {k:"Best racket sport", v:"Pickleball at Baldivis", d:"Beats tennis on accessibility, padel on price, badminton on existing nearby."},
+ {k:"Best outdoor", v:"Sunday hikes, SOTB / BOWA", d:"Half a day of walking and talking. Check the season before planning around it."},
+ {k:"Best social sport", v:"Cockburn ARC via Just Play", d:"~$8–11 a game, they place you in a team, same team for ten weeks."},
+ {k:"Best close to home", v:"Kwinana Tennis Club", d:"Roughly 3 km. Organised social tennis, Monday nights, all levels."},
+ {k:"Best worth the drive", v:"Perth Pirates Dragon Boating", d:"40 minutes, and the only thing here that's free for a full month with zero prerequisites."}
+];
+
+const PLANS = [
+ {name:"Lowest cost", cost:"$5–17 per week", blurb:"Almost entirely free. The one paid item is five dollars.",
+  days:[
+   {d:"Mon", v:"Kwinana Tennis social", t:"Evening · ~$5–10 · 5 min"},
+   {d:"Tue", v:"Rest or free outdoor gym", t:"Kwinana parks · FREE", rest:true},
+   {d:"Wed", v:"Rest", t:"", rest:true},
+   {d:"Thu", v:"Run — build toward parkrun", t:"Local · FREE"},
+   {d:"Fri", v:"Rest", t:"", rest:true},
+   {d:"Sat", v:"Tamworth Wetlands parkrun", t:"8:00am · FREE · stay for coffee"},
+   {d:"Sun", v:"Rockingham bunch ride or a free walk", t:"8:00am · FREE"}
+  ]},
+ {name:"Balanced", cost:"$29–39 per week", blurb:"Free anchors plus two paid sessions, comfortably under your $50 ceiling.",
+  days:[
+   {d:"Mon", v:"Kwinana Tennis social", t:"Evening · ~$5–10 · 5 min"},
+   {d:"Tue", v:"Rest", t:"", rest:true},
+   {d:"Wed", v:"Rockingham Masters swimming", t:"Evening · Aqua Jetty · 20 min"},
+   {d:"Thu", v:"Rest", t:"", rest:true},
+   {d:"Fri", v:"Rest or easy run", t:"", rest:true},
+   {d:"Sat", v:"parkrun 8am → Rockingham Tennis 2pm", t:"FREE + $5"},
+   {d:"Sun", v:"Baldivis pickleball", t:"4:30–6:30pm · $12 · 13 min"}
+  ]},
+ {name:"Fun & social", cost:"$37–50 per week", blurb:"Maximum contact with people. Every session puts you in a group by design.",
+  days:[
+   {d:"Mon", v:"Cockburn ARC social sport via Just Play", t:"Evening · ~$8–11 · 15 min"},
+   {d:"Tue", v:"Perth Pirates dragon boating", t:"Evening · FREE first month · 40 min"},
+   {d:"Wed", v:"Rest", t:"", rest:true},
+   {d:"Thu", v:"Blue Gum squash round robin", t:"7:30pm · $16 · 25 min"},
+   {d:"Fri", v:"Rest", t:"", rest:true},
+   {d:"Sat", v:"parkrun 8am → Scorpions volleyball 10am", t:"FREE + ~$11"},
+   {d:"Sun", v:"Baldivis pickleball", t:"4:30–6:30pm · $12"}
+  ]}
+];
+
+const COSTLABEL = {free:"FREE","u10":"Under $10","10-20":"$10–20","20-30":"$20–30","30plus":"$30+",member:"Membership"};
+const SOLOLABEL = {yes:"Turn up alone ✓", part:"Alone — with effort", no:"Need your own players"};
+
+const F = {cost:"all", day:"all", solo:"all", cat:"all"};
+
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+
+function priceClass(a){
+  if(a.cost==="free") return "free";
+  if(a.cost==="u10") return "cheap";
+  return "";
+}
+
+function card(a){
+  const days=[];
+  if(a.sat) days.push(`<span class="tag ${F.day==='sat'?'on':''}">Sat</span>`);
+  if(a.sun) days.push(`<span class="tag ${F.day==='sun'?'on':''}">Sun</span>`);
+  if(a.night) days.push(`<span class="tag ${F.day==='night'?'on':''}">Weeknight</span>`);
+  if(!days.length) days.push(`<span class="tag">Weekday only</span>`);
+
+  const soloTag = a.solo==="yes" ? `<span class="tag solo">${SOLOLABEL.yes}</span>`
+    : a.solo==="part" ? `<span class="tag flag">${SOLOLABEL.part}</span>`
+    : `<span class="tag flag">${SOLOLABEL.no}</span>`;
+
+  const flag = a.flag ? `<span class="tag flag">${esc(a.flag)}</span>` : "";
+  const unconf = a.unconf ? `<span class="tag flag">Unconfirmed: ${esc(a.unconf)}</span>` : "";
+
+  return `<article class="card${a.hero?" hero":""}">
+    <div class="ctop">
+      <div>
+        <div class="cname">${esc(a.n)}</div>
+        <div class="cvenue">${esc(a.v)}</div>
+      </div>
+      <span class="price ${priceClass(a)}">${esc(a.price)}</span>
+    </div>
+    <div class="geo"><span>${esc(a.s)}</span><span>~${a.km} km</span><span>${esc(a.dr)}</span></div>
+    <div class="tags">${soloTag}${days.join("")}${flag}${unconf}</div>
+    <p class="pitch">${esc(a.pitch)}</p>
+    <details class="more"><summary>Full detail — all 24 fields</summary>
+      <dl class="fields">
+        <dt>Suburb</dt><dd>${esc(a.s)}</dd>
+        <dt>Distance</dt><dd>~${a.km} km from Kwinana 6167</dd>
+        <dt>Drive</dt><dd>${esc(a.dr)}</dd>
+        <dt>Price</dt><dd>${esc(a.price)}</dd>
+        <dt>Casual / drop-in</dt><dd>${esc(a.casual)}</dd>
+        <dt>Membership</dt><dd>${esc(a.mem)}</dd>
+        <dt>Trial offer</dt><dd>${esc(a.trial)}</dd>
+        <dt>Saturday</dt><dd>${a.sat?"Yes":"No"}</dd>
+        <dt>Sunday</dt><dd>${a.sun?"Yes":"No"}</dd>
+        <dt>Weeknight</dt><dd>${a.night?"Yes":"No"}</dd>
+        <dt>Session times</dt><dd>${esc(a.times)}</dd>
+        <dt>Attend alone</dt><dd>${esc(SOLOLABEL[a.solo])}</dd>
+        <dt>Partner matching</dt><dd>${esc(a.match)}</dd>
+        <dt>Beginner friendly</dt><dd>${esc(a.beg)}</dd>
+        <dt>Age range</dt><dd>${esc(a.age)}</dd>
+        <dt>Social feel</dt><dd>${esc(a.social)}</dd>
+        <dt>Intensity</dt><dd>${esc(a.int)}</dd>
+        <dt>Duration</dt><dd>${esc(a.dur)}</dd>
+        <dt>Equipment</dt><dd>${esc(a.eq)}</dd>
+        <dt>Hire / borrow</dt><dd>${esc(a.hire)}</dd>
+        <dt>Booking</dt><dd>${esc(a.book)}</dd>
+        <dt>Commitment</dt><dd>${esc(a.commit)}</dd>
+        <dt>Link</dt><dd>${esc(a.link)}</dd>
+        <dt>Contact</dt><dd>${esc(a.contact)}</dd>
+      </dl>
+    </details>
+  </article>`;
+}
+
+function matches(a){
+  if(F.cost!=="all"){
+    if(F.cost==="member"){ if(a.cost!=="member") return false; }
+    else if(a.cost!==F.cost) return false;
+  }
+  if(F.day==="sat" && !a.sat) return false;
+  if(F.day==="sun" && !a.sun) return false;
+  if(F.day==="night" && !a.night) return false;
+  if(F.solo==="yes" && a.solo!=="yes") return false;
+  if(F.solo==="part" && a.solo==="no") return false;
+  if(F.cat!=="all" && a.cat!==F.cat) return false;
+  return true;
+}
+
+const ORDER = {free:0,"u10":1,"10-20":2,"20-30":3,"30plus":4,member:5};
+
+function render(){
+  const list = A.filter(matches).sort((x,y)=>(ORDER[x.cost]-ORDER[y.cost]) || (x.km-y.km));
+  document.getElementById("grid").innerHTML = list.map(card).join("");
+  document.getElementById("count").textContent = list.length + " of " + A.length;
+  document.getElementById("empty").hidden = list.length>0;
+}
+
+document.querySelectorAll(".chip").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const f=btn.dataset.f, v=btn.dataset.v;
+    F[f]=v;
+    document.querySelectorAll(`.chip[data-f="${f}"]`).forEach(b=>b.setAttribute("aria-pressed", b===btn ? "true":"false"));
+    try{ localStorage.setItem("kdi-filters", JSON.stringify(F)); }catch(e){}
+    render();
+  });
+});
+
+try{
+  const saved=JSON.parse(localStorage.getItem("kdi-filters")||"null");
+  if(saved && typeof saved==="object"){
+    Object.keys(F).forEach(k=>{ if(typeof saved[k]==="string") F[k]=saved[k]; });
+    Object.keys(F).forEach(k=>{
+      document.querySelectorAll(`.chip[data-f="${k}"]`).forEach(b=>
+        b.setAttribute("aria-pressed", b.dataset.v===F[k] ? "true":"false"));
+    });
+  }
+}catch(e){}
+
+document.getElementById("board").innerHTML = WEEKEND.map(s=>`
+  <div class="slot"><h3>${esc(s.slot)}</h3>
+    ${s.picks.map((p,i)=>`<div class="pick${p.win?" win":""}">
+      <span class="rank">${i+1}</span>
+      <div><b>${esc(p.n)}</b><span class="when">${esc(p.w)}</span><span>${esc(p.d)}</span></div>
+    </div>`).join("")}
+  </div>`).join("");
+
+document.getElementById("awardgrid").innerHTML = AWARDS.map(a=>`
+  <div class="award"><h4>${esc(a.k)}</h4><b>${esc(a.v)}</b><p>${esc(a.d)}</p></div>`).join("");
+
+document.getElementById("planwrap").innerHTML = PLANS.map(p=>`
+  <div class="plan">
+    <div class="plan-top">
+      <h3>${esc(p.name)}</h3>
+      <div class="plan-cost">${esc(p.cost)}</div>
+      <p>${esc(p.blurb)}</p>
+    </div>
+    <div class="days">
+      ${p.days.map(d=>`<div class="day${d.rest?" rest":""}">
+        <span class="dn">${esc(d.d)}</span>
+        <div class="dv"><b>${esc(d.v)}</b>${d.t?`<span>${esc(d.t)}</span>`:""}</div>
+      </div>`).join("")}
+    </div>
+  </div>`).join("");
+
+const MASTER = A.filter(a=>a.hero || ["free","u10"].includes(a.cost) || ["10-20"].includes(a.cost))
+  .sort((x,y)=>(ORDER[x.cost]-ORDER[y.cost])||(x.km-y.km));
+
+document.getElementById("tbody").innerHTML = MASTER.map(a=>{
+  const yn=b=>b?'<span class="yes">Yes</span>':'<span class="no">—</span>';
+  const solo = a.solo==="yes"?'<span class="yes">Yes</span>':a.solo==="part"?'<span class="part">Partly</span>':'<span class="no">No</span>';
+  return `<tr>
+    <td class="n">${esc(a.n)}</td>
+    <td>${esc(a.v)}<br><span style="color:var(--muted)">${esc(a.s)}</span></td>
+    <td class="mono">${a.km}</td>
+    <td class="mono">${esc(a.dr)}</td>
+    <td class="mono">${esc(a.price)}</td>
+    <td>${yn(a.sat)}</td><td>${yn(a.sun)}</td><td>${yn(a.night)}</td>
+    <td>${solo}</td>
+    <td>${esc(a.beg.split("—")[0].trim())}</td>
+    <td>${esc(a.int.split("—")[0].trim())}</td>
+    <td>${esc(a.commit)}</td>
+  </tr>`;
+}).join("");
+
+render();
+</script>
