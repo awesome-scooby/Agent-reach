@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>Pregnancy Optimisation Plan</title>
+<style>
+  :root { --ink:#1d2330; --muted:#5b6475; --line:#d9dde5; --accent:#1f5f8b; --soft:#eef4f9;
+          --green:#e6f4ea; --amber:#fff4de; --red:#fde8e8; --grey:#f1f2f4; --blue:#e7f0fb; }
+  @page { size: A4; margin: 16mm 14mm 18mm 14mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "DejaVu Sans", "Helvetica Neue", Arial, sans-serif; color: var(--ink);
+         font-size: 9.6pt; line-height: 1.45; background:#fff; margin:0; }
+  h1 { font-size: 22pt; color: var(--accent); margin: 0 0 4pt; line-height:1.15; }
+  h2 { font-size: 14.5pt; color: var(--accent); border-bottom: 2px solid var(--accent);
+       padding-bottom: 3pt; margin: 18pt 0 8pt; page-break-after: avoid; }
+  h2.newpage { page-break-before: always; }
+  h3 { font-size: 11.3pt; margin: 12pt 0 5pt; color: #183b57; page-break-after: avoid; }
+  h4 { font-size: 10pt; margin: 9pt 0 4pt; page-break-after: avoid; }
+  p { margin: 0 0 6pt; }
+  ul, ol { margin: 0 0 7pt 0; padding-left: 16pt; }
+  li { margin-bottom: 2.5pt; }
+  table { width: 100%; border-collapse: collapse; margin: 5pt 0 10pt; font-size: 8.4pt;
+          page-break-inside: auto; }
+  tr { page-break-inside: avoid; }
+  th { background: var(--accent); color: #fff; text-align: left; padding: 4pt 5pt; font-weight: 600; }
+  td { border-bottom: 1px solid var(--line); padding: 3.5pt 5pt; vertical-align: top; }
+  tbody tr:nth-child(even) td { background: #fafbfc; }
+  .box { border-left: 4px solid var(--accent); background: var(--soft); padding: 7pt 9pt;
+         margin: 7pt 0 10pt; page-break-inside: avoid; }
+  .warn { border-left-color: #b3261e; background: var(--red); }
+  .ok { border-left-color: #1e7b3a; background: var(--green); }
+  .amber { border-left-color: #b26a00; background: var(--amber); }
+  .tag { display:inline-block; font-size:7.6pt; font-weight:700; padding:1pt 5pt; border-radius:3pt; white-space:nowrap; }
+  .t1 { background:#1e7b3a; color:#fff; } .t2 { background:#2f6db3; color:#fff; }
+  .t3 { background:#b26a00; color:#fff; } .t4 { background:#6b7280; color:#fff; } .t5 { background:#b3261e; color:#fff; }
+  .muted { color: var(--muted); }
+  .small { font-size: 8.2pt; }
+  sup.c { font-size: 6.8pt; color: var(--accent); }
+  .cover { border: 1px solid var(--line); padding: 16pt 18pt; margin-bottom: 12pt; background: linear-gradient(180deg,#f4f8fb,#fff); }
+  .two { display: flex; gap: 10pt; } .two > div { flex: 1; }
+  .kpi { border:1px solid var(--line); padding:6pt 8pt; border-radius:4pt; background:#fff; }
+  .kpi b { display:block; font-size:12pt; color:var(--accent); }
+  .toc { columns: 2; font-size: 9pt; } .toc li { margin-bottom: 1.5pt; }
+  .src li { font-size: 7.8pt; word-break: break-all; margin-bottom: 1.5pt; }
+  .check li { list-style: none; margin-left: -12pt; } .check li:before { content: "\2610  "; }
+  .cal td, .cal th { text-align:center; }
+  .hl { background:#fff1a8; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>Pregnancy Optimisation Plan</h1>
+  <p style="font-size:11pt;margin-bottom:8pt;"><b>Personalised plan for a couple in Kwinana, Perth WA</b>: female 28, male 33, trying for 2–3 years, no previous pregnancies</p>
+  <p class="muted small">Prepared 22 September 2026. Evidence-based education to take to your GP, not a substitute for individual medical care. Prices and service details were checked online in September 2026 wherever a source is cited. Anything marked <b>(unverified)</b> or "approx." must be confirmed by phone before you rely on it. Citations in [square brackets] refer to the numbered source list at the end.</p>
+  <div class="two" style="margin-top:8pt;">
+    <div class="kpi"><b>Diagnosis-level problem</b>More than 12 months without conception meets the clinical definition of infertility. You need investigation, not optimisation.</div>
+    <div class="kpi"><b>Biggest gaps</b>No semen analysis ever. Heavy, painful periods never investigated. Sex once a week.</div>
+    <div class="kpi"><b>Cost of the first step</b>$0 to about $150 for the core workup, using a bulk-billing GP and Medicare-rebated tests.</div>
+  </div>
+</div>
+
+<h2 style="margin-top:6pt;">0. The honest summary: read this first</h2>
+<div class="box warn">
+<p><b>You are not a "let's optimise diet and gadgets" couple. You are a "get a proper infertility workup this month" couple.</b></p>
+<p>About 84% of couples conceive within 12 months of regular unprotected sex, and about 92% within 2 years [34]. A 28-year-old woman trying for 2–3 years without a single pregnancy means there is very likely a specific, findable cause. Supplements, food changes, apps and wearables will not fix a blocked tube, endometriosis, an ovulation problem or a low sperm count. Those factors are what you need to find.</p>
+</div>
+<p><b>Your five most important facts, ranked by how likely each is to matter:</b></p>
+<ol>
+<li><b>No semen analysis in 2–3 years of trying.</b> A male factor contributes in roughly 40–50% of infertile couples [35]. The test costs about $0–$110 after Medicare. It is the cheapest high-yield test in all of fertility medicine. Book it this week.</li>
+<li><b>Heavy, painful periods.</b> Together with infertility, these are classic red flags for <b>endometriosis</b> or <b>adenomyosis</b>. Fibroids and polyps are other possibilities. Endometriosis is found in a large share of women investigated for infertility [26][39]. This needs a proper pelvic ultrasound and probably a gynaecology or fertility specialist opinion. Heavy bleeding also commonly causes <b>iron deficiency</b>.</li>
+<li><b>Sex once a week "planned around ovulation".</b> If the timing is even slightly off (an LH surge missed, tested at the wrong time of day, or sex after ovulation instead of before), a weekly pattern can miss the fertile window in many cycles. The fix is free: sex every 1–2 days through the fertile window, and every 2–3 days the rest of the month [21].</li>
+<li><b>Ovulation has not been confirmed.</b> A positive LH strip shows the surge, not that an egg was released. A correctly timed mid-luteal progesterone blood test is the cheap confirmation.</li>
+<li><b>Tubal patency is unknown.</b> Blocked tubes cause no symptoms. If the other tests are normal, a tube test is next. An oil-based contrast tube flush has randomised-trial evidence that it <i>increases</i> pregnancy rates in the following six months [22].</li>
+</ol>
+<div class="box amber">
+<p><b>About wanting a baby boy:</b> no natural method changes the sex of your baby, and choosing sex through IVF for non-medical reasons is <b>prohibited in Western Australia and under NHMRC guidelines</b> [19]. The details are in Section 11. The chance of a boy is about 51% whatever you do. Please don't spend money or cycles on "boy" timing methods. Timing sex late in the window to "favour boys" (the Shettles method) can actually <b>lower</b> your chance of pregnancy at all.</p>
+</div>
+<div class="box">
+<p><b>About your "normal" tests:</b> "some tests were normal" is not enough information. Ask your GP for printed copies. Standard blood tests often do <b>not</b> assess the things most likely to matter here: tubes, endometriosis, confirmed ovulation, and sperm. Section 8 lists what is still needed.</p>
+<p><b>Missing data that matters:</b> actual weights (BMI). At about 168 cm, BMI 25 is about 71 kg and BMI 30 is about 85 kg. BMI over 30 in either partner measurably reduces fertility, and a BMI over 35 excludes you from the public KEMH fertility clinic [1].</p>
+</div>
+
+<h3>Contents</h3>
+<ol class="toc">
+<li>Highest-impact actions (evidence-ranked)</li>
+<li>Timing intercourse and the simplest schedule</li>
+<li>Fertility devices and technology</li>
+<li>Female preconception health</li>
+<li>Male fertility</li>
+<li>Food and fertility</li>
+<li>Supplements (female and male tables)</li>
+<li>Testing before spending money on gadgets</li>
+<li>Perth + Medicare + bulk-billed pathway</li>
+<li>Private fertility options in Perth</li>
+<li>Myth-busting (including "how to have a boy")</li>
+<li>Environmental exposures</li>
+<li>When to seek help / do-not-wait list</li>
+<li>Priority roadmap, budget, GP scripts</li>
+<li>Private health insurance: do you need it?</li>
+<li>Sources</li>
+</ol>
+
+<h2 class="newpage">1. Highest-impact actions, ranked by evidence</h2>
+<p>Every item below is also put into one of four categories:
+<b>[A] increases pregnancy/live-birth probability</b> ·
+<b>[B] improves biomarkers, with uncertain pregnancy benefit</b> ·
+<b>[C] only helps identify ovulation</b> ·
+<b>[D] insufficient evidence</b>.</p>
+
+<table>
+<thead><tr><th style="width:17%">Tier</th><th style="width:43%">Intervention</th><th style="width:8%">Class</th><th>Why, specific to you</th></tr></thead>
+<tbody>
+<tr><td><span class="tag t1">STRONG / HIGH PRIORITY</span></td><td><b>Full couple infertility workup now</b>: semen analysis, confirmed ovulation, pelvic ultrasound, tubal patency test</td><td>A</td><td>Finds the cause and gets you onto the right treatment. After 2–3 years this beats every lifestyle change combined [34].</td></tr>
+<tr><td><span class="tag t1">STRONG</span></td><td><b>Sex every 1–2 days in the 6-day fertile window</b>, and every 2–3 days the rest of the cycle</td><td>A</td><td>Conception only happens from sex in the 6 days ending on ovulation day [20]. Once a week is too sparse.</td></tr>
+<tr><td><span class="tag t1">STRONG</span></td><td><b>Specialist assessment of heavy, painful periods</b> (possible endometriosis or adenomyosis)</td><td>A</td><td>In minimal to mild endometriosis, operative laparoscopy can improve natural pregnancy rates [39]. Moderate to severe disease changes the whole treatment plan.</td></tr>
+<tr><td><span class="tag t1">STRONG</span></td><td><b>Tubal patency test</b>. If done as HSG, ask about oil-based contrast.</td><td>A</td><td>Oil-based HSG gave 39.7% vs 29.1% pregnancy within 6 months compared with water-based contrast in a 1,119-woman RCT [22].</td></tr>
+<tr><td><span class="tag t1">STRONG</span></td><td><b>Folic acid 400–500 µg + iodine 150 µg</b> daily for her</td><td>Baby's health</td><td>Prevents neural tube defects and protects the baby's brain development [27][28]. It does not raise conception odds, but it is non-negotiable.</td></tr>
+<tr><td><span class="tag t1">STRONG</span></td><td><b>Healthy weight</b> if either BMI is over 30</td><td>A (female), B (male)</td><td>Obesity lowers ovulation and pregnancy rates and worsens semen quality. Even 5–10% weight loss helps when overweight.</td></tr>
+<tr><td><span class="tag t1">STRONG</span></td><td><b>Treat iron deficiency</b> if ferritin is low</td><td>Health</td><td>Heavy periods make this likely. Fixing it matters for pregnancy health and energy.</td></tr>
+<tr><td><span class="tag t2">MODERATE / REASONABLE</span></td><td>LH urine strips to time sex (used correctly)</td><td>A (low certainty), C</td><td>A Cochrane review suggests timed intercourse with urine LH tests may modestly improve pregnancy rates [33]. Cheap.</td></tr>
+<tr><td><span class="tag t2">MODERATE</span></td><td>Zero alcohol for her; no more than about 1–2 drinks per occasion and few per week for him; caffeine under 200 mg/day</td><td>B</td><td>You already avoid substances, which is good. Keep caffeine moderate [30][56].</td></tr>
+<tr><td><span class="tag t2">MODERATE</span></td><td>Mediterranean-style diet for both</td><td>B</td><td>Consistent observational links with better semen quality and fertility outcomes, but no RCT proving more births [40][41].</td></tr>
+<tr><td><span class="tag t2">MODERATE</span></td><td>Avoid testicular heat: no saunas or spas, no laptop on lap, break up long sitting</td><td>B</td><td>Heat reliably lowers sperm counts, and the effect is reversible over about 3 months.</td></tr>
+<tr><td><span class="tag t2">MODERATE</span></td><td>Vaccinations and preconception checks (rubella, varicella, flu, COVID, cervical screening, genetic carrier screening)</td><td>Baby's health</td><td>Protects the pregnancy. Carrier screening is Medicare-rebated once per lifetime [37].</td></tr>
+<tr><td><span class="tag t3">LIMITED / OPTIONAL</span></td><td>Omega-3 or a fish-based diet; vitamin D if deficient; general exercise; sleep of 7–9 h</td><td>B / D</td><td>Good for health. Direct fertility effects are small or unproven.</td></tr>
+<tr><td><span class="tag t3">LIMITED</span></td><td>Male antioxidant supplements (only if the semen analysis is abnormal)</td><td>B / D</td><td>Large, rigorous trials (MOXI, FAZST) showed no benefit on semen or live births [23][24].</td></tr>
+<tr><td><span class="tag t4">SKIP</span></td><td>Fertility wearables, fertility teas, seed cycling, castor oil packs, detoxes, "fertility massage", crystals, Brazil nuts or pineapple core, sex positions, legs up the wall</td><td>D</td><td>No human evidence of more pregnancies. Section 11 covers each.</td></tr>
+<tr><td><span class="tag t4">SKIP</span></td><td>AMH as a "can we conceive naturally?" test</td><td>—</td><td>AMH does not predict natural conception in women your age [31]. It is only useful when planning IVF.</td></tr>
+<tr><td><span class="tag t5">POTENTIALLY HARMFUL</span></td><td>Vaginal steaming, douching (including "baking soda for a boy"), unregulated herbal mixes, testosterone or "T-booster" products for him, megadose vitamin A</td><td>—</td><td>Testosterone shuts down sperm production. Douching and steaming risk infection and burns. Herbs have unknown effects in early pregnancy.</td></tr>
+</tbody>
+</table>
+
+<h2 class="newpage">2. Timing intercourse</h2>
+<h3>The biology in one table</h3>
+<table>
+<thead><tr><th style="width:28%">Question</th><th>Evidence-based answer</th></tr></thead>
+<tbody>
+<tr><td>Fertile window</td><td><b>6 days</b>: the 5 days before ovulation plus ovulation day. Conception essentially never follows sex after ovulation [20].</td></tr>
+<tr><td>Best days</td><td>The <b>2 days before ovulation and ovulation day</b> carry the highest probability per act of sex (roughly 25–30%+ in fertile couples) [20].</td></tr>
+<tr><td>When ovulation happens</td><td>About <b>14 days before the next period</b> (range about 12–16), not "day 14" of every cycle. For a 30-day cycle that is about day 16.</td></tr>
+<tr><td>Sperm survival</td><td>Up to <b>5 days</b> in good fertile-type cervical mucus. Most sperm die much sooner.</td></tr>
+<tr><td>Egg survival</td><td>About <b>12–24 hours</b> after ovulation. This is why sperm must already be waiting.</td></tr>
+<tr><td>Daily vs every second day</td><td>Pregnancy rates are very similar. Daily is marginally higher in modelling. Every second day is easier to sustain. Either is far better than weekly [21][34].</td></tr>
+<tr><td>How often he should ejaculate</td><td>Every 1–3 days. Long abstinence (over about 5–7 days) raises the count but worsens motility and DNA quality. Short abstinence does not "use up" sperm in normal men. <b>Do not "save up" for ovulation day.</b></td></tr>
+<tr><td>LH surge</td><td>A positive LH strip (test line as dark as or darker than the control line) means ovulation is likely in about <b>24–36 hours</b>. Have sex on the day of the positive test and the next day. The day before the surge is also excellent, which is why starting earlier matters.</td></tr>
+<tr><td>Cervical mucus</td><td>Clear, slippery, stretchy "egg-white" mucus marks the most fertile days, and it is free to track. The last day of slippery mucus ("peak day") is usually within a day of ovulation.</td></tr>
+<tr><td>Basal body temperature</td><td>It rises about 0.2–0.5 °C <b>after</b> ovulation. It is useful to confirm ovulation happened, in hindsight, but it cannot tell you in advance when to have sex.</td></tr>
+<tr><td>Sex position</td><td>No evidence any position affects pregnancy rates. Sperm reach the cervix within minutes.</td></tr>
+<tr><td>Lying down afterwards</td><td>No evidence it helps after sex. It's harmless if you want to do it, but not needed.</td></tr>
+<tr><td>Female orgasm</td><td>The "upsuck" theory has not been shown to change pregnancy rates in humans. Pleasant, not required.</td></tr>
+<tr><td>Lubricant</td><td>Many common lubricants reduce sperm motility in lab tests. If you need one, use a "sperm-friendly" one such as Pre-Seed or Conceive Plus, or plain canola or mineral oil. None has been shown to <i>increase</i> pregnancy [25].</td></tr>
+</tbody>
+</table>
+
+<h3>Your simplest high-probability schedule</h3>
+<div class="box ok">
+<p><b>Rule 1 (base layer, whole month):</b> sex <b>every 2–3 days</b>, regardless of any test. This alone covers almost every fertile window without tracking [21].</p>
+<p><b>Rule 2 (fertile boost):</b> from about <b>day 10 of the cycle</b> (for 28–32-day cycles), switch to <b>every day or every second day</b> until 2 days after the positive LH test.</p>
+<p><b>Rule 3:</b> on the day the LH strip turns positive and on the following day, have sex both days.</p>
+<p><b>Rule 4:</b> don't abstain for more than 5 days at any point in the cycle, even outside the fertile window.</p>
+</div>
+<p><b>How to use LH strips properly (where many people go wrong):</b></p>
+<ul>
+<li>Start testing about <b>17 days before your expected period</b>. For a 28-day cycle that is day 11, for 30 days it is day 13, and for 32 days it is day 15. Start 2 days earlier if your cycles vary.</li>
+<li>Test <b>twice a day</b> (about 10 am to midday, and 6–8 pm). Surges can be short, and once-daily testing misses some.</li>
+<li>Reduce fluids for about 2 hours before testing. Don't rely on first-morning urine for most LH strips.</li>
+<li>A <b>faint line is negative</b>. Positive means the test line is as dark as or darker than the control line.</li>
+<li>If you never get a clear positive, or you get several positives spread across the cycle, tell the doctor. That can suggest anovulation or PCOS.</li>
+</ul>
+
+<h3>Example: 28-day cycle (day 1 = first day of full bleeding)</h3>
+<table class="cal">
+<thead><tr><th>Day</th><th>1–5</th><th>6–9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14 (LH+)</th><th>15</th><th>16</th><th>17–28</th></tr></thead>
+<tbody>
+<tr><td><b>LH test</b></td><td>–</td><td>–</td><td>–</td><td>×2</td><td>×2</td><td>×2</td><td class="hl">positive</td><td>stop</td><td>–</td><td>–</td></tr>
+<tr><td><b>Sex</b></td><td>optional</td><td>every 2–3 d</td><td>✔</td><td></td><td>✔</td><td>✔</td><td class="hl">✔</td><td class="hl">✔</td><td>optional</td><td>every 2–3 d</td></tr>
+</tbody>
+</table>
+<p class="small muted">If the timetable feels like pressure, drop the strips and just have sex every 2 days all month. The pregnancy rate is almost identical and the stress is lower.</p>
+
+<h2 class="newpage">3. Fertility devices and technology</h2>
+<div class="box amber"><p><b>Key distinction:</b> almost nothing on this list increases the biological chance of conception. The devices only help you <b>find</b> the fertile window. If you already have sex every 2–3 days, their extra value is close to zero. The one "device" that changes outcomes is a <b>laboratory semen analysis</b>, because it is diagnostic.</p></div>
+<table>
+<thead><tr><th style="width:12%">Product</th><th style="width:13%">Measures</th><th style="width:12%">Evidence</th><th style="width:14%">Usefulness</th><th style="width:15%">Limitations</th><th style="width:10%">Approx. AU cost</th><th style="width:10%">Need it?</th><th>Best-value choice</th></tr></thead>
+<tbody>
+<tr><td><b>Laboratory semen analysis</b></td><td>Volume, count, concentration, motility, morphology, vitality (WHO 2021 method) [36]</td><td>Gold standard. Diagnostic.</td><td><b>Essential.</b> Changes management.</td><td>Needs 2–7 days of abstinence and delivery to the lab within about 1 h. Results vary, so repeat if abnormal.</td><td>$0–$110 after Medicare [3][18]</td><td><b>YES, this week</b></td><td>Fertility-clinic andrology lab with a GP referral (Section 9)</td></tr>
+<tr><td><b>LH urine strips (cheap bulk packs)</b></td><td>LH surge</td><td>Moderate. May modestly improve pregnancy with timed sex [33].</td><td>High value for the price</td><td>Can miss short surges. False readings in PCOS.</td><td>$15–$35 for 40–50 strips</td><td><b>Yes</b> (you already have them)</td><td>Generic strips, tested twice daily</td></tr>
+<tr><td>Digital ovulation tests (e.g. Clearblue Digital / Advanced)</td><td>LH (plus oestrogen in the dual-hormone version)</td><td>Same principle as strips</td><td>Easier to read. The dual-hormone version flags a wider window.</td><td>About 5–10× the cost per test. Same false-reading issues.</td><td>$35–$70 for 10–20 tests</td><td>Optional</td><td>Only if you misread strip lines</td></tr>
+<tr><td>Clearblue-style fertility monitor</td><td>Oestrogen metabolite + LH</td><td>Validated for ovulation detection</td><td>Some gain over strips</td><td>Monitor plus ongoing test sticks</td><td>$200–$300 + about $50/month (approx.)</td><td>No</td><td>—</td></tr>
+<tr><td>BBT thermometer</td><td>Post-ovulation temperature rise</td><td>Confirms ovulation <i>retrospectively</i> only</td><td>Low to moderate. Free insight into whether you ovulate.</td><td>Disturbed by sleep, alcohol and illness. Cannot predict ovulation.</td><td>$15–$30</td><td>Optional</td><td>Use a mid-luteal progesterone blood test instead</td></tr>
+<tr><td>Wearable temperature trackers (Oura, Tempdrop, Ava-type)</td><td>Skin or overnight temperature, heart rate</td><td>Reasonable for <i>retrospective</i> ovulation estimates. No evidence of more pregnancies.</td><td>Low for conception</td><td>Expensive, and still largely retrospective</td><td>Oura about $450–$650 + subscription (approx.)</td><td><b>No</b></td><td>—</td></tr>
+<tr><td>Apple Watch cycle and temperature features</td><td>Wrist temperature, used for retrospective ovulation estimates</td><td>Manufacturer validation only</td><td>Low. Free if you already own one.</td><td>Retrospective, not predictive</td><td>$0 if owned</td><td>No (fine if owned)</td><td>—</td></tr>
+<tr><td>Natural Cycles (app + thermometer, ring or watch)</td><td>Temperature ± LH</td><td>Regulated as contraception. Evidence for its pregnancy-planning mode is weaker.</td><td>Low to moderate</td><td>Subscription. Temperature is retrospective.</td><td>About $100–$200/yr (approx.)</td><td>No</td><td>—</td></tr>
+<tr><td>Inito / Mira / Proov (quantitative hormone readers)</td><td>LH, E3G, PdG (progesterone metabolite) ± FSH</td><td>Correlate with lab hormones. <b>No trials showing more pregnancies.</b></td><td>Moderate for tracking. PdG gives some evidence that ovulation happened.</td><td>Costly strips. Urine PdG is less reliable than a blood progesterone test.</td><td>Reader $200–$350 + $50–$100/month in strips (approx.)</td><td><b>No</b></td><td>One mid-luteal blood progesterone test does the job for about $0</td></tr>
+<tr><td>Cervical mucus tracking</td><td>Mucus quality</td><td>Good. Peak mucus closely tracks the fertile window.</td><td>High, and free</td><td>Takes a couple of cycles to learn</td><td>$0</td><td>Yes (free)</td><td>Just note "slippery / not slippery" daily</td></tr>
+<tr><td>Cycle-tracking apps (calendar-based)</td><td>Predicts from past cycle dates</td><td>Poor at predicting the day of ovulation</td><td>Useful as a diary only</td><td>Predictions are often wrong by days</td><td>Free to $80/yr</td><td>Free version only</td><td>Any free app, used as a log</td></tr>
+<tr><td>Sperm-friendly lubricant (Pre-Seed, Conceive Plus)</td><td>—</td><td>Less harmful to sperm in lab tests. No proven gain in pregnancy [25].</td><td>Only if you need lubricant</td><td>—</td><td>$20–$35</td><td>Only if dryness</td><td>Pre-Seed, or canola oil</td></tr>
+<tr><td>At-home sperm tests (e.g. YO, SpermCheck-type)</td><td>Motile count or concentration threshold only</td><td>Screens for very low counts only</td><td>Low</td><td>Misses morphology, volume and detail. False reassurance.</td><td>$40–$120 (approx.)</td><td><b>No</b></td><td>Lab semen analysis instead</td></tr>
+<tr><td>Home insemination kits (syringe or cup type)</td><td>—</td><td>No evidence of benefit for couples who can have intercourse</td><td>None for you</td><td>—</td><td>$50–$150</td><td><b>No</b></td><td>—</td></tr>
+<tr><td>Cervical-fluid electrolyte devices (e.g. Kegg)</td><td>Electrical impedance of cervical fluid</td><td>Very limited validation</td><td>Low</td><td>Expensive</td><td>About $400+ (approx.)</td><td>No</td><td>—</td></tr>
+<tr><td>Continuous hormone monitors</td><td>—</td><td>No consumer continuous hormone monitor is validated and on sale in Australia as of September 2026 (to my knowledge)</td><td>—</td><td>—</td><td>—</td><td>No</td><td>—</td></tr>
+</tbody>
+</table>
+<p class="small muted">Device prices are typical Australian pharmacy and online retail ranges, not verified quotes. The ranking and advice do not depend on the exact price.</p>
+
+<h2 class="newpage">4. Female preconception health</h2>
+<div class="box"><p><b>Routinely recommended for every woman trying to conceive in Australia:</b> folic acid (400–500 µg) and iodine (150 µg) daily, no alcohol, no smoking, vaccinations up to date, and a review of any medicines [27][28][30]. <b>Everything else below is "only if deficient" or "only in specific conditions".</b></p></div>
+<table>
+<thead><tr><th style="width:15%">Topic</th><th style="width:15%">Status</th><th>What to do (you)</th></tr></thead>
+<tbody>
+<tr><td>Ovulation</td><td>Must be confirmed</td><td>Confirm with a blood progesterone test about 7 days before your expected period. If ovulation is irregular or absent, it is treated medically (letrozole is first-line for PCOS), and that works far better than any supplement [43].</td></tr>
+<tr><td>Folic acid</td><td><b>Routine</b></td><td>400–500 µg daily, at least 1 month before conception (ideally 3 months) and through the first 12 weeks [28]. You are taking it. Keep going. <b>5 mg</b> is used when BMI is 30 or more, with diabetes, some epilepsy medicines, or a previous neural tube defect. Ask your GP if BMI is 30 or more.</td></tr>
+<tr><td>Iodine</td><td><b>Routine</b></td><td><b>150 µg daily</b> (NHMRC) [27]. <b>You are currently missing this.</b> Most pregnancy multivitamins include it. Get your GP to check first if you have a thyroid condition.</td></tr>
+<tr><td>Iron</td><td>Test first</td><td>Heavy periods make deficiency likely. Check ferritin. Supplement only if low (typically 60–100 mg elemental iron on alternate days, per your GP).</td></tr>
+<tr><td>Vitamin D</td><td>Only if deficient or at risk</td><td>Medicare restricts routine testing to at-risk people (dark skin, covered clothing, little sun, malabsorption). A pregnancy multivitamin usually contains a small amount, which is fine.</td></tr>
+<tr><td>Vitamin B12</td><td>Only if deficient or at risk</td><td>Test if vegetarian or vegan, on metformin, or if the blood count suggests it.</td></tr>
+<tr><td>Omega-3 (DHA/EPA)</td><td>Optional</td><td>Eat oily low-mercury fish 2–3 times a week. In pregnancy, omega-3 reduces preterm birth in women with low intake [42]. No proven conception benefit.</td></tr>
+<tr><td>Choline</td><td>Food first</td><td>Important for the baby's brain. Most prenatals contain little. Eggs (about 150 mg each), meat, fish and legumes cover much of the 440 mg/day pregnancy target.</td></tr>
+<tr><td>Calcium</td><td>Food first</td><td>2–3 serves of dairy or fortified alternatives daily. Supplement only if intake is low.</td></tr>
+<tr><td>Zinc</td><td>Food first</td><td>Present in most prenatals. No benefit from extra.</td></tr>
+<tr><td>CoQ10</td><td>Not routine</td><td>Limited evidence, mainly in older women doing IVF with low ovarian reserve. <b>Not relevant at 28.</b></td></tr>
+<tr><td>Inositol</td><td>PCOS only</td><td>Low-certainty evidence, and the 2023 PCOS guideline does not recommend it as fertility treatment [43]. You have no PCOS diagnosis. Skip it.</td></tr>
+<tr><td>Antioxidant stacks</td><td>Skip</td><td>No evidence of benefit for natural conception.</td></tr>
+<tr><td>Prenatal multivitamin</td><td>Reasonable</td><td>The simplest way to get folic acid + iodine together. Choose one with 400–500 µg folic acid, 150 µg iodine, and <b>no vitamin A above about 800 µg retinol</b>. Generic pharmacy prenatals (about $15–$30 a month) are as good as premium brands. Elevit has 800 µg folic acid, which is fine but not necessary.</td></tr>
+<tr><td>Caffeine</td><td>Limit</td><td>Under 200 mg/day. That's about 1–2 cafe coffees; energy drinks count [56].</td></tr>
+<tr><td>Alcohol</td><td>Avoid</td><td>NHMRC: no alcohol when planning pregnancy, pregnant or breastfeeding [30].</td></tr>
+<tr><td>Smoking and vaping</td><td>None</td><td>You don't smoke or vape. Also avoid second-hand smoke.</td></tr>
+<tr><td>Sleep</td><td>Healthy habit</td><td>7–9 h. Shift work and very short sleep are associated with cycle disruption (observational).</td></tr>
+<tr><td>Exercise</td><td>Increase moderately</td><td>Walking every second day is a good start. Aim for 150 min/week of moderate activity plus 2 strength sessions. <b>Very</b> intense training with weight loss can suppress ovulation. That isn't you.</td></tr>
+<tr><td>Weight</td><td>Unknown: measure it</td><td>At about 168 cm, a healthy BMI range is about 52–70 kg. If BMI is 30 or more, losing 5–10% of body weight improves ovulation and pregnancy outcomes.</td></tr>
+<tr><td>Stress</td><td>Reduce, but don't blame yourselves</td><td>Stress is a real consequence of infertility. Evidence that it <i>causes</i> infertility is weak. Counselling helps you cope and keep going with treatment.</td></tr>
+<tr><td>Thyroid</td><td>Test TSH</td><td>Treat overt hypothyroidism. Subclinical cases are treated by guideline thresholds; your GP or specialist decides.</td></tr>
+<tr><td>Vaccinations</td><td>Check before pregnancy</td><td>Rubella and varicella immunity (blood test). If not immune, vaccinate and wait 28 days before conceiving. Also flu and COVID per current advice. Pertussis is given in each pregnancy at 20–32 weeks.</td></tr>
+<tr><td>Dental health</td><td>Check-up</td><td>Gum disease is associated with pregnancy complications. Get a check-up before pregnancy.</td></tr>
+<tr><td>Medicine review</td><td>Always</td><td>Ask the GP or pharmacist about <i>every</i> medicine and supplement. Concerns include isotretinoin, valproate, some blood pressure medicines (ACE inhibitors, ARBs), methotrexate, warfarin, high-dose vitamin A, many herbal products, and regular NSAIDs around ovulation (can delay follicle rupture).</td></tr>
+<tr><td>Cervical screening</td><td>Up to date?</td><td>Every 5 years from 25. Self-collection is available.</td></tr>
+<tr><td>Genetic carrier screening</td><td>Recommended to discuss</td><td>Cystic fibrosis, SMA and fragile X. A Medicare rebate is available once per lifetime [37].</td></tr>
+</tbody>
+</table>
+
+<h2 class="newpage">5. Male fertility: equally important</h2>
+<div class="box warn"><p>He has <b>never had a semen analysis</b> after 2–3 years of trying. Until that test is done, the whole investigation is incomplete. It is non-invasive and inexpensive, and a result showing severe male factor would change your treatment immediately (for example, from "keep trying" to ICSI).</p></div>
+<h3>Understanding the semen analysis (WHO 2021, lower 5th-percentile reference limits [36])</h3>
+<table>
+<thead><tr><th>Parameter</th><th>Lower reference limit</th><th>What it means</th></tr></thead>
+<tbody>
+<tr><td>Volume</td><td>1.4 mL</td><td>Low volume may mean an incomplete collection, a duct blockage or retrograde ejaculation.</td></tr>
+<tr><td>Concentration</td><td>16 million/mL</td><td>Very low (under 5 million/mL) triggers hormone and genetic tests.</td></tr>
+<tr><td>Total count</td><td>39 million per ejaculate</td><td>—</td></tr>
+<tr><td>Total motility</td><td>42%</td><td>—</td></tr>
+<tr><td>Progressive motility</td><td>30%</td><td>The most clinically useful single number.</td></tr>
+<tr><td>Normal forms (morphology)</td><td>4%</td><td>Strict criteria. Isolated low morphology is a weak predictor by itself.</td></tr>
+<tr><td>Vitality</td><td>54% live</td><td>—</td></tr>
+<tr><td>DNA fragmentation</td><td>No WHO cut-off</td><td><b>Not a routine first test</b> [35]. Consider it after recurrent miscarriage or repeated failed IVF.</td></tr>
+</tbody>
+</table>
+<p>The "normal" range is a population reference, not a pass/fail fertility test. Men below the limits still father children, and men above them can still have problems. One abnormal result should be <b>repeated</b>, ideally about 3 months later (or sooner if the result is severe).</p>
+
+<h3>Lifestyle and exposure factors</h3>
+<table>
+<thead><tr><th style="width:18%">Factor</th><th style="width:12%">Strength</th><th>Evidence and action</th></tr></thead>
+<tbody>
+<tr><td>Testosterone, anabolic steroids, SARMs, "T-boosters"</td><td><b>Major</b></td><td>External testosterone <b>switches off sperm production</b>, sometimes for over a year. Never start it while trying. Tell your doctor if ever used.</td></tr>
+<tr><td>Finasteride / dutasteride</td><td>Minor to moderate</td><td>Can lower semen volume and count in some men, reversibly. Discuss stopping if the semen analysis is abnormal.</td></tr>
+<tr><td>Other medicines</td><td>Varies</td><td>Sulfasalazine, some antidepressants (ejaculation effects), opioids, chemotherapy. Review all medicines with your GP.</td></tr>
+<tr><td>Smoking or vaping</td><td>Moderate</td><td>Lowers semen quality. You don't use either.</td></tr>
+<tr><td>Alcohol</td><td>Moderate if heavy</td><td>Heavy drinking lowers testosterone and semen quality. Light drinking has little effect.</td></tr>
+<tr><td>Cannabis</td><td>Moderate</td><td>Associated with lower counts and motility. Avoid.</td></tr>
+<tr><td>Obesity</td><td>Moderate</td><td>Lowers testosterone and semen quality. Weight loss helps.</td></tr>
+<tr><td>Exercise</td><td>Positive</td><td>Moderate exercise is associated with better semen. Extreme endurance training may reduce it.</td></tr>
+<tr><td>Sleep</td><td>Small</td><td>Very short or very long sleep is associated with poorer semen (observational). Aim for 7–9 h.</td></tr>
+<tr><td>Heat: sauna, hot tubs, hot baths</td><td><b>Real</b></td><td>Regular sauna use lowers counts, reversibly over about 3 months. Avoid while trying.</td></tr>
+<tr><td>Laptop on lap</td><td>Plausible</td><td>Raises scrotal temperature measurably. Use a desk. It's free.</td></tr>
+<tr><td>Long sitting (both your jobs)</td><td>Small</td><td>Prolonged sitting raises scrotal temperature a little. Stand or walk for a few minutes every 30–60 min. Low cost, modest evidence.</td></tr>
+<tr><td>Tight underwear</td><td>Small</td><td>A large 2018 study associated boxers with slightly higher concentration than tight briefs. Loose underwear is cheap and harmless.</td></tr>
+<tr><td>Cycling</td><td>Small</td><td>Only very high-volume cycling has been linked with changes. Recreational riding is fine.</td></tr>
+<tr><td>Varicocele</td><td>Real, if clinical</td><td>Found by physical exam. Repair is considered only if it can be felt <b>and</b> semen is abnormal [35]. Don't treat an ultrasound-only finding.</td></tr>
+<tr><td>Fever / illness</td><td>Real, temporary</td><td>A fever over 38.5 °C can depress sperm for 2–3 months. Repeat an abnormal test if there was recent illness.</td></tr>
+<tr><td>Occupational exposures</td><td>Real in specific jobs</td><td>Solvents, pesticides, lead and heavy metals, high heat (bakers, welders, drivers). Kwinana has heavy industry. If either of you works in the industrial strip, tell the doctor what chemicals are involved.</td></tr>
+</tbody>
+</table>
+
+<h3>Male supplements: worthwhile or marketing?</h3>
+<table>
+<thead><tr><th style="width:15%">Supplement</th><th style="width:14%">Verdict</th><th>Evidence</th></tr></thead>
+<tbody>
+<tr><td>Antioxidant combinations (e.g. Menevit-type)</td><td><span class="tag t4">Mostly marketing</span></td><td>The MOXI RCT (vitamin C, vitamin E, selenium, L-carnitine, zinc, folate, lycopene) found <b>no improvement</b> in semen, DNA or live births (15% vs 24% for placebo) [23]. The Cochrane review found very low-certainty evidence, and benefit disappears in the higher-quality studies [32].</td></tr>
+<tr><td>Zinc + folic acid</td><td><span class="tag t4">No benefit</span></td><td>The FAZST RCT (2,370 couples, JAMA 2020) found no improvement in semen quality or live births [24].</td></tr>
+<tr><td>CoQ10</td><td><span class="tag t3">Uncertain</span></td><td>Small trials show modest changes in motility or count. No convincing live-birth data.</td></tr>
+<tr><td>Selenium</td><td><span class="tag t3">Uncertain</span></td><td>Small effects on motility. Excess is toxic. Don't add Brazil nuts on top of a supplement.</td></tr>
+<tr><td>Omega-3</td><td><span class="tag t3">Uncertain</span></td><td>Semen biomarker changes in small trials. Fine to get from fish.</td></tr>
+<tr><td>Vitamin C / Vitamin E</td><td><span class="tag t4">Skip as separate products</span></td><td>No outcome benefit shown. High-dose vitamin E has safety concerns.</td></tr>
+<tr><td>L-carnitine</td><td><span class="tag t3">Uncertain</span></td><td>Some motility data. It was part of the failed MOXI mixture.</td></tr>
+<tr><td>Lycopene</td><td><span class="tag t3">Uncertain</span></td><td>Small trials only. Eat tomatoes instead.</td></tr>
+<tr><td>Ashwagandha</td><td><span class="tag t4">Weak, with quality concerns</span></td><td>Small trials, mostly from the same research groups. Rare liver injury has been reported. Not recommended.</td></tr>
+<tr><td>Men's fertility multivitamins</td><td><span class="tag t4">Poor value</span></td><td>About $50–$90 a month with no proven increase in pregnancy. If the semen analysis is <i>abnormal</i> and you want to try something, a plain generic multivitamin (about $10/month) for 3 months is a reasonable low-cost experiment. Don't expect it to change your treatment plan.</td></tr>
+</tbody>
+</table>
+
+<h2 class="newpage">6. Food and fertility</h2>
+<div class="box"><p><b>Honest framing:</b> almost all diet–fertility evidence is observational. Healthier eaters also differ in many other ways. Better diets are consistently associated with better semen quality and ovulatory function [40][41]. <b>No food has been proven to raise pregnancy rates by itself.</b> So this guide says "associated with" and never "fertility-boosting".</p></div>
+<h3>Framework for both of you</h3>
+<table>
+<thead><tr><th style="width:20%">Food group</th><th>Evidence and practical advice</th></tr></thead>
+<tbody>
+<tr><td>Mediterranean-style pattern</td><td>Vegetables, fruit, legumes, whole grains, nuts, olive oil and fish. This pattern is associated with better semen parameters and IVF outcomes in observational studies. It is the best-supported overall eating pattern.</td></tr>
+<tr><td>Fish</td><td>2–3 serves a week of lower-mercury fish (salmon, sardines, tinned light tuna, snapper, whiting, barramundi). For pregnancy or planning, FSANZ advises limiting <b>shark/flake, marlin and swordfish to 1 serve per fortnight</b>, and <b>orange roughy and catfish to 1 serve per week</b>, with no other fish in that week [29].</td></tr>
+<tr><td>Eggs</td><td>An excellent source of choline, protein and B12. Cook fully once pregnant.</td></tr>
+<tr><td>Dairy</td><td>2–3 serves a day. Some observational data link full-fat dairy with fewer ovulatory problems. The evidence is weak, so choose whichever you prefer.</td></tr>
+<tr><td>Whole grains</td><td>Associated with better insulin sensitivity. Choose them over refined grains.</td></tr>
+<tr><td>Legumes</td><td>Plant protein, fibre and folate. Replacing some meat protein with plant protein was associated with less ovulatory infertility in the Nurses' Health Study.</td></tr>
+<tr><td>Nuts and seeds</td><td>A 2018 RCT (FERTINUTS) found 60 g/day of mixed nuts improved sperm count, vitality, motility and morphology. That is a biomarker result, not a pregnancy result.</td></tr>
+<tr><td>Fruit and vegetables</td><td>At least 5 serves of vegetables and 2 of fruit a day. Wash well (see pesticides, Section 12).</td></tr>
+<tr><td>Olive oil</td><td>Use it as your main fat.</td></tr>
+<tr><td>Protein</td><td>Adequate protein from mixed sources. No "fertility protein" exists.</td></tr>
+<tr><td>Red and processed meat</td><td>Processed meat (ham, salami, bacon) is associated with poorer semen quality. Keep processed meat occasional and unprocessed red meat moderate (about 2–3 times a week).</td></tr>
+<tr><td>Ultra-processed food</td><td>Associated with poorer metabolic health and semen quality. Cut down on takeaway meals. Your diet is "mixed outside and home", so aim for 80% home-cooked.</td></tr>
+<tr><td>Added sugar and sugary drinks</td><td>Sugary drinks are associated with lower fecundability in both partners (PRESTO cohort). Swap for water.</td></tr>
+<tr><td>Artificial sweeteners</td><td>Weak, inconsistent data. Moderate use is fine.</td></tr>
+<tr><td>Caffeine</td><td>Under 200 mg/day for her. Moderate intake for him is fine.</td></tr>
+<tr><td>Soy</td><td>Normal dietary soy (tofu, soy milk) shows no harm to fertility in humans. Scare stories come from animal and supplement megadoses.</td></tr>
+<tr><td>Food safety (for pregnancy)</td><td>Avoid listeria-risk foods once pregnant: pre-cut salad from bars, soft-serve, raw sprouts, deli meats, pâté, cold smoked seafood, raw eggs, and unpasteurised dairy. Cook meat and eggs fully and reheat leftovers to steaming hot [29].</td></tr>
+</tbody>
+</table>
+
+<h3>20 foods worth building meals around</h3>
+<div class="small muted">These are associated with better reproductive or pregnancy health through nutrient density, not magic.</div>
+<table>
+<tbody>
+<tr><td>1. Salmon / sardines</td><td>2. Eggs</td><td>3. Lentils</td><td>4. Chickpeas</td><td>5. Walnuts</td></tr>
+<tr><td>6. Almonds</td><td>7. Extra virgin olive oil</td><td>8. Oats</td><td>9. Wholegrain bread / brown rice</td><td>10. Leafy greens (spinach, silverbeet)</td></tr>
+<tr><td>11. Broccoli</td><td>12. Tomatoes</td><td>13. Berries</td><td>14. Citrus fruit</td><td>15. Plain yoghurt</td></tr>
+<tr><td>16. Milk / cheese (pasteurised)</td><td>17. Lean beef (iron)</td><td>18. Chicken</td><td>19. Pumpkin seeds (zinc)</td><td>20. Iodised salt (small amounts, instead of plain salt)</td></tr>
+</tbody>
+</table>
+<div class="two">
+<div><h4>Foods worth limiting</h4><ul class="small">
+<li>Processed meats</li><li>Sugary drinks and energy drinks</li><li>Deep-fried takeaway and trans fats</li><li>Heavily refined snacks and pastries</li><li>High-mercury fish (see FSANZ limits)</li><li>Coffee above about 2 cups a day for her</li><li>Alcohol</li></ul></div>
+<div><h4>Foods with exaggerated fertility claims</h4><ul class="small">
+<li>Pineapple core ("implantation")</li><li>Brazil nuts ("lining")</li><li>Pomegranate</li><li>Maca, royal jelly, bee pollen</li><li>"Warming" foods and avoiding cold foods</li><li>Seed cycling</li><li>Alkaline or "fertility" diets</li><li>Full-fat ice cream "for ovulation" (weak signal overhyped)</li></ul></div>
+</div>
+
+<h3>Simple 7-day example menu</h3>
+<table>
+<thead><tr><th>Day</th><th>Breakfast</th><th>Lunch</th><th>Dinner</th><th>Snack</th></tr></thead>
+<tbody>
+<tr><td>Mon</td><td>Oats with milk, berries, walnuts</td><td>Wholegrain wrap, chicken, salad</td><td>Baked salmon, brown rice, broccoli</td><td>Yoghurt + fruit</td></tr>
+<tr><td>Tue</td><td>2 eggs on wholegrain toast, tomato</td><td>Leftover salmon + rice salad</td><td>Lentil dahl, spinach, brown rice</td><td>Handful of almonds</td></tr>
+<tr><td>Wed</td><td>Yoghurt, muesli (low sugar), banana</td><td>Leftover dahl</td><td>Lean beef stir-fry with vegetables, noodles</td><td>Apple + cheese</td></tr>
+<tr><td>Thu</td><td>Oats + pumpkin seeds</td><td>Tuna (tinned light) and chickpea salad</td><td>Chicken, roast vegetables, olive oil</td><td>Carrot + hummus</td></tr>
+<tr><td>Fri</td><td>Vegetable omelette</td><td>Leftover chicken sandwich</td><td>Homemade pizza on wholemeal base, salad (planned "takeaway night")</td><td>Orange + walnuts</td></tr>
+<tr><td>Sat</td><td>Wholegrain toast, avocado, egg</td><td>Minestrone with beans</td><td>Grilled barramundi, potatoes, greens</td><td>Yoghurt</td></tr>
+<tr><td>Sun</td><td>Pancakes (wholemeal) + berries + yoghurt</td><td>Sardines on toast, salad</td><td>Chickpea and vegetable curry, rice</td><td>Mixed nuts</td></tr>
+</tbody>
+</table>
+<p class="small muted">Adapt this freely to your cuisine. The pattern is what matters, not these exact dishes. South Asian dals, curries with vegetables, and grilled fish fit the Mediterranean-type pattern perfectly well.</p>
+
+<h2 class="newpage">7. Supplements: evidence tables</h2>
+<div class="box warn"><p><b>Safety rules:</b> no megadoses. Avoid <b>vitamin A (retinol) above about 3,000 µg/day</b>, which is teratogenic. Avoid herbal fertility blends, because their effects in early pregnancy are unknown. Stop any product your GP hasn't checked once you get a positive pregnancy test. Tell the pharmacist about every supplement.</p></div>
+<h3>Female</h3>
+<table>
+<thead><tr><th style="width:11%">Supplement</th><th style="width:10%">Evidence</th><th style="width:15%">Benefit</th><th style="width:12%">Dose</th><th style="width:12%">Safety</th><th style="width:12%">Interactions</th><th style="width:13%">Who benefits</th><th>Test first?</th></tr></thead>
+<tbody>
+<tr><td><b>Folic acid</b></td><td>High</td><td>About 70% fewer neural tube defects</td><td>400–500 µg (5 mg if at high risk)</td><td>Very safe</td><td>Some antiepileptics (dose change)</td><td>All women</td><td>No</td></tr>
+<tr><td><b>Iodine</b></td><td>High (NHMRC)</td><td>Baby's brain development</td><td>150 µg [27]</td><td>Safe</td><td>Thyroid disease: ask your doctor</td><td>All women</td><td>Only if thyroid disease</td></tr>
+<tr><td>Iron</td><td>High if deficient</td><td>Corrects anaemia</td><td>Per GP, often 60–100 mg on alternate days</td><td>GI upset. Overload if not deficient.</td><td>Reduces absorption of thyroxine and calcium (separate doses)</td><td>Heavy periods, low ferritin</td><td><b>Yes (ferritin)</b></td></tr>
+<tr><td>Vitamin D</td><td>Moderate if deficient</td><td>Corrects deficiency. Fertility effect uncertain.</td><td>1,000–2,000 IU</td><td>Safe at this dose</td><td>—</td><td>Low sun or deficient</td><td>If at risk</td></tr>
+<tr><td>Vitamin B12</td><td>High if deficient</td><td>Prevents anaemia and neural problems</td><td>Per GP</td><td>Safe</td><td>Metformin lowers B12</td><td>Vegan or deficient</td><td>If at risk</td></tr>
+<tr><td>Omega-3</td><td>Moderate (pregnancy)</td><td>Fewer preterm births in low-intake women [42]</td><td>About 500–1,000 mg DHA+EPA</td><td>Safe</td><td>Anticoagulants</td><td>Low fish intake</td><td>No</td></tr>
+<tr><td>Choline</td><td>Low to moderate</td><td>Fetal brain</td><td>Food first</td><td>Safe</td><td>—</td><td>Low egg or meat intake</td><td>No</td></tr>
+<tr><td>Calcium</td><td>Moderate if intake is low</td><td>Bone. Lowers pre-eclampsia risk if intake is low.</td><td>Per diet gap</td><td>Safe</td><td>Iron, thyroxine</td><td>Low dairy intake</td><td>No</td></tr>
+<tr><td>CoQ10</td><td>Low</td><td>Possibly in IVF poor responders</td><td>200–600 mg</td><td>Safe</td><td>Warfarin</td><td>Not you</td><td>—</td></tr>
+<tr><td>Myo-inositol</td><td>Low</td><td>PCOS metabolic markers</td><td>2–4 g</td><td>Safe</td><td>—</td><td>PCOS only</td><td>Needs a PCOS diagnosis</td></tr>
+<tr><td>Prenatal multivitamin</td><td>Moderate</td><td>Covers folate + iodine in one tablet</td><td>1 daily</td><td>Check vitamin A</td><td>—</td><td>All women</td><td>No</td></tr>
+</tbody>
+</table>
+<h3>Male</h3>
+<table>
+<thead><tr><th style="width:11%">Supplement</th><th style="width:10%">Evidence</th><th style="width:15%">Benefit</th><th style="width:12%">Research dose</th><th style="width:12%">Safety</th><th style="width:12%">Interactions</th><th style="width:13%">Who may benefit</th><th>Test first?</th></tr></thead>
+<tbody>
+<tr><td>Antioxidant combos</td><td>Low (negative RCT) [23]</td><td>None proven for live birth</td><td>Varies</td><td>Generally safe</td><td>—</td><td>Possibly men with abnormal semen (unproven)</td><td><b>Yes: only after an abnormal semen analysis</b></td></tr>
+<tr><td>Zinc</td><td>Negative RCT [24]</td><td>None</td><td>30 mg</td><td>Excess causes copper deficiency</td><td>Antibiotics</td><td>Deficient men only</td><td>Yes</td></tr>
+<tr><td>Folic acid</td><td>Negative RCT [24]</td><td>None</td><td>5 mg</td><td>Safe</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Selenium</td><td>Low</td><td>Motility (small trials)</td><td>100–200 µg</td><td>Toxic above 400 µg/day</td><td>—</td><td>—</td><td>Yes</td></tr>
+<tr><td>CoQ10</td><td>Low</td><td>Motility biomarkers</td><td>200–400 mg</td><td>Safe</td><td>Warfarin</td><td>—</td><td>Yes</td></tr>
+<tr><td>Omega-3</td><td>Low</td><td>Biomarkers</td><td>1–2 g</td><td>Safe</td><td>Anticoagulants</td><td>Low fish intake</td><td>No</td></tr>
+<tr><td>Vitamin C</td><td>Low</td><td>Biomarkers</td><td>500–1,000 mg</td><td>Safe</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Vitamin E</td><td>Low</td><td>Biomarkers</td><td>400 IU</td><td>High doses carry bleeding risk</td><td>Anticoagulants</td><td>—</td><td>—</td></tr>
+<tr><td>L-carnitine</td><td>Low</td><td>Motility</td><td>2 g</td><td>GI upset</td><td>Thyroxine</td><td>—</td><td>Yes</td></tr>
+<tr><td>Lycopene</td><td>Low</td><td>Biomarkers</td><td>10–20 mg</td><td>Safe</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Ashwagandha</td><td>Very low</td><td>Unclear</td><td>675 mg</td><td>Liver injury reports</td><td>Thyroid, sedatives</td><td>—</td><td>Not recommended</td></tr>
+<tr><td>DHEA / T-boosters / testosterone</td><td>—</td><td><b>Harmful</b></td><td>—</td><td>Suppress sperm production</td><td>—</td><td>No one trying to conceive</td><td>Avoid</td></tr>
+</tbody>
+</table>
+
+<h2 class="newpage">8. Testing before spending money on gadgets</h2>
+<p>These are the tests that normally make sense for <b>your situation</b>: infertility for more than 12 months, her aged 28 with heavy and painful periods, him never tested. Your GP decides the final list. This is what to ask for.</p>
+<h3>Female</h3>
+<table>
+<thead><tr><th style="width:20%">Test</th><th style="width:12%">For you?</th><th style="width:18%">Timing</th><th>Why / notes</th></tr></thead>
+<tbody>
+<tr><td>Pregnancy test (urine or blood)</td><td>If late</td><td>Any time</td><td>Before any procedure or X-ray.</td></tr>
+<tr><td>Full blood count</td><td><b>Yes</b></td><td>Any day</td><td>Heavy periods, so check for anaemia.</td></tr>
+<tr><td>Iron studies / ferritin</td><td><b>Yes</b></td><td>Any day</td><td>Heavy periods.</td></tr>
+<tr><td>TSH</td><td><b>Yes</b></td><td>Any day</td><td>Thyroid problems affect cycles and pregnancy.</td></tr>
+<tr><td>Prolactin</td><td>Reasonable</td><td>Any day, not just after sex or exercise</td><td>Standard in an infertility workup.</td></tr>
+<tr><td><b>Mid-luteal progesterone</b></td><td><b>Yes, key test</b></td><td><b>About 7 days before the expected period</b> (day 21 only for a 28-day cycle; day 23 for 30-day cycles)</td><td>Confirms ovulation. A mistimed test gives a falsely "low" result, so it may need repeating. Also count the days until the next period.</td></tr>
+<tr><td>FSH, LH, oestradiol</td><td>Reasonable</td><td>Days 2–5 of the cycle</td><td>Baseline ovarian function. Helps diagnose PCOS or hypothalamic causes.</td></tr>
+<tr><td>AMH</td><td>Only if heading to IVF</td><td>Any day</td><td><b>Not Medicare-rebated</b>; usually about $60–$100 out of pocket (approx.). It does <b>not</b> predict natural conception [31].</td></tr>
+<tr><td>Testosterone / SHBG</td><td>Only if indicated</td><td>Days 2–5</td><td>Only if there is acne, excess hair or irregular cycles (a PCOS screen).</td></tr>
+<tr><td>HbA1c / glucose</td><td>If BMI is 25+ or other risks</td><td>Any day</td><td>Diabetes screen.</td></tr>
+<tr><td>Vitamin D</td><td>Only if at risk</td><td>—</td><td>Medicare only rebates this for at-risk groups.</td></tr>
+<tr><td>B12 / folate</td><td>If diet or blood count suggests it</td><td>—</td><td>—</td></tr>
+<tr><td>Rubella IgG, varicella IgG</td><td><b>Yes</b></td><td>Any day</td><td>Vaccinate before pregnancy if not immune.</td></tr>
+<tr><td>Blood group and antibodies</td><td>Yes</td><td>Any day</td><td>Routine preconception or antenatal test.</td></tr>
+<tr><td>STI screen: chlamydia and gonorrhoea PCR, HIV, hepatitis B, hepatitis C, syphilis</td><td><b>Yes (both partners)</b></td><td>Any day</td><td>Past chlamydia is a leading cause of tubal damage. Blood-borne virus screening is standard before fertility treatment.</td></tr>
+<tr><td>Cervical screening</td><td>If due</td><td>—</td><td>Every 5 years.</td></tr>
+<tr><td>Reproductive carrier screening (CF, SMA, fragile X)</td><td>Recommended</td><td>Any day</td><td>Medicare-rebated once per lifetime [37].</td></tr>
+<tr><td><b>Transvaginal pelvic ultrasound</b></td><td><b>Yes, key test</b></td><td>Ideally days 5–10</td><td>Checks for fibroids, polyps, adenomyosis, endometriomas and PCO morphology, plus antral follicle count. <b>Ask for an "endometriosis-focused" or deep-endometriosis scan</b> at a practice experienced in this (usually a specialist gynaecological ultrasound practice). A standard scan can miss deep endometriosis [26].</td></tr>
+<tr><td><b>Tubal patency test</b> (HSG or HyCoSy)</td><td><b>Yes</b>, usually ordered by a specialist or fertility GP</td><td>Days 6–11 (after bleeding, before ovulation)</td><td>An open or blocked tube decides the treatment path. Ask whether <b>oil-based contrast (Lipiodol)</b> is available. It has RCT evidence of higher pregnancy rates afterwards [22][57]. If there is significant endometriosis or tubal disease, the specialist may choose laparoscopy instead.</td></tr>
+<tr><td>Laparoscopy</td><td>Possibly later</td><td>—</td><td>This is a specialist decision. Heavy, painful periods plus infertility is a common reason for it. It diagnoses and treats endometriosis and tests the tubes at the same time.</td></tr>
+</tbody>
+</table>
+<h3>Male</h3>
+<table>
+<thead><tr><th style="width:24%">Test</th><th style="width:14%">When</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td><b>Semen analysis</b> (concentration, motility, morphology, vitality)</td><td><b>Now</b></td><td>2–7 days of abstinence. Collect at the lab or deliver within about 1 hour, kept at body temperature. Use a fertility-clinic andrology lab. PathWest no longer does fertility semen analysis [2].</td></tr>
+<tr><td>Repeat semen analysis</td><td>If abnormal</td><td>Ideally about 3 months later, or 2–4 weeks if the result is severe.</td></tr>
+<tr><td>FSH, LH, total testosterone (morning), ± prolactin</td><td>If the semen is abnormal, or the history suggests it</td><td>Needs to be a morning sample [35].</td></tr>
+<tr><td>Karyotype + Y-chromosome microdeletion</td><td>If under 5 million/mL or no sperm</td><td>Genetic causes of severe male infertility.</td></tr>
+<tr><td>CFTR (cystic fibrosis gene)</td><td>If no sperm, with low volume or absent vas</td><td>—</td></tr>
+<tr><td>Scrotal exam ± ultrasound</td><td>If the semen is abnormal</td><td>Checks for varicocele or testicular problems.</td></tr>
+<tr><td>STI and blood-borne virus screen</td><td>Yes</td><td>Needed before any fertility treatment anyway.</td></tr>
+<tr><td>Sperm DNA fragmentation</td><td><b>Not routinely</b></td><td>Only after recurrent miscarriage or repeated IVF failure. Usually about $150–$350 with no rebate (approx.).</td></tr>
+</tbody>
+</table>
+<div class="box amber"><p><b>Tests <u>not</u> worth ordering routinely:</b> AMH "to see if we can conceive naturally" [31]; sperm DNA fragmentation as a first test; routine vitamin D in low-risk people; thrombophilia or "immune" or NK-cell testing (no pregnancy losses so far, and this is poor-value fertility-clinic testing); endometrial receptivity (ERA) tests; hair-mineral or "food intolerance" tests; salivary hormone panels; "hormone mapping" from wellness clinics; home sperm tests in place of a lab test.</p></div>
+
+<h2 class="newpage">9. Perth + Medicare + bulk-billed pathway (lowest cost first)</h2>
+<div class="box"><p><b>Ground rules.</b> "Bulk billed" below appears only where a current source states it. Practices change their billing policies. <b>Always ask "Is this bulk billed for me, and what is the gap?" when you book.</b> Since 1 November 2025, federal bulk-billing incentives cover <b>all</b> Medicare card holders, not just concession holders, and about 81% of GP visits are now bulk billed nationally [14]. Register as a couple for the <b>Medicare Safety Net</b> via Services Australia. It matters if you move to specialist treatment [54].</p></div>
+
+<h3>Step 1: Bulk-billing GP, 20–30 minute "long" consult (this week)</h3>
+<table>
+<thead><tr><th>Provider</th><th>Address</th><th>Billing (verified source)</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td><b>Wellness Family Doctors</b></td><td>Unit 14, 40 Meares Ave, Kwinana Town Centre WA 6167 · (08) 9419 0800</td><td>Listed as bulk billing all Medicare card holders [12]</td><td>Closest to you. Book a long appointment for both of you.</td></tr>
+<tr><td><b>Rockingham Medical &amp; Dental Centre</b> (ForHealth)</td><td>18 Civic Blvd, Rockingham WA 6168 · (08) 9557 1111</td><td>States 100% bulk billing for all GP consults with a Medicare card [13]</td><td>About 15 min south.</td></tr>
+<tr><td>Other options</td><td>HotDoc / Healthengine "bulk billing GP Kwinana" listings [45][47]</td><td>Varies</td><td>Filter for bulk billing and for a GP with a women's health interest.</td></tr>
+<tr><td><b>Genea Perth: bulk-billed Fertility GP</b></td><td>Level 2, 190 Cambridge St, Wembley WA 6014 · (08) 9389 4200 [5]</td><td>Genea states its fertility assessment with a Fertility GP is bulk billed for all Medicare card holders, including WA, and <b>no referral is needed</b> [4]</td><td>About 40 min drive. A good alternative or add-on: a GP who does fertility workups daily, with an andrology lab on site. Individual tests may still carry fees, so ask.</td></tr>
+</tbody>
+</table>
+<p class="small"><b>Tip:</b> you can use both routes. Your local bulk-billing GP handles the blood tests and the KEMH referral. Genea's (or another clinic's) bulk-billed fertility GP speeds up the fertility-specific steps: semen analysis, tubal test and specialist triage.</p>
+
+<h3>Step 2: Semen analysis (Medicare-rebated with a referral)</h3>
+<table>
+<thead><tr><th>Where</th><th>Status (verified)</th><th>Likely cost</th></tr></thead>
+<tbody>
+<tr><td><b>PathWest</b> (public)</td><td><b>No longer offers fertility semen analysis</b>. It only does post-vasectomy samples at QEII Medical Centre [2].</td><td>N/A</td></tr>
+<tr><td>Fertility-clinic andrology labs: Genea Wembley, Adora Murdoch, Concept/IVFAustralia Subiaco, Fertility North Joondalup, PIVET, Monash, City Fertility</td><td>Accept GP referrals. Genea publishes an andrology request form [5]. Medicare item <b>73523</b> (schedule fee $43.85; 85% benefit $37.30) [3].</td><td>Gap usually about $0–$110 (IVF Australia quotes about $150 with about $43.75 rebated [18]). <b>Call and ask whether it is bulk billed.</b> Low-cost clinics sometimes bulk bill it (unverified).</td></tr>
+<tr><td><b>Australian Clinical Labs</b> (andrology)</td><td>Accredited andrology lab with semen drop-off locations, including Adora WA collection sites [17]</td><td>Ask. May carry a gap.</td></tr>
+<tr><td>Western Diagnostic Pathology</td><td>Accepts seminal fluid, but states an <b>out-of-pocket fee for fertility analysis</b> [16]</td><td>Gap applies</td></tr>
+<tr><td>Clinipath</td><td>No dedicated fertility semen page found. Check before going.</td><td>Unverified</td></tr>
+</tbody>
+</table>
+<p><b>Closest practical option from Kwinana:</b> Adora Fertility Murdoch (Tower C, Suite 307, Level 3, 44 Barry Marshall Pde, Murdoch WA 6150; (08) 6146 5100) [6]. That is about 20–25 minutes' drive, which suits the 1-hour delivery rule if collecting at home. Adora describes itself as a bulk-billing clinic [6][7]. Confirm whether semen analysis specifically is bulk billed.</p>
+
+<h3>Step 3: Blood tests (pathology collection centre)</h3>
+<p>Clinipath (Sonic) states that it bulk bills <b>routine</b> Medicare-eligible pathology for eligible patients, but not complex tests [15]. WDP and Australian Clinical Labs have their own policies; check before going. Routine tests usually bulk billed when requested by a GP with a clinical indication include FBC, iron studies, TSH, progesterone, FSH, LH, oestradiol, prolactin, rubella and varicella serology, the STI screen and HbA1c. <b>Not rebated:</b> AMH. Both Clinipath and WDP have collection centres across the Kwinana–Rockingham area; use their online locators.</p>
+
+<h3>Step 4: Pelvic ultrasound (Medicare-rebated)</h3>
+<p>A transvaginal pelvic ultrasound has a Medicare item when referred by a GP. Bulk billing varies by radiology provider. Expect $0 to about $150 gap at a general radiology practice, and about $150–$350 at a specialist gynaecological ultrasound practice for an endometriosis-mapping scan (approx., unverified). Given your symptoms, the specialist scan is usually worth the gap because it answers the endometriosis question much better [26].</p>
+
+<h3>Step 5: Referrals, all at once (don't do them one after another)</h3>
+<table>
+<thead><tr><th style="width:22%">Service</th><th>Details (verified where cited)</th></tr></thead>
+<tbody>
+<tr><td><b>KEMH Reproductive Medicine Clinic</b> (public, the only public fertility clinic in WA)<br><span class="small">374 Bagot Rd, Subiaco WA 6008 · switchboard (08) 6458 2222 [46]</span></td><td>
+<ul class="small">
+<li>Provides publicly funded <b>investigation, cycle tracking, ovulation induction and surgery</b>, plus counselling. It is listed as a "limited" service [1].</li>
+<li><b>Inclusion:</b> woman aged 21–38 at referral, in a relationship, both wanting treatment, unable to conceive naturally [1].</li>
+<li><b>Exclusions:</b> either partner not on Medicare, smoking, illicit drug use, <b>BMI over 35 in either partner</b>, donor sperm needed [1].</li>
+<li><b>Process:</b> the GP emails the referral to KEMH.referrals@health.wa.gov.au (subject: "Reproductive Medicine Referral, [Surname]"). KEMH then sends a letter listing prerequisite tests to complete about 60 days before the appointment [1].</li>
+<li><b>Cost:</b> public, so no charge for public outpatient services.</li>
+<li><b>Waiting time:</b> no official figure published. One third-party comparison site states 12–24 months for public IVF at KEMH [10] (unverified). Assume it is long.</li>
+<li><b>Caution:</b> that same third-party source says eligibility requires <i>no private health insurance</i> [10]. KEMH's own page (as indexed) lists Medicare cover, not insurance status [1]. <b>Ask KEMH before you buy private insurance.</b></li>
+<li>You appear to meet the eligibility criteria, subject to BMI. <b>Get referred now</b>, even if you also go private, so your place in the queue is secure.</li>
+</ul></td></tr>
+<tr><td>Public gynaecology (South Metropolitan Health Service: Fiona Stanley Hospital, Murdoch; Rockingham General Hospital)</td><td class="small">Suitable if the ultrasound shows fibroids or polyps, suspected endometriosis or adenomyosis, or heavy menstrual bleeding needing treatment. The GP refers through the WA Health outpatient referral system. Public, so no charge. Waits vary by urgency category (unverified).</td></tr>
+<tr><td>Bulk-billing specialist fertility clinic</td><td class="small"><b>Adora Fertility</b> (Murdoch and Craigie) describes itself as a bulk-billing specialist-led service from ovulation tracking through to IVF [6][7]. A specialist referral from your GP is needed for the Medicare rebate on the specialist consultation. Ask exactly which items are bulk billed.</td></tr>
+</tbody>
+</table>
+
+<h3>Step 6: After the results</h3>
+<ul>
+<li><b>Everything normal</b> ("unexplained infertility" after 2–3 years): options are ovarian stimulation with IUI, or IVF. The trying duration of 3 years matters more to prognosis than your ages. Discuss your predicted natural conception chance with the specialist. Oil-based HSG is worth doing first if tubes haven't been tested [22][38].</li>
+<li><b>Not ovulating:</b> ovulation induction with letrozole or clomiphene plus timed intercourse. This is available at KEMH and is low cost privately [1].</li>
+<li><b>Endometriosis suspected:</b> specialist opinion. Laparoscopic surgery or IVF depending on stage [39].</li>
+<li><b>Abnormal semen:</b> repeat test, hormones, urology or andrology review. Severe male factor usually means ICSI.</li>
+<li><b>Tubal blockage:</b> IVF is usually the most effective option.</li>
+</ul>
+
+<h2 class="newpage">10. Private fertility options in Perth</h2>
+<p class="small">Treat this as "if you need treatment," not "go straight to IVF." Figures are from clinic sites or third-party comparisons (September 2026 searches) and change often. Always get a written quote. Medicare rebates reduce specialist and IVF costs, and the <b>Extended Medicare Safety Net</b> (2026 threshold $2,615.50) can raise rebates further once reached [8][53].</p>
+<table>
+<thead><tr><th style="width:17%">Clinic</th><th style="width:14%">Location</th><th style="width:15%">Initial consult</th><th style="width:30%">IVF / ICSI out of pocket (per cycle, after Medicare)</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td><b>Adora Fertility</b></td><td>Murdoch (closest to Kwinana); Craigie</td><td>Bulk-billing model [6]</td><td>About <b>$2,430</b> for a fresh IVF/ICSI cycle, excluding medications and anaesthetist [7]</td><td>Low-cost, bulk-billing model. Does OI and IUI too.</td></tr>
+<tr><td><b>Genea Perth</b></td><td>Wembley</td><td>Bulk-billed Fertility GP assessment [4]</td><td>Specialist IVF pricing on Genea WA cost page [55]</td><td>Also a Mandurah satellite (unverified).</td></tr>
+<tr><td><b>Fertility North</b></td><td>Joondalup</td><td>$290 fee, $77 rebate, <b>$213 gap</b> [8]</td><td>About <b>$6,600</b> (fee about $9,500 less about $2,900 rebate) [8]</td><td>Prices updated 1 July 2026 [8]. Far from Kwinana.</td></tr>
+<tr><td><b>Monash IVF Perth</b></td><td>Perth metro</td><td>—</td><td>About <b>$7,200</b>. "Access" program about <b>$4,800</b> for eligible patients [11]</td><td>Third-party figures [11]</td></tr>
+<tr><td><b>PIVET Medical Centre</b></td><td>Leederville</td><td>—</td><td>About <b>$4,000–$7,000</b> [10]</td><td>Third-party figures</td></tr>
+<tr><td><b>Fertility Specialists of WA</b></td><td>Claremont</td><td>Private billing, <b>no bulk billing</b> [9]</td><td>See their 2026 fee schedule [9]</td><td>—</td></tr>
+<tr><td><b>Concept Fertility</b> (now IVFAustralia)</td><td>Subiaco; Joondalup</td><td>Bulk-billed fertility GP (third-party) [10]</td><td>See fee schedule</td><td>—</td></tr>
+<tr><td><b>City Fertility Perth</b></td><td>Perth</td><td>—</td><td>See cost page</td><td>—</td></tr>
+</tbody>
+</table>
+<table>
+<thead><tr><th>Service</th><th>Typical Perth out-of-pocket (approx., unverified ranges)</th><th>Comment</th></tr></thead>
+<tbody>
+<tr><td>Specialist initial consult</td><td>$0 (bulk-billing clinics) to about $250</td><td>A GP referral is needed for the rebate.</td></tr>
+<tr><td>Semen analysis</td><td>$0–$110</td><td>Item 73523 [3]</td></tr>
+<tr><td>Pelvic ultrasound</td><td>$0–$350</td><td>Depends on scan type and provider</td></tr>
+<tr><td>HSG / HyCoSy</td><td>About $150–$500 (unverified)</td><td>Ask about oil-based contrast</td></tr>
+<tr><td>Ovulation induction (tablets + tracking)</td><td>About $100–$800 per cycle (unverified)</td><td>Cheap and effective when you don't ovulate</td></tr>
+<tr><td>IUI (± stimulation)</td><td>About $500–$2,000 per cycle (unverified)</td><td>An option for unexplained infertility [38]</td></tr>
+<tr><td>IVF / ICSI</td><td>About $2,430 (Adora) to $7,200+ (full-fee clinics) per cycle [7][8][11]</td><td>Plus medications, anaesthetist and day hospital at some clinics</td></tr>
+</tbody>
+</table>
+<div class="box amber"><p><b>Avoid paid "add-ons"</b> unless there is a specific indication: embryo glue, endometrial scratch, time-lapse imaging, IVIG, steroids, "immune" testing, PGT-A for a woman your age, or assisted hatching. Most have no proven live-birth benefit.</p></div>
+
+<h2 class="newpage">11. Myth-busting (human evidence, not testimonials)</h2>
+<table>
+<thead><tr><th style="width:18%">Claim</th><th style="width:13%">Verdict</th><th>Evidence</th></tr></thead>
+<tbody>
+<tr><td>Pineapple core for implantation</td><td><span class="tag t4">Myth</span></td><td>Based on bromelain. No human fertility study.</td></tr>
+<tr><td>Brazil nuts for the uterine lining</td><td><span class="tag t4">Myth</span></td><td>Selenium is fine in food. There is no evidence for the lining, and excess selenium is toxic.</td></tr>
+<tr><td>Pomegranate</td><td><span class="tag t4">Myth</span></td><td>No human fertility trials.</td></tr>
+<tr><td>Mucinex (guaifenesin) for cervical mucus</td><td><span class="tag t4">Unproven</span></td><td>One tiny uncontrolled 1982 report. Not recommended.</td></tr>
+<tr><td>Fertility teas</td><td><span class="tag t4">Myth</span></td><td>No trials. Some herbs (e.g. dong quai, high-dose liquorice) are inappropriate in early pregnancy.</td></tr>
+<tr><td>Seed cycling</td><td><span class="tag t4">Myth</span></td><td>No human hormonal or fertility data.</td></tr>
+<tr><td>Acupuncture</td><td><span class="tag t4">No benefit</span></td><td>An Australian RCT of 848 IVF patients (JAMA 2018) found no increase in live births [44]. Evidence for natural conception is weaker still. Fine for relaxation if you enjoy it, but not a fertility treatment.</td></tr>
+<tr><td>Chinese herbal medicine</td><td><span class="tag t5">Unproven + risk</span></td><td>Low-quality trials. Contamination and interaction risks. Unknown effects in early pregnancy.</td></tr>
+<tr><td>Fertility massage / Maya abdominal massage</td><td><span class="tag t4">Myth</span></td><td>No evidence it opens tubes or improves pregnancy.</td></tr>
+<tr><td>Castor oil packs</td><td><span class="tag t4">Myth</span></td><td>No evidence.</td></tr>
+<tr><td>Legs up after sex</td><td><span class="tag t4">Myth</span></td><td>Sperm reach the cervix within minutes. No evidence after intercourse.</td></tr>
+<tr><td>Special sex positions</td><td><span class="tag t4">Myth</span></td><td>No evidence for pregnancy, or for the baby's sex.</td></tr>
+<tr><td>Alkaline diets</td><td><span class="tag t4">Myth</span></td><td>Diet does not meaningfully change vaginal or blood pH.</td></tr>
+<tr><td>Avoiding cold foods</td><td><span class="tag t4">Myth</span></td><td>A traditional belief with no evidence.</td></tr>
+<tr><td>Grounding / earthing</td><td><span class="tag t4">Myth</span></td><td>No evidence.</td></tr>
+<tr><td>Red-light therapy</td><td><span class="tag t4">Unproven</span></td><td>No quality human fertility RCTs. Heat near the testes is counterproductive.</td></tr>
+<tr><td>Sauna</td><td><span class="tag t5">Harmful for sperm</span></td><td>Lowers sperm counts, reversibly. Avoid while trying. It is also a hyperthermia risk in early pregnancy.</td></tr>
+<tr><td>Cold exposure / ice baths</td><td><span class="tag t4">Unproven</span></td><td>No fertility outcome evidence.</td></tr>
+<tr><td>Fertility crystals</td><td><span class="tag t4">Myth</span></td><td>No plausible mechanism and no evidence.</td></tr>
+<tr><td>Vaginal steaming</td><td><span class="tag t5">Harmful</span></td><td>Documented burns and infection risk. No benefit.</td></tr>
+<tr><td>Detoxes / cleanses</td><td><span class="tag t4">Myth</span></td><td>Your liver and kidneys do this. Some products contain laxatives or herbs of concern.</td></tr>
+<tr><td>Sperm-friendly lubricants</td><td><span class="tag t3">Partly true</span></td><td>Less harmful to sperm than ordinary lubricants, but not shown to <i>increase</i> pregnancy [25]. Only use one if needed.</td></tr>
+<tr><td>Antioxidant stacks</td><td><span class="tag t4">Overhyped</span></td><td>The MOXI and FAZST RCTs were negative [23][24].</td></tr>
+<tr><td>AMH predicts natural fertility</td><td><span class="tag t4">Myth</span></td><td>A JAMA cohort found low AMH did not reduce natural conception chances in women aged 30–44 [31].</td></tr>
+</tbody>
+</table>
+
+<h3>Can you choose a baby boy?</h3>
+<table>
+<thead><tr><th style="width:28%">Method</th><th style="width:13%">Verdict</th><th>Evidence</th></tr></thead>
+<tbody>
+<tr><td>Shettles method (sex at ovulation for a boy, days before for a girl)</td><td><span class="tag t5">Doesn't work, and can cost you pregnancies</span></td><td>An NEJM study of 625 cycles found timing relative to ovulation has <b>no influence on the baby's sex</b> [20]. Restricting sex to ovulation day also cuts your overall chance of pregnancy.</td></tr>
+<tr><td>"Boy" diets (high salt or potassium, cereal for breakfast)</td><td><span class="tag t4">Myth</span></td><td>The 2008 "cereal = boys" study was shown to be a probable false positive from multiple testing [48].</td></tr>
+<tr><td>Baking soda douching, pH manipulation</td><td><span class="tag t5">Harmful</span></td><td>No effect on sex. Irritation and infection risk. Can harm sperm survival.</td></tr>
+<tr><td>Positions, orgasm, moon calendars, Chinese gender charts</td><td><span class="tag t4">Myth</span></td><td>No evidence.</td></tr>
+<tr><td>Sperm sorting / IVF with embryo sex selection</td><td><span class="tag t5">Not legal here for non-medical reasons</span></td><td>Non-medical sex selection is <b>prohibited</b> by NHMRC ART guidelines, and by law in WA, NSW, VIC and SA [19]. It is only permitted to avoid serious sex-linked genetic disease.</td></tr>
+</tbody>
+</table>
+<p><b>Bottom line:</b> about 51% of babies are boys, and nothing you do naturally changes that. Put all your energy into getting pregnant.</p>
+
+<h2 class="newpage">12. Environmental exposures: sensible vs fear-based</h2>
+<table>
+<thead><tr><th style="width:15%">Exposure</th><th style="width:30%">What the evidence shows</th><th style="width:28%">Sensible, low-cost step</th><th>Fear-based (skip)</th></tr></thead>
+<tbody>
+<tr><td>Heat (testicular)</td><td><b>Strongest evidence on this list.</b> Reversible drop in sperm.</td><td>No sauna or spa. No laptop on lap. Stand or walk every 30–60 min.</td><td>Special cooling underwear gadgets</td></tr>
+<tr><td>Occupational chemicals</td><td>Real risks for solvents, pesticides, lead, and some metals and welding</td><td>Follow site PPE. Tell your doctor your job. Change out of work clothes before home.</td><td>—</td></tr>
+<tr><td>BPA</td><td>Observational associations with semen and IVF outcomes. Causation unclear.</td><td>Don't microwave food in plastic. Use glass or steel for hot food.</td><td>Throwing out every plastic item</td></tr>
+<tr><td>Phthalates</td><td>Observational links to semen quality and hormones</td><td>Less processed or packaged food. Fragrance-free personal products where easy.</td><td>Expensive "clean beauty" overhaul</td></tr>
+<tr><td>Plastics / microplastics</td><td>Found in human tissues, <b>but no human fertility outcome data yet</b></td><td>As above: heat and plastic are the main thing to avoid.</td><td>Water filter subscriptions and "microplastic detox"</td></tr>
+<tr><td>Pesticides</td><td>High occupational exposure is harmful. The dietary-residue effect is uncertain.</td><td>Wash produce. Organic is optional.</td><td>An all-organic diet as a fertility requirement</td></tr>
+<tr><td>PFAS</td><td>Associations with some outcomes. Main exposure is contaminated water sites and some products.</td><td>Check WA Health advisories if near a contaminated site. Otherwise no action.</td><td>Testing your blood for PFAS</td></tr>
+<tr><td>Fragrances / cleaning products</td><td>Weak evidence</td><td>Ventilate, wear gloves, use simple products.</td><td>Replacing all products</td></tr>
+<tr><td>Non-stick cookware</td><td>Modern non-stick pans are low risk if not overheated or badly scratched</td><td>Don't heat an empty pan on high. Replace flaking pans.</td><td>Throwing out all cookware</td></tr>
+<tr><td>Thermal receipts</td><td>A BPA/BPS source through the skin, but a small dose</td><td>Decline paper receipts. Wash hands.</td><td>—</td></tr>
+<tr><td>Kwinana industrial area</td><td>Localised air-quality concerns exist. No specific fertility data.</td><td>Only relevant if you work on-site: use PPE.</td><td>Moving house for fertility</td></tr>
+</tbody>
+</table>
+
+<h2 class="newpage">13. When to seek medical help</h2>
+<table>
+<thead><tr><th>Situation</th><th>When to get investigated</th></tr></thead>
+<tbody>
+<tr><td>Woman under 35, regular cycles, no known problems</td><td>After 12 months of trying [34][51]</td></tr>
+<tr><td>Woman 35–39</td><td>After 6 months</td></tr>
+<tr><td>Woman 40+</td><td>Straight away</td></tr>
+<tr><td>Irregular periods (cycles under 21 or over 35 days) or no periods</td><td>Straight away</td></tr>
+<tr><td><b>Painful periods or pain with sex (possible endometriosis), heavy bleeding</b></td><td><b>Straight away. This applies to you.</b></td></tr>
+<tr><td>Past pelvic infection, chlamydia, or abdominal or pelvic surgery</td><td>Straight away</td></tr>
+<tr><td>Two or more miscarriages</td><td>Straight away (KEMH also assesses recurrent miscarriage [1])</td></tr>
+<tr><td>Male: undescended testis, testicular surgery or injury, chemotherapy, erection or ejaculation problems, known abnormal semen</td><td>Straight away</td></tr>
+<tr><td><b>You: 2–3 years of trying</b></td><td><b>Overdue. Start now.</b></td></tr>
+</tbody>
+</table>
+<div class="box warn"><p><b>"Do not wait" situations (go to a GP or emergency department the same day):</b> positive pregnancy test with one-sided pelvic pain, shoulder-tip pain, fainting or heavy bleeding (possible ectopic pregnancy). Also go the same day for severe pelvic pain with fever, very heavy bleeding (soaking a pad an hour or passing large clots), a painless testicular lump, or sudden testicular pain (torsion is an emergency).</p></div>
+
+<h2 class="newpage">14. Priority roadmap</h2>
+<h3>THIS WEEK</h3>
+<ol class="check">
+<li>Book a <b>long (double) bulk-billed GP appointment for both of you</b>: Wellness Family Doctors Kwinana or Rockingham Medical Centre. Alternatively (or as well), book Genea Perth's bulk-billed Fertility GP, which needs no referral.</li>
+<li>Take this document plus copies of any previous test results. Ask the GP to request the tests in the "exact test list" below.</li>
+<li><b>Him:</b> book a semen analysis at a fertility-clinic andrology lab (e.g. Adora Murdoch, Genea Wembley). Abstain 2–7 days beforehand.</li>
+<li><b>Her:</b> switch folic acid alone to a <b>pregnancy multivitamin with folic acid 400–500 µg + iodine 150 µg</b>, or add a separate iodine tablet.</li>
+<li>Change the sex schedule: <b>every 2–3 days all month, and every 1–2 days in the fertile window</b>.</li>
+<li>Start a simple cycle diary: period start dates, LH results (tested twice daily), slippery mucus days, pain and bleeding heaviness.</li>
+<li>Weigh yourselves and calculate BMI.</li>
+<li>Him: no saunas, spas or hot baths, and no laptop on lap. Stand up regularly at work.</li>
+</ol>
+<h3>NEXT 3 MONTHS (90 days is about one full sperm-production cycle)</h3>
+<table>
+<thead><tr><th style="width:14%">When</th><th>Medical track</th><th>Lifestyle track</th></tr></thead>
+<tbody>
+<tr><td>Weeks 1–2</td><td>GP visit. Referrals written: KEMH, specialist or fertility clinic, ultrasound. Bloods ordered. Semen analysis done.</td><td>Start the prenatal vitamin. Start the sex schedule. Cut takeaway meals to 1–2 per week.</td></tr>
+<tr><td>Weeks 2–6</td><td>Day 2–5 bloods. Mid-luteal progesterone (7 days before period). Pelvic ultrasound on days 5–10. STI screen. Rubella and varicella check.</td><td>Walks become 30–40 min on most days, plus 2 strength sessions. Fish twice weekly.</td></tr>
+<tr><td>Weeks 4–8</td><td>Review results with the GP. Repeat semen analysis if abnormal. Specialist appointment (private bulk-billing clinic, public gynaecology, or both). Tubal test organised.</td><td>If BMI is over 25, aim to lose 0.5 kg/week. Keep sleep to 7–9 h.</td></tr>
+<tr><td>Weeks 8–12</td><td>Treatment plan agreed: ovulation induction, surgery for endometriosis, IUI or IVF, depending on findings. Keep your KEMH referral active.</td><td>Keep going. Vaccinate if not immune (then wait 28 days before conceiving).</td></tr>
+</tbody>
+</table>
+
+<div class="two">
+<div>
+<h3>BUY</h3>
+<table><thead><tr><th>Item</th><th>Approx. cost</th></tr></thead><tbody>
+<tr><td>Pregnancy multivitamin with folate + iodine (generic is fine)</td><td>$15–$30/month</td></tr>
+<tr><td>Bulk LH ovulation strips (you already use these)</td><td>$15–$35 per 40–50</td></tr>
+<tr><td>Semen analysis</td><td>$0–$110</td></tr>
+<tr><td>Iron supplement, <i>only if ferritin is low</i></td><td>$10–$20/month</td></tr>
+<tr><td>Pre-Seed, <i>only if you need lubricant</i></td><td>$20–$35</td></tr>
+</tbody></table>
+</div>
+<div>
+<h3>DON'T BUY</h3>
+<table><thead><tr><th>Item</th><th>Why</th></tr></thead><tbody>
+<tr><td>Men's fertility antioxidant blends</td><td>Negative RCTs [23][24]</td></tr>
+<tr><td>Inito, Mira, Oura or similar trackers for conception</td><td>No pregnancy benefit</td></tr>
+<tr><td>At-home sperm tests</td><td>The lab test is better and costs about the same</td></tr>
+<tr><td>AMH to "check fertility"</td><td>Not predictive for natural conception [31]</td></tr>
+<tr><td>Fertility teas, herbs, seed cycling, crystals, steaming</td><td>No evidence, some harm</td></tr>
+<tr><td>"Gender swaying" kits or diets</td><td>Don't work [20]</td></tr>
+<tr><td>Acupuncture as fertility treatment</td><td>No live-birth benefit [44]</td></tr>
+<tr><td>Sperm DNA fragmentation, immune tests</td><td>Not indicated now</td></tr>
+</tbody></table>
+</div>
+</div>
+
+<h3>Top 10 highest-impact actions</h3>
+<ol>
+<li>Semen analysis at an andrology lab this month.</li>
+<li>A formal infertility workup for her, including confirmed ovulation.</li>
+<li>An endometriosis-focused pelvic ultrasound, and a specialist review of the heavy, painful periods.</li>
+<li>Tubal patency testing (ask about oil-based HSG).</li>
+<li>Sex every 1–2 days in the fertile window and every 2–3 days otherwise. No long abstinence.</li>
+<li>Referral to KEMH now, plus a bulk-billing specialist clinic in parallel.</li>
+<li>Folic acid + iodine daily for her.</li>
+<li>Reach a healthy BMI if either of you is over 30 (or over 25 and rising).</li>
+<li>Remove testicular heat sources for him and break up sitting.</li>
+<li>Stop spending on unproven products, and put that money toward diagnostics or treatment.</li>
+</ol>
+<div class="two">
+<div><h3>Top 5 useful purchases</h3><ol class="small">
+<li>Laboratory semen analysis</li><li>Pregnancy multivitamin (folate + iodine)</li><li>Bulk LH strips</li><li>Specialist gynaecological ultrasound (worth any gap)</li><li>Iron supplement, only if ferritin is low</li></ol></div>
+<div><h3>Top 5 things people waste money on</h3><ol class="small">
+<li>Male "fertility" antioxidant blends</li><li>Premium hormone-tracking devices and wearables</li><li>Fertility teas and herbal protocols</li><li>Acupuncture packages for fertility</li><li>Unindicated tests (AMH for natural fertility, DNA fragmentation, "immune" panels)</li></ol></div>
+</div>
+
+<h3>Estimated monthly budget</h3>
+<table>
+<thead><tr><th>Level</th><th>Monthly</th><th>What's included</th></tr></thead>
+<tbody>
+<tr><td><b>Minimum</b></td><td>About $25–$40</td><td>Generic prenatal vitamin + LH strips. All GP visits and pathology bulk billed.</td></tr>
+<tr><td><b>Sensible</b></td><td>About $40–$80, plus one-off $150–$500 over 3 months</td><td>Above, plus iron or vitamin D if deficient, Pre-Seed if needed, and one-off gaps (semen analysis, specialist ultrasound, tubal test).</td></tr>
+<tr><td><b>Premium</b> (not recommended)</td><td>About $150–$300</td><td>Adding a hormone monitor, a wearable and men's supplements. Adds cost, not babies. Put this money toward treatment instead.</td></tr>
+</tbody>
+</table>
+
+<h3>Exact list of things to ask your GP</h3>
+<ol class="small">
+<li>"We've been trying for 2–3 years without a pregnancy. Can you start a couple infertility workup today?"</li>
+<li>"I have heavy, painful periods. Could this be endometriosis or adenomyosis? Can you refer me for an endometriosis-focused transvaginal ultrasound?"</li>
+<li>"Can you refer [him] for a semen analysis at a fertility-clinic andrology lab? PathWest no longer does them."</li>
+<li>"Can you time my progesterone test for 7 days before my expected period, not simply day 21?"</li>
+<li>"Can you check my iron, thyroid, prolactin and immunity, and do STI screening for both of us?"</li>
+<li>"Should I be on 5 mg folic acid instead of 0.5 mg?" (relevant if BMI is 30+ or other risks)</li>
+<li>"Can you refer us to KEMH Reproductive Medicine now, and also to a fertility specialist or gynaecologist so we're not waiting?"</li>
+<li>"Can you arrange reproductive carrier screening?"</li>
+<li>"Are all of these bulk billed? Which ones will have a gap?"</li>
+<li>"Please give us printed copies of all our results, including previous ones."</li>
+</ol>
+
+<h3>Exact referrals and test requests worth discussing</h3>
+<table class="small">
+<thead><tr><th>For her</th><th>For him</th><th>Referrals</th></tr></thead>
+<tbody><tr>
+<td>FBC, iron studies, TSH, prolactin; day 2–5 FSH, LH, E2; mid-luteal progesterone; rubella and varicella IgG; chlamydia and gonorrhoea PCR; HIV, hepatitis B, hepatitis C, syphilis; blood group and antibodies; HbA1c (if BMI 25+); carrier screening; transvaginal pelvic ultrasound (endometriosis protocol); cervical screening if due. <i>Later, via specialist:</i> HSG or HyCoSy (oil-based if possible).</td>
+<td>Semen analysis (andrology lab, Medicare item 73523); HIV, hepatitis B, hepatitis C, syphilis; chlamydia PCR. <i>If semen is abnormal:</i> repeat, plus FSH, LH, morning testosterone, prolactin; karyotype and Y-microdeletion if under 5 million/mL; scrotal exam or ultrasound; urology or andrology referral.</td>
+<td>1. KEMH Reproductive Medicine Clinic (couple referral).<br>2. Fertility specialist at a bulk-billing clinic (e.g. Adora Murdoch) <i>or</i> Genea bulk-billed Fertility GP.<br>3. Public gynaecology (Fiona Stanley) if the ultrasound is abnormal or symptoms warrant it.</td>
+</tr></tbody>
+</table>
+
+<h3>Perth "bulk-billed first" pathway</h3>
+<div class="box ok small">
+<p><b>1.</b> Bulk-billing GP (Kwinana or Rockingham): consult, pathology and referrals, all $0 [12][13] →
+<b>2.</b> Bulk-billed routine blood tests at Clinipath (confirm policy) [15] →
+<b>3.</b> Semen analysis at a fertility-clinic andrology lab with a Medicare rebate (ask if bulk billed; otherwise about $0–$110) [3] →
+<b>4.</b> Pelvic ultrasound (look for a bulk-billing radiology provider, or pay the gap for an endometriosis-protocol scan) →
+<b>5.</b> <b>Parallel referrals:</b> KEMH (public, free, long wait) [1] <i>and</i> Adora Fertility Murdoch (bulk-billing model) [6] <i>or</i> Genea's bulk-billed Fertility GP [4] →
+<b>6.</b> Tubal test via the specialist →
+<b>7.</b> Treatment matched to the findings. Go to IVF only if tubes are blocked, there is severe male factor or significant endometriosis, or cheaper treatments fail. If IVF is needed, a bulk-billing clinic costs about $2,430 per cycle compared with $6,600–$7,200 at full-fee clinics [7][8][11].</p>
+</div>
+
+<h2 class="newpage">15. Private health insurance: do you need it?</h2>
+<ul>
+<li><b>Not for investigations.</b> GP visits, blood tests, semen analysis, ultrasound and specialist consults are out-of-hospital Medicare services. Private insurance cannot legally pay for out-of-hospital Medicare gaps.</li>
+<li><b>For IVF,</b> insurance only helps with the <b>in-hospital</b> part (the egg-collection day-surgery fee and theatre costs). This needs <b>Gold-tier hospital cover</b> that includes "assisted reproductive services", with a <b>12-month waiting period</b> [50]. A couple's Gold hospital policy in WA typically costs several thousand dollars a year (approx.). That is often more than it saves across 1–2 IVF cycles, especially at a bulk-billing clinic.</li>
+<li><b>Pregnancy and birth:</b> public maternity care in Perth (Fiona Stanley, Rockingham General, KEMH) is free and high quality. Private obstetric care is a comfort choice, not a safety requirement, and also needs a 12-month wait.</li>
+<li><b>Lifetime Health Cover loading:</b> this applies from 1 July after you turn 31 if you don't hold hospital cover. <b>He is 33</b>, so he may already attract a loading (2% per year over 30) when he buys cover. She is 28, so there is no loading yet. Check your own situation.</li>
+<li><b>Possible KEMH issue:</b> a third-party source says KEMH public fertility requires no private insurance [10]. Confirm with KEMH first.</li>
+<li><b>Verdict:</b> do not buy insurance for fertility now. Revisit only if the specialist says IVF is likely <i>and</i> you've done the maths with a clinic quote, or if you want private obstetric care. If you'd pay the Medicare Levy Surcharge anyway because of your income, basic hospital cover may make sense for tax reasons. That is a separate calculation.</li>
+</ul>
+
+<h2 class="newpage">16. Sources</h2>
+<p class="small muted">Web sources were searched in September 2026. Government sites (health.wa.gov.au, kemh.health.wa.gov.au, MBS Online) were verified through search-engine indexing of their current pages, because direct page fetches were blocked from the research environment. "Third-party" means a comparison site, not the provider itself.</p>
+<ol class="src">
+<li>KEMH – Reproductive Medicine Service incl. Fertility Clinic (eligibility, exclusions, referral): https://www.kemh.health.wa.gov.au/For-Health-Professionals/Gynaecology/Reproductive</li>
+<li>PathWest – Semen Analysis Service Cessation (2024): https://www.pathwest.health.wa.gov.au/News/2024/03/26/Semen-Analysis-Service-Cessation</li>
+<li>MBS Online – Item 73523 (semen examination; fee $43.85, 85% benefit $37.30): https://www9.health.gov.au/mbs/fullDisplay.cfm?type=item&amp;q=73523&amp;qt=item</li>
+<li>Genea – Bulk-billed fertility assessment and Fertility GP (incl. WA, no referral needed): https://www.genea.com.au/pages/bulk-billed-fertility-assessment-MCGKVCZZKWOVASRGEJ3EBQSIJRYQ</li>
+<li>Genea Perth (Wembley) location and andrology request form: https://www.genea.com.au/location/genea-perth</li>
+<li>Adora Fertility – Murdoch clinic: https://www.adorafertility.com.au/locations/western-australia/murdoch</li>
+<li>Adora Fertility – IVF costs: https://www.adorafertility.com.au/ivf-costs</li>
+<li>Fertility North – How much does IVF cost / fees: https://www.fertilitynorth.com.au/about-us/our-fees/how-much-does-ivf-cost/</li>
+<li>Fertility Specialists of WA – Treatment costs and FAQs: https://www.fertilitywa.com.au/treatment-costs/ ; https://www.fertilitywa.com.au/faqs/</li>
+<li>TreatCompare – IVF Clinics Perth &amp; WA 2026 (third-party): https://www.treatcompare.com/articles/ivf-clinics-perth-wa</li>
+<li>TreatCompare – Monash IVF costs 2026 (third-party): https://www.treatcompare.com/au/fertility/clinics/monash-ivf</li>
+<li>Wellness Family Doctors, Kwinana (healthdirect listing and website): https://www.healthdirect.gov.au/australian-health-services/healthcare-service/kwinana-town-centre-6167-wa/wellness-family-doctors/gp-general-practice/36d2a56c-4272-4495-bcb0-a667f3021785 ; https://wellnessfd.com.au/</li>
+<li>Rockingham Medical Centre – Patient fees (100% bulk billing): https://www.rockinghammedicalcentre.com.au/patient-fees/</li>
+<li>ABC News – Bulk-billing changes from 1 Nov 2025: https://www.abc.net.au/news/2025-10-31/bulk-billing-changes-medicare-gp-incentives/105953126 ; Minister for Health media release: https://www.health.gov.au/ministers/the-hon-mark-butler-mp/media/delivering-the-bulk-billing-incentive-program</li>
+<li>Clinipath Pathology – Billing: https://www.clinipathpathology.com.au/patients/pay-your-account/</li>
+<li>Western Diagnostic Pathology – Seminal fluid collection: https://www.wdp.com.au/pre-test-collection-information/seminal-fluid-collection</li>
+<li>Australian Clinical Labs – Semen analysis drop-off locations: https://www.clinicallabs.com.au/patient/semen-analysis-collection-centre-locations</li>
+<li>IVF Australia – Booking a semen analysis: https://www.ivf.com.au/booking-a-semen-analysis</li>
+<li>NHMRC – ART ethical guidelines Q&amp;A (sex selection): https://www.nhmrc.gov.au/file/7076/download?token=IN55xiK- ; guidelines: https://www.nhmrc.gov.au/about-us/publications/art</li>
+<li>Wilcox AJ et al. Timing of sexual intercourse in relation to ovulation. NEJM 1995;333:1517-21: https://www.nejm.org/doi/full/10.1056/NEJM199512073332301</li>
+<li>Your Fertility – Timing is everything: https://www.yourfertility.org.au/latest-news/if-you-want-get-pregnant-timing-everything</li>
+<li>Dreyer K et al. Oil-based or water-based contrast for HSG (H2Oil). NEJM 2017: https://www.nejm.org/doi/full/10.1056/NEJMoa1612337</li>
+<li>Steiner AZ et al. MOXI randomized trial. Fertil Steril 2020: https://pubmed.ncbi.nlm.nih.gov/32111479/</li>
+<li>Schisterman EF et al. FAZST trial. JAMA 2020;323:35-48: https://clinicaltrials.gov/study/NCT01857310</li>
+<li>Markram et al. Sperm-friendly lubricant: fact or fiction. Int J Gynaecol Obstet 2022: https://pubmed.ncbi.nlm.nih.gov/35318650/</li>
+<li>RANZCOG – Endometriosis / Australian Living Evidence Guideline: https://ranzcog.edu.au/womens-health/endometriosis/</li>
+<li>NHMRC – Iodine supplementation for pregnant and breastfeeding women: https://www.nhmrc.gov.au/about-us/publications/iodine-supplementation-pregnant-and-breastfeeding-women</li>
+<li>healthdirect – Planning for your pregnancy: https://www.healthdirect.gov.au/planning-for-your-pregnancy</li>
+<li>FSANZ – Mercury in fish: https://www.foodstandards.gov.au/consumer/chemicals/mercury/mercury-in-fish ; Listeria: https://www.foodstandards.gov.au/consumer/safety/listeria</li>
+<li>NHMRC – Australian guidelines to reduce health risks from drinking alcohol (2020): https://www.nhmrc.gov.au/health-advice/alcohol</li>
+<li>Steiner AZ et al. Association of biomarkers of ovarian reserve with infertility. JAMA 2017;318:1367-76: https://jamanetwork.com/journals/jama/fullarticle/2656811</li>
+<li>de Ligny W et al. Antioxidants for male subfertility. Cochrane 2022: https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD007411.pub5/full</li>
+<li>Gibbons T et al. Timed intercourse for couples trying to conceive. Cochrane 2023: https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD011345.pub3/full</li>
+<li>NICE CG156 – Fertility problems: assessment and treatment: https://www.nice.org.uk/guidance/cg156</li>
+<li>AUA/ASRM – Diagnosis and treatment of male infertility guideline (2024): https://www.auanet.org/guidelines-and-quality/guidelines/male-infertility</li>
+<li>WHO Laboratory manual for the examination and processing of human semen, 6th ed. (2021): https://www.who.int/publications/i/item/9789240030787</li>
+<li>MBS Online – Reproductive carrier screening item 73451: https://www9.health.gov.au/mbs/fullDisplay.cfm?type=item&amp;q=73451&amp;qt=item</li>
+<li>Farquhar CM et al. Ovarian stimulation + IUI vs expectant management for unexplained infertility (TUI). Lancet 2018: https://pubmed.ncbi.nlm.nih.gov/29290449/</li>
+<li>ESHRE Guideline: Endometriosis (2022): https://www.eshre.eu/Guideline/Endometriosis</li>
+<li>Salas-Huetos A et al. Dietary patterns and male fertility – systematic review. Hum Reprod Update 2017: https://doi.org/10.1093/humupd/dmx006</li>
+<li>Gaskins AJ, Chavarro JE. Diet and fertility: a review. AJOG 2018: https://doi.org/10.1016/j.ajog.2017.08.010</li>
+<li>Middleton P et al. Omega-3 fatty acid addition during pregnancy. Cochrane 2018: https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD003402.pub3/full</li>
+<li>International evidence-based PCOS guideline 2023 (Monash/MCHRI): https://www.monash.edu/medicine/mchri/pcos/guideline</li>
+<li>Smith CA et al. Acupuncture and live births among women undergoing IVF. JAMA 2018: https://jamanetwork.com/journals/jama/fullarticle/2680710</li>
+<li>Healthengine – Bulk billing GPs, Kwinana Town Centre: https://healthengine.com.au/find/bulk-billing-gp/WA/Kwinana-Town-Centre-6167</li>
+<li>KEMH – Home page (address 374 Bagot Rd Subiaco; switchboard): https://www.kemh.health.wa.gov.au/</li>
+<li>HotDoc – Bulk billing doctors, Kwinana Town Centre: https://www.hotdoc.com.au/find/bulk-billing-doctor/WA/kwinana-town-centre-6167</li>
+<li>Young SS et al. Cereal-induced gender selection? Most likely a multiple testing false positive. Proc R Soc B 2009: https://royalsocietypublishing.org/doi/10.1098/rspb.2008.1348</li>
+<li>Fertility North – Our fees: https://www.fertilitynorth.com.au/about-us/our-fees/</li>
+<li>privatehealth.gov.au – Private hospital cover clinical categories: https://www.privatehealth.gov.au/health_insurance/what_is_covered/privatehospital.htm</li>
+<li>healthdirect – Infertility: https://www.healthdirect.gov.au/infertility</li>
+<li>Your Fertility (Australian Government-funded education program): https://www.yourfertility.org.au</li>
+<li>Monash IVF – Medicare rebates explained: https://monashivf.com/costs/medicare/</li>
+<li>Services Australia – Medicare Safety Nets: https://www.servicesaustralia.gov.au/medicare-safety-nets</li>
+<li>Genea – WA treatment costs and Medicare rebates: https://www.genea.com.au/pages/treatment-costs-wa-MCN44CJLIDJ5FZRAU3AOUL6FK53Q</li>
+<li>FSANZ – Caffeine: https://www.foodstandards.gov.au/consumer/generalissues/caffeine</li>
+<li>Lipiodol flush under ultrasound guidance in Australia (PubMed): https://pubmed.ncbi.nlm.nih.gov/32909253/</li>
+</ol>
+<p class="small muted" style="margin-top:10pt;">Disclaimer: this document is general, evidence-based health information prepared for discussion with your own doctors. It does not replace individual medical assessment. Service details, eligibility and prices change. Confirm with each provider before relying on them.</p>
+</body>
+</html>
