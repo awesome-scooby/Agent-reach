@@ -167,7 +167,7 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:18px 0}
       <div>
         <div class="eyebrow">Perth metropolitan · houses · $600k–$650k buyer brief</div>
         <h1>Perth Property Bottom Model</h1>
-        <div class="sub" id="gendate">Built 8 September 2026 · refreshed 18 September 2026 · Perth (AWST)</div>
+        <div class="sub" id="gendate">Built 8 Sep 2026 · refreshed 18 Sep · <strong>refreshed 9 Nov 2026</strong> · Perth (AWST)</div>
       </div>
       <div class="badgebar" id="mastbadges"></div>
     </div>
@@ -557,7 +557,7 @@ hr.rule{border:none;border-top:1px solid var(--rule);margin:18px 0}
    Data Confidence score, not hidden.
    ════════════════════════════════════════════════════════════════════════ */
 
-const BUILD_DATE = "2026-09-18";
+const BUILD_DATE = "2026-11-09";
 
 /* ── Source registry ─────────────────────────────────────────────────── */
 const SRC = {
@@ -592,26 +592,26 @@ const SRC = {
 /* ── Model variables. v = value; every field is audited. ──────────────── */
 const V = {
   /* PRICE */
-  medHouseREIWA:{lab:"Perth median house sale price (REIWA)", v:960000, u:"$", src:"reiwaNews",
-    date:"Aug 2026", fresh:"green", note:"+1.1% m/m, +18.5% y/y. Landgate settlement medians; composition-sensitive and lags the index.", ed:1},
-  medDwellCot:{lab:"Perth median dwelling value (Cotality)", v:999987, u:"$", src:"cotality",
-    date:"Aug 2026", fresh:"green", note:"Hedonic index value, all dwellings. −0.8% m/m, −3.2% q/q, +15.6% y/y.", ed:1},
-  drawdown:{lab:"Drawdown from cycle peak", v:3.2, u:"%", src:"cotality",
-    date:"Aug 2026", fresh:"green", note:"Peak May 2026. Derived from the −3.2% quarterly index change to August.", ed:1},
-  momQ:{lab:"Quarterly price momentum", v:-3.2, u:"%", src:"cotality", date:"Aug 2026", fresh:"green",
-    note:"Four consecutive monthly falls (May–Aug 2026).", ed:1},
-  momY:{lab:"Annual price growth", v:15.6, u:"%", src:"cotality", date:"Aug 2026", fresh:"green",
-    note:"Still strongly positive — the annual number is a rear-view mirror here.", ed:1},
-  accel:{lab:"Momentum acceleration", v:-1, u:"flag", src:"cotality", date:"Aug 2026", fresh:"green",
-    note:"−1 = falls deepening, 0 = steady, +1 = falls easing. Monthly prints have worsened.", ed:1},
+  medHouseREIWA:{lab:"Perth median house sale price (REIWA)", v:970000, u:"$", src:"reiwaNews",
+    date:"Oct 2026", fresh:"green", note:"+0.5% m/m, +16.4% y/y on the rolling annual median. Still rising while the index falls hard — the settlement median lags by a quarter and is composition-sensitive. CONFLICT: a second summary gives ~$965,000 for September. Single-source; verify with REIWA.", ed:1},
+  medDwellCot:{lab:"Perth median dwelling value (Cotality)", v:958400, u:"$", src:"cotality",
+    date:"Oct 2026", fresh:"green", note:"DERIVED: September's reported median was $975,022; October's −1.7% applied to it gives ≈$958,400. Cotality's October Perth median was not published in anything reachable here, so this is an arithmetic extension of a sourced figure, not a quoted one.", ed:1},
+  drawdown:{lab:"Drawdown from cycle peak", v:7.6, u:"%", src:"cotality",
+    date:"Oct 2026", fresh:"green", note:"Cotality put Perth −6.0% below peak at September; October's −1.7% compounds that to ≈−7.6%. PEAK DATE CORRECTED: Cotality now dates the peak to APRIL 2026, not May as the first two builds said.", ed:1},
+  momQ:{lab:"Quarterly price momentum", v:-5.7, u:"%", src:"cotality", date:"Oct 2026", fresh:"green",
+    note:"Rolling quarter to October. Perth and Brisbane now LEAD the national decline — Brisbane −6.1%, Perth −5.7%, both ahead of Sydney. Six consecutive monthly falls.", ed:1},
+  momY:{lab:"Annual price growth", v:10.1, u:"%", src:"cotality", date:"Sep 2026", fresh:"amber",
+    note:"Down from +15.6% in August. October's annual figure was not published in anything reachable here, so September's is used and marked 🟡 — it is certainly lower now.", ed:1},
+  accel:{lab:"Momentum acceleration", v:-1, u:"flag", src:"cotality", date:"Oct 2026", fresh:"green",
+    note:"−1 = falls deepening. The monthly sequence is −0.8% (Aug), −1.2% (Sep), −1.7% (Oct). Still accelerating downward — this is what stops the bottom probability rising faster than it has.", ed:1},
 
   /* SUPPLY */
-  listings:{lab:"Perth listings for sale", v:7565, u:"", src:"reiwaNews", date:"w/e 13 Sep 2026", fresh:"green",
-    note:"REFRESHED 18 Sep. Up from 7,204 at 23 Aug — +5.0% in three weeks, +6.9% on four weeks ago. Houses +3.6% w/w. Supply is still building, and building faster.", ed:1},
+  listings:{lab:"Perth listings for sale", v:7565, u:"", src:"reiwaNews", date:"w/e 13 Sep 2026", fresh:"orange",
+    note:"⚠️ NOW STALE. No REIWA weekly listing LEVEL after 13 September could be sourced in this refresh. Every growth reading since (Cotality +64.7% y/y at September, a November secondary +70.2%) says supply kept building, so this level is certainly understated and the Supply family score is correspondingly too low. The weakest input in the model as of 9 November.", ed:1},
   listingsLTA:{lab:"Listings long-run average (assumption)", v:12500, u:"", src:"author", date:"structural", fresh:"amber",
     note:"Perth's decade-average active listing count. Not freshly sourced — an author assumption used only as a scale reference. Change it if you have the REIWA series.", ed:1},
-  listingsYoY:{lab:"Listings, year on year", v:157.2, u:"%", src:"reiwaNews", date:"w/e 13 Sep 2026", fresh:"green",
-    note:"REVISED UP sharply. REIWA reports listings +157.2% y/y — a year ago Perth had roughly 2,940 properties for sale. Cotality's +36.4% (Jul) counts differently; see the conflicts panel. The REIWA figure is used because it is the same series as the listings level above.", ed:1},
+  listingsYoY:{lab:"Listings, year on year", v:64.7, u:"%", src:"cotality", date:"Sep 2026", fresh:"amber",
+    note:"SOURCE SWITCHED at the 9 Nov refresh. Cotality's +64.7% (Sep) and a November secondary's +70.2% now bracket each other closely, while REIWA's +157.2% (an active-listing count off a near-record-low base) sits far outside both. With the REIWA level itself stale, pairing a stale level with its own outlier growth rate was the worse option. Logged as a conflict.", ed:1},
   approvalsWA:{lab:"WA dwelling approvals, monthly change", v:-0.3, u:"%", src:"abs", date:"Jul 2026", fresh:"green",
     note:"Private house approvals −0.1%. Essentially flat; national trend approvals +11.7% y/y.", ed:1},
 
@@ -620,26 +620,26 @@ const V = {
     note:"Fastest of any state. Nine months old at build date — the single most important stale input.", ed:1},
   lendingQ:{lab:"New housing loan commitments, q/q", v:-5.4, u:"%", src:"abs", date:"Jun qtr 2026", fresh:"green",
     note:"Owner-occupier −3.3%, investor −8.6% by number.", ed:1},
-  salesYoY:{lab:"Perth sales volumes, y/y", v:-20, u:"%", src:"abc", date:"Aug 2026", fresh:"green",
-    note:"Reported as 'down more than 20%'. Treated as −20% (conservative edge of the claim). REIWA's weekly count for w/e 13 Sep was 600 transactions, down 12.4% on the week before.", ed:1},
+  salesYoY:{lab:"Perth sales volumes, y/y", v:-18.8, u:"%", src:"cotality", date:"Sep 2026", fresh:"amber",
+    note:"Cotality −18.8%; a November secondary gives −24.2%. The traceable figure is used. REIWA reported 713 transactions in the week to 1 November, up 4.5% on the week before — weekly noise, not a turn.", ed:1},
   ngShock:{lab:"Negative gearing shock absorbed?", v:0, u:"flag", src:"ato", date:"legislated 12 May 2026", fresh:"green",
     note:"0 = not yet. Negative gearing on established dwellings bought after 12 May 2026 ends 1 Jul 2027; 50% CGT discount replaced by indexation + 30% minimum rate.", ed:1},
 
   /* STRESS */
-  dom:{lab:"Median days on market (houses)", v:23, u:"days", src:"reiwaNews", date:"Aug 2026", fresh:"green",
-    note:"12 days slower than a year ago. CommBank quotes 9 → 22 days on its own measure.", ed:1},
+  dom:{lab:"Median days on market (houses)", v:26, u:"days", src:"cotality", date:"Sep 2026", fresh:"amber",
+    note:"Cotality: 26 days, up from 11 a year earlier — still the FASTEST of any capital (combined capitals 39). A November secondary gives 35 days. The traceable September figure is used, so this input is probably conservative.", ed:1},
   domTrough:{lab:"Days on market at 2018-19 trough (reference)", v:70, u:"days", src:"author", date:"structural", fresh:"amber",
     note:"Scale reference for the mapping only. Not freshly sourced.", ed:1},
-  discount:{lab:"Vendor discount", v:-4.0, u:"%", src:"cotality", date:"Jul 2026", fresh:"green",
-    note:"Widened from −2.9% a year earlier.", ed:1},
+  discount:{lab:"Vendor discount", v:-4.7, u:"%", src:"agg", date:"Nov 2026", fresh:"amber",
+    note:"Widened from −4.0% (Jul) and −2.9% a year earlier. SINGLE TIER-4 SOURCE — the only November reading found. Reverting it to −4.0% moves the ensemble by well under a point, so nothing here turns on it.", ed:1},
   clearance:{lab:"Auction clearance rate", v:null, u:"%", src:"cotality", date:"n/a", fresh:"red",
     note:"UNAVAILABLE BY CONSTRUCTION. Cotality does not publish a Perth clearance rate — 9–13 auctions a week is too few to be meaningful. Excluded; its weight is redistributed inside the Stress family.", ed:0},
 
   /* ECONOMY */
-  unempWA:{lab:"WA unemployment rate", v:4.5, u:"%", src:"abs", date:"Apr 2026", fresh:"orange",
-    note:"Up from 3.4% in Jan 2026. Sources seen give 3.4% (Jan), 4.40% (Feb), 4.30% (Mar), 4.5% (Apr) — the level is uncertain, the direction is not. STILL STALE at the 18 Sep refresh: ABS Labour Force for August 2026 is not released until 24 September.", ed:1},
-  unempTrend:{lab:"WA unemployment direction", v:1, u:"flag", src:"abs", date:"2026 YTD", fresh:"green",
-    note:"+1 = rising, 0 = flat, −1 = falling.", ed:1},
+  unempWA:{lab:"WA unemployment rate", v:4.2, u:"%", src:"abs", date:"Sep 2026", fresh:"green",
+    note:"🔄 THE BIGGEST CHANGE IN THIS REFRESH, and it cuts against the bear case. WA unemployment FELL to 4.2% in September — equal-lowest of the states, against 4.7% nationally. The April–August deterioration (≈4.5–4.6%) has reversed. The model's stalest input for two builds is now fresh, and it says the WA income shock is not happening. October data lands 19 November.", ed:1},
+  unempTrend:{lab:"WA unemployment direction", v:-1, u:"flag", src:"abs", date:"Sep 2026", fresh:"green",
+    note:"FLIPPED from +1 to −1: 4.5–4.6% in August to 4.2% in September. This one flag removes 15 points from the mining-shock regime weight in the trough-timing model and pulls the whole distribution forward.", ed:1},
   sentiment:{lab:"Consumer sentiment (Westpac-MI)", v:84.4, u:"idx", src:"westpac", date:"Sep 2026", fresh:"green",
     note:"−5.2% m/m, ~−12% y/y. Deeply pessimistic; 100 = optimists equal pessimists.", ed:1},
   ironOre:{lab:"Iron ore, forecast average", v:85, u:"US$/t", src:"disr", date:"2026-27 forecasts", fresh:"amber",
@@ -650,18 +650,20 @@ const V = {
     note:"WA Treasury revised 2025-26 SFD to 3.5%; Q4-2025 through-the-year 3.2%. Lower figure used.", ed:1},
 
   /* FINANCE */
-  cashRate:{lab:"RBA cash rate target", v:4.35, u:"%", src:"rba", date:"held Aug 2026", fresh:"green",
-    note:"Three hikes in 2026: Feb 3.85%, Mar 4.10%, May 4.35%. Held June and August.", ed:1},
-  rateDir:{lab:"Cash rate direction", v:1, u:"flag", src:"rba", date:"Sep 2026", fresh:"green",
-    note:"+1 = tightening bias. Market pricing for 29 Sep 2026 is reported at ~55% (ASX futures, 3 Sep) and ~68% (later summary) — a live disagreement, see conflicts. NAB expects Sep, ANZ and CBA Nov, Westpac a hold through 2026.", ed:1},
-  mortRate:{lab:"New owner-occupier variable rate", v:6.20, u:"%", src:"agg", date:"Jun–Jul 2026", fresh:"green",
-    note:"6.25% (end-Jun) and 6.17% (15 Jul) from lender-comparison trackers; ~6.9% average across existing loans.", ed:1},
-  inflation:{lab:"Headline CPI", v:3.5, u:"%", src:"abs", date:"Jul 2026", fresh:"green",
-    note:"Trimmed mean 3.6%. Above the 2–3% band — the reason the RBA is tightening.", ed:1},
+  cashRate:{lab:"RBA cash rate target", v:4.85, u:"%", src:"rba", date:"3 Nov 2026", fresh:"green",
+    note:"FIVE hikes in 2026: Feb 3.85, Mar 4.10, May 4.35, Sep 4.60, Nov 4.85. Highest since late 2008. September was unanimous; November split 6–3. Next decision 8 December.", ed:1},
+  rateDir:{lab:"Cash rate direction", v:1, u:"flag", src:"rba", date:"Nov 2026", fresh:"green",
+    note:"+1 = still tightening. Both September and November delivered hikes. But see the peak-signal flag — the character of the tightening changed in November.", ed:1},
+  peakSignal:{lab:"Rate peak signalled?", v:1, u:"flag", src:"rba", date:"3 Nov 2026", fresh:"green",
+    note:"NEW INPUT, added 9 Nov. 1 = the RBA has signalled the cycle is at or near its peak. Two pieces of evidence: the November statement DROPPED September's line about raising further if needed, and the vote split 6–3 after a unanimous September. A board that has lost three members and stopped promising more is usually at, or one move from, the end. This flag reweights the trough-timing model's 'last hike' distribution heavily toward 'already behind us'.", ed:1},
+  mortRate:{lab:"New owner-occupier variable rate", v:6.70, u:"%", src:"agg", date:"Nov 2026", fresh:"amber",
+    note:"DERIVED: ≈6.20% before the September and November hikes, plus 50bp of pass-through. Macquarie confirmed +0.25% effective 19 November. No post-November lender-average survey was reachable, so this is an arithmetic extension marked 🟡, not a quoted figure.", ed:1},
+  inflation:{lab:"Headline CPI", v:3.5, u:"%", src:"abs", date:"Jul 2026", fresh:"orange",
+    note:"⚠️ NOW FOUR MONTHS OLD. No September-quarter CPI could be sourced in this refresh. That the RBA hiked twice more implies inflation did not fall away, but that is inference, not data. Feeds only the real-cash-rate indicator, a minor input.", ed:1},
 
   /* RENTAL */
-  vacancy:{lab:"Perth rental vacancy rate", v:0.6, u:"%", src:"sqm", date:"Jul 2026", fresh:"green",
-    note:"SQM 0.6%. REIWA reported 0.7% for the March 2026 quarter on its own methodology.", ed:1},
+  vacancy:{lab:"Perth rental vacancy rate", v:0.6, u:"%", src:"sqm", date:"Jul 2026", fresh:"amber",
+    note:"No newer vacancy print was reachable, but the direction is corroborated: Perth rental listings fell below 2,000 for the first time since March, at 1,914 at end-September, −8.8% y/y. The rental market is tightening further, not loosening — still the strongest argument against a deep correction.", ed:1},
   rentMed:{lab:"Perth median rent (all dwellings)", v:784, u:"$/wk", src:"cotalityR", date:"Jun 2026", fresh:"amber",
     note:"Houses $798, units $716.", ed:1},
   rentGrowth:{lab:"Annual rent growth (houses)", v:8.1, u:"%", src:"cotalityR", date:"Jun 2026", fresh:"amber",
@@ -731,10 +733,10 @@ const CYCLES = [
    down:"≈ 24", gap:"≈ 36", driver:"Mining capex plateau; prices drifted while construction peaked.", conf:"low"},
   {name:"Mining bust", peak:"Nov 2014 · $585,000", pt:"−21.6%", trough:"Oct 2019 · ≈ $459,000",
    down:"59", gap:"49", driver:"Mining construction phase ended, population growth collapsed, WA unemployment rose. The reference downturn.", conf:"high"},
-  {name:"Recovery + boom II", peak:"May 2026 · index peak", pt:"in progress", trough:"—",
+  {name:"Recovery + boom II", peak:"Apr 2026 · index peak", pt:"in progress", trough:"—",
    down:"—", gap:"138", driver:"Population surge, record-low vacancy, historically cheap relative to the east coast — then rate cuts in 2025.", conf:"high"},
-  {name:"Current downturn", peak:"May 2026", pt:"−3.2% so far", trough:"unknown",
-   down:"4 and counting", gap:"—", driver:"Three RBA hikes in 2026, negative-gearing abolition, listings doubling, sales volumes −20%.", conf:"high"}
+  {name:"Current downturn", peak:"Apr 2026", pt:"−7.6% so far", trough:"unknown",
+   down:"6 and counting", gap:"—", driver:"FIVE RBA hikes in 2026 to 4.85%, negative-gearing abolition from Jul 2027, listings up ~65% y/y, sales volumes −19%. Perth and Brisbane now lead the national decline.", conf:"high"}
 ];
 
 /* ── Suburbs. Tier-4 aggregator data, mixed reference periods. ───────── */
@@ -876,9 +878,13 @@ function indicators(){
     "The WA economy is still expanding. Perth's 2014-19 bust required an actual income shock; there isn't one yet.","wpiWA");
 
   /* FINANCE */
-  add("Finance","f1","Cash rate direction",rd>0?"Tightening (4.35%, hike priced)":rd<0?"Easing":"On hold",
-    rd>0?4:rd<0?72:46,
-    "This is the model's most decisive single input. No Australian capital-city housing trough in the modern record has formed while the RBA was still raising rates. Three hikes in 2026 and roughly two-thirds odds on a fourth.","rateDir");
+  const pk=val("peakSignal");
+  add("Finance","f1","Cash rate direction",
+    rd>0?(pk?"Tightening at "+pcAbs(cr)+", but peak signalled":"Tightening at "+pcAbs(cr)):rd<0?"Easing":"On hold",
+    rd>0?(pk?34:4):rd<0?72:46,
+    rd>0&&pk
+      ? "Still the model's most decisive input, but it has changed character. Five hikes in 2026 took the cash rate to "+pcAbs(cr)+", the highest since 2008 — yet the November statement dropped the line about raising further and the board split 6–3. No Australian housing trough forms while the RBA is still tightening, but one commonly forms within two to four quarters of the LAST hike, and the evidence says the last hike is at hand. Scored 34 rather than 4 for that reason."
+      : "No Australian capital-city housing trough in the modern record has formed while the RBA was still raising rates.","rateDir");
   add("Finance","f2","Mortgage rate level",pcAbs(mr),
     pw(mr,[[3.5,14],[5.0,36],[6.0,56],[6.8,70],[7.5,80],[8.5,88]]),
     "6.2% on new owner-occupier variable loans is genuinely restrictive and is what is doing the damage to borrowing capacity.","mortRate");
@@ -950,7 +956,7 @@ function band(p){
 function falseBottom(){
   const c=[];
   const f=(q,hit,txt,w)=>c.push({q,hit,txt,w});
-  f("Are interest rates still rising?", val("rateDir")>0, "Cash rate 4.35% after three 2026 hikes; ~68% market odds on a fourth at the 29 Sep meeting.",2);
+  f("Are interest rates still rising?", val("rateDir")>0, "Cash rate 4.85% after five 2026 hikes — but the November statement dropped its tightening guidance and the board split 6–3. Still a YES, and still the condition that matters most; it is just closer to flipping than at any point this year. Next decision 8 December.",2);
   f("Are listings still increasing?", val("listingsYoY")>10, "Listings +"+val("listingsYoY")+"% y/y and more than double their March level. Supply is still building.",2);
   f("Is unemployment rising?", val("unempTrend")>0, "WA unemployment up roughly a percentage point since January 2026.",2);
   f("Is population growth slowing?", null, "Latest ABS state population data is the December 2025 quarter, released June 2026. Nine months old — genuinely unknown, so scored as unknown rather than assumed benign.",1);
@@ -1003,26 +1009,30 @@ function buyingScore(m){
    a couple of quarters after the RBA stops hiking. Regime 2: a WA
    real-economy shock — the 2014-19 pattern, where cuts did not help because
    the problem was jobs and population, not rates.                          */
-const Q0={y:2026,q:3};                                  // index 0 = Q3 2026
+const Q0={y:2026,q:4};                                  // index 0 = Q4 2026
 const qLab=i=>{const t=Q0.q-1+i; return "Q"+(t%4+1)+" "+(Q0.y+Math.floor(t/4));};
 const qYear=i=>Q0.y+Math.floor((Q0.q-1+i)/4);
 function troughModel(){
   const N=26;                                            // Q3 2026 → Q4 2032
   const r1=new Array(N).fill(0), r2=new Array(N).fill(0);
-  /* P(last hike lands in ...) — anchored on bank calls: NAB Sep, ANZ/CBA Nov,
-     Westpac hold; markets ~68% for 29 Sep. */
-  const lastHike=[{i:-1,p:.10},{i:1,p:.40},{i:3,p:.35},{i:5,p:.15}];
+  /* P(last hike lands in ...). Reweighted 9 Nov 2026: the RBA hiked to 4.85%
+     on 3 November but dropped its tightening guidance and split 6–3, so most
+     of the mass moves to "the last hike has already happened". Without that
+     signal the distribution stays spread out across 2027. */
+  const lastHike = val("peakSignal")
+    ? [{i:0,p:.50},{i:1,p:.30},{i:2,p:.15},{i:4,p:.05}]
+    : [{i:0,p:.15},{i:2,p:.40},{i:4,p:.30},{i:6,p:.15}];
   const kern=[.1,.2,.4,.2,.1];                            // trough ≈ last hike + 2q, ±2q
   lastHike.forEach(h=>{
     const c=h.i+2;
     kern.forEach((k,j)=>{ const idx=clamp(c-2+j,0,N-1); r1[idx]+=k*h.p; });
   });
-  /* Negative-gearing abolition bites 1 Jul 2027 (index 4). A trough before the
-     investor withdrawal lands is discounted, not excluded. */
-  for(let i=0;i<4;i++) r1[i]*=0.5;
+  /* Negative-gearing abolition bites 1 Jul 2027 (index 3 on this epoch). A
+     trough before the investor withdrawal lands is discounted, not excluded. */
+  for(let i=0;i<3;i++) r1[i]*=0.5;
   const s1=r1.reduce((a,b)=>a+b,0); for(let i=0;i<N;i++) r1[i]/=s1;
-  /* Regime 2: centred Q2 2030 (index 15), sd 3 quarters. */
-  for(let i=0;i<N;i++){ const z=(i-15)/3; r2[i]=Math.exp(-.5*z*z); }
+  /* Regime 2: centred Q2 2030 (index 14 on this epoch), sd 3 quarters. */
+  for(let i=0;i<N;i++){ const z=(i-14)/3; r2[i]=Math.exp(-.5*z*z); }
   const s2=r2.reduce((a,b)=>a+b,0); for(let i=0;i<N;i++) r2[i]/=s2;
   /* P(regime 2) rises with WA labour-market deterioration and falling iron ore */
   let p2=0.20;
@@ -1051,18 +1061,18 @@ function scenarios(){
   const mk=(k,lab,name,dd,tr,prob,drv,px)=>({k,lab,name,dd,tr,prob,drv,px,
     trough: peakIdx*(1-dd/100), houseTrough: (val("medHouseREIWA")/(1-val("drawdown")/100))*(1-dd/100)});
   return [
-    mk("bull","🟢 Bull","Shallow reset", 5.5, "Q4 2026 – Q2 2027", 22,
-      ["RBA holds at 4.35% and is cutting by mid-2027","Iron ore holds above US$95/t; WA capex pipeline extends",
-       "Vacancy stays under 1%; population growth holds near 2%","Listings peak near 8,000 and roll over"],
-      "Peak-to-trough about −5% to −6%. Prices resume rising through 2027 and the metro median passes $1.1m during 2028. In this world you do not get a materially better entry price than today's — you get a better interest rate."),
-    mk("base","🟡 Base","Normalisation", 10.5, "Q3 2027 – Q1 2028", 48,
-      ["One more hike, then a long hold into mid-2027","Negative-gearing abolition removes investor bid from 1 Jul 2027",
-       "WA unemployment peaks near 5.0–5.5%","Listings reach 10,000–12,000; days on market 35–45"],
-      "Peak-to-trough about −9% to −12%, consistent with CommBank's −8% Perth call and ANZ's +1.5% for 2027. Metro median dwelling near $920,000; REIWA median house near $870,000–$890,000. Recovery from late 2028."),
-    mk("bear","🔴 Bear","Mining-bust rerun", 22, "2029 – 2030", 30,
-      ["Cash rate above 5% into 2028 on sticky inflation","Iron ore below US$70/t; a major WA capex project deferred",
-       "WA unemployment above 6.5%; net interstate migration turns negative","Listings above 16,000; forced sales appear"],
-      "A repeat of 2014-19: −20% to −25% over four to five years. Metro median dwelling near $790,000; entry suburbs back toward $480,000–$520,000. This is the only scenario in which your budget buys a meaningfully better house than it does today.")
+    mk("bull","🟢 Bull","Shallow reset", 9.5, "Q2 – Q3 2027", 26,
+      ["November 2026 was the last hike; the RBA cuts from mid-2027","WA unemployment holds near 4.2%",
+       "Vacancy stays under 1% — rental listings are already below 2,000","Listings peak and roll over through summer"],
+      "Peak-to-trough about −9% to −10%, which means roughly 2% more downside from here. Prices resume rising through late 2027. In this world you do not get a materially better entry price than today's — you get a better interest rate, and you will be competing again by spring."),
+    mk("base","🟡 Base","Normalisation", 14.5, "Q4 2027 – Q2 2028", 50,
+      ["One more hike at most, then a long hold through 2027","Negative-gearing abolition removes the investor bid from 1 Jul 2027",
+       "WA unemployment drifts back to 4.5–5.0%","Listings reach 10,000–12,000; days on market 35–45"],
+      "Peak-to-trough about −13% to −16%, deeper than CommBank's −8% Perth call made in September — that call now looks too shallow, with Perth already −7.6% and falling 1.7% a month. Metro median dwelling near $880,000. About 7% more downside from here."),
+    mk("bear","🔴 Bear","Mining-bust rerun", 24, "2029 – 2030", 24,
+      ["Cash rate above 5.25% into 2028 on sticky inflation","Iron ore below US$70/t; a major WA capex project deferred",
+       "WA unemployment back above 6%; net interstate migration turns negative","Listings above 16,000; forced sales appear"],
+      "A repeat of 2014-19: −22% to −26% over four to five years. Metro median dwelling near $780,000; entry suburbs back toward $470,000–$510,000. Its weight is DOWN from 30% to 24% in this refresh, because WA unemployment fell to 4.2% in September — the income shock this scenario needs is not currently happening.")
   ];
 }
 
@@ -1079,7 +1089,7 @@ function dataConfidence(){
                                 // 7 suburb attributes, borrowing-capacity index, household formation,
                                 // GSP, business investment, completions, land releases
   const comp = avail.length/(keys.length+STRUCTURAL_GAPS)*100;
-  const CONFLICTS=7;
+  const CONFLICTS=9;
   const cons = clamp(100-11*CONFLICTS,0,100);
   const forecast = 52;  // bimodal trough distribution, regime uncertainty, n≈3 back-test
   const total = q*.25 + f*.20 + comp*.20 + cons*.15 + forecast*.20;
@@ -1174,21 +1184,21 @@ function chartScenario(host,SC){
   }
   for(let y=2025;y<=2031;y++){ s.appendChild(txt(y,{x:X(y),y:M.t+ih+18,"text-anchor":"middle"})); }
   // forecast boundary
-  s.appendChild(el("rect",{x:X(2026.63),y:M.t,width:M.l+iw-X(2026.63),height:ih,fill:"var(--ink3)","fill-opacity":".05"}));
-  s.appendChild(el("line",{x1:X(2026.63),x2:X(2026.63),y1:M.t,y2:M.t+ih,stroke:"var(--ink2)","stroke-dasharray":"4 3"}));
-  s.appendChild(txt("ACTUAL",{x:X(2026.63)-6,y:M.t+12,"text-anchor":"end",fill:"var(--good)","font-size":"9.5"}));
-  s.appendChild(txt("FORECAST — model output, not data",{x:X(2026.63)+6,y:M.t+12,fill:"var(--ink2)","font-size":"9.5"}));
+  s.appendChild(el("rect",{x:X(2026.83),y:M.t,width:M.l+iw-X(2026.83),height:ih,fill:"var(--ink3)","fill-opacity":".05"}));
+  s.appendChild(el("line",{x1:X(2026.83),x2:X(2026.83),y1:M.t,y2:M.t+ih,stroke:"var(--ink2)","stroke-dasharray":"4 3"}));
+  s.appendChild(txt("ACTUAL",{x:X(2026.83)-6,y:M.t+12,"text-anchor":"end",fill:"var(--good)","font-size":"9.5"}));
+  s.appendChild(txt("FORECAST — model output, not data",{x:X(2026.83)+6,y:M.t+12,fill:"var(--ink2)","font-size":"9.5"}));
   // actual segment
-  const act=[[2025.63,peak/1.156],[2026.38,peak],[2026.63,val("medDwellCot")]];
+  const act=[[2025.75,peak/1.101],[2026.30,peak],[2026.58,975022],[2026.83,val("medDwellCot")]];
   s.appendChild(el("polyline",{points:act.map(([y,p])=>X(y)+","+Y(p)).join(" "),fill:"none",
     stroke:"var(--ink)","stroke-width":2.4}));
   // scenarios
   const cols={bull:"var(--s2)",base:"var(--s3)",bear:"var(--s1)"};
-  const tro={bull:2027.0,base:2027.9,bear:2029.9};
+  const tro={bull:2027.5,base:2028.1,bear:2030.0};
   SC.forEach(sc=>{
     const t=tro[sc.k], tp=peak*(1-sc.dd/100);
     const rec = sc.k==="bull"?0.055:sc.k==="base"?0.04:0.03;
-    const pts=[[2026.63,val("medDwellCot")],[t,tp]];
+    const pts=[[2026.83,val("medDwellCot")],[t,tp]];
     for(let y=t+0.5;y<=2031.4;y+=0.5) pts.push([y,tp*Math.pow(1+rec,y-t)]);
     s.appendChild(el("polyline",{points:pts.map(([y,p])=>X(y)+","+Y(clamp(p,ymin,ymax))).join(" "),
       fill:"none",stroke:cols[sc.k],"stroke-width":2,"stroke-dasharray":"6 4"}));
@@ -1196,7 +1206,7 @@ function chartScenario(host,SC){
     s.appendChild(txt(sc.lab.replace(/[^A-Za-z]/g,"")+" "+money0(tp),
       {x:X(2031.5)+6,y:Y(clamp(tp*Math.pow(1+rec,2031.4-t),ymin,ymax))+3.5,fill:cols[sc.k],"font-size":"10.5","font-weight":"600"}));
   });
-  s.appendChild(txt("Peak "+money0(peak)+" · May 2026",{x:X(2026.38),y:Y(peak)-10,"text-anchor":"middle",fill:"var(--ink)","font-size":"10"}));
+  s.appendChild(txt("Peak "+money0(peak)+" · Apr 2026",{x:X(2026.30),y:Y(peak)-10,"text-anchor":"middle",fill:"var(--ink)","font-size":"10"}));
   host.innerHTML=""; host.appendChild(s);
 }
 
@@ -1432,7 +1442,7 @@ function render(){
   $("#cyctrack").innerHTML = PHASES.map(([n,i])=>
     `<div class="cycseg${i===2?" on":""}"><span>${n}</span></div>`).join("")
     + `<div class="cycmark" style="left:calc(${(pos/6)*100}% - 1px)"></div>`;
-  $("#cyccap").innerHTML = `Model reads Perth as <strong>early slowdown</strong> — four months and −${val("drawdown").toFixed(1)}% past a May 2026 peak, with the RBA still tightening. Not near the bottom band.`;
+  $("#cyccap").innerHTML = `Model reads Perth as <strong>mid-slowdown</strong> — six months and −${val("drawdown").toFixed(1)}% past an April 2026 peak, falling faster each month, with the cash rate at ${pcAbs(val("cashRate"))}. Moved up the band since September, but not yet at the bottom.`;
 
   if(DC.total<60) $("#confwarn").innerHTML =
     `<div class="critbox" style="margin-top:24px">⚠️ <strong>Forecast reliability is reduced.</strong> Data confidence is
@@ -1447,14 +1457,14 @@ function render(){
   const tro=qLab(T.mode), win=qLab(T.lo)+" – "+qLab(T.hi);
   const entryMed=610000;
   $("#tiles").innerHTML=[
-    {k:"Current market",v:pc(val("momQ")),u:`Quarterly change · median dwelling ${money(val("medDwellCot"))}<br>Four straight monthly falls`,c:"crit",m:null,hi:1},
+    {k:"Current market",v:pc(val("momQ")),u:`Quarterly change · median dwelling ${money(val("medDwellCot"))}<br>Six straight falls; Perth now leads the national decline`,c:"crit",m:null,hi:1},
     {k:"Bottom probability",v:Math.round(M.ensemble)+"%",u:b.l,c:b.c,m:M.ensemble},
     {k:"Expected bottom",v:tro,u:`50% window ${win}<br>Distribution is bimodal`,c:"",m:null},
     {k:"$600–650k opportunity",v:"Outer only",u:`Metro median needs −${((1-650000/val("medHouseREIWA"))*100).toFixed(0)}% to reach $650k.<br>Your budget already works in the outer corridor.`,c:"warn",m:null},
     {k:"Buying score",v:Math.round(BS.total),u:BS.lvl.e+" "+BS.lvl.l,c:BS.lvl.c,m:BS.total},
     {k:"False-bottom risk",v:FB.lvl.l,u:`${FB.hits} of ${FB.known} conditions triggered${FB.unknown?`, ${FB.unknown} unknown`:""}`,c:FB.lvl.c,m:FB.ratio*100},
     {k:"Model confidence",v:Math.round(DC.total),u:DC.lvl.l+" · "+DC.conflicts+" source conflicts",c:DC.lvl.c,m:DC.total},
-    {k:"Cash rate",v:pcAbs(val("cashRate")),u:"↑ Tightening · three hikes in 2026<br>~68% priced for a fourth on 29 Sep",c:"crit",m:null}
+    {k:"Cash rate",v:pcAbs(val("cashRate")),u:"↑ Five hikes in 2026 · highest since 2008<br>But guidance dropped and the board split 6–3",c:"crit",m:null}
   ].map(t=>`<div class="tile${t.hi?" hi":""}">
       <div class="k">${t.k}</div><div class="v ${t.c}">${t.v}</div><div class="u">${t.u}</div>
       ${t.m!=null?`<div class="meter"><i class="${t.c}" style="width:${clamp(t.m,0,100)}%"></i></div>`:""}</div>`).join("");
@@ -1469,11 +1479,12 @@ function render(){
       Both are correct. A settlement median moves with what sells and lags the market by roughly a quarter; a hedonic index
       holds quality constant and turns first. <strong>In a turning market the index leads and the median lags</strong> — which
       is exactly what you are looking at, and why the headline "Perth on track for a $1m median" is a rear-view statement.</p>
-    <p class="note">The mechanics underneath: three RBA hikes in 2026 to 4.35% with a fourth roughly two-thirds priced;
-      listings past 7,000 for the first time in three years and more than double their March level; days on market 23 against
-      11 a year ago; vendor discounting −4.0%; sales volumes down more than 20%. Against that, vacancy is 0.6% and WA is the
-      fastest-growing state. <strong>That combination produces a downturn, not a crash</strong> — and it is four months old,
-      not four years old.</p></div>`;
+    <p class="note">The mechanics underneath: <strong>five</strong> RBA hikes in 2026 to 4.85%, the highest cash rate since
+      2008; listings up around 65% year on year; days on market 26 against 11 a year ago; vendor discounting −4.7%; sales
+      volumes −19%. Against that, vacancy is 0.6% with rental listings below 2,000 for the first time since March, and
+      <strong>WA unemployment fell to 4.2% in September, equal-lowest of the states</strong>.
+      <strong>That combination still produces a downturn, not a crash</strong> — but a deeper one than September's reading
+      implied, arriving faster.</p></div>`;
 
   /* ── update panel ── */
   $("#srctable tbody").innerHTML = FEEDS.map(f=>`<tr><td class="nm">${f.n}</td><td>${f.vars}</td>
@@ -1524,22 +1535,26 @@ function render(){
   $("#cyclecompare").innerHTML=`
     <p class="note">Positioned against Perth's own reference downturn:</p>
     <div class="g3" style="margin-top:12px">
-      <div class="card"><h4>Elapsed</h4><div class="kv"><span>Now</span><b>4 months</b></div>
+      <div class="card"><h4>Elapsed</h4><div class="kv"><span>Now</span><b>6 months</b></div>
         <div class="kv"><span>2014–19</span><b>59 months</b></div>
-        <div class="kv"><span>Position</span><b>7% through</b></div></div>
+        <div class="kv"><span>Position</span><b>10% through</b></div></div>
       <div class="card"><h4>Decline</h4><div class="kv"><span>Now</span><b>−${dd.toFixed(1)}%</b></div>
         <div class="kv"><span>2014–19</span><b>−21.6%</b></div>
-        <div class="kv"><span>Position</span><b>15% of the way</b></div></div>
-      <div class="card"><h4>Market stress</h4><div class="kv"><span>Days on market</span><b>23 vs ~70</b></div>
-        <div class="kv"><span>Vendor discount</span><b>−4.0% vs ~−7.5%</b></div>
-        <div class="kv"><span>Listings vs average</span><b>58% vs ~130%</b></div></div>
+        <div class="kv"><span>Position</span><b>${Math.round(dd/21.6*100)}% of the way</b></div></div>
+      <div class="card"><h4>Market stress</h4><div class="kv"><span>Days on market</span><b>${val("dom")} vs ~70</b></div>
+        <div class="kv"><span>Vendor discount</span><b>${pcAbs(val("discount"))} vs ~−7.5%</b></div>
+        <div class="kv"><span>Listings y/y</span><b>+${val("listingsYoY")}% and climbing</b></div></div>
     </div>
-    <div class="critbox" style="margin-top:14px"><strong>Answer to the question you asked:</strong> today's Perth market
-      resembles the <em>beginning</em> of a historical cycle downturn, not the middle and certainly not the end. Every
-      stress measure sits between a quarter and a third of the way toward its 2018-19 reading, and the one input that has
-      never been present at an Australian housing trough — a central bank still raising rates — is present now.
-      <br><br>The countervailing evidence is real and should not be waved away: 0.6% vacancy and 2.2% population growth are
-      not 2015 conditions. That is the argument for a shallow downturn. It is not an argument that this <em>is</em> the bottom.</div>`;
+    <div class="warnbox" style="margin-top:14px"><strong>Answer to the question you asked, updated 9 November:</strong>
+      Perth has moved from the <em>beginning</em> of a downturn to the <em>early middle</em>. Six months and −${dd.toFixed(1)}%
+      past an April 2026 peak, roughly ${Math.round(dd/21.6*100)}% of the way to the 2014-19 decline in depth but only
+      10% of the way through in time, and falling faster each month (−0.8%, −1.2%, −1.7%).
+      <br><br>Two things changed in this refresh and they point opposite ways. Against you: the RBA hiked twice more, to
+      4.85%, the highest since 2008, and Perth now leads the national decline rather than lagging it. For you: WA
+      unemployment <em>fell</em> to 4.2% in September, equal-lowest of the states, and the November RBA statement dropped
+      its tightening guidance on a 6–3 split. The income shock the bear case needs is not happening, and the rate cycle
+      looks close to done. <strong>This is still not the bottom — but the path to one is much clearer than it was in
+      September.</strong></div>`;
 
   /* ── score ── */
   $("#familyBars").innerHTML = FAMS.map(f=>{
@@ -1658,21 +1673,34 @@ function render(){
       <div class="card"><h4>Regime 1 — rates-driven correction · ${Math.round((1-T.p2)*100)}%</h4>
         <p class="small">The trough forms roughly two quarters after the RBA stops hiking (±2 quarters, triangular).
           Timing of the last hike is taken from published bank calls: NAB September, ANZ and CBA November, Westpac a hold
-          for the rest of 2026, with markets ~68% priced for 29 September.</p>
-        <div class="kv"><span>Last hike already behind us</span><b>10%</b></div>
-        <div class="kv"><span>Last hike Q4 2026</span><b>40%</b></div>
-        <div class="kv"><span>Last hike Q2 2027</span><b>35%</b></div>
-        <div class="kv"><span>Last hike Q4 2027</span><b>15%</b></div>
+          for the rest of 2026. <strong>Superseded 9 November:</strong> the RBA hiked in September AND November, to 4.85%,
+          then dropped its tightening guidance on a 6–3 split — so the distribution below is reweighted heavily toward
+          "the last hike has already happened".</p>
+        <div class="kv"><span>3 Nov 2026 was the last hike</span><b>50%</b></div>
+        <div class="kv"><span>One more, Q1 2027</span><b>30%</b></div>
+        <div class="kv"><span>Last hike Q2 2027</span><b>15%</b></div>
+        <div class="kv"><span>Last hike Q4 2027</span><b>5%</b></div>
         <p class="small" style="margin-top:9px">Quarters before Q3 2027 are then halved: negative gearing on established
           dwellings ends 1 July 2027, so the investor withdrawal is still ahead of the market. A trough before a known
           demand shock lands is possible but unlikely.</p></div>
       <div class="card"><h4>Regime 2 — WA income shock · ${Math.round(T.p2*100)}%</h4>
         <p class="small">The 2014-19 pattern, in which the RBA cut all the way down and Perth kept falling for five years
           because the problem was jobs and population, not rates. Centred on Q2 2030 with a 3-quarter spread.</p>
-        <p class="small">Its weight is not fixed — it is built from the inputs you can edit: base 20%, +10% because WA
-          unemployment is rising, +5% because it is already at or above 4.4%, +5% because iron ore consensus is at or below
-          US$88/t. Currently <strong>${Math.round(T.p2*100)}%</strong>. If WA unemployment stabilises, this falls and the
-          2029-30 hump shrinks.</p></div>
+        <p class="small">Its weight is not fixed — it is built from the inputs you can edit, and it <strong>fell from 40%
+          to ${Math.round(T.p2*100)}% at the 9 November refresh</strong> because WA unemployment turned down:</p>
+        ${[["Base weight","+20%",true],
+           ["WA unemployment rising","+10%",val("unempTrend")>0],
+           ["WA unemployment at or above 4.4%","+5%",val("unempWA")>=4.4],
+           ["Iron ore consensus at or below US$88/t","+5%",val("ironOre")<=88],
+           ["WA population growth below 1.5%","+10%",val("popWA")<1.5]
+          ].map(([k,v,on])=>`<div class="kv" style="font-size:.76rem;${on?"":"opacity:.45"}">
+            <span>${on?"✓":"✗"} ${k}</span><b>${on?v:"not applied"}</b></div>`).join("")}
+        <div class="kv" style="border-top:1px solid var(--rule);margin-top:5px"><span><strong>Regime 2 weight</strong></span>
+          <b>${Math.round(T.p2*100)}%</b></div>
+        <p class="small" style="margin-top:9px">The two unemployment conditions both switched off in September. That is
+          what shrank the 2029-30 hump from 20% to ${Math.round((T.years[2030]||0)*100)}% and pushed 2027 to
+          ${Math.round((T.years[2027]||0)*100)}% of the distribution. If the 19 November labour-force release reverses
+          it, this moves straight back.</p></div>
     </div>
     <div class="warnbox" style="margin-top:14px"><strong>Why the second hump matters more than the headline.</strong>
       The single most likely quarter carries only ${Math.round(T.q[T.mode]*100)}% — that is genuine uncertainty, not false modesty.
@@ -1704,7 +1732,8 @@ function render2(){
       buys a house today — in Armadale ($610,000), Brookdale ($622,000), Cannington ($635,000), Midland ($636,000) and the
       Kwinana corridor. The real question is not <em>can I afford Perth</em>; it is <strong>should I buy in the
       bottom-quartile outer corridor in the month after it posted +25% to +31% annual growth, with the whole market
-      four months into a downturn and the RBA still hiking?</strong> That is what the rest of this page is answering.</p>
+      six months into a downturn, with the cash rate at its highest since 2008?</strong> That is what the rest of this
+      page is answering.</p>
     <p class="note"><strong>Correction, 18 September 2026.</strong> The first build of this page said the $600,000
       duty threshold made a $625,000 purchase "$30,000–$40,000" more expensive than a $600,000 one. <em>That was wrong</em>,
       and it was wrong in the direction that made buying look worse. It came from a defect in the duty function, which
@@ -1899,8 +1928,8 @@ function render2(){
         <div class="small" style="display:flex;justify-content:space-between;margin-top:5px">
           <span>0 avoid</span><span>40 monitor</span><span>60 inspect</span><span>75 buy</span><span>100</span></div>
         <p class="note" style="margin-top:14px">The score is held down by three things and lifted by two. Down: you would
-          be buying four months into a downturn, at the worst affordability in Perth's history, with the RBA still
-          tightening. Up: real negotiating power has appeared for the first time since 2022, and the rental market is
+          be buying six months into a downturn, at the worst affordability in Perth's history, with the cash rate at
+          4.85%. Up: real negotiating power has appeared for the first time since 2022, and the rental market is
           genuinely tight. <strong>It reads 🔴 Wait — but only just, and it is a score that improves quickly once the
           RBA stops.</strong></p></div>
       <div>
@@ -2025,6 +2054,28 @@ function render3(){
         <div class="kv"><span>Forecast models active</span><b>6 / 7</b></div>
         <div class="kv"><span>Back-test events</span><b>3 troughs</b></div></div>
     </div>`;
+  $("#auditSummary").insertAdjacentHTML("beforeend",`
+    <h3 style="margin-top:22px">What moved between 18 September and 9 November</h3>
+    <div class="tw" style="margin-top:10px"><table><thead><tr><th>Input</th><th class="num">18 Sep</th>
+      <th class="num">9 Nov</th><th>Effect on the model</th></tr></thead><tbody>
+    ${[
+      ["RBA cash rate","4.35%","4.85%","Two more hikes (29 Sep unanimous, 3 Nov on a 6–3 split). Highest since 2008. Cuts your borrowing capacity by about $24,000."],
+      ["Rate guidance","\"may raise further\"","dropped","NEW INPUT. The peak-signal flag moves half the 'last hike' probability mass to 'already behind us', which is the single biggest reason the trough pulled forward from Q4 2027 to Q3 2027."],
+      ["Drawdown from peak","−3.2%","−7.6%","Peak also redated from May to April 2026. Perth now LEADS the national decline with Brisbane, rather than lagging it."],
+      ["Monthly momentum","−0.8%","−1.7%","Falls still accelerating: −0.8% (Aug), −1.2% (Sep), −1.7% (Oct). This is what stops the bottom probability rising further."],
+      ["WA unemployment","4.5% and rising (Apr)","4.2% and falling (Sep)","The refresh's most important change, and it cuts AGAINST the bear case. Equal-lowest of the states. Drops the mining-shock regime weight from 40% to 25%."],
+      ["Mortgage rate","6.20%","6.70%","Derived from 50bp of pass-through; Macquarie confirmed +0.25% from 19 Nov. Max purchase price falls from $744,000 to $720,000."],
+      ["Listings y/y","+157.2% (REIWA)","+64.7% (Cotality)","Source switched after the REIWA level went stale; logged as a conflict. The listings LEVEL is now the model's weakest input."],
+      ["Bottom probability","34%","${Math.round(M.ensemble)}%","Up 5 points, to the edge of the 'approaching possible bottom' band."],
+      ["Most likely trough","Q4 2027 (15%)","${qLab(T.mode)} (${Math.round(T.q[T.mode]*100)}%)","Earlier and much more concentrated: 2027 now carries ${Math.round((T.years[2027]||0)*100)}% of the distribution, against 38% in September."],
+      ["Buying score","31","${Math.round(BS.total)}","Essentially unchanged — a better cycle position and more negotiating power were cancelled by a 50bp rise in the cost of finance."]
+    ].map(([a,b,c,d])=>`<tr><td class="nm">${a}</td><td class="num">${b}</td><td class="num"><strong>${c}</strong></td><td class="small">${d}</td></tr>`).join("")}
+    </tbody></table></div>
+    <div class="warnbox" style="margin-top:14px"><strong>Two inputs went backwards in this refresh.</strong> The REIWA
+      listings level could not be updated past 13 September, and CPI is now four months old. Both are disclosed in the
+      missing-data panel below and both pull the confidence score down. The listings level matters: every growth reading
+      says supply kept building, so the Supply family score of ${Math.round(M.fam.Supply.score)} is probably too low,
+      which means the true bottom probability is probably a little higher than the ${Math.round(M.ensemble)}% shown.</div>`);
   $("#auditTable tbody").innerHTML=Object.keys(POLICY).map(k=>{
     const v=POLICY[k], sc=SRC[v.src], f=FRESH[v.fresh];
     return `<tr><td class="nm">${v.lab} <span class="tag">POLICY</span></td>
@@ -2041,7 +2092,7 @@ function render3(){
       <td class="num">T${s.tier}</td><td class="small">${v.note}</td></tr>`;}).join("");
 
   $("#conflicts").innerHTML=`
-    <p class="note">Seven material disagreements were found. None was resolved by picking a favourite.</p>
+    <p class="note">Nine material disagreements were found. None was resolved by picking a favourite.</p>
     ${[
       ["Perth price direction, August 2026",
        "REIWA: median house sale price <strong>+1.1%</strong> to $960,000. Cotality: Perth index <strong>−0.8%</strong>, median dwelling value $999,987.",
@@ -2059,10 +2110,18 @@ function render3(){
        "REIWA: <strong>+157.2%</strong> (w/e 13 Sep 2026). Cotality: <strong>+36.4%</strong> (Jul 2026).",
        "Different series. REIWA counts properties actively listed by its members at a point in time; Cotality's 'total listings' uses a longer counting window that carries stale listings forward, which compresses the growth rate off a very low base. A year ago Perth had roughly 2,940 active listings — the REIWA figure is arithmetically consistent with that.",
        "<strong>REIWA used</strong>, because it is the same series as the listings <em>level</em> the model scores against; mixing a level from one source with a growth rate from another would be incoherent. This revision alone lifted the Supply family score materially at the 18 September refresh.",1],
-      ["Market odds on the 29 September RBA hike",
-       "ASX cash-rate futures: <strong>~55%</strong> (as at 3 Sep 2026). A later summary: <strong>~68%</strong>.",
-       "Probably a genuine repricing between the two dates rather than a measurement difference — but neither figure could be traced to a primary RBA or ASX release.",
-       "<strong>Unresolved.</strong> Reported as a 55–68% range rather than a false point estimate. The model uses the <em>direction</em> of the rate cycle, not the odds, so nothing downstream turns on which is right.",1],
+      ["Perth's cycle peak — April or May 2026?",
+       "Cotality's September commentary dates the peak to <strong>April 2026</strong>. Earlier reporting of the same index said <strong>May 2026</strong>.",
+       "Most likely a revision as later sales were processed into the hedonic index; small monthly differences near a turning point move the identified peak by a month.",
+       "<strong>April adopted</strong> as the more recent statement of the same series; the first two builds of this page are corrected. It changes the elapsed duration by one month and nothing else.",1],
+      ["Perth days on market, late 2026",
+       "Cotality: <strong>26 days</strong> (September). A November secondary: <strong>35 days</strong>.",
+       "Two months apart in a fast-deteriorating market, and probably different definitions of listing date. Both plausible; neither contradicts the other.",
+       "<strong>Cotality's 26 used</strong> because it is traceable, which makes this input deliberately conservative — the real figure is probably worse for sellers and better for you.",1],
+      ["Perth median house price, October 2026",
+       "One October summary: <strong>$970,000</strong>, +0.5% m/m, +16.4% y/y. Another: <strong>≈$965,000</strong> for September.",
+       "Both describe REIWA's rolling 12-month median, which moves slowly; the two are about a month apart and differ by 0.5%.",
+       "<strong>$970,000 used.</strong> Single-source and unverified against REIWA directly. The gap is immaterial to every conclusion on this page.",1],
       ["WA first home owner duty threshold — effective date",
        "WA Government: the $600,000 exemption and $800,000 concession ceiling apply <strong>from 7 May 2026</strong>. A broker-aggregator source dated the change <strong>28 July 2026</strong>.",
        "The 7 May date matches the 2026-27 WA Housing Taxation Package announcement; the July date has no primary corroboration.",
@@ -2122,7 +2181,7 @@ function render3(){
   $("#strategyPanel").innerHTML=`
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)">
     ${[
-      ["NOW","Early slowdown","Four months and −3.2% past a May 2026 peak. Bottom probability "+Math.round(M.ensemble)+"%. False-bottom risk "+FB.lvl.l+"."],
+      ["NOW","Mid-slowdown","Six months and −"+val("drawdown").toFixed(1)+"% past an April 2026 peak, falling 1.7% a month. Bottom probability "+Math.round(M.ensemble)+"%, up from 34% in September. False-bottom risk "+FB.lvl.l+"."],
       ["NEXT","Further, gentle falls","Listings building, sales −20%, RBA still tightening. Base case −9% to −12% peak to trough."],
       ["BOTTOM",qLab(T.lo)+" – "+qLab(T.hi),Math.round(T.acc*100)+"% of the distribution, centred "+qLab(T.mode)+". Tail into 2029-30 if WA's labour market cracks."],
       ["BUYING WINDOW","From the last RBA hike","Start inspecting when the RBA stops, not when it cuts. Historically you get 2–3 quarters of weak sentiment and strong negotiating power before prices turn."],
@@ -2135,9 +2194,9 @@ function render3(){
   $("#doWatchWait").innerHTML=`
     <div class="card g"><h4>🟢 What I would do</h4>
       <ol class="small" style="padding-left:17px;margin:8px 0 0;line-height:1.65">
-        <li><strong>Not buy this quarter</strong>, on the evidence: buying score ${Math.round(BS.total)}, four months into a downturn,
-          with roughly two-thirds odds on another rate hike within three weeks of this being written. Every further hike cuts
-          your borrowing capacity and the price at the same time.</li>
+        <li><strong>Still not buy this quarter</strong>, but for a narrower reason than in September: buying score
+          ${Math.round(BS.total)}, and prices falling 1.7% a month. When the asset is getting cheaper that fast, a quarter's
+          patience is worth roughly 5% of the purchase price. That argument expires the moment the monthly falls shrink.</li>
         <li><strong>Get finance-ready now anyway.</strong> Pre-approval, deposit consolidated, conveyancer chosen. The
           window this model points at opens on a rate decision, not on a schedule, and the back-test says the signal
           arrives 3–13 months <em>early</em>. You want to be able to act inside a fortnight.</li>
@@ -2157,8 +2216,9 @@ function render3(){
       </ol></div>
     <div class="card w"><h4>🟡 What I would watch</h4>
       <ul class="small" style="padding-left:17px;margin:8px 0 0;line-height:1.65">
-        <li><strong>The 29 September 2026 RBA decision, then the one after.</strong> The single highest-information event
-          for this decision. A hold followed by a second hold is the start of your window.</li>
+        <li><strong>The 8 December 2026 RBA decision.</strong> November was a 6–3 split with the tightening guidance
+          dropped. A hold on 8 December would be the clearest signal yet that the cycle is done — and on this model's own
+          arithmetic that is what pulls the trough into 2027 and lifts the buying score.</li>
         <li><strong>REIWA weekly listings.</strong> The number to watch is not the level, it is the <em>rate of change</em>.
           When weekly listings stop rising for six to eight consecutive weeks, the supply side has turned.</li>
         <li><strong>Days on market past 35, vendor discounting past −5.5%.</strong> Those are the 2018-style readings that

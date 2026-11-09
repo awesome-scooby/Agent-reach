@@ -9,20 +9,20 @@ $600,000–$650,000 owner-occupier purchase within commuting distance of the CBD
   machine-readable and prints a paste-ready block for the dashboard's manual
   entry panel.
 
-Built 8 September 2026. Refreshed and extended 18 September 2026.
+Built 8 September 2026. Refreshed and extended 18 September. Refreshed again 9 November 2026.
 
 ## The headline result
 
 | | |
 |---|---|
-| Bottom probability | **34%** — early downturn, not near a trough |
-| Market position | Four months and −3.2% past a May 2026 index peak |
-| False-bottom risk | **HIGH** — 8 of 8 testable conditions triggered |
-| Buying Opportunity Score | **31 / 100** — 🔴 Wait |
-| Most likely trough | Q4 2027, 15% · 53% chance it falls in Q1 2027 – Q2 2028 |
-| Distribution shape | **Bimodal** — a rates-driven 2027 trough, or a WA income-shock trough around 2030 |
-| Data confidence | 64/100 — Moderate |
-| Your max purchase (single $120k, $130k savings) | $744,000 — **serviceability**, not deposit, is what binds |
+| Bottom probability | **40%** — at the edge of "approaching possible bottom" (was 34% in September) |
+| Market position | Six months and −7.6% past an **April** 2026 index peak, falling 1.7%/month |
+| False-bottom risk | **HIGH** — 7 of 8 testable conditions triggered |
+| Buying Opportunity Score | **31 / 100** — 🔴 Wait (unchanged) |
+| Most likely trough | **Q3 2027, 24%** · 55% chance it falls in Q2–Q4 2027 |
+| Distribution shape | Still bimodal, but 2027 now carries **61%** of the mass (was 38%) |
+| Data confidence | 63/100 — Moderate |
+| Your max purchase (single $120k, $130k savings) | **$720,000** at a 6.70% mortgage rate — down $24,000 since September |
 | Cost of each 25bp hike | ~$12,000 of purchasing power, vs ~$64,000 from a base-case 10% fall |
 
 **The finding that matters most for a $600–650k budget:** a Perth metro median
@@ -59,6 +59,24 @@ the year to June 2026, against +15.6% for the metro.
 9. **Buy-vs-wait break-even**, including LMI, the WA first home owner duty scale and
    the Home Guarantee Scheme toggle.
 
+## What the 9 November refresh changed
+
+| Input | 18 Sep | 9 Nov | Effect |
+|---|---|---|---|
+| RBA cash rate | 4.35% | **4.85%** | Two more hikes (29 Sep unanimous, 3 Nov on a 6–3 split). Highest since 2008. |
+| Rate guidance | "may raise further" | **dropped** | New peak-signal input. Moves half the "last hike" mass to *already behind us* — the main reason the trough pulled forward. |
+| Drawdown from peak | −3.2% | **−7.6%** | Peak also redated May → **April 2026**. Perth now leads the national decline with Brisbane. |
+| Monthly momentum | −0.8% | **−1.7%** | Falls still accelerating. This is what stops the bottom probability rising further. |
+| WA unemployment | 4.5%, rising (Apr) | **4.2%, falling (Sep)** | The most important change, and it cuts *against* the bear case. Mining-shock regime weight 40% → 25%. |
+| Mortgage rate | 6.20% | **6.70%** | Derived from 50bp pass-through. Max purchase price $744k → $720k. |
+| Listings y/y | +157.2% (REIWA) | +64.7% (Cotality) | Source switched after the REIWA level went stale; logged as a conflict. |
+
+**Two inputs went backwards:** the REIWA listings *level* could not be updated past
+13 September, and CPI is now four months old. Both are disclosed. The listings level
+matters — every growth reading says supply kept building, so the Supply family score
+is probably too low, which means the true bottom probability is likely a little
+higher than the 40% shown.
+
 ## What the 18 September update changed
 
 **Two defects in the 8 September build are fixed, and both had made buying look
@@ -89,7 +107,7 @@ unemployment is still April data; ABS Labour Force for August is not released un
 
 - Every figure carries a source, a data date (not an access date), a freshness
   grade and a source tier.
-- Seven source conflicts are documented with cause and resolution rather than
+- Nine source conflicts are documented with cause and resolution rather than
   silently resolved. One figure (a $1.09m Q4-2025 Perth median) is documented as
   a rejected outlier.
 - Ten missing or unavailable inputs are named, each with the weight
