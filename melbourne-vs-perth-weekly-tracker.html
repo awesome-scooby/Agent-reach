@@ -1,0 +1,470 @@
+<title>Melbourne vs Perth Weekly Check</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+:root{
+  --mel:#0C63AE; --per:#D2691E;
+  --good:#1F7A4C; --warn:#A96A05; --crit:#B3261E;
+  --good-w:rgba(31,122,76,.10); --warn-w:rgba(169,106,5,.10); --crit-w:rgba(179,38,30,.10);
+  --bg:#FBFAF8; --surface:#FFFFFF; --surface-2:#F4F2EE;
+  --ink:#16191D; --ink-2:#454B54; --ink-3:#71787F;
+  --rule:#E0DDD6; --rule-strong:#C8C4BA;
+  --display:'Archivo',system-ui,sans-serif;
+  --body:'Source Sans 3',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --mel:#3E93D6; --per:#D0742A;
+  --good:#3FA971; --warn:#D69420; --crit:#E4685E;
+  --good-w:rgba(63,169,113,.14); --warn-w:rgba(214,148,32,.14); --crit-w:rgba(228,104,94,.14);
+  --bg:#141513; --surface:#1C1E1C; --surface-2:#242624;
+  --ink:#F0EEE9; --ink-2:#BFBCB4; --ink-3:#8B8880;
+  --rule:#33352F; --rule-strong:#4A4C45;
+}}
+:root[data-theme="dark"]{
+  --mel:#3E93D6; --per:#D0742A;
+  --good:#3FA971; --warn:#D69420; --crit:#E4685E;
+  --good-w:rgba(63,169,113,.14); --warn-w:rgba(214,148,32,.14); --crit-w:rgba(228,104,94,.14);
+  --bg:#141513; --surface:#1C1E1C; --surface-2:#242624;
+  --ink:#F0EEE9; --ink-2:#BFBCB4; --ink-3:#8B8880;
+  --rule:#33352F; --rule-strong:#4A4C45;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px 80px}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* head */
+header{padding:36px 0 22px;border-bottom:2px solid var(--ink)}
+header h1{font-size:clamp(28px,4.6vw,46px);line-height:1;font-weight:800;letter-spacing:-.025em}
+header h1 .a{color:var(--mel)} header h1 .b{color:var(--per)}
+.hmeta{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:13px}
+.hmeta span{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+
+/* verdict strip */
+.verdict{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:24px}
+.verdict div{background:var(--surface);padding:14px 16px}
+.verdict .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
+.verdict .v{font-family:var(--display);font-size:21px;font-weight:800;margin-top:4px;letter-spacing:-.02em}
+.verdict .d{font-size:12px;color:var(--ink-3);margin-top:3px;line-height:1.35}
+
+section{margin-top:44px}
+.sh{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--rule-strong);padding-bottom:9px;margin-bottom:18px}
+.sh h2{font-size:clamp(19px,2.5vw,25px);font-weight:700;letter-spacing:-.015em}
+.sh .n{font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--ink-3)}
+.sh .r{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+p{max-width:74ch;color:var(--ink-2)}
+p.lede{font-size:16.5px;margin:0 0 18px}
+
+/* movement cards */
+.moves{display:grid;grid-template-columns:repeat(auto-fit,minmax(252px,1fr));gap:14px}
+.move{background:var(--surface);border:1px solid var(--rule);border-radius:3px;padding:17px 18px;display:flex;flex-direction:column;gap:7px}
+.move.up{border-left:5px solid var(--crit)}
+.move.dn{border-left:5px solid var(--good)}
+.move.nt{border-left:5px solid var(--ink-3)}
+.move .lab{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
+.move .big{font-family:var(--display);font-size:27px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.05}
+.move .was{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+.move .say{font-size:13.5px;color:var(--ink-2);margin:0;max-width:none}
+.delta{font-family:var(--mono);font-size:13px;font-weight:600}
+.delta.bad{color:var(--crit)} .delta.ok{color:var(--good)} .delta.nu{color:var(--ink-3)}
+
+/* trigger board */
+.trig{display:flex;flex-direction:column;gap:11px}
+.tg{display:grid;grid-template-columns:34px 1fr auto;gap:15px;align-items:start;background:var(--surface);border:1px solid var(--rule);border-radius:3px;padding:15px 17px}
+.tg.fired{border-color:var(--crit);background:var(--crit-w)}
+.tg.watch{border-color:var(--warn)}
+.dot{width:13px;height:13px;border-radius:50%;margin-top:4px}
+.dot.g{background:var(--good)} .dot.a{background:var(--warn)} .dot.r{background:var(--crit)}
+.tg .body h3{font-size:15.5px;font-weight:700;margin-bottom:3px}
+.tg .body p{font-size:13.5px;margin:0;max-width:none}
+.tg .body .thr{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-top:5px;display:block}
+.tg .st{text-align:right;white-space:nowrap}
+.tg .st .cur{font-family:var(--mono);font-size:14.5px;font-weight:600;font-variant-numeric:tabular-nums}
+.tg .st .lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;margin-top:3px;font-weight:600}
+.st.g .lbl{color:var(--good)} .st.a .lbl{color:var(--warn)} .st.r .lbl{color:var(--crit)}
+
+/* log form */
+.logbox{background:var(--surface);border:2px solid var(--mel);border-radius:3px;padding:22px 24px}
+.logbox h3{font-size:18px;font-weight:800;color:var(--mel)}
+.logbox .cap{font-size:13.5px;color:var(--ink-3);margin:4px 0 16px;max-width:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(152px,1fr));gap:12px 16px}
+.f label{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px}
+.f input,.f textarea{width:100%;padding:8px 10px;border:1px solid var(--rule-strong);border-radius:2px;background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:14px;font-variant-numeric:tabular-nums}
+.f textarea{font-family:var(--body);min-height:58px;resize:vertical}
+.f.wide{grid-column:1/-1}
+.acts{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:16px}
+button{font-family:var(--display);font-size:14px;font-weight:700;padding:9px 18px;border-radius:2px;border:1px solid var(--mel);background:var(--mel);color:#fff;cursor:pointer}
+button.ghost{background:transparent;color:var(--mel)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.msg{font-size:13.5px;font-family:var(--mono)}
+.msg.ok{color:var(--good)} .msg.err{color:var(--crit)} .msg.inf{color:var(--ink-3)}
+
+/* table */
+.tw{overflow-x:auto;border:1px solid var(--rule);background:var(--surface);border-radius:3px;margin-top:14px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:620px}
+th,td{padding:8px 11px;text-align:right;border-bottom:1px solid var(--rule);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{font-family:var(--mono);font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);font-weight:600;background:var(--surface-2)}
+tbody td{font-variant-numeric:tabular-nums;color:var(--ink-2)}
+tbody td:first-child{color:var(--ink);font-weight:600;font-family:var(--mono)}
+tbody tr:last-child td{border-bottom:none}
+.empty{padding:26px;text-align:center;color:var(--ink-3);font-size:14px}
+
+/* prompt */
+.promptbox{background:var(--surface-2);border:1px solid var(--rule-strong);border-radius:3px;padding:0;overflow:hidden}
+.pbar{display:flex;align-items:center;gap:12px;padding:11px 16px;background:var(--surface);border-bottom:1px solid var(--rule)}
+.pbar .t{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.pbar button{margin-left:auto;padding:6px 13px;font-size:12.5px}
+pre{margin:0;padding:18px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.62;color:var(--ink-2);white-space:pre-wrap;word-break:break-word}
+
+/* sources */
+.srcs{display:grid;grid-template-columns:repeat(auto-fit,minmax(262px,1fr));gap:12px}
+.sc{background:var(--surface);border:1px solid var(--rule);border-radius:3px;padding:14px 16px}
+.sc h3{font-size:14.5px;font-weight:700;margin-bottom:3px}
+.sc p{font-size:12.5px;margin:0 0 7px;max-width:none;color:var(--ink-3)}
+.sc a{font-family:var(--mono);font-size:12px;color:var(--mel);word-break:break-all}
+.note{border-left:3px solid var(--rule-strong);padding:2px 0 2px 15px;margin:18px 0;font-size:14.5px;color:var(--ink-2);max-width:76ch}
+.note strong{color:var(--ink)}
+.warnbox{background:var(--warn-w);border:1px solid var(--warn);border-radius:3px;padding:15px 18px;margin:18px 0}
+.warnbox h3{font-size:14.5px;font-weight:700;color:var(--warn);margin-bottom:5px}
+.warnbox p{font-size:14px;margin:0;max-width:none}
+footer{margin-top:50px;padding-top:20px;border-top:1px solid var(--rule);font-size:12.5px;color:var(--ink-3)}
+footer a{color:var(--ink-2)}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--mel);outline-offset:2px}
+@media(max-width:520px){.tg{grid-template-columns:20px 1fr;gap:11px}.tg .st{grid-column:2;text-align:left;margin-top:7px}}
+</style>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">Weekly recheck · Decision tracker</p>
+  <h1><span class="a">Melbourne</span> vs <span class="b">Perth</span></h1>
+  <div class="hmeta">
+    <span>Baseline: 8 Sep 2026</span><span>Last refresh: 10 Nov 2026</span><span>Check weekly · ~10 min</span><span>All figures AUD</span>
+  </div>
+</header>
+
+<div class="verdict">
+  <div><span class="k">Current call</span><span class="v" style="color:var(--mel)">Melbourne</span><span class="d">Freestanding house, outer-west corridor</span></div>
+  <div><span class="k">Confidence</span><span class="v">68%</span><span class="d">Up from 65% — the gap is widening in Melbourne's favour</span></div>
+  <div><span class="k">Triggers fired</span><span class="v" style="color:var(--good)">0 of 6</span><span class="d">Nothing has flipped the decision</span></div>
+  <div><span class="k">Action this week</span><span class="v" style="color:var(--warn)">Apply</span><span class="d">Melbourne job applications are the only thing blocking a decision</span></div>
+</div>
+
+<!-- ===== WHAT MOVED ===== -->
+<section>
+  <div class="sh"><span class="n">01</span><h2>What moved since the baseline</h2><span class="r">8 Sep → 10 Nov 2026</span></div>
+  <p class="lede">Two months of real data. The central thesis — that Perth was at a cycle top and Melbourne near a bottom — is tracking, but rates moved against you.</p>
+
+  <div class="moves">
+    <div class="move up">
+      <span class="lab">RBA cash rate</span>
+      <span class="big">4.85%</span>
+      <span class="was">was 4.35% · <span class="delta bad">+50 bp</span></span>
+      <p class="say">Hiked 3 Nov in a 6–3 split vote — the <strong>fifth rise of 2026</strong> and the highest rate in 18 years. The "raise further if needed" line was dropped, so a pause is now more likely. Next decision 8 Dec.</p>
+    </div>
+    <div class="move dn">
+      <span class="lab">Perth median dwelling</span>
+      <span class="big" style="color:var(--per)">$942,018</span>
+      <span class="was">was $999,987 · <span class="delta ok">−5.8%</span></span>
+      <p class="say">Down 1.7% in October alone and <strong>−5.7% over the quarter</strong>. Annual growth has collapsed from +15.6% to +3.9%. The correction called in the model has arrived, and faster than modelled.</p>
+    </div>
+    <div class="move dn">
+      <span class="lab">Melbourne median dwelling</span>
+      <span class="big" style="color:var(--mel)">$773,027</span>
+      <span class="was">was $786,718 · <span class="delta nu">−1.7%</span></span>
+      <p class="say">Falling, but <strong>3.3× more slowly than Perth</strong>. Annual change −7.6%, so Melbourne is deeper into its own correction and closer to the other side of it.</p>
+    </div>
+    <div class="move nt">
+      <span class="lab">Perth premium over Melbourne</span>
+      <span class="big">21.9%</span>
+      <span class="was">was 27.1% · <span class="delta nu">−5.2 pts</span></span>
+      <p class="say">The gap is closing from the Perth side — exactly the direction the model predicted, but it means <strong>Perth is getting relatively cheaper</strong>. Worth watching: this is the main mechanism that could eventually favour Perth.</p>
+    </div>
+  </div>
+
+  <div class="warnbox">
+    <h3>The rate rise costs you about $2,300 a year — and it is not priced into the main report</h3>
+    <p>A 4.85% cash rate implies roughly <strong>6.95%</strong> on a competitive owner-occupier variable, against the 6.35% used throughout the model. On a $480,000 loan that is <strong>$3,177/month instead of $2,987</strong> (+$191/mo, +$2,287/yr), lifting repayments from 22.0% to 23.4% of net household income. Still comfortable on two incomes. Not comfortable on one — the parental-leave stress case now reaches roughly 47% rather than 44.5%.</p>
+  </div>
+
+  <div class="note"><strong>Net effect on the decision: mildly positive for Melbourne.</strong> Perth has given back nearly 6% of value in two months while Melbourne gave back 1.7%. That is the thesis working. But higher rates reduce your borrowing capacity and raise the cost of waiting, so the case for acting once a job is secured has strengthened rather than weakened.</p></div>
+</section>
+
+<!-- ===== TRIGGERS ===== -->
+<section>
+  <div class="sh"><span class="n">02</span><h2>Trigger board</h2><span class="r">check each weekly</span></div>
+  <p class="lede">These are the only six things that can change the answer. Everything else is noise — if none has fired, there is nothing to decide this week.</p>
+
+  <div class="trig">
+    <div class="tg watch">
+      <span class="dot a"></span>
+      <div class="body">
+        <h3>1 · Tiger lands a Melbourne offer at $115k+</h3>
+        <p>The decisive one. Every argument for Melbourne assumes he can get hired there. Victoria added just 26,000 jobs in the year to March 2026, the weakest since 2021.</p>
+        <span class="thr">FIRES IF: 12 weeks of genuine applications produce no offer at his level → buy Perth</span>
+      </div>
+      <div class="st a"><div class="cur">0 offers</div><div class="lbl">In progress</div></div>
+    </div>
+
+    <div class="tg">
+      <span class="dot g"></span>
+      <div class="body">
+        <h3>2 · Perth growth re-accelerates past Melbourne</h3>
+        <p>Perth needs roughly a full percentage point more annual growth than Melbourne, sustained, to beat it from here. Currently moving the opposite way.</p>
+        <span class="thr">FIRES IF: Perth annual growth &gt; 5.5% while Melbourne stays under 4%, for two consecutive quarters</span>
+      </div>
+      <div class="st g"><div class="cur">+3.9% vs −7.6%</div><div class="lbl">Clear</div></div>
+    </div>
+
+    <div class="tg">
+      <span class="dot g"></span>
+      <div class="body">
+        <h3>3 · Melbourne's entry corridor prices out</h3>
+        <p>The Melbourne case rests on Werribee at ~$510k with a 32-minute train. If that band closes, Melbourne's affordability edge disappears.</p>
+        <span class="thr">FIRES IF: Werribee or Melton median house exceeds $650,000</span>
+      </div>
+      <div class="st g"><div class="cur">$510k / $557k</div><div class="lbl">Clear</div></div>
+    </div>
+
+    <div class="tg watch">
+      <span class="dot a"></span>
+      <div class="body">
+        <h3>4 · Rates rise far enough to break serviceability</h3>
+        <p>At 4.85% you are fine on two incomes. The risk is the single-income case during parental leave.</p>
+        <span class="thr">FIRES IF: cash rate exceeds 5.35%, or your repayment passes 30% of net income on two incomes → reduce budget</span>
+      </div>
+      <div class="st a"><div class="cur">4.85% · 23.4%</div><div class="lbl">Watch</div></div>
+    </div>
+
+    <div class="tg">
+      <span class="dot g"></span>
+      <div class="body">
+        <h3>5 · Victoria's job market deteriorates further</h3>
+        <p>Already the weak point in the Melbourne case. A move past 5.5% would make the job-search risk material enough to outweigh the property advantage.</p>
+        <span class="thr">FIRES IF: Victorian unemployment exceeds 5.5%, or the VIC–WA gap exceeds 1.5 points</span>
+      </div>
+      <div class="st g"><div class="cur">4.8% vs 4.0%</div><div class="lbl">Clear · 0.8 gap</div></div>
+    </div>
+
+    <div class="tg">
+      <span class="dot g"></span>
+      <div class="body">
+        <h3>6 · The data-centre pipeline stalls</h3>
+        <p>Tiger's salary-growth thesis rests on Melbourne's 37-project pipeline. Grid connection constraints are the realistic failure mode. Check quarterly, not weekly.</p>
+        <span class="thr">FIRES IF: Victorian pipeline drops below 25 projects, or major campuses are publicly deferred</span>
+      </div>
+      <div class="st g"><div class="cur">37 projects</div><div class="lbl">Clear</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LOG ===== -->
+<section>
+  <div class="sh"><span class="n">03</span><h2>Log this week's reading</h2><span class="r">saved to this page</span></div>
+  <p class="lede">Fill in what you can find — blanks are fine. Readings are stored with the artifact, so the history builds up and Claude can read it back next week.</p>
+
+  <div class="logbox">
+    <h3>New reading</h3>
+    <p class="cap">Takes about ten minutes using the source links in section 5. Leave anything you cannot find blank rather than guessing.</p>
+    <div class="grid">
+      <div class="f"><label for="i_date">Date</label><input type="date" id="i_date"></div>
+      <div class="f"><label for="i_cash">Cash rate %</label><input type="number" id="i_cash" step="0.05" placeholder="4.85"></div>
+      <div class="f"><label for="i_mort">Your quoted rate %</label><input type="number" id="i_mort" step="0.01" placeholder="6.95"></div>
+      <div class="f"><label for="i_mel">MEL median $</label><input type="number" id="i_mel" step="1" placeholder="773027"></div>
+      <div class="f"><label for="i_per">PER median $</label><input type="number" id="i_per" step="1" placeholder="942018"></div>
+      <div class="f"><label for="i_vic">VIC unemp %</label><input type="number" id="i_vic" step="0.1" placeholder="4.8"></div>
+      <div class="f"><label for="i_wa">WA unemp %</label><input type="number" id="i_wa" step="0.1" placeholder="4.0"></div>
+      <div class="f"><label for="i_apps">Job apps sent</label><input type="number" id="i_apps" step="1" placeholder="0"></div>
+      <div class="f"><label for="i_int">Interviews</label><input type="number" id="i_int" step="1" placeholder="0"></div>
+      <div class="f"><label for="i_off">Offers ≥$115k</label><input type="number" id="i_off" step="1" placeholder="0"></div>
+      <div class="f"><label for="i_sav">Savings $</label><input type="number" id="i_sav" step="1" placeholder="160000"></div>
+      <div class="f wide"><label for="i_note">Notes — anything that happened this week</label><textarea id="i_note" placeholder="e.g. applied to 4 data centre roles; broker said capacity now $820k"></textarea></div>
+    </div>
+    <div class="acts">
+      <button id="save">Save reading</button>
+      <button id="clear" class="ghost">Clear form</button>
+      <span class="msg inf" id="msg">Checking access…</span>
+    </div>
+  </div>
+
+  <div class="tw"><table>
+    <thead><tr><th>Date</th><th>Cash</th><th>Rate</th><th>MEL median</th><th>PER median</th><th>Premium</th><th>VIC</th><th>WA</th><th>Apps</th><th>Offers</th><th>Savings</th></tr></thead>
+    <tbody id="hist"><tr><td colspan="11" class="empty">Loading history…</td></tr></tbody>
+  </table></div>
+  <div id="notes"></div>
+</section>
+
+<!-- ===== PROMPT ===== -->
+<section>
+  <div class="sh"><span class="n">04</span><h2>The weekly prompt</h2><span class="r">paste into Claude</span></div>
+  <p class="lede">Copy this, paste it into a new Claude conversation once a week. It tells Claude to fetch the current numbers, compare them against the triggers, and write the reading back here.</p>
+
+  <div class="promptbox">
+    <div class="pbar"><span class="t">Weekly recheck prompt</span><button id="copy" class="ghost">Copy</button></div>
+<pre id="ptext">Weekly Melbourne vs Perth check.
+
+CONTEXT — do not ask me to restate this:
+Tiger: electrical project engineer, $113k + super, 3+ yrs, switchboards /
+switchrooms / HV-LV, will NOT do FIFO. Tigress: AHPRA-registered general
+psychologist, ~$100k. Combined ~$213k, $160k savings, no debt. Both first
+home buyers. Target: freestanding HOUSE, $600-650k. Kids expected within
+4 years. Commute matters. Currently in Perth. Current call: Melbourne,
+68% confidence.
+
+TASK:
+1. Fetch the CURRENT value of each indicator below. Give the figure, its
+   date, and its source. Prefer Cotality, RBA, ABS, REIWA, Domain, SQM.
+   - RBA cash rate + next decision date
+   - Melbourne and Perth median DWELLING and HOUSE values, monthly and
+     annual change
+   - Werribee and Melton median house price
+   - Victorian and WA unemployment rate
+   - Rental vacancy rates, both cities
+   - Average competitive owner-occupier variable mortgage rate
+
+2. Compare each against my last logged reading in the tracker artifact's
+   database (collection "readings"). Report only what MOVED materially.
+
+3. Check all six triggers on the tracker's board and state plainly whether
+   any has FIRED. The triggers are:
+   (1) no Melbourne offer >=$115k after 12 weeks of applications -> buy Perth
+   (2) Perth annual growth >5.5% while Melbourne <4%, two quarters running
+   (3) Werribee or Melton median house >$650,000
+   (4) cash rate >5.35%, or repayment >30% of net income on two incomes
+   (5) VIC unemployment >5.5%, or VIC-WA gap >1.5 points
+   (6) Victorian data centre pipeline <25 projects
+
+4. If NOTHING fired: say "No change" plus one line on the most notable
+   movement. Do not re-argue the decision. Be brief.
+
+5. If something FIRED: say which, what it changes, and what I should do
+   this week. Then update the tracker's verdict strip and trigger board.
+
+6. Write this week's reading into the tracker database so the history
+   builds. Flag any figure you could not verify rather than estimating it.
+
+Tracker: [PASTE THIS ARTIFACT'S URL]
+Full report: [PASTE THE 16-SECTION REPORT URL]</pre>
+  </div>
+
+  <div class="note"><strong>Paste both URLs in before you save the prompt somewhere.</strong> Claude needs the tracker link to read your logged history and write the new reading, and the report link for the underlying assumptions. Without them it will start from scratch each week and give you a different answer.</p></div>
+</section>
+
+<!-- ===== SOURCES ===== -->
+<section>
+  <div class="sh"><span class="n">05</span><h2>Where each number comes from</h2><span class="r">~10 min to do manually</span></div>
+  <div class="srcs">
+    <div class="sc"><h3>Cash rate</h3><p>RBA media release. Board meets roughly every six weeks; next 8 Dec 2026.</p><a href="https://www.rba.gov.au/media-releases/">rba.gov.au/media-releases</a></div>
+    <div class="sc"><h3>Property values</h3><p>Cotality Home Value Index, released the 1st of each month. Use the capital-city table.</p><a href="https://www.cotality.com/au/insights">cotality.com/au/insights</a></div>
+    <div class="sc"><h3>Perth medians &amp; suburbs</h3><p>REIWA publishes Perth metro and suburb-level data weekly.</p><a href="https://reiwa.com.au/the-wa-market/perth-metro/">reiwa.com.au/the-wa-market</a></div>
+    <div class="sc"><h3>Unemployment</h3><p>ABS Labour Force, monthly. Use the state table, not the national headline.</p><a href="https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release">abs.gov.au — Labour Force</a></div>
+    <div class="sc"><h3>Rents &amp; vacancy</h3><p>Domain Rental Report (quarterly) and SQM Research vacancy rates (monthly).</p><a href="https://sqmresearch.com.au/">sqmresearch.com.au</a></div>
+    <div class="sc"><h3>Mortgage rates</h3><p>Canstar or your own broker. The number that matters is what <em>you</em> can actually get, not the average.</p><a href="https://www.canstar.com.au/home-loans/">canstar.com.au/home-loans</a></div>
+    <div class="sc"><h3>Melbourne suburb prices</h3><p>Domain or realestate.com.au suburb profiles for Werribee, Melton, Tarneit.</p><a href="https://www.domain.com.au/suburb-profile/werribee-vic-3030">domain.com.au — Werribee</a></div>
+    <div class="sc"><h3>Job market — the real one</h3><p>Your own application count. No published statistic substitutes for how many offers Tiger is actually getting.</p><a href="https://www.seek.com.au/electrical-project-engineer-jobs/in-All-Melbourne-VIC">seek.com.au — Melbourne roles</a></div>
+  </div>
+
+  <div class="note"><strong>If you only check one thing each week, check trigger 1.</strong> Property medians move slowly and a week of movement is almost always noise. Tiger's application count is the only indicator that is both fast-moving and decisive — and it is the only one entirely within your control.</p></div>
+</section>
+
+<footer>
+  <p>Tracker companion to the full 16-section Melbourne vs Perth evidence base. Baseline 8 Sep 2026, refreshed 10 Nov 2026. Figures sourced from Cotality, RBA, ABS, REIWA, Domain and SQM; property forecasts are scenarios, not predictions. Not financial advice — confirm mortgage structure with a licensed broker and stamp duty with the relevant state revenue office.</p>
+</footer>
+</div>
+
+<script>
+(function(){
+ "use strict";
+ const $=id=>document.getElementById(id);
+ const msg=(t,c)=>{const m=$("msg");m.textContent=t;m.className="msg "+c;};
+ const fmt=v=>(v===null||v===undefined||v==="")?"—":v;
+ const money=v=>(v===null||v===undefined||v==="")?"—":"$"+Number(v).toLocaleString("en-AU");
+ const pct=v=>(v===null||v===undefined||v==="")?"—":Number(v).toFixed(v<10?2:1)+"%";
+
+ const d=new Date();
+ $("i_date").value=d.toISOString().slice(0,10);
+
+ $("copy").addEventListener("click",async()=>{
+  try{await navigator.clipboard.writeText($("ptext").textContent);
+   $("copy").textContent="Copied";setTimeout(()=>$("copy").textContent="Copy",1600);}
+  catch(e){
+   const r=document.createRange();r.selectNodeContents($("ptext"));
+   const s=getSelection();s.removeAllRanges();s.addRange(r);
+   $("copy").textContent="Select & copy";setTimeout(()=>$("copy").textContent="Copy",2400);}
+ });
+
+ $("clear").addEventListener("click",()=>{
+  ["i_cash","i_mort","i_mel","i_per","i_vic","i_wa","i_apps","i_int","i_off","i_sav","i_note"]
+   .forEach(id=>$(id).value="");
+ });
+
+ function render(rows){
+  const tb=$("hist");
+  if(!rows.length){tb.innerHTML='<tr><td colspan="11" class="empty">No readings logged yet. Save one above, or run the weekly prompt.</td></tr>';$("notes").innerHTML="";return;}
+  tb.innerHTML=rows.map(r=>{
+   const prem=(r.mel&&r.per)?(((r.per/r.mel)-1)*100).toFixed(1)+"%":"—";
+   return `<tr><td>${r.id}</td><td>${pct(r.cash)}</td><td>${pct(r.mort)}</td>
+    <td>${money(r.mel)}</td><td>${money(r.per)}</td><td>${prem}</td>
+    <td>${pct(r.vic)}</td><td>${pct(r.wa)}</td><td>${fmt(r.apps)}</td>
+    <td>${fmt(r.off)}</td><td>${money(r.sav)}</td></tr>`;}).join("");
+  const withNotes=rows.filter(r=>r.note);
+  $("notes").innerHTML=withNotes.length
+   ? '<div class="note"><strong>Notes.</strong><br>'+withNotes.map(r=>`<span class="mono" style="font-size:12.5px">${r.id}</span> — ${String(r.note).replace(/</g,"&lt;")}`).join("<br>")+'</div>'
+   : "";
+ }
+
+ (async function(){
+  let db=null;
+  try{ db = await claude.use("db"); }catch(e){ db=null; }
+  if(!db){
+   msg("Saving unavailable in this view — sign in as the owner to log readings.","inf");
+   $("save").disabled=true;
+   $("hist").innerHTML='<tr><td colspan="11" class="empty">History unavailable in this view.</td></tr>';
+   return;
+  }
+  const col=db.collection("readings");
+  let loaded=false;
+  const timer=setTimeout(()=>{ if(!loaded) msg("Still reaching the store — history may be out of date.","inf"); },10000);
+
+  col.orderBy("id","desc").limit(60).onSnapshot(
+   snap=>{
+    loaded=true;clearTimeout(timer);
+    const rows=snap.docs.map(s=>Object.assign({id:s.id},s.data()));
+    rows.sort((a,b)=>b.id.localeCompare(a.id));
+    render(rows);
+    if($("msg").className.indexOf("ok")===-1) msg("Ready — "+rows.length+" reading"+(rows.length===1?"":"s")+" logged.","inf");
+   },
+   err=>{
+    loaded=true;clearTimeout(timer);
+    msg("Could not load history ("+err.code+").","err");
+    $("hist").innerHTML='<tr><td colspan="11" class="empty">History unavailable.</td></tr>';
+   }
+  );
+
+  $("save").addEventListener("click",async()=>{
+   const date=$("i_date").value;
+   if(!date){msg("Pick a date first.","err");return;}
+   const num=id=>{const v=$(id).value.trim();return v===""?null:Number(v);};
+   const body={
+    cash:num("i_cash"), mort:num("i_mort"), mel:num("i_mel"), per:num("i_per"),
+    vic:num("i_vic"), wa:num("i_wa"), apps:num("i_apps"), ints:num("i_int"),
+    off:num("i_off"), sav:num("i_sav"), note:$("i_note").value.trim()||null,
+    loggedAt:new Date().toISOString()
+   };
+   $("save").disabled=true;msg("Saving…","inf");
+   try{
+    await col.doc(date).set(body);
+    msg("Saved "+date+".","ok");
+   }catch(e){
+    msg(e&&e.code==="invalid_argument"
+     ? "You do not have write access to this tracker."
+     : "Save failed ("+((e&&e.code)||"unknown")+"). Try again.","err");
+   }finally{ $("save").disabled=false; }
+  });
+ })();
+})();
+</script>
