@@ -1,0 +1,95 @@
+{
+ "checked": "2026-11-11",
+ "items": [
+  {
+   "d": "3 NOV 2026",
+   "h": "RBA lifts cash rate to 4.85%",
+   "p": "The fifth rise of 2026, on a 6\u20133 vote, with inflation at 4.3%. No cut is expected before 2028.",
+   "e": "dn",
+   "x": "Lower borrowing capacity for every buyer. Both cities' 2027 base cases are negative.",
+   "u": "https://www.rba.gov.au/publications/smp/2026/nov/overview.html",
+   "s": "RBA"
+  },
+  {
+   "d": "2 NOV 2026",
+   "h": "Perth \u22121.7% in October, \u22125.7% over the quarter",
+   "p": "National values have fallen for seven months straight. Capital cities are down 8.1% since March, the fastest fall in 40 years of data.",
+   "e": "dn",
+   "x": "Perth base case set at \u22126% for 2027 and \u22122% for 2028. The Perth correction is already underway.",
+   "u": "https://www.cotality.com/au/insights/articles/housing-downturn-broadens-as-brisbane-and-perth-lead-the-decline",
+   "s": "Cotality"
+  },
+  {
+   "d": "OCT 2026",
+   "h": "Buyer's market: 39 days on market, 4.7% discounting",
+   "p": "Advertised stock is the highest for this time of year since 2019. Auction clearance rates are below 50%.",
+   "e": "up",
+   "x": "Good for you as a buyer. Offer below asking price, and expect the medians shown here to be beatable.",
+   "u": "https://www.cotality.com/au/insights/articles/housing-downturn-broadens-as-brisbane-and-perth-lead-the-decline",
+   "s": "Cotality"
+  },
+  {
+   "d": "12 MAY 2026",
+   "h": "Budget limits negative gearing and changes CGT",
+   "p": "From July 2027, negative gearing for future purchases applies to new builds only, and the 50% CGT discount is replaced by indexation. The ATO says this is not yet law, so check its current status.",
+   "e": "up",
+   "x": "Fewer investors bidding on established entry-level houses, which helps first home buyers.",
+   "u": "https://www.ato.gov.au/about-ato/new-legislation/in-detail/individuals/tax-reform-boosting-home-ownership-reforming-negative-gearing-and-capital-gains-tax",
+   "s": "ATO"
+  },
+  {
+   "d": "MAY 2026",
+   "h": "Melton line electrification: $152.7m for planning only",
+   "p": "Design and approvals run to mid-2027, with no construction date. Separately, $14.8m funds longer trains on the Wyndham Vale line.",
+   "e": "eq",
+   "x": "Not in the model. Real upside for Melton and Wyndham Vale if construction is funded.",
+   "u": "https://www.theurbandeveloper.com/articles/vic-rail-expansion-melbourne-west-august-2026",
+   "s": "The Urban Developer"
+  },
+  {
+   "d": "28 NOV 2026",
+   "h": "Victorian state election",
+   "p": "The Coalition has promised 25 hybrid trains for the Melton and Wyndham Vale lines. Rail and housing commitments could change after the vote.",
+   "e": "eq",
+   "x": "Watch it. A funded rail commitment for the west would raise Melton and Wyndham Vale tilts.",
+   "u": "https://www.melton.vic.gov.au/News-Media/Hybrid-trains-welcomed-but-need-for-electrification-remains",
+   "s": "Melton City Council"
+  },
+  {
+   "d": "7 MAY 2026",
+   "h": "WA first home buyer exemption raised to $600k",
+   "p": "This matches Victoria. At $600k you pay $0 duty in either state. Above that, the concession runs to $800k in WA and $750k in Victoria.",
+   "e": "eq",
+   "x": "Removes stamp duty from the decision at your budget.",
+   "u": "https://www.smartpropertyinvestment.com.au/hotspots/27757-wa-lifts-first-home-buyer-stamp-duty-thresholds",
+   "s": "Smart Property Investment"
+  },
+  {
+   "d": "FY27 FORECASTS",
+   "h": "Forecasters disagree, as usual",
+   "p": "Domain: Melbourne houses \u22124% to \u22128%, Perth +5% to +9% for the year to June 2027. ANZ: Perth \u22123.1% in 2027.",
+   "e": "eq",
+   "x": "Our Perth base case is more bearish than Domain's and close to ANZ's. Use the Bull button if you side with Domain.",
+   "u": "https://www.apimagazine.com.au/news/article/perth-property-investors-face-a-very-different-market-in-2027",
+   "s": "API Magazine"
+  },
+  {
+   "d": "2026",
+   "h": "Perth still has the tightest rentals",
+   "p": "Vacancy is about 0.6%, and WA has the strongest interstate migration of any state. Melbourne vacancy is 1.4\u20131.6%.",
+   "e": "up",
+   "x": "This keeps Perth's bear case from going deeper than about \u221216% to \u221225% in the most stretched suburbs.",
+   "u": "https://sqmresearch.com.au/uploads/12-05-26-National-Vacancy-Rates-April-2026-2021.pdf",
+   "s": "SQM Research"
+  },
+  {
+   "d": "3 NOV 2026",
+   "h": "Lowest variable rates are about 5.89%",
+   "p": "A few lenders are offering 5.89\u20136.13% for owner-occupiers. The big four banks charge more.",
+   "e": "eq",
+   "x": "The planner defaults to 6.20%. Each extra 0.25% adds about $70 a month on a $475k loan.",
+   "u": "https://www.infochoice.com.au/",
+   "s": "InfoChoice"
+  }
+ ]
+}

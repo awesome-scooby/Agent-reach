@@ -1,0 +1,16 @@
+{
+ "date": "2026-11-11",
+ "previous": null,
+ "changes": [],
+ "alerts": [],
+ "rules": [
+  "Cheapest Perth 3-bed median at or below $620k",
+  "A Melbourne shortlist 3-bed median falls 3%+",
+  "RBA cash rate changes",
+  "New matching listings appear (needs Domain key)"
+ ],
+ "cheapest_perth_3br": {
+  "suburb": "Orelia",
+  "price": 680000
+ }
+}

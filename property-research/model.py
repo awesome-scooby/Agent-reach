@@ -79,8 +79,61 @@ def z(vals, v):
     return (v - mean(vals)) / sd
 
 
+def spearman(a, b):
+    def ranks(v):
+        order = sorted(range(len(v)), key=lambda i: v[i])
+        r = [0.0] * len(v)
+        for pos, i in enumerate(order):
+            r[i] = pos
+        return r
+    ra, rb = ranks(a), ranks(b)
+    ma, mb = mean(ra), mean(rb)
+    num = sum((x - ma) * (y - mb) for x, y in zip(ra, rb))
+    den = math.sqrt(sum((x - ma) ** 2 for x in ra) * sum((y - mb) ** 2 for y in rb)) or 1
+    return round(num / den, 2)
+
+
+def backtest(out):
+    """Score suburbs with ONLY data available in Nov 2023, then compare with
+    what actually happened Nov 2023 -> Nov 2026, within each city."""
+    res = {}
+    for city in ("Melbourne", "Perth"):
+        grp = [d for d in out if d["city"] == city]
+        feats = []
+        for d in grp:
+            s, r = d["series"], d["rent_series"]
+            t0 = 24
+            p0, p_start, p_end = s[t0][1], s[0][1], s[-1][1]
+            rent0, rent_prev = r[t0][1], r[t0 - 12][1]
+            feats.append({"suburb": d["suburb"], "yield": 52 * rent0 / p0 * 100,
+                          "rent_g": (rent0 / rent_prev - 1) * 100, "run": (p0 / p_start - 1) * 100,
+                          "green": d["greenfield"], "rail": d["rail"], "actual": (p_end / p0 - 1) * 100})
+        ys = [f["yield"] for f in feats]; rg = [f["rent_g"] for f in feats]; rn = [f["run"] for f in feats]
+        for f in feats:
+            f["score"] = (0.45 * z(ys, f["yield"]) + 0.30 * z(rg, f["rent_g"]) - 0.40 * z(rn, f["run"])
+                          - (0.6 if f["green"] else 0) + (0.3 if f["rail"] else -0.1))
+        act = [f["actual"] for f in feats]
+        rho_model = spearman([f["score"] for f in feats], act)
+        rho_momentum = spearman(rn, act)
+        rho_yield = spearman(ys, act)
+        med_a = sorted(act)[len(act) // 2]
+        med_s = sorted(f["score"] for f in feats)[len(feats) // 2]
+        hits = sum(1 for f in feats if (f["score"] >= med_s) == (f["actual"] >= med_a))
+        top = sorted(feats, key=lambda f: -f["score"])[:5]
+        res[city] = {"n": len(feats), "rho_model": rho_model, "rho_momentum": rho_momentum, "rho_yield": rho_yield,
+                     "hit_rate": round(100 * hits / len(feats)),
+                     "city_actual_median": round(med_a, 1),
+                     "top5": [{"suburb": f["suburb"], "actual": round(f["actual"], 1)} for f in top],
+                     "rows": [{"suburb": f["suburb"], "score": round(f["score"], 2), "actual": round(f["actual"], 1),
+                               "run_2y": round(f["run"], 1)} for f in sorted(feats, key=lambda f: -f["score"])]}
+    return res
+
+
 def main():
     rows = json.loads(SRC.read_text())["suburbs"]
+    projects = json.loads((ROOT / "data" / "projects.json").read_text())
+    hz_path = ROOT / "data" / "hazards.json"
+    hazards = json.loads(hz_path.read_text()) if hz_path.exists() else {"suburbs": {}}
     out = []
     # ---------------- per-suburb derived metrics ----------------
     for r in rows:
@@ -113,6 +166,10 @@ def main():
             "rent_series": [[p["date"][:7], p["house"]] for p in rpts],
             "sources": {"microburbs": mb["url"], "spi": sp["url"], **({"reiwa": r["reiwa"]["url"]} if r.get("reiwa") else {})},
         }
+        d["hazards"] = hazards["suburbs"].get(r["suburb"], {})
+        mine = [p for p in projects["projects"] if r["suburb"] in p["suburbs"]]
+        d["projects"] = [p["id"] for p in mine]
+        d["infra_uplift"] = round(max(-0.2, min(0.5, sum(projects["uplift"][p["status"]] for p in mine))), 2)
         if r.get("reiwa"):
             d["reiwa_median"] = r["reiwa"].get("median")
             d["reiwa_rent"] = r["reiwa"].get("rent")
@@ -129,6 +186,7 @@ def main():
                 "price_run": -0.40 * z(g5, d["g5"]),
                 "supply": -0.60 if d["greenfield"] else 0.0,
                 "rail": 0.30 if d["rail"] else -0.10,
+                "projects": d["infra_uplift"],
             }
             tilt = max(-1.5, min(1.5, sum(parts.values())))
             d["tilt"] = round(tilt, 2)
@@ -172,8 +230,11 @@ def main():
         access = (0.6 if d["rail"] else 0.2) + 0.4 * max(0.0, 1 - (d["km"] - 12) / 35)
         parts = {"afford": afford * 35, "growth": growth * 25, "downside": downside * 15,
                  "rent": rent * 10, "access": access * 15}
+        hz = d.get("hazards") or {}
+        hazard_pen = 4 * (hz.get("bushfire_pct") or 0) / 100 + 3 * min(1.0, (hz.get("flood_pct") or 0) / 10)
         d["match_parts"] = {k: round(v, 1) for k, v in parts.items()}
-        d["match"] = round(sum(parts.values()))
+        d["match_parts"]["hazard"] = round(-hazard_pen, 1)
+        d["match"] = round(sum(parts.values()) - hazard_pen)
         d["in_budget_house"] = bool(d["house_3br"] and d["house_3br"] <= BUDGET)
         d["in_budget_unit"] = bool(d["unit_3br"] and d["unit_3br"] <= BUDGET)
 
@@ -188,8 +249,13 @@ def main():
             idx.append([grp[0]["series"][i][0], round(100 * math.exp(mean(math.log(v) for v in vals)), 1)])
         city_idx[city] = idx
 
+    bt = backtest(out)
     OUT.write_text(json.dumps({"years": YEARS, "city_paths": CITY_PATHS, "city_index": city_idx,
-                               "budget": BUDGET, "suburbs": out}, separators=(",", ":")))
+                               "budget": BUDGET, "backtest": bt, "projects": projects,
+                               "hazard_meta": {k: v for k, v in hazards.items() if k != "suburbs"},
+                               "suburbs": out}, separators=(",", ":")))
+    for c, v in bt.items():
+        print(c, {k: v[k] for k in ("n", "rho_model", "rho_momentum", "rho_yield", "hit_rate", "city_actual_median")}, v["top5"])
     out.sort(key=lambda d: -d["match"])
     for d in out[:47]:
         print(f'{d["match"]:3d} {d["city"][:3]} {d["suburb"]:16s} 3br {d["house_3br"]} tilt {d["tilt"]:+.2f} '

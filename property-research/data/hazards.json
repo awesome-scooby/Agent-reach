@@ -1,0 +1,382 @@
+{
+ "crime_period": "Year ending June 2026",
+ "crime_source": "Crime Statistics Agency Victoria",
+ "vic_median_crime_per_1000": 65.8,
+ "suburbs": {
+  "Melton": {
+   "bushfire_pct": 63.2,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 21.0,
+   "population_2021": 7953,
+   "crime_incidents": 1510,
+   "crime_per_1000": 189.9
+  },
+  "Melton South": {
+   "bushfire_pct": 7.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 5.6,
+   "population_2021": 11362,
+   "crime_incidents": 1143,
+   "crime_per_1000": 100.6
+  },
+  "Kurunjang": {
+   "bushfire_pct": 35.7,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 10.5,
+   "population_2021": 10711,
+   "crime_incidents": 426,
+   "crime_per_1000": 39.8
+  },
+  "Melton West": {
+   "bushfire_pct": 53.2,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 9.6,
+   "population_2021": 8784,
+   "crime_incidents": 894,
+   "crime_per_1000": 101.8
+  },
+  "Brookfield": {
+   "bushfire_pct": 55.2,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 10.9,
+   "population_2021": 10782,
+   "crime_incidents": 359,
+   "crime_per_1000": 33.3
+  },
+  "Werribee": {
+   "bushfire_pct": 24.9,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 43.9,
+   "population_2021": 50027,
+   "crime_incidents": 4058,
+   "crime_per_1000": 81.1
+  },
+  "Wyndham Vale": {
+   "bushfire_pct": 62.9,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 27.6,
+   "population_2021": 20518,
+   "crime_incidents": 1290,
+   "crime_per_1000": 62.9
+  },
+  "Manor Lakes": {
+   "bushfire_pct": 62.4,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 16.3,
+   "population_2021": 12675,
+   "crime_incidents": 778,
+   "crime_per_1000": 61.4
+  },
+  "Hoppers Crossing": {
+   "bushfire_pct": 0.1,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 18.2,
+   "population_2021": 37216,
+   "crime_incidents": 3119,
+   "crime_per_1000": 83.8
+  },
+  "Tarneit": {
+   "bushfire_pct": 36.7,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 39.2,
+   "population_2021": 56370,
+   "crime_incidents": 3708,
+   "crime_per_1000": 65.8
+  },
+  "Deer Park": {
+   "bushfire_pct": 0.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 8.8,
+   "population_2021": 18145,
+   "crime_incidents": 1232,
+   "crime_per_1000": 67.9
+  },
+  "St Albans": {
+   "bushfire_pct": 0.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 13.3,
+   "population_2021": 38042,
+   "crime_incidents": 3099,
+   "crime_per_1000": 81.5
+  },
+  "Craigieburn": {
+   "bushfire_pct": 36.1,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 36.3,
+   "population_2021": 65178,
+   "crime_incidents": 3397,
+   "crime_per_1000": 52.1
+  },
+  "Wallan": {
+   "bushfire_pct": 86.9,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 71.1,
+   "population_2021": 15004,
+   "crime_incidents": 1198,
+   "crime_per_1000": 79.8
+  },
+  "Kalkallo": {
+   "bushfire_pct": 46.2,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 7.2,
+   "population_2021": 5548,
+   "crime_incidents": 534,
+   "crime_per_1000": 96.3
+  },
+  "Mickleham": {
+   "bushfire_pct": 80.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 56.0,
+   "population_2021": 17452,
+   "crime_incidents": 1054,
+   "crime_per_1000": 60.4
+  },
+  "Donnybrook": {
+   "bushfire_pct": 84.1,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 25.0,
+   "population_2021": 2100,
+   "crime_incidents": 496,
+   "crime_per_1000": 236.2
+  },
+  "Roxburgh Park": {
+   "bushfire_pct": 1.4,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 6.9,
+   "population_2021": 24129,
+   "crime_incidents": 1010,
+   "crime_per_1000": 41.9
+  },
+  "Broadmeadows": {
+   "bushfire_pct": 3.9,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 8.5,
+   "population_2021": 12524,
+   "crime_incidents": 2910,
+   "crime_per_1000": 232.4
+  },
+  "Meadow Heights": {
+   "bushfire_pct": 13.7,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 4.8,
+   "population_2021": 14890,
+   "crime_incidents": 756,
+   "crime_per_1000": 50.8
+  },
+  "Sunbury": {
+   "bushfire_pct": 82.8,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 135.3,
+   "population_2021": 38851,
+   "crime_incidents": 2101,
+   "crime_per_1000": 54.1
+  },
+  "Lalor": {
+   "bushfire_pct": 17.5,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 9.7,
+   "population_2021": 23219,
+   "crime_incidents": 1250,
+   "crime_per_1000": 53.8
+  },
+  "Glenroy": {
+   "bushfire_pct": 0.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Area flooded in recorded events (Vic Flood History)",
+   "area_km2": 9.2,
+   "population_2021": 23792,
+   "crime_incidents": 1544,
+   "crime_per_1000": 64.9
+  },
+  "Armadale": {
+   "bushfire_pct": 8.8,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 8.4,
+   "population_2021": 13415
+  },
+  "Kelmscott": {
+   "bushfire_pct": 71.2,
+   "flood_pct": 3.6,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 15.1,
+   "population_2021": 10575
+  },
+  "Gosnells": {
+   "bushfire_pct": 46.4,
+   "flood_pct": 5.9,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 14.9,
+   "population_2021": 21149
+  },
+  "Maddington": {
+   "bushfire_pct": 28.3,
+   "flood_pct": 3.4,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 10.9,
+   "population_2021": 12419
+  },
+  "Seville Grove": {
+   "bushfire_pct": 30.7,
+   "flood_pct": 2.9,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 4.6,
+   "population_2021": 11408
+  },
+  "Camillo": {
+   "bushfire_pct": 23.9,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.6,
+   "population_2021": 4442
+  },
+  "Brookdale": {
+   "bushfire_pct": 10.2,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 1.2,
+   "population_2021": 2968
+  },
+  "Haynes": {
+   "bushfire_pct": 82.1,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 4.9,
+   "population_2021": 2417
+  },
+  "Byford": {
+   "bushfire_pct": 77.6,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 22.2,
+   "population_2021": 18878
+  },
+  "Thornlie": {
+   "bushfire_pct": 17.2,
+   "flood_pct": 3.6,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 11.6,
+   "population_2021": 23665
+  },
+  "Beckenham": {
+   "bushfire_pct": 31.7,
+   "flood_pct": 10.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 5.9,
+   "population_2021": 9092
+  },
+  "Medina": {
+   "bushfire_pct": 61.7,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.7,
+   "population_2021": 2260
+  },
+  "Parmelia": {
+   "bushfire_pct": 52.9,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 4.0,
+   "population_2021": 6184
+  },
+  "Calista": {
+   "bushfire_pct": 42.8,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.3,
+   "population_2021": 1975
+  },
+  "Orelia": {
+   "bushfire_pct": 57.3,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.0,
+   "population_2021": 4535
+  },
+  "Bertram": {
+   "bushfire_pct": 60.3,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.2,
+   "population_2021": 6196
+  },
+  "Wellard": {
+   "bushfire_pct": 80.8,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 16.6,
+   "population_2021": 14127
+  },
+  "Cooloongup": {
+   "bushfire_pct": 30.3,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 11.4,
+   "population_2021": 6696
+  },
+  "Rockingham": {
+   "bushfire_pct": 32.5,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 13.0,
+   "population_2021": 15312
+  },
+  "Waikiki": {
+   "bushfire_pct": 50.5,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 10.3,
+   "population_2021": 12453
+  },
+  "Warnbro": {
+   "bushfire_pct": 29.6,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 11.8,
+   "population_2021": 10828
+  },
+  "Safety Bay": {
+   "bushfire_pct": 8.6,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 4.8,
+   "population_2021": 7662
+  },
+  "Port Kennedy": {
+   "bushfire_pct": 68.7,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 23.9,
+   "population_2021": 13477
+  },
+  "Baldivis": {
+   "bushfire_pct": 82.2,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 88.0,
+   "population_2021": 37697
+  }
+ }
+}
