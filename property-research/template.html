@@ -1,0 +1,576 @@
+<title>The $600k Shortlist</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a dark streaming-catalogue screen. Billboard verdict on top, then
+   swipeable rows of suburb "titles", then three feature panels (city
+   showdown, payoff planner, news), then method. One deliberate dark world. */
+:root{
+  color-scheme:dark;
+  --bg:#0A0C10; --surface:#14171D; --surface-2:#1C2028; --surface-3:#262B35;
+  --line:#2B313C; --fg:#EDF0F5; --fg-2:#AEB5C2; --fg-3:#767E8D;
+  --mel:#5B95F9; --mel-deep:#16305F; --per:#F2953F; --per-deep:#5A2C0C;
+  --good:#4CC583; --warn:#E9B44C; --bad:#E8675C;
+  --display:'Bebas Neue',Impact,'Arial Narrow',sans-serif;
+  --body:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --gut:max(16px,env(safe-area-inset-left,0px));
+  --gutr:max(16px,env(safe-area-inset-right,0px));
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+a{color:var(--fg)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--fg);outline-offset:2px;border-radius:4px}
+.num{font-variant-numeric:tabular-nums}
+.pad{padding-left:var(--gut);padding-right:var(--gutr)}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;display:flex;align-items:center;gap:22px;padding-block:12px;background:linear-gradient(var(--bg),rgba(10,12,16,.82));backdrop-filter:blur(8px)}
+.brand{font-family:var(--display);font-size:30px;letter-spacing:.04em;line-height:1;white-space:nowrap}
+.brand .m{color:var(--mel)} .brand .p{color:var(--per)}
+.nav nav{display:flex;gap:16px;overflow-x:auto;scrollbar-width:none;min-width:0}
+.nav nav::-webkit-scrollbar{display:none}
+.nav nav a{color:var(--fg-2);text-decoration:none;font-size:13.5px;white-space:nowrap}
+.nav nav a:hover{color:var(--fg)}
+.stamp{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--fg-3);white-space:nowrap}
+@media (max-width:640px){.stamp{display:none}}
+
+/* billboard */
+.bill{position:relative;overflow:hidden;min-height:0}
+.bill-art{position:absolute;inset:0;z-index:0}
+.bill-art svg{width:100%;height:100%;display:block}
+.bill::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,var(--bg) 0%,rgba(10,12,16,.92) 34%,rgba(10,12,16,.45) 70%,rgba(10,12,16,.7) 100%),linear-gradient(0deg,var(--bg) 0%,rgba(10,12,16,0) 30%)}
+.bill-in{position:relative;z-index:2;padding-block:56px 46px;max-width:1280px}
+.tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-2)}
+.tag b{display:inline-block;padding:2px 6px;border:1px solid var(--fg-3);border-radius:3px;color:var(--fg);letter-spacing:.06em}
+.bill h1{font-family:var(--display);font-weight:400;font-size:clamp(46px,8.4vw,104px);line-height:.9;letter-spacing:.01em;margin:14px 0 0;max-width:13ch;text-wrap:balance}
+.bill h1 .m{color:var(--mel)} .bill h1 .p{color:var(--per)}
+.bill .lede{font-size:clamp(15px,1.6vw,18px);color:var(--fg-2);max-width:58ch;margin:16px 0 0}
+.bill .lede strong{color:var(--fg);font-weight:600}
+.facts{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:22px}
+.fact{display:flex;flex-direction:column;gap:2px}
+.fact .v{font-family:var(--display);font-size:34px;line-height:1;letter-spacing:.02em}
+.fact .l{font-size:12px;color:var(--fg-3);max-width:20ch}
+.ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:9px;border:0;border-radius:5px;padding:11px 20px;font-weight:700;font-size:15px;cursor:pointer;text-decoration:none}
+.btn.pri{background:var(--fg);color:var(--bg)}
+.btn.pri:hover{background:#fff}
+.btn.sec{background:rgba(120,130,150,.32);color:var(--fg)}
+.btn.sec:hover{background:rgba(120,130,150,.48)}
+.btn svg{width:18px;height:18px}
+
+/* rows */
+.rows{display:flex;flex-direction:column;gap:30px;padding-block:6px 20px}
+.row h2{font-size:19px;font-weight:700;margin:0 0 4px;letter-spacing:-.01em}
+.row .sub{font-size:13px;color:var(--fg-3);margin:0 0 10px;max-width:90ch}
+.rail-wrap{position:relative}
+.rail{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;padding-block:8px 14px;padding-left:var(--gut);padding-right:var(--gutr);scroll-padding-left:var(--gut)}
+.rail::-webkit-scrollbar{display:none}
+.arrow{position:absolute;top:8px;bottom:14px;width:44px;border:0;z-index:3;background:rgba(10,12,16,.72);color:var(--fg);cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+.rail-wrap:hover .arrow{opacity:1}
+.arrow.l{left:0}.arrow.r{right:0}
+.arrow svg{width:26px;height:26px}
+@media (hover:none){.arrow{display:none}}
+
+.card{flex:0 0 auto;width:min(272px,72vw);scroll-snap-align:start;border:0;background:var(--surface);border-radius:6px;padding:0;text-align:left;cursor:pointer;overflow:hidden;transition:transform .22s ease,box-shadow .22s ease;position:relative}
+.card:hover,.card:focus-visible{transform:scale(1.035);box-shadow:0 14px 34px rgba(0,0,0,.55);z-index:2}
+.card .art{aspect-ratio:16/9;position:relative;max-width:100%}
+.card .art svg{position:absolute;inset:0;width:100%;height:100%}
+.card .art .nm{position:absolute;left:12px;right:12px;bottom:9px;font-family:var(--display);font-size:30px;line-height:.92;letter-spacing:.02em;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.card .art .cty{position:absolute;left:12px;top:10px;max-width:44%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.82)}
+.card .art .flag{position:absolute;right:10px;top:9px;display:flex;gap:4px}
+.card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px}
+.card .l1{display:flex;align-items:center;gap:8px;font-size:13px;flex-wrap:wrap}
+.match{color:var(--good);font-weight:700}
+.match.mid{color:var(--warn)} .match.low{color:var(--bad)}
+.chip{font-size:10.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:2px 6px;border-radius:3px;border:1px solid var(--line);color:var(--fg-2);white-space:nowrap}
+.chip.ok{border-color:color-mix(in srgb,var(--good) 60%,transparent);color:var(--good)}
+.chip.no{border-color:color-mix(in srgb,var(--bad) 55%,transparent);color:var(--bad)}
+.chip.dark{background:rgba(0,0,0,.55);border-color:transparent;color:#fff}
+.card .price{font-size:15px;font-weight:600}
+.card .price small{color:var(--fg-3);font-weight:500;font-size:12px}
+.card .l3{font-size:12px;color:var(--fg-2);display:flex;gap:12px;flex-wrap:wrap}
+.card .l3 b{font-weight:600;color:var(--fg)}
+.ranked{display:flex;align-items:flex-end;flex:0 0 auto;scroll-snap-align:start}
+.ranked .rk{font-family:var(--display);font-size:clamp(120px,15vw,176px);line-height:.74;color:var(--bg);-webkit-text-stroke:3px var(--fg-3);margin-right:-18px;position:relative;z-index:0;user-select:none}
+.ranked .card{width:min(232px,62vw);z-index:1}
+.ranked .card:hover{z-index:2}
+
+/* panels */
+.panel{padding-block:44px 8px}
+.panel-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;margin-bottom:6px}
+.panel h2{font-family:var(--display);font-weight:400;font-size:clamp(34px,5vw,52px);line-height:.95;letter-spacing:.02em;margin:0}
+.panel .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3)}
+.panel p.intro{color:var(--fg-2);max-width:72ch;margin:6px 0 18px}
+.grid2{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:18px}
+@media (max-width:880px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.box{background:var(--surface);border-radius:8px;padding:18px;min-width:0}
+.box h3{margin:0 0 10px;font-size:14px;font-weight:700;letter-spacing:.01em}
+.chart svg{width:100%;height:auto;display:block}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--fg-2);margin-top:8px}
+.legend i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
+.stat-list{display:flex;flex-direction:column;gap:0}
+.srow{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px;align-items:baseline}
+.srow:last-child{border-bottom:0}
+.srow .k{color:var(--fg-2)}
+.srow .a{color:var(--mel);font-weight:600;text-align:right}
+.srow .b{color:var(--per);font-weight:600;text-align:right;min-width:64px}
+.srow.h{font-size:11px;color:var(--fg-3);text-transform:uppercase;letter-spacing:.08em}
+.srow.h .a,.srow.h .b{font-weight:600}
+
+/* planner */
+.planner{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:18px}
+@media (max-width:880px){.planner{grid-template-columns:minmax(0,1fr)}}
+.ctrl{display:flex;flex-direction:column;gap:16px}
+.field label{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--fg-2);margin-bottom:6px}
+.field label output{color:var(--fg);font-weight:700;font-variant-numeric:tabular-nums}
+.field input[type=range]{width:100%;accent-color:var(--fg)}
+.field select{width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:5px;padding:8px 10px;color:var(--fg)}
+.seg{display:flex;background:var(--surface-2);border-radius:6px;padding:3px;gap:3px}
+.seg button{flex:1;border:0;background:transparent;padding:7px 6px;border-radius:4px;cursor:pointer;font-size:13px;color:var(--fg-2);font-weight:600}
+.seg button[aria-pressed=true]{background:var(--fg);color:var(--bg)}
+.hint{font-size:12px;color:var(--fg-3)}
+.big3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}
+@media (max-width:520px){.big3{grid-template-columns:minmax(0,1fr)}}
+.big{background:var(--surface-2);border-radius:6px;padding:12px}
+.big .v{font-family:var(--display);font-size:38px;line-height:1;letter-spacing:.02em}
+.big .l{font-size:12px;color:var(--fg-3);margin-top:3px}
+.verdict{font-size:15px;color:var(--fg-2);margin:12px 0 0;max-width:70ch}
+.verdict b{color:var(--fg)}
+
+/* news */
+.news{width:min(320px,80vw);flex:0 0 auto;scroll-snap-align:start;background:var(--surface);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.news .d{font-family:var(--mono);font-size:11px;color:var(--fg-3);letter-spacing:.06em}
+.news h3{margin:0;font-size:15.5px;line-height:1.3}
+.news p{margin:0;font-size:13px;color:var(--fg-2)}
+.news .eff{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;padding-top:8px;border-top:1px solid var(--line);margin-top:auto}
+.news .eff .ic{font-weight:800;flex:0 0 auto;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px}
+.ic.dn{background:color-mix(in srgb,var(--bad) 22%,transparent);color:var(--bad)}
+.ic.up{background:color-mix(in srgb,var(--good) 22%,transparent);color:var(--good)}
+.ic.eq{background:color-mix(in srgb,var(--warn) 22%,transparent);color:var(--warn)}
+.news a{font-size:12px;color:var(--fg-3)}
+
+/* method */
+.method{display:flex;flex-direction:column;gap:10px;max-width:980px}
+details{background:var(--surface);border-radius:8px;padding:0 18px}
+summary{cursor:pointer;padding:15px 0;font-weight:700;font-size:15px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-weight:400;color:var(--fg-3);font-size:20px;line-height:1}
+details[open] summary::after{content:"–"}
+details .in{padding:0 0 18px;color:var(--fg-2);font-size:14px}
+details .in p{max-width:76ch;margin:0 0 10px}
+details .in ul{margin:0 0 10px;padding-left:18px;max-width:80ch}
+details .in li{margin-bottom:5px}
+details .in b{color:var(--fg)}
+.tbl-wrap{overflow-x:auto;margin:6px 0 12px}
+table{border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums;min-width:560px}
+th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--fg-3);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+footer{padding-block:40px 60px;color:var(--fg-3);font-size:12.5px;max-width:90ch}
+
+/* modal */
+dialog{border:0;padding:0;background:var(--surface);color:var(--fg);border-radius:10px;width:min(880px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow:auto;box-shadow:0 30px 80px rgba(0,0,0,.7)}
+dialog::backdrop{background:rgba(0,0,0,.72)}
+.m-hero{position:relative;aspect-ratio:21/8;max-width:100%;min-height:170px}
+.m-hero svg{position:absolute;inset:0;width:100%;height:100%}
+.m-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,var(--surface) 2%,rgba(20,23,29,0) 60%)}
+.m-hero .t{position:absolute;left:24px;right:24px;bottom:12px;z-index:1}
+.m-hero h2{font-family:var(--display);font-weight:400;font-size:clamp(44px,7vw,72px);line-height:.9;margin:0;letter-spacing:.02em}
+.m-close{position:absolute;right:12px;top:12px;z-index:2;width:38px;height:38px;border-radius:50%;border:0;background:rgba(10,12,16,.8);color:var(--fg);cursor:pointer;font-size:20px;line-height:1}
+.m-body{padding:4px 24px 24px;display:flex;flex-direction:column;gap:18px}
+.m-meta{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;font-size:13.5px;color:var(--fg-2)}
+.m-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.kv{background:var(--surface-2);border-radius:6px;padding:10px}
+.kv .v{font-weight:700;font-size:17px;font-variant-numeric:tabular-nums}
+.kv .l{font-size:11.5px;color:var(--fg-3)}
+.m-sec h3{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg-3);margin:0 0 8px;font-weight:600}
+.bars{display:flex;flex-direction:column;gap:7px}
+.bar{display:grid;grid-template-columns:120px minmax(0,1fr) 54px;gap:10px;align-items:center;font-size:12.5px}
+.bar .track{height:8px;background:var(--surface-3);border-radius:4px;position:relative;overflow:hidden}
+.bar .fill{position:absolute;top:0;bottom:0;border-radius:4px}
+.bar .val{text-align:right;color:var(--fg-2);font-variant-numeric:tabular-nums}
+.note{font-size:13px;color:var(--fg-2);background:var(--surface-2);border-radius:6px;padding:12px 14px;max-width:none}
+.note b{color:var(--fg)}
+.srcs{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:12.5px}
+.srcs a{color:var(--fg-3)}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<header class="nav pad">
+  <div class="brand" aria-label="Shortlist">SHORT<span class="m">LI</span><span class="p">ST</span></div>
+  <nav aria-label="Sections">
+    <a href="#picks">Top picks</a><a href="#showdown">City showdown</a><a href="#payoff">Payoff planner</a><a href="#news">News</a><a href="#method">Method</a>
+  </nav>
+  <div class="stamp" id="stamp"></div>
+</header>
+
+<section class="bill" aria-labelledby="bill-h">
+  <div class="bill-art" id="billArt" aria-hidden="true"></div>
+  <div class="bill-in pad">
+    <div class="tag"><b>FHB</b><span>$600k · 3 bed · Melbourne N/W vs Perth South</span></div>
+    <h1 id="bill-h"><span class="m">Melbourne</span> buys the house. <span class="p">Perth</span> buys a wait.</h1>
+    <p class="lede" id="lede"></p>
+    <div class="facts" id="facts"></div>
+    <div class="ctas">
+      <a class="btn pri" href="#picks"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>See top picks</a>
+      <a class="btn sec" href="#payoff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Payoff planner</a>
+      <a class="btn sec" href="#method"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>How it's forecast</a>
+    </div>
+  </div>
+</section>
+
+<main>
+  <div class="rows" id="picks"></div>
+
+  <section class="panel pad" id="showdown" aria-labelledby="sd-h">
+    <div class="panel-head"><h2 id="sd-h">City showdown</h2><span class="kicker">Actual Nov 2021 – Nov 2026 · scenarios to 2036</span></div>
+    <p class="intro">Each line is the typical suburb in the shortlist, indexed to 100 in November 2021. New-estate suburbs are left out because their early medians include land-only sales. Past the dashed line, the shaded band runs from the bear case to the bull case, and the solid line is the base case.</p>
+    <div class="grid2">
+      <div class="box chart"><div id="cityChart"></div>
+        <div class="legend"><span><i style="background:var(--mel)"></i>Melbourne N/W</span><span><i style="background:var(--per)"></i>Perth South</span><span><i style="background:var(--fg-3)"></i>Shaded: bear to bull</span></div>
+      </div>
+      <div class="box"><h3>Head to head</h3><div class="stat-list" id="h2h"></div></div>
+    </div>
+  </section>
+
+  <section class="panel pad" id="payoff" aria-labelledby="po-h">
+    <div class="panel-head"><h2 id="po-h">Payoff planner</h2><span class="kicker">Your numbers · live</span></div>
+    <p class="intro">At the same price, the loan is the same in both cities, so payoff speed depends on your repayments, not the city. The city changes what you own when the loan is gone. Take-home pay is estimated from $120k + $80k at 2026–27 tax rates, including the Medicare levy.</p>
+    <div class="planner">
+      <div class="box ctrl">
+        <div class="field"><label for="iPrice">Purchase price <output id="oPrice"></output></label><input type="range" id="iPrice" min="450000" max="850000" step="5000" value="600000"></div>
+        <div class="field"><label for="iDep">Deposit <output id="oDep"></output></label><input type="range" id="iDep" min="40000" max="220000" step="5000" value="130000"></div>
+        <div class="field"><label for="iRate">Interest rate <output id="oRate"></output></label><input type="range" id="iRate" min="5.5" max="8.5" step="0.05" value="6.2"><div class="hint">The cheapest variable rates on 3 Nov 2026 were about 5.89%. The big four banks charge more.</div></div>
+        <div class="field"><label for="iPay">Monthly repayment <output id="oPay"></output></label><input type="range" id="iPay" min="2500" max="11000" step="100" value="6000"><div class="hint" id="payHint"></div></div>
+        <div class="field"><label>Growth scenario</label><div class="seg" role="group" aria-label="Growth scenario" id="segSc"><button type="button" data-v="bear" aria-pressed="false">Bear</button><button type="button" data-v="base" aria-pressed="true">Base</button><button type="button" data-v="bull" aria-pressed="false">Bull</button></div></div>
+        <div class="field"><label for="iMel">Melbourne suburb</label><select id="iMel"></select></div>
+        <div class="field"><label for="iPer">Perth suburb</label><select id="iPer"></select></div>
+      </div>
+      <div class="box">
+        <div class="big3" id="big3"></div>
+        <div class="chart" id="payChart"></div>
+        <div class="legend"><span><i style="background:var(--mel)"></i>Melbourne home value</span><span><i style="background:var(--per)"></i>Perth home value</span><span><i style="background:var(--fg-2)"></i>Loan balance</span></div>
+        <p class="verdict" id="verdict"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="news" aria-labelledby="nw-h">
+    <div class="pad"><div class="panel-head"><h2 id="nw-h">News that moves the forecast</h2><span class="kicker">Checked 11 Nov 2026</span></div>
+    <p class="intro">Each item states what it changed in the model. News sets the near-term years. Rents, yields and supply drive the long run.</p></div>
+    <div class="rail-wrap"><div class="rail" id="newsRail"></div></div>
+  </section>
+
+  <section class="panel pad" id="method" aria-labelledby="me-h">
+    <div class="panel-head"><h2 id="me-h">Method, data &amp; limits</h2><span class="kicker">Read before you trust a number</span></div>
+    <div class="method" id="methodBox"></div>
+  </section>
+
+  <footer class="pad">Scenario model for one household's decision. It is not financial advice and not a valuation. Suburb medians blend very different homes, so get a bank valuation and a building inspection on the specific property. Confirm stamp duty with the State Revenue Office (VIC) and RevenueWA, and loan structure with a licensed broker.</footer>
+</main>
+
+<dialog id="dlg" aria-labelledby="dlgTitle"><div id="dlgIn"></div></dialog>
+
+<script type="application/json" id="data">/*__DATA__*/{}</script>
+<script>
+(function(){
+const D = JSON.parse(document.getElementById('data').textContent);
+const S = D.suburbs;
+S.forEach((s,i)=>s.i=i);
+const $ = (q,el=document)=>el.querySelector(q);
+const esc = t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const k = v=> v==null?'—':(v>=1e6?'$'+(v/1e6).toFixed(2)+'m':'$'+Math.round(v/1000)+'k');
+const money = v=>'$'+Math.round(v).toLocaleString('en-AU');
+const pct = (v,d=1)=> v==null?'—':(v>0?'+':'')+v.toFixed(d)+'%';
+const css = n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const C = {mel:css('--mel'),per:css('--per'),fg:css('--fg'),fg2:css('--fg-2'),fg3:css('--fg-3'),line:css('--line'),good:css('--good'),warn:css('--warn'),bad:css('--bad'),surface:css('--surface'),s2:css('--surface-2')};
+const col = s=> s.city==='Melbourne'?C.mel:C.per;
+const byMatch = [...S].sort((a,b)=>b.match-a.match);
+const mel = S.filter(s=>s.city==='Melbourne'), per = S.filter(s=>s.city==='Perth');
+const avg = a=>a.reduce((x,y)=>x+y,0)/a.length;
+const med = a=>{const b=[...a].sort((x,y)=>x-y);const m=b.length>>1;return b.length%2?b[m]:(b[m-1]+b[m])/2};
+
+$('#stamp').textContent = 'Data to Nov 2026 · ' + S.length + ' suburbs';
+
+/* ---------- hashing for deterministic art ---------- */
+function hash(str){let h=2166136261;for(const c of str){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+function rng(seed){return ()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296}}
+
+/* ---------- card art: gradient + contour lines + the suburb's own 5-yr price line ---------- */
+function art(s, w=320, h=180, big=false){
+  const r = rng(hash(s.suburb));
+  const deep = s.city==='Melbourne'?['#0F2347','#1D4B91','#3A7BE8']:['#3E1D08','#8A3F10','#E58A36'];
+  const id = 'g'+s.i+(big?'b':'');
+  const ang = Math.round(r()*60+10);
+  let contours='';
+  const cx=w*(.55+r()*.4), cy=h*(.2+r()*.6);
+  for(let j=1;j<=7;j++){const rx=j*w*.09*(1+r()*.3), ry=j*h*.12*(1+r()*.3);contours+=`<ellipse cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" rx="${rx.toFixed(1)}" ry="${ry.toFixed(1)}" fill="none" stroke="rgba(255,255,255,${(.09-j*.009).toFixed(3)})" stroke-width="1"/>`}
+  const ser = s.series.map(p=>p[1]);
+  const lo=Math.min(...ser), hi=Math.max(...ser);
+  const pad=h*.18, top=h*.12, bot=h*(big?.62:.58);
+  const pts = ser.map((v,j)=>[(j/(ser.length-1))*w, bot-(hi===lo?0:(v-lo)/(hi-lo))*(bot-top)]);
+  const line = pts.map((p,j)=>(j?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join('');
+  const area = line+`L${w} ${h}L0 ${h}Z`;
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="${id}" gradientTransform="rotate(${ang})"><stop offset="0" stop-color="${deep[0]}"/><stop offset=".6" stop-color="${deep[1]}"/><stop offset="1" stop-color="${deep[2]}"/></linearGradient><linearGradient id="${id}a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><rect width="${w}" height="${h}" fill="url(#${id})"/>${contours}<path d="${area}" fill="url(#${id}a)"/><path d="${line}" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="${big?2.2:1.8}" vector-effect="non-scaling-stroke"/><rect width="${w}" height="${h}" fill="url(#${id}v)" opacity="0"/></svg>`;
+}
+
+function matchCls(m){return m>=70?'':(m>=45?'mid':'low')}
+
+function card(s, mode){
+  const p3 = s.house_3br, u3=s.unit_3br;
+  let price, chipBudget;
+  if(mode==='unit'){price=`3-bed townhouse ${k(u3)}<small> · house ${k(p3)}</small>`;chipBudget=s.in_budget_unit?'<span class="chip ok">Under $600k</span>':''}
+  else{price=`3-bed house ${k(p3)}<small>${u3?' · townhouse '+k(u3):''}</small>`;chipBudget=s.in_budget_house?'<span class="chip ok">In budget</span>':'<span class="chip no">Over budget</span>'}
+  const l3 = mode==='risk'
+    ? `<span>5-yr <b>${pct(s.g5,0)}</b></span><span>Bear case <b>${pct(s.trough_bear,0)}</b></span><span>Yield <b>${s.yield.toFixed(1)}%</b></span>`
+    : `<span>10-yr base <b>${pct(s.cagr10_base)}</b>/yr</span><span>Bear dip <b>${pct(s.trough_bear,0)}</b></span>`;
+  return `<button class="card" type="button" data-s="${s.i}" aria-label="${esc(s.suburb)}, ${s.city}. ${s.match}% match. Open details">
+    <div class="art">${art(s)}<div class="cty">${s.city} · ${esc(s.region)}</div><div class="flag">${s.rail?'<span class="chip dark">Train</span>':''}${s.greenfield?'<span class="chip dark">New estate</span>':''}</div><div class="nm">${esc(s.suburb)}</div></div>
+    <div class="body"><div class="l1"><span class="match ${matchCls(s.match)}">${s.match}% match</span>${chipBudget}<span class="chip">${s.km} km</span></div>
+    <div class="price num">${price}</div><div class="l3 num">${l3}</div></div></button>`;
+}
+
+const ROWS = [
+  {t:'Top 10 matches for your $600k', sub:'Ranked on price against your budget (35%), base-case growth (25%), transport (15%), downside (15%) and rental yield (10%). Click any title for the detail.', items:byMatch.slice(0,10), ranked:true},
+  {t:'3-bed houses at or under $600k', sub:'Suburbs where the median 3-bed house sold for $600k or less over the past 12 months. Every one is in Melbourne. None of the 24 Perth suburbs qualify.', items:S.filter(s=>s.in_budget_house).sort((a,b)=>b.match-a.match)},
+  {t:'3-bed townhouses and villas under $600k', sub:'Medians for units with 3 bedrooms. In these suburbs that mostly means townhouses and villas. Sorted cheapest first.', items:S.filter(s=>s.in_budget_unit).sort((a,b)=>a.unit_3br-b.unit_3br), mode:'unit'},
+  {t:'Melbourne · West', items:mel.filter(s=>s.region==='West').sort((a,b)=>b.match-a.match)},
+  {t:'Melbourne · North', items:mel.filter(s=>s.region==='North').sort((a,b)=>b.match-a.match)},
+  {t:'Perth · South-East corridor', sub:'Armadale line and Thornlie–Cockburn link. Prices up 100–165% in five years.', items:per.filter(s=>s.region==='South-East').sort((a,b)=>b.match-a.match)},
+  {t:'Perth · Kwinana–Rockingham corridor', items:per.filter(s=>s.region==='South-West').sort((a,b)=>b.match-a.match)},
+  {t:'Biggest 5-year run-ups, highest correction risk', sub:'The model expects the suburbs that rose most to give back the most in a downturn. Bear case shown.', items:[...S].sort((a,b)=>b.g5-a.g5).slice(0,10), mode:'risk'},
+];
+const chev = d=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="${d==='l'?'M15 5l-7 7 7 7':'M9 5l7 7-7 7'}"/></svg>`;
+$('#picks').innerHTML = ROWS.map((r,ri)=>`<section class="row" aria-labelledby="rw${ri}"><div class="pad"><h2 id="rw${ri}">${r.t}</h2>${r.sub?`<p class="sub">${r.sub}</p>`:''}</div>
+  <div class="rail-wrap"><button class="arrow l" type="button" aria-label="Scroll left">${chev('l')}</button><div class="rail">${r.items.map((s,j)=>r.ranked?`<div class="ranked"><span class="rk" aria-hidden="true">${j+1}</span>${card(s,r.mode)}</div>`:card(s,r.mode)).join('')}</div><button class="arrow r" type="button" aria-label="Scroll right">${chev('r')}</button></div></section>`).join('');
+document.querySelectorAll('.rail-wrap').forEach(w=>{const rail=$('.rail',w);w.querySelectorAll('.arrow').forEach(b=>b.addEventListener('click',()=>rail.scrollBy({left:(b.classList.contains('l')?-1:1)*rail.clientWidth*.85,behavior:'smooth'})))});
+document.addEventListener('click',e=>{const c=e.target.closest('.card');if(c)openDetail(S[+c.dataset.s])});
+
+/* ---------- billboard ---------- */
+const melIn = mel.filter(s=>s.in_budget_house).length, perIn = per.filter(s=>s.in_budget_house).length;
+const perCheapest = [...per].sort((a,b)=>a.house_3br-b.house_3br)[0];
+const melG5 = med(mel.filter(s=>!s.greenfield).map(s=>s.g5)), perG5 = med(per.map(s=>s.g5));
+$('#lede').innerHTML = `With $130k down and a $600k budget, <strong>${melIn} of ${mel.length}</strong> Melbourne north/west suburbs have a median 3-bed house you can afford. In Perth's south it's <strong>${perIn} of ${per.length}</strong>. The cheapest Perth 3-bed median is ${esc(perCheapest.suburb)} at <strong>${k(perCheapest.house_3br)}</strong>. Perth prices are also falling: down 5.7% over the last quarter after rising ${Math.round(perG5)}% in five years.`;
+$('#facts').innerHTML = [
+  [melIn+' / '+mel.length,'Melbourne suburbs with a 3-bed house under $600k',C.mel],
+  [perIn+' / '+per.length,'Perth suburbs with a 3-bed house under $600k',C.per],
+  ['+'+Math.round(perG5)+'%','Perth South typical 5-yr price rise',C.per],
+  ['−5.7%','Perth values, Aug–Oct 2026 (Cotality)',C.fg],
+  ['4.85%','RBA cash rate since 3 Nov 2026',C.fg],
+].map(f=>`<div class="fact"><span class="v num" style="color:${f[2]}">${f[0]}</span><span class="l">${f[1]}</span></div>`).join('');
+
+/* ---------- generic chart ---------- */
+function chart({w=760,h=340,xs,series,bands=[],xLabel,yFmt=v=>v,vline,markers=[],yMin,yMax,pad={l:52,r:16,t:16,b:30}}){
+  const all=[];series.forEach(s=>s.pts.forEach(p=>all.push(p[1])));bands.forEach(b=>b.pts.forEach(p=>{all.push(p[1],p[2])}));
+  let lo=yMin??Math.min(...all), hi=yMax??Math.max(...all);
+  const span=hi-lo||1; lo-=span*.06; hi+=span*.06;
+  const nice = (()=>{const raw=(hi-lo)/5;const mag=Math.pow(10,Math.floor(Math.log10(raw)));const n=[1,2,2.5,5,10].find(m=>m*mag>=raw)*mag;return n})();
+  lo=Math.floor(lo/nice)*nice; hi=Math.ceil(hi/nice)*nice;
+  const X=x=>pad.l+(x-xs[0])/(xs[1]-xs[0])*(w-pad.l-pad.r);
+  const Y=y=>h-pad.b-(y-lo)/(hi-lo)*(h-pad.t-pad.b);
+  let g='';
+  for(let v=lo;v<=hi+1e-9;v+=nice){g+=`<line x1="${pad.l}" x2="${w-pad.r}" y1="${Y(v).toFixed(1)}" y2="${Y(v).toFixed(1)}" stroke="${C.line}" stroke-width="1"/><text x="${pad.l-8}" y="${(Y(v)+4).toFixed(1)}" text-anchor="end" font-size="11" fill="${C.fg3}" font-family="Inter,sans-serif">${yFmt(v)}</text>`}
+  const yr0=Math.ceil(xs[0]), yr1=Math.floor(xs[1]); const stepY=(yr1-yr0)>8?2:1;
+  for(let y=yr0;y<=yr1;y+=stepY){g+=`<text x="${X(y).toFixed(1)}" y="${h-8}" text-anchor="middle" font-size="11" fill="${C.fg3}" font-family="Inter,sans-serif">${y}</text>`}
+  if(vline!=null){g+=`<line x1="${X(vline).toFixed(1)}" x2="${X(vline).toFixed(1)}" y1="${pad.t}" y2="${h-pad.b}" stroke="${C.fg3}" stroke-dasharray="4 4"/><text x="${(X(vline)+6).toFixed(1)}" y="${pad.t+10}" font-size="10.5" fill="${C.fg3}" font-family="Inter,sans-serif">FORECAST →</text>`}
+  bands.forEach(b=>{const up=b.pts.map(p=>`${X(p[0]).toFixed(1)},${Y(p[2]).toFixed(1)}`);const dn=b.pts.slice().reverse().map(p=>`${X(p[0]).toFixed(1)},${Y(p[1]).toFixed(1)}`);g+=`<polygon points="${up.concat(dn).join(' ')}" fill="${b.color}" fill-opacity=".16" stroke="none"/>`});
+  series.forEach(s=>{const d=s.pts.map((p,j)=>(j?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1)).join('');g+=`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="${s.w||2.4}" ${s.dash?`stroke-dasharray="${s.dash}"`:''} stroke-linejoin="round" stroke-linecap="round"/>`;
+    if(s.end){const p=s.pts[s.pts.length-1];g+=`<circle cx="${X(p[0]).toFixed(1)}" cy="${Y(p[1]).toFixed(1)}" r="4" fill="${s.color}"/>`;if(s.endLabel)g+=`<text x="${(X(p[0])-6).toFixed(1)}" y="${(Y(p[1])-9).toFixed(1)}" text-anchor="end" font-size="11.5" font-weight="700" fill="${s.color}" font-family="Inter,sans-serif">${s.endLabel}</text>`}});
+  markers.forEach(m=>{g+=`<circle cx="${X(m.x).toFixed(1)}" cy="${Y(m.y).toFixed(1)}" r="5" fill="${C.surface}" stroke="${m.color}" stroke-width="2"/><text x="${(X(m.x)+(m.anchor==='end'?-9:9)).toFixed(1)}" y="${(Y(m.y)+(m.dy||-9)).toFixed(1)}" text-anchor="${m.anchor||'start'}" font-size="11.5" font-weight="700" fill="${m.color}" font-family="Inter,sans-serif">${m.label}</text>`});
+  return `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${xLabel||'chart'}">${g}</svg>`;
+}
+const ym = s=>{const [y,m]=s.split('-').map(Number);return y+(m-.5)/12};
+
+/* ---------- city showdown ---------- */
+function cityProj(city, startIdx){
+  const out={};for(const sc of ['bear','base','bull']){let v=startIdx;out[sc]=[[2026.875,v]].concat(D.city_paths[city][sc].map((g,i)=>{v*=1+g/100;return [2027.875+i,+v.toFixed(1)]}))}return out;
+}
+(function(){
+  const series=[],bands=[];
+  for(const city of ['Melbourne','Perth']){
+    const idx=D.city_index[city].map(p=>[ym(p[0]),p[1]]);
+    const last=idx[idx.length-1][1]; const pr=cityProj(city,last);
+    const color=city==='Melbourne'?C.mel:C.per;
+    series.push({pts:idx,color,w:2.6});
+    bands.push({pts:pr.bear.map((p,i)=>[p[0],p[1],pr.bull[i][1]]),color});
+    series.push({pts:pr.base,color,w:2,dash:'1 0',end:true,endLabel:city==='Melbourne'?'MEL '+Math.round(pr.base[pr.base.length-1][1]):'PER '+Math.round(pr.base[pr.base.length-1][1])});
+  }
+  $('#billArt').innerHTML = chart({w:1400,h:560,xs:[2021.9,2036.9],series:series.map(s=>({...s,w:(s.w||2)*1.6,endLabel:null})),bands,yFmt:()=> '',pad:{l:0,r:0,t:40,b:0}}).replace('role="img"','');
+  $('#cityChart').innerHTML = chart({xs:[2021.9,2036.9],series,bands,vline:2026.875,yFmt:v=>Math.round(v),xLabel:'Price index, Nov 2021 = 100, Melbourne vs Perth with scenarios'});
+  const h2h=[
+    ['Median 3-bed house', k(med(mel.map(s=>s.house_3br))), k(med(per.map(s=>s.house_3br)))],
+    ['Median 3-bed townhouse', k(med(mel.filter(s=>s.unit_3br).map(s=>s.unit_3br))), k(med(per.filter(s=>s.unit_3br).map(s=>s.unit_3br)))],
+    ['3-bed house ≤ $600k', melIn+' of '+mel.length, perIn+' of '+per.length],
+    ['Price change, 5 yrs (typical)', pct(melG5,0), pct(perG5,0)],
+    ['Price change, last 6 mths (typical)', pct(med(mel.map(s=>s.g6))), pct(med(per.map(s=>s.g6)))],
+    ['Gross rental yield (typical)', med(mel.map(s=>s.yield)).toFixed(1)+'%', med(per.map(s=>s.yield)).toFixed(1)+'%'],
+    ['Yield in 2021 (typical)', med(mel.map(s=>s.yield_2021)).toFixed(1)+'%', med(per.map(s=>s.yield_2021)).toFixed(1)+'%'],
+    ['Base case, 10 yrs p.a.', pct(med(mel.map(s=>s.cagr10_base))), pct(med(per.map(s=>s.cagr10_base)))],
+    ['Bear case, worst dip', pct(med(mel.map(s=>s.trough_bear)),0), pct(med(per.map(s=>s.trough_bear)),0)],
+    ['FHB stamp duty at $600k','$0','$0'],
+  ];
+  $('#h2h').innerHTML = `<div class="srow h"><span>Typical suburb</span><span class="a">MEL</span><span class="b">PER</span></div>`+h2h.map(r=>`<div class="srow num"><span class="k">${r[0]}</span><span class="a">${r[1]}</span><span class="b">${r[2]}</span></div>`).join('')+`<p class="hint" style="margin:10px 0 0">Note the yield rows. Perth rents rose too, but prices outran them: yields fell from about ${med(per.map(s=>s.yield_2021)).toFixed(1)}% to ${med(per.map(s=>s.yield)).toFixed(1)}%. Melbourne's barely moved. That is the main reason the model expects Perth to cool.</p>`;
+})();
+
+/* ---------- detail modal ---------- */
+const dlg=$('#dlg');
+function openDetail(s){
+  const p3=s.house_3br||s.house_median;
+  const proj=s.proj_3br;
+  const yrs=D.years;
+  const hist=s.series.map(p=>[ym(p[0]),p[1]]);
+  const histU=s.series.filter(p=>p[2]).map(p=>[ym(p[0]),p[2]]);
+  const mk=sc=>[[2026.875,p3]].concat(proj[sc].map((v,i)=>[yrs[i]+.875,v]));
+  const c=col(s);
+  const ch=chart({xs:[2021.9,2036.9],series:[{pts:hist,color:c,w:2.6},{pts:histU,color:C.fg3,w:1.6,dash:'4 4'},{pts:mk('base'),color:c,w:2,end:true,endLabel:k(proj.base[9])}],bands:[{pts:mk('bear').map((p,i)=>[p[0],p[1],mk('bull')[i][1]]),color:c}],vline:2026.875,yFmt:v=>k(v),xLabel:s.suburb+' median house price and 3-bed forecast',
+    markers:[{x:2026.875,y:p3,color:C.fg,label:'3-bed now '+k(p3),anchor:'end',dy:18}]});
+  const mp=s.match_parts, mx={afford:35,growth:25,downside:15,rent:10,access:15};
+  const mlab={afford:'Fits budget',growth:'Base growth',downside:'Downside',rent:'Rent support',access:'Transport'};
+  const tp=s.tilt_parts; const tlab={yield:'Rental yield',rent_growth:'Rent growth',price_run:'5-yr price run',supply:'Land supply',rail:'Train station'};
+  const notes=[];
+  if(s.greenfield) notes.push('<b>New-estate suburb.</b> Large land supply is still coming, which tends to cap resale growth. Its 2021 median included land-only and off-the-plan sales, so the 5-year growth figure is overstated.');
+  if(s.city==='Perth') notes.push(`<b>Perth timing.</b> These 12-month medians lag. Cotality's index has Perth down 5.7% over the last three months, so recent sales may already be below the medians shown here. If the bear case plays out, this 3-bed could sell for about ${k(p3*(1+s.trough_bear/100))}, which is close to your budget.`);
+  if(s.city==='Melbourne' && s.region==='West' && /Melton|Kurunjang|Brookfield|Wyndham|Manor/.test(s.suburb)) notes.push('<b>Rail upside not priced in.</b> Melton line electrification has $152.7m for planning only, with no build date. The model gives it no credit. If it gets construction funding, treat that as upside.');
+  if(!s.in_budget_house && s.in_budget_unit) notes.push(`<b>At $600k, think townhouse here.</b> The 3-bed townhouse median is ${k(s.unit_3br)}.`);
+  $('#dlgIn').innerHTML=`<div class="m-hero">${art(s,880,335,true)}<button class="m-close" type="button" aria-label="Close">×</button><div class="t"><div class="tag">${s.city} · ${esc(s.region)} · ${s.postcode}</div><h2 id="dlgTitle">${esc(s.suburb)}</h2></div></div>
+  <div class="m-body">
+    <div class="m-meta"><span class="match ${matchCls(s.match)}">${s.match}% match</span>${s.in_budget_house?'<span class="chip ok">3-bed house in budget</span>':'<span class="chip no">3-bed house over budget</span>'}${s.rail?'<span class="chip">Train station</span>':''}${s.greenfield?'<span class="chip">New estate</span>':''}<span>${s.km} km to CBD (approx.)</span><span>${s.sales_12m||'—'} house sales in 12 mths</span></div>
+    <div class="m-grid">
+      <div class="kv"><div class="v">${k(s.house_3br)}</div><div class="l">3-bed house median</div></div>
+      <div class="kv"><div class="v">${k(s.unit_3br)}</div><div class="l">3-bed townhouse median</div></div>
+      <div class="kv"><div class="v">${k(s.house_median)}</div><div class="l">All houses median</div></div>
+      <div class="kv"><div class="v">$${s.rent}/wk</div><div class="l">House rent (${pct(s.rent_g12)} yr)</div></div>
+      <div class="kv"><div class="v">${s.yield.toFixed(2)}%</div><div class="l">Gross yield (2021: ${s.yield_2021.toFixed(1)}%)</div></div>
+      <div class="kv"><div class="v">${pct(s.g5,0)}</div><div class="l">House price, 5 yrs</div></div>
+      <div class="kv"><div class="v">${pct(s.g12)}</div><div class="l">Last 12 mths</div></div>
+      <div class="kv"><div class="v">${pct(s.g6)}</div><div class="l">Last 6 mths</div></div>
+    </div>
+    <div class="m-sec"><h3>Price history and 3-bed forecast</h3><div class="chart">${ch}</div><div class="legend"><span><i style="background:${c}"></i>House median (12-mth rolling)</span><span><i style="background:${C.fg3}"></i>Unit/townhouse median</span><span>Shaded: bear to bull</span></div></div>
+    <div class="m-sec"><h3>What a $${Math.round(p3/1000)}k 3-bed could be worth</h3><div class="tbl-wrap"><table><thead><tr><th>Scenario</th><th>2028</th><th>2031</th><th>2036</th><th>10-yr p.a.</th></tr></thead><tbody>
+      ${['bear','base','bull'].map(sc=>`<tr><td>${sc[0].toUpperCase()+sc.slice(1)}</td><td>${k(proj[sc][1])}</td><td>${k(proj[sc][4])}</td><td>${k(proj[sc][9])}</td><td>${pct(s['cagr10_'+sc],2)}</td></tr>`).join('')}
+    </tbody></table></div></div>
+    <div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+      <div class="m-sec"><h3>Why ${s.match}% match</h3><div class="bars">${Object.keys(mx).map(key=>`<div class="bar"><span>${mlab[key]}</span><span class="track"><span class="fill" style="width:${(mp[key]/mx[key]*100).toFixed(0)}%;background:${c}"></span></span><span class="val">${mp[key].toFixed(0)}/${mx[key]}</span></div>`).join('')}</div></div>
+      <div class="m-sec"><h3>Forecast tilt vs ${s.city}: ${pct(s.tilt,2)}/yr</h3><div class="bars">${Object.keys(tlab).map(key=>{const v=tp[key];const w=Math.min(50,Math.abs(v)/1.0*50);return `<div class="bar"><span>${tlab[key]}</span><span class="track"><span class="fill" style="left:${v<0?50-w:50}%;width:${w}%;background:${v<0?C.bad:C.good}"></span><span style="position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:${C.fg3}"></span></span><span class="val">${pct(v,2)}</span></div>`}).join('')}</div></div>
+    </div>
+    ${notes.map(n=>`<p class="note">${n}</p>`).join('')}
+    <div class="srcs"><span class="hint">Sources:</span>${Object.entries(s.sources).map(([n,u])=>`<a href="${esc(u)}" target="_blank" rel="noopener">${n==='spi'?'Smart Property Investment':n==='reiwa'?'REIWA':'Microburbs'}</a>`).join('')}</div>
+  </div>`;
+  $('.m-close',dlg).addEventListener('click',()=>dlg.close());
+  if(!dlg.open) dlg.showModal();
+  dlg.scrollTop=0;
+}
+dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+
+/* ---------- payoff planner ---------- */
+function vicDuty(p){const gen=p<=960000?2870+0.06*(p-130000):0.055*p; if(p<=600000)return 0; if(p<=750000)return gen*(750000-p)/150000; return gen}
+function waDuty(p){const gen=p<=725000?11115+0.0475*(p-360000):28453+0.0515*(p-725000); if(p<=600000)return 0; if(p<=800000){const g8=28453+0.0515*(800000-725000);return g8*(p-600000)/200000} return gen}
+function tax(i){let t=0;if(i>190000)t=4020+27000+20350+(i-190000)*.45;else if(i>135000)t=4020+27000+(i-135000)*.37;else if(i>45000)t=4020+(i-45000)*.30;else if(i>18200)t=(i-18200)*.15;return t+i*.02}
+const takeHome=(120000-tax(120000)+80000-tax(80000))/12;
+const st={sc:'base'};
+const optsM=byMatch.filter(s=>s.city==='Melbourne'), optsP=byMatch.filter(s=>s.city==='Perth');
+$('#iMel').innerHTML=optsM.map(s=>`<option value="${s.i}">${esc(s.suburb)} · ${s.match}% · 3-bed ${k(s.house_3br)}</option>`).join('');
+$('#iPer').innerHTML=optsP.map(s=>`<option value="${s.i}">${esc(s.suburb)} · ${s.match}% · 3-bed ${k(s.house_3br)}</option>`).join('');
+$('#iPer').value=String([...per].sort((a,b)=>a.house_3br-b.house_3br)[0].i);
+document.querySelectorAll('#segSc button').forEach(b=>b.addEventListener('click',()=>{st.sc=b.dataset.v;document.querySelectorAll('#segSc button').forEach(x=>x.setAttribute('aria-pressed',x===b));plan()}));
+['iPrice','iDep','iRate','iPay','iMel','iPer'].forEach(id=>$('#'+id).addEventListener('input',plan));
+
+function amort(L,r,pay){const m=r/1200;let b=L,mo=0,int=0;const bal=[[0,b]];while(b>0.5&&mo<600){const i=b*m;int+=i;b=b+i-pay;mo++;if(mo%12===0)bal.push([mo/12,Math.max(0,b)])}bal.push([mo/12,0]);return {months:mo,interest:int,bal,ok:pay>L*m}}
+function plan(){
+  const price=+$('#iPrice').value, dep=+$('#iDep').value, rate=+$('#iRate').value;
+  const m=rate/1200, n=360;
+  const sm=S[+$('#iMel').value], sp=S[+$('#iPer').value];
+  const dutyM=vicDuty(price), dutyP=waDuty(price);
+  const costs=3500;
+  const loanM=Math.max(0,price+dutyM+costs-dep), loanP=Math.max(0,price+dutyP+costs-dep);
+  const L=Math.max(loanM,loanP);
+  const minPay=L*m/(1-Math.pow(1+m,-n));
+  const pay=$('#iPay'); pay.min=Math.ceil(minPay/100)*100; if(+pay.value<+pay.min)pay.value=pay.min;
+  const P=+pay.value;
+  $('#oPrice').textContent=k(price);$('#oDep').textContent=k(dep);$('#oRate').textContent=rate.toFixed(2)+'%';$('#oPay').textContent=money(P);
+  $('#payHint').textContent=`${Math.round(P/takeHome*100)}% of your estimated take-home of ${money(takeHome)}/month. The 30-year minimum is ${money(minPay)}.`;
+  const aM=amort(loanM,rate,P), aP=amort(loanP,rate,P), a30=amort(L,rate,minPay);
+  const yrs=aM.months/12;
+  const lvr=(price+0-dep+dutyM+costs)/price*100;
+  $('#big3').innerHTML=[
+    [Math.floor(aM.months/12)+'y '+(aM.months%12)+'m','Debt-free (Melbourne loan)'],
+    [k(aM.interest),'Total interest, saving '+k(a30.interest-aM.interest)+' vs 30 years'],
+    [k(loanM),`Loan · duty VIC ${k(dutyM)} / WA ${k(dutyP)}${lvr>80?' · LVR over 80%: use the First Home Guarantee to avoid LMI':''}`],
+  ].map(b=>`<div class="big"><div class="v num">${b[0]}</div><div class="l">${b[1]}</div></div>`).join('');
+  const val=(s)=>{const p=s.paths[st.sc];const out=[[0,price]];let v=price;for(let i=0;i<p.length;i++){v*=1+p[i]/100;out.push([i+1,v])}return out};
+  const vM=val(sm), vP=val(sp);
+  const at=(arr,t)=>{const i=Math.min(arr.length-2,Math.floor(t));const f=Math.min(1,t-i);return arr[i][1]+(arr[i+1][1]-arr[i][1])*f};
+  const T=Math.min(10,yrs);
+  const eqM=at(vM,T), eqP=at(vP,T);
+  $('#payChart').innerHTML=chart({w:760,h:300,xs:[2026.9,2036.9],yMin:0,series:[{pts:vM.map(p=>[2026.9+p[0],p[1]]),color:C.mel,w:2.6,end:true,endLabel:k(vM[10][1])},{pts:vP.map(p=>[2026.9+p[0],p[1]]),color:C.per,w:2.6,end:true,endLabel:k(vP[10][1])},{pts:aM.bal.filter(p=>p[0]<=10).map(p=>[2026.9+p[0],p[1]]),color:C.fg2,w:2,dash:'5 4'}],yFmt:v=>k(v),xLabel:'Home value and loan balance over 10 years',markers:yrs<=10?[{x:2026.9+yrs,y:0,color:C.good,label:'Debt-free '+(2026+Math.ceil(yrs+.9)),dy:-10}]:[]});
+  const diff=eqM-eqP;
+  const yrLbl=yrs<=10?`when the loan is gone in ${2026+Math.ceil(yrs+.9)}`:'after 10 years';
+  $('#verdict').innerHTML=`${st.sc[0].toUpperCase()+st.sc.slice(1)} case: a ${k(price)} home in <b style="color:${C.mel}">${esc(sm.suburb)}</b> would be worth about <b>${k(eqM)}</b> ${yrLbl}, against <b>${k(eqP)}</b> in <b style="color:${C.per}">${esc(sp.suburb)}</b>. That is <b>${k(Math.abs(diff))} ${diff>=0?'in Melbourne\'s favour':'in Perth\'s favour'}</b>. ${sp.house_3br>price?`At ${k(price)} you are unlikely to get a 3-bed house in ${esc(sp.suburb)}, where the median is ${k(sp.house_3br)}. You'd be looking at a 2-bed house or a townhouse.`:''}`;
+}
+plan();
+
+/* ---------- news ---------- */
+const NEWS=[
+  {d:'3 NOV 2026',h:'RBA lifts cash rate to 4.85%',p:'The fifth rise of 2026, on a 6–3 vote, with inflation at 4.3%. No cut is expected before 2028.',e:'dn',x:'Lower borrowing capacity for every buyer. Both cities\' 2027 base cases are negative.',u:'https://www.rba.gov.au/publications/smp/2026/nov/overview.html',s:'RBA'},
+  {d:'2 NOV 2026',h:'Perth −1.7% in October, −5.7% over the quarter',p:'National values have fallen for seven months straight. Capital cities are down 8.1% since March, the fastest fall in 40 years of data.',e:'dn',x:'Perth base case set at −6% for 2027 and −2% for 2028. The Perth correction is already underway.',u:'https://www.cotality.com/au/insights/articles/housing-downturn-broadens-as-brisbane-and-perth-lead-the-decline',s:'Cotality'},
+  {d:'OCT 2026',h:'Buyer\'s market: 39 days on market, 4.7% discounting',p:'Advertised stock is the highest for this time of year since 2019. Auction clearance rates are below 50%.',e:'up',x:'Good for you as a buyer. Offer below asking price, and expect the medians shown here to be beatable.',u:'https://www.cotality.com/au/insights/articles/housing-downturn-broadens-as-brisbane-and-perth-lead-the-decline',s:'Cotality'},
+  {d:'12 MAY 2026',h:'Budget limits negative gearing and changes CGT',p:'From July 2027, negative gearing for future purchases applies to new builds only, and the 50% CGT discount is replaced by indexation. The ATO says this is not yet law, so check its current status.',e:'up',x:'Fewer investors bidding on established entry-level houses, which helps first home buyers.',u:'https://www.ato.gov.au/about-ato/new-legislation/in-detail/individuals/tax-reform-boosting-home-ownership-reforming-negative-gearing-and-capital-gains-tax',s:'ATO'},
+  {d:'MAY 2026',h:'Melton line electrification: $152.7m for planning only',p:'Design and approvals run to mid-2027, with no construction date. Separately, $14.8m funds longer trains on the Wyndham Vale line.',e:'eq',x:'Not in the model. Real upside for Melton and Wyndham Vale if construction is funded.',u:'https://www.theurbandeveloper.com/articles/vic-rail-expansion-melbourne-west-august-2026',s:'The Urban Developer'},
+  {d:'28 NOV 2026',h:'Victorian state election',p:'The Coalition has promised 25 hybrid trains for the Melton and Wyndham Vale lines. Rail and housing commitments could change after the vote.',e:'eq',x:'Watch it. A funded rail commitment for the west would raise Melton and Wyndham Vale tilts.',u:'https://www.melton.vic.gov.au/News-Media/Hybrid-trains-welcomed-but-need-for-electrification-remains',s:'Melton City Council'},
+  {d:'7 MAY 2026',h:'WA first home buyer exemption raised to $600k',p:'This matches Victoria. At $600k you pay $0 duty in either state. Above that, the concession runs to $800k in WA and $750k in Victoria.',e:'eq',x:'Removes stamp duty from the decision at your budget.',u:'https://www.smartpropertyinvestment.com.au/hotspots/27757-wa-lifts-first-home-buyer-stamp-duty-thresholds',s:'Smart Property Investment'},
+  {d:'FY27 FORECASTS',h:'Forecasters disagree, as usual',p:'Domain: Melbourne houses −4% to −8%, Perth +5% to +9% for the year to June 2027. ANZ: Perth −3.1% in 2027.',e:'eq',x:'Our Perth base case is more bearish than Domain\'s and close to ANZ\'s. Use the Bull button if you side with Domain.',u:'https://www.apimagazine.com.au/news/article/perth-property-investors-face-a-very-different-market-in-2027',s:'API Magazine'},
+  {d:'2026',h:'Perth still has the tightest rentals',p:'Vacancy is about 0.6%, and WA has the strongest interstate migration of any state. Melbourne vacancy is 1.4–1.6%.',e:'up',x:'This keeps Perth\'s bear case from going deeper than about −16% to −25% in the most stretched suburbs.',u:'https://sqmresearch.com.au/uploads/12-05-26-National-Vacancy-Rates-April-2026-2021.pdf',s:'SQM Research'},
+  {d:'3 NOV 2026',h:'Lowest variable rates are about 5.89%',p:'A few lenders are offering 5.89–6.13% for owner-occupiers. The big four banks charge more.',e:'eq',x:'The planner defaults to 6.20%. Each extra 0.25% adds about $70 a month on a $475k loan.',u:'https://www.infochoice.com.au/',s:'InfoChoice'},
+];
+$('#newsRail').innerHTML=NEWS.map(n=>`<article class="news"><div class="d">${n.d}</div><h3>${n.h}</h3><p>${n.p}</p><div class="eff"><span class="ic ${n.e}" aria-hidden="true">${n.e==='dn'?'↓':n.e==='up'?'↑':'→'}</span><span>${n.x}</span></div><a href="${n.u}" target="_blank" rel="noopener">${n.s} ↗</a></article>`).join('');
+
+/* ---------- method ---------- */
+const cp=D.city_paths;
+const pathRows=['Melbourne','Perth'].flatMap(c=>['bear','base','bull'].map(sc=>`<tr><td>${c} · ${sc}</td>${cp[c][sc].slice(0,6).map(v=>`<td>${pct(v,1)}</td>`).join('')}<td>${pct(cp[c][sc][9],1)}</td></tr>`)).join('');
+$('#methodBox').innerHTML=`
+<details open><summary>The short version</summary><div class="in">
+<p><b>Your goal is to pay off fast, and at $600k the city doesn't change that.</b> The loan is the same in both cities and so is stamp duty ($0). With $200k of household income you can clear about $475k in roughly 8–9 years by paying $6,000 a month. The city decides two things: <b>what $600k buys</b> (a 3-bed house in Melbourne's north/west; a 2-bed or a townhouse in Perth's south) and <b>what it's worth when the loan is gone</b>.</p>
+<p><b>Perth's south rose 100–165% in five years and has now started falling.</b> Melbourne's outer north/west rose 10–35% and has been flat for a year. Rents in Perth haven't kept up with prices: yields compressed from about 6% to 4.3%. That is the main evidence for a weaker Perth decade from here. It is a judgement, not a certainty. Perth's population and rental shortage are real, which is why the bull case exists.</p>
+<p><b>If you prefer Perth for lifestyle or jobs,</b> the data says wait. On the bear case, the cheapest Perth 3-bed houses (Armadale, Medina, Orelia, Brookdale) fall to about $540–570k within 12–24 months. That's back inside your budget, and you'd buy after the fall instead of before it.</p>
+</div></details>
+<details><summary>Where the data comes from</summary><div class="in">
+<ul>
+<li><b>Microburbs suburb reports:</b> monthly 12-month-rolling median house and unit prices and rents, Nov 2021 to Nov 2026, plus medians by bedroom count. Used for every price, rent and growth figure.</li>
+<li><b>Smart Property Investment suburb data:</b> 3-month to 5-year growth, 10-year average growth and yield, used to cross-check Microburbs. The two agree on direction and roughly on size, e.g. Armadale's 5-year growth is +158% (Microburbs) vs +165% (SPI).</li>
+<li><b>REIWA suburb pages (Perth):</b> 12-month medians and rents, also a cross-check.</li>
+<li><b>Cotality, RBA, ATO, state governments, Domain/ANZ forecasts:</b> current conditions. See the News row.</li>
+<li><b>Distances and train stations</b> are approximate, from general knowledge. Time your own commute at 7:30am.</li>
+</ul>
+<p>Collected 11 Nov 2026 with a rate-limited script (one request every 1.5 seconds, allowed by each site's robots.txt). The script and raw data are in the repository under <code>property-research/</code>.</p>
+</div></details>
+<details><summary>How the forecast works</summary><div class="in">
+<p><b>Step 1, city paths.</b> These are annual growth assumptions for each city in three scenarios. They are judgement calls anchored on current conditions (rate rises, Perth falling 5.7% last quarter) and long-run growth of about 5–6% a year. Change them in <code>model.py</code> if you disagree.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Scenario</th><th>2027</th><th>2028</th><th>2029</th><th>2030</th><th>2031</th><th>2032</th><th>2036</th></tr></thead><tbody>${pathRows}</tbody></table></div>
+<p><b>Step 2, suburb tilt.</b> Each suburb's growth is shifted up to ±1.5% a year, relative to its own city, using: rental yield (+), rent growth (+), 5-year price run (−, because the biggest risers tend to revert), new-estate land supply (−0.6) and a train station (+0.3). Each detail page shows the breakdown.</p>
+<p><b>Step 3, bear depth.</b> In the bear case, suburbs that rose more than their city peers fall further.</p>
+<p><b>Match score</b> = fit to your $600k budget for a 3-bed house (35) + base-case 10-year growth (25) + transport (15) + bear-case downside (15) + rental yield (10).</p>
+</div></details>
+<details><summary>What this can't tell you</summary><div class="in">
+<ul>
+<li><b>Nobody can forecast house prices reliably.</b> Bank forecasts for a single year routinely differ by 10–15 points. Use the three scenarios as a range, and don't read the base case as a prediction.</li>
+<li><b>Medians lag and mix stock.</b> A 12-month rolling median moves months behind the market, and one sale of a new 4-bed can shift a small suburb's figure.</li>
+<li><b>Five years of suburb history isn't enough</b> to see a full cycle. Perth's flat decade of 2010–2020 isn't in the series. It was used to set the Perth bear case.</li>
+<li><b>Not included:</b> school zones, flood and bushfire overlays, crime, the condition of individual properties, your jobs and commute. These often matter more than a 1% difference in growth.</li>
+</ul></div></details>
+<details><summary>Tools to dig deeper (all free)</summary><div class="in">
+<ul>
+<li><b>Valuer-General Victoria yearly suburb medians (2013–2025)</b> on data.vic.gov.au. The files sit behind a browser check that this environment won't get past. Download them in your own browser, put them in <code>property-research/data/raw/</code>, and the collector can be extended to add 13 years of Melbourne history.</li>
+<li><b>ABS Data API</b> (free, no key) for population growth, building approvals and incomes by area. These are the supply and demand inputs the model currently treats as flags.</li>
+<li><b>Domain developer API</b> has a free tier after you register. It provides listing and sales data with legitimate access. Add the key through the environment's credential settings, never by pasting it into chat.</li>
+<li><b>Cotality monthly Home Value Index PDF</b> (free) gives the most current city direction. Re-check it before you make an offer.</li>
+<li><b>A monthly refresh:</b> re-run <code>collect.py</code> → <code>model.py</code> → <code>build.py</code> on a schedule to keep this page current.</li>
+</ul></div></details>`;
+})();
+</script>
