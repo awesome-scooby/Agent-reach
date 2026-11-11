@@ -55,7 +55,7 @@
    "kind": "Health",
    "status": "building",
    "when": "Structural works since Apr 2026; completion 2029",
-   "value": "\u2014",
+   "value": "$900m+",
    "what": "Full public hospital run by Western Health, expected to treat about 130,000 patients a year. A major local employer.",
    "suburbs": [
     "Melton",
@@ -302,6 +302,75 @@
     "Wellard"
    ],
    "src": "https://www.spglobal.com/energy/en/news-research/latest-news/metals/042226-kwinana-lithium-hydroxide-plant-to-be-competitive-soon-tianqi-jv-ceo"
+  },
+  {
+   "id": "cdc-maddington",
+   "city": "Perth",
+   "name": "CDC Maddington data centre campus",
+   "kind": "Commercial / tech",
+   "status": "building",
+   "when": "First of four buildings under construction; stage 1 opens early 2027",
+   "value": "$415m stage 1; up to 200 MW",
+   "what": "Perth's largest data centre campus, off Bickley Road. It brings a lot of construction work but relatively few permanent jobs, and it strengthens the Maddington\u2013Kenwick industrial area.",
+   "suburbs": [
+    "Maddington",
+    "Gosnells",
+    "Thornlie",
+    "Beckenham",
+    "Kelmscott"
+   ],
+   "src": "https://cdc.com/media/4y2fcog4/maddington-project-update-september-2026.pdf"
+  },
+  {
+   "id": "west-datacentres",
+   "city": "Melbourne",
+   "name": "Truganina\u2013Derrimut data centre cluster",
+   "kind": "Commercial / tech",
+   "status": "building",
+   "when": "STACK MEL02 to 2027; AirTrunk MEL1 expansion since Aug 2024; PGIM campus approved",
+   "value": "PGIM 80 MW; AirTrunk 100 MW+",
+   "what": "Several hyperscale campuses (STACK, AirTrunk, PGIM, Hickory, Goodman) are going up in Melbourne's west. They anchor construction and technical jobs near Tarneit and Deer Park, though permanent headcount per site is modest.",
+   "suburbs": [
+    "Tarneit",
+    "Hoppers Crossing",
+    "Deer Park",
+    "St Albans"
+   ],
+   "src": "https://w.media/victorias-data-centre-pipeline-grows-with-four-new-melbourne-proposals/"
+  },
+  {
+   "id": "melton-line-upgrade",
+   "city": "Melbourne",
+   "name": "Melton line upgrade (stabling + longer platforms)",
+   "kind": "Rail",
+   "status": "building",
+   "when": "Works underway; platforms done by Dec 2027",
+   "value": "\u2014",
+   "what": "New train stabling yard at Cobblebank and longer platforms, so longer, higher-capacity trains can run before full electrification.",
+   "suburbs": [
+    "Melton",
+    "Melton South",
+    "Kurunjang",
+    "Melton West",
+    "Brookfield"
+   ],
+   "src": "https://infrastructuremagazine.com.au/works-powering-ahead-on-melton-line-upgrade/"
+  },
+  {
+   "id": "amazon-cobblebank",
+   "city": "Melbourne",
+   "name": "Amazon data centre, Cobblebank",
+   "kind": "Commercial / tech",
+   "status": "proposed",
+   "when": "Planning application; no build date",
+   "value": "~$50m",
+   "what": "A planned data centre on 13.2 ha at Ferris Road, Cobblebank. It's a small permanent-jobs story but a signal of commercial interest in the Melton corridor.",
+   "suburbs": [
+    "Melton South",
+    "Brookfield",
+    "Kurunjang"
+   ],
+   "src": "https://w.media/victorias-data-centre-pipeline-grows-with-four-new-melbourne-proposals/"
   }
  ]
 }

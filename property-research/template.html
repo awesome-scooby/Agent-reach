@@ -358,6 +358,7 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
 const D = JSON.parse(document.getElementById('data').textContent);
 const S = D.suburbs;
 S.forEach((s,i)=>s.i=i);
+{const st=Object.fromEntries(((D.projects&&D.projects.projects)||[]).map(p=>[p.id,p.status]));S.forEach(s=>{s.nproj=(s.projects||[]).filter(id=>st[id]==='building'||st[id]==='planning').length;});}
 const $ = (q,el=document)=>el.querySelector(q);
 const esc = t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const k = v=> v==null?'—':(v>=1e6?'$'+(v/1e6).toFixed(2)+'m':'$'+Math.round(v/1000)+'k');
@@ -406,7 +407,7 @@ function card(s, mode){
     ? `<span>5-yr <b>${pct(s.g5,0)}</b></span><span>Bear case <b>${pct(s.trough_bear,0)}</b></span><span>Yield <b>${s.yield.toFixed(1)}%</b></span>`
     : `<span>10-yr base <b>${pct(s.cagr10_base)}</b>/yr</span><span>Bear dip <b>${pct(s.trough_bear,0)}</b></span>`;
   return `<button class="card" type="button" data-s="${s.i}" aria-label="${esc(s.suburb)}, ${s.city}. ${s.match}% match. Open details">
-    <div class="art">${art(s)}<div class="cty">${s.city} · ${esc(s.region)}</div><div class="flag">${s.rail?'<span class="chip dark">Train</span>':''}${s.greenfield?'<span class="chip dark">New estate</span>':''}</div><div class="nm">${esc(s.suburb)}</div></div>
+    <div class="art">${art(s)}<div class="cty">${s.city} · ${esc(s.region)}</div><div class="flag">${s.rail?'<span class="chip dark">Train</span>':''}${s.greenfield?'<span class="chip dark">New estate</span>':''}${s.nproj?`<span class="chip dark" title="Funded projects nearby">▲ ${s.nproj} project${s.nproj>1?'s':''}</span>`:''}</div><div class="nm">${esc(s.suburb)}</div></div>
     <div class="body"><div class="l1"><span class="match ${matchCls(s.match)}">${s.match}% match</span>${chipBudget}<span class="chip">${s.km} km</span></div>
     <div class="price num">${price}</div><div class="l3 num">${l3}</div></div></button>`;
 }
@@ -419,6 +420,7 @@ const ROWS = [
   {t:'Melbourne · North', items:mel.filter(s=>s.region==='North').sort((a,b)=>b.match-a.match)},
   {t:'Perth · South-East corridor', sub:'Armadale line and Thornlie–Cockburn link. Prices up 100–165% in five years.', items:per.filter(s=>s.region==='South-East').sort((a,b)=>b.match-a.match)},
   {t:'Perth · Kwinana–Rockingham corridor', items:per.filter(s=>s.region==='South-West').sort((a,b)=>b.match-a.match)},
+  {t:'Most future projects nearby', sub:'Ranked by funded projects (under construction or funded for planning), then by match. ▲ marks the count on each card. Open a suburb to see what each project is, its status and a source.', items:S.filter(s=>s.nproj>0).sort((a,b)=>b.nproj-a.nproj||b.match-a.match).slice(0,12)},
   {t:'Biggest 5-year run-ups, highest correction risk', sub:'The model expects the suburbs that rose most to give back the most in a downturn. Bear case shown.', items:[...S].sort((a,b)=>b.g5-a.g5).slice(0,10), mode:'risk'},
 ];
 const chev = d=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="${d==='l'?'M15 5l-7 7 7 7':'M9 5l7 7-7 7'}"/></svg>`;
