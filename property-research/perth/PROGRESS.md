@@ -2,7 +2,8 @@
 
 Branch: `claude/perth-property-intelligence-cf8ob0` (fast-forwarded from
 `claude/affectionate-faraday-jq4eiw`, which still owns the Melbourne page and its
-06:59 refresh). Page: `perth-southern-buyer-dashboard.html` (repo root).
+06:59 refresh). Page: `perth-southern-buyer-dashboard.html` (repo root),
+published at https://claude.ai/artifact/MuXDLmuR1xrzCnQRuG1Yyp (capabilities db + user; watchlist collection `watch`).
 
 ## Stages
 | Stage | Status | Notes |

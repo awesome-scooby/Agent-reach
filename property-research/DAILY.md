@@ -38,6 +38,6 @@ Separate pipeline; it never writes the Melbourne files above. Branch:
    only from a cited source. Then re-run `python3 model_perth.py && python3 daily_perth.py && python3 build_perth.py`.
    If the market read changed materially, edit the analyst text in Row 1 of `perth/template.html`.
 3. `cd .. && python3 -m pytest perth/tests -q && node --test perth/tests/finance.test.js`
-4. Republish `perth-southern-buyer-dashboard.html` to its artifact URL (see perth/PROGRESS.md).
+4. Read then republish https://claude.ai/artifact/MuXDLmuR1xrzCnQRuG1Yyp from `perth-southern-buyer-dashboard.html` (omit capabilities to keep db + user). Read the `watch` collection and report those suburbs first.
 5. Commit `perth-southern-buyer-dashboard.html` and `property-research/perth/` and push.
 6. Phone summary: alerts, turning-point signals that changed, suburbs that moved group, watchlist first.
