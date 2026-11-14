@@ -11,7 +11,7 @@ published at https://claude.ai/artifact/MuXDLmuR1xrzCnQRuG1Yyp (capabilities db 
 | 1 Repository discovery | done 14 Nov 2026 | Existing pipeline reused: collect.py scrapers + cache, hazards.wa + SLIP helper, model.spearman, artifact-db watchlist convention |
 | 2 Research + source validation | done 14 Nov 2026 | Cotality Nov 2026 HVI checked against PDF; RBA 4.85%; FHOR duty checked on wa.gov.au fact sheet; evidence register in `data/market.json` |
 | 2b Suburb universe | done | `universe.py`: LGATE-234 via SLIP, EPSG:7850 centroids, Perth GPO, south of CBD + south/east of Swan River (user choice) + <=35 km -> 141 localities |
-| 3 Forecast model | done | `model_perth.py`: AR(1) bootstrap on ABS RPPI Perth 2003-21, P15/P50/P85, expanding-window back-test, REIWA-based suburb beta, tilt gated by rank back-test |
+| 3 Forecast model | done | `model_perth.py`: AR(1) bootstrap on ABS RPPI Perth 2003-21, path-conditioned bear/base/bull (10-20/45-55/80-90th pct at 24m), expanding-window back-test, REIWA-based suburb beta, tilt gated by rank back-test |
 | 4 Finance engine | done | `finance.js` (page + node tests), Python duty parity test |
 | 5 Dashboard | done | `template.html` + `build_perth.py` |
 | 6 Automation | see below | `run_daily.sh`, `daily_perth.py`; scheduled task at 06:59 Australia/Perth |
