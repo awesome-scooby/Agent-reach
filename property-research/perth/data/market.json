@@ -1,0 +1,476 @@
+{
+ "as_of": "2026-11-14",
+ "note": "Hand-curated evidence register. Every figure carries source, URL, observation date, collection date, scope, property type and method. Update only from a cited source; never overwrite with an unsourced number.",
+ "indicators": [
+  {
+   "id": "cot_m",
+   "label": "Perth dwelling values, month",
+   "value": -1.7,
+   "unit": "%",
+   "obs": "2026-10-31",
+   "collected": "2026-11-14",
+   "scope": "Greater Perth",
+   "type": "All dwellings",
+   "method": "Cotality hedonic Home Value Index (not a median)",
+   "timing": "coincident",
+   "src": "Cotality Home Value Index, Nov 2026 release (2 Nov 2026)",
+   "url": "https://discover.cotality.com/hubfs/COTALITY%20HVI%20NOV%202026%20FINAL.pdf",
+   "dir": "bear"
+  },
+  {
+   "id": "cot_q",
+   "label": "Perth dwelling values, quarter",
+   "value": -5.7,
+   "unit": "%",
+   "obs": "2026-10-31",
+   "collected": "2026-11-14",
+   "scope": "Greater Perth",
+   "type": "All dwellings",
+   "method": "Cotality hedonic HVI, rolling 3 months",
+   "timing": "coincident",
+   "src": "Cotality HVI Nov 2026",
+   "url": "https://discover.cotality.com/hubfs/COTALITY%20HVI%20NOV%202026%20FINAL.pdf",
+   "dir": "bear"
+  },
+  {
+   "id": "cot_y",
+   "label": "Perth dwelling values, 12 months",
+   "value": 3.9,
+   "unit": "%",
+   "obs": "2026-10-31",
+   "collected": "2026-11-14",
+   "scope": "Greater Perth",
+   "type": "All dwellings",
+   "method": "Cotality hedonic HVI",
+   "timing": "lagging",
+   "src": "Cotality HVI Nov 2026",
+   "url": "https://discover.cotality.com/hubfs/COTALITY%20HVI%20NOV%202026%20FINAL.pdf",
+   "dir": "mixed"
+  },
+  {
+   "id": "cot_peak",
+   "label": "Perth fall from April 2026 peak",
+   "value": -8.9,
+   "unit": "%",
+   "obs": "2026-10-31",
+   "collected": "2026-11-14",
+   "scope": "Greater Perth",
+   "type": "All dwellings",
+   "method": "Cotality hedonic HVI, peak Apr 2026",
+   "timing": "coincident",
+   "src": "Cotality HVI Nov 2026",
+   "url": "https://discover.cotality.com/hubfs/COTALITY%20HVI%20NOV%202026%20FINAL.pdf",
+   "dir": "bear"
+  },
+  {
+   "id": "cot_5y",
+   "label": "Perth 5-year change",
+   "value": 68.3,
+   "unit": "%",
+   "obs": "2026-10-31",
+   "collected": "2026-11-14",
+   "scope": "Greater Perth",
+   "type": "All dwellings",
+   "method": "Cotality hedonic HVI",
+   "timing": "lagging",
+   "src": "Cotality HVI Nov 2026",
+   "url": "https://discover.cotality.com/hubfs/COTALITY%20HVI%20NOV%202026%20FINAL.pdf",
+   "dir": "bear",
+   "why": "Size of the run-up = room to fall; affordability stretched"
+  },
+  {
+   "id": "cot_10y",
+   "label": "Perth 10-year change",
+   "value": 93.2,
+   "unit": "%",
+   "obs": "2026-10-31",
+   "collected": "2026-11-14",
+   "scope": "Greater Perth",
+   "type": "All dwellings",
+   "method": "Cotality hedonic HVI",
+   "timing": "lagging",
+   "src": "Cotality HVI Nov 2026",
+   "url": "https://discover.cotality.com/hubfs/COTALITY%20HVI%20NOV%202026%20FINAL.pdf",
+   "dir": "info"
+  },
+  {
+   "id": "cot_med",
+   "label": "Perth median dwelling value",
+   "value": 942018,
+   "unit": "$",
+   "obs": "2026-10-31",
+   "collected": "2026-11-14",
+   "scope": "Greater Perth",
+   "type": "All dwellings",
+   "method": "Cotality modelled median value",
+   "timing": "coincident",
+   "src": "Cotality HVI Nov 2026",
+   "url": "https://discover.cotality.com/hubfs/COTALITY%20HVI%20NOV%202026%20FINAL.pdf",
+   "dir": "info"
+  },
+  {
+   "id": "cot_house_q",
+   "label": "Perth house values, quarter",
+   "value": -5.6,
+   "unit": "%",
+   "obs": "2026-10-31",
+   "collected": "2026-11-14",
+   "scope": "Greater Perth",
+   "type": "Houses",
+   "method": "Cotality hedonic HVI",
+   "timing": "coincident",
+   "src": "Cotality HVI Nov 2026",
+   "url": "https://discover.cotality.com/hubfs/COTALITY%20HVI%20NOV%202026%20FINAL.pdf",
+   "dir": "bear"
+  },
+  {
+   "id": "cot_28d",
+   "label": "Perth, 28 days to 9 Nov",
+   "value": -1.7,
+   "unit": "%",
+   "obs": "2026-11-09",
+   "collected": "2026-11-14",
+   "scope": "Greater Perth",
+   "type": "All dwellings",
+   "method": "Cotality daily HVI, provisional",
+   "timing": "coincident",
+   "src": "Cotality daily index via Property Investment Professionals tracker (secondary)",
+   "url": "https://propertyinvestmentprofessionals.com.au/research-insights/home-value-index-tracker",
+   "dir": "bear",
+   "confidence": "secondary, provisional"
+  },
+  {
+   "id": "sep_rev",
+   "label": "September month revised",
+   "value": -2.1,
+   "unit": "%",
+   "obs": "2026-09-30",
+   "collected": "2026-11-14",
+   "scope": "Greater Perth",
+   "type": "All dwellings",
+   "method": "Cotality HVI revision (was -1.2%)",
+   "timing": "coincident",
+   "src": "Cotality HVI Nov 2026",
+   "url": "https://discover.cotality.com/hubfs/COTALITY%20HVI%20NOV%202026%20FINAL.pdf",
+   "dir": "bear"
+  },
+  {
+   "id": "dom_cap",
+   "label": "Median days on market (combined capitals)",
+   "value": 39,
+   "unit": "days",
+   "obs": "2026-10-31",
+   "collected": "2026-11-14",
+   "scope": "Combined capitals (not Perth-only)",
+   "type": "All dwellings",
+   "method": "Cotality private treaty",
+   "timing": "leading",
+   "src": "Cotality HVI Nov 2026",
+   "url": "https://discover.cotality.com/hubfs/COTALITY%20HVI%20NOV%202026%20FINAL.pdf",
+   "dir": "bear",
+   "why": "Highest since Aug 2020"
+  },
+  {
+   "id": "disc_cap",
+   "label": "Vendor discount (combined capitals)",
+   "value": 4.7,
+   "unit": "%",
+   "obs": "2026-10-31",
+   "collected": "2026-11-14",
+   "scope": "Combined capitals (not Perth-only)",
+   "type": "All dwellings",
+   "method": "Cotality median discount from first list price",
+   "timing": "leading",
+   "src": "Cotality HVI Nov 2026",
+   "url": "https://discover.cotality.com/hubfs/COTALITY%20HVI%20NOV%202026%20FINAL.pdf",
+   "dir": "bear",
+   "why": "Largest since May 2019"
+  },
+  {
+   "id": "listings_cap",
+   "label": "Advertised stock (combined capitals)",
+   "value": null,
+   "text": "Highest for time of year since 2019; new listings ~18% below average",
+   "obs": "2026-10-31",
+   "collected": "2026-11-14",
+   "scope": "Combined capitals (not Perth-only)",
+   "type": "All dwellings",
+   "method": "Cotality listings",
+   "timing": "leading",
+   "src": "Cotality HVI Nov 2026",
+   "url": "https://discover.cotality.com/hubfs/COTALITY%20HVI%20NOV%202026%20FINAL.pdf",
+   "dir": "bear"
+  },
+  {
+   "id": "reiwa_sales",
+   "label": "Perth sales volume (REIWA spring)",
+   "value": null,
+   "text": "Number of sales down to levels last seen in 2019 while new listings rose seasonally",
+   "obs": "2026-10-31",
+   "collected": "2026-11-14",
+   "scope": "Perth metro",
+   "type": "All",
+   "method": "REIWA member sales",
+   "timing": "leading",
+   "src": "REIWA news: New listings rise but sales are down",
+   "url": "https://reiwa.com.au/news/new-listings-rise-but-sales-are-down-as-spring-selling-season-starts/",
+   "dir": "bear",
+   "confidence": "count not published in source text"
+  },
+  {
+   "id": "reiwa_med",
+   "label": "REIWA Perth median house sale price (annual)",
+   "value": 970000,
+   "unit": "$",
+   "obs": "2026-10-31",
+   "collected": "2026-11-14",
+   "scope": "Perth metro",
+   "type": "Houses",
+   "method": "REIWA median of settled sales, 12 months (lagging; includes peak-period sales)",
+   "timing": "lagging",
+   "src": "REIWA October 2026 release (via search; REIWA metro page shows $965,000)",
+   "url": "https://reiwa.com.au/the-wa-market/perth-metro/",
+   "dir": "info",
+   "confidence": "two REIWA figures differ ($965k vs $970k)"
+  },
+  {
+   "id": "cash",
+   "label": "RBA cash rate",
+   "value": 4.85,
+   "unit": "%",
+   "obs": "2026-11-03",
+   "collected": "2026-11-14",
+   "scope": "Australia",
+   "type": "Policy rate",
+   "method": "RBA decision, +25bp, 6-3 vote (5th hike of 2026)",
+   "timing": "leading",
+   "src": "RBA Statement on Monetary Policy Nov 2026",
+   "url": "https://www.rba.gov.au/publications/smp/2026/nov/overview.html",
+   "dir": "bear",
+   "why": "Next decision 8 Dec 2026; statement dropped explicit tightening bias"
+  },
+  {
+   "id": "cpi",
+   "label": "CPI, headline annual (Sep qtr)",
+   "value": 4.3,
+   "unit": "%",
+   "obs": "2026-09-30",
+   "collected": "2026-11-14",
+   "scope": "Australia",
+   "type": "Inflation",
+   "method": "ABS CPI; trimmed mean 3.7%",
+   "timing": "leading",
+   "src": "Cotality HVI Nov 2026 citing ABS",
+   "url": "https://discover.cotality.com/hubfs/COTALITY%20HVI%20NOV%202026%20FINAL.pdf",
+   "dir": "bear"
+  },
+  {
+   "id": "mort_low",
+   "label": "Lowest advertised owner-occupier variable",
+   "value": 6.14,
+   "unit": "%",
+   "obs": "2026-11-13",
+   "collected": "2026-11-14",
+   "scope": "Australia",
+   "type": "Mortgage rate",
+   "method": "Canstar database snapshot reported by media",
+   "timing": "coincident",
+   "src": "Broker News / Savings.com.au reporting Canstar",
+   "url": "https://www.brokernews.com.au/news/breaking-news/fifth-rba-increase-ends-sub6-variable-rates-as-borrower-stress-mounts-290252.aspx",
+   "dir": "bear",
+   "confidence": "secondary"
+  },
+  {
+   "id": "mort_big4",
+   "label": "Big-four standard variable (CBA/WBC/NAB)",
+   "value": 6.54,
+   "unit": "%",
+   "text": "6.49% to 6.59% from 13 Nov",
+   "obs": "2026-11-13",
+   "collected": "2026-11-14",
+   "scope": "Australia",
+   "type": "Mortgage rate",
+   "method": "Bank announcements reported by ABC",
+   "timing": "coincident",
+   "src": "ABC News 4 Nov 2026",
+   "url": "https://www.abc.net.au/news/2026-11-04/australian-banks-lift-interest-rates-after-rba-cash-rate-hike/107341858",
+   "dir": "bear",
+   "confidence": "secondary"
+  },
+  {
+   "id": "wa_unemp",
+   "label": "WA unemployment rate (Sep)",
+   "value": 4.2,
+   "unit": "%",
+   "obs": "2026-09-30",
+   "collected": "2026-11-14",
+   "scope": "Western Australia",
+   "type": "Labour",
+   "method": "ABS Labour Force, seasonally adjusted; national 4.7%",
+   "timing": "coincident",
+   "src": "ABS Labour Force Sep 2026 / WA Treasury",
+   "url": "https://www.wa.gov.au/organisation/department-of-treasury-and-finance/labour-force",
+   "dir": "bull",
+   "why": "Equal lowest of states; October data due 19 Nov"
+  },
+  {
+   "id": "wa_pop",
+   "label": "WA population growth (yr to Mar 2026)",
+   "value": 2.1,
+   "unit": "%",
+   "text": "+64.2k; NOM 41.5k, NIM 10.3k",
+   "obs": "2026-03-31",
+   "collected": "2026-11-14",
+   "scope": "Western Australia",
+   "type": "Demography",
+   "method": "ABS National, state and territory population",
+   "timing": "lagging",
+   "src": "ABS National, state and territory population, Mar 2026",
+   "url": "https://www.abs.gov.au/statistics/people/population/national-state-and-territory-population/latest-release",
+   "dir": "bull",
+   "why": "Fastest of any state; June-qtr data due 17 Dec"
+  },
+  {
+   "id": "vac_reiwa",
+   "label": "Perth rental vacancy (REIWA)",
+   "value": 1.7,
+   "unit": "%",
+   "obs": "2026-09-30",
+   "collected": "2026-11-14",
+   "scope": "Perth metro",
+   "type": "Rental",
+   "method": "REIWA; SQM's different method gives 0.6% (Sep)",
+   "timing": "coincident",
+   "src": "REIWA rental vacancy rates",
+   "url": "https://reiwa.com.au/the-wa-market/rental-vacancy-rates/",
+   "dir": "mixed",
+   "why": "Still tight (<2%) but highest since Nov 2024: rental pressure easing"
+  },
+  {
+   "id": "rent_house",
+   "label": "Perth median house rent (REIWA)",
+   "value": 750,
+   "unit": "$/wk",
+   "text": "+7.1% y/y, unchanged on September",
+   "obs": "2026-10-31",
+   "collected": "2026-11-14",
+   "scope": "Perth metro",
+   "type": "Houses",
+   "method": "REIWA median of leases",
+   "timing": "coincident",
+   "src": "REIWA (via search results; SQM combined rents -0.3% in 30 days to 12 Oct)",
+   "url": "https://reiwa.com.au/the-wa-market/perth-metro/",
+   "dir": "mixed",
+   "confidence": "secondary"
+  },
+  {
+   "id": "yield",
+   "label": "Perth gross rental yield (dwellings)",
+   "value": 4.2,
+   "unit": "%",
+   "obs": "2026-10-31",
+   "collected": "2026-11-14",
+   "scope": "Greater Perth",
+   "type": "All dwellings",
+   "method": "Cotality",
+   "timing": "lagging",
+   "src": "Cotality HVI Nov 2026",
+   "url": "https://discover.cotality.com/hubfs/COTALITY%20HVI%20NOV%202026%20FINAL.pdf",
+   "dir": "info"
+  }
+ ],
+ "history": {
+  "abs_2014_2019": {
+   "text": "ABS RPPI Perth: peak Mar 2014 (114.8) to trough Sep 2019 (98.5) = -14.2% over 5.5 years",
+   "url": "https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/residential-property-price-indexes-eight-capital-cities/dec-2021"
+  },
+  "cotality_records": {
+   "text": "National: 2017-19 downturn -8.2% peak to trough was the largest on record before 2026 (Cotality)",
+   "url": "https://discover.cotality.com/hubfs/COTALITY%20HVI%20NOV%202026%20FINAL.pdf"
+  }
+ },
+ "monthly_path_reconstruction": {
+  "method": "Perth dwelling index levels relative to 31 Oct 2026 = 1.000, rebuilt from Cotality published changes: +3.9% y/y; peak Apr 2026 = 1/0.911; Aug-Oct quarter -5.7% with Sep -2.1% and Oct -1.7% (so Aug ~ -2.0%); May-Jul evenly spread; Nov 2025-Apr 2026 evenly spread. Used ONLY to estimate how far a 12-month median (Nov 2025-Oct 2026) sits above the Oct 2026 level. Approximate.",
+  "levels": [
+   [
+    "2025-10",
+    0.9625
+   ],
+   [
+    "2025-11",
+    0.9837
+   ],
+   [
+    "2025-12",
+    1.0054
+   ],
+   [
+    "2026-01",
+    1.0275
+   ],
+   [
+    "2026-02",
+    1.0501
+   ],
+   [
+    "2026-03",
+    1.0732
+   ],
+   [
+    "2026-04",
+    1.0977
+   ],
+   [
+    "2026-05",
+    1.0851
+   ],
+   [
+    "2026-06",
+    1.0727
+   ],
+   [
+    "2026-07",
+    1.0603
+   ],
+   [
+    "2026-08",
+    1.0391
+   ],
+   [
+    "2026-09",
+    1.0173
+   ],
+   [
+    "2026-10",
+    1.0
+   ]
+  ],
+  "window_mean": 1.0427,
+  "lag_factor": 0.959
+ },
+ "duty": {
+  "rule": "WA first home owner rate for homes, agreements on/after 7 May 2026: $0 to $600,000; $16.15 per $100 (or part) above $600,000 up to $800,000; general rate above $800,000. Eligibility aligned with First Home Owner Grant Act 2000 criteria (FHOG value cap no longer applies to the duty concession).",
+  "url": "https://www.wa.gov.au/government/publications/duties-fact-sheet-first-home-owner-rate",
+  "checked": "2026-11-14",
+  "fhog": "The $10,000 WA First Home Owner Grant applies to NEW homes only (not established). Separate from the duty concession. Verify current caps with RevenueWA before relying on it.",
+  "guarantee": "Australian Government 5% Deposit Scheme (Housing Australia): Perth price cap $850,000, no income cap, unlimited places since 1 Oct 2025, removes LMI for eligible buyers at 5%+ deposit. Confirmed by multiple secondary sources only; verify with Housing Australia / lender."
+ },
+ "perth_monthly": {
+  "note": "Cotality Perth dwelling HVI monthly % change (latest vintage; Aug implied from the -5.7% quarter)",
+  "series": [
+   [
+    "2026-08",
+    -2.0
+   ],
+   [
+    "2026-09",
+    -2.1
+   ],
+   [
+    "2026-10",
+    -1.7
+   ]
+  ],
+  "url": "https://discover.cotality.com/hubfs/COTALITY%20HVI%20NOV%202026%20FINAL.pdf"
+ }
+}

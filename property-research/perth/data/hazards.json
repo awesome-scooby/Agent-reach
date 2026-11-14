@@ -1,0 +1,1092 @@
+{
+ "generated": "2026-11-14",
+ "sources": {
+  "bushfire": "OBRM-026 Bush Fire Prone Areas (SLIP)",
+  "flood": "DWER-014 1-in-100 floodway/fringe (SLIP)",
+  "boundaries": "LGATE-234"
+ },
+ "flags_note": "Land-use flags are a hand-maintained screening list, not measured exposure.",
+ "failed": [],
+ "suburbs": {
+  "Alfred Cove": {
+   "bushfire_pct": 4.4,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 1.1,
+   "flags": []
+  },
+  "Anketell": {
+   "bushfire_pct": 87.2,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 6.8,
+   "flags": []
+  },
+  "Applecross": {
+   "bushfire_pct": 1.3,
+   "flood_pct": 0.1,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.3,
+   "flags": []
+  },
+  "Ardross": {
+   "bushfire_pct": 23.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.2,
+   "flags": []
+  },
+  "Armadale": {
+   "bushfire_pct": 8.8,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 8.4,
+   "flags": []
+  },
+  "Attadale": {
+   "bushfire_pct": 10.8,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.1,
+   "flags": []
+  },
+  "Atwell": {
+   "bushfire_pct": 20.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.6,
+   "flags": [
+    "Jandakot Airport noise exposure possible (check ANEF)"
+   ]
+  },
+  "Aubin Grove": {
+   "bushfire_pct": 56.1,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.6,
+   "flags": [
+    "Jandakot Airport noise exposure possible (check ANEF)"
+   ]
+  },
+  "Banjup": {
+   "bushfire_pct": 97.8,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 14.3,
+   "flags": [
+    "Jandakot Airport noise exposure possible (check ANEF)"
+   ]
+  },
+  "Bateman": {
+   "bushfire_pct": 3.5,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.0,
+   "flags": []
+  },
+  "Beaconsfield": {
+   "bushfire_pct": 5.1,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.8,
+   "flags": []
+  },
+  "Beckenham": {
+   "bushfire_pct": 31.7,
+   "flood_pct": 10.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 5.9,
+   "flags": []
+  },
+  "Bedfordale": {
+   "bushfire_pct": 97.7,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 58.0,
+   "flags": []
+  },
+  "Beeliar": {
+   "bushfire_pct": 54.5,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 11.8,
+   "flags": []
+  },
+  "Bentley": {
+   "bushfire_pct": 0.1,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 5.4,
+   "flags": []
+  },
+  "Bertram": {
+   "bushfire_pct": 60.3,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.2,
+   "flags": []
+  },
+  "Bibra Lake": {
+   "bushfire_pct": 45.1,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 12.9,
+   "flags": [
+    "Industrial adjacency (Welshpool/Kewdale/Maddington/Canning Vale industrial)"
+   ]
+  },
+  "Bickley": {
+   "bushfire_pct": 99.9,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 9.9,
+   "flags": []
+  },
+  "Bicton": {
+   "bushfire_pct": 14.4,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.1,
+   "flags": []
+  },
+  "Booragoon": {
+   "bushfire_pct": 12.3,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.1,
+   "flags": []
+  },
+  "Brentwood": {
+   "bushfire_pct": 18.4,
+   "flood_pct": 3.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 0.9,
+   "flags": []
+  },
+  "Brookdale": {
+   "bushfire_pct": 10.2,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 1.2,
+   "flags": []
+  },
+  "Bull Creek": {
+   "bushfire_pct": 17.3,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 4.3,
+   "flags": []
+  },
+  "Burswood": {
+   "bushfire_pct": 0.8,
+   "flood_pct": 17.1,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.4,
+   "flags": []
+  },
+  "Byford": {
+   "bushfire_pct": 77.6,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 22.2,
+   "flags": []
+  },
+  "Calista": {
+   "bushfire_pct": 42.8,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.3,
+   "flags": [
+    "Kwinana Strategic Industrial Area nearby (heavy industry, buffer zones)"
+   ]
+  },
+  "Camillo": {
+   "bushfire_pct": 23.9,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.6,
+   "flags": []
+  },
+  "Canning Mills": {
+   "bushfire_pct": 98.1,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 33.7,
+   "flags": []
+  },
+  "Canning Vale": {
+   "bushfire_pct": 28.1,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 25.6,
+   "flags": [
+    "Jandakot Airport noise exposure possible (check ANEF)",
+    "Industrial adjacency (Welshpool/Kewdale/Maddington/Canning Vale industrial)"
+   ]
+  },
+  "Cannington": {
+   "bushfire_pct": 15.5,
+   "flood_pct": 8.9,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 4.1,
+   "flags": [
+    "Freight rail / major road corridor through suburb (Kwinana freight line, Roe/Tonkin/Kwinana Fwy)"
+   ]
+  },
+  "Carlisle": {
+   "bushfire_pct": 0.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.6,
+   "flags": []
+  },
+  "Carmel": {
+   "bushfire_pct": 99.5,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 11.7,
+   "flags": []
+  },
+  "Casuarina": {
+   "bushfire_pct": 89.8,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 10.0,
+   "flags": []
+  },
+  "Champion Lakes": {
+   "bushfire_pct": 81.6,
+   "flood_pct": 12.2,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 5.7,
+   "flags": []
+  },
+  "Cloverdale": {
+   "bushfire_pct": 5.9,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 4.0,
+   "flags": [
+    "Perth Airport flight path / noise exposure possible (check ANEF)"
+   ]
+  },
+  "Cockburn Central": {
+   "bushfire_pct": 59.1,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.8,
+   "flags": []
+  },
+  "Como": {
+   "bushfire_pct": 0.1,
+   "flood_pct": 0.5,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 6.5,
+   "flags": []
+  },
+  "Coogee": {
+   "bushfire_pct": 68.1,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 5.6,
+   "flags": [
+    "Freight rail / major road corridor through suburb (Kwinana freight line, Roe/Tonkin/Kwinana Fwy)"
+   ]
+  },
+  "Coolbellup": {
+   "bushfire_pct": 30.4,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.1,
+   "flags": []
+  },
+  "Darling Downs": {
+   "bushfire_pct": 99.1,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 10.7,
+   "flags": []
+  },
+  "Doobarda": {
+   "bushfire_pct": 82.8,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.4,
+   "flags": [
+    "No freehold residential market (defence / island reserve / industrial)"
+   ]
+  },
+  "East Cannington": {
+   "bushfire_pct": 11.9,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.8,
+   "flags": []
+  },
+  "East Fremantle": {
+   "bushfire_pct": 0.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.7,
+   "flags": []
+  },
+  "East Victoria Park": {
+   "bushfire_pct": 0.8,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.9,
+   "flags": []
+  },
+  "Ferndale": {
+   "bushfire_pct": 50.4,
+   "flood_pct": 33.2,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.3,
+   "flags": []
+  },
+  "Forrestdale": {
+   "bushfire_pct": 85.9,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 28.6,
+   "flags": [
+    "Industrial adjacency (Welshpool/Kewdale/Maddington/Canning Vale industrial)"
+   ]
+  },
+  "Forrestfield": {
+   "bushfire_pct": 59.3,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 17.5,
+   "flags": [
+    "Perth Airport flight path / noise exposure possible (check ANEF)"
+   ]
+  },
+  "Fremantle": {
+   "bushfire_pct": 7.4,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 5.5,
+   "flags": []
+  },
+  "Garden Island": {
+   "bushfire_pct": 84.6,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 13.4,
+   "flags": [
+    "No freehold residential market (defence / island reserve / industrial)"
+   ]
+  },
+  "Gosnells": {
+   "bushfire_pct": 46.4,
+   "flood_pct": 5.9,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 14.9,
+   "flags": [
+    "Freight rail / major road corridor through suburb (Kwinana freight line, Roe/Tonkin/Kwinana Fwy)"
+   ]
+  },
+  "Hacketts Gully": {
+   "bushfire_pct": 99.9,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 12.2,
+   "flags": []
+  },
+  "Hamilton Hill": {
+   "bushfire_pct": 36.1,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 6.6,
+   "flags": [
+    "Freight rail / major road corridor through suburb (Kwinana freight line, Roe/Tonkin/Kwinana Fwy)"
+   ]
+  },
+  "Hammond Park": {
+   "bushfire_pct": 52.2,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 4.3,
+   "flags": [
+    "Jandakot Airport noise exposure possible (check ANEF)"
+   ]
+  },
+  "Harrisdale": {
+   "bushfire_pct": 51.7,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 5.8,
+   "flags": [
+    "Jandakot Airport noise exposure possible (check ANEF)"
+   ]
+  },
+  "Haynes": {
+   "bushfire_pct": 82.1,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 4.9,
+   "flags": []
+  },
+  "Henderson": {
+   "bushfire_pct": 72.3,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 10.9,
+   "flags": [
+    "Industrial adjacency (Welshpool/Kewdale/Maddington/Canning Vale industrial)"
+   ]
+  },
+  "Hilbert": {
+   "bushfire_pct": 62.7,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 9.2,
+   "flags": []
+  },
+  "Hilton": {
+   "bushfire_pct": 2.2,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 1.7,
+   "flags": []
+  },
+  "Hope Valley": {
+   "bushfire_pct": 52.9,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 13.4,
+   "flags": [
+    "Kwinana Strategic Industrial Area nearby (heavy industry, buffer zones)"
+   ]
+  },
+  "Huntingdale": {
+   "bushfire_pct": 42.3,
+   "flood_pct": 1.2,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 4.8,
+   "flags": []
+  },
+  "Jandakot": {
+   "bushfire_pct": 59.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 16.2,
+   "flags": [
+    "Jandakot Airport noise exposure possible (check ANEF)"
+   ]
+  },
+  "Kalamunda": {
+   "bushfire_pct": 95.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 10.7,
+   "flags": []
+  },
+  "Karawara": {
+   "bushfire_pct": 0.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 1.0,
+   "flags": []
+  },
+  "Kardinya": {
+   "bushfire_pct": 1.6,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 4.4,
+   "flags": []
+  },
+  "Karragullen": {
+   "bushfire_pct": 96.6,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 34.0,
+   "flags": []
+  },
+  "Kelmscott": {
+   "bushfire_pct": 71.2,
+   "flood_pct": 3.6,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 15.1,
+   "flags": [
+    "Freight rail / major road corridor through suburb (Kwinana freight line, Roe/Tonkin/Kwinana Fwy)"
+   ]
+  },
+  "Kensington": {
+   "bushfire_pct": 15.1,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.5,
+   "flags": []
+  },
+  "Kenwick": {
+   "bushfire_pct": 67.0,
+   "flood_pct": 3.3,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 9.9,
+   "flags": [
+    "Industrial adjacency (Welshpool/Kewdale/Maddington/Canning Vale industrial)",
+    "Freight rail / major road corridor through suburb (Kwinana freight line, Roe/Tonkin/Kwinana Fwy)"
+   ]
+  },
+  "Kewdale": {
+   "bushfire_pct": 10.2,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 8.4,
+   "flags": [
+    "Perth Airport flight path / noise exposure possible (check ANEF)",
+    "Industrial adjacency (Welshpool/Kewdale/Maddington/Canning Vale industrial)",
+    "Freight rail / major road corridor through suburb (Kwinana freight line, Roe/Tonkin/Kwinana Fwy)"
+   ]
+  },
+  "Kwinana Beach": {
+   "bushfire_pct": 47.7,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 14.1,
+   "flags": [
+    "Kwinana Strategic Industrial Area nearby (heavy industry, buffer zones)",
+    "No freehold residential market (defence / island reserve / industrial)"
+   ]
+  },
+  "Kwinana Town Centre": {
+   "bushfire_pct": 53.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 0.8,
+   "flags": []
+  },
+  "Lake Coogee": {
+   "bushfire_pct": 39.5,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.6,
+   "flags": []
+  },
+  "Langford": {
+   "bushfire_pct": 35.0,
+   "flood_pct": 17.1,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.3,
+   "flags": []
+  },
+  "Lathlain": {
+   "bushfire_pct": 0.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 1.6,
+   "flags": []
+  },
+  "Leeming": {
+   "bushfire_pct": 27.2,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 7.5,
+   "flags": []
+  },
+  "Lesmurdie": {
+   "bushfire_pct": 100.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 13.7,
+   "flags": []
+  },
+  "Lynwood": {
+   "bushfire_pct": 18.5,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 1.8,
+   "flags": []
+  },
+  "Maddington": {
+   "bushfire_pct": 28.3,
+   "flood_pct": 3.4,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 10.9,
+   "flags": [
+    "Industrial adjacency (Welshpool/Kewdale/Maddington/Canning Vale industrial)",
+    "Freight rail / major road corridor through suburb (Kwinana freight line, Roe/Tonkin/Kwinana Fwy)"
+   ]
+  },
+  "Maida Vale": {
+   "bushfire_pct": 90.4,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 8.5,
+   "flags": [
+    "Perth Airport flight path / noise exposure possible (check ANEF)"
+   ]
+  },
+  "Mandogalup": {
+   "bushfire_pct": 64.7,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 7.0,
+   "flags": [
+    "Kwinana Strategic Industrial Area nearby (heavy industry, buffer zones)"
+   ]
+  },
+  "Manning": {
+   "bushfire_pct": 0.0,
+   "flood_pct": 0.6,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 1.7,
+   "flags": []
+  },
+  "Martin": {
+   "bushfire_pct": 97.6,
+   "flood_pct": 0.6,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 28.6,
+   "flags": []
+  },
+  "Medina": {
+   "bushfire_pct": 61.7,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.7,
+   "flags": [
+    "Kwinana Strategic Industrial Area nearby (heavy industry, buffer zones)"
+   ]
+  },
+  "Melville": {
+   "bushfire_pct": 0.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.5,
+   "flags": []
+  },
+  "Mount Nasura": {
+   "bushfire_pct": 68.7,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.8,
+   "flags": []
+  },
+  "Mount Pleasant": {
+   "bushfire_pct": 5.8,
+   "flood_pct": 6.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.8,
+   "flags": []
+  },
+  "Mount Richon": {
+   "bushfire_pct": 78.4,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.2,
+   "flags": []
+  },
+  "Munster": {
+   "bushfire_pct": 89.9,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 4.1,
+   "flags": [
+    "Freight rail / major road corridor through suburb (Kwinana freight line, Roe/Tonkin/Kwinana Fwy)"
+   ]
+  },
+  "Murdoch": {
+   "bushfire_pct": 32.2,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 4.3,
+   "flags": []
+  },
+  "Myaree": {
+   "bushfire_pct": 0.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 1.3,
+   "flags": []
+  },
+  "Naval Base": {
+   "bushfire_pct": 62.6,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 5.1,
+   "flags": [
+    "Kwinana Strategic Industrial Area nearby (heavy industry, buffer zones)",
+    "No freehold residential market (defence / island reserve / industrial)"
+   ]
+  },
+  "North Coogee": {
+   "bushfire_pct": 44.2,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.8,
+   "flags": []
+  },
+  "North Lake": {
+   "bushfire_pct": 61.5,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.3,
+   "flags": []
+  },
+  "O'Connor": {
+   "bushfire_pct": 0.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 1.9,
+   "flags": [
+    "Industrial adjacency (Welshpool/Kewdale/Maddington/Canning Vale industrial)"
+   ]
+  },
+  "Oakford": {
+   "bushfire_pct": 99.7,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 46.2,
+   "flags": []
+  },
+  "Orange Grove": {
+   "bushfire_pct": 98.5,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 13.9,
+   "flags": []
+  },
+  "Orelia": {
+   "bushfire_pct": 57.3,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.0,
+   "flags": [
+    "Kwinana Strategic Industrial Area nearby (heavy industry, buffer zones)"
+   ]
+  },
+  "Palmyra": {
+   "bushfire_pct": 0.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.1,
+   "flags": []
+  },
+  "Parkwood": {
+   "bushfire_pct": 7.3,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.6,
+   "flags": []
+  },
+  "Parmelia": {
+   "bushfire_pct": 52.9,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 4.0,
+   "flags": [
+    "Kwinana Strategic Industrial Area nearby (heavy industry, buffer zones)"
+   ]
+  },
+  "Paulls Valley": {
+   "bushfire_pct": 99.9,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 20.4,
+   "flags": []
+  },
+  "Piara Waters": {
+   "bushfire_pct": 26.6,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 6.7,
+   "flags": [
+    "Jandakot Airport noise exposure possible (check ANEF)"
+   ]
+  },
+  "Pickering Brook": {
+   "bushfire_pct": 99.6,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 105.3,
+   "flags": []
+  },
+  "Piesse Brook": {
+   "bushfire_pct": 99.9,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 10.3,
+   "flags": []
+  },
+  "Postans": {
+   "bushfire_pct": 86.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 5.1,
+   "flags": [
+    "Kwinana Strategic Industrial Area nearby (heavy industry, buffer zones)"
+   ]
+  },
+  "Queens Park": {
+   "bushfire_pct": 11.1,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.7,
+   "flags": []
+  },
+  "Reservoir": {
+   "bushfire_pct": 100.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 39.8,
+   "flags": []
+  },
+  "Riverton": {
+   "bushfire_pct": 21.3,
+   "flood_pct": 15.1,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.7,
+   "flags": []
+  },
+  "Rivervale": {
+   "bushfire_pct": 4.4,
+   "flood_pct": 1.1,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.3,
+   "flags": []
+  },
+  "Roleystone": {
+   "bushfire_pct": 93.6,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 38.0,
+   "flags": []
+  },
+  "Rossmoyne": {
+   "bushfire_pct": 8.4,
+   "flood_pct": 7.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 1.6,
+   "flags": []
+  },
+  "Rottnest Island": {
+   "bushfire_pct": 89.7,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 18.5,
+   "flags": [
+    "No freehold residential market (defence / island reserve / industrial)"
+   ]
+  },
+  "Salter Point": {
+   "bushfire_pct": 23.8,
+   "flood_pct": 15.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 1.8,
+   "flags": []
+  },
+  "Samson": {
+   "bushfire_pct": 31.1,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 1.1,
+   "flags": []
+  },
+  "Seville Grove": {
+   "bushfire_pct": 30.7,
+   "flood_pct": 2.9,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 4.6,
+   "flags": []
+  },
+  "Shelley": {
+   "bushfire_pct": 0.1,
+   "flood_pct": 19.8,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.1,
+   "flags": []
+  },
+  "South Fremantle": {
+   "bushfire_pct": 21.5,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 1.6,
+   "flags": []
+  },
+  "South Lake": {
+   "bushfire_pct": 21.5,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.3,
+   "flags": []
+  },
+  "South Perth": {
+   "bushfire_pct": 0.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 5.2,
+   "flags": []
+  },
+  "Southern River": {
+   "bushfire_pct": 73.6,
+   "flood_pct": 1.8,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 14.1,
+   "flags": []
+  },
+  "Spearwood": {
+   "bushfire_pct": 34.4,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 6.1,
+   "flags": [
+    "Freight rail / major road corridor through suburb (Kwinana freight line, Roe/Tonkin/Kwinana Fwy)"
+   ]
+  },
+  "St James": {
+   "bushfire_pct": 0.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 1.7,
+   "flags": []
+  },
+  "Success": {
+   "bushfire_pct": 59.4,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 6.0,
+   "flags": [
+    "Jandakot Airport noise exposure possible (check ANEF)"
+   ]
+  },
+  "The Spectacles": {
+   "bushfire_pct": 100.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 4.7,
+   "flags": []
+  },
+  "Thornlie": {
+   "bushfire_pct": 17.2,
+   "flood_pct": 3.6,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 11.6,
+   "flags": []
+  },
+  "Treeby": {
+   "bushfire_pct": 81.9,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 8.3,
+   "flags": [
+    "Jandakot Airport noise exposure possible (check ANEF)"
+   ]
+  },
+  "Victoria Park": {
+   "bushfire_pct": 0.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.6,
+   "flags": []
+  },
+  "Walliston": {
+   "bushfire_pct": 99.9,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.9,
+   "flags": []
+  },
+  "Wandi": {
+   "bushfire_pct": 95.6,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 12.5,
+   "flags": []
+  },
+  "Waterford": {
+   "bushfire_pct": 26.4,
+   "flood_pct": 20.2,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 1.5,
+   "flags": []
+  },
+  "Wattle Grove": {
+   "bushfire_pct": 81.1,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 8.0,
+   "flags": [
+    "Perth Airport flight path / noise exposure possible (check ANEF)"
+   ]
+  },
+  "Wattleup": {
+   "bushfire_pct": 65.5,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 11.3,
+   "flags": [
+    "Kwinana Strategic Industrial Area nearby (heavy industry, buffer zones)",
+    "Freight rail / major road corridor through suburb (Kwinana freight line, Roe/Tonkin/Kwinana Fwy)"
+   ]
+  },
+  "Wellard": {
+   "bushfire_pct": 80.8,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 16.6,
+   "flags": []
+  },
+  "Welshpool": {
+   "bushfire_pct": 6.5,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 8.4,
+   "flags": [
+    "Industrial adjacency (Welshpool/Kewdale/Maddington/Canning Vale industrial)",
+    "No freehold residential market (defence / island reserve / industrial)"
+   ]
+  },
+  "White Gum Valley": {
+   "bushfire_pct": 8.1,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 1.2,
+   "flags": []
+  },
+  "Willagee": {
+   "bushfire_pct": 0.0,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 2.1,
+   "flags": []
+  },
+  "Willetton": {
+   "bushfire_pct": 4.8,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 8.7,
+   "flags": []
+  },
+  "Wilson": {
+   "bushfire_pct": 28.6,
+   "flood_pct": 25.3,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.8,
+   "flags": []
+  },
+  "Winthrop": {
+   "bushfire_pct": 19.2,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 3.5,
+   "flags": []
+  },
+  "Wungong": {
+   "bushfire_pct": 99.8,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 4.2,
+   "flags": []
+  },
+  "Yangebup": {
+   "bushfire_pct": 31.8,
+   "flood_pct": 0.0,
+   "flood_measure": "Inside 1-in-100-year floodway/fringe (DWER)",
+   "area_km2": 6.0,
+   "flags": []
+  }
+ }
+}

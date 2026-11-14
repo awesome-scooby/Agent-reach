@@ -1,0 +1,736 @@
+<title>South of the River</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: the shortlist's dark streaming-catalogue world, Perth-only.
+   Billboard verdict, then ten "rows" a viewer scans top to bottom, each
+   with one picture first and the detail one tap away. Single dark theme,
+   chosen deliberately to match the existing Melbourne-vs-Perth page. */
+:root{
+  color-scheme:dark;
+  --bg:#0A0C10; --surface:#14171D; --surface-2:#1C2028; --surface-3:#262B35;
+  --line:#2B313C; --fg:#EDF0F5; --fg-2:#AEB5C2; --fg-3:#7C8494;
+  --per:#F2953F; --per-deep:#5A2C0C;
+  --bear:#E8675C; --base:#E9B44C; --bull:#4CC583; --ref:#8EA2C8;
+  --good:#4CC583; --warn:#E9B44C; --bad:#E8675C; --info:#6FA8F5;
+  --display:'Bebas Neue',Impact,'Arial Narrow',sans-serif;
+  --body:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --gut:max(16px,env(safe-area-inset-left,0px));
+  --gutr:max(16px,env(safe-area-inset-right,0px));
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+a{color:var(--fg)}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--fg);outline-offset:2px;border-radius:4px}
+.num{font-variant-numeric:tabular-nums}
+.pad{padding-left:var(--gut);padding-right:var(--gutr)}
+.mono{font-family:var(--mono)}
+.muted{color:var(--fg-3)}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;display:flex;align-items:center;gap:22px;padding-block:12px;background:linear-gradient(var(--bg),rgba(10,12,16,.86));backdrop-filter:blur(8px)}
+.brand{font-family:var(--display);font-size:28px;letter-spacing:.04em;line-height:1;white-space:nowrap}
+.brand span{color:var(--per)}
+.nav nav{display:flex;gap:16px;overflow-x:auto;scrollbar-width:none;min-width:0}
+.nav nav::-webkit-scrollbar{display:none}
+.nav nav a{color:var(--fg-2);text-decoration:none;font-size:13.5px;white-space:nowrap}
+.nav nav a:hover{color:var(--fg)}
+.stamp{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--fg-3);white-space:nowrap}
+@media (max-width:700px){.stamp{display:none}}
+
+.bill{position:relative;overflow:hidden;background:radial-gradient(1200px 500px at 85% 10%,rgba(242,149,63,.18),transparent 60%),linear-gradient(180deg,#11141a,var(--bg))}
+.bill-in{position:relative;padding-block:40px 30px;max-width:1280px}
+.tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-2)}
+.tag b{display:inline-block;padding:2px 6px;border:1px solid var(--fg-3);border-radius:3px;color:var(--fg);letter-spacing:.06em}
+.bill h1{font-family:var(--display);font-weight:400;font-size:clamp(44px,8vw,96px);line-height:.9;margin:12px 0 0;max-width:15ch;text-wrap:balance}
+.bill h1 span{color:var(--per)}
+.lede{font-size:clamp(15px,1.6vw,18px);color:var(--fg-2);max-width:62ch;margin:14px 0 0}
+.lede strong{color:var(--fg)}
+.facts{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:22px}
+.fact{display:flex;flex-direction:column;gap:2px;min-width:0}
+.fact .v{font-family:var(--display);font-size:36px;line-height:1;letter-spacing:.02em}
+.fact .l{font-size:12px;color:var(--fg-3);max-width:22ch}
+.gauge{display:flex;align-items:center;gap:12px;margin-top:20px;flex-wrap:wrap}
+.gbar{position:relative;width:min(360px,100%);height:12px;border-radius:6px;background:linear-gradient(90deg,#3a6fd8,#5e7896 35%,#8b8b8b 50%,#c98a4a 65%,#e8675c)}
+.gbar i{position:absolute;top:-5px;width:4px;height:22px;background:var(--fg);border-radius:2px;transform:translateX(-2px)}
+.gl{font-size:12px;color:var(--fg-3)}
+
+.rows{display:flex;flex-direction:column;gap:42px;padding-block:18px 30px}
+.row h2{font-size:21px;font-weight:700;margin:0 0 4px;letter-spacing:-.01em;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.row h2 .n{font-family:var(--mono);font-size:12px;color:var(--per);letter-spacing:.08em}
+.row .sub{font-size:13.5px;color:var(--fg-3);margin:0 0 12px;max-width:92ch}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px;min-width:0}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.kv{display:grid;grid-template-columns:1fr auto;gap:4px 14px;font-size:13.5px}
+.kv dt{color:var(--fg-2)} .kv dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:999px;font-size:11.5px;font-weight:600;background:var(--surface-3);color:var(--fg-2);white-space:nowrap}
+.chip.bear{background:rgba(232,103,92,.16);color:#f39b92}.chip.bull{background:rgba(76,197,131,.16);color:#7fdca9}
+.chip.base{background:rgba(233,180,76,.16);color:#f0cb7c}.chip.info{background:rgba(111,168,245,.16);color:#9cc3fb}
+.chip.g1{background:rgba(76,197,131,.18);color:#86e0ae}.chip.g2{background:rgba(233,180,76,.18);color:#f1cd80}
+.chip.g3{background:rgba(242,149,63,.18);color:#f6b67a}.chip.g4{background:rgba(232,103,92,.16);color:#f39b92}.chip.gx{background:var(--surface-3);color:var(--fg-3)}
+.sig{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--line);font-size:13.5px}
+.sig:first-child{border-top:0}
+.sig .dot{flex:0 0 10px;height:10px;border-radius:50%;margin-top:5px}
+.list{margin:6px 0 0;padding-left:18px;font-size:13.5px;color:var(--fg-2)} .list li{margin:3px 0}
+.list b{color:var(--fg)}
+h3{font-size:15px;margin:0 0 8px}
+.small{font-size:12.5px;color:var(--fg-3)}
+.hint{font-size:12px;color:var(--fg-3)}
+
+.ctrl{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:flex-end;margin-bottom:12px}
+.ctrl label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--fg-3);min-width:0}
+.ctrl select,.ctrl input{background:var(--surface-2);border:1px solid var(--line);border-radius:5px;padding:7px 9px;color:var(--fg);max-width:100%}
+.ctrl input[type=number]{width:120px}
+.ctrl input[type=range]{padding:0;width:160px;accent-color:var(--per)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.seg button{background:var(--surface-2);border:0;padding:7px 11px;cursor:pointer;font-size:13px;color:var(--fg-2)}
+.seg button[aria-pressed=true]{background:var(--fg);color:var(--bg);font-weight:700}
+.ph{color:var(--warn);font-family:var(--mono);font-size:10px;letter-spacing:.06em}
+
+.chart{width:100%;height:auto;display:block}
+.chart text{fill:var(--fg-3);font-family:var(--mono);font-size:11px}
+.chart .grid line{stroke:var(--line);stroke-width:1}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--fg-2);margin-top:6px}
+.legend i{display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle}
+
+.rail-wrap{position:relative}
+.rail{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:thin;padding-block:6px 14px;padding-left:var(--gut);padding-right:var(--gutr);scroll-padding-left:var(--gut)}
+.card{flex:0 0 auto;width:min(270px,76vw);scroll-snap-align:start;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:0;text-align:left;cursor:pointer;overflow:hidden;transition:transform .2s ease,border-color .2s}
+.card:hover{transform:translateY(-3px);border-color:var(--fg-3)}
+.card .art{position:relative;height:92px;background:linear-gradient(135deg,var(--per-deep),#1b2230 70%);padding:10px 12px;display:flex;flex-direction:column;justify-content:flex-end}
+.card .art.se{background:linear-gradient(135deg,#4a2a14,#1b2230 75%)}.card .art.sw{background:linear-gradient(135deg,#123a46,#1b2230 75%)}
+.card .art.in{background:linear-gradient(135deg,#2c2347,#1b2230 75%)}.card .art.hi{background:linear-gradient(135deg,#1f3b22,#1b2230 75%)}
+.card .art .t{font-family:var(--display);font-size:30px;line-height:.95;letter-spacing:.02em}
+.card .art .c{position:absolute;top:8px;right:10px;display:flex;gap:4px}
+.card .score{position:absolute;top:8px;left:10px;font-family:var(--display);font-size:24px;line-height:1}
+.card .score small{font-family:var(--mono);font-size:10px;color:var(--fg-2);margin-left:3px}
+.card .bd{padding:10px 12px;display:flex;flex-direction:column;gap:6px;font-size:13px}
+.card .p{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.card .p b{font-size:18px;font-variant-numeric:tabular-nums}
+.card .r{color:var(--fg-3);font-size:12px}
+.ecard{flex:0 0 auto;scroll-snap-align:start;width:min(320px,80vw);border:1px dashed var(--line);border-radius:8px;padding:14px;color:var(--fg-2);font-size:13.5px}
+
+.dec{display:flex;flex-direction:column;gap:8px}
+.dec .h{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.dec .big{font-family:var(--display);font-size:34px;line-height:1}
+.dec .rng{display:flex;gap:6px;flex-wrap:wrap}
+.verdict{font-family:var(--display);font-size:26px;letter-spacing:.02em}
+
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;max-height:560px}
+table{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums}
+th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th{position:sticky;top:0;background:var(--surface-2);color:var(--fg-2);font-weight:600;cursor:pointer;z-index:1}
+th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:var(--surface)}
+th:first-child{background:var(--surface-2);z-index:2}
+td.l,th.l{text-align:left}
+tr:hover td{background:var(--surface-2)}
+tr.click{cursor:pointer}
+.yes{color:var(--good)} .no{color:var(--fg-3)}
+details{border-top:1px solid var(--line);padding:10px 0}
+details summary{cursor:pointer;font-weight:600;font-size:14px}
+.mapwrap{position:relative;background:#0d1117;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.mapwrap svg{display:block;width:100%;height:auto}
+.mtip{position:absolute;pointer-events:none;background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:6px 9px;font-size:12px;max-width:240px}
+
+dialog{border:0;padding:0;background:var(--surface);color:var(--fg);border-radius:10px;width:min(980px,calc(100vw - 24px));max-height:calc(100vh - 40px);overflow:auto}
+dialog::backdrop{background:rgba(0,0,0,.72)}
+.m-head{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:16px 18px;background:linear-gradient(135deg,var(--per-deep),var(--surface) 70%);border-bottom:1px solid var(--line)}
+.m-head h2{font-family:var(--display);font-weight:400;font-size:44px;line-height:.9;margin:4px 0 0}
+.m-close{background:var(--surface-3);border:0;border-radius:50%;width:36px;height:36px;font-size:22px;cursor:pointer;flex:0 0 auto}
+.m-body{padding:16px 18px;display:flex;flex-direction:column;gap:14px}
+.watch textarea{width:100%;min-height:70px;background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:8px;color:var(--fg)}
+.wbtn{background:var(--surface-3);border:1px solid var(--line);border-radius:5px;padding:6px 12px;cursor:pointer}
+.wbtn[aria-pressed=true]{background:var(--per);color:#1b0e04;font-weight:700}
+.warnbox{border-left:3px solid var(--warn);background:rgba(233,180,76,.08);padding:10px 12px;border-radius:0 6px 6px 0;font-size:13.5px;color:var(--fg-2)}
+.foot{padding-block:24px 40px;color:var(--fg-3);font-size:12.5px;border-top:1px solid var(--line)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<header class="nav pad">
+  <div class="brand">SOUTH OF THE <span>RIVER</span></div>
+  <nav aria-label="Sections">
+    <a href="#now">Market now</a><a href="#scen">Scenarios</a><a href="#wait">Buy or wait</a><a href="#best">Under $600k</a>
+    <a href="#stretch">Stretch</a><a href="#corr">Corridors</a><a href="#watch">Correction watch</a><a href="#plan">Mortgage planner</a>
+    <a href="#map">Map</a><a href="#today">Today</a><a href="#all">All suburbs</a><a href="#method">Method</a>
+  </nav>
+  <div class="stamp" id="stamp"></div>
+</header>
+
+<section class="bill" id="now">
+  <div class="bill-in pad">
+    <div class="tag"><b>Row 1</b> Perth market right now · southern suburbs · first-home couple</div>
+    <h1 id="verdict">Perth is in a <span>correction</span></h1>
+    <p class="lede" id="lede"></p>
+    <div class="facts" id="facts"></div>
+    <div class="gauge"><span class="gl">Market temperature</span><div class="gbar" role="img" id="gbar" aria-label="Market temperature"><i id="gneedle"></i></div><span class="gl" id="gval"></span>
+      <button class="wbtn" type="button" id="tempWhy">How this is scored</button></div>
+    <div class="panel" id="tempBox" hidden style="margin-top:12px"></div>
+  </div>
+</section>
+
+<main class="rows">
+  <section class="row pad">
+    <div class="grid g3" id="exec"></div>
+  </section>
+
+  <section class="row pad" id="scen">
+    <h2><span class="n">ROW 2</span> Bear vs base vs bull</h2>
+    <p class="sub">Three conditional paths from 31 Oct 2026. They come from a statistical model fitted to Perth's own price history, then scaled for each suburb's past swings. They are scenarios, not valuations, and the model does not know the odds of each.</p>
+    <div class="ctrl">
+      <label for="scSub">Suburb<select id="scSub"></select></label>
+      <label>Property type<div class="seg" id="scType"><button type="button" data-v="house" aria-pressed="true">3-bed house</button><button type="button" data-v="th" aria-pressed="false">3-bed townhouse</button></div></label>
+      <label>Horizon<div class="seg" id="scHz"></div></label>
+    </div>
+    <div class="grid g2">
+      <div class="panel"><div id="scChart"></div><div class="legend" id="scLegend"></div></div>
+      <div class="panel" id="scSide"></div>
+    </div>
+  </section>
+
+  <section class="row pad" id="wait">
+    <h2><span class="n">ROW 3</span> Should we buy now or wait for Perth prices to fall?</h2>
+    <p class="sub">Each card compares your net wealth (home value − loan + cash) after <b id="hzTxt">36</b> months, with the same income, spending and starting deposit in every case. Rent buys housing, so it isn't treated as wasted, and principal you repay counts as wealth. Edit the inputs in Row 8; marked <span class="ph">PLACEHOLDER</span> values are not your real figures.</p>
+    <div class="ctrl">
+      <label for="wSub">Price to test<select id="wSub"></select></label>
+      <label for="wDisc">Negotiated discount %<input id="wDisc" type="number" step="0.5" value="5"></label>
+      <label for="wRate">Mortgage rate change if you wait (pts)<input id="wRate" type="number" step="0.25" value="0"></label>
+      <label for="wHz">Compare at (months)<input id="wHz" type="number" min="30" max="120" step="6" value="36"></label>
+    </div>
+    <div class="grid g4" id="decCards"></div>
+    <div class="grid g2" style="margin-top:12px"><div class="panel" id="beBox"></div><div class="panel" id="decRead"></div></div>
+  </section>
+
+  <section class="row" id="best">
+    <div class="pad"><h2><span class="n">ROW 4</span> Best suburbs under $600k</h2>
+    <p class="sub" id="bestSub"></p></div>
+    <div class="rail-wrap"><div class="rail" id="bestRail"></div></div>
+  </section>
+
+  <section class="row" id="stretch">
+    <div class="pad"><h2><span class="n">ROW 5</span> Stretch-budget three-bedroom homes</h2>
+    <p class="sub" id="stretchSub"></p></div>
+    <div class="rail-wrap"><div class="rail" id="stretchRail"></div></div>
+  </section>
+
+  <section class="row pad" id="corr">
+    <h2><span class="n">ROW 6</span> Perth corridor comparison</h2>
+    <p class="sub">Averages hide a lot. Every corridor has cheap streets next to industrial land and dearer streets near the train, so open the suburbs before judging a corridor.</p>
+    <div class="grid g2"><div class="panel" id="corrChart"></div><div class="panel" id="ringChart"></div></div>
+    <div class="tbl-wrap" style="margin-top:12px"><table id="corrTbl"></table></div>
+  </section>
+
+  <section class="row pad" id="watch">
+    <h2><span class="n">ROW 7</span> Correction watchlist</h2>
+    <p class="sub">How far each suburb's typical 3-bed house would have to fall to reach $600k, and whether any modelled path gets there. Modelled prices are not asking prices or sales, and sellers may not accept them.</p>
+    <div class="ctrl"><label for="cwFilter">Show<select id="cwFilter"><option value="near">Within 20% of $600k</option><option value="all">All priced suburbs</option><option value="mine">My list only</option></select></label></div>
+    <div class="tbl-wrap"><table id="cwTbl"></table></div>
+  </section>
+
+  <section class="row pad" id="plan">
+    <h2><span class="n">ROW 8</span> Mortgage freedom planner</h2>
+    <p class="sub">Budget A ($600k) next to Budget B (stretch). Every input is editable and saved in this browser only.</p>
+    <div class="panel"><div class="ctrl" id="inputs"></div></div>
+    <div class="grid g2" style="margin-top:12px"><div class="panel" id="budA"></div><div class="panel" id="budB"></div></div>
+    <div class="panel" style="margin-top:12px"><div id="payChart"></div><div class="legend" id="payLegend"></div></div>
+    <div class="panel" style="margin-top:12px"><h3>Stress test: what if prices fall after you buy?</h3>
+      <p class="small">Pick any fall. It is a what-if, not something the model expects. It shows your position one year after settlement.</p>
+      <div class="ctrl"><div class="seg" id="stPick"><button type="button" data-v="10" aria-pressed="false">&minus;10%</button><button type="button" data-v="20" aria-pressed="true">&minus;20%</button><button type="button" data-v="30" aria-pressed="false">&minus;30%</button></div>
+      <label for="stPct">Custom fall %<input id="stPct" type="range" min="0" max="45" value="20"></label><span class="mono" id="stVal">20%</span></div>
+      <div class="tbl-wrap"><table id="stTbl"></table></div></div>
+  </section>
+
+  <section class="row pad" id="map">
+    <h2><span class="n">ROW 9</span> Infrastructure and risk map</h2>
+    <p class="sub">Official Landgate locality outlines, coloured by layer. Dots are each suburb's centre; the white ring is 35 km from Perth GPO. Suburb-wide hazard shares can't tell you about one street, so check the exact address before you offer.</p>
+    <div class="ctrl"><label>Layer<div class="seg" id="mapLayer"><button type="button" data-v="group" aria-pressed="true">Affordability</button><button type="button" data-v="score" aria-pressed="false">Match score</button><button type="button" data-v="bush" aria-pressed="false">Bushfire</button><button type="button" data-v="flood" aria-pressed="false">Flood</button></div></label>
+      <label><span><input type="checkbox" id="mapProj" checked> Projects</span></label></div>
+    <div class="grid g2"><div class="mapwrap" id="mapBox"><div class="mtip" id="mtip" hidden></div></div><div class="panel" id="projList"></div></div>
+  </section>
+
+  <section class="row pad" id="today">
+    <h2><span class="n">ROW 10</span> Today's changes</h2>
+    <p class="sub">Only verified, material changes. A quiet day shows nothing, by design.</p>
+    <div class="grid g2"><div class="panel" id="todayBox"></div><div class="panel" id="turnBox"></div></div>
+  </section>
+
+  <section class="row pad" id="all">
+    <h2><span class="n">EXTRA</span> Every suburb, ranked your way</h2>
+    <p class="sub">Move the sliders to change what matters. Rankings update straight away. Capital growth is deliberately not a slider; fundamentals carry a little of it.</p>
+    <div class="panel"><div class="ctrl" id="weights"></div></div>
+    <div class="ctrl" style="margin-top:10px"><label for="allCorr">Corridor<select id="allCorr"></select></label><label for="allGroup">Affordability<select id="allGroup"></select></label><label for="allQ">Search<input id="allQ" type="search" placeholder="Suburb name"></label></div>
+    <div class="tbl-wrap"><table id="allTbl"></table></div>
+  </section>
+
+  <section class="row pad" id="method">
+    <h2><span class="n">AUDIT</span> Coverage, method and sources</h2>
+    <div class="panel" id="methodBox"></div>
+  </section>
+</main>
+<footer class="foot pad" id="foot"></footer>
+
+<dialog id="dlg" aria-labelledby="dlgTitle"><div id="dlgIn"></div></dialog>
+
+<script type="application/json" id="data">/*__DATA__*/{}</script>
+<script>/*__FINANCE__*/</script>
+<script>
+"use strict";
+const D=JSON.parse(document.getElementById('data').textContent);
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const k=v=>v==null?'—':'$'+(Math.abs(v)>=1e6?(v/1e6).toFixed(2)+'m':Math.round(v/1000)+'k');
+const money=v=>v==null?'—':(v<0?'−':'')+'$'+Math.round(Math.abs(v)).toLocaleString('en-AU');
+const pc=(v,d=1)=>v==null?'—':(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(d)+'%';
+const ymLabel=s=>{const [y,m]=s.split('-');return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m-1]+' '+y};
+const fy=s=>{const [y,m]=s.split('-');return +y+(+m-.5)/12};
+const S=D.suburbs||[], M=D.market||{}, IND=Object.fromEntries((M.indicators||[]).map(i=>[i.id,i]));
+const C={bear:'#E8675C',base:'#E9B44C',bull:'#4CC583',ref:'#8EA2C8',fg:'#EDF0F5',fg3:'#7C8494',line:'#2B313C',per:'#F2953F'};
+const GRP={'1':['g1','≤ $600k'],'2':['g2','Negotiable'],'3':['g3','Stretch'],'4':['g4','Out of reach'],'I':['gx','Not enough data']};
+const gkey=g=>g?(g[0]==='I'?'I':g[0]):'I';
+const store={get(k,d){try{const v=localStorage.getItem('sotr:'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('sotr:'+k,JSON.stringify(v))}catch(e){}}};
+
+/* ---------- inputs (editable; placeholders flagged) ---------- */
+const DEF={income1:120000,income2:80000,deposit:130000,keepBuffer:20000,rentWeek:600,expenses:4500,otherDebts:0,cardLimits:0,
+  rate:6.39,years:30,stress:2,ownCostsYear:6500,extra:0,freq:'monthly',offset:0,guarantee:false,budgetA:600000,budgetB:(D.stretch||{}).high||700000,date:'2026-11-14',saveRate:4,rentGrowth:3};
+const PH=new Set(['rentWeek','expenses','ownCostsYear','otherDebts','cardLimits']);
+const IN=Object.assign({},DEF,store.get('inputs',{}));
+const LAB={income1:'Income 1 ($/yr)',income2:'Income 2 ($/yr)',deposit:'Deposit ($)',keepBuffer:'Emergency cash kept ($)',rentWeek:'Rent now ($/wk)',expenses:'Living costs ($/month)',
+  otherDebts:'Other repayments ($/month)',cardLimits:'Credit card limits ($)',rate:'Mortgage rate (%)',years:'Loan term (yrs)',stress:'Stress test (+pts)',ownCostsYear:'Rates, water, insurance, upkeep ($/yr)',
+  extra:'Extra repayment ($/period)',offset:'Offset balance ($)',budgetA:'Budget A ($)',budgetB:'Budget B ($)',saveRate:'Savings rate (%)',rentGrowth:'Rent growth (%/yr)'};
+function netM(){return (PF.netIncome(IN.income1)+PF.netIncome(IN.income2))/12}
+function monthlyBudget(){return Math.max(0,netM()-IN.expenses-IN.otherDebts)}
+
+/* ---------- scores ---------- */
+const WDEF={afford:25,sustain:15,suit:10,access:12,fund:10,liquid:10,risk:10,conf:8};
+const WLAB={afford:'Affordability',sustain:'Repayment safety',suit:'Suits a 3-bed house',access:'Transport & distance',fund:'Rent fundamentals',liquid:'Easy to resell',risk:'Hazard & land-use risk',conf:'Evidence quality'};
+const W=Object.assign({},WDEF,store.get('weights',{}));
+function score(s){ if(!s.comp) return null; let t=0,w=0; for(const k in W){t+=s.comp[k]*W[k];w+=W[k]} return w?Math.round(100*t/w):null }
+function scoreTxt(s){const v=score(s); if(v==null) return '—'; return s.conf==='Low'?v+'±10':String(v)}
+
+/* ---------- generic SVG line chart ---------- */
+function lineChart(o){
+  const Wd=o.w||640,H=o.h||300,L=58,R=o.r||70,T=14,B=30;
+  const xs=o.series.flatMap(s=>s.pts.map(p=>p[0])).concat(o.band?o.band.map(p=>p[0]):[]);
+  const ys=o.series.flatMap(s=>s.pts.map(p=>p[1])).concat(o.band?o.band.flatMap(p=>[p[1],p[2]]):[]).concat(o.hlines?o.hlines.map(h=>h.y):[]);
+  let x0=o.x0??Math.min(...xs),x1=o.x1??Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
+  const padY=(y1-y0)*.08||1; y0-=padY; y1+=padY;
+  const X=v=>L+(v-x0)/(x1-x0)*(Wd-L-R), Y=v=>T+(1-(v-y0)/(y1-y0))*(H-T-B);
+  const step=niceStep((y1-y0)/5); const ticks=[]; for(let v=Math.ceil(y0/step)*step;v<=y1;v+=step) ticks.push(v);
+  const xt=[]; for(let y=Math.ceil(x0);y<=x1;y+=(x1-x0>12?2:1)) xt.push(y);
+  let g=`<svg class="chart" viewBox="0 0 ${Wd} ${H}" role="img" aria-label="${esc(o.label||'chart')}"><g class="grid">`;
+  ticks.forEach(v=>g+=`<line x1="${L}" x2="${Wd-R}" y1="${Y(v)}" y2="${Y(v)}"/><text x="${L-6}" y="${Y(v)+4}" text-anchor="end">${esc((o.yFmt||String)(v))}</text>`);
+  xt.forEach(v=>g+=`<text x="${X(v)}" y="${H-10}" text-anchor="middle">${v}</text>`);
+  g+='</g>';
+  (o.hlines||[]).forEach(h=>g+=`<line x1="${L}" x2="${Wd-R}" y1="${Y(h.y)}" y2="${Y(h.y)}" stroke="${h.color}" stroke-dasharray="5 4" stroke-width="1.4"/><text x="${Wd-R+4}" y="${Y(h.y)+4}" style="fill:${h.color}">${esc(h.label)}</text>`);
+  if(o.vline!=null) g+=`<line x1="${X(o.vline)}" x2="${X(o.vline)}" y1="${T}" y2="${H-B}" stroke="${C.fg3}" stroke-dasharray="2 4"/><text x="${X(o.vline)+4}" y="${T+10}">now</text>`;
+  if(o.band&&o.band.length){const up=o.band.map(p=>`${X(p[0])},${Y(p[2])}`).join(' '),dn=o.band.slice().reverse().map(p=>`${X(p[0])},${Y(p[1])}`).join(' ');g+=`<polygon points="${up} ${dn}" fill="${o.bandColor||C.base}" fill-opacity=".10" stroke="none"/>`}
+  o.series.forEach(s=>{ if(!s.pts.length) return; g+=`<polyline points="${s.pts.map(p=>`${X(p[0])},${Y(p[1])}`).join(' ')}" fill="none" stroke="${s.color}" stroke-width="${s.w||2.2}" ${s.dash?`stroke-dasharray="${s.dash}"`:''} stroke-linejoin="round"/>`;
+    if(s.end){const p=s.pts[s.pts.length-1];g+=`<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="3.5" fill="${s.color}"/><text x="${X(p[0])+6}" y="${Y(p[1])+4}" style="fill:${s.color}">${esc(s.endLabel||'')}</text>`}
+    (s.dots||[]).forEach(p=>g+=`<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="2.6" fill="${s.color}"/>`)});
+  return g+'</svg>';
+}
+function niceStep(r){const p=Math.pow(10,Math.floor(Math.log10(r)));const n=r/p;return (n<1.5?1:n<3?2:n<7?5:10)*p}
+
+/* ---------- scenario helpers ---------- */
+const PTS=D.points||[], PQ=D.point_q||[];
+function cityPath(sc){return (D.city.pct[sc]||[]).map(v=>1+v/100)}
+function pathFor(s,type,sc){
+  if(!s) return cityPath(sc);
+  if(type==='th'){ if(!s.u3_now||s.u3_count<15) return null; return cityPath(sc).map(m=>m) }
+  if(!s.paths) return null; return s.paths[sc].map(v=>v/s.h3_now);
+}
+function startFor(s,type){ if(!s) return null; return type==='th'?(s.u3_count>=15?s.u3_now:null):s.h3_now }
+function monthMult(mults,m){ // mults at PQ quarters; month m from start
+  const q=m/3; if(q<=0) return 1; const qs=[0].concat(PQ), vs=[1].concat(mults);
+  for(let i=1;i<qs.length;i++) if(q<=qs[i]){const t=(q-qs[i-1])/(qs[i]-qs[i-1]);return Math.exp(Math.log(vs[i-1])*(1-t)+Math.log(vs[i])*t)}
+  return vs[vs.length-1];
+}
+
+/* ---------- Row 1 ---------- */
+function renderNow(){
+  $('#stamp').textContent=`Suburb data ${D.data_collected} · built ${D.generated} · model ${D.model_version}`;
+  const q=IND.cot_q?.value, pk=IND.cot_peak?.value;
+  $('#lede').innerHTML=`Cotality has Perth dwelling values down <strong>${Math.abs(q)}% in three months</strong> and <strong>${Math.abs(pk)}% from the April 2026 peak</strong>. The fall is broad and selling is slower, but jobs and population still look solid. For a first-home couple that means <strong>time to negotiate, not to panic-buy or to bet everything on a crash.</strong>${D.counts.lag_adjusted_under_A===0?" One hard fact first: a <strong>typical 3-bed house south of the river within 35 km currently costs more than $600k</strong> in every suburb with enough sales to judge.":""}`;
+  const c=D.counts;
+  $('#facts').innerHTML=[[pc(IND.cot_m?.value),'Perth values, October (Cotality)'],[pc(pk),'From April 2026 peak'],[IND.cash?.value+'%','RBA cash rate (3 Nov)'],
+    [c.lag_adjusted_under_A+' / '+c.priced,'Priced suburbs where a typical 3-bed house is ≈$600k or less today'],['Medium','Evidence strength for “correction” (city-wide data is strong; suburb-level data lags)']]
+    .map(([v,l])=>`<div class="fact"><span class="v num">${esc(v)}</span><span class="l">${esc(l)}</span></div>`).join('');
+  const t=D.temperature.value; $('#gneedle').style.left=((t+2)/4*100)+'%'; $('#gval').textContent=`${t>0?'+':''}${t} on a −2 (cold) to +2 (hot) scale: ${t<-1?'cold':t<-0.3?'cool':t<0.3?'neutral':t<1?'warm':'hot'}`;
+  $('#tempWhy').onclick=()=>{const b=$('#tempBox');b.hidden=!b.hidden};
+  $('#tempBox').innerHTML=`<p class="small">${esc(D.temperature.formula)}</p>`+D.temperature.signals.map(s=>`<div class="sig"><span class="dot" style="background:${s.s<0?C.bear:s.s>0?C.bull:C.fg3}"></span><div><b>${esc(s.k)}</b> <span class="chip">${s.s>0?'+':''}${s.s} × weight ${s.w}</span><div class="small">${esc(s.why)}</div></div></div>`).join('');
+  const bear=(M.indicators||[]).filter(i=>i.dir==='bear').slice(0,5), bull=(M.indicators||[]).filter(i=>i.dir==='bull'||i.dir==='mixed');
+  const li=i=>`<li><b>${esc(i.label)}</b>: ${i.value!=null?esc(i.value)+esc(i.unit==='%'?'%':i.unit==='$'?'':' '+i.unit):''} ${esc(i.text||'')} <span class="small">(${esc(i.timing)}, ${esc(i.obs)}${i.confidence?', '+esc(i.confidence):''})</span></li>`;
+  $('#exec').innerHTML=`
+   <div class="panel"><h3>Where the cycle is</h3><div class="verdict" style="color:var(--bear)">Correction · established</div>
+    <p class="small">Not yet stabilising. Monthly falls were −2.0% (Aug), −2.1% (Sep, revised), −1.7% (Oct) and −1.7% in the 28 days to 9 Nov: big, but no longer clearly speeding up. Signs of stabilisation would be monthly falls shrinking below −0.5%, listings stopping their rise, and sales volumes recovering.</p>
+    <p class="small"><b>Competing explanation:</b> part of this is the run-up unwinding (+68% in five years) and rates at an 18-year high. It may be sharp and short, unlike 2014–19, if jobs hold and rate cuts come earlier than priced.</p></div>
+   <div class="panel"><h3>Strongest bearish evidence</h3><ul class="list">${bear.map(li).join('')}</ul></div>
+   <div class="panel"><h3>Strongest bullish / supporting evidence</h3><ul class="list">${bull.map(li).join('')}</ul></div>
+   <div class="panel"><h3>Main uncertainty</h3><p class="small">Interest rates. The RBA hiked to 4.85% on a 6–3 vote and dropped its tightening bias. A hold on <b>8 Dec</b> points to a peak; another hike would extend the fall. Next is WA unemployment for October on <b>19 Nov</b>: a jump from 4.2% would make the bear path more likely.</p></div>
+   <div class="panel"><h3>What would change this read</h3><ul class="list"><li><b>More bearish:</b> another RBA hike; WA unemployment above 5%; monthly falls beyond −2.5%; forced sales.</li><li><b>Less bearish:</b> two months of falls under −0.5%; rising sales volumes; vendor discounts narrowing; first rate cut priced before 2028.</li></ul></div>
+   <div class="panel"><h3>What it means for you</h3><ul class="list"><li><b>You have leverage.</b> Buyers are scarce, so offer below asking and use comparable sales.</li><li><b>No rush</b> to buy at the peak-era medians shown on listing sites; they lag the fall by months.</li><li><b>Don't wait on a crash alone.</b> Rent keeps costing and nobody can time the bottom (Row 3).</li><li><b>Keep the buffer.</b> Rates may rise again; test repayments at +2 points.</li>
+   <li><b>$600k reality check:</b> ${D.counts.lag_adjusted_under_A} of ${D.counts.priced} priced southern suburbs have a typical 3-bed house at $600k or less today, and ${D.counts.negotiable} more are within negotiating range. At $600k the realistic options are a 3-bed townhouse/villa (${D.counts.townhouse_under_A} suburbs), a below-median house (older, smaller block or needing work), stretching toward ${k(D.stretch.high)}, or waiting.</li></ul></div>`;
+}
+
+/* ---------- Row 2 ---------- */
+let SC={sub:'',type:'house',hz:'12m'};
+function renderScenario(){
+  const s=S.find(x=>x.suburb===SC.sub)||null;
+  const start=s?startFor(s,SC.type):100;
+  const seg=$('#scHz'); if(!seg.children.length) seg.innerHTML=Object.keys(D.horizons).map(h=>`<button type="button" data-v="${h}" aria-pressed="${h===SC.hz}">${h}</button>`).join('');
+  $$('#scHz button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===SC.hz));
+  $$('#scType button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===SC.type));
+  const fmt=s?(v=>k(v)):(v=>Math.round(v-100)+'%');
+  if(s&&!start){ $('#scChart').innerHTML=`<p class="empty">${esc(s.suburb)}: not enough ${SC.type==='th'?'townhouse':'3-bed house'} sales for a scenario path. Missing data stays missing.</p>`; $('#scSide').innerHTML=''; $('#scLegend').innerHTML=''; return }
+  const x0=fy(D.start_date);
+  const mk=sc=>{const p=pathFor(s,SC.type,sc);return [[x0,start]].concat(p.map((m,i)=>[fy(PTS[i]),start*m]))};
+  const hist=[];
+  if(!s&&D.abs_series){ /* show recent reconstruction for context */ (M.monthly_path_reconstruction?.levels||[]).forEach(([d,v])=>hist.push([fy(d),100*v])) }
+  if(s&&SC.type==='house'&&s.trend) s.trend.forEach(t=>{ if(t[1]&&s.h3) hist.push([t[0]+.5, t[1]*(s.h3/(s.house_med||s.h3))]) });
+  const series=[{pts:mk('bear'),color:C.bear},{pts:mk('base'),color:C.base,w:2.8},{pts:mk('bull'),color:C.bull},{pts:[[x0,start],[2036.8,start]],color:C.ref,dash:'3 5',w:1.4}];
+  if(hist.length) series.unshift({pts:hist,color:C.fg3,w:1.8,dots:hist});
+  const hl=s?[{y:IN.budgetA,color:C.per,label:'$600k'}]:[];
+  $('#scChart').innerHTML=lineChart({series,band:mk('bear').map((p,i)=>[p[0],p[1],mk('bull')[i][1]]),bandColor:C.base,vline:x0,hlines:hl,yFmt:fmt,x0:s&&hist.length?2017:2025.8,x1:2036.9,label:'Scenario chart'});
+  $('#scLegend').innerHTML=`<span><i style="background:${C.bear}"></i>Bear (avg of 10–20th pct paths)</span><span><i style="background:${C.base}"></i>Base (45–55th)</span><span><i style="background:${C.bull}"></i>Bull (80–90th)</span><span><i style="background:${C.ref}"></i>No-change baseline</span>${hist.length?`<span><i style="background:${C.fg3}"></i>${s?'History: REIWA annual house median, rescaled to 3-bed':'Reconstructed Perth path'}</span>`:''}`;
+  const hq=D.horizons[SC.hz], idx=PQ.indexOf(hq);
+  const val=sc=>start*pathFor(s,SC.type,sc)[idx];
+  const bt=D.backtest_city.summary;
+  $('#scSide').innerHTML=`<h3>${s?esc(s.suburb)+' · '+(SC.type==='th'?'3-bed townhouse/villa':'3-bed house'):'Perth (city level, % change)'}</h3>
+   <dl class="kv">${s?`<dt>Start (31 Oct 2026, lag-adjusted)</dt><dd>${k(start)}</dd><dt>Observed 12-month 3-bed median</dt><dd>${k(SC.type==='th'?s.u3:s.h3)}</dd>`:''}
+   <dt>${SC.hz} bear</dt><dd style="color:var(--bear)">${s?k(val('bear')):pc(100*(pathFor(null,0,'bear')[idx]-1))}</dd>
+   <dt>${SC.hz} base</dt><dd style="color:var(--base)">${s?k(val('base')):pc(100*(pathFor(null,0,'base')[idx]-1))}</dd>
+   <dt>${SC.hz} bull</dt><dd style="color:var(--bull)">${s?k(val('bull')):pc(100*(pathFor(null,0,'bull')[idx]-1))}</dd>
+   ${s&&SC.type==='house'?`<dt>Cycle beta (swing vs Perth)</dt><dd>${s.beta}${s.beta_raw!=null?' (raw '+s.beta_raw+')':' (default)'}</dd><dt>Band widening (thin sales)</dt><dd>×${s.widen}</dd><dt>Bear trough</dt><dd>${k(s.bear_trough)} · ${ymLabel(s.bear_trough_date)}</dd>`:''}</dl>
+   <p class="warnbox" style="margin-top:10px">The bear path (about &minus;25% for Perth from here, &minus;32% from the peak) is deeper than any recorded Perth fall: about &minus;14% on the ABS index in 2014&ndash;19. Read it as a stress case. All three paths carry today's momentum forward because the model was fitted on smoothed quarterly data.</p>
+   <p class="small"><b>Economic story behind each path.</b> <span style="color:var(--bear)">Bear:</span> another rate hike or two, WA jobs weaken, credit tightens, forced listings rise; falls continue through 2027 and recovery is slow. <span style="color:var(--base)">Base:</span> rates peak around now, falls fade over 2027, then prices drift back toward long-run growth. <span style="color:var(--bull)">Bull:</span> cuts come earlier, migration and jobs stay strong, stock is absorbed fast.</p>
+   <p class="small"><b>How good is the model?</b> In back-tests on Perth 2008–2021, the bear–bull band held the outcome ${bt.all_h8.coverage_band}% of the time at 2 years. But a simple "prices stay where they are" guess had a smaller average error (${bt.all_h8.mae_random_walk}% vs ${bt.all_h8.mae_model}% at 2 years). Use the band for ranges, not the base line as a prediction.</p>
+   <p class="small"><b>Signals to watch:</b> bear gains if the RBA hikes on 8 Dec or WA unemployment jumps on 19 Nov; bull gains if monthly falls shrink below −0.5% and sales volumes rise.</p>`;
+}
+
+/* ---------- Row 3 ---------- */
+function decisions(){
+  const s=S.find(x=>x.suburb===$('#wSub').value)||null;
+  const P=s?s.h3_now:IN.budgetA, disc=(+$('#wDisc').value||0)/100, H=+$('#wHz').value||36, dr=+$('#wRate').value||0;
+  $('#hzTxt').textContent=H;
+  const base={price:P,deposit:IN.deposit,keepBuffer:IN.keepBuffer,income1:IN.income1,income2:IN.income2,expenses:IN.expenses,rate:IN.rate,years:IN.years,
+    rentWeek:IN.rentWeek,monthlyBudget:monthlyBudget(),horizon:H,saveRate:IN.saveRate,rentGrowth:IN.rentGrowth,ownCostsYear:IN.ownCostsYear,date:IN.date,guarantee:IN.guarantee,stress:IN.stress};
+  const res={};
+  for(const sc of ['bear','base','bull']){
+    const mult=pathFor(s,'house',sc)||cityPath(sc); const pp=m=>monthMult(mult,m);
+    res[sc]={neg:null,now:PF.buyVsWait({...base,wait:0,pricePath:pp}),
+      w12:PF.buyVsWait({...base,wait:12,rateChangeAtWait:dr,pricePath:pp}),
+      w24:PF.buyVsWait({...base,wait:24,rateChangeAtWait:dr,pricePath:pp})};
+    // negotiated purchase: you pay P(1-disc) for a home whose market value follows the scenario from P
+    res[sc].neg=PF.buyVsWait({...base,wait:0,buyDiscount:disc,pricePath:pp});
+  }
+  const card=(key,title,desc)=>{
+    const b=res.base[key],lo=res.bear[key],hi=res.bull[key];
+    if(!b.feasible) return `<div class="panel dec"><div class="h"><h3>${title}</h3></div><p class="small">Not feasible with these inputs (LVR above 95% or similar).</p></div>`;
+    const rel=v=>v.wealth-res.base.now.wealth;
+    return `<div class="panel dec"><div class="h"><h3>${title}</h3><span class="chip ${key==='now'?'':key==='neg'?'g1':'info'}">${key==='now'?'reference':pcDiff(rel(b))}</span></div>
+      <div class="big num">${k(b.wealth)}</div><div class="small">net wealth after ${H} months, base path</div>
+      <div class="rng"><span class="chip bear">bear ${k(lo.wealth)}</span><span class="chip bull">bull ${k(hi.wealth)}</span></div>
+      <dl class="kv"><dt>Buy price</dt><dd>${k(b.buyPrice)}</dd><dt>Duty</dt><dd>${money(b.duty)}</dd><dt>Rent paid</dt><dd>${k(b.rentPaid)}</dd><dt>Interest paid</dt><dd>${k(b.interestPaid)}</dd><dt>Cash at end</dt><dd>${k(b.cash)}</dd></dl>
+      <p class="small">${desc}</p></div>`;
+  };
+  const pcDiff=v=>(v>=0?'+':'−')+k(Math.abs(v)).slice(1)+' vs buy now';
+  $('#decCards').innerHTML=card('now','Buy now','Buy a typical 3-bed at today\'s lag-adjusted value.')+card('neg','Negotiate now',`Buy now but ${(disc*100).toFixed(1)}% under value. Current capital-city discounting averages 4.7%.`)+card('w12','Wait 12 months','Rent for a year, keep saving, then buy at the scenario price.')+card('w24','Wait 24 months','Rent for two years. Only worth it if falls are deep and your rent, deposit and jobs stay stable.');
+  const be12=PF.breakEvenFall({...base,wait:12,rateChangeAtWait:dr}), be24=PF.breakEvenFall({...base,wait:24,rateChangeAtWait:dr});
+  $('#beBox').innerHTML=`<h3>Break-even: how far must prices fall for waiting to pay?</h3>
+    <dl class="kv"><dt>Wait 12 months</dt><dd><b>${be12.fall==null?'over 60%':pc(-be12.fall*100)}</b></dd><dt>Wait 24 months</dt><dd><b>${be24.fall==null?'over 60%':pc(-be24.fall*100)}</b></dd>
+    <dt>Bear path by month 12 / 24</dt><dd style="color:var(--bear)">${pc(100*(monthMult(pathFor(s,'house','bear')||cityPath('bear'),12)-1))} / ${pc(100*(monthMult(pathFor(s,'house','bear')||cityPath('bear'),24)-1))}</dd>
+    <dt>Base path by month 12 / 24</dt><dd style="color:var(--base)">${pc(100*(monthMult(pathFor(s,'house','base')||cityPath('base'),12)-1))} / ${pc(100*(monthMult(pathFor(s,'house','base')||cityPath('base'),24)-1))}</dd></dl>
+    <p class="small">A negative number is the fall needed. A positive number means waiting already breaks even if prices rise by that much, mostly because you save hard while renting and avoid mortgage interest and ownership costs. That depends on the <span class="ph">PLACEHOLDER</span> rent and costs. Includes extra rent, interest on the savings you'd hold, mortgage interest you'd avoid, ownership costs avoided, the rate change you set, duty at the new price (same first-home rules), and the larger deposit at purchase. Prices are assumed to fall in a straight line to the target and then stay flat. Your deposit keeps earning ${IN.saveRate}% while you wait.</p>`;
+  const best=Object.entries(res.base).filter(([,v])=>v.feasible).sort((a,b)=>b[1].wealth-a[1].wealth)[0][0];
+  const g=D.city.fit.drift_pa_pct/100, rise=m=>Math.pow(1+g,m/12);
+  const fNow=PF.buyVsWait({...base,wait:0,pricePath:rise}), f12=PF.buyVsWait({...base,wait:12,rateChangeAtWait:dr,pricePath:rise}), f24=PF.buyVsWait({...base,wait:24,rateChangeAtWait:dr,pricePath:rise});
+  const failGap=f12.feasible?f12.wealth-fNow.wealth:null, failGap24=f24.feasible?f24.wealth-fNow.wealth:null;
+  $('#decRead').innerHTML=`<h3>Plain-English read</h3><ul class="list">
+    <li>On the base path, the highest-wealth option here is <b>${{now:'buy now',neg:'negotiate now',w12:'wait 12 months',w24:'wait 24 months'}[best]}</b>.</li>
+    <li><b>If waiting fails</b> (no further fall: prices rise ${D.city.fit.drift_pa_pct}% a year from today), waiting 12 months leaves you ${failGap==null?'unable to compare':failGap<0?k(-failGap)+' worse off':k(failGap)+' better off'} and waiting 24 months ${failGap24==null?'unable to compare':failGap24<0?k(-failGap24)+' worse off':k(failGap24)+' better off'} than buying now. Suitable homes may also be scarcer by then.</li>
+    <li>A discount you win at the table is certain. A price fall you wait for is not.</li>
+    <li>These results move a lot with your rent and costs, which are still <span class="ph">PLACEHOLDER</span> values. Set them in Row 8.</li></ul>`;
+}
+
+/* ---------- cards ---------- */
+const artCls=s=>({'South-East':'se','South-West':'sw','Inner South':'in','Inner South-West':'in','Hills / East':'hi'}[s.corridor]||'');
+function card(s,extra){
+  const g=gkey(s.group_house), risk=[]; if((s.bushfire_pct||0)>20) risk.push('Bushfire '+s.bushfire_pct+'%'); if((s.flood_pct||0)>3) risk.push('Flood '+s.flood_pct+'%'); s.flags.forEach(f=>risk.push(f.split(' (')[0].replace(' nearby','')));
+  return `<button class="card" type="button" data-s="${esc(s.suburb)}"><div class="art ${artCls(s)}"><span class="score num">${scoreTxt(s)}<small>/100</small></span><div class="c">${WL[s.suburb]?'<span class="chip">★</span>':''}<span class="chip ${GRP[g][0]}">${GRP[g][1]}</span></div><div class="t">${esc(s.suburb)}</div></div>
+   <div class="bd"><div class="p"><span>3-bed house now</span><b>${k(s.h3_now)}</b></div>
+   <div class="r">Observed 12-mo median ${k(s.h3)} (${s.count} house sales) · ${esc(s.corridor)} · ${s.km.toFixed(1)} km${s.rail?' · 🚆 '+esc(s.trains):''}</div>
+   ${s.u3_now&&s.u3_count>=15?`<div class="r">3-bed townhouse ≈ ${k(s.u3_now)} (${s.u3_count} unit sales)</div>`:''}
+   <div class="r">Trend: 1 yr ${pc(s.g1)} · 5 yr ${pc(s.g5,0)} · bear trough ${k(s.bear_trough)}</div>
+   ${extra||''}
+   <div class="r">${risk.length?'⚠ '+esc(risk.slice(0,2).join(' · ')):'No hazard flags at suburb level'}</div>
+   <div class="r">Evidence: ${esc(s.conf)} · REIWA, 12 mo to Oct 2026</div></div></button>`;
+}
+function renderRails(){
+  const ranked=S.filter(s=>s.comp).sort((a,b)=>score(b)-score(a));
+  const g12=ranked.filter(s=>/^[12]/.test(s.group_house));
+  $('#bestSub').innerHTML=`${D.counts.median_3bed_settled_under_A} suburbs have a 3-bed house median of settled sales at or under $600k; ${D.counts.lag_adjusted_under_A} are ≈$600k or less after adjusting for the fall since those sales; ${D.counts.negotiable} more are within negotiating range (≤ ${k(D.negotiable_cut)} today). These are suburb medians, <b>not</b> verified listings. No listing feed is connected, so homes for sale aren't checked.`;
+  const th=ranked.filter(s=>/^[12]/.test(s.group_th)&&!/^[12]/.test(s.group_house)).sort((a,b)=>a.u3_now-b.u3_now);
+  const near=ranked.filter(s=>/^3/.test(s.group_house)).sort((a,b)=>a.h3_now-b.h3_now).slice(0,4);
+  const thCards=th.map(s=>card(s,`<div class="r" style="color:var(--good)">3-bed townhouse/villa (strata) ≈ ${k(s.u3_now)} · ${s.u3_count} unit sales. Check levies and strata type.</div>`)).join('');
+  $('#bestRail').innerHTML=(g12.length?g12.map(s=>card(s)).join(''):`<div class="ecard"><h3>No typical 3-bed house fits $600k right now</h3><p>No priced southern suburb within 35 km has a lag-adjusted 3-bed house median at or below ${k(D.negotiable_cut)}. To the right: suburbs where a <b>3-bed townhouse or villa</b> does fit, then the cheapest house suburbs, where a below-median house (older, smaller, or needing work) might.</p></div>`)+thCards+near.map(s=>card(s,`<div class="r" style="color:var(--warn)">Typical 3-bed is ${k(s.h3_now-IN.budgetA)} over. Lower-quartile house price ${k(s.house_lq)} (all bedrooms).</div>`)).join('');
+  const g3=ranked.filter(s=>/^3/.test(s.group_house)).sort((a,b)=>a.h3_now-b.h3_now);
+  const repA=pmtFor(IN.budgetA);
+  $('#stretchSub').innerHTML=`Budget B is ${k(D.stretch.low)}–${k(D.stretch.high)}: the lower of your conservative affordability ceiling (${k(D.stretch.ceiling)}) and the price that opens up the typical middle/outer southern suburb (${k(D.stretch.market_p40_mid_outer_3bed_now)}). Cheapest first. Each card shows the extra monthly repayment compared with a $600k purchase.`;
+  $('#stretchRail').innerHTML=g3.length?g3.map(s=>card(s,`<div class="r" style="color:var(--warn)">+${money(pmtFor(s.h3_now)-repA)}/month vs $600k · duty ${money(PF.duty(s.h3_now,{date:IN.date}))}</div>`)).join(''):`<div class="ecard">Nothing in the stretch band.</div>`;
+  $$('.card').forEach(c=>c.onclick=()=>openDetail(S.find(x=>x.suburb===c.dataset.s)));
+}
+function pmtFor(price){const p=PF.purchase({...IN,price,extra:0,offset:0});return p.feasible?p.repayment:NaN}
+
+/* ---------- Row 6 ---------- */
+function barChart(rows,keyF,label,fmt){
+  const Wd=560,rowH=30,L=150,R=70,H=rows.length*rowH+20; const vals=rows.map(keyF).filter(v=>v!=null); const mx=Math.max(...vals,1);
+  let g=`<svg class="chart" viewBox="0 0 ${Wd} ${H}" role="img" aria-label="${esc(label)}">`;
+  rows.forEach((r,i)=>{const v=keyF(r),y=10+i*rowH;g+=`<text x="${L-8}" y="${y+18}" text-anchor="end" style="fill:#AEB5C2">${esc(r.name)}</text>`;if(v!=null){const w=(v/mx)*(Wd-L-R);g+=`<rect x="${L}" y="${y+6}" width="${w}" height="16" rx="3" fill="${r.color||C.per}"/><text x="${L+w+6}" y="${y+18}">${esc(fmt(v))}</text>`}else g+=`<text x="${L}" y="${y+18}">no data</text>`});
+  return `<h3>${esc(label)}</h3>`+g+'</svg>';
+}
+function renderCorr(){
+  const cs=Object.entries(D.corridors).filter(([c])=>c!=='Other').map(([name,v])=>({name,...v}));
+  $('#corrChart').innerHTML=barChart(cs,r=>r.median_3bed_now,'Typical 3-bed house today, by corridor',k)+`<p class="small">Bars show the median across suburbs of each suburb's lag-adjusted 3-bed median.</p>`;
+  const rs=Object.entries(D.rings).map(([name,v])=>({name:name+' ring',...v,color:C.ref}));
+  $('#ringChart').innerHTML=barChart(rs,r=>r.median_3bed_now,'Inner vs middle vs outer ring',k)+`<p class="small">Inner < 12 km, middle 12–22 km, outer 22–35 km straight-line from Perth GPO.</p>`;
+  const cols=[['Corridor / ring','name','l'],['Suburbs','n'],['Priced','n_priced'],['Typical 3-bed','median_3bed_now',k],['≤$600k','g1'],['Negotiable','g2'],['Stretch','g3'],['Days on market','dom'],['Gross yield %','yield'],['Suburbs with a station %','rail_share'],['Avg bushfire-prone %','bushfire_avg'],['Avg flood %','flood_avg'],['Cycle beta (median)','beta_med'],['5-yr growth % (median)','g5_med'],['House sales, 12 mo','sales']];
+  const all=cs.concat(Object.entries(D.rings).map(([name,v])=>({name:name+' ring',...v})));
+  $('#corrTbl').innerHTML=`<thead><tr>${cols.map(c=>`<th class="${c[2]==='l'?'l':''}">${c[0]}</th>`).join('')}</tr></thead><tbody>${all.map(r=>`<tr>${cols.map(c=>`<td class="${c[2]==='l'?'l':''}">${esc(typeof c[2]==='function'?c[2](r[c[1]]):r[c[1]]??'—')}</td>`).join('')}</tr>`).join('')}</tbody>`;
+}
+
+/* ---------- Row 7 ---------- */
+function renderWatchTbl(){
+  const f=$('#cwFilter').value;
+  let rows=S.filter(s=>s.paths);
+  if(f==='near') rows=rows.filter(s=>s.need_fall_A<=20); if(f==='mine') rows=rows.filter(s=>WL[s.suburb]);
+  rows.sort((a,b)=>a.need_fall_A-b.need_fall_A);
+  const i6=PQ.indexOf(2),i12=PQ.indexOf(4),i24=PQ.indexOf(8);
+  const fd=v=>v?ymLabel(v):'never (to 2036)';
+  $('#cwTbl').innerHTML=`<thead><tr><th>Suburb</th><th>3-bed now</th><th>Fall needed for $600k</th><th>Bear 6 mo</th><th>Bear 12 mo</th><th>Bear 24 mo</th><th>Bear trough</th><th>Below $600k in bear?</th><th>First date ≤ $600k: bear</th><th>base</th><th>bull</th><th>Evidence</th></tr></thead><tbody>${rows.map(s=>`<tr class="click" data-s="${esc(s.suburb)}"><td>${esc(s.suburb)}</td><td>${k(s.h3_now)}</td><td>${s.need_fall_A?'−'+s.need_fall_A+'%':'already ≤'}</td><td>${k(s.paths.bear[i6])}</td><td>${k(s.paths.bear[i12])}</td><td>${k(s.paths.bear[i24])}</td><td>${k(s.bear_trough)} <span class="muted">${ymLabel(s.bear_trough_date)}</span></td><td class="${s.bear_trough<=IN.budgetA?'yes':'no'}">${s.bear_trough<=IN.budgetA?'yes':'no'}</td><td>${fd(s.first_below_A.bear)}</td><td>${fd(s.first_below_A.base)}</td><td>${fd(s.first_below_A.bull)}</td><td>${esc(s.conf)}</td></tr>`).join('')||'<tr><td colspan="12">Nothing to show for this filter.</td></tr>'}</tbody>`;
+  $$('#cwTbl tr.click').forEach(r=>r.onclick=()=>openDetail(S.find(x=>x.suburb===r.dataset.s)));
+}
+
+/* ---------- Row 8 ---------- */
+function renderInputs(){
+  const keys=['income1','income2','deposit','keepBuffer','rentWeek','expenses','otherDebts','cardLimits','rate','years','stress','ownCostsYear','extra','offset','budgetA','budgetB','saveRate','rentGrowth'];
+  $('#inputs').innerHTML=keys.map(key=>`<label for="in_${key}">${esc(LAB[key])}${PH.has(key)?' <span class="ph">PLACEHOLDER</span>':''}<input id="in_${key}" type="number" step="any" value="${IN[key]}"></label>`).join('')+
+   `<label for="in_freq">Repayments<select id="in_freq"><option value="monthly">Monthly</option><option value="fortnightly">Fortnightly (half-monthly)</option></select></label>
+    <label><span><input type="checkbox" id="in_guarantee" ${IN.guarantee?'checked':''}> 5% Deposit Scheme (no LMI, cap $850k)</span></label>
+    <label for="in_date">Contract date (duty rules)<input id="in_date" type="date" value="${IN.date}"></label>
+    <button class="wbtn" type="button" id="inReset">Reset to starting values</button>`;
+  $('#in_freq').value=IN.freq;
+  $$('#inputs input,#inputs select').forEach(el=>el.addEventListener('change',()=>{const key=el.id.slice(3);IN[key]=el.type==='checkbox'?el.checked:el.type==='number'?+el.value:el.value;store.set('inputs',IN);refreshMoney()}));
+  $('#inReset').onclick=()=>{Object.assign(IN,DEF);store.set('inputs',{});renderInputs();refreshMoney()};
+}
+function budgetPanel(id,title,price){
+  const p=PF.purchase({...IN,price});
+  const bp=PF.borrowingPower({income1:IN.income1,income2:IN.income2,expenses:IN.expenses,otherDebts:IN.otherDebts,cardLimits:IN.cardLimits,rate:IN.rate,years:IN.years});
+  if(!p.feasible){$(id).innerHTML=`<h3>${title}: ${k(price)}</h3><p class="small">Not feasible: ${esc(p.reason)}.</p>`;return p}
+  const base=PF.purchase({...IN,price,extra:0,offset:0,freq:'monthly'});
+  const end=d=>{const t=new Date(2027,0,1);t.setMonth(t.getMonth()+Math.round(d*12));return t.toLocaleDateString('en-AU',{month:'short',year:'numeric'})};
+  const eq=yr=>{const bal=p.balancePath[yr-1]??0;const v=price*(1+(D.city.fit.drift_pa_pct/100))**yr;return v-bal};
+  $(id).innerHTML=`<h3>${title}: ${k(price)} <span class="chip">${p.lvr>0.8?'LVR '+(p.lvr*100).toFixed(1)+'%':'LVR '+(p.lvr*100).toFixed(1)+'% · no LMI'}</span></h3>
+   <dl class="kv"><dt>Deposit used</dt><dd>${money(p.depositUsed)}</dd><dt>Cash left (incl. buffer)</dt><dd>${money(p.cashLeft)}</dd>
+   <dt>Transfer duty (first-home rate, contract ${IN.date})</dt><dd>${money(p.duty)}</dd><dt>Other purchase costs (est.)</dt><dd>${money(p.otherCosts)}</dd>
+   <dt>LMI (indicative, capitalised)</dt><dd>${p.lmi?money(p.lmi):'$0'}</dd><dt>Loan</dt><dd><b>${money(p.loan)}</b></dd>
+   <dt>Repayment (${IN.years} yrs, ${IN.rate}%)</dt><dd><b>${money(p.repayment)}/mo</b> · ${(p.repaymentShareGross*100).toFixed(0)}% of gross</dd>
+   <dt>At +${IN.stress} pts stress</dt><dd style="color:${p.stressShareGross>0.35?'var(--bad)':p.stressShareGross>0.3?'var(--warn)':'var(--good)'}">${money(p.stressRepayment)}/mo · ${(p.stressShareGross*100).toFixed(0)}%</dd>
+   <dt>Monthly surplus after costs <span class="ph">uses placeholders</span></dt><dd>${money(p.surplus)}</dd>
+   <dt>Debt-free (with your extra/offset)</dt><dd><b>${p.yearsToRepay.toFixed(1)} yrs</b> · ${end(p.yearsToRepay)}</dd>
+   <dt>Total interest</dt><dd>${money(p.totalInterest)} <span class="muted">(vs ${money(base.totalInterest)} with no extras)</span></dd>
+   <dt>Equity yr 5 / 10 (long-run drift, not a forecast)</dt><dd>${k(eq(5))} / ${k(eq(10))}</dd></dl>
+   <p class="small">Lender-style borrowing estimate: ${k(bp.maxLoan)} (assessed at ${bp.assessmentRate.toFixed(2)}%). That is a ceiling some lender might approve, <b>not</b> a recommendation. Conservative loan for the same income: ${k(PF.conservativeLoan({income1:IN.income1,income2:IN.income2,rate:IN.rate,stress:IN.stress,years:25}))}.</p>`;
+  return p;
+}
+function refreshMoney(){
+  const a=budgetPanel('#budA','Budget A',IN.budgetA), b=budgetPanel('#budB','Budget B',IN.budgetB);
+  const mk=p=>p.feasible?[[2026.9,p.loan]].concat(p.balancePath.map((v,i)=>[2026.9+i+1,v])):[];
+  const a0=PF.purchase({...IN,price:IN.budgetA,extra:0,offset:0,freq:'monthly'}), b0=PF.purchase({...IN,price:IN.budgetB,extra:0,offset:0,freq:'monthly'});
+  $('#payChart').innerHTML=lineChart({w:1200,h:340,series:[{pts:mk(a0),color:C.ref,dash:'4 4',w:1.5},{pts:mk(b0),color:C.fg3,dash:'4 4',w:1.5},{pts:mk(a),color:C.bull,w:2.6},{pts:mk(b),color:C.per,w:2.6}],yFmt:k,x0:2026.9,label:'Loan balance'})+`<h3>Loan balance over time</h3>`;
+  $('#payLegend').innerHTML=`<span><i style="background:${C.bull}"></i>Budget A with your extras</span><span><i style="background:${C.per}"></i>Budget B with your extras</span><span><i style="background:${C.ref}"></i>A, minimum repayments</span><span><i style="background:${C.fg3}"></i>B, minimum repayments</span>`;
+  decisions(); renderRails(); renderStress();
+}
+function renderStress(){
+  const f=(+$('#stPct').value||0)/100; $('#stVal').textContent=Math.round(f*100)+'%';
+  $$('#stPick button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.v===Math.round(f*100)));
+  const row=(lab,price)=>{const p=PF.purchase({...IN,price});if(!p.feasible)return `<tr><td>${lab}</td><td colspan="5">not feasible</td></tr>`;
+    const bal=PF.balanceAfter(p.loan,IN.rate,IN.years,12,IN.extra), v=price*(1-f), eq=v-bal, lvr=bal/v;
+    return `<tr><td>${lab} (${k(price)})</td><td>${k(v)}</td><td>${k(bal)}</td><td style="color:${eq<0?'var(--bad)':'var(--fg)'}">${money(eq)}</td><td style="color:${lvr>0.9?'var(--bad)':lvr>0.8?'var(--warn)':'var(--good)'}">${(lvr*100).toFixed(0)}%</td><td class="l">${eq<0?'Negative equity: fine if you stay and keep paying; a problem only if you must sell or refinance':lvr>0.8?'Refinancing would need LMI again':'Comfortable'}</td></tr>`};
+  $('#stTbl').innerHTML=`<thead><tr><th>Purchase</th><th>Value after fall</th><th>Loan after 1 yr</th><th>Equity</th><th>LVR</th><th class="l">What it means</th></tr></thead><tbody>${row('Budget A',IN.budgetA)}${row('Budget B',IN.budgetB)}</tbody>`;
+}
+
+/* ---------- Row 9: map ---------- */
+let LAYER='group';
+function renderMap(){
+  const geo=D.geo||[]; const lat0=-32.05, cx=Math.cos(lat0*Math.PI/180);
+  const bx=[115.70,116.12], by=[-32.33,-31.93]; const Wd=640, H=Math.round(Wd*(by[1]-by[0])/((bx[1]-bx[0])*cx));
+  const X=lon=>(lon-bx[0])/(bx[1]-bx[0])*Wd, Y=lat=>(by[1]-lat)/(by[1]-by[0])*H;
+  const bySub=Object.fromEntries(S.map(s=>[s.suburb,s]));
+  const fill=s=>{ if(!s) return '#1a1f27';
+    if(LAYER==='group') return {'1':'#2f8a5a','2':'#a8822f','3':'#b56a2a','4':'#7a3b36','I':'#2a2f38'}[gkey(s.group_house)];
+    if(LAYER==='score'){const v=score(s);if(v==null)return '#2a2f38';const t=Math.max(0,Math.min(1,(v-30)/50));return `hsl(${20+t*120},45%,${28+t*12}%)`}
+    if(LAYER==='bush'){const v=(s.bushfire_pct||0)/100;return `rgba(232,103,92,${0.12+0.8*v})`}
+    const v=Math.min(1,(s.flood_pct||0)/15);return `rgba(111,168,245,${0.1+0.85*v})`};
+  const ring=(path)=>path.map(r=>'M'+r.map(p=>`${X(p[0]).toFixed(1)},${Y(p[1]).toFixed(1)}`).join('L')+'Z').join('');
+  let g=`<svg viewBox="0 0 ${Wd} ${H}" role="img" aria-label="Map of southern Perth suburbs">`;
+  geo.forEach(f=>{const s=bySub[f.n];const d=f.t==='Polygon'?ring(f.g):f.g.map(ring).join('');g+=`<path d="${d}" fill="${f.inc?fill(s):'#12161c'}" stroke="#0d1117" stroke-width=".8" data-n="${esc(f.n)}" ${f.inc?'class="mp" style="cursor:pointer"':''}/>`});
+  const cbd=[115.85868,-31.95224]; const kmPx=Wd/((bx[1]-bx[0])*111.32*cx);
+  g+=`<circle cx="${X(cbd[0])}" cy="${Y(cbd[1])}" r="${35*kmPx}" fill="none" stroke="#EDF0F5" stroke-opacity=".5" stroke-dasharray="4 5"/><circle cx="${X(cbd[0])}" cy="${Y(cbd[1])}" r="4" fill="#EDF0F5"/><text x="${X(cbd[0])+6}" y="${Y(cbd[1])-6}" fill="#EDF0F5" font-size="11" font-family="IBM Plex Mono">Perth GPO</text>`;
+  if($('#mapProj').checked) (D.projects?.projects||[]).forEach(p=>{const s=bySub[(p.in_universe||[])[0]];if(!s) return;g+=`<rect x="${X(s.lon)-5}" y="${Y(s.lat)-5}" width="10" height="10" transform="rotate(45 ${X(s.lon)} ${Y(s.lat)})" fill="${p.status==='done'?'#4CC583':p.status==='building'?'#E9B44C':p.status==='risk'?'#E8675C':'#8EA2C8'}" stroke="#0A0C10"><title>${esc(p.name)} (${esc(p.status_label)})</title></rect>`});
+  g+='</svg>';
+  const box=$('#mapBox'); box.innerHTML=g+'<div class="mtip" id="mtip" hidden></div>';
+  const tip=$('#mtip');
+  $$('.mp',box).forEach(el=>{const s=bySub[el.dataset.n];
+    el.addEventListener('mousemove',e=>{const r=box.getBoundingClientRect();tip.hidden=false;tip.style.left=Math.min(r.width-200,e.clientX-r.left+12)+'px';tip.style.top=(e.clientY-r.top+12)+'px';
+      tip.innerHTML=s?`<b>${esc(s.suburb)}</b> · ${esc(s.lga)}<br>3-bed now ${k(s.h3_now)} · score ${scoreTxt(s)}<br>Bushfire ${s.bushfire_pct??'—'}% · flood ${s.flood_pct??'—'}%`:esc(el.dataset.n)});
+    el.addEventListener('mouseleave',()=>tip.hidden=true); el.addEventListener('click',()=>s&&openDetail(s))});
+  $('#projList').innerHTML=`<h3>Verified projects (${D.projects.checked})</h3>`+(D.projects.projects||[]).map(p=>`<div class="sig"><span class="dot" style="background:${p.status==='done'?C.bull:p.status==='building'?C.base:p.status==='risk'?C.bear:C.ref}"></span><div><b>${esc(p.name)}</b> <span class="chip">${esc(p.status_label)}</span><div class="small">${esc(p.when)} · ${esc(p.value)} · <a href="${esc(p.src)}" target="_blank" rel="noopener">source</a></div><div class="small">${esc(p.what)}</div><div class="small">+ ${esc(p.positive)} · − ${esc(p.negative)}</div><div class="small">Suburbs: ${esc((p.in_universe||[]).join(', ')||'none inside the 35 km universe')}</div></div></div>`).join('')+`<p class="small">Projects are never added to price forecasts here. A proposed project is not a promise.</p>`;
+}
+
+/* ---------- Row 10 ---------- */
+function renderToday(){
+  const ch=D.changes||{alerts:[],changes:[]};
+  $('#todayBox').innerHTML=`<h3>Since ${esc(ch.previous||'the first run')}</h3>`+((ch.alerts||[]).length?ch.alerts.map(a=>`<div class="sig"><span class="dot" style="background:${a.level==='high'?C.bear:C.ref}"></span><div><b>${esc(a.text)}</b>${a.why?`<div class="small">${esc(a.why)}</div>`:''}</div></div>`).join(''):'<p class="small">No material alerts today.</p>')+
+   ((ch.changes||[]).length?`<details><summary>${ch.changes.length} data changes</summary>${ch.changes.slice(0,30).map(c=>`<div class="small">${esc(c.suburb||'')} ${esc(c.what)}: ${esc(typeof c.from==='number'&&c.from>1000?k(c.from):c.from)} → ${esc(typeof c.to==='number'&&c.to>1000?k(c.to):c.to)} ${c.pct!=null?'('+pc(c.pct)+')':''}</div>`).join('')}</details>`:'')+
+   `<details><summary>Market news log</summary>${(ch.news||[]).map(n=>`<div class="sig"><div><b>${esc(n.d)} · ${esc(n.h)}</b><div class="small">${esc(n.p||'')}</div><div class="small"><a href="${esc(n.u)}" target="_blank" rel="noopener">${esc(n.s||'source')}</a></div></div></div>`).join('')||'<p class="small">No news items logged yet.</p>'}</details>`;
+  $('#turnBox').innerHTML=`<h3>Turning-point signals</h3><p class="small">Heuristic thresholds (not statistically tested). Each says what changed, why it matters, which way it points, and what contradicts it.</p>`+(ch.signals||[]).map(s=>`<div class="sig"><span class="dot" style="background:${s.dir==='bearish'?C.bear:s.dir==='bullish'?C.bull:C.fg3}"></span><div><b>${esc(s.name)}</b> <span class="chip ${s.dir==='bearish'?'bear':s.dir==='bullish'?'bull':''}">${esc(s.state)}</span><div class="small"><b>Changed:</b> ${esc(s.what)} <b>Why it matters:</b> ${esc(s.why)} <b>Against it:</b> ${esc(s.against)} <b>Changes your decision?</b> ${esc(s.material)}</div></div></div>`).join('');
+}
+
+/* ---------- ranked table + weights ---------- */
+function renderWeights(){
+  $('#weights').innerHTML=Object.keys(WDEF).map(key=>`<label for="w_${key}">${esc(WLAB[key])} <span class="mono" id="wv_${key}">${W[key]}</span><input id="w_${key}" type="range" min="0" max="40" value="${W[key]}"></label>`).join('')+`<button class="wbtn" type="button" id="wReset">Reset weights</button>`;
+  $$('#weights input').forEach(el=>el.addEventListener('input',()=>{const key=el.id.slice(2);W[key]=+el.value;$('#wv_'+key).textContent=el.value;store.set('weights',W);renderAll();renderRails()}));
+  $('#wReset').onclick=()=>{Object.assign(W,WDEF);store.set('weights',{});renderWeights();renderAll();renderRails()};
+}
+let SORT={k:'score',d:-1};
+function renderAll(){
+  const corr=$('#allCorr'), grp=$('#allGroup');
+  if(!corr.options.length){corr.innerHTML='<option value="">All</option>'+[...new Set(S.map(s=>s.corridor))].sort().map(c=>`<option>${esc(c)}</option>`).join('');
+    grp.innerHTML='<option value="">All</option>'+['1 Evidenced <= $600k','2 Negotiable to $600k','3 Stretch budget','4 Unlikely without big falls','Insufficient data'].map(g=>`<option value="${esc(g)}">${esc(g)}</option>`).join('');
+    [corr,grp,$('#allQ')].forEach(e=>e.addEventListener('input',renderAll))}
+  const q=$('#allQ').value.toLowerCase();
+  let rows=S.filter(s=>(!corr.value||s.corridor===corr.value)&&(!grp.value||s.group_house===grp.value)&&(!q||s.suburb.toLowerCase().includes(q)));
+  const cols=[['Suburb','suburb'],['Score','score'],['LGA','lga'],['km','km'],['3-bed now','h3_now'],['3-bed median (12 mo)','h3'],['Townhouse 3-bed','u3_now'],['Group','group_house'],['House sales','count'],['DOM','dom'],['Yield %','yield'],['1 yr %','g1'],['5 yr %','g5'],['Beta','beta'],['Bushfire %','bushfire_pct'],['Flood %','flood_pct'],['Station','rail'],['Evidence','conf']];
+  const val=(s,c)=>c==='score'?score(s):s[c];
+  rows.sort((a,b)=>{const x=val(a,SORT.k),y=val(b,SORT.k);if(x==null)return 1;if(y==null)return -1;return (x>y?1:x<y?-1:0)*SORT.d});
+  const fmt=(s,c)=>{const v=val(s,c);if(c==='score')return scoreTxt(s);if(['h3_now','h3','u3_now'].includes(c))return k(v);if(c==='rail')return v?'yes':'';if(c==='group_house')return `<span class="chip ${GRP[gkey(v)][0]}">${GRP[gkey(v)][1]}</span>`;if(c==='km')return v.toFixed(1);return esc(v??'—')};
+  $('#allTbl').innerHTML=`<thead><tr>${cols.map(c=>`<th data-k="${c[1]}" class="${c[1]==='suburb'||c[1]==='lga'?'l':''}">${c[0]}${SORT.k===c[1]?(SORT.d>0?' ▲':' ▼'):''}</th>`).join('')}</tr></thead><tbody>${rows.map(s=>`<tr class="click" data-s="${esc(s.suburb)}">${cols.map(c=>`<td class="${c[1]==='suburb'||c[1]==='lga'?'l':''}">${c[1]==='suburb'&&WL[s.suburb]?'★ ':''}${c[1]==='suburb'?esc(s.suburb):fmt(s,c[1])}</td>`).join('')}</tr>`).join('')}</tbody>`;
+  $$('#allTbl th').forEach(th=>th.onclick=()=>{SORT=SORT.k===th.dataset.k?{k:SORT.k,d:-SORT.d}:{k:th.dataset.k,d:-1};renderAll()});
+  $$('#allTbl tr.click').forEach(r=>r.onclick=()=>openDetail(S.find(x=>x.suburb===r.dataset.s)));
+}
+
+/* ---------- method ---------- */
+function renderMethod(){
+  const u=D.universe||[], inc=u.filter(r=>r.included), exc=u.filter(r=>!r.included&&r.south&&r.km<=45).sort((a,b)=>a.km-b.km);
+  const old=['Rockingham','Baldivis','Warnbro','Safety Bay','Port Kennedy','Waikiki','Cooloongup'];
+  const bt=D.backtest_city, f=D.city.fit, tb=D.backtest_tilt||[];
+  const tbl=(rows,why)=>`<div class="tbl-wrap"><table><thead><tr><th>Suburb</th><th class="l">LGA</th><th>km</th><th class="l">Corridor</th><th>Included?</th><th class="l">Reason</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.suburb)}${old.includes(r.suburb)?' <span class="chip">on old shortlist</span>':''}</td><td class="l">${esc(r.lga)}</td><td>${r.km.toFixed(2)}</td><td class="l">${esc(r.corridor)}</td><td class="${r.included?'yes':'no'}">${r.included?'yes':'no'}</td><td class="l">${esc(r.reason)}${r.centroid_inside===false?' (centroid falls outside its own outline)':''}</td></tr>`).join('')}</tbody></table></div>`;
+  $('#methodBox').innerHTML=`
+   <details open><summary>Suburb universe: ${inc.length} included, ${exc.length} southern localities excluded (to 45 km)</summary>
+    <p class="small">${esc(D.universe_meta.rule)}. Source: ${esc(D.universe_meta.source)} (${esc(D.universe_meta.source_crs)}), distances in ${esc(D.universe_meta.projected_crs)}, CBD point ${esc(D.universe_meta.cbd_point.name)} (${D.universe_meta.cbd_point.lat}, ${D.universe_meta.cbd_point.lon}). Retrieved ${esc(D.universe_meta.generated)}. ${esc(D.universe_meta.publication_note)} The river rule was the buyers' choice (14 Nov 2026); it drops Nedlands, Claremont, Cottesloe, Mosman Park, the City of Perth and North Fremantle.</p>
+    <h3>Included</h3>${tbl(inc)}<h3 style="margin-top:12px">Excluded southern localities</h3>${tbl(exc)}</details>
+   <details><summary>Scenario model and back-test</summary><div class="small">
+    <p>AR(1) on quarterly log changes of the ABS Residential Property Price Index for Perth (2003–2021, n=${f.n}): long-run drift ${f.drift_pa_pct}% a year, persistence φ=${f.phi}, residual s.d. ${f.resid_sd_pct}% a quarter. From the observed −5.7% quarter we bootstrap ${D.city.npath} paths (seed ${D.city.seed}). Paths are ranked by their 2-year outcome; bear/base/bull = the average of paths in the 10–20th, 45–55th and 80–90th percentile bands, so each is a coherent path that troughs and recovers. Model points are quarterly to Oct 2028, then annual to Oct 2036.</p>
+    <p><b>Back-test (expanding window, no look-ahead):</b> ${Object.entries(bt.summary).map(([k2,v])=>`${k2}: n=${v.n}, band coverage ${v.coverage_band}%, below bear ${v.below_bear}%, average error model ${v.mae_model}% vs no-change ${v.mae_random_walk}% / momentum ${v.mae_momentum}% / drift ${v.mae_drift}%`).join('; ')}.</p>
+    <p><b>Where it did badly:</b> ${bt.worst_8q.map(w=>`${w.origin} (actual ${pc(w.real_pct)} vs base ${pc(w.base_pct)})`).join(', ')}. It carried the 2003–07 boom momentum into 2009–10 and missed the 2020 turn. <b>The no-change baseline beat the model on average error.</b> We keep the model for its ranges. The band edges were chosen on the same history, so coverage is partly in-sample. ABS quarterly data is smoothed, which probably overstates persistence. Gap: no quarterly Perth series for 2022–2026 in the fit.</p>
+    <p><b>Suburb beta</b> = swing size against the median Perth suburb, from REIWA calendar-year medians 2017–2026, shrunk halfway to 1 and clamped 0.7–1.5. It is estimated mostly from one boom, so it's a hypothesis. Medians also shift with the mix of homes sold. <b>Suburb tilt</b> ${D.use_tilt?'is used':'is switched off'}: rank back-test ${tb.map(b=>`${b.window} ρ=${b.rho_tilt} (momentum ρ=${b.rho_momentum}, yield ρ=${b.rho_yield}, n=${b.n})`).join('; ')||'not available'}. Rule: use it only if it beats momentum and is positive in both windows.</p>
+    <p><b>Start price</b> = REIWA 3-bed house median of settled sales, 12 months to Oct 2026, × ${D.lag_factor} (the Perth index sits that far below its 12-month average; Perth-wide factor, suburb paths differ). <b>Negotiable</b> = start ≤ $600k ÷ (1 − 4.7%) = ${k(D.negotiable_cut)}. Fewer than 40 sales widens the bands; fewer than 15, or no 3-bed median, suppresses the path.</p></div></details>
+   <details><summary>Finance rules</summary><div class="small"><p>${esc(M.duty.rule)} <a href="${esc(M.duty.url)}" target="_blank" rel="noopener">WA fact sheet</a>, checked ${esc(M.duty.checked)}. General rate schedule for other cases. ${esc(M.duty.fhog)} ${esc(M.duty.guarantee)}</p>
+    <p>Repayments are standard P&amp;I amortisation. Fortnightly = half the monthly amount every fortnight (13 months' worth a year). Offset balances are held constant. The borrowing estimate uses 2026–27 resident tax rates plus a 2% Medicare levy, subtracts your living costs and debts plus 3.8% of card limits, and assesses at your rate + 3 points (APRA buffer). <b>Lenders use their own calculators and expense floors.</b> LMI uses a rough indicative table, not an insurer quote. The conservative loan caps repayments at rate + 2 points over 25 years to 30% of gross income.</p></div></details>
+   <details><summary>Sources and evidence register</summary><div class="tbl-wrap"><table><thead><tr><th>Indicator</th><th>Value</th><th class="l">Observed</th><th class="l">Scope</th><th class="l">Type</th><th class="l">Method</th><th class="l">Source</th></tr></thead><tbody>${(M.indicators||[]).map(i=>`<tr><td>${esc(i.label)}</td><td>${esc(i.value??'')}${esc(i.unit==='%'?'%':'')} ${esc(i.text||'')}</td><td class="l">${esc(i.obs)}</td><td class="l">${esc(i.scope)}</td><td class="l">${esc(i.type)}</td><td class="l">${esc(i.method)}</td><td class="l"><a href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.src)}</a>${i.confidence?' · '+esc(i.confidence):''}</td></tr>`).join('')}</tbody></table></div>
+    <p class="small">Suburb data: REIWA suburb profiles (settled sales, 12 months to Oct 2026, read ${esc(D.generated)}), Microburbs (cross-check of 3-bed medians), Smart Property Investment (days on market fallback). Hazards: WA SLIP OBRM-026 bushfire-prone areas and DWER-014 1-in-100 flood; land-use flags are a hand-kept screening list. Not used: realestate.com.au or Domain pages (no permitted automated access); Domain API (no key saved), so <b>no live listings or price reductions are verified</b>.</p></details>
+   <details><summary>What this page cannot tell you</summary><ul class="list"><li>Whether a particular house is for sale, or what it will sell for.</li><li>The odds of each scenario. They are model percentiles, not calibrated probabilities.</li><li>Street-level flood, bushfire, noise or contamination. Check the address, the strata report and a building inspection.</li><li>Your real borrowing power. Rent, living costs and debts are placeholders until you change them.</li><li>Individual completed 3-bed sales under $600k. No licensed sales feed is connected; medians only.</li></ul></details>`;
+  $('#foot').innerHTML=`Scenarios are conditional and are not valuations or advice. Data ${esc(D.generated)} · model ${esc(D.model_version)} · build ${esc(D.build||'')}. Separate from the Melbourne vs Perth shortlist page.`;
+}
+
+/* ---------- detail ---------- */
+const dlg=$('#dlg');
+function openDetail(s){ if(!s) return;
+  const sc=s.paths, x0=fy(D.start_date);
+  let chart='<p class="small">Not enough sales to model this suburb. Missing data stays missing.</p>';
+  if(sc){const mk=k2=>[[x0,s.h3_now]].concat(sc[k2].map((v,i)=>[fy(PTS[i]),v]));const hist=(s.trend||[]).filter(t=>t[1]).map(t=>[t[0]+.5,t[1]]);
+    chart=lineChart({series:[{pts:hist,color:C.fg3,dots:hist},{pts:mk('bear'),color:C.bear},{pts:mk('base'),color:C.base,w:2.6},{pts:mk('bull'),color:C.bull}],band:mk('bear').map((p,i)=>[p[0],p[1],mk('bull')[i][1]]),vline:x0,hlines:[{y:IN.budgetA,color:C.per,label:'$600k'}],yFmt:k,x0:2017,x1:2036.9,label:s.suburb+' history and scenarios'})+`<div class="legend"><span><i style="background:${C.fg3}"></i>REIWA house median (all bedrooms), by year</span><span><i style="background:${C.base}"></i>3-bed scenarios (base, with bear–bull band)</span></div>`}
+  const pA=PF.purchase({...IN,price:s.h3_now||IN.budgetA});
+  const projs=(D.projects.projects||[]).filter(p=>(p.in_universe||[]).includes(s.suburb));
+  const comp=s.comp?Object.keys(WDEF).map(key=>`<dt>${esc(WLAB[key])} (weight ${W[key]})</dt><dd>${Math.round(s.comp[key]*100)}/100</dd>`).join(''):'<dt>Score</dt><dd>not scored: not enough data</dd>';
+  $('#dlgIn').innerHTML=`<div class="m-head"><div><div class="tag">${esc(s.lga)} · ${esc(s.corridor)} · ${esc(s.ring)} ring · ${s.km.toFixed(1)} km · ${esc(s.postcode)}</div><h2 id="dlgTitle">${esc(s.suburb)}</h2></div><button class="m-close" type="button" aria-label="Close">×</button></div>
+  <div class="m-body">
+   <div class="warnbox">Forecast lines are scenarios, not a valuation. Prices shown are suburb medians of settled sales, not listings.</div>
+   <div class="grid g2"><div class="panel"><h3>1 · Price snapshot (evidence)</h3><dl class="kv">
+     <dt>3-bed house median, 12 mo to Oct 2026</dt><dd>${k(s.h3)} <span class="muted">${esc(s.h3_src||'')}</span></dd>
+     <dt>Microburbs cross-check</dt><dd>${k(s.h3_mb)}${s.h3_agree_pct!=null?' ('+pc(s.h3_agree_pct)+')':''}</dd>
+     <dt>Lag-adjusted to 31 Oct 2026 (model)</dt><dd><b>${k(s.h3_now)}</b></dd>
+     <dt>All houses: median / lower quartile</dt><dd>${k(s.house_med)} / ${k(s.house_lq)}</dd>
+     <dt>2-bed / 4-bed house</dt><dd>${k(s.h2)} / ${k(s.h4)}</dd>
+     <dt>3-bed unit/townhouse (strata)</dt><dd>${k(s.u3)} (${s.u3_count} unit sales)</dd>
+     <dt>House sales, 12 months</dt><dd>${s.count}</dd><dt>Median days on market</dt><dd>${s.dom??'—'}</dd>
+     <dt>Rent (house) / gross yield</dt><dd>${s.rent?'$'+s.rent+'/wk':'—'} / ${s.yield??'—'}%</dd>
+     <dt>Evidence</dt><dd>${esc(s.conf)}</dd></dl><p class="small">${esc(s.period||'')}</p></div>
+    <div class="panel"><h3>2 · History</h3><dl class="kv"><dt>1 year</dt><dd>${pc(s.g1)}</dd><dt>3 years (2023→2026)</dt><dd>${pc(s.g3)}</dd><dt>5 years</dt><dd>${pc(s.g5,0)}</dd><dt>10 years</dt><dd>${pc(s.g10,0)} (${s.g10_pa??'—'}% p.a.)</dd><dt>Cycle beta</dt><dd>${s.beta}</dd></dl>
+     <h3 style="margin-top:12px">4 · Affordability</h3><dl class="kv"><dt>House group</dt><dd><span class="chip ${GRP[gkey(s.group_house)][0]}">${esc(s.group_house)}</span></dd><dt>Townhouse group</dt><dd>${esc(s.group_th)}</dd><dt>Lower-quartile house ≤ $600k?</dt><dd>${s.lq_under_A?'yes':'no'}</dd><dt>Fall needed to reach $600k</dt><dd>${s.need_fall_A!=null?'−'+s.need_fall_A+'%':'—'}</dd></dl></div></div>
+   <div class="panel"><h3>3 · Scenarios</h3>${chart}${sc?`<p class="small">Bear trough ${k(s.bear_trough)} (${ymLabel(s.bear_trough_date)}). First ≤ $600k: bear ${s.first_below_A.bear?ymLabel(s.first_below_A.bear):'never'}, base ${s.first_below_A.base?ymLabel(s.first_below_A.base):'never'}, bull ${s.first_below_A.bull?ymLabel(s.first_below_A.bull):'never'}.</p>`:''}</div>
+   <div class="grid g2"><div class="panel"><h3>5 · Buy vs wait</h3><p class="small">Pick this suburb in Row 3 to run the full comparison.</p><button class="wbtn" type="button" id="toWait">Compare in Row 3</button>
+     <h3 style="margin-top:12px">8 · Mortgage illustration at ${k(s.h3_now)}</h3>${pA.feasible?`<dl class="kv"><dt>Duty</dt><dd>${money(pA.duty)}</dd><dt>Loan / LVR</dt><dd>${money(pA.loan)} / ${(pA.lvr*100).toFixed(1)}%</dd><dt>Repayment</dt><dd>${money(pA.repayment)}/mo</dd><dt>At +${IN.stress} pts</dt><dd>${money(pA.stressRepayment)}/mo</dd><dt>Debt-free</dt><dd>${pA.yearsToRepay.toFixed(1)} yrs</dd></dl>`:'<p class="small">Not feasible with current inputs.</p>'}</div>
+    <div class="panel"><h3>6 · Infrastructure</h3>${projs.length?projs.map(p=>`<div class="small"><b>${esc(p.name)}</b> (${esc(p.status_label)}): ${esc(p.when)}</div>`).join(''):'<p class="small">No verified project mapped to this suburb.</p>'}
+     <h3 style="margin-top:12px">7 · Risks</h3><dl class="kv"><dt>Bushfire-prone share</dt><dd>${s.bushfire_pct??'—'}%</dd><dt>1-in-100 flood share</dt><dd>${s.flood_pct??'—'}%</dd><dt>Strata share of dwellings</dt><dd>${s.semi_pct??'—'}%</dd><dt>Renting households</dt><dd>${s.rented_pct??'—'}%</dd></dl>${s.flags.map(f=>`<div class="small">⚠ ${esc(f)}</div>`).join('')}
+     <p class="small">Suburb-level screening only. Check the address on the <a href="https://maps.slip.wa.gov.au/landgate/bushfireprone/" target="_blank" rel="noopener">WA bushfire-prone map</a>, council flood mapping, any strata levies and a building inspection.</p></div></div>
+   <div class="grid g2"><div class="panel"><h3>Match score: ${scoreTxt(s)}</h3><dl class="kv">${comp}</dl></div>
+    <div class="panel"><h3>9 · Sources</h3>${Object.entries(s.src).map(([n,u])=>`<div class="small"><a href="${esc(u)}" target="_blank" rel="noopener">${esc(n)}</a></div>`).join('')}<p class="small">${esc(s.as_at||'')}</p>${watchBox(s)}</div></div>
+  </div>`;
+  $('.m-close',dlg).onclick=()=>dlg.close(); $('#toWait',dlg).onclick=()=>{$('#wSub').value=s.suburb;decisions();dlg.close();location.hash='wait'};
+  wireWatch(s); current=s; if(!dlg.open) dlg.showModal();
+}
+dlg.addEventListener('click',e=>{if(e.target===dlg) dlg.close()});
+
+/* ---------- watchlist (artifact db, same convention as the shortlist page) ---------- */
+const WL={}; let DB=null, canWrite=true, current=null, wlState='loading';
+const slug=n=>n.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+const STATUSES=['Watching','Inspecting','Making an offer','Ruled out'];
+function watchBox(s){
+  if(wlState==='off') return `<p class="small">Saving a list needs this page opened on claude.ai while signed in.</p>`;
+  const w=WL[s.suburb];
+  return `<div class="watch" style="margin-top:10px"><button class="wbtn" type="button" id="wBtn" aria-pressed="${!!w}" ${canWrite?'':'disabled'}>${w?'★ On my list':'☆ Add to my list'}</button>
+   <label class="hint" for="wStatus">Status</label> <select id="wStatus" ${w&&canWrite?'':'disabled'}>${STATUSES.map(x=>`<option ${w&&w.status===x?'selected':''}>${x}</option>`).join('')}</select> <span class="hint" id="wMsg"></span>
+   <label class="hint" for="wNote">Notes</label><textarea id="wNote" ${w&&canWrite?'':'disabled'}>${w?esc(w.note||''):''}</textarea><button class="wbtn" type="button" id="wSave" ${w&&canWrite?'':'disabled'}>Save note</button></div>`;
+}
+function wireWatch(s){
+  const btn=$('#wBtn',dlg); if(!btn||!DB) return; const msg=t=>{const m=$('#wMsg',dlg);if(m)m.textContent=t};
+  const ref=DB.doc('watch/'+slug(s.suburb));
+  btn.onclick=async()=>{btn.disabled=true;try{if(WL[s.suburb]){await ref.delete();msg('Removed')}else{await ref.set({suburb:s.suburb,city:'Perth',status:'Watching',note:'',updated:new Date().toISOString()});msg('Added')}}catch(e){msg('Could not save. Only the page owner can change this list.')}btn.disabled=false};
+  const save=async()=>{if(!WL[s.suburb])return;try{await ref.update({status:$('#wStatus',dlg).value,note:$('#wNote',dlg).value.slice(0,4000),updated:new Date().toISOString()});msg('Saved')}catch(e){msg('Could not save. Try again.')}};
+  $('#wSave',dlg).onclick=save; $('#wStatus',dlg).onchange=save;
+}
+function onWatch(){ renderRails(); renderAll(); renderWatchTbl(); if(dlg.open&&current&&document.activeElement?.id!=='wNote'){const b=$('.watch',dlg);if(b){b.outerHTML=watchBox(current);wireWatch(current)}} }
+async function initWatch(){
+  try{ const db=window.claude&&window.claude.use?await window.claude.use('db'):null;
+    if(!db){wlState='off';return}
+    DB=db; try{const u=await window.claude.use('user');if(u){const cw=await u.can('data.write');if(cw===false)canWrite=false}}catch(e){}
+    db.collection('watch').onSnapshot(snap=>{wlState='ready';for(const x in WL)delete WL[x];snap.docs.forEach(d=>{const v=d.data();if(v&&v.suburb)WL[v.suburb]=v});onWatch()},()=>{wlState='off'});
+  }catch(e){wlState='off'}
+}
+
+/* ---------- boot ---------- */
+function boot(){
+  const priced=S.filter(s=>s.paths).sort((a,b)=>a.suburb.localeCompare(b.suburb));
+  $('#scSub').innerHTML='<option value="">Perth (city index)</option>'+priced.map(s=>`<option>${esc(s.suburb)}</option>`).join('');
+  $('#wSub').innerHTML=`<option value="">Exactly $600k (Budget A)</option>`+priced.map(s=>`<option value="${esc(s.suburb)}">${esc(s.suburb)} · ${k(s.h3_now)}</option>`).join('');
+  $('#scSub').onchange=e=>{SC.sub=e.target.value;renderScenario()};
+  $('#scType').onclick=e=>{const b=e.target.closest('button');if(b){SC.type=b.dataset.v;renderScenario()}};
+  $('#scHz').onclick=e=>{const b=e.target.closest('button');if(b){SC.hz=b.dataset.v;renderScenario()}};
+  ['#wSub','#wDisc','#wRate','#wHz'].forEach(id=>$(id).addEventListener('change',decisions));
+  $('#cwFilter').onchange=renderWatchTbl;
+  $('#mapLayer').onclick=e=>{const b=e.target.closest('button');if(!b)return;LAYER=b.dataset.v;$$('#mapLayer button').forEach(x=>x.setAttribute('aria-pressed',x===b));renderMap()};
+  $('#mapProj').onchange=renderMap;
+  $('#stPct').addEventListener('input',renderStress);
+  $('#stPick').onclick=e=>{const b=e.target.closest('button');if(b){$('#stPct').value=b.dataset.v;renderStress()}};
+  renderNow(); renderScenario(); renderInputs(); renderWeights(); refreshMoney(); renderCorr(); renderWatchTbl(); renderMap(); renderToday(); renderAll(); renderMethod();
+  initWatch();
+}
+boot();
+</script>

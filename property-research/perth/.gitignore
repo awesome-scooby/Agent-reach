@@ -1,0 +1,7 @@
+data/.daily.lock
+data/.run.lock
+data/*.tmp
+data/history/*.tmp
+__pycache__/
+tests/__pycache__/
+.pytest_cache/
