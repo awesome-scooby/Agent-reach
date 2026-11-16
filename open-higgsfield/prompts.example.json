@@ -1,0 +1,10 @@
+[
+  {
+    "name": "example-clip",
+    "model": "seedance-lite-t2v",
+    "prompt": "A red fox trotting through fresh snow at sunrise, cinematic, shallow depth of field",
+    "aspect_ratio": "16:9",
+    "duration": 5,
+    "resolution": "720p"
+  }
+]
