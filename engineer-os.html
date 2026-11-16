@@ -1,0 +1,786 @@
+<title>ENGINEER OS</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+/* Layout: streaming-service home screen. Billboard hero, then one horizontal shelf of landscape posters per channel; a poster opens a detail sheet. Tools (ladder, portfolio, simulator, decision) sit below as full-width panels. Single committed dark look. */
+:root{
+  color-scheme:dark;
+  --bg:#0A0D13; --bg2:#10151E; --panel:#151B26; --panel2:#1C2432; --line:#2A3445; --line2:#3B485E;
+  --ink:#F1F4F8; --ink2:#B4BECC; --ink3:#7C8899;
+  --hot:#FF6B1A; --hot2:#FFB088; --volt:#39C6F0;
+  --good:#3FCB8A; --warn:#F2B53A; --bad:#F0605A;
+  --fE:#FF6B1A; --fC:#C9A227; --fP:#39C6F0; --fT:#A98BFF; --fI:#4FD1A5; --fB:#F06FA8;
+  --disp:'Barlow Condensed','Arial Narrow',system-ui,sans-serif;
+  --body:'Barlow',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --gut:max(16px, env(safe-area-inset-left, 0px));
+  --gutr:max(16px, env(safe-area-inset-right, 0px));
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+h1,h2,h3,h4{font-family:var(--disp);margin:0;text-wrap:balance;letter-spacing:.01em}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:var(--volt)}
+:focus-visible{outline:2px solid var(--volt);outline-offset:2px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.pad{padding-left:var(--gut);padding-right:var(--gutr)}
+.in{max-width:1320px;margin:0 auto}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(10,13,19,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav .in{display:flex;align-items:center;gap:14px;padding-block:9px}
+.logo{font-family:var(--disp);font-weight:800;font-size:23px;letter-spacing:.04em;white-space:nowrap}
+.logo b{color:var(--hot)}
+.navlinks{display:flex;gap:2px;overflow-x:auto;flex:1;min-width:0;scrollbar-width:none}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks button{background:none;border:0;padding:6px 9px;font-family:var(--disp);font-weight:600;font-size:14.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2);white-space:nowrap;border-radius:4px}
+.navlinks button:hover{color:var(--ink);background:var(--panel)}
+.xp{font-family:var(--mono);font-size:11.5px;color:var(--ink2);white-space:nowrap;border:1px solid var(--line2);padding:4px 8px;border-radius:20px}
+.xp b{color:var(--good)}
+
+/* hero */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:
+  linear-gradient(90deg,var(--bg) 0%,rgba(10,13,19,.92) 38%,rgba(10,13,19,.35) 100%),
+  repeating-linear-gradient(0deg,transparent 0 39px,rgba(57,198,240,.10) 39px 40px),
+  repeating-linear-gradient(90deg,transparent 0 39px,rgba(57,198,240,.10) 39px 40px),
+  radial-gradient(900px 420px at 88% 30%,rgba(255,107,26,.34),transparent 70%),var(--bg2)}
+.hero .in{padding-block:38px 30px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:30px;align-items:end}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--hot2)}
+.hero h1{font-size:clamp(38px,6.4vw,78px);line-height:.92;font-weight:800;text-transform:uppercase;margin-top:10px}
+.hero h1 em{font-style:normal;color:var(--hot)}
+.hero p{color:var(--ink2);max-width:60ch;margin:14px 0 0;font-size:16.5px}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.btn{border:0;border-radius:5px;padding:10px 18px;font-family:var(--disp);font-weight:700;font-size:17px;letter-spacing:.05em;text-transform:uppercase}
+.btn.p{background:var(--ink);color:#0A0D13}.btn.p:hover{background:#fff}
+.btn.s{background:rgba(124,136,153,.32);color:var(--ink)}.btn.s:hover{background:rgba(124,136,153,.5)}
+.btn.sm{padding:6px 12px;font-size:14px}
+.pipe{display:flex;flex-direction:column;gap:0;background:rgba(16,21,30,.86);border:1px solid var(--line2);border-radius:8px;padding:6px 14px}
+.pipe div{display:grid;grid-template-columns:54px minmax(0,1fr) auto;gap:10px;align-items:baseline;padding:9px 0;border-bottom:1px dashed var(--line)}
+.pipe div:last-child{border:0}
+.pipe .y{font-family:var(--mono);font-size:11px;color:var(--hot2)}
+.pipe .rl{font-weight:600;font-size:14.5px}
+.pipe .m{font-family:var(--mono);font-size:12px;color:var(--good);white-space:nowrap}
+.truth{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;background:var(--line);border-bottom:1px solid var(--line)}
+.truth div{background:var(--bg2);padding:13px var(--gut)}
+.truth .k{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+.truth .v{font-size:13.5px;color:var(--ink2);margin-top:3px;line-height:1.4}
+.truth .v b{color:var(--ink)}
+
+/* shelves */
+.shelf{padding-top:30px}
+.sh{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-bottom:10px}
+.sh h2{font-size:26px;font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+.sh .d{color:var(--ink3);font-size:13.5px;flex:1;min-width:200px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.chip{background:var(--panel);border:1px solid var(--line2);border-radius:20px;padding:4px 12px;font-size:13px;color:var(--ink2)}
+.chip[aria-pressed="true"]{background:var(--ink);color:#0A0D13;border-color:var(--ink);font-weight:600}
+.rail{display:flex;gap:10px;overflow-x:auto;padding:6px var(--gut) 16px;margin:0 calc(var(--gut)*-1);scroll-snap-type:x proximity;scrollbar-color:var(--line2) transparent}
+.card{flex:0 0 250px;scroll-snap-align:start;text-align:left;border:1px solid var(--line);border-radius:7px;padding:0;background:var(--panel);overflow:hidden;position:relative;transition:transform .16s,border-color .16s}
+.card:hover,.card:focus-visible{transform:scale(1.035);border-color:var(--ink2);z-index:2}
+.art{height:112px;position:relative;padding:10px 12px;display:flex;flex-direction:column;justify-content:flex-end;background:
+  linear-gradient(180deg,transparent 30%,rgba(10,13,19,.88)),
+  repeating-linear-gradient(0deg,transparent 0 15px,rgba(255,255,255,.07) 15px 16px),
+  repeating-linear-gradient(90deg,transparent 0 15px,rgba(255,255,255,.07) 15px 16px),
+  linear-gradient(135deg,color-mix(in srgb,var(--f) 78%,#000),color-mix(in srgb,var(--f) 22%,#0A0D13))}
+.art .t{font-family:var(--disp);font-weight:700;font-size:21px;line-height:1;text-transform:uppercase;text-shadow:0 1px 6px rgba(0,0,0,.7)}
+.art .tag{position:absolute;top:8px;left:10px;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;background:rgba(10,13,19,.72);padding:2px 6px;border-radius:3px}
+.art .rank{position:absolute;right:8px;top:-8px;font-family:var(--disp);font-weight:800;font-size:92px;line-height:1;color:rgba(255,255,255,.2)}
+.meta{padding:9px 12px 11px;display:flex;flex-direction:column;gap:5px;min-height:84px}
+.meta .b{font-family:var(--mono);font-size:12px;color:var(--ink)}
+.meta .s{font-size:12.5px;color:var(--ink2);line-height:1.35}
+.pill{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:3px;border:1px solid currentColor;white-space:nowrap}
+.g{color:var(--good)}.w{color:var(--warn)}.r{color:var(--bad)}.n{color:var(--ink2)}.v{color:var(--volt)}
+.deep{position:absolute;top:8px;right:8px;font-family:var(--mono);font-size:9px;background:var(--ink);color:#0A0D13;padding:2px 5px;border-radius:3px;font-weight:700;letter-spacing:.06em}
+
+/* panels */
+.panel{margin-top:38px;background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.panel .in{padding-block:28px}
+.panel h2{font-size:32px;font-weight:800;text-transform:uppercase}
+.panel h2 em{font-style:normal;color:var(--hot)}
+.lede{color:var(--ink2);max-width:74ch;margin:6px 0 18px}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px}
+.grid{display:grid;gap:12px}
+.g3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.box h3{font-size:19px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px}
+.box p{margin:0 0 8px;color:var(--ink2);font-size:14.5px}
+.box ul,.sheet ul{margin:0;padding-left:18px;color:var(--ink2);font-size:14.5px}
+.box li,.sheet li{margin-bottom:4px}
+.k{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);display:block;margin-bottom:3px}
+.big{font-family:var(--disp);font-weight:800;font-size:34px;line-height:1}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);font-weight:500;white-space:nowrap}
+th button{background:none;border:0;padding:0;font:inherit;color:inherit;text-transform:inherit;letter-spacing:inherit}
+th button:hover{color:var(--ink)}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.bar{display:inline-block;height:7px;border-radius:4px;background:var(--volt);vertical-align:middle}
+.dots{font-family:var(--mono);letter-spacing:1px;white-space:nowrap}
+.dots i{font-style:normal;color:var(--line2)}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--ink2)}
+input[type=number],select{background:var(--bg);border:1px solid var(--line2);color:var(--ink);border-radius:5px;padding:7px 9px;font:inherit;font-family:var(--mono);font-size:13.5px;width:100%}
+input[type=range]{width:100%;accent-color:var(--hot)}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.chk{display:flex;gap:9px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed var(--line);font-size:14.5px;color:var(--ink2)}
+.chk:last-child{border:0}
+.chk input{margin-top:3px;width:17px;height:17px;accent-color:var(--good);flex:0 0 auto}
+.chk input:checked+span{color:var(--ink3);text-decoration:line-through}
+.note{font-size:12.5px;color:var(--ink3);margin-top:10px}
+.warnbox{border-left:3px solid var(--warn);background:rgba(242,181,58,.08);padding:9px 12px;font-size:14px;color:var(--ink2);border-radius:0 6px 6px 0;margin:10px 0}
+.simres{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:14px;margin-top:14px}
+.opt{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:8px;align-items:center;width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:9px 11px;margin-bottom:6px}
+.opt[aria-pressed="true"]{border-color:var(--hot);background:var(--panel2)}
+.opt .no{font-family:var(--disp);font-weight:800;font-size:22px;color:var(--ink3)}
+.opt .nm{font-weight:600;font-size:14.5px}
+.opt .sub{font-size:12px;color:var(--ink3)}
+svg text{font-family:var(--mono);font-size:10px;fill:var(--ink3)}
+.sx{font-family:var(--mono);font-size:10px;text-decoration:none;vertical-align:super;margin-left:2px}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:100;background:rgba(4,6,10,.82);overflow-y:auto;padding:max(18px,env(safe-area-inset-top,0px)) var(--gutr) 40px var(--gut)}
+.sheet{max-width:900px;margin:0 auto;background:var(--panel);border:1px solid var(--line2);border-radius:10px;overflow:hidden}
+.sheet .top{padding:54px 22px 18px;position:relative;background:
+  linear-gradient(180deg,transparent,var(--panel)),
+  repeating-linear-gradient(0deg,transparent 0 23px,rgba(255,255,255,.06) 23px 24px),
+  repeating-linear-gradient(90deg,transparent 0 23px,rgba(255,255,255,.06) 23px 24px),
+  linear-gradient(135deg,color-mix(in srgb,var(--f) 70%,#000),color-mix(in srgb,var(--f) 14%,#0A0D13))}
+.sheet .top h2{font-size:clamp(28px,5vw,44px);font-weight:800;text-transform:uppercase;line-height:.95}
+.sheet .x{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;border:0;background:rgba(10,13,19,.8);font-size:19px}
+.sheet .body{padding:4px 22px 24px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px 22px;margin-top:14px}
+.facts>div{border-top:1px solid var(--line);padding-top:9px;font-size:14.5px;color:var(--ink2);min-width:0}
+.sheet h3{font-size:18px;text-transform:uppercase;letter-spacing:.04em;margin:20px 0 8px}
+.tl{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.tl div{background:var(--bg2);border:1px solid var(--line);border-top:3px solid var(--hot);border-radius:6px;padding:10px 12px;font-size:14px;color:var(--ink2)}
+.tl b{display:block;font-family:var(--disp);font-size:19px;color:var(--ink);text-transform:uppercase}
+footer{padding-block:26px 60px;color:var(--ink3);font-size:12.5px}
+@media (max-width:860px){.hero .in,.simres{grid-template-columns:1fr}.card{flex-basis:218px}.hero .in{padding-block:26px 22px}}
+@media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
+</style>
+
+<header class="nav"><div class="in pad">
+  <div class="logo">ENGINEER<b>&nbsp;OS</b></div>
+  <nav class="navlinks" id="navlinks" aria-label="Channels"></nav>
+  <div class="xp" title="Missions and plan items you have ticked">XP <b id="xp">0</b></div>
+</div></header>
+
+<section class="hero"><div class="in pad">
+  <div>
+    <div class="eyebrow">Top pick for you &middot; career-to-business trajectory #1</div>
+    <h1>Critical power delivery <em>+ project controls</em></h1>
+    <p>Stay in electrical project delivery, move it to where the money is being spent (data centres, substations, batteries), and add a project controls skill set you can sell on the side. It is the only route here that raises your salary quickly, holds up in a downturn and produces a business you can test without resigning.</p>
+    <div class="cta">
+      <button class="btn p" data-open="traj:t1">&#9654; Open the roadmap</button>
+      <button class="btn s" data-go="sim">Run the simulator</button>
+      <button class="btn s" data-go="decide">90-day plan</button>
+    </div>
+  </div>
+  <div class="pipe" aria-label="Trajectory summary">
+    <div><span class="y">NOW</span><span class="rl">Electrical Project Engineer</span><span class="m">$113k</span></div>
+    <div><span class="y">YR 1</span><span class="rl">Senior PE, critical power or HV contractor</span><span class="m">$130&ndash;150k</span></div>
+    <div><span class="y">YR 3</span><span class="rl">Project Manager + first paying controls clients</span><span class="m">$150&ndash;180k</span></div>
+    <div><span class="y">YR 5</span><span class="rl">Senior PM, or contract at day rates</span><span class="m">$170&ndash;210k</span></div>
+    <div><span class="y">YR 10</span><span class="rl">Delivery lead, or own a controls consultancy</span><span class="m">$200&ndash;270k</span></div>
+  </div>
+</div></section>
+<div class="truth">
+  <div><div class="k">Base salary</div><div class="v"><b>What every band on this page means</b> unless it says otherwise. Excludes super, car, bonus.</div></div>
+  <div><div class="k">Total remuneration</div><div class="v">Base + 12% super + allowances + bonus. A "$250k package" is often a <b>$190&ndash;200k base</b>.</div></div>
+  <div><div class="k">Contracting revenue</div><div class="v">Rate &times; hours billed. No leave, no pay between contracts. <b>$120/h is not $250k salary</b>.</div></div>
+  <div><div class="k">Business turnover</div><div class="v">Money in. An electrical contractor turning over <b>$1.5m</b> can pay its owner less than a Senior PE.</div></div>
+  <div><div class="k">Owner profit</div><div class="v">Turnover minus every cost, <b>before your own tax and super</b>. The only number that compares with a salary.</div></div>
+</div>
+
+<main>
+  <div id="shelves" class="pad"><div class="in" id="shelvesIn"></div></div>
+
+  <section class="panel" id="c200"><div class="in pad">
+    <h2>The <em>$200K</em> challenge</h2>
+    <p class="lede">Pick a milestone. Each shows an employment route, a contracting route and a business route, with the gate you have to pass. Years are counted from today and assume you are on $113k with 3&ndash;6 years' experience.</p>
+    <div class="chips" id="ladChips"></div>
+    <div id="ladOut"></div>
+  </div></section>
+
+  <section class="panel" id="c300"><div class="in pad">
+    <h2>The <em>$300K</em> challenge</h2>
+    <p class="lede">At this level almost nobody is paid a $300k base for doing engineering. The money comes from running a business unit, billing a scarce specialism by the hour, or owning something. Check any day rate here before you believe it.</p>
+    <div class="grid g2">
+      <div class="box">
+        <h3>Day-rate reality check</h3>
+        <div class="form">
+          <label class="f">Hourly rate ($)<input type="number" id="crRate" value="130" min="40" max="400" step="5"></label>
+          <label class="f">Hours per day<input type="number" id="crHrs" value="8" min="4" max="12" step="0.5"></label>
+          <label class="f">Weeks worked a year<input type="number" id="crWks" value="44" min="20" max="52"></label>
+          <label class="f">Rate includes super?<select id="crSup"><option value="0">No, super paid on top</option><option value="1">Yes, all-inclusive</option></select></label>
+          <label class="f">Own costs a year ($)<input type="number" id="crCost" value="7000" min="0" step="500"></label>
+        </div>
+        <div id="crOut" style="margin-top:14px"></div>
+        <p class="note">Costs: professional indemnity and public liability, accounting, software. Weeks worked: 52 minus 4 leave, 2 public holidays, and whatever gap you expect between contracts. Contracting through an agency for one client usually leaves you inside the ATO personal services income rules, so you cannot split the income or hold it in a company <span data-src="ato"></span>.</p>
+      </div>
+      <div class="box">
+        <h3>Who actually earns $300k</h3>
+        <div id="who300"></div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="panel" id="skills"><div class="in pad">
+    <h2>Skills <em>investment portfolio</em></h2>
+    <p class="lede">Every skill scored 1&ndash;5 by me against your profile, then ranked by return on learning time. Return = (2&times;salary + demand + transferability + business + strategic value) weighed against difficulty, cost and the risk of being commoditised. Click a column to re-sort. These are judgements, with the reasoning in the last column.</p>
+    <div class="scroll"><table id="skT"></table></div>
+    <p class="note">Hours = time to be useful on a real project, not to finish a course. "Commod." = how fast the skill alone stops commanding a premium, including through AI tools that now write AutoLISP, Dynamo graphs, SQL and Power Query on request.</p>
+  </div></section>
+
+  <section class="panel" id="sim"><div class="in pad">
+    <h2>Career <em>simulator</em></h2>
+    <p class="lede">Change the inputs and the eight pathways re-rank. Bands are scenario ranges in today's dollars built from the advertised and survey data in the sources list. They are not forecasts, and no probabilities are attached.</p>
+    <div class="box">
+      <div class="form">
+        <label class="f">Current base salary ($)<input type="number" id="sCur" value="113000" step="1000" min="50000"></label>
+        <label class="f">Target income ($)<input type="number" id="sTar" value="200000" step="5000" min="100000"></label>
+        <label class="f">Study hours a week<input type="number" id="sHrs" value="5" min="1" max="30"></label>
+        <label class="f">Training budget ($)<input type="number" id="sBud" value="3000" step="500" min="0"></label>
+        <label class="f">City<select id="sCity"><option value="M">Melbourne</option><option value="P">Perth</option><option value="O">Sydney / Brisbane / other</option></select></label>
+        <label class="f">Preference<select id="sPref"><option value="B">Job now, business later</option><option value="E">Employment only</option><option value="O">Business as soon as possible</option></select></label>
+        <label class="f">Travel / FIFO<select id="sTrav"><option value="0">Home most nights</option><option value="1">Some regional travel</option><option value="2">FIFO or long stints fine</option></select></label>
+        <label class="f">Risk tolerance<select id="sRisk"><option value="1">Low</option><option value="2" selected>Medium</option><option value="3">High</option></select></label>
+        <label class="f">Time horizon<select id="sHor"><option value="3">3 years</option><option value="5" selected>5 years</option><option value="10">10 years</option></select></label>
+      </div>
+    </div>
+    <div class="simres">
+      <div id="simList"></div>
+      <div class="box" id="simDet"></div>
+    </div>
+  </div></section>
+
+  <section class="panel" id="decide"><div class="in pad">
+    <h2>Final <em>decision framework</em></h2>
+    <p class="lede">Eight questions, one pick each, ranked by how much weight I would give them for someone on your profile.</p>
+    <div class="scroll"><table id="pathT"></table></div>
+    <div class="grid g3" style="margin-top:18px" id="recs"></div>
+    <h3 style="font-size:24px;text-transform:uppercase;margin:26px 0 10px">The 90-day plan</h3>
+    <div class="grid g3" id="plan"></div>
+    <h3 style="font-size:24px;text-transform:uppercase;margin:26px 0 10px">Milestones</h3>
+    <div class="tl" id="miles"></div>
+  </div></section>
+
+  <section class="pad" id="sources"><div class="in" style="padding-top:34px">
+    <div class="sh"><h2>Sources and limits</h2><div class="d">Checked 16 November 2026. Open any radar poster and press "Mark re-checked" after you re-read its source; ask me to refresh the figures each quarter.</div></div>
+    <div class="grid g2">
+      <div class="box"><h3>What the salary numbers are</h3>
+        <ul>
+          <li><b>Advertised ranges</b> from job ads and recruiters run high: they describe the top of what an employer will pay.</li>
+          <li><b>Aggregator averages</b> (Payscale, Employment Hero, Glassdoor) run low or stale: self-reported, mixed seniority.</li>
+          <li><b>Bands on posters</b> are my synthesis between the two for a competent person in a capital city. Treat them as &plusmn;10%.</li>
+          <li>I could not retrieve the role-level tables in the Hays FY25/26 guide or Engineers Australia's salary guide, and I did not open the official JSA shortage spreadsheet. Shortage ratings quoted come from third-party copies of it.</li>
+          <li>Radar entries marked "not verified this pass" rest on general knowledge, not on a source I read today.</li>
+        </ul>
+      </div>
+      <div class="box"><h3>Source list</h3><div id="srcList" style="font-size:13px;columns:2 220px;column-gap:18px"></div></div>
+    </div>
+  </div></section>
+  <footer class="pad"><div class="in">ENGINEER OS is a personal planning tool. It is not financial, legal or tax advice. Licensing and registration rules change; confirm with Consumer Affairs Victoria, Energy Safe Victoria, WA Building and Energy and a registered tax agent before you act on them. Progress is saved in this browser only.</div></footer>
+</main>
+
+<div class="modal" id="modal" hidden><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
+
+<script>
+(function(){
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var store={get:function(k,d){try{var v=localStorage.getItem('eos.'+k);return v?JSON.parse(v):d}catch(e){return d}},set:function(k,v){try{localStorage.setItem('eos.'+k,JSON.stringify(v))}catch(e){}}};
+var done=store.get('done',{}),mylist=store.get('list',[]),stamps=store.get('stamps',{});
+var fmt=function(n){return '$'+Math.round(n).toLocaleString('en-AU')};
+var dots=function(n){var s='';for(var i=1;i<=5;i++)s+=i<=n?'●':'<i>●</i>';return '<span class="dots">'+s+'</span>'};
+
+/* ---------- sources ---------- */
+var SRC={
+ia:['Infrastructure Australia, 2025 Infrastructure Market Capacity Report','https://www.infrastructureaustralia.gov.au/reports/2025-infrastructure-market-capacity-report'],
+aca:['Australian Constructors Association on the IA report','https://www.constructors.com.au/?p=4570'],
+isp:['AEMO, 2026 Integrated System Plan release','https://www.aemo.com.au/newsroom/media-release/aemo-publishes-least-cost-pathway-for-the-national-electricity-market'],
+modo:['Modo Energy, 2026 ISP battery outlook','https://modoenergy.com/research/en/nem-isp-2026-bess'],
+rn:['RenewEconomy, 2026 ISP coverage','https://reneweconomy.com.au/households-lead-march-to-least-cost-electricity-as-aemo-issues-call-to-arms-on-renewable-transition/'],
+eco:['EcoGeneration, transmission costs double','https://www.ecogeneration.com.au/transmission-project-costs-double-in-new-aemo-planning-reports/'],
+dcw:['W.Media, AEMO data centre demand forecast','https://w.media/aemo-australias-data-centres-to-use-34twh-by-2035-36/'],
+dca:['W.Media, DCA / DC Byte pipeline 26.8 GW','https://w.media/?p=44973'],
+ibis:['IBISWorld, data centre build-out','https://www.ibisworld.com/blog/australia-data-centres-build-out/'],
+jsa:['Jobs and Skills Australia, 2025 Occupation Shortage List','https://www.jobsandskills.gov.au/news/shortages-ease-gaps-persist-2025-occupation-shortage-list'],
+osl:['JSA shortage analysis (official list download)','https://www.jobsandskills.gov.au/work/skills-shortages-analysis'],
+acs:['ACS, software engineers no longer in shortage','https://ia.acs.org.au/article/2025/there-s-no-shortage-of-software-engineers-in-australia-anymore.html'],
+hays:['Hays FY25/26 Salary Guide release','https://www.hays.com.au/press-release/content/hays-launches-fy25-26-salary-guide'],
+hs:['Hays figures as reported (construction +11.7%, WA average)','https://www.thesenior.com.au/story/9023013/salary-growth-in-australia-engineers-and-lawyers-top-list/'],
+eh:['Employment Hero, project engineer medians by city','https://employmenthero.com/career-advice/project-engineer/salary/'],
+psS:['Payscale, construction scheduler with P6','https://www.payscale.com/research/AU/Job=Construction_Scheduler/Salary/569d9f55/Primavera-P6'],
+psC:['Payscale, project control manager with P6','https://www.payscale.com/research/AU/Job=Project_Control_Manager/Salary/a070e7e7/Primavera-P6'],
+psE:['Payscale, electrical estimator','https://www.payscale.com/research/AU/Job=Electrical_Estimator/Salary'],
+psB:['Payscale, BIM coordinator','https://www.payscale.com/research/AU/Job=Building_Information_Modeling_(BIM)_Coordinator/Salary'],
+psA:['Payscale, contracts administrator','https://www.payscale.com/research/AU/Job=Contracts_Administrator%2C_Construction/Salary'],
+psM:['Payscale, electrical project manager','https://www.payscale.com/research/AU/Job=Electrical_Project_Manager/Salary'],
+gd:['Glassdoor, construction project manager','https://www2.glassdoor.com.au/Salaries/project-manager-construction-salary-SRCH_KO0,28.htm'],
+mb:['Marble, data centre electrical senior PM advert','https://www.marble.com.au/job/30559/electrical-senior-project-manager-data-centre'],
+salt:['Salt, electrical business manager (data centres) advert','https://welovesalt.com/au/jobs/sales/electrical-business-manager-data-centres-75738'],
+rs:['Randstad, project controller / scheduler advert','https://randstad.com.au/jobs/project-controller-scheduler-major-infrastructure-projects_melbourne_45131884'],
+ti:['Talent International, 2026 contractor day rates','https://www.talentinternational.com/blog/top-tech-contractor-day-rates-australia/'],
+sw:['Seymour Whyte, digital engineering coordinator advert','https://careers.seymourwhyte.com.au/jobs/digital-engineering-coordinator-act-australia-c30e7488-70dd-4804-8157-1b6f1eb175c8'],
+bc:['Bespoke Careers, 2026 salary calculator','https://www.bespokecareers.com/?p=2933'],
+vic:['Consumer Affairs Victoria, who needs to be registered','https://www.consumer.vic.gov.au/licensing-and-registration/professional-engineers/who-needs-to-be-registered'],
+ea:['Engineers Australia, electrical registration in Victoria','https://www.engineersaustralia.org.au/news-and-media/2023/05/three-weeks-register-electrical-engineer-victoria'],
+wa:['WA Building and Energy, building engineers registration','https://www.commerce.wa.gov.au/building-engineers'],
+hwl:['HWL Ebsworth, WA registration scope','https://hwlebsworth.com.au/engineering-compliance-navigating-contractor-registration-requirements-for-was-building-engineering-sector/'],
+esv:['Energy Safe Victoria, Registered Electrical Contractors','https://www.energysafe.vic.gov.au/licensing/electrical-licences/licence-types/registered-electrical-contractors-rec'],
+wae:['WA Government, electrical contractor licence','https://www.wa.gov.au/government/multi-step-guides/electrical-contractor-licensing/apply-electrical-contractors-licence'],
+ato:['ATO, personal services income and agencies','https://www.ato.gov.au/businesses-and-organisations/income-deductions-and-concessions/personal-services-income/working-out-if-the-psi-rules-apply/psi-obtaining-work-through-an-agency'],
+cpa:['CPA Australia, PSI explained','https://www.cpaaustralia.com.au/public-practice/inpractice/accounting-finance-and-regulation/personal-services-income-explained'],
+pi:['BizCover, professional indemnity cost','https://www.bizcover.com.au/professional-indemnity-insurance-cost/'],
+pso:['Powering Skills Organisation, 2025 Workforce Plan','https://energyskillsaustralia.com.au/media/pso-launches-2025-workforce-plan/'],
+hsf:['HSF Kramer, delivering defence infrastructure','https://www.hsfkramer.com/notes/infrastructure/2026-posts/delivering-defence-infrastructure'],
+wat:['Infrastructure Australia, water and wastewater','https://www.infrastructureaustralia.gov.au/ipl/secure-sustainable-water-for-growth/wastewater'],
+ox:['Oxford Economics, booms, busts and bulk water','https://www.oxfordeconomics.com/?p=119447'],
+ins:['Accountants Daily, FY2025-26 insolvencies','https://www.accountantsdaily.com.au/business/22687-company-insolvencies-climb-to-14-152-for-fy2025-26'],
+mba:['Master Builders NSW, construction insolvencies','https://www.mbansw.asn.au/media/industry-news/whats-happening-insolvencies-construction-industry'],
+abs:['Mastt, ABS construction work done summary','https://www.mastt.com/research/australian-construction-statistics-2026']
+};
+var srcKeys=Object.keys(SRC);
+function L(t){return String(t).replace(/\{(\w+)\}/g,function(m,k){var s=SRC[k];if(!s)return '';return '<a class="sx" href="'+s[1]+'" target="_blank" rel="noopener" title="'+s[0].replace(/"/g,'&quot;')+'">['+(srcKeys.indexOf(k)+1)+']</a>'})}
+
+/* ---------- roles ---------- */
+/* id,name,family,lo,hi (experienced base $k),demand,fit,contract,business,aiExposure,odds(g/w/r),verdict */
+var FAM={E:'Electrical & energy',C:'Civil & construction',P:'Planning & commercial',T:'Tech & automation',I:'Wider industry'};
+var R=[
+['spe','Senior Project Engineer','E',130,165,5,5,3,2,'Low','g','Your next title. The cheapest raise on this page.'],
+['epm','Project Manager, electrical','E',150,200,5,4,4,4,'Low','g','Main road to $180k+ employed.'],
+['dc','Data centre electrical delivery','E',135,180,5,5,4,3,'Low','g','Strongest Melbourne demand for exactly your background.'],
+['sub','Substation and grid delivery','E',130,175,5,4,4,3,'Low','g','Structural demand, needs HV exposure.'],
+['bess','Battery and renewables delivery','E',130,175,4,4,4,3,'Low','g','Fast-growing, regional sites, policy risk.'],
+['epe','Electrical Project Engineer','E',100,135,4,5,2,1,'Low','g','Where you are. $113k sits below the Melbourne median.'],
+['ecm','Electrical Construction Manager','E',180,240,4,3,3,4,'Low','w','A 7-10 year role. Usually wants site or trade depth.'],
+['est','Electrical Estimator','E',105,150,4,4,4,4,'Medium','g','Solid bridge to a service business. Pay ceiling is lower.'],
+['dco','Design Coordinator / Design Manager','E',120,165,4,4,3,2,'Low','g','Good fit on D&C jobs. Manager level reaches $160-200k.'],
+['swg','Switchgear and switchroom specialist','E',120,160,4,4,3,4,'Low','g','Niche with long lead times and real scarcity.'],
+['com','Protection and commissioning','E',130,180,5,3,5,4,'Low','w','Scarce and well paid by the hour. Heavy travel, deep technical gap.'],
+['ups','Critical power and UPS','E',120,160,4,4,3,3,'Low','g','Rides the data centre build. Vendor roles add commission.'],
+['utl','Utilities Project Engineer','C',115,150,4,4,3,2,'Low','g','Power and water utilities. Stable, slower pay growth.'],
+['mep','Services (MEP) Coordinator to Manager','C',120,160,5,5,3,3,'Low','g','Best door into building construction. Your degree is the entry ticket.'],
+['pkg','Infrastructure Package Manager','C',150,190,4,4,3,2,'Low','w','Electrical or systems package on rail and road. A 3-5 year step.'],
+['ipe','Infrastructure PE (rail and road systems)','C',115,150,4,3,3,2,'Low','w','Works through the systems package, not the civil one.'],
+['cpm','Construction Project Manager','C',150,200,4,3,3,3,'Low','w','Reachable via services management, in 5+ years.'],
+['cpe','Civil Project Engineer','C',105,140,4,2,2,1,'Low','r','Sideways or backwards without a civil degree. Skip.'],
+['ces','Civil Estimator','C',110,150,4,2,3,3,'Medium','r','Needs civil methods and rates you do not have.'],
+['bim','BIM Coordinator','C',90,125,3,3,3,3,'High','r','A pay cut, and the modelling side is commoditising.'],
+['dec','Digital Engineering Coordinator','C',110,145,3,3,3,3,'Medium','w','Adverts reach $135-150k on majors. Thin market.'],
+['pce','Project Controls Engineer','P',115,150,4,4,4,4,'Medium','g','Entry point to the controls bridge.'],
+['pln','Planner / Scheduler (P6)','P',115,150,4,4,5,5,'Medium','g','Portable across every capital-project industry.'],
+['spl','Senior Planner','P',150,190,5,3,5,5,'Low','w','Contract rates of $100-150/h. Needs 3-5 years of pure planning.'],
+['pcl','Project Controls Lead / Manager','P',170,240,4,3,5,5,'Low','w','Highest-paid non-PM seat on a major project.'],
+['cad','Contracts Administrator to Commercial Manager','P',110,170,5,3,4,4,'Low','w','Commercial managers reach $180-250k. Starts with a lateral move.'],
+['cst','Cost Controller / Cost Engineer','P',110,160,4,3,4,3,'Medium','w','Pairs with planning. On its own, a narrower ladder.'],
+['cmp','Commercial Project Manager','P',160,210,4,3,3,3,'Low','w','A PM who owns the contract. Natural for you by year 5.'],
+['qto','Quantity takeoff specialist','P',95,135,3,3,3,3,'High','r','The task most exposed to AI takeoff tools.'],
+['dly','Delay analysis consultant','P',140,200,3,2,5,4,'Low','r','Needs 8-10 years of planning first. Not a starting point.'],
+['clm','Claims and contract specialist','P',130,180,4,3,5,4,'Low','w','Lucrative, slow to enter, legal-adjacent.'],
+['des','Digital engineering / automation specialist','T',115,150,3,4,3,4,'Medium','w','Best AI-plus-engineering job title. Few seats.'],
+['cau','CAD Automation Developer','T',95,130,2,3,3,4,'High','r','Almost no advertised jobs. A skill to use, not a title to chase.'],
+['bau','BIM Automation Specialist','T',110,145,3,3,3,4,'Medium','w','Needs Revit and Dynamo depth you would start from zero.'],
+['eda','Engineering Data Analyst','T',100,135,3,3,3,3,'High','r','Pay below your current track.'],
+['esi','Engineering Systems Integrator','T',120,160,3,3,4,4,'Low','w','Valuable in 5+ years once you know two systems deeply.'],
+['aic','AI Workflow Automation Consultant','T',110,170,3,3,4,4,'High','w','Speculative as a job. Better as a service you sell.'],
+['imp','Software Implementation Consultant','T',110,150,3,3,3,3,'Medium','w','Vendor-side. Travel and quota pressure.'],
+['tps','Technical Product Specialist (vendor)','T',110,150,3,4,2,2,'Low','w','Switchgear and UPS vendors pay base plus commission.'],
+['ais','Engineering AI Solutions Developer','T',120,170,3,2,3,4,'High','r','You compete with software engineers, who are no longer in shortage.'],
+['iap','Industrial Automation Project Engineer','T',110,150,4,3,4,4,'Low','w','Needs PLC and SCADA. 12-18 months to credible.'],
+['dtm','Digital Transformation Manager','T',160,220,3,3,3,3,'Low','r','A 10-year destination, not a move.'],
+['min','Mining electrical projects (Perth)','I',140,190,5,4,5,3,'Low','w','Highest pay per year of experience. FIFO is the price.'],
+['rai','Rail traction power and systems','I',125,165,4,3,4,2,'Low','w','Accreditation-heavy. Good once inside.'],
+['wtr','Water utility electrical projects','I',115,150,4,4,3,2,'Low','g','Most downturn-proof employer on the page.'],
+['def','Defence infrastructure delivery','I',120,160,4,3,3,2,'Low','w','Perth and Adelaide. Needs citizenship and clearance.'],
+['ast','Asset management engineer','I',115,150,4,3,2,2,'Low','w','Stable, flatter pay curve.'],
+['phm','Pharma and manufacturing projects','I',115,155,3,3,3,3,'Low','w','Melbourne strength. Validation rules are the learning curve.'],
+['log','Logistics automation projects','I',115,155,3,3,3,3,'Low','w','Warehouse automation integrators. Cyclical with retail capex.'],
+['tel','Telecommunications infrastructure','I',100,140,3,2,3,2,'Medium','r','Lower pay, weaker fit.']
+];
+var RD={
+spe:{dr:'The same job at larger scope. Demand follows grid, data centre and battery capex. Infrastructure Australia counts a 141,000-worker shortfall on the public pipeline {ia}; construction pay grew 11.7% in the Hays FY25/26 guide {hs}.',prog:['Senior PE, $135-160k','Project Manager, $160-195k','Senior PM or Construction Manager, $190-240k'],req:'Degree (you have it), one package delivered end to end, some HV exposure. Victorian registration or CPEng is asked for more often each year.',have:'Procurement, drawings and specifications, subcontractor coordination, client reporting.',gap:'Owning variations and extension-of-time claims. Owning the programme. HV and protection literacy if your work so far is LV.',tc:'0-12 months. Under $1,000. This is a job move, not a course.',ai:'Drawing registers, specification compliance matrices, RFI and variation logs, weekly reports.',con:'Moderate. PEs contract on majors at roughly $80-110/h (my estimate from planner and controls adverts {rs}).',biz:'Low by itself. It is the credibility every other route needs.',geo:'All capitals. Perth pays a premium: WA professional pay averages $147.2k against $141.9k nationally {hs}.',exp:'Outsourcing low (you have to be on site). AI removes paperwork, not accountability. Cyclical with capex.',wl:'45-50 hour weeks on site. Regional travel on renewables.',odds:'Likely inside 12 months if you change employer or get regraded. Assumes you can show one package you ran. Employment Hero puts the Melbourne project engineer median at $125k {eh}.',next:['Save 15 Senior PE adverts that state pay and note the band.','Rewrite your CV around one package: dollars, kV, MW, dates.','Ask for a regrade with that evidence, and apply to five critical power or HV contractors the same week.']},
+epm:{dr:'Every electrical package needs one accountable person. Data centre electrical PM adverts run $160-210k plus car and bonus, with packages quoted to $250k {mb}. Payscale shows a far lower $110k average {psM}, which mixes in small domestic contractors.',prog:['PM on a $5-20m package, $150-180k','Senior PM, $180-215k','Construction Manager or Project Director, $220-280k'],req:'5-8 years, a completed project as number two, commercial competence, client-facing track record.',have:'Technical delivery and coordination.',gap:'Profit-and-loss ownership, contract administration, managing supervisors and subcontractors.',tc:'2-4 years. Mostly experience. $2-4k for contract and leadership short courses.',ai:'Forecasting cost to complete, programme risk scans, contract notice tracking.',con:'Good. Contract PMs on majors bill $120-160/h (estimate).',biz:'Strong. The basis of a project delivery consultancy or, with a licensed partner, a contractor.',geo:'All capitals. Sydney and Melbourne for data centres, Perth for resources.',exp:'Low outsourcing and AI exposure. Exposed to contractor insolvency: construction was 24.5% of all insolvencies in FY25-26 {ins}.',wl:'50+ hours. The job that is hardest to switch off from.',odds:'Likely in 3-4 years if you take the Senior PE step first and seek commercial exposure. Assumes you want to manage people.',next:['Ask to run the variation register on your current job.','Do a 2-day contracts course (AS 4000 / AS 4902).','Tell your manager in writing that PM is the goal and ask what is missing.']},
+dc:{dr:'AEMO expects data centre demand of about 15 TWh by 2029-30 and 34 TWh by 2035-36 {dcw}. Industry forecasts operating capacity near 3.9 GW by 2030 from roughly 1.6-2.2 GW today, and Melbourne now leads Sydney in forecast pipeline {dca}. The 67 GW of grid connection requests is mostly speculative {dcw}.',prog:['Senior PE on a hall fit-out, $135-160k','PM, $165-200k','Senior PM or client-side delivery lead, $200-260k'],req:'LV and MV distribution, generators, UPS, busway, commissioning sequence (levels 1-5).',have:'Switchboards, cable, procurement of long-lead plant.',gap:'Integrated systems testing, redundancy topologies (N+1, 2N), hyperscaler QA demands.',tc:'6-12 months. $0-1,500. Learn on the job after the move.',ai:'Commissioning script tracking, QA record checks, procurement lead-time dashboards.',con:'Good on commissioning and delivery roles.',biz:'Moderate: QA, commissioning records and reporting services for subcontractors.',geo:'Melbourne west and north, Sydney. Little in Perth so far.',exp:'Concentrated on a handful of hyperscale customers. If AI capex pauses, this slows first.',wl:'Programme-driven, long hours near energisation. Metro sites, home each night.',odds:'Likely. Contractors are hiring from adjacent electrical sectors. Assumes Melbourne.',next:['List the ten electrical contractors on Melbourne data centre jobs.','Learn the commissioning levels and one UPS topology well enough to explain it.','Message two project managers there and ask what they hire for.']},
+sub:{dr:'The 2026 ISP relies on new transmission and reports 45 GW in the connection pipeline, up from 3 GW in 2022 {rn}. Transmission project costs have doubled {eco}, which means delays as well as work.',prog:['Senior PE on a zone or terminal station, $135-165k','PM, $170-205k','Program or delivery manager for a network business, $200-250k'],req:'HV primary and secondary systems, AS 2067, network operator standards, outage planning.',have:'Project delivery method, procurement, documentation.',gap:'HV plant, protection and earthing fundamentals, operator access and switching rules.',tc:'12-18 months. $2-5k for HV and protection short courses.',ai:'Outage and switching programme checks, ITP and test record management.',con:'Strong. HV delivery people are scarce.',biz:'Moderate. Specialist delivery and documentation support.',geo:'Victoria, NSW, Queensland renewable zones; WA south-west network.',exp:'Regulated funding makes it steadier than private construction. Political and approval delays are the risk.',wl:'Brownfield outages mean nights and weekends at times. Regional travel.',odds:'Possible to likely. Depends on whether you already touch HV. If LV only, expect a level move first.',next:['Find out which of your current projects has an HV interface and get onto it.','Read AS 2067 and one network operator connection standard.','Short course: power system protection fundamentals.']},
+bess:{dr:'The 2026 ISP doubles the 2030 grid battery outlook to about 33 GW {modo}. Batteries take a little over two years to get through connection {rn}, so projects turn over quickly.',prog:['Senior PE (balance of plant), $135-160k','PM, $165-200k','Head of delivery at a developer or EPC, $200-250k'],req:'MV collection, inverters, grid connection studies awareness (R1/R2), HV substation interface.',have:'Electrical balance-of-plant delivery.',gap:'Grid compliance process, performance testing, EPC contract risk.',tc:'6-12 months. $1-3k.',ai:'Commissioning data checks, punch-list analytics.',con:'Good.',biz:'Moderate: owner-side reporting and document services for developers.',geo:'Regional Victoria, NSW, Queensland, SA; some metro-fringe sites.',exp:'Policy-sensitive, and EPC margins are thin: contractor failures happen.',wl:'Regional sites. Expect weeks away or a long commute.',odds:'Likely if you accept travel. Poor if you need to be home nightly.',next:['Pick three EPCs and three developers and read their project lists.','Learn the grid connection stages well enough to draw them.','Ask a recruiter who covers renewables what Senior PEs are actually paid.']},
+pln:{dr:'Every capital project needs a programme. P6 schedulers average $137.5k on Payscale with a middle band of $108-152k {psS}. Contract adverts run $80-150/h {rs}.',prog:['Planner on one project, $115-140k','Senior Planner, $150-185k or $110-140/h contract','Planning Manager or own consultancy'],req:'Primavera P6, critical path method, progress measurement, basic delay analysis.',have:'You know how the work is actually sequenced, which most pure schedulers do not.',gap:'P6 fluency, resource and cost loading, contract programme clauses.',tc:'6-9 months of study at 5 hours a week. $1,500-3,000 for a P6 course.',ai:'Schedule quality checks, narrative reports, logic gap detection. AI drafts; the planner still has to defend it.',con:'Very strong. The most contract-friendly role here.',biz:'Very strong. Low capital, sold by the hour or by the programme.',geo:'Everywhere, across mining, energy, transport, defence, buildings.',exp:'Offshoring of basic scheduling is real. Senior planners who attend site and face the client are safe.',wl:'Desk-heavy and detail-heavy. Monthly reporting peaks. Often hybrid.',odds:'Likely as a lateral move. Expect little or no raise in year one. Assumes you enjoy long stretches of detail work: test that first.',next:['Build your current project programme in P6 from scratch.','Offer to own the monthly programme update at work.','Take one P6 fundamentals course and stop there until you have used it.']},
+pcl:{dr:'Controls managers with P6 average $192k on Payscale, middle band $153-255k {psC}. The role exists on every project above about $100m.',prog:['Project Controls Engineer, $120-150k','Controls Lead, $160-200k','Controls Manager, $190-250k or consultancy owner'],req:'Planning plus cost control, earned value, change control, risk, reporting to executives.',have:'Delivery context and reporting.',gap:'Cost control systems, earned value in practice, a major-project name on the CV.',tc:'5-8 years to manager. $3-6k across P6, cost and EVM courses.',ai:'Integrated dashboards, variance commentary, forecast checks.',con:'Very strong at $130-180/h for leads (estimate above advertised planner rates).',biz:'Very strong. This is what a controls consultancy sells.',geo:'Major projects in every state; Perth resources pay most.',exp:'Tied to the size of the major-project pipeline, which Infrastructure Australia puts at $242b {ia}.',wl:'Office or hybrid. Month-end pressure. Less site time.',odds:'Possible. It requires leaving delivery for a pure controls seat for several years.',next:['Learn earned value on your own project: build the S-curve.','Shadow the cost controller for one month-end.','Decide by month three whether you prefer this to running the work.']},
+mep:{dr:'Builders cannot find people who understand electrical and mechanical services. Hospitals, data centres, labs and towers are services-heavy. Construction manager and PM calculators show $150-200k {bc}.',prog:['Services Coordinator at a tier 1-2 builder, $120-145k','Services Manager, $160-200k','Construction Manager or Project Manager, $190-240k'],req:'Reading every services discipline, coordination, commissioning management, NCC basics.',have:'Electrical depth, which is the hardest services discipline to fake.',gap:'Mechanical, hydraulic and fire systems; builder-side contract administration.',tc:'3-6 months. Under $1,500.',ai:'Clash triage, commissioning trackers, submittal review.',con:'Moderate.',biz:'Moderate: independent services commissioning management.',geo:'All capitals.',exp:'Building construction is the most insolvency-prone part of the industry {mba}. Pick the builder carefully.',wl:'Site hours, six-day weeks near completion.',odds:'Likely. This is the standard route for electrical engineers into builders.',next:['Walk a mechanical plant room with someone who can explain it.','Learn Navisworks well enough to run a clash review.','Apply to two tier 1 builders for Services Engineer or Coordinator.']},
+est:{dr:'Contractors win or die on estimates. Payscale shows a low $84k average {psE}, pulled down by small domestic firms; commercial and industrial estimators are paid well above that (my band, low confidence).',prog:['Estimator, $105-135k','Senior Estimator, $140-175k','Estimating Manager, $170-210k, or own service'],req:'Takeoff, labour units, supplier pricing, tender strategy, scope gap reading.',have:'You know what gets missed in a scope because you have delivered it.',gap:'Labour productivity rates, pricing databases, tender commercial terms.',tc:'6-12 months. $1-3k for estimating software training.',ai:'High. Takeoff from drawings is being automated; judgement on risk and method is not.',con:'Good. Tenders are lumpy, so contractors buy capacity.',biz:'Strong. Estimating bureaus exist because of that lumpiness.',geo:'All capitals, remote-friendly.',exp:'Takeoff is exposed to AI and offshoring. Review and pricing judgement is not.',wl:'Office hours with tender-deadline spikes. No travel.',odds:'Likely. Lower ceiling than PM unless you own the service.',next:['Ask to help price one tender at work.','Rebuild a past estimate and compare with final cost.','Learn one estimating package your sector uses.']},
+cad:{dr:'Commercial skill is the scarcest thing in construction. Payscale shows contracts administrators at $72k average {psA}; recruiters show $80-120k+ {bc}; senior and commercial manager roles sit far higher (my band).',prog:['Contracts Administrator, $110-135k','Senior CA, $140-170k','Commercial Manager, $180-250k'],req:'AS 4000, AS 4902, AS 4903, security of payment law, subcontract letting, claims.',have:'You know the scope the contracts describe.',gap:'Formal contract law, valuation of variations, payment legislation.',tc:'12 months to credible. $3-8k (contract courses; a law or QS certificate is optional).',ai:'Clause comparison, notice deadline tracking, claim drafting support.',con:'Good.',biz:'Good: claims and contract support for subcontractors.',geo:'All capitals.',exp:'Needed most when the market turns and disputes rise.',wl:'Office-based. Adversarial at times.',odds:'Possible. First move is lateral in pay, and you leave engineering.',next:['Read your current head contract cover to cover.','Take a security of payment short course.','Run the subcontract variation process on your project.']},
+des:{dr:'Major projects mandate digital deliverables. Adverts for digital engineering coordinators on infrastructure show $135-150k {sw}; BIM coordinators average $78k on Payscale {psB}. The title covers both.',prog:['Digital engineering engineer, $115-140k','Digital Engineering Lead, $145-175k','Digital or Technology Manager, $170-220k'],req:'ISO 19650, common data environments, Python, Power BI, Autodesk platform, data standards.',have:'You know what the data is for. AI tools already in use.',gap:'BIM process depth, a coding portfolio, a common data environment admin role.',tc:'12-18 months. $1-3k.',ai:'This is the role. Automating registers, model checks, handover data.',con:'Moderate.',biz:'Strong for a specialist consultancy.',geo:'Sydney and Melbourne majors; less in Perth.',exp:'First cut when margins tighten. Software engineering is no longer in shortage {acs}, so pure coders compete here.',wl:'Office or hybrid. Good hours.',odds:'Possible. Fewer seats than delivery, and likely a level move.',next:['Ship one automation at work that saves a measurable hour a week.','Learn what your project information requirements actually require.','Keep it as a second skill until a paid role appears.']},
+min:{dr:'WA leads professional pay {hs}. Resources construction pays for remoteness. Planner adverts in Perth average far above national figures on Jooble (thin sample).',prog:['Project engineer on a FIFO roster, $140-170k','Senior PE or Superintendent, $170-210k','PM or Area Manager, $210-270k'],req:'HV and LV on process plant, hazardous areas, mine site rules, WA electrical regulations.',have:'Electrical delivery.',gap:'Mine site experience, hazardous area knowledge, roster life.',tc:'3-6 months to land. Relocation cost is the real cost.',ai:'Same tools, more valued because offices are thin.',con:'Very strong. Day rates are the norm.',biz:'Moderate.',geo:'Perth base, Pilbara and Goldfields sites.',exp:'Commodity cycle. When iron ore or lithium falls, projects stop.',wl:'FIFO 2:1 or 8:6. Incompatible with being home for young children.',odds:'Possible. The work is there; the roster is the decision.',next:['Read the Melbourne-vs-Perth model you already built.','Price a Perth-based (not FIFO) role against Melbourne.','Talk to one person on a roster with children.']}
+};
+
+/* ---------- industries ---------- */
+var CLS={S:['Structural','g'],C:['Cyclical','w'],X:['Speculative','r'],M:['Structural core, speculative edge','w'],U:['Not verified this pass','n']};
+var IND=[
+['grid','Grid upgrades and electrification','S','The 2026 ISP is built on new transmission; its least-cost path needs about $106b of grid-scale investment to 2050 {isp}{rn}. Connection pipeline has grown from 3 GW (2022) to 45 GW (2026) {rn}.','Transmission costs have doubled {eco}. Approvals and community opposition delay projects for years. The reported 6,000 km figure is a minister\'s number I could not confirm against AEMO.','Regulated revenue. Work is delayed, rarely cancelled.',['sub','spe','epm','com'],'isp'],
+['bat','Renewables and battery storage','S','AEMO doubled its 2030 grid battery outlook to about 33 GW {modo}. Batteries clear connection in a little over two years {rn}. The energy trades shortfall is projected at 42,000 by 2030 {pso}.','Policy changes, thin EPC margins, regional sites. Wind is slower and harder than batteries.','A change in federal policy or a run of EPC failures would slow it.',['bess','sub','com'],'modo'],
+['dcs','Data centres and AI compute','M','AEMO forecasts 15 TWh by 2029-30 and 34 TWh by 2035-36 {dcw}. Industry expects 3.9 GW operating by 2030 {dca}, roughly double today.','AEMO counts 67 GW of connection requests and says most will not be built {dcw}. Operating sites used about 27% of rated capacity in early 2026 {ibis}. Demand rests on a few hyperscalers.','Real doubling: structural. Anything priced on the 26-67 GW pipeline: speculative.',['dc','ups','epm','mep'],'dcw'],
+['dfn','Defence and industrial manufacturing','M','Henderson precinct needs about $25b over a decade with $12b committed early; Stirling $8b; Osborne $3.2b {hsf}.','These are announced figures, not all budgeted {hsf}. Needs citizenship and clearance. Decade-long timelines slip.','Bipartisan so far. Concentrated in Perth and Adelaide.',['def','epm','pcl'],'hsf'],
+['civ','Civil infrastructure and transport','C','Public pipeline of $242b, up $29b in a year; 141,000 workers short now, possibly 300,000 by 2027 {ia}{aca}.','Growth is shifting to energy and housing {ia}. Engineering work done peaked at $39.0b in the March quarter 2026 and then fell {abs}. I found no verified figure for Victorian transport spending in 2026.','Big, but past its transport peak. Enter through energy or systems packages.',['pkg','ipe','pln','cad'],'ia'],
+['wat','Water and wastewater','S','Utilities plan rising capital spend to 2029-30, mostly renewals, compliance and growth {wat}. Regulated customers, essential service.','The sector has a boom-bust history on big augmentations {ox}. Pay is steady, not high. I did not retrieve the WSAA dollar total.','The most recession-proof employer type on this page.',['wtr','utl','ast'],'wat'],
+['ctl','Project controls and commercial','S','Follows total capex across every sector, not any one of them. Controls managers average $192k {psC}; contract rates $80-150/h {rs}.','Shrinks when the whole pipeline shrinks. Basic scheduling can be offshored.','Portable between mining, energy, transport, defence and buildings, which is the hedge.',['pln','spl','pcl','cad'],'psC'],
+['crt','Energy efficiency and critical power','S','Attached to data centres, hospitals and electrification of buildings. Same drivers as the grid and data centre entries.','Not separately verified this pass. Treat as a sub-market of data centres.','Follows the data centre call.',['ups','dc','swg'],'dcw'],
+['dig','Digital engineering and BIM','C','Major projects require digital deliverables; adverts at $135-150k on infrastructure {sw}.','BIM coordinators average $78k {psB}. Modelling is commoditising and software engineers are no longer scarce {acs}.','A useful skill. A weak primary career on pay.',['des','dec','bim'],'sw'],
+['aut','Industrial automation and robotics','U','Long-run trend to automate mining, logistics and manufacturing.','Not verified this pass. Needs PLC and SCADA skills you do not have yet.','Plausible, unproven here. Re-check before investing time.',['iap','log'],'osl'],
+['ast','Asset management and maintenance','U','Ageing networks and plant need renewal regardless of the cycle.','Not verified with figures this pass. Flatter pay.','Defensive. Good fallback, weak for the $200k target.',['ast','wtr'],'wat'],
+['ctk','Construction technology','X','Many start-ups and tools.','No evidence gathered of durable hiring demand. Contractors with thin margins are slow buyers.','Speculative. Build tools for yourself first.',['aic','des'],'osl'],
+['int','Engineering software integration','U','Firms run disconnected systems for drawings, programme and cost.','Niche. No demand data found. Sold on reputation.','A year-5 specialism, not an entry point.',['esi','imp'],'osl']
+];
+
+/* ---------- trajectories ---------- */
+var T=[
+{id:'t1',n:'Critical power delivery + project controls',f:'E',tag:'Job and business',v:'Fastest raise, structural demand, and a side business that does not need your employer\'s clients.',
+ road:['Senior PE at a critical power or HV contractor. Own the programme and variation register. First unpaid then paid programme job for a small subcontractor.','Project Manager on a $5-20m package. Victorian registration done. 3-5 small clients on fixed-price programme and reporting packages.','Senior PM at $180-210k, or go contract at day rates. Decide whether the side business deserves full time.','Delivery lead employed at $220k+, or a 3-6 person controls and delivery consultancy.'],
+ sk:'P6, contract administration, earned value, Power BI, HV fundamentals.',cap:'Under $5k in years 1-3 (courses, insurance, software).',rel:'Two project managers at subcontractors, one recruiter in critical power, one senior planner as mentor.',fc:'A small electrical or mechanical subcontractor who has just been asked by a builder for a compliant programme and cannot produce one.',risk:'PM hours leave little energy for a side business. If the side work stalls you still have the salary path.'},
+{id:'t2',n:'Project Controls to independent planner',f:'P',tag:'Most portable',v:'Best pure employment-to-business bridge. Slower pay growth in years 1-2.',
+ road:['Move to Project Controls Engineer or Planner. Probably no raise. Build P6 hours.','Senior Planner on a major project, $150-185k.','Contract at $110-140/h, or stay as Controls Lead.','Controls consultancy with 2-5 planners, or Controls Manager at $200k+.'],
+ sk:'P6, cost control, earned value, delay analysis basics, contract programme clauses.',cap:'$3-6k training. $3-6k a year insurance and software once independent.',rel:'Planning managers at tier 1 contractors, specialist controls recruiters.',fc:'Your former employer or a subcontractor on your last project, buying monthly updates.',risk:'You give up delivery authority. Agency contracting falls under the personal services income rules {ato}.'},
+{id:'t3',n:'Electrical PE to PM to delivery consultancy',f:'E',tag:'Highest employed pay',v:'Clearest road to $200k+ employed. The business at the end is harder to start part-time.',
+ road:['Senior PE.','Project Manager.','Senior PM, $180-215k.','Project Director, or a specialist owner-side delivery consultancy.'],
+ sk:'Commercial management, leadership, HV, client management.',cap:'Low until you go independent; then 6 months of living costs as a buffer.',rel:'Client-side project directors. They are who hires consultants.',fc:'A developer or asset owner who needs an owner\'s engineer or project manager for one job.',risk:'Owner-side consulting usually needs registration and 10+ years. It cannot be tested on weekends.'},
+{id:'t4',n:'Estimator to estimating service',f:'E',tag:'Lowest-risk business',v:'Demand is constant and remote-friendly. Ceiling is lower and conflict of interest is sharpest.',
+ road:['Help price tenders in your current role.','Estimator or Senior Estimator, $130-160k.','Estimating Manager, or part-time bureau work.','Estimating service with 2-4 staff.'],
+ sk:'Takeoff, labour units, tender strategy, estimating software.',cap:'$2-6k software and training.',rel:'Owners of 10-50 person electrical contractors.',fc:'A contractor outside your employer\'s market who is losing tenders for lack of estimating hours.',risk:'If your employer tenders, pricing for anyone else in the same market is a direct conflict.'},
+{id:'t5',n:'Automation specialist to CAD and document tools',f:'T',tag:'AI plus engineering',v:'Most interesting, least proven. Few jobs carry the title and the buyers are small.',
+ road:['Automate three tasks in your current job. Keep before-and-after numbers.','Digital engineering role, or stay in delivery with automation as your edge.','Paid automation projects for 3-6 small firms.','A product: drawing and specification register tool with 50-200 subscribers.'],
+ sk:'Python, AutoLISP, Power Query, AI agents, one Autodesk API.',cap:'Under $2k. The cost is 300-600 unpaid hours.',rel:'Document controllers and drafting managers, who feel the pain.',fc:'A 5-20 person design or contracting firm drowning in drawing transmittals.',risk:'AI tools make scripts cheap, so the script is not the product. Most small SaaS products never reach 50 customers.'},
+{id:'t6',n:'Digital engineering lead to BIM automation',f:'C',tag:'Weakest fit',v:'Real field, wrong starting point. You would begin below your current pay.',
+ road:['Learn Revit, Navisworks, ISO 19650.','Digital Engineering Coordinator, $110-145k.','Digital Engineering Lead, $145-175k.','BIM automation consultancy.'],
+ sk:'Revit, Dynamo, Navisworks, common data environments.',cap:'$2-5k and 400+ hours.',rel:'Digital leads at tier 1 contractors.',fc:'A subcontractor required to deliver models it cannot produce.',risk:'Competes with cheaper modellers and with software engineers. Pay trails delivery roles for years.'}
+];
+
+/* ---------- businesses ---------- */
+/* name,tier,startup,licence,side(Y/C/N),solo ceiling,scale,fit,verdict */
+var TIER={L:'Low-capital services',S:'Specialist technical',D:'Scalable digital',H:'Higher-capital'};
+var BZ=[
+['b1','Planning and programme services','S','$2-5k','None','Y','$150-220k',3,5,'Best test business. Sold by the hour, bought on trust.'],
+['b2','Progress and cost reporting dashboards','L','$1-3k','None','Y','$120-200k',4,5,'Productised version of b1. Recurring monthly fee.'],
+['b3','CAD and document automation','S','$1-2k','None','Y','$100-180k',4,4,'Lumpy. Sell the saved hours, not the script.'],
+['b4','Electrical estimating support','S','$2-6k','None','C','$130-200k',3,4,'Steady demand. Check conflict with your employer first.'],
+['b5','Engineering AI implementation','S','$1-3k','None','Y','$80-220k',3,4,'Wide range. Crowded with generalists; your edge is the domain.'],
+['b6','Drawing and specification register SaaS','D','$2-10k','None','Y','$0-150k',5,3,'Highest scalability. Most likely to earn nothing.'],
+['b7','Electrical contracting','H','$50-250k','REC + A-grade nominee','N','$90-250k',4,2,'Needs a licensed electrician as partner. Turnover flatters.'],
+['b8','CAD drafting and drawing administration','L','$3-6k','None','Y','$70-110k',2,3,'Offshore competition at $15-30/h. Avoid.'],
+['b9','Drawing register and document control','L','$1-2k','None','Y','$70-120k',3,4,'Low rate alone. Good entry product for b3.'],
+['b10','Engineering data extraction and reporting','L','$1-2k','None','Y','$80-140k',3,4,'Fold into b2.'],
+['b11','Procurement and supplier tracking','L','$1-2k','None','Y','$70-110k',2,3,'Hard to sell as a standalone service.'],
+['b12','Tender administration and bid support','L','$1-2k','None','C','$90-150k',2,4,'Real need at small contractors. Deadline-driven.'],
+['b13','Quantity takeoff support','L','$2-5k','None','C','$70-110k',2,3,'Being automated and offshored.'],
+['b14','Engineering documentation automation','L','$1-2k','None','Y','$90-150k',4,4,'Same as b3 for manuals and handover packs.'],
+['b15','Construction progress reporting','L','$1-2k','None','Y','$80-130k',3,4,'Fold into b2.'],
+['b16','AutoLISP and Autodesk API development','S','$1-2k','None','Y','$80-150k',3,3,'Tiny buyer pool in Australia.'],
+['b17','BIM automation services','S','$3-6k','None','Y','$100-170k',3,2,'Needs Revit depth you do not have.'],
+['b18','Engineering workflow integration','S','$2-5k','None','C','$120-220k',3,3,'Year 5+. Sold on reputation.'],
+['b19','Project controls consultancy (team)','S','$10-30k','None','N','$200-400k',4,4,'Where b1 leads if you hire planners.'],
+['b20','Delay analysis and claims support','S','$3-8k','None; expert work needs standing','N','$200-350k',2,2,'Requires a decade of planning credibility.'],
+['b21','Technical document management','S','$1-3k','None','Y','$80-130k',3,3,'Same buyer as b9.'],
+['b22','Manufacturing process automation','S','$10-40k','Electrical licence for wiring','N','$120-220k',3,2,'Needs PLC skills and licensed installers.'],
+['b23','Engineering automation templates','D','$0.5-1k','None','Y','$0-30k',4,3,'Pocket money. Useful as marketing.'],
+['b24','CAD plugins and scripts','D','$1-2k','None','Y','$0-50k',4,3,'Autodesk store sales are small. Lead generator at best.'],
+['b25','Engineering reporting software','D','$5-20k','None','Y','$0-200k',5,3,'b2 turned into a product after 10+ service clients.'],
+['b26','Subscription project dashboards','D','$3-10k','None','Y','$0-150k',5,4,'Same as b2 with a login. Start as a service.'],
+['b27','AI document review software','D','$10-50k','None','C','$0-250k',5,3,'Funded competitors already here. Liability if it misses a clause.'],
+['b28','Construction productivity apps','D','$10-50k','None','C','$0-200k',5,2,'Crowded, slow-buying market.'],
+['b29','Engineering training products','D','$1-3k','None','Y','$5-60k',4,3,'Works only with an audience you do not have yet.'],
+['b30','SaaS for small engineering firms','D','$5-20k','None','Y','$0-200k',5,3,'Pick one painful job. b6 is the candidate.'],
+['b31','Switchboard manufacturing','H','$250k+','Workshop, AS/NZS 61439 testing','N','$100-300k',4,2,'Capital-heavy, established competitors, thin margins.'],
+['b32','Electrical panel assembly','H','$80-200k','Licensed electrical workers','N','$90-200k',3,2,'Sub-supplier to b31. Same issues, smaller.'],
+['b33','Industrial automation integration','H','$50-150k','Electrical contractor licence','N','$120-300k',4,2,'Good business for someone with PLC depth and a licence.'],
+['b34','Testing and commissioning services','H','$60-200k','Licensed testers, calibrated gear','N','$150-350k',3,3,'Excellent margins. Needs HV test experience first.'],
+['b35','Renewable energy project services','H','$10-50k','Depends on scope','N','$120-250k',3,3,'Owner-side support. Year 7+.'],
+['b36','Specialist engineering subcontracting','H','$20-100k','Registration for design','N','$120-250k',3,3,'Design work needs a registered engineer.'],
+['b37','Equipment supply and distribution','H','$50-300k','None; stock and credit','N','$80-250k',4,2,'Needs supplier agencies and working capital.'],
+['b38','Specialist delivery consultancy','S','$5-15k','Registration likely','N','$180-300k',3,4,'The year-10 version of your career.']
+];
+var COMMON={legal:'<b>What you can sell yourself:</b> planning, scheduling, cost reporting, document control, dashboards, software, estimating and drafting to someone else\'s design. None of these is a "professional engineering service" as Victoria defines it, because they do not apply engineering judgement to a design {vic}. <b>Where you need a registered engineer:</b> any electrical design, design verification or engineering sign-off in or for Victoria. Registration has been mandatory for electrical engineers since 1 June 2023 unless you work under direct supervision of a registered engineer or strictly to a prescriptive standard {vic}{ea}. WA\'s scheme covers structural, fire, civil and mechanical building engineering and leaves electrical out {wa}{hwl}; Queensland requires RPEQ. <b>Where you need a licensed electrician:</b> any electrical installation work. In Victoria the business must be a Registered Electrical Contractor with an A-grade licensed technical nominee and $5m public liability cover {esv}; WA requires an electrical contractor licence with a licensed nominee {wae}.',
+conflict:'Read your employment contract for secondary-employment, intellectual property and restraint clauses before you take a dollar. Get written consent. Never use employer time, files, licences, templates or contacts. Do not sell to your employer\'s clients, competitors or current project subcontractors. Do not put employer documents into public AI tools.'};
+var BD={
+b1:{p:'Small subcontractors are contractually required to submit and update a programme and have nobody who can build one.',who:'Owners and project managers of 10-80 person electrical, mechanical and civil subcontractors; small builders.',why:'A rejected programme delays their first payment claim. A planner hire costs $130k+; they need 10-30 hours a month.',comp:'Freelance planners, small controls consultancies, offshore scheduling shops at $25-45/h.',cost:'$2-5k: P6 or equivalent licence, insurance, ABN, basic site.',price:'$100-140/h, or fixed price: $2,500-6,000 for a baseline programme, $600-1,500 for a monthly update.',sales:'Direct: people you have worked beside. One good programme gets passed around a builder\'s subcontractors.',ops:'Insurance $2-4k a year (general estimate; engineering PI quotes vary widely {pi}), software $1-3k, accounting $1-2k. Gross margin above 85% when solo.',ai:'Draft logic from scope documents, quality-check schedules, write the monthly narrative.',first:'Offer one subcontractor outside your employer\'s projects a fixed-price baseline programme for their next tender.',scale:'Train a junior planner on your templates; sell monthly retainers; move up to controls for whole projects (b19).',side:'Yes. Work is evening-compatible. Monthly update deadlines are the pressure point.',fail:'Selling hours caps income. Clients pay late: construction is a quarter of all insolvencies {ins}. Offshore shops undercut on price.',side$:{rev:[900,2400,4200],cost:[350,400,500]},full$:{rev:[10800,16000,21500],cost:[900,1100,1400]},as:['Side: 8 / 20 / 32 billable hours a month at $115-130/h.','Full time: 90 / 125 / 150 billable hours a month at $120-145/h.','Full-time figures are before your own super, leave and tax, and assume 11 working months.']},
+b2:{p:'Project managers at small contractors report progress and cost from memory and spreadsheets, and find out about overruns after the money is gone.',who:'Directors of contractors with 3-15 live jobs; owner-side project managers.',why:'One avoided overrun pays for a year. They want a page they can read in two minutes each Monday.',comp:'Generic Power BI freelancers, construction software suites that small firms find too heavy, in-house spreadsheets.',cost:'$1-3k: Power BI licences, insurance, a demo built on fake data.',price:'$2,000-5,000 set-up plus $500-1,200 a month per client to maintain and update.',sales:'Show the demo. Sell to someone who already trusts you; convert b1 clients.',ops:'Software $50-150 a month, insurance, accounting. 3-6 hours a month per client once built.',ai:'Data cleaning, variance commentary, automated weekly summaries.',first:'Build it for your own project at work (with permission). Rebuild it clean on dummy data. Show three contractors.',scale:'Template it. Each new client takes less set-up. At 10+ clients, turn it into a subscription product (b26).',side:'Yes. The best fit for limited hours because the fee recurs.',fail:'Clients\' data is too messy to feed it. They stop looking after month three. You become unpaid IT support.',side$:{rev:[600,2100,4000],cost:[150,250,400]},full$:{rev:[6000,12000,20000],cost:[800,1600,4500]},as:['Side: 1 / 3 / 5 clients at $600-800 a month, set-up fees excluded.','Full time: 7 / 13 / 20 clients at about $900 a month.','Optimistic full-time case includes $3k a month for a part-time analyst.']},
+b3:{p:'Small design and contracting firms burn hours on title blocks, revision clouds, drawing registers and transmittals, and still issue the wrong revision.',who:'Drafting managers, document controllers, directors of 5-30 person firms.',why:'Wrong-revision errors cost real money on site. A register that builds itself is easy to value in hours saved.',comp:'Document management platforms, in-house macros, overseas freelancers, and AI tools that write LISP on request.',cost:'$1-2k.',price:'Fixed price per tool: $1,500-6,000. Support retainer $200-500 a month.',sales:'Before-and-after video of the tool running. Autodesk user groups, LinkedIn posts aimed at document controllers.',ops:'Negligible beyond software and insurance.',ai:'AI writes most of the code. Your value is knowing which step to automate and making it survive real drawings.',first:'A firm you know that still types its drawing register by hand.',scale:'Package the three most-requested tools as a product (b6).',side:'Yes.',fail:'Buyers do not know they want it. Every client\'s drawing standard is different, so each job becomes custom. Low repeat demand.',side$:{rev:[0,1500,4000],cost:[100,150,250]},full$:{rev:[5000,11000,18000],cost:[600,900,1500]},as:['Side: zero, one or two small tools sold a month.','Conservative case is zero because demand is unproven.','Full time assumes a steady pipeline you would need a year to build.']},
+b4:{p:'Contractors lose tenders, or win bad ones, because estimating capacity runs out in busy weeks.',who:'Owners of 10-50 person electrical contractors.',why:'They only need the hours when tenders land. A full-time estimator costs $110-150k.',comp:'Estimating bureaus, freelance estimators, AI takeoff tools.',cost:'$2-6k: estimating software, pricing data, insurance.',price:'$90-120/h, or a fixed fee per tender ($800-5,000 by size).',sales:'Direct to owners. Wholesaler reps know who is short of estimating hours.',ops:'Software $2-5k a year, insurance.',ai:'Takeoff from drawings is increasingly automated. Sell scope-gap review and pricing judgement.',first:'A contractor in a different segment or region from your employer.',scale:'Add a second estimator; charge per tender, not per hour.',side:'With caution. Tender deadlines do not move for your day job.',fail:'A missed item becomes your client\'s loss and your reputation. Conflict of interest if your employer tenders in the same market.',side$:{rev:[800,2400,4500],cost:[250,350,450]},full$:{rev:[8000,13000,19000],cost:[900,1200,1600]},as:['Side: 8 / 22 / 40 hours a month at about $105/h.','Full time: 80 / 120 / 160 billable hours.','Tender work arrives in bursts; monthly figures are averages.']},
+b5:{p:'Small engineering firms know AI could remove paperwork and do not know where to start or what is safe.',who:'Directors of 5-50 person consultancies and contractors.',why:'They trust an engineer who has done it on real projects more than a generic consultant.',comp:'A flood of generalist AI consultants, software vendors adding AI features, clients doing it themselves next year.',cost:'$1-3k.',price:'$1,500-4,000 for a workshop and audit; $3,000-15,000 per implemented workflow.',sales:'Case studies with numbers from your own job. Talks at industry events.',ops:'AI subscriptions $100-400 a month, insurance.',ai:'The service itself.',first:'A firm that has seen something you built and asked how.',scale:'Turn repeat implementations into fixed-price packages, then templates.',side:'Yes, in small doses.',fail:'The tools change every quarter, so what you sold becomes free. Clients\' data is confidential and messy. Liability if an AI check misses something.',side$:{rev:[0,1200,4000],cost:[150,200,300]},full$:{rev:[3000,10000,20000],cost:[700,1000,2000]},as:['Highly variable. Conservative case is zero revenue in most months.','Do not go full time on this without six months of signed work.']},
+b6:{p:'Small firms track drawings and specification revisions in spreadsheets and issue superseded documents.',who:'5-30 person design firms and subcontractors, paying $50-150 a month.',why:'Cheaper and simpler than enterprise document platforms.',comp:'Established construction document platforms, free spreadsheets, and inertia.',cost:'$2-10k and 400-800 unpaid hours.',price:'$49-149 a month per firm.',sales:'Content, user groups, converting b3 service clients. Expect 12-24 months to 20 customers.',ops:'Hosting, support, payment fees. Support time is the hidden cost.',ai:'Reading title blocks and revision tables from PDFs automatically.',first:'Convert a b3 client who already uses your script.',scale:'It is the scalable one, if it reaches about 100 customers.',side:'Yes, and it should stay a side project until it has 30 paying firms.',fail:'Most small software products stall under 20 customers. Churn. A bigger platform adds the feature.',side$:{rev:[0,400,2500],cost:[150,250,500]},full$:{rev:[1000,6000,25000],cost:[500,2000,9000]},as:['Side: 0 / 5 / 25 firms at about $90 a month.','Full time is a year 3-5 picture: 12 / 65 / 250 firms.','Conservative case loses money. That is the common outcome.']},
+b7:{p:'Builders and asset owners need electrical installation delivered.',who:'Builders, facility owners, developers.',why:'Price, programme certainty and relationships.',comp:'Thousands of established contractors.',cost:'$50-250k: vehicles, tools, wages before first payment, bank guarantees.',price:'Lump-sum tenders. Net margins of 3-10% are normal (general industry knowledge, not verified this pass).',sales:'Tendering and relationships with builders.',ops:'Wages, materials, insurance, vehicles, retention held for 12 months.',ai:'Estimating, programme, QA records.',first:'Not applicable until a licensed partner exists.',scale:'More crews, larger packages.',side:'No.',fail:'Cash flow. Fixed-price jobs with rising costs. A builder upstream going broke.',side$:null,full$:{rev:[40000,120000,300000],cost:[38000,110000,268000]},as:['Monthly turnover of $40k / $120k / $300k.','Owner profit shown is before tax and is the owner\'s only pay.','At $1.4m a year turnover the owner makes about $120k. Turnover is not income.']}
+};
+
+/* ---------- lab and academy ---------- */
+var LAB=[
+['l1','Drawing register that builds itself','Python reads title blocks from PDFs or DWG attributes, writes the register, flags revision clashes.',12,['Export 20 real title blocks to test on','Get an AI model to write the extraction script','Run it on a full package and count the errors','Record minutes saved a week']],
+['l2','Specification compliance matrix','Feed a specification section in, get a clause-by-clause requirement table with a responsible party column.',8,['Pick one section you know well','Prompt for requirement, clause, evidence needed','Check 20 rows by hand for misses','Use it on the next subcontract scope']],
+['l3','Notice deadline tracker','Reads your contract for time bars and reminds you before a notice is due.',6,['List every notice clause and its day count','Build the tracker in Excel or Power Automate','Add the live variations','Catch one deadline you would have missed']],
+['l4','Programme to S-curve dashboard','P6 or MS Project export into Power BI: planned against actual, critical path, slipping tasks.',16,['Export the programme to Excel','Model planned and earned value by week','Build the one-page report','Present it at one site meeting']],
+['l5','Long-lead procurement radar','Tracks switchgear, transformers and generators against need-on-site dates.',8,['List long-lead items and quoted lead times','Join to the programme need dates','Colour by float remaining','Send it weekly']],
+['l6','Batch title block and revision updater','AutoLISP routine that updates revisions across a drawing set in one run.',10,['Write down the manual steps','Have AI draft the routine','Test on copies only','Document it so a drafter can run it']],
+['l7','Tender scope-gap finder','Compares drawings list, specification and bill of quantities and lists what is priced nowhere.',10,['Take a past tender','Extract scope items from each document','Diff them','Compare against the variations that later occurred']],
+['l8','Weekly report generator','Site diary, photos and programme status in; a client-ready weekly report out.',6,['Collect four past reports as style examples','Build the prompt and template','Generate, then edit','Time it against the manual version']],
+['l9','Cable schedule sanity checker','Flags cables whose size, length and load look inconsistent so an engineer can review them.',12,['Load a cable schedule','Add rule checks for volt drop and rating bands','Flag, never approve','Have a registered engineer confirm the flags']]
+];
+var ACA=[
+['a1','AutoCAD','E',['Layers, xrefs and sheet sets on a live project','Dynamic blocks with attributes','Title block attributes that feed a register','AutoCAD Electrical: when it pays, when it does not','Mission: rebuild one standard drawing as a template']],
+['a2','Engineering design','E',['Reading single-line diagrams end to end','Cable sizing and volt drop to AS/NZS 3008','Switchboard requirements under AS/NZS 61439','Earthing and HV basics under AS 2067','Mission: review a design and write five RFIs']],
+['a3','Specifications','P',['How a specification is structured and ranked','Finding conflicts between drawings and specification','Writing a scope of works for a subcontract','Hold points, ITPs and evidence','Mission: build a compliance matrix for one section']],
+['a4','Civil engineering','C',['Reading civil drawings: levels, chainage, sections','Trenching, conduits and pits for electrical routes','Concrete and footing basics for plant','Drainage and why it wrecks cable routes','Mission: mark up a combined services plan']],
+['a5','Construction','C',['Method statements and sequencing','Site safety documents and permits','Subcontract letting and management','Commissioning and handover','Mission: write the construction sequence for a switchroom']],
+['a6','BIM','C',['What a model is for and who uses it','Navisworks clash review','ISO 19650 naming and information requirements','Common data environments','Mission: run one clash meeting']],
+['a7','Project controls','P',['Critical path method by hand','Primavera P6 baseline and update','Earned value and S-curves','Change control and forecasting','Mission: baseline your own project in P6']],
+['a8','AI automation','T',['Prompting for engineering documents','Python and Power Query basics with AI as tutor','Agents that read, check and report','Confidentiality: what must never leave the company','Mission: ship one tool from the AI Engineering Lab']]
+];
+
+/* ---------- skills ---------- */
+/* name,salary,demand,transfer,business,difficulty,cost,hours,aiPot,commod,strategic,note */
+var SK=[
+['Contract administration',5,5,5,4,3,2,150,3,2,5,'The gap between PE and PM. Used in every sector.'],
+['Electrical power systems (HV, protection)',5,5,3,3,4,2,300,2,1,5,'What data centre and grid employers pay a premium for.'],
+['Primavera P6',4,4,5,5,3,2,120,3,2,4,'Opens contracting and the planning business.'],
+['Construction methodology',4,4,4,3,4,1,400,2,1,5,'Learned on site, not in a course. Cannot be faked or automated.'],
+['Cost engineering',4,4,5,4,3,2,100,3,2,4,'Pairs with P6 to make project controls.'],
+['Earned value management',3,3,5,3,2,1,40,3,2,4,'Forty hours, high credibility with clients.'],
+['Engineering estimating',4,4,4,4,3,1,200,4,3,4,'Takeoff is commoditising; pricing judgement is not.'],
+['Engineering standards',4,4,3,3,3,2,150,3,2,4,'AS/NZS 3000, 3008, 61439, AS 2067. Needed for registration.'],
+['Power BI',3,4,5,4,2,1,80,5,3,4,'Cheap, visible, and the core of the dashboard business.'],
+['Advanced Excel',3,4,5,3,2,1,40,5,3,3,'Still what most contractors run on.'],
+['Power Query',3,3,5,4,2,1,40,5,3,4,'The fastest route from messy data to a report.'],
+['Python',3,3,5,4,3,1,150,5,3,4,'With AI writing most code, 150 hours gets you far.'],
+['AI agents and workflow automation',3,3,5,4,3,1,100,5,4,4,'Useful now. The specifics go stale every six months.'],
+['SQL',2,3,5,3,2,1,60,5,3,3,'Only once your data outgrows Excel.'],
+['Engineering software integration',3,2,4,4,5,2,400,4,2,4,'Year 5+. Needs two systems known deeply.'],
+['Navisworks',2,3,3,2,2,1,40,3,3,3,'Forty hours. Required for services coordination.'],
+['BIM',3,3,4,3,3,2,60,3,3,3,'Learn the process, skip the modelling.'],
+['MS Project',2,3,4,2,2,1,30,3,4,2,'What small contractors use. A weekend.'],
+['AutoCAD',1,3,3,2,2,1,0,4,5,2,'You have it. More adds nothing to pay.'],
+['AutoCAD Electrical',2,2,2,2,3,1,60,4,4,2,'Only if your employer uses it.'],
+['AutoLISP',1,1,2,3,3,1,60,4,5,2,'AI writes it now. Learn to read and test it.'],
+['Autodesk APIs',2,2,3,3,5,1,300,3,3,3,'Only if you commit to the product business.'],
+['Dynamo',2,2,2,3,4,1,120,3,4,2,'Tied to Revit. Skip.'],
+['Revit',2,3,3,2,4,2,200,3,4,2,'Modeller pay is below yours.'],
+['Civil 3D',1,3,2,2,4,2,200,3,3,1,'A civil designer tool. No return for you.']
+];
+SK.forEach(function(s){s.roi=Math.round(((2*s[1]+s[2]+s[3]+s[4]+s[10])/6*20)-(s[5]+s[6]+s[9])*3-s[7]/40)});
+
+/* ---------- ladder ---------- */
+var LAD={
+130:{t:'0-12 months',e:'Senior Project Engineer by regrade or by moving employer. No new qualification needed.',c:'Not worth it yet: about $75/h for 44 weeks equals this, with no security.',b:'No business route this early.',gate:'One package you can prove you ran.',fast:'Change employer to a critical power contractor.',safe:'Regrade where you are, with market evidence.',up:'Same move, at an employer with PMs under 35.'},
+150:{t:'1-3 years',e:'Senior PE in data centres, HV or batteries; or Project Manager on a small package; or Perth resources.',c:'Contract PE or planner at $85-95/h, 44 weeks.',b:'Salary of about $135k plus $15k of side-business profit (base case of the reporting business).',gate:'Owning programme and variations, not only technical delivery.',fast:'Perth resources or data centres.',safe:'Network or water utility project role with HV exposure.',up:'Project Manager title early.'},
+180:{t:'3-5 years',e:'Project Manager, electrical; Senior Planner; Services Manager at a tier 1 builder.',c:'Senior planner or PM contract at $105-115/h, 44 weeks.',b:'Full-time planning practice in its base case earns about this before your own super.',gate:'A completed project with your name against the commercial result.',fast:'PM at a specialist contractor.',safe:'Senior Planner: portable across five industries.',up:'PM, because it leads to director roles.'},
+200:{t:'5-8 years',e:'Senior Project Manager; Project Controls Manager; Commercial Manager; Construction Manager.',c:'About $125/h for 44 weeks, plus super, equals a $200k base.',b:'Planning or reporting business at the optimistic full-time case, or the base case with one employee.',gate:'Running other people, or being the named specialist on a major project.',fast:'Senior PM in data centres or FIFO resources.',safe:'Controls Manager on publicly funded majors.',up:'Commercial Manager into operations.'},
+250:{t:'8-12 years',e:'Project Director, Operations Manager, General Manager of a business unit. Total remuneration of $250k arrives sooner, at about a $205k base.',c:'$150/h for 46 weeks. Rare outside controls leads, commissioning managers and claims specialists.',b:'A consultancy with 2-4 billable staff, or a contractor turning over $3m+ at a healthy margin.',gate:'Profit-and-loss responsibility.',fast:'FIFO construction management in WA.',safe:'There is no safe route to this number.',up:'Ownership.'},
+300:{t:'10-15+ years, if at all',e:'Executive roles: regional general manager, project director on a $500m+ job. Few seats.',c:'Expert witness or delay and quantum work at $200-300/h. Needs standing you build over a decade.',b:'Owning a firm with 5-15 staff. This is where most people who reach $300k get it.',gate:'Leverage: other people\'s hours, or a product.',fast:'None that I would call realistic inside eight years.',safe:'None.',up:'Controls or delivery consultancy with staff; software only if it reaches 200+ customers.'}
+};
+
+/* ---------- simulator ---------- */
+/* bands at years 1,3,5,10 as [lo,hi] in $k */
+var PW=[
+{id:'A',n:'Critical power and grid delivery to PM',b:[[125,145],[145,175],[165,200],[190,250]],h:120,cost:2500,trav:0,risk:2,or:'E',city:'MPO',dem:5,sk:'HV fundamentals, contract administration, commissioning',rk:'Concentrated on data centre and energy capex. Long hours.',nx:'Benchmark 15 Senior PE adverts and ask for a regrade.'},
+{id:'G',n:'Delivery career + controls side business',b:[[125,150],[145,195],[165,240],[190,300]],h:260,cost:5000,trav:0,risk:2,or:'B',city:'MPO',dem:5,sk:'P6, earned value, Power BI, contract administration',rk:'Two jobs at once. Employer consent needed.',nx:'Build the programme dashboard for your own project.'},
+{id:'B',n:'Project controls to Senior Planner',b:[[115,140],[140,170],[155,200],[180,250]],h:240,cost:4500,trav:0,risk:2,or:'B',city:'MPO',dem:4,sk:'P6, cost control, earned value',rk:'Flat pay at first. Desk-bound detail work.',nx:'Rebuild your project programme in P6.'},
+{id:'C',n:'Services coordination at a builder',b:[[120,140],[140,165],[155,190],[180,230]],h:80,cost:1500,trav:0,risk:2,or:'E',city:'MPO',dem:5,sk:'Mechanical and fire services, Navisworks, commissioning',rk:'Builder insolvency. Six-day weeks.',nx:'Apply to two tier 1 builders.'},
+{id:'D',n:'Contracts to Commercial Manager',b:[[105,130],[130,160],[155,190],[190,260]],h:200,cost:6000,trav:0,risk:2,or:'E',city:'MPO',dem:5,sk:'Contract law, security of payment, valuation',rk:'A pay cut first. You leave engineering.',nx:'Run the variation register on your project.'},
+{id:'F',n:'Perth resources electrical projects',b:[[135,165],[155,190],[175,220],[200,270]],h:60,cost:1500,trav:2,risk:3,or:'E',city:'P',dem:5,sk:'Hazardous areas, mine site systems, HV',rk:'Commodity cycle. FIFO rosters.',nx:'Price a Perth-based role against Melbourne.'},
+{id:'H',n:'Estimating',b:[[110,135],[130,160],[145,180],[160,210]],h:150,cost:3000,trav:0,risk:1,or:'B',city:'MPO',dem:4,sk:'Takeoff, labour units, tender strategy',rk:'Lower ceiling. Takeoff is being automated.',nx:'Help price one tender.'},
+{id:'E',n:'Digital engineering and automation',b:[[110,130],[120,150],[135,170],[160,220]],h:350,cost:2500,trav:0,risk:3,or:'B',city:'MO',dem:3,sk:'Python, Power BI, ISO 19650, AI agents',rk:'Few roles. First to be cut.',nx:'Ship one tool that saves an hour a week.'}
+];
+var YR=[1,3,5,10];
+
+/* ---------- decision ---------- */
+var PATHS=[
+['G','Best combined job and business','Critical power delivery + controls side business','Costs evenings. Needs employer consent.',1],
+['A','Fastest realistic raise','Senior PE at a critical power or HV contractor','A job move, with the usual risk of a bad employer.',2],
+['B','Strongest long-term demand','Grid, battery and data centre electrical delivery','Policy and hyperscaler dependence.',3],
+['H','Most resilient in a downturn','Utility-side HV project delivery plus controls skills','Slower pay growth than contractors.',4],
+['D','Best AI and engineering mix','Automation as your edge inside delivery, not as a job title','Less glamorous than "AI engineer". Far more jobs.',5],
+['E','Lowest-cost business','Progress and cost reporting dashboards (b2)','Small at first: one or two clients.',6],
+['C','Best way into construction','Services coordinator at a tier 1 builder','Builder insolvency risk; six-day weeks.',7],
+['F','Highest business scalability','Reporting service turned into subscription software','Most likely outcome is that it stays a service.',8]
+];
+var PLAN=[
+['Days 1-30: price yourself',['p1','Collect 15 adverts that state pay for Senior PE and PM in Melbourne and Perth'],['p2','Rewrite the CV around one package: dollars, kV, MW, dates'],['p3','Read your employment contract for secondary-employment and IP clauses'],['p4','Check Victorian registration requirements and count your qualifying years'],['p5','Start the programme-to-S-curve dashboard (Lab mission 4)']],
+['Days 31-60: build the proof',['p6','Finish the dashboard and present it at a site meeting'],['p7','Take over the variation register or monthly programme update'],['p8','Complete a P6 fundamentals course, then rebuild your programme in it'],['p9','Have the regrade conversation with evidence in hand'],['p10','Talk to two PMs at critical power or HV contractors']],
+['Days 61-90: test the market',['p11','Apply to five roles if the regrade answer was no or vague'],['p12','Rebuild the dashboard on dummy data as a demo'],['p13','Show it to three contractors outside your employer\'s market'],['p14','Offer one fixed-price programme or dashboard job with written employer consent'],['p15','Decide: keep the side test, or park it and go all-in on PM']]
+];
+var MILES=[['1 year','Senior PE on $130-150k. One paying client or a clear no. P6 working knowledge. Registration application lodged.'],['3 years','Project Manager on $150-180k. Registered. Side income of $10-40k a year, or shut down on purpose.'],['5 years','Senior PM on $180-210k, or contracting. Decide employee, contractor or owner.'],['10 years','Delivery lead on $220k+, or a consultancy with 3-6 people paying you $200-300k.']];
+
+/* ---------- rendering: shelves ---------- */
+var CH=[['top','Top picks'],['salary','High salary tracks'],['radar','Demand radar'],['civil','Civil bridge'],['biz','Business builder'],['lab','AI lab'],['academy','Academy'],['c200','$200K'],['c300','$300K'],['skills','Skills'],['sim','Simulator'],['decide','Decide']];
+$('#navlinks').innerHTML=CH.map(function(c){return '<button data-go="'+c[0]+'">'+c[1]+'</button>'}).join('');
+
+function card(o){return '<button class="card" data-open="'+o.open+'" style="--f:var(--f'+o.f+')"><div class="art">'+(o.tag?'<span class="tag">'+o.tag+'</span>':'')+(o.rank?'<span class="rank">'+o.rank+'</span>':'')+(o.deep?'<span class="deep">FULL FILE</span>':'')+'<span class="t">'+o.t+'</span></div><div class="meta"><span class="b">'+(o.b||'')+'</span><span class="s">'+o.s+'</span>'+(o.pill?'<span>'+o.pill+'</span>':'')+'</div></button>'}
+var oddsP={g:'<span class="pill g">Strong fit</span>',w:'<span class="pill w">Possible</span>',r:'<span class="pill r">Poor fit</span>'};
+function roleCard(r){return card({open:'role:'+r[0],f:r[2],tag:FAM[r[2]],deep:!!RD[r[0]],t:r[1],b:'$'+r[3]+'-'+r[4]+'k base',s:r[11],pill:oddsP[r[10]]})}
+function bizCard(b){var sd={Y:'<span class="pill g">Start while employed</span>',C:'<span class="pill w">Conflict check first</span>',N:'<span class="pill r">Not part-time</span>'}[b[5]];return card({open:'biz:'+b[0],f:'B',tag:TIER[b[2]],deep:!!BD[b[0]],t:b[1],b:'Owner profit '+b[6],s:b[9],pill:sd})}
+var filt={salary:'all',biz:'all'};
+function shelf(id,title,desc,cards,chips){return '<section class="shelf" id="'+id+'"><div class="sh"><h2>'+title+'</h2><div class="d">'+desc+'</div></div>'+(chips||'')+'<div class="rail" id="rail-'+id+'">'+cards+'</div></section>'}
+function chipRow(key,opts){return '<div class="chips">'+opts.map(function(o){return '<button class="chip" data-filt="'+key+':'+o[0]+'" aria-pressed="'+(filt[key]===o[0])+'">'+o[1]+'</button>'}).join('')+'</div>'}
+function salaryCards(){var f=filt.salary;return R.filter(function(r){return f==='all'||r[2]===f||(f==='deep'&&RD[r[0]])}).sort(function(a,b){return ('gwr'.indexOf(a[10])-'gwr'.indexOf(b[10]))||(b[4]-a[4])}).map(roleCard).join('')}
+function bizCards(){var f=filt.biz;return BZ.filter(function(b){return f==='all'||b[2]===f||(f==='side'&&b[5]==='Y')}).map(bizCard).join('')}
+function listCards(){return mylist.map(function(k){var p=k.split(':'),x;if(p[0]==='role'){x=R.filter(function(r){return r[0]===p[1]})[0];return x?roleCard(x):''}if(p[0]==='biz'){x=BZ.filter(function(r){return r[0]===p[1]})[0];return x?bizCard(x):''}if(p[0]==='traj'){x=T.filter(function(r){return r.id===p[1]})[0];return x?card({open:k,f:x.f,tag:x.tag,t:x.n,b:'Trajectory',s:x.v}):''}return ''}).join('')}
+function renderShelves(){
+  var h='';
+  h+=shelf('top','Top picks for you','Six career-to-business trajectories, ranked for an electrical project engineer with 3-6 years, a recognised degree and no registration yet.',T.map(function(t,i){return card({open:'traj:'+t.id,f:t.f,tag:t.tag,rank:i+1,t:t.n,b:'1 / 3 / 5 / 10-year roadmap',s:t.v})}).join(''));
+  if(mylist.length)h+=shelf('mylist','My list','Posters you saved.',listCards());
+  h+=shelf('salary','High salary tracks','50 roles scored against your profile. "Full file" posters carry all 15 points; the rest carry a scorecard and a verdict.',salaryCards(),chipRow('salary',[['all','All'],['deep','Full files'],['E','Electrical'],['C','Civil'],['P','Planning'],['T','Tech'],['I','Wider industry']]));
+  h+=shelf('radar','Future demand radar','Each industry is classed on evidence read on 16 November 2026. Nothing here is called future-proof.',IND.map(function(i){var c=CLS[i[2]];return card({open:'ind:'+i[0],f:i[2]==='S'?'I':i[2]==='C'?'C':i[2]==='M'?'E':'T',tag:'Radar',t:i[1],b:'Checked '+(stamps[i[0]]||'16 Nov 2026'),s:i[5],pill:'<span class="pill '+c[1]+'">'+c[0]+'</span>'})}).join(''));
+  h+=shelf('civil','Civil and construction bridge','Which doors into construction are open to an electrical engineer, and which are a step backwards.',R.filter(function(r){return r[2]==='C'||['cad','pln','cmp'].indexOf(r[0])>=0}).sort(function(a,b){return 'gwr'.indexOf(a[10])-'gwr'.indexOf(b[10])}).map(roleCard).join(''));
+  h+=shelf('biz','Business builder','38 businesses. Figures are owner profit before your own tax and super, never turnover.',bizCards(),chipRow('biz',[['all','All'],['side','Start while employed'],['L','Low-capital'],['S','Specialist'],['D','Digital'],['H','Higher-capital']]));
+  h+=shelf('lab','AI engineering lab','Nine tools to build in your current job. Each one is also a portfolio piece and a product demo.',LAB.map(function(l){var n=l[4].filter(function(_,i){return done[l[0]+'.'+i]}).length;return card({open:'lab:'+l[0],f:'T',tag:'Mission',t:l[1],b:'About '+l[3]+' hours',s:l[2],pill:'<span class="pill '+(n===l[4].length?'g':'n')+'">'+n+' / '+l[4].length+' steps</span>'})}).join(''));
+  h+=shelf('academy','Engineering academy','The core modules: AutoCAD, design, specifications, civil, construction, BIM, project controls and AI automation.',ACA.map(function(a){var n=a[3].filter(function(_,i){return done[a[0]+'.'+i]}).length;return card({open:'aca:'+a[0],f:a[2],tag:'Learning path',t:a[1],b:a[3].length+' lessons',s:a[3][a[3].length-1],pill:'<span class="pill '+(n===a[3].length?'g':'n')+'">'+n+' / '+a[3].length+' done</span>'})}).join(''));
+  $('#shelvesIn').innerHTML=h;
+}
+
+/* ---------- modal ---------- */
+function fact(k,v){return '<div><span class="k">'+k+'</span>'+L(v)+'</div>'}
+function saveBtn(key){var on=mylist.indexOf(key)>=0;return '<button class="btn s sm" data-save="'+key+'">'+(on?'✓ In my list':'+ My list')+'</button>'}
+function checks(prefix,items){return items.map(function(t,i){var id=prefix+'.'+i;return '<label class="chk"><input type="checkbox" data-chk="'+id+'"'+(done[id]?' checked':'')+'><span>'+t+'</span></label>'}).join('')}
+function scen(d){
+  var rows='';['side$','full$'].forEach(function(k){var s=d[k];if(!s)return;var lab=k==='side$'?'While employed':'Full time';
+    rows+='<tr><td>'+lab+': revenue / month</td>'+s.rev.map(function(v){return '<td class="num">'+fmt(v)+'</td>'}).join('')+'</tr><tr><td>'+lab+': costs / month</td>'+s.cost.map(function(v){return '<td class="num">'+fmt(v)+'</td>'}).join('')+'</tr><tr><td><b>'+lab+': owner profit / year</b></td>'+s.rev.map(function(v,i){var p=(v-s.cost[i])*(k==='full$'?11:12);return '<td class="num"><b class="'+(p<=0?'r':'g')+'">'+fmt(p)+'</b></td>'}).join('')+'</tr>'});
+  return '<h3>Scenarios</h3><div class="scroll"><table><tr><th></th><th>Conservative</th><th>Base</th><th>Optimistic</th></tr>'+rows+'</table></div><ul class="note">'+d.as.map(function(a){return '<li>'+a+'</li>'}).join('')+'<li>Owner profit is before your own income tax and super. Assumptions are mine; replace them with your own quotes.</li></ul>';
+}
+function openSheet(key){
+  var p=key.split(':'),kind=p[0],id=p[1],h='',f='E',x,d;
+  if(kind==='role'){x=R.filter(function(r){return r[0]===id})[0];d=RD[id];f=x[2];
+    h='<div class="top"><span class="eyebrow">'+FAM[x[2]]+'</span><h2>'+x[1]+'</h2><p style="color:var(--ink2);margin:8px 0 12px">'+x[11]+'</p>'+oddsP[x[10]]+' <span class="pill n mono">$'+x[3]+'-'+x[4]+'k base, experienced</span> '+saveBtn(key)+'</div><div class="body"><div class="facts">'+
+      fact('Demand',dots(x[5]))+fact('Fit with your background',dots(x[6]))+fact('Contracting potential',dots(x[7]))+fact('Business potential',dots(x[8]))+fact('Exposure to AI and offshoring',x[9])+'</div>';
+    if(d){h+='<div class="facts">'+fact('1. Demand and drivers',d.dr)+fact('2. Salary',' $'+x[3]+'-'+x[4]+'k base for an experienced person, capital city. Sources are cited under demand; treat as plus or minus 10%.')+fact('3. Progression','<b>3 yrs:</b> '+d.prog[0]+'<br><b>5 yrs:</b> '+d.prog[1]+'<br><b>10 yrs:</b> '+d.prog[2])+fact('4. Skills and qualifications',d.req)+fact('5. What you already bring',d.have)+fact('6. What is missing',d.gap)+fact('7. Time and cost to be competitive',d.tc)+fact('8. AI automation',d.ai)+fact('9. Contracting',d.con)+fact('10. Independent business',d.biz)+fact('11. Where the work is',d.geo)+fact('12. Outsourcing, automation, downturns',d.exp)+fact('13. Hours and travel',d.wl)+fact('14. Chance of making the move',d.odds)+'</div><h3>15. Next three actions</h3>'+checks('r.'+id,d.next)}
+    else h+='<div class="warnbox">Scorecard only. This role was scored but not expanded, because '+(x[10]==='r'?'it is a poor match for your background or pays below your current track.':'it is a later-career step or sits behind one of the full-file roles.')+' Ask me to expand it if you disagree.</div>';
+    h+='</div>';
+  }
+  else if(kind==='ind'){x=IND.filter(function(r){return r[0]===id})[0];var c=CLS[x[2]];f=x[2]==='S'?'I':x[2]==='C'?'C':x[2]==='M'?'E':'T';
+    h='<div class="top"><span class="eyebrow">Future demand radar</span><h2>'+x[1]+'</h2><p style="margin:10px 0 0"><span class="pill '+c[1]+'">'+c[0]+'</span> <span class="pill n mono">Checked <span id="stamp">'+(stamps[id]||'16 Nov 2026')+'</span></span></p></div><div class="body"><div class="facts">'+fact('Evidence for',x[3])+fact('Evidence against',x[4])+fact('The call',x[5])+'</div><h3>Roles this feeds</h3><div class="rail" style="margin:0;padding-left:0">'+x[6].map(function(rid){var r=R.filter(function(q){return q[0]===rid})[0];return r?roleCard(r):''}).join('')+'</div><h3>Refresh</h3><p style="color:var(--ink2);font-size:14.5px">Re-read the primary source each quarter: <a href="'+SRC[x[7]][1]+'" target="_blank" rel="noopener">'+SRC[x[7]][0]+'</a>. If the numbers moved, ask me to update this poster.</p><button class="btn s sm" data-stamp="'+id+'">Mark re-checked today</button></div>';
+  }
+  else if(kind==='traj'){x=T.filter(function(r){return r.id===id})[0];f=x.f;
+    h='<div class="top"><span class="eyebrow">Trajectory #'+(T.indexOf(x)+1)+' &middot; '+x.tag+'</span><h2>'+x.n+'</h2><p style="color:var(--ink2);margin:8px 0 12px">'+x.v+'</p>'+saveBtn(key)+'</div><div class="body"><h3>Roadmap</h3><div class="tl">'+['1 year','3 years','5 years','10 years'].map(function(y,i){return '<div><b>'+y+'</b>'+x.road[i]+'</div>'}).join('')+'</div><div class="facts">'+fact('Skills to build',x.sk)+fact('Capital needed',x.cap)+fact('Relationships to build',x.rel)+fact('First paying customer',x.fc)+fact('What could go wrong',x.risk)+'</div></div>';
+  }
+  else if(kind==='biz'){x=BZ.filter(function(r){return r[0]===id})[0];d=BD[id];f='B';
+    h='<div class="top"><span class="eyebrow">'+TIER[x[2]]+'</span><h2>'+x[1]+'</h2><p style="color:var(--ink2);margin:8px 0 12px">'+x[9]+'</p>'+saveBtn(key)+'</div><div class="body"><div class="facts">'+fact('Start-up cost',x[3])+fact('Licence or registration',x[4])+fact('Solo owner profit ceiling',x[6]+' a year, before tax')+fact('Scalability beyond your hours',dots(x[7]))+fact('Fit with your background',dots(x[8]))+'</div>';
+    if(d){h+='<div class="facts">'+fact('1. Customer problem',d.p)+fact('2. Who pays',d.who)+fact('3. Why they buy',d.why)+fact('4. Competitors',d.comp)+fact('5. Start-up costs',d.cost)+fact('9. Pricing',d.price)+fact('10. Sales and customer acquisition',d.sales)+fact('11. Operating costs and margin',d.ops)+fact('13. AI automation',d.ai)+fact('14. First customer',d.first)+fact('15. Scaling beyond your time',d.scale)+fact('16. Start while employed?',d.side)+fact('18. Why it could fail',d.fail)+'</div><h3>6-8. Licences, and what you can legally do yourself</h3><p style="color:var(--ink2);font-size:14.5px">'+L(COMMON.legal)+'</p><h3>17. Conflicts of interest and confidentiality</h3><p style="color:var(--ink2);font-size:14.5px">'+COMMON.conflict+'</p><span class="k" style="margin-top:14px">12. Monthly revenue and owner profit</span>'+scen(d)}
+    else h+='<div class="warnbox">Scorecard only. The seven businesses marked "Full file" have all 18 points and three financial scenarios. The licensing and conflict rules below apply to this one too.</div><p style="color:var(--ink2);font-size:14.5px">'+L(COMMON.legal)+'</p><p style="color:var(--ink2);font-size:14.5px">'+COMMON.conflict+'</p>';
+    h+='</div>';
+  }
+  else if(kind==='lab'){x=LAB.filter(function(r){return r[0]===id})[0];f='T';
+    h='<div class="top"><span class="eyebrow">AI engineering lab &middot; about '+x[3]+' hours</span><h2>'+x[1]+'</h2><p style="color:var(--ink2);margin:8px 0 0">'+x[2]+'</p></div><div class="body"><h3>Mission steps</h3>'+checks(id,x[4])+'<div class="warnbox">Get permission before running employer documents through any AI tool, and keep a copy of the result only on employer systems. Rebuild on dummy data if you want to show it outside work.</div></div>';
+  }
+  else if(kind==='aca'){x=ACA.filter(function(r){return r[0]===id})[0];f=x[2];
+    h='<div class="top"><span class="eyebrow">Engineering academy</span><h2>'+x[1]+'</h2></div><div class="body"><h3>Learning path</h3>'+checks(id,x[3])+'<p class="note">Lesson titles are the path. Ask me for any lesson and I will build it as its own page with worked examples.</p></div>';
+  }
+  $('#sheet').style.setProperty('--f','var(--f'+f+')');
+  $('#sheet').innerHTML='<div style="position:relative"><button class="x" data-close aria-label="Close">✕</button>'+h+'</div>';
+  $('#modal').hidden=false;$('#modal').scrollTop=0;document.body.style.overflow='hidden';
+  var xb=$('#sheet .x');if(xb)xb.focus();
+}
+function closeSheet(){$('#modal').hidden=true;document.body.style.overflow='';renderShelves()}
+
+/* ---------- ladder ---------- */
+var ladSel=200;
+function renderLad(){
+  $('#ladChips').innerHTML=Object.keys(LAD).map(function(k){return '<button class="chip" data-lad="'+k+'" aria-pressed="'+(+k===ladSel)+'">$'+k+'k'+(k>=250?' personal income':' base')+'</button>'}).join('');
+  var d=LAD[ladSel];
+  $('#ladOut').innerHTML='<div class="grid g3"><div class="box"><span class="k">Employment route</span><p>'+d.e+'</p></div><div class="box"><span class="k">Contracting route</span><p>'+d.c+'</p></div><div class="box"><span class="k">Business route</span><p>'+d.b+'</p></div></div><div class="grid g3" style="margin-top:12px"><div class="box"><span class="k">Realistic timing</span><div class="big">'+d.t+'</div><p style="margin-top:8px"><b>Gate:</b> '+d.gate+'</p></div><div class="box"><span class="k">Fastest &middot; Safest &middot; Highest upside</span><ul><li><b>Fastest:</b> '+d.fast+'</li><li><b>Safest:</b> '+d.safe+'</li><li><b>Upside:</b> '+d.up+'</li></ul></div><div class="box"><span class="k">Routes I would rule out</span><ul><li><b>Too slow:</b> civil project engineer, BIM coordinator (restart below current pay).</li><li><b>Too expensive:</b> electrical contracting or switchboard manufacture without a licensed partner and $50k+.</li><li><b>Too crowded:</b> AI solutions developer, generic AI consulting.</li><li><b>Poor match:</b> delay analysis, digital transformation manager (10-year roles).</li></ul></div></div>';
+}
+$('#who300').innerHTML='<ul><li><b>Employed:</b> project directors and general managers with profit-and-loss responsibility, typically 12-15+ years in. Data centre business-manager adverts reach $190-220k base today '+L('{salt}')+', so $300k is a level above that.</li><li><b>Contracting:</b> $150/h for 46 weeks grosses about $276k before super and costs. Master scheduler rates of about $1,500 a day are quoted in 2026 '+L('{ti}')+' and are the top of the market.</li><li><b>Business:</b> owners of consultancies with 5-15 billable people, or contractors turning over several million at a healthy margin.</li><li><b>FIFO:</b> construction managers on resources projects reach $250k+ packages sooner, in exchange for the roster.</li></ul><div class="warnbox">My read: $200k is a realistic 5-8 year target for you. $300k is a 10+ year outcome that needs ownership or an executive seat. Plan for the first and position for the second.</div>';
+function renderCR(){
+  var r=+$('#crRate').value||0,h=+$('#crHrs').value||0,w=+$('#crWks').value||0,sup=$('#crSup').value==='1',c=+$('#crCost').value||0;
+  var days=Math.max(0,w*5),rev=r*h*days,net=rev-c,eq=sup?net/1.12:net;
+  $('#crOut').innerHTML='<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr))"><div><span class="k">Billed in a year</span><div class="big">'+fmt(rev)+'</div></div><div><span class="k">After own costs</span><div class="big">'+fmt(net)+'</div></div><div><span class="k">Equivalent base salary</span><div class="big" style="color:var(--hot)">'+fmt(eq)+'</div></div></div><p class="note">'+days+' billable days. A permanent job at '+fmt(eq)+' base also gives paid leave, redundancy rights and continuity, which this figure already accounts for only through the weeks you entered.</p>';
+}
+
+/* ---------- skills ---------- */
+var skSort='roi',skDir=-1;
+var SKC=[['Skill',0],['Return','roi'],['Salary',1],['Demand',2],['Transfer',3],['Business',4],['Difficulty',5],['Cost',6],['Hours',7],['AI leverage',8],['Commod.',9],['Strategic',10],['Why',11]];
+function renderSk(){
+  var rows=SK.slice().sort(function(a,b){var x=skSort==='roi'?a.roi:a[skSort],y=skSort==='roi'?b.roi:b[skSort];return (x>y?1:x<y?-1:0)*skDir});
+  var mx=Math.max.apply(null,SK.map(function(s){return s.roi}));
+  $('#skT').innerHTML='<tr>'+SKC.map(function(c){return '<th><button data-sk="'+c[1]+'">'+c[0]+(skSort===c[1]?(skDir<0?' ▼':' ▲'):'')+'</button></th>'}).join('')+'</tr>'+rows.map(function(s,i){
+    return '<tr><td><b>'+s[0]+'</b></td><td class="num"><span class="bar" style="width:'+Math.max(4,s.roi/mx*70)+'px;background:'+(s.roi>=55?'var(--good)':s.roi>=38?'var(--warn)':'var(--bad)')+'"></span> '+s.roi+'</td>'+[1,2,3,4,5,6].map(function(k){return '<td class="num">'+s[k]+'</td>'}).join('')+'<td class="num">'+s[7]+'</td><td class="num">'+s[8]+'</td><td class="num">'+s[9]+'</td><td class="num">'+s[10]+'</td><td style="min-width:220px;color:var(--ink2)">'+s[11]+'</td></tr>'}).join('');
+}
+
+/* ---------- simulator ---------- */
+var simSel=null;
+function simCalc(){
+  var cur=+$('#sCur').value||0,tar=(+$('#sTar').value||0)/1000,hrs=Math.max(1,+$('#sHrs').value||1),bud=+$('#sBud').value||0,city=$('#sCity').value,pref=$('#sPref').value,trav=+$('#sTrav').value,risk=+$('#sRisk').value,hor=+$('#sHor').value;
+  var up=city==='P'?1.04:1;
+  return PW.map(function(p){
+    var b=p.b.map(function(x){return [Math.max(x[0]*up,cur/1000),Math.max(x[1]*up,cur/1000)]});
+    var hi=null,lo=null;YR.forEach(function(y,i){if(hi===null&&b[i][1]>=tar)hi=y;if(lo===null&&b[i][0]>=tar)lo=y});
+    var s=50+p.dem*5,flags=[];
+    if(p.city.indexOf(city)<0){s-=40;flags.push('Not available in your city')}
+    if(p.trav>trav){s-=25*(p.trav-trav);flags.push('Needs more travel than you allow')}
+    if(p.risk>risk){s-=12*(p.risk-risk);flags.push('Riskier than your tolerance')}
+    if(p.cost>bud){s-=8;flags.push('Training costs about '+fmt(p.cost)+', above budget')}
+    if(pref==='E'&&p.or==='B'&&p.id==='G'){s-=20}
+    if(pref==='O'){s+=p.or==='B'?12:-8}
+    if(pref==='B'&&p.id==='G')s+=10;
+    if(hi===null){s-=30;flags.push('Target not reached inside 10 years, even in the high case')}
+    else if(hi>hor){s-=15;flags.push('High case reaches target in year '+hi+', beyond your horizon')}
+    else s+=(10-hi)*2;
+    if(lo!==null&&lo<=hor)s+=8;
+    return {p:p,b:b,hi:hi,lo:lo,s:s,flags:flags,weeks:Math.ceil(p.h/hrs),cur:cur/1000,tar:tar};
+  }).sort(function(a,b){return b.s-a.s});
+}
+function chart(r){
+  var W=520,H=230,l=38,rt=30,t=12,bt=26,ymin=80,ymax=Math.max(300,r.tar+20);
+  var X=function(y){return l+(W-l-rt)*y/10},Y=function(v){return t+(H-t-bt)*(1-(v-ymin)/(ymax-ymin))};
+  var pts=[[0,r.cur,r.cur]].concat(YR.map(function(y,i){return [y,r.b[i][0],r.b[i][1]]}));
+  var top=pts.map(function(p){return X(p[0])+','+Y(p[2])}).join(' '),bot=pts.slice().reverse().map(function(p){return X(p[0])+','+Y(p[1])}).join(' ');
+  var g='';for(var v=100;v<=ymax;v+=50)g+='<line x1="'+l+'" x2="'+(W-rt)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="#2A3445"/><text x="'+(l-5)+'" y="'+(Y(v)+3)+'" text-anchor="end">$'+v+'k</text>';
+  var xs=[0,1,3,5,10].map(function(y){return '<text x="'+X(y)+'" y="'+(H-8)+'" text-anchor="middle">'+(y?'Yr '+y:'Now')+'</text>'}).join('');
+  var mid=pts.map(function(p){return X(p[0])+','+Y((p[1]+p[2])/2)}).join(' ');
+  return '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto" role="img" aria-label="Salary band for the selected pathway">'+g+xs+'<polygon points="'+top+' '+bot+'" fill="rgba(57,198,240,.22)" stroke="none"/><polyline points="'+mid+'" fill="none" stroke="#39C6F0" stroke-width="2"/><line x1="'+l+'" x2="'+(W-rt)+'" y1="'+Y(r.tar)+'" y2="'+Y(r.tar)+'" stroke="#FF6B1A" stroke-width="1.5" stroke-dasharray="6 4"/><text x="'+(W-rt)+'" y="'+(Y(r.tar)-5)+'" text-anchor="end" style="fill:#FFB088">Target $'+Math.round(r.tar)+'k</text><circle cx="'+X(0)+'" cy="'+Y(r.cur)+'" r="4.5" fill="#F1F4F8"/></svg>';
+}
+function renderSim(){
+  var res=simCalc();if(!simSel||!res.some(function(r){return r.p.id===simSel}))simSel=res[0].p.id;
+  $('#simList').innerHTML=res.map(function(r,i){return '<button class="opt" data-sim="'+r.p.id+'" aria-pressed="'+(r.p.id===simSel)+'"><span class="no">'+(i+1)+'</span><span><span class="nm">'+r.p.n+'</span><br><span class="sub">'+(r.hi?'Target reachable from year '+r.hi+(r.lo?', near-certain band by year '+r.lo:''):'Target out of range')+'</span></span><span class="pill '+(r.flags.length===0?'g':r.flags.length===1?'w':'r')+'">'+(r.flags.length?r.flags.length+' flag'+(r.flags.length>1?'s':''):'Clear')+'</span></button>'}).join('');
+  var r=res.filter(function(q){return q.p.id===simSel})[0],p=r.p;
+  $('#simDet').innerHTML='<h3>'+p.n+'</h3>'+chart(r)+'<div class="facts" style="margin-top:4px">'+
+    fact('Salary band, today\'s dollars',YR.map(function(y,i){return 'Yr '+y+': $'+Math.round(r.b[i][0])+'-'+Math.round(r.b[i][1])+'k'}).join('<br>'))+
+    fact('Training investment',fmt(p.cost)+' and about '+p.h+' study hours')+
+    fact('Time to be ready to move',r.weeks+' weeks at your study rate'+(r.weeks>78?'. That is too slow: raise the hours or pick a nearer step.':''))+
+    fact('Skills required',p.sk)+fact('Job demand',dots(p.dem))+fact('Business opportunity',p.or==='B'?'Yes, the same skills sell as a service':'Limited until senior')+fact('Key risks',p.rk+(r.flags.length?'<br><span class="w">'+r.flags.join('. ')+'.</span>':''))+fact('Next action',p.nx)+'</div><p class="note">Assumptions: bands are capital-city base salaries from the sources list, with Perth lifted 4% (Hays reports WA professional pay 3.7% above national). No inflation, no promotion odds. The pale band is the range between a slow and a strong case; the line is its middle. For pathway G the upper edge includes side-business owner profit.</p>';
+}
+
+/* ---------- decision ---------- */
+$('#pathT').innerHTML='<tr><th>Rank</th><th>Path</th><th>Question</th><th>My pick</th><th>Trade-off</th></tr>'+PATHS.map(function(p){return '<tr><td class="num">'+p[4]+'</td><td class="num"><b>'+p[0]+'</b></td><td>'+p[1]+'</td><td><b>'+p[2]+'</b></td><td style="color:var(--ink2)">'+p[3]+'</td></tr>'}).join('');
+$('#recs').innerHTML='<div class="box"><span class="k">Primary career pathway</span><h3>Electrical delivery in critical power and grid</h3><p>Senior PE, then Project Manager. It uses everything you have, sits on the best-evidenced demand, and reaches $180-200k as an employee without a new degree.</p></div><div class="box"><span class="k">Secondary skill set</span><h3>Project controls</h3><p>P6, earned value, contract administration and Power BI. About 350 hours. It makes you a better PM, works in mining, transport and defence if energy slows, and is the thing you can sell.</p></div><div class="box"><span class="k">Business to test without resigning</span><h3>Progress and cost reporting for small subcontractors</h3><p>Fixed set-up fee plus a monthly retainer. Under $3k to start, needs no registration or licence, and recurring fees suit limited hours. Stop if three demos produce no buyer.</p></div><div class="box"><span class="k">One thing to do regardless</span><h3>Get registered</h3><p>With 3-6 years you are at or near the experience threshold. Victorian registration or CPEng removes the supervision dependency, is asked for in senior adverts, and is required before you can ever sell engineering judgement yourself '+L('{vic}')+'. Check current fees and the assessment route.</p></div><div class="box"><span class="k">Where I disagree with the brief</span><h3>Three assumptions to drop</h3><ul><li>Civil is not a credible adjacent move. The services and systems side of construction is.</li><li>CAD and BIM tool skills do not raise your pay. Commercial and HV skills do.</li><li>"AI skills" will not stay scarce. Domain knowledge plus the judgement to apply AI will.</li></ul></div>';
+$('#plan').innerHTML=PLAN.map(function(ph){return '<div class="box"><h3>'+ph[0]+'</h3>'+ph.slice(1).map(function(it){return '<label class="chk"><input type="checkbox" data-chk="'+it[0]+'"'+(done[it[0]]?' checked':'')+'><span>'+it[1]+'</span></label>'}).join('')+'</div>'}).join('');
+$('#miles').innerHTML=MILES.map(function(m){return '<div><b>'+m[0]+'</b>'+m[1]+'</div>'}).join('');
+$('#srcList').innerHTML=srcKeys.map(function(k,i){return '<div style="break-inside:avoid;margin-bottom:5px"><span class="mono" style="color:var(--ink3)">['+(i+1)+']</span> <a href="'+SRC[k][1]+'" target="_blank" rel="noopener">'+SRC[k][0]+'</a></div>'}).join('');
+$$('[data-src]').forEach(function(e){e.innerHTML=L('{'+e.getAttribute('data-src')+'}')});
+
+function xp(){$('#xp').textContent=Object.keys(done).filter(function(k){return done[k]}).length}
+
+/* ---------- events ---------- */
+document.addEventListener('click',function(e){
+  var t=e.target.closest('[data-open],[data-go],[data-close],[data-filt],[data-save],[data-stamp],[data-lad],[data-sk],[data-sim]');
+  if(!t){if(e.target.id==='modal')closeSheet();return}
+  if(t.dataset.open)openSheet(t.dataset.open);
+  else if(t.dataset.go){var el=document.getElementById(t.dataset.go);if(el){var y=el.getBoundingClientRect().top+window.scrollY-58;window.scrollTo({top:y,behavior:'smooth'})}}
+  else if('close' in t.dataset)closeSheet();
+  else if(t.dataset.filt){var f=t.dataset.filt.split(':');filt[f[0]]=f[1];var sx=window.scrollY;renderShelves();window.scrollTo(0,sx)}
+  else if(t.dataset.save){var k=t.dataset.save,i=mylist.indexOf(k);if(i>=0)mylist.splice(i,1);else mylist.unshift(k);store.set('list',mylist);t.textContent=mylist.indexOf(k)>=0?'✓ In my list':'+ My list'}
+  else if(t.dataset.stamp){var d=new Date().toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'});stamps[t.dataset.stamp]=d;store.set('stamps',stamps);var s=$('#stamp');if(s)s.textContent=d;t.textContent='Marked '+d}
+  else if(t.dataset.lad){ladSel=+t.dataset.lad;renderLad()}
+  else if(t.dataset.sk!==undefined){var c=t.dataset.sk;c=c==='roi'?'roi':+c;if(skSort===c)skDir=-skDir;else{skSort=c;skDir=(c===0||c===11)?1:-1}renderSk()}
+  else if(t.dataset.sim){simSel=t.dataset.sim;renderSim()}
+});
+document.addEventListener('change',function(e){
+  var c=e.target.dataset&&e.target.dataset.chk;
+  if(c){done[c]=e.target.checked;store.set('done',done);xp();return}
+  if(e.target.id&&e.target.id.charAt(0)==='s')renderSim();
+});
+document.addEventListener('input',function(e){
+  if(e.target.id&&e.target.id.indexOf('cr')===0)renderCR();
+  else if(e.target.id&&e.target.id.charAt(0)==='s'&&e.target.type==='number')renderSim();
+});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('#modal').hidden)closeSheet()});
+
+renderShelves();renderLad();renderCR();renderSk();renderSim();xp();
+})();
+</script>
