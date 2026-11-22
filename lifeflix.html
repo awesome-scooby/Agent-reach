@@ -323,6 +323,53 @@ footer{padding:30px var(--gutR) 30px var(--gut);color:var(--fg-faint);font-size:
 .steps i.on{background:var(--tungsten)}
 .contract-doc{border-radius:12px;padding:20px;background:repeating-linear-gradient(0deg,transparent 0 31px,rgba(255,255,255,.035) 31px 32px),var(--ink-2);border:1px solid var(--line);display:flex;flex-direction:column;gap:12px}
 .signature{font-family:var(--display);font-style:italic;font-weight:800;font-size:34px;color:var(--tungsten);border-bottom:1px solid var(--fg-faint);padding-bottom:4px}
+
+/* green room: calmer mint accent inside the same dark shell */
+:root{--calm:#5fe0a0;--calm-soft:rgba(95,224,160,.14);--calm-line:rgba(95,224,160,.42);--calm-ink:#062114}
+.btn-calm{background:var(--calm);color:var(--calm-ink)}
+.btn-calm:hover{background:#7ff0b8}
+.linkish{color:var(--calm);text-decoration:underline;font-weight:700;padding:0;font-size:inherit}
+.green-hero{position:relative;overflow:hidden;border-radius:16px;padding:28px 22px;isolation:isolate;display:flex;flex-direction:column;gap:12px;border:1px solid var(--calm-line);background:radial-gradient(70% 90% at 88% 0%, rgba(95,224,160,.30), transparent 62%),radial-gradient(60% 80% at 0% 100%, rgba(76,195,255,.16), transparent 60%),var(--ink-2)}
+.green-hero::after{content:"";position:absolute;inset:-40%;z-index:-1;background:conic-gradient(from 0deg, transparent, rgba(95,224,160,.10), transparent 40%, rgba(76,195,255,.08), transparent 70%);animation:leak 40s linear infinite}
+.green-hero h2{font-size:clamp(44px,9vw,88px);text-transform:uppercase;font-weight:900;color:#d3f7e4;line-height:.88}
+.green-link{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;margin-top:10px;padding:14px 16px;border-radius:12px;text-align:left;font-size:14.5px;border:1px solid var(--calm-line);background:linear-gradient(120deg,var(--calm-soft),var(--ink-2) 70%)}
+.green-link > span:last-child{font-size:22px;color:var(--calm)}
+.calm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,170px),1fr));gap:10px}
+.calm-card{display:flex;flex-direction:column;gap:6px;text-align:left;padding:14px;border-radius:12px;background:var(--ink-2);border:1px solid var(--line);min-height:124px;transition:border-color .15s, transform .15s;position:relative;min-width:0}
+.calm-card:hover{border-color:var(--calm-line);transform:translateY(-2px)}
+.calm-card .ct{font-family:var(--display);font-weight:900;font-size:21px;line-height:1;text-transform:uppercase}
+.calm-card .cm{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--calm)}
+.calm-card .cd{font-size:13px;color:var(--fg-dim)}
+.calm-card.rescue{border-color:var(--calm-line);background:linear-gradient(160deg,rgba(95,224,160,.13),var(--ink-2) 70%)}
+.calm-choice{border-color:var(--calm-line)!important;background:var(--calm-soft)!important}
+.calm-band{border-left:3px solid var(--calm)!important}
+.quick-mood{display:flex;flex-direction:column;gap:8px}
+.qdot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:7px;vertical-align:middle;flex:none}
+.choice .ic svg{width:22px;height:22px}
+.mm{position:relative;width:100%;max-width:360px;aspect-ratio:1;border-radius:14px;overflow:hidden;cursor:crosshair;touch-action:manipulation;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;border:1px solid var(--line);user-select:none;-webkit-user-select:none}
+.mm .qd{display:flex;align-items:flex-start;justify-content:flex-start;padding:10px;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.mm .dot{position:absolute;width:26px;height:26px;border-radius:50%;background:var(--fg);border:3px solid var(--ink);box-shadow:0 0 0 2px var(--fg),0 0 26px rgba(255,255,255,.55);transform:translate(-50%,-50%);transition:left .2s, top .2s;pointer-events:none}
+.mm .axis-x,.mm .axis-y{position:absolute;background:rgba(255,255,255,.2);pointer-events:none}
+.mm .axis-x{left:0;right:0;top:50%;height:1px}
+.mm .axis-y{top:0;bottom:0;left:50%;width:1px}
+.orb-wrap{position:relative;width:min(70vw,300px);aspect-ratio:1;max-width:100%;margin:6px auto;display:grid;place-items:center}
+.orb-wrap .orb2{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 40% 35%, rgba(190,245,218,.96), rgba(95,224,160,.6) 45%, rgba(76,195,255,.16) 76%);box-shadow:0 0 90px rgba(95,224,160,.35)}
+.orb-wrap .ring{position:absolute;inset:0;border-radius:50%;border:1px solid var(--calm-line)}
+.orb-wrap .lbl{position:relative;font-family:var(--display);font-weight:900;font-size:clamp(22px,6vw,32px);text-transform:uppercase;letter-spacing:.04em;color:var(--calm-ink);text-align:center;padding:0 12px}
+.tapdots{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.tapdots button{width:56px;height:56px;border-radius:50%;border:2px solid var(--calm-line);font-family:var(--mono);font-weight:700;font-size:16px}
+.tapdots button[aria-pressed="true"]{background:var(--calm);color:var(--calm-ink);border-color:var(--calm)}
+.help-row{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center;padding:12px 14px;border-radius:10px;background:var(--ink-3)}
+.help-row .num{font-family:var(--mono);font-size:21px;font-weight:700;user-select:all;-webkit-user-select:all}
+.help-row a{text-decoration:none}
+.found{display:flex;flex-wrap:wrap;gap:8px}
+.found button{padding:9px 13px;border-radius:999px;border:1px solid var(--line);background:var(--ink-3);font-size:13px;font-weight:700}
+.found button[aria-pressed="true"]{background:var(--calm-soft);border-color:var(--calm);color:var(--calm)}
+.night{background:#07060a;border-color:#1b1822}
+.night .big-letter{font-family:var(--display);font-weight:900;font-size:clamp(96px,30vw,150px);line-height:1;color:#9a8fa6;text-align:center}
+.nav{overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+@media (max-width:820px){.fab{padding:10px 14px;font-size:12px;gap:6px}}
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
   .breath .orb{animation:none;transform:scale(.8)}
@@ -391,6 +438,7 @@ const CATS = {
   admin:    { label: "Personal administration",      ic: "🗂" },
   money:    { label: "Money and savings",            ic: "💰" },
   move:     { label: "Planning the Melbourne move",  ic: "🧳" },
+  mood:     { label: "I'm too anxious or low to start", ic: "🌧" },
   other:    { label: "Something else",               ic: "✏️" }
 };
 
@@ -465,6 +513,7 @@ function freshState() {
     sim: { target: 60, days: 6, avoid: null, split: { learn: 35, jobs: 30, biz: 25, money: 10 }, assume: { appHours: 1.5, p6Hours: 30, protHours: 40, bizHours: 60 } },
     active: null, brk: null,
     diag: [], thoughts: [], woop: [], values: {}, slips: [], bundles: [], contracts: [], excuses: [], tomb: [],
+    moods: [], lifts: [], worries: [], screens: [], goodThings: [], circles: [], calm: { sound: false, worryTime: "18:30", wake: "06:30", need: 7.5 },
     profile: { salary: 115000, target: 150000 }, prefs: { noMercy: false }, epoch: uid(), resetAt: 0
   };
 }
@@ -474,8 +523,8 @@ function normalize(s) {
   out.sim = Object.assign({}, f.sim, out.sim || {});
   out.sim.split = Object.assign({}, f.sim.split, out.sim.split || {});
   out.sim.assume = Object.assign({}, f.sim.assume, out.sim.assume || {});
-  ["missions", "sessions", "urges", "checkins", "seenAch", "diag", "thoughts", "woop", "slips", "bundles", "contracts", "excuses", "tomb"].forEach(k => { if (!Array.isArray(out[k])) out[k] = f[k]; });
-  ["values", "profile", "prefs"].forEach(k => { out[k] = Object.assign({}, f[k], (out[k] && typeof out[k] === "object") ? out[k] : {}); });
+  ["missions", "sessions", "urges", "checkins", "seenAch", "diag", "thoughts", "woop", "slips", "bundles", "contracts", "excuses", "tomb", "moods", "lifts", "worries", "screens", "goodThings", "circles"].forEach(k => { if (!Array.isArray(out[k])) out[k] = f[k]; });
+  ["values", "profile", "prefs", "calm"].forEach(k => { out[k] = Object.assign({}, f[k], (out[k] && typeof out[k] === "object") ? out[k] : {}); });
   if (s && !s.epoch) out.epoch = "v1";
   if (!out.daily || typeof out.daily !== "object") out.daily = {};
   if (!out.milestones || typeof out.milestones !== "object") out.milestones = {};
@@ -497,7 +546,7 @@ const Store = {
 /* Cloud sync: private per-user documents in the artifact's database (path data/users/<id>/…, readable only by you).
    core doc = everything but the logs; logs are split by month to stay well under the 256 KiB document cap.
    Every device merges instead of overwriting: logs are unioned by id, settings follow the most recent edit. */
-const LOG_KEYS = ["sessions", "urges", "checkins", "diag", "thoughts", "slips", "excuses"];
+const LOG_KEYS = ["sessions", "urges", "checkins", "diag", "thoughts", "slips", "excuses", "moods", "lifts", "worries", "screens", "goodThings", "circles"];
 const UNION_KEYS = ["missions", "woop", "bundles", "contracts"];
 const byTsId = (x, y) => (x.ts || 0) - (y.ts || 0) || (x.id < y.id ? -1 : x.id > y.id ? 1 : 0);
 const byOrder = (x, y) => (x.order || 0) - (y.order || 0) || (x.createdAt || x.ts || 0) - (y.createdAt || y.ts || 0) || (x.id < y.id ? -1 : x.id > y.id ? 1 : 0);
@@ -624,6 +673,7 @@ function derive(s) {
   let total = 0;
   s.sessions.forEach(x => { total += x.xp || 0; Object.entries(x.gains || {}).forEach(([k, v]) => attr[k] = (attr[k] || 0) + v); });
   s.urges.forEach(x => { total += x.xp || 0; Object.entries(x.gains || {}).forEach(([k, v]) => attr[k] = (attr[k] || 0) + v); });
+  (s.lifts || []).forEach(x => { total += x.xp || 0; Object.entries(x.gains || {}).forEach(([k, v]) => attr[k] = (attr[k] || 0) + v); });
   const level = levelFrom(total);
   const shown = new Set(s.sessions.filter(productive).map(x => x.day));
   // runs
@@ -642,7 +692,7 @@ function derive(s) {
   const span14 = clamp(daysBetween(firstDay, today) + 1, 1, 14);
   const avg14 = Math.round(focusSec(last14) / 60 / span14);
   const urgeCounts = {}; s.urges.forEach(u => urgeCounts[u.urge] = (urgeCounts[u.urge] || 0) + 1);
-  const catCounts = {}; s.checkins.forEach(c => { if (c.cat !== "none") catCounts[c.cat] = (catCounts[c.cat] || 0) + 1; });
+  const catCounts = {}; s.checkins.forEach(c => { if (c.cat !== "none" && c.cat !== "mood") catCounts[c.cat] = (catCounts[c.cat] || 0) + 1; });
   const topUrge = Object.entries(urgeCounts).sort((a, b) => b[1] - a[1])[0];
   const topCat = Object.entries(catCounts).sort((a, b) => b[1] - a[1])[0];
   const dayN = clamp(daysBetween(s.seasonStart, today) + 1, 1, 9999);
@@ -811,7 +861,25 @@ function coachBoss(coach, choice, urgeKey, genuine) {
   return `Great reframe. When a task feels heavy, shrinking it is the most strategic thing you can do. Let's start the small version.`;
 }
 
+// Only avoidance phrases are logged as "excuses" for No Mercy receipts. Feelings never are.
+const EXCUSE_INTENTS = ["bored", "nomood", "wasted", "youtube", "toomany", "tomorrow", "research"];
 const INTENTS = [
+  { id: "anxious", re: /anxious|anxiety|panic|nervous|on edge|heart('s| is)? racing|can'?t calm down/i,
+    brutal: c => `Anxiety isn't weakness, and it isn't a reason to quit either. Settle your body first: two minutes of cyclic sighing. Then we pick the next step.`,
+    mentor: c => `That sounds really uncomfortable. Let's settle your nervous system first. A long, slow out-breath is the fastest lever you have. Two minutes.`,
+    action: { label: "Breathe: 2-minute reset", act: "calm:breathe" } },
+  { id: "stressed", re: /stress|pressure|worried|worrying|\bworry\b/i,
+    brutal: c => `Stress is usually a worry with no plan attached. Run it through the worry sorter: it either becomes a step, or you set it down.`,
+    mentor: c => `Let's get the worry out of your head and onto the screen. If it's something you can act on, we'll find one step. If it isn't, we'll set it aside properly.`,
+    action: { label: "Sort the worry", act: "calm:sorter" } },
+  { id: "low", re: /\b(sad|down|depressed|low|flat|empty|lonely|miserable|hopeless|numb)\b/i,
+    brutal: c => `Low mood lies. It says nothing will help, so don't bother. ${liftEvidence(c.s)}Pick one lifter and do it, especially if you don't feel like it.`,
+    mentor: c => `I'm sorry today feels heavy. Mood often lifts after gentle action, not before. ${liftEvidence(c.s)}Let's pick one small lifter: a walk, some daylight, or a message to someone.`,
+    action: { label: "Open the mood lifters", act: "calm:hub" } },
+  { id: "sleep", re: /can'?t sleep|insomnia|awake at night|sleep(ing)? (badly|poorly)|not sleeping|bad sleep/i,
+    brutal: c => `Sleep is the foundation everything else stands on, so stop treating it as optional. Fix your wake time and work back from it.`,
+    mentor: c => `Poor sleep makes everything harder, including mood and focus. Let's build a simple wind-down plan around a fixed wake time.`,
+    action: { label: "Wind-down plan", act: "calm:winddown" } },
   { id: "bored", re: /\bbor(ed|ing)\b|dull|repetitive|tedious/i,
     brutal: c => `Bored is information, not a stop sign. Boring tasks still pay. Most of your $150K–$200K jump sits in boring work: CV bullets, applications, P6 practice. Make it a game: 10 minutes, then judge.`,
     mentor: c => `Boredom often means the task has no clear next step or no visible finish. Let's give it both: a 10-minute timer and one tiny deliverable. ${c.prio ? `Try "${c.prio.title}".` : ""}`,
@@ -850,6 +918,7 @@ const INTENTS = [
     action: { label: "Start: Contact one potential customer", act: "contact" } }
 ];
 function coachReply(coach, text, ctx) {
+  if (CRISIS_RE.test(text)) return { crisis: true, text: "I'm really glad you said that. This is bigger than a productivity app, and you deserve to talk to a person right now. Lifeline: call 13 11 14 or text 0477 13 11 14, any time, day or night. If you're in immediate danger, call 000.", action: { label: "Show support lines", act: "help" } };
   const it = INTENTS.find(i => i.re.test(text));
   if (it) return { text: it[coach](ctx), action: it.action, intent: it.id };
   return { text: coach === "brutal"
@@ -919,6 +988,7 @@ function MissionCard({ s, m, onOpen, label }) {
 }
 
 const ICONS = {
+  calm: "M19.5 3.5C11 3.5 4.5 8 4.5 15.5c0 1.3.3 2.5.8 3.6l-2 2 1.4 1.4 2-2c1.1.5 2.3.8 3.6.8 7.5 0 9.2-8.4 9.2-17.8Z", more: "M5 10a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm7 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm7 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4Z",
   home: "M3 11 12 3l9 8v10h-6v-6H9v6H3Z", today: "M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7Zm-2 8h14v10H5V10Z",
   stats: "M4 20V10h3v10H4Zm6.5 0V4h3v16h-3ZM17 20v-7h3v7h-3Z", futures: "M3 17 9 11l4 4 8-8v4h2V5h-6v2h4l-6 6-4-4-7 7Z",
   coach: "M4 4h16v11H8l-4 4V4Z", tools: "M21.7 18.3 15 11.6a6 6 0 0 0-7.6-7.6l3.9 3.9-3.4 3.4L4 7.4A6 6 0 0 0 11.6 15l6.7 6.7a1 1 0 0 0 1.4 0l2-2a1 1 0 0 0 0-1.4Z", recap: "M4 5h16v14H4V5Zm2 2v10h12V7H6Zm3 2 6 3-6 3V9Z"
@@ -936,9 +1006,14 @@ function App() {
   const [ov, setOv] = useState(() => null);      // overlay: {type, ...}
   const [toast, setToast] = useState(null);
   const [tool, setTool] = useState(null);
+  const [calmTool, setCalmTool] = useState(null);
+  const goCalm = (id, extra) => { setCalmTool(id ? Object.assign({ id }, extra || {}) : null); setView("calm"); setOv(null); try { window.scrollTo(0, 0); } catch (e) {} };
+  const logQuickMood = (q, id) => { const c = QUAD_CENTER[q]; update(n => { const ex = n.moods.find(x => x.id === id); if (ex) Object.assign(ex, c); else n.moods.push(Object.assign({ id, ts: Date.now(), tags: [], sleep: null, quick: true }, c)); }); };
   const goTool = (id, extra) => { setTool(Object.assign({ id }, extra || {})); setView("tools"); setOv(null); try { window.scrollTo(0, 0); } catch (e) {} };
   const [now, setNow] = useState(Date.now());
   const browseStart = useRef(Date.now());
+  // Time spent resetting in the Green Room never counts as "browsing the app".
+  useEffect(() => { browseStart.current = Date.now(); }, [view === "calm"]);
   const [nudgeDismissed, setNudgeDismissed] = useState(0);
   const sample = useRef(null);
   const downloads = useRef(null);
@@ -1019,6 +1094,8 @@ function App() {
     setOv({ type: "result", sess, m, newAch });
   };
   const runAct = (act) => {
+    if (act && act.indexOf("calm:") === 0) { const id = act.slice(5); goCalm(id === "hub" ? null : id); return; }
+    if (act === "help") { setOv({ type: "help" }); return; }
     const p = prio || activeMissions(s)[0];
     if (act === "prio10" && p) openBrief(p, { minutes: 10 });
     else if (act === "prio2" && p) openBrief(p, { minutes: 2 });
@@ -1058,17 +1135,18 @@ function App() {
 
   // browsing nudge: 5 min in the app without a mission
   const browsingMin = (now - browseStart.current) / 60000;
-  const showNudge = !s.active && !s.brk && !ov && browsingMin >= 5 + nudgeDismissed * 5;
+  const showNudge = !s.active && !s.brk && !ov && view !== "calm" && browsingMin >= 5 + nudgeDismissed * 5;
 
   const inPlayer = !!s.active;
-  const nav = [["home", "Home"], ["today", "Today"], ["tools", "Tools"], ["stats", "Player"], ["futures", "Two Futures"], ["coach", "Coach"], ["recap", "Recap"]];
+  const nav = [["home", "Home"], ["today", "Today"], ["calm", "Calm"], ["tools", "Tools"], ["stats", "Player"], ["futures", "Two Futures"], ["coach", "Coach"], ["recap", "Recap"]];
+  const navTo = k => { if (k === view && k === "calm") setCalmTool(null); if (k === view && k === "tools") setTool(null); setView(k); };
 
   return html`<${React.Fragment}>
     ${!inPlayer ? html`<header className="top">
       <div className="top-in">
         <button className="logo" onClick=${() => setView("home")} aria-label="LIFEFLIX home">LIFEFLIX</button>
         <nav className="nav" aria-label="Main">
-          ${nav.map(([k, l]) => html`<button key=${k} aria-current=${view === k ? "page" : undefined} onClick=${() => setView(k)}>${l}</button>`)}
+          ${nav.map(([k, l]) => html`<button key=${k} aria-current=${view === k ? "page" : undefined} onClick=${() => navTo(k)}>${l}</button>`)}
         </nav>
         <button className="coach-pill" onClick=${() => update(n => { n.coach = n.coach === "brutal" ? "mentor" : "brutal"; })} aria-label=${"Coach: " + COACH[coach].name + ". Tap to switch."} title="Switch coach">
           <span className=${"avatar " + coach}>${COACH[coach].init}</span><span className="lbl">${COACH[coach].short}</span><span className="faint" aria-hidden="true">⇄</span>
@@ -1090,34 +1168,38 @@ function App() {
         <div className="btn-row"><button className="btn btn-sm btn-amber" onClick=${() => prio && openBrief(prio, { minutes: 10 })}>Start priority</button><button className="btn btn-sm btn-line" onClick=${() => { setNudgeDismissed(x => x + 1); }}>Dismiss</button></div>
       </div></div>` : null}
 
-      ${view === "home" ? html`<${Home} ...${ctx} coach=${coach} daily=${daily} byId=${byId} openBrief=${openBrief} setOv=${setOv} setView=${setView} goTool=${goTool}/>` : null}
+      ${view === "home" ? html`<${Home} ...${ctx} coach=${coach} daily=${daily} byId=${byId} openBrief=${openBrief} setOv=${setOv} setView=${setView} goTool=${goTool} goCalm=${goCalm}/>` : null}
       ${view === "today" ? html`<${Today} ...${ctx} coach=${coach} daily=${daily} byId=${byId} openBrief=${openBrief} setOv=${setOv} update=${update} goTool=${goTool}/>` : null}
       ${view === "stats" ? html`<${Stats} ...${ctx} coach=${coach} update=${update} flash=${flash} goTool=${goTool}/>` : null}
       ${view === "futures" ? html`<${Futures} ...${ctx} update=${update}/>` : null}
       ${view === "coach" ? html`<${CoachChat} ...${ctx} coach=${coach} runAct=${runAct} update=${update} sample=${sample.current} goTool=${goTool}/>` : null}
       ${view === "recap" ? html`<${Recap} ...${ctx} coach=${coach} byId=${byId} update=${update} flash=${flash}/>` : null}
+      ${view === "calm" ? html`<${GreenRoom} ...${ctx} coach=${coach} update=${update} openBrief=${openBrief} flash=${flash} calmTool=${calmTool} setCalmTool=${setCalmTool} goTool=${goTool} setOv=${setOv}/>` : null}
       ${view === "tools" ? html`<${Tools} ...${ctx} coach=${coach} update=${update} openBrief=${openBrief} flash=${flash} tool=${tool} setTool=${setTool}/>` : null}
 
       <footer>
         <div style=${{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}><${SaveStatus}/></div>
         <p style=${{ marginTop: "8px" }}>LIFEFLIX rewards what you do outside the screen. XP comes only from missions you report honestly. Projections are illustrative, not guarantees.</p>
+        <p style=${{ marginTop: "6px" }}>Need to talk to someone? <button className="linkish" onClick=${() => setOv({ type: "help" })}>Lifeline 13 11 14 and other 24/7 support lines</button></p>
       </footer>
     </main>` : null}
 
-    ${!inPlayer && !ov ? html`<button className="fab" onClick=${() => setOv({ type: "boss" })} aria-label="I want to escape my task">
+    ${!inPlayer && !ov && view !== "calm" ? html`<button className="fab" onClick=${() => setOv({ type: "boss" })} aria-label="I want to escape my task">
       <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M13 3h-2v10h2V3Zm4.8 2.2-1.4 1.4A7 7 0 1 1 7.6 6.6L6.2 5.2A9 9 0 1 0 17.8 5.2Z"/></svg>
-      Escape?</button>` : null}
+      <span>Escape</span></button>` : null}
 
     ${!inPlayer ? html`<nav className="tabbar" aria-label="Main">
-      ${nav.map(([k, l]) => html`<button key=${k} aria-current=${view === k ? "page" : undefined} onClick=${() => setView(k)}><${Icon} k=${k === "stats" ? "stats" : k}/>${l === "Two Futures" ? "Futures" : l}</button>`)}
+      ${[["home", "Home"], ["today", "Today"], ["calm", "Calm"], ["tools", "Tools"]].map(([k, l]) => html`<button key=${k} aria-current=${view === k ? "page" : undefined} onClick=${() => navTo(k)}><${Icon} k=${k}/>${l}</button>`)}
+      <button aria-current=${["stats", "futures", "coach", "recap"].includes(view) ? "page" : undefined} onClick=${() => setOv({ type: "more" })}><${Icon} k="more"/>More</button>
     </nav>` : null}
 
     ${inPlayer && (!ov || ov.type === "boss") ? html`<${Player} s=${s} coach=${coach} update=${update} onReview=${() => setOv({ type: "review" })} onEscape=${() => { update(n => { if (n.active && !n.active.pausedAt) n.active.pausedAt = Date.now(); }); setOv({ type: "boss", fromPlayer: true }); }} hidden=${ov && ov.type === "boss"}/>` : null}
 
     ${ov && ov.type === "coachPick" ? html`<${CoachPick} first=${ov.first} current=${s.coach} onPick=${c => { update(n => { n.coach = c; }); setOv(ov.first ? { type: "checkin" } : null); }} onClose=${() => setOv(null)}/>` : null}
-    ${ov && ov.type === "checkin" ? html`<${CheckIn} s=${s} d=${d} coach=${coach} prio=${prio} onSkip=${() => { update(n => { n.checkins.push({ id: uid(), ts: Date.now(), cat: "none" }); }); setOv(null); }}
+    ${ov && ov.type === "checkin" ? html`<${CheckIn} s=${s} d=${d} coach=${coach} prio=${prio} onMood=${logQuickMood} onCalm=${q => goCalm(q === "red" ? "breathe" : null)} onSkip=${() => { update(n => { n.checkins.push({ id: uid(), ts: Date.now(), cat: "none" }); }); setOv(null); }}
         onPick=${(cat, text) => {
           update(n => { n.checkins.push({ id: uid(), ts: Date.now(), cat, text: text || "" }); });
+          if (cat === "mood") { goCalm(null); return; }
           let m;
           if (cat === "other" && text) m = { id: uid(), season: 1, title: text.slice(0, 70), desc: "The task you named when LIFEFLIX asked what you're avoiding.", minutes: 10, difficulty: "Medium", attr: "courage", tags: ["other"], firstStep: "Open whatever you need for this task.", deliverable: "One visible step forward.", repeat: true, status: "active" };
           else m = pickForCategory(s, cat);
@@ -1151,6 +1233,8 @@ function App() {
         onReturn=${() => { update(n => { n.brk = null; }); const m = prio || activeMissions(s)[0]; if (m) startMission(m, 2, m.firstStep, { viaBoss: true }); else setOv(null); }}
         onExtend=${() => { update(n => { n.brk = { start: n.brk ? n.brk.start : Date.now(), until: Date.now() + 5 * 60000, min: 5, extended: true }; }); setOv(null); }}
         onDone=${() => { update(n => { n.brk = null; }); setOv(null); }}/>` : null}
+    ${ov && ov.type === "help" ? html`<${HelpSheet} onClose=${() => setOv(null)}/>` : null}
+    ${ov && ov.type === "more" ? html`<${MoreSheet} view=${view} onGo=${k => { setView(k); setOv(null); try { window.scrollTo(0, 0); } catch (e) {} }} onSettings=${() => setOv({ type: "settings" })} onClose=${() => setOv(null)}/>` : null}
     ${ov && ov.type === "settings" ? html`<${Settings} s=${s} update=${update} setS=${setS} downloads=${downloads.current} onClose=${() => setOv(null)} flash=${flash} openCoach=${() => setOv({ type: "coachPick" })}/>` : null}
 
     ${toast ? html`<div className="toast" role="status" key=${toast.id}><span className="avatar mentor" aria-hidden="true">★</span><div><div style=${{ fontWeight: 800 }}>${toast.t}</div>${toast.sub ? html`<div className="dim" style=${{ fontSize: "13px" }}>${toast.sub}</div>` : null}</div></div>` : null}
@@ -1194,7 +1278,8 @@ function SaveStatus() {
 /* =========================================================
    HOME
    ========================================================= */
-function Home({ s, d, prio, coach, daily, byId, openBrief, setOv, setView, goTool }) {
+function Home({ s, d, prio, coach, daily, byId, openBrief, setOv, setView, goTool, goCalm }) {
+  const guard = moodGuard(s);
   const se = SEASONS[0];
   const dayN = Math.min(d.dayN, 30);
   const strip = []; for (let i = 0; i < 30; i++) { const k = addDays(s.seasonStart, i); strip.push({ k, on: d.shown.has(k), today: k === d.today }); }
@@ -1235,13 +1320,15 @@ function Home({ s, d, prio, coach, daily, byId, openBrief, setOv, setView, goToo
     <div className="wrap section" style=${{ paddingTop: "4px" }}>
       <div className=${"coach-band " + coach}>
         <span className=${"avatar " + coach}>${COACH[coach].init}</span>
-        <div><div className="who">${COACH[coach].name}</div><p>${(coach === "brutal" && s.prefs.noMercy && noMercyLine(s, d, prio)) || coachHome(coach, s, d, prio)}</p></div>
+        <div><div className="who">${COACH[coach].name}</div><p>${guard ? moodCoachLine(coach, guard) : ((coach === "brutal" && s.prefs.noMercy && noMercyLine(s, d, prio)) || coachHome(coach, s, d, prio))}</p>
+          ${guard ? html`<div className="btn-row" style=${{ marginTop: "10px", alignItems: "center" }}><button className="btn btn-sm btn-calm" onClick=${() => goCalm(null)}>Open the Green Room</button>${coach === "brutal" && s.prefs.noMercy ? html`<span className="note">No Mercy is paused while things are hard.</span>` : null}</div>` : null}</div>
       </div>
       <${HomeBanners} s=${s} d=${d} coach=${coach} goTool=${goTool}/>
     </div>
 
     <div className="wrap section">
       <button className="escape-big" onClick=${() => setOv({ type: "boss" })}>I want to escape my task<small>Start the Urge Boss Fight: 90 seconds to decide on purpose instead of on impulse.</small></button>
+      <button className="green-link" onClick=${() => goCalm(null)}><span><b>Anxious, stressed or flat?</b> <span className="dim">The Green Room has 2-minute resets and mood lifters that are backed by research.</span></span><span aria-hidden="true">›</span></button>
     </div>
 
     <section className="section">
@@ -1304,14 +1391,19 @@ function CoachPick({ first, current, onPick, onClose }) {
 /* =========================================================
    CHECK-IN
    ========================================================= */
-function CheckIn({ s, d, coach, prio, onPick, onSkip }) {
+function CheckIn({ s, d, coach, prio, onPick, onSkip, onMood, onCalm }) {
   const [cat, setCat] = useState(null);
   const [text, setText] = useState("");
+  const [mq, setMq] = useState(null);
+  const midRef = useRef(uid());
   return html`<div className="fullscreen" role="dialog" aria-modal="true" aria-label="What are you avoiding right now?">
     <div className="fs-in">
       <span className="eyebrow">${seasonOf(1).code} · Day ${Math.min(d.dayN, 30)} · ${niceDate(d.today)} · ${timeStr()}</span>
       <h1 style=${{ fontSize: "clamp(44px,9vw,92px)", textTransform: "uppercase" }}>What are you avoiding right now?</h1>
       <p className="dim" style=${{ fontSize: "16px" }}>${coach === "brutal" ? "Be honest. Naming it takes three seconds. Pretending you aren't avoiding anything takes all day." : "No judgement. Naming what you're avoiding takes away some of its power, and lets us make it smaller."}</p>
+      <div className="quick-mood"><span className="eyebrow">Quick mood check (optional)</span>
+        <div className="seg" role="group" aria-label="Quick mood">${["red", "blue", "green", "yellow"].map(k => html`<button key=${k} aria-pressed=${mq === k} onClick=${() => { setMq(k); onMood(k, midRef.current); }}><span className="qdot" style=${{ background: QUADS[k].color }}></span>${QUADS[k].short}</button>`)}</div></div>
+      ${mq === "red" || mq === "blue" ? html`<button className="choice calm-choice" onClick=${() => onCalm(mq)}><span className="ic" aria-hidden="true">🌿</span><div><div>Reset first: two minutes in the Green Room</div><div className="note" style=${{ fontWeight: 500 }}>${mq === "red" ? "Settle your body first, then pick a task." : "A small lift first makes starting easier."}</div></div></button>` : null}
       <div className="choice-grid">
         ${Object.entries(CATS).map(([k, c]) => html`<button key=${k} className="choice" aria-pressed=${cat === k} onClick=${() => { setCat(k); if (k !== "other") onPick(k); }}><span className="ic" aria-hidden="true">${c.ic}</span>${c.label}</button>`)}
       </div>
@@ -1422,7 +1514,7 @@ function EditMission({ s, m, season, onSave, onClose }) {
           <label className="f" htmlFor="em-min">Default length<select id="em-min" value=${f.minutes} onChange=${e => set("minutes", Number(e.target.value))}>${LENGTHS.map(L => html`<option key=${L} value=${L}>${L} minutes</option>`)}</select></label>
           <label className="f" htmlFor="em-diff">Difficulty<select id="em-diff" value=${f.difficulty} onChange=${e => set("difficulty", e.target.value)}>${DIFFS.map(x => html`<option key=${x} value=${x}>${x}</option>`)}</select></label>
         </div>
-        <label className="f" htmlFor="em-cat">Matches this avoidance<select id="em-cat" value=${(f.tags || ["other"])[0]} onChange=${e => set("tags", [e.target.value])}>${Object.entries(CATS).map(([k, c]) => html`<option key=${k} value=${k}>${c.label}</option>`)}</select></label>
+        <label className="f" htmlFor="em-cat">Matches this avoidance<select id="em-cat" value=${(f.tags || ["other"])[0]} onChange=${e => set("tags", [e.target.value])}>${Object.entries(CATS).filter(([k]) => k !== "mood").map(([k, c]) => html`<option key=${k} value=${k}>${c.label}</option>`)}</select></label>
         <label className="f" htmlFor="em-first">First physical action<input id="em-first" value=${f.firstStep} onInput=${e => set("firstStep", e.target.value)} placeholder="Open the file / put shoes on / write the subject line"/></label>
         <label className="f" htmlFor="em-del">Tangible deliverable<input id="em-del" value=${f.deliverable} onInput=${e => set("deliverable", e.target.value)} placeholder="What will exist at the end that didn't before?"/></label>
         <label style=${{ display: "flex", gap: "10px", alignItems: "center", fontWeight: 600 }}><input id="em-rep" type="checkbox" style=${{ width: "20px", height: "20px" }} checked=${!!f.repeat} onChange=${e => set("repeat", e.target.checked)}/>Repeatable (stays in the row after completion)</label>
@@ -1955,23 +2047,25 @@ function CoachChat({ s, d, prio, coach, runAct, update, sample, goTool }) {
   const [busy, setBusy] = useState(false);
   const endRef = useRef(null);
   useEffect(() => { if (endRef.current) endRef.current.scrollTop = endRef.current.scrollHeight; }, [msgs]);
-  const QUICK = ["I keep researching instead of doing.", "I'm bored.", "I don't feel like working.", "I wasted the whole morning.", "I want to watch YouTube.", "I have too many goals.", "I'll start tomorrow.", "I'm afraid I won't succeed."];
+  const QUICK = ["I feel anxious.", "I'm feeling low.", "I keep researching instead of doing.", "I'm bored.", "I don't feel like working.", "I wasted the whole morning.", "I want to watch YouTube.", "I have too many goals.", "I'll start tomorrow.", "I'm afraid I won't succeed."];
   const send = async (t) => {
     t = (t || "").trim(); if (!t || busy) return;
     setText("");
     const ctx = { s, d, prio };
     const base = coachReply(coach, t, ctx);
-    if (base.intent) update(n => { n.excuses.push({ id: uid(), ts: Date.now(), text: t, src: "coach chat" }); });
-    if (coach === "brutal" && s.prefs.noMercy) { const nm = noMercyLine(s, d, prio); if (nm) base.text = base.text + "\n\n" + nm; }
+    const guard = moodGuard(s);
+    if (base.intent && EXCUSE_INTENTS.includes(base.intent)) update(n => { n.excuses.push({ id: uid(), ts: Date.now(), text: t, src: "coach chat" }); });
+    if (!base.crisis && !guard && coach === "brutal" && s.prefs.noMercy && base.intent && EXCUSE_INTENTS.includes(base.intent)) { const nm = noMercyLine(s, d, prio); if (nm) base.text = base.text + "\n\n" + nm; }
+    if (!base.crisis && /hopeless/i.test(t)) base.text = base.text + "\n\nIf hopelessness has lasted more than a couple of weeks, please talk to a GP, or call Beyond Blue on 1300 22 4636 (24/7).";
     const next = msgs.concat([{ who: "me", text: t }]);
-    if (live && sample) {
+    if (live && sample && !base.crisis) {
       const idx = next.length;
       setMsgs(next.concat([{ who: "co", coach, text: "…", action: base.action, live: true }]));
       setBusy(true);
       const persona = coach === "brutal"
         ? "You are 'The Brutal Truth' coach: direct, firm, evidence-based, challenges excuses, distinguishes real obstacles from avoidance. Never humiliating or abusive. No flattery."
         : "You are 'The Strategist' coach: calm, warm, intelligent, understands task avoidance, makes starting easier with small concrete steps.";
-      const facts = `User profile: 33, Perth, electrical & electronics engineering degree, master's in engineering management, ~3 years Australian project engineering (switchboards, switchrooms, procurement, manufacturing, scheduling). Earns about AUD 115k, aims for 150-200k, relocating to Melbourne early 2027, long-term 300k combined income, first home. Struggles with novelty-seeking, research instead of action, avoidance. No clinical diagnosis assumed.
+      const facts = `User profile: 33, Perth, electrical & electronics engineering degree, master's in engineering management, ~3 years Australian project engineering (switchboards, switchrooms, procurement, manufacturing, scheduling). Earns about AUD 115k, aims for 150-200k, relocating to Melbourne early 2027, long-term 300k combined income, first home. Struggles with novelty-seeking, research instead of action, avoidance. No clinical diagnosis assumed. If the user raises anxiety, stress, low mood or sleep, be supportive and practical (no shaming, even as the Brutal coach) and suggest one specific Green Room tool: cyclic sighing, 5-4-3-2-1 grounding, the worry sorter, a brisk walk, morning daylight, reaching out to someone, or the wind-down plan. If there is any hint of self-harm, give Lifeline 13 11 14 and 000.
 Tracked today: ${d.minsToday} focused minutes, ${d.doneToday} done, ${d.partialToday} partial, ${d.distractedToday} distracted, ${d.urgesToday.length} urges fought. 14-day average ${d.avg14} min/day. Most common urge: ${d.topUrge ? URGES[d.topUrge].label : "none yet"}. Most avoided: ${d.topCat ? CATS[d.topCat].label : "none yet"}. Today's priority mission: ${prio ? prio.title + " (" + prio.minutes + " min)" : "none"}.`;
       const history = next.slice(-6).map(m => (m.who === "me" ? "User: " : "Coach: ") + m.text).join("\n");
       const prompt = `${persona}\n\n${facts}\n\nConversation so far:\n${history}\n\nReply as the coach in under 110 words, plain text, no lists or headings. Use the tracked data where relevant, never invent completed actions, and end with exactly one concrete next action the user can start within 10 minutes.`;
@@ -2024,7 +2118,7 @@ function Recap({ s, d, coach, byId, update, flash }) {
   const inWeek = k => k >= ws && k <= we;
   const sess = s.sessions.filter(x => inWeek(x.day));
   const urges = s.urges.filter(u => inWeek(dayKey(new Date(u.ts))));
-  const checks = s.checkins.filter(c => inWeek(dayKey(new Date(c.ts))) && c.cat !== "none");
+  const checks = s.checkins.filter(c => inWeek(dayKey(new Date(c.ts))) && c.cat !== "none" && c.cat !== "mood");
   const done = sess.filter(x => x.outcome === "done");
   const focusMin = Math.round(sess.filter(productive).reduce((a, x) => a + x.actual, 0) / 60);
   const daysShown = new Set(sess.filter(productive).map(x => x.day)).size;
@@ -2073,6 +2167,7 @@ function Recap({ s, d, coach, byId, update, flash }) {
       <div className="panel"><h3>Most useful actions</h3>${useful.length ? html`<ul className="list">${useful.map(x => html`<li key=${x.id}><span>${x.title}</span><span>${fmtMin(x.actual / 60)} · ${ATTRS[x.attr] ? ATTRS[x.attr].label : ""}</span></li>`)}</ul>` : html`<p className="dim">Complete a mission to see it here.</p>`}</div>
     </div>
     <${RecapExtras} s=${s} d=${d} coach=${coach} ws=${ws} we=${we} postponed=${postponed} update=${update} flash=${flash}/>
+    <${MoodWeek} s=${s} ws=${ws} we=${we}/>
     <div className="panel"><h3>Three priorities for next week</h3><ol style=${{ margin: 0, paddingLeft: "20px", display: "grid", gap: "8px" }}>${prios.slice(0, 3).map((p, i) => html`<li key=${i} style=${{ fontWeight: 600 }}>${p}</li>`)}</ol>
       <p className="note">Generated from this week's tracked data. Progress is measured; your worth isn't.</p></div>
   </div>`;
@@ -2307,7 +2402,7 @@ function Tools(props) {
       <${C} key=${tool.id + (tool.mid || "")} ...${props}/>
     </div>`;
   }
-  const used = { diag: s.diag.length, woop: s.woop.length, thought: s.thoughts.filter(t => t.kind !== "defuse").length, defuse: s.thoughts.filter(t => t.kind === "defuse").length, values: Object.keys(s.values).length, slip: s.slips.length, bundle: s.bundles.length, contract: s.contracts.length };
+  const used = { diag: s.diag.length, woop: s.woop.length, thought: s.thoughts.filter(t => !t.kind || t.kind === "record").length, defuse: s.thoughts.filter(t => t.kind === "defuse").length, values: Object.keys(s.values).length, slip: s.slips.length, bundle: s.bundles.length, contract: s.contracts.length };
   return html`<div className="wrap section" style=${{ display: "flex", flexDirection: "column", gap: "16px" }}>
     <div><span className="eyebrow">Clinical toolkit</span><h2 style=${{ fontSize: "clamp(38px,7vw,64px)", marginTop: "6px" }}>Tools</h2>
       <p className="dim" style=${{ marginTop: "8px", maxWidth: "72ch" }}>Techniques from cognitive behavioural therapy, acceptance and commitment therapy and motivation research, adapted for self-use. Every tool ends in a real-world action. They're not therapy. If low mood or anxiety is persistent, talk to a GP or psychologist.</p></div>
@@ -2427,8 +2522,8 @@ function ThoughtRecord({ s, prio, coach, update, openBrief, flash }) {
   </div>`;
 }
 
-function Defuse({ s, prio, coach, update, openBrief }) {
-  const [t, setT] = useState(""); const [stage, setStage] = useState(0); const [leafKey, setLeafKey] = useState(0);
+function Defuse({ s, prio, coach, update, openBrief, tool }) {
+  const [t, setT] = useState((tool && tool.text) || ""); const [stage, setStage] = useState(0); const [leafKey, setLeafKey] = useState(0);
   const [hookB, setHookB] = useState(7); const [hookA, setHookA] = useState(5);
   const clean = t.trim().replace(/^i('m| am) having the thought that\s*/i, "").replace(/[.!]+$/, "");
   return html`<div className="panel" style=${{ gap: "16px" }}>
@@ -2592,6 +2687,994 @@ function Contract({ s, d, coach, update, flash }) {
     <label style=${{ display: "flex", gap: "10px", alignItems: "flex-start", fontWeight: 600 }}><input id="ct-und" type="checkbox" style=${{ width: "20px", height: "20px", flex: "none" }} checked=${f.understand} onChange=${e => set("understand", e.target.checked)}/><span>I understand this contract can't be edited once signed. I'll send my referee the weekly report and pay the stake if I break it.</span></label>
     <div><button className="btn btn-amber" disabled=${!valid} onClick=${() => { update(n => { n.contracts.push({ id: uid(), ts: Date.now(), createdAt: Date.now(), week: ws, sessions: f.sessions, minutes: f.minutes, must: f.must.trim(), stake: f.stake.trim(), referee: f.referee.trim(), sig: f.sig.trim(), mustDone: false, paid: null }); }); flash("Contract signed", "Tell " + (f.referee || "your referee") + " today."); }}>Sign contract</button></div>
   </div>`;
+}
+
+
+/* =========================================================
+   THE GREEN ROOM — anxiety, stress and mood.
+   Self-help techniques from CBT, DBT, ACT, positive psychology and sleep medicine.
+   Not a diagnosis and not a substitute for professional care.
+   ========================================================= */
+const CRISIS = [
+  { name: "Emergency", num: "000", tel: "000", note: "If you or someone else is in immediate danger." },
+  { name: "Lifeline", num: "13 11 14", tel: "131114", note: "24/7 crisis support by phone." },
+  { name: "Lifeline Text", num: "0477 13 11 14", sms: "0477131114", note: "24/7 crisis support by text." },
+  { name: "Suicide Call Back Service", num: "1300 659 467", tel: "1300659467", note: "24/7 phone counselling, for you or someone you're worried about." },
+  { name: "Beyond Blue", num: "1300 22 4636", tel: "1300224636", note: "24/7 support for anxiety, depression and stress." }
+];
+const CRISIS_RE = /suicid|kill myself|end it all|end my life|self[- ]?harm|hurt(ing)? myself|don'?t want to (live|be here|exist)|better off dead|no reason to live|want to die/i;
+const QUADS = {
+  red: { short: "Stressed / anxious", color: "#ff7b7b", words: ["Anxious", "Stressed", "Overwhelmed", "Worried", "Tense", "Restless", "Irritated", "Frustrated", "Panicky", "Angry"] },
+  yellow: { short: "Energised", color: "#ffcf3d", words: ["Motivated", "Focused", "Energised", "Optimistic", "Excited", "Determined", "Proud", "Inspired"] },
+  blue: { short: "Low / flat", color: "#4cc3ff", words: ["Flat", "Tired", "Sad", "Drained", "Unmotivated", "Bored", "Lonely", "Discouraged", "Numb", "Hopeless"] },
+  green: { short: "Calm", color: "#47d18c", words: ["Calm", "Content", "Relaxed", "Settled", "Grateful", "Peaceful", "Thoughtful", "At ease"] }
+};
+const QUAD_CENTER = { red: { p: -3, e: 3, word: "Stressed" }, blue: { p: -3, e: -3, word: "Flat" }, green: { p: 3, e: -2, word: "Calm" }, yellow: { p: 3, e: 3, word: "Energised" } };
+const quadOf = (p, e) => p < 0 ? (e >= 0 ? "red" : "blue") : (e >= 0 ? "yellow" : "green");
+const MOOD_TAGS = ["Work", "Job search", "Money", "The move", "Sleep", "Health", "Relationships", "Uncertainty", "Too much to do", "Nothing specific"];
+const FOUNDATIONS = [["sleep", "Slept 7+ hours"], ["move", "Moved my body"], ["eat", "Ate proper meals"], ["light", "Got daylight"], ["social", "Talked to someone"], ["subs", "Caffeine and alcohol in check"]];
+const calmRx = { borderColor: "var(--calm-line)", background: "linear-gradient(120deg,var(--calm-soft),var(--ink-2) 70%)" };
+const toMin = t => { const [h, m] = String(t || "0:0").split(":").map(Number); return (h || 0) * 60 + (m || 0); };
+const fromMin = m => { m = ((Math.round(m) % 1440) + 1440) % 1440; const x = new Date(); x.setHours(Math.floor(m / 60), m % 60, 0, 0); return x.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }); };
+const latestMood = s => (s.moods || []).reduce((a, b) => (!a || b.ts > a.ts) ? b : a, null);
+const agoText = ts => { const m = Math.round((Date.now() - ts) / 60000); return m < 1 ? "just now" : m < 60 ? m + " min ago" : m < 1440 ? Math.round(m / 60) + " h ago" : niceDate(dayKey(new Date(ts))); };
+const sign = v => (v >= 0 ? "+" : "") + v.toFixed(1);
+
+/* When mood is low or a check-up is high, firmness backfires: soften the coach and pause No Mercy. */
+function moodGuard(s) {
+  const m = latestMood(s);
+  // A low check-in softens the coach until you've reset (a rating that shows relief) or done real work since.
+  const recovered = m && ((s.lifts || []).some(x => x.ts > m.ts && x.after != null && (x.metric === "anxiety" ? x.after <= 3 : x.after >= 6)) || s.sessions.some(x => x.ts > m.ts && productive(x)));
+  if (m && !recovered && Date.now() - m.ts < 6 * 3600000 && (m.p <= -3 || (m.p <= -2 && Math.abs(m.e) >= 3) || m.word === "Hopeless" || m.word === "Panicky")) return { why: `you checked in feeling ${(m.word || "low").toLowerCase()}`, m };
+  const recent = (s.screens || []).filter(x => Date.now() - x.ts < 14 * 86400000).sort((a, b) => a.ts - b.ts);
+  const phq = recent.filter(x => x.kind === "phq9").pop(), gad = recent.filter(x => x.kind === "gad7").pop();
+  if (phq && (phq.score >= 15 || (phq.answers && phq.answers[8] > 0))) return { why: "your recent mood check-up came back high" };
+  if (gad && gad.score >= 15) return { why: "your recent anxiety check-up came back high" };
+  return null;
+}
+function moodCoachLine(coach, g) {
+  return coach === "brutal"
+    ? `I see ${g.why}. Pushing harder won't fix that, and I won't pretend it will. Two minutes in the Green Room, then one small mission. That's the professional move.`
+    : `I noticed ${g.why}. Let's look after that first: a two-minute reset in the Green Room, then we'll pick something small.`;
+}
+function liftEvidence(s) {
+  const m = liftStats(s).mood.filter(o => o.avg > 0);
+  return m.length ? `Your own data disagrees: ${m[0].label} lifted your mood by ${m[0].avg.toFixed(1)} points on average. ` : "";
+}
+
+function unlockAudio() { try { const ac = window.__ac || new (window.AudioContext || window.webkitAudioContext)(); window.__ac = ac; if (ac.resume) ac.resume(); } catch (e) {} }
+function softChime() {
+  try {
+    unlockAudio(); const ac = window.__ac, t0 = ac.currentTime;
+    [523.25, 659.25].forEach((f, i) => { const o = ac.createOscillator(), g = ac.createGain(), t = t0 + i * 0.18; o.type = "sine"; o.frequency.value = f; g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.12, t + 0.03); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.4); o.connect(g).connect(ac.destination); o.start(t); o.stop(t + 1.5); });
+  } catch (e) {}
+}
+function breathTone(kind, dur) {
+  if (kind === "hold") return;
+  try {
+    unlockAudio(); const ac = window.__ac, t0 = ac.currentTime;
+    const o = ac.createOscillator(), g = ac.createGain(); o.type = "sine";
+    o.frequency.setValueAtTime(kind === "in" ? 196 : 330, t0); o.frequency.linearRampToValueAtTime(kind === "in" ? 330 : 174, t0 + dur);
+    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(0.06, t0 + Math.min(0.4, dur / 3));
+    g.gain.setValueAtTime(0.06, t0 + Math.max(0.5, dur - 0.5)); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.connect(g).connect(ac.destination); o.start(t0); o.stop(t0 + dur + 0.05);
+  } catch (e) {}
+}
+
+const PATTERNS = {
+  sigh: { t: "Cyclic sighing", d: "Two inhales through the nose (a full breath, then a short top-up), then a long, slow exhale through the mouth. The strongest evidence of the three for lifting mood.", ph: [["Breathe in", 2, 0.82, "in"], ["Top up", 1, 1, "in"], ["Long breath out", 6, 0.42, "out"]] },
+  resonance: { t: "Resonance", d: "Slow and even, about five and a half breaths a minute. Calm but alert, so it's good before deep work.", ph: [["Breathe in", 5.5, 1, "in"], ["Breathe out", 5.5, 0.42, "out"]] },
+  box: { t: "Box", d: "In for four, hold for four, out for four, hold for four. Steady under pressure.", ph: [["Breathe in", 4, 1, "in"], ["Hold", 4, 1, "hold"], ["Breathe out", 4, 0.42, "out"], ["Hold", 4, 0.42, "hold"]] }
+};
+const CALM_TOOLS = {
+  breathe: { t: "Breathe", sec: "rescue", min: 2, src: "Balban et al., 2023 (Cell Reports Medicine): 5 minutes of cyclic sighing a day lifted mood more than mindfulness meditation", d: "Cyclic sighing, resonance or box breathing with a guided orb." },
+  ground: { t: "5-4-3-2-1 grounding", sec: "rescue", min: 2, src: "Sensory grounding, used across CBT and trauma-focused therapy", d: "Pull your attention out of your head and back into the room." },
+  tipp: { t: "TIPP: cool down fast", sec: "rescue", min: 4, src: "Marsha Linehan, DBT Skills Training Manual", d: "For when it's intense: temperature, exercise, paced breathing, muscle release." },
+  pmr: { t: "Release tension", sec: "rescue", min: 3, src: "Progressive muscle relaxation (Jacobson; Bernstein & Borkovec)", d: "Tense and release ten muscle groups. Good before sleep too." },
+  panic: { t: "Riding a panic wave", sec: "rescue", min: 2, src: "Cognitive model of panic (David M. Clark)", d: "What's happening in your body, and how to let it pass." },
+  sorter: { t: "Worry sorter", sec: "worry", min: 4, src: "The worry tree (Butler & Hope, Manage Your Mind) · problem-solving therapy (D'Zurilla & Nezu)", d: "Practical worry? Turn it into a step. Hypothetical? Set it down properly." },
+  worrytime: { t: "Worry time", sec: "worry", min: 15, src: "Worry postponement (Borkovec et al., 1983), a standard part of CBT for generalised anxiety", d: "Box worries during the day. Deal with them in one 15-minute window." },
+  decat: { t: "Decatastrophise", sec: "worry", min: 4, src: "Cognitive therapy (Aaron Beck; David Burns)", d: "Worst case, best case, most likely, and how you'd cope." },
+  control: { t: "Control circle", sec: "worry", min: 3, src: "Epictetus' dichotomy of control · Covey's circle of influence", d: "Sort stressors into what you control, influence, and can let go." },
+  reappraise: { t: "Pressure reset", sec: "worry", min: 3, src: "Jamieson et al., 2012 · Brooks, 2014: reframing nerves as excitement improved performance", d: "Before an interview, a sales call or a hard conversation." },
+  winddown: { t: "Wind-down plan", sec: "sleep", min: 3, src: "CBT for insomnia, the first-line treatment in sleep-medicine guidelines (AASM, 2021) · Drake et al., 2013 on caffeine", d: "Bedtime, screens-off and caffeine cut-off, worked back from your wake time." },
+  braindump: { t: "Bedtime brain dump", sec: "sleep", min: 5, src: "Scullin et al., 2018: a 5-minute to-do list before bed helped people fall asleep faster", d: "Get tomorrow's list out of your head and onto the screen." },
+  shuffle: { t: "Cognitive shuffle", sec: "sleep", min: 10, src: "Luc Beaudoin's serial diverse imagining (early but promising evidence)", d: "A deliberately boring word game for a racing mind." },
+  checkup: { t: "Mood check-up", sec: "check", min: 4, src: "PHQ-9 and GAD-7, the questionnaires GPs use (Kroenke, Spitzer & Williams)", d: "Track anxiety and depression symptoms every two weeks." }
+};
+const LIFTERS = [
+  { id: "walk", t: "Brisk walk", min: 10, timer: true, src: "Noetel et al., BMJ 2024: walking, jogging, yoga and strength training all reduced depression in trials", d: "One of the most reliable mood lifters there is.", steps: ["Shoes on, out the door. Phone in your pocket, not your hand.", "Walk fast enough that talking takes a little effort.", "Notice three things you'd normally walk straight past."] },
+  { id: "daylight", t: "Morning daylight", min: 10, timer: true, src: "Light sets your body clock; bright-light therapy reduces depression (Golden et al., 2005)", d: "Even cloudy outdoor light is many times brighter than indoors.", steps: ["Get outside within an hour or two of waking.", "Face the open sky (never look at the sun). Coffee outside counts.", "Perth UV is fierce: hat and sunscreen once the UV index hits 3 (SunSmart)."] },
+  { id: "nature", t: "Nature pill", min: 20, timer: true, src: "Hunter et al., 2019: 20 to 30 minutes in nature gave the biggest drop in cortisol, the stress hormone", d: "A park, the river foreshore, Kings Park. No podcast.", steps: ["Go somewhere green or near water. Sit or stroll.", "No podcasts, no scrolling.", "Look for one thing that's vast or surprising. That's an 'awe walk' (Sturm et al., 2020)."] },
+  { id: "move", t: "Move hard", min: 5, timer: true, src: "Exercise trials (Noetel et al., 2024) · 'intense exercise' in DBT's TIPP skill", d: "Five minutes that burns off stress and irritation.", steps: ["Stairs, star jumps, push-ups, squats, a fast jog.", "Hard enough that you're breathing heavily.", "Go at a level that's safe for your body."] },
+  { id: "connect", t: "Reach out", min: 5, kind: "connect", src: "Harvard Study of Adult Development (Waldinger & Schulz, The Good Life): relationships predict long-term wellbeing better than money or status", d: "One message or call to one person." },
+  { id: "three", t: "Three good things", min: 5, kind: "three", src: "Seligman et al., 2005: done nightly for a week, it reduced depressive symptoms for six months", d: "What went well today, and why it happened." },
+  { id: "gratitude", t: "Gratitude letter", min: 15, kind: "letter", src: "Seligman et al., 2005: the biggest short-term happiness boost of the exercises tested", d: "Thank someone who helped you, properly." },
+  { id: "savour", t: "Savour it", min: 3, timer: true, src: "Bryant & Veroff, Savoring: deliberately stretching good moments increases positive emotion", d: "Slow down a good moment on purpose.", steps: ["Pick something good: a coffee, a song, a view, a recent win.", "Slow right down. Notice taste, sound, colour, how your body feels.", "Stay with it longer than feels normal, and say what you like about it."] },
+  { id: "kind", t: "Act of kindness", min: 5, timer: true, src: "Lyubomirsky et al., 2005 · Curry et al., 2018 meta-analysis: a small but reliable mood boost", d: "Do something for someone, expecting nothing back.", steps: ["Shout a colleague a coffee, thank a supplier who came through, help a neighbour.", "Or write the five-star review someone has earned.", "Don't announce it."] },
+  { id: "music", t: "Music, on purpose", min: 10, timer: true, src: "Ferguson & Sheldon, 2013: upbeat music lifted mood most when listeners actively tried to feel happier", d: "Upbeat songs plus the intention to feel better.", steps: ["Play something upbeat you love.", "Actively try to feel better while you listen. The intention matters.", "Move if you can."] },
+  { id: "compassion", t: "Self-compassion break", min: 3, kind: "compassion", src: "Kristin Neff, Self-Compassion", d: "Be on your own side for three minutes." },
+  { id: "opposite", t: "Opposite action", min: 10, kind: "opposite", timer: true, src: "Marsha Linehan, DBT: act opposite to an emotion's urge, all the way", d: "When the mood says hide, do the opposite." },
+  { id: "bestself", t: "Best possible self", min: 10, kind: "bestself", src: "King, 2001 (mood and optimism) plus Oettingen's mental contrasting, so the vision drives action", d: "Picture it, then name what's in the way." },
+  { id: "mastery", t: "Build mastery", min: 10, src: "DBT and behavioural activation: small wins at things that matter lift mood", d: "Ten minutes on your priority. Competence feels good." }
+];
+const SENSES = [[5, "things you can see", "Look around slowly: light on a wall, a cable, the colour of a mug."], [4, "things you can feel", "Feet on the floor, the chair under you, fabric on your skin, the air temperature."], [3, "things you can hear", "Near and far: a fridge hum, traffic, your own breathing."], [2, "things you can smell", "Coffee, soap, fresh air. Move around if you need to."], [1, "thing you can taste", "Or take a sip of water and really notice it."]];
+const TIPP = [
+  ["T", "Temperature", 30, "Splash cold (not icy) water on your face, or hold a cold pack wrapped in a cloth over your eyes and cheeks, and hold your breath for up to 30 seconds. This triggers the dive reflex, which slows your heart rate.", "Skip this step if you have a heart condition, low blood pressure or an eating disorder."],
+  ["I", "Intense exercise", 60, "Move hard for a minute: star jumps, running on the spot, stairs, push-ups. Spend the adrenaline your body just made.", "Go at a level that's safe for your body."],
+  ["P", "Paced breathing", 60, "Slow your breathing right down: in through your nose for 4, out through your mouth for 6. Longer out than in.", ""],
+  ["P", "Paired muscle relaxation", 60, "As you breathe in, tense your whole body: fists, arms, shoulders, stomach, legs. As you breathe out, let it all go and think 'relax'. Repeat.", ""]
+];
+const PMR = [["Hands", "Make tight fists"], ["Arms", "Bend your elbows and tense your upper arms"], ["Shoulders", "Shrug your shoulders up towards your ears"], ["Forehead", "Raise your eyebrows as high as they go"], ["Eyes and face", "Squeeze your eyes shut and scrunch your face"], ["Jaw and lips", "Press your lips together firmly (don't grind your teeth)"], ["Chest and back", "Breathe in deeply and pull your shoulder blades together"], ["Stomach", "Tighten your stomach muscles"], ["Legs", "Squeeze your thighs and press your knees together"], ["Feet", "Pull your toes up towards your shins"]];
+const CONNECT_SCRIPTS = ["Saw this and thought of you. How've you been?", "Free for a quick call this week? Would be good to catch up.", "How did [the thing] go? I've been meaning to ask.", "Thanks again for [what they did]. It genuinely helped."];
+const COMPASSION = [["Mindfulness", "Say to yourself: \"This is a moment of struggle.\" Or simply: \"This is hard right now.\""], ["Common humanity", "\"Struggle is part of being human. Plenty of people feel exactly this, right now.\""], ["Self-kindness", "Put a hand on your chest. Say: \"May I be kind to myself.\" Or whatever you'd say to a good mate in the same spot."]];
+const ZONES = [["control", "I control"], ["influence", "I influence"], ["none", "Not mine"]];
+const PRESSURE = ["Job interview", "Calling a potential customer", "Asking for a pay rise", "Presenting to a client", "A hard conversation"];
+const SHUFFLE = ["BLANKET", "HARBOUR", "MEADOW", "PICNIC", "LANTERN", "ORCHARD", "VELVET", "PEBBLE", "GARDEN", "SUNRISE", "CANOE", "THUNDER"];
+const SHUFFLE_EG = { A: "apple, anchor, attic", B: "bicycle, bowl, bridge", C: "cactus, candle, cloud", D: "door, daisy, drum", E: "egg, eagle, envelope", G: "gate, guitar, glove", H: "hat, harbour, honey", I: "island, ink, igloo", K: "kite, kettle, koala", L: "lemon, ladder, leaf", M: "moon, mug, map", N: "nest, needle, net", O: "orange, owl, oar", P: "pear, piano, pillow", R: "rope, river, rocket", S: "sock, spoon, sail", T: "tent, tree, teapot", U: "umbrella, ukulele, urn", V: "violin, vase, van", W: "whale, window, wheel" };
+const FREQ = ["Not at all", "Several days", "More than half the days", "Nearly every day"];
+const GAD7 = ["Feeling nervous, anxious, or on edge", "Not being able to stop or control worrying", "Worrying too much about different things", "Trouble relaxing", "Being so restless that it is hard to sit still", "Becoming easily annoyed or irritable", "Feeling afraid, as if something awful might happen"];
+const PHQ9 = ["Little interest or pleasure in doing things", "Feeling down, depressed, or hopeless", "Trouble falling or staying asleep, or sleeping too much", "Feeling tired or having little energy", "Poor appetite or overeating", "Feeling bad about yourself, or that you are a failure or have let yourself or your family down", "Trouble concentrating on things, such as reading the newspaper or watching television", "Moving or speaking so slowly that other people could have noticed, or the opposite: being so fidgety or restless that you have been moving around a lot more than usual", "Thoughts that you would be better off dead, or of hurting yourself in some way"];
+const screenBand = (kind, sc) => kind === "gad7" ? (sc <= 4 ? "Minimal" : sc <= 9 ? "Mild" : sc <= 14 ? "Moderate" : "Severe") : (sc <= 4 ? "Minimal" : sc <= 9 ? "Mild" : sc <= 14 ? "Moderate" : sc <= 19 ? "Moderately severe" : "Severe");
+const screenGuide = sc => sc >= 15 ? "This is in the higher range. Please book a GP appointment this week. A GP can assess you properly and set up a mental health treatment plan, which includes Medicare-rebated sessions with a psychologist."
+  : sc >= 10 ? "This is the range where seeing a GP is recommended. They can assess properly and, if it fits, set up a mental health treatment plan with Medicare-rebated psychologist sessions."
+  : sc >= 5 ? "Mild symptoms. Keep using the Green Room, protect sleep and movement, and recheck in two weeks. See a GP if it persists or gets worse."
+  : "Minimal symptoms. Recheck in two weeks so you can spot changes early.";
+
+function prescribe(m) {
+  const q = quadOf(m.p, m.e), w = (m.word || "").toLowerCase(), tags = m.tags || [], out = [];
+  const add = (id, why) => { if (!out.some(x => x.id === id)) out.push({ id, why }); };
+  if (q === "red") {
+    if (w === "panicky" || (m.e >= 4 && m.p <= -3)) { add("breathe", "Slow your body down first. Clear thinking comes after."); add("panic", "Know what the wave is, so it can't scare you twice."); add("tipp", "If it's intense, cold water and hard movement work fastest."); }
+    if (["irritated", "frustrated", "angry", "restless"].includes(w)) { add("move", "Burn off the adrenaline: five minutes of hard movement."); add("pmr", "Then let the leftover tension go."); }
+    if (["worried", "anxious", "stressed", "overwhelmed", "tense"].includes(w) || tags.some(t => ["Work", "Job search", "Money", "The move", "Uncertainty", "Too much to do"].includes(t))) { add("sorter", "Sort the worry: act on it, or set it down."); add("control", "Separate what's yours to fix from what isn't."); }
+    add("breathe", "Two minutes of cyclic sighing takes the edge off.");
+    add("ground", "Get out of your head and into the room.");
+  } else if (q === "blue") {
+    if (w === "lonely") add("connect", "Loneliness responds to contact, even a short message.");
+    if (["sad", "discouraged", "hopeless", "numb"].includes(w)) { add("compassion", "Be on your own side for three minutes."); add("walk", "Then move. Mood tends to follow."); }
+    if (["tired", "drained"].includes(w) || m.e <= -3) add("daylight", "Low energy: daylight and gentle movement beat more time on the couch.");
+    if (["bored", "unmotivated", "flat"].includes(w)) { add("opposite", "Low mood says stay put. Do the opposite, fully."); add("mastery", "A small win on something real builds momentum."); }
+    add("walk", "A 10-minute walk is one of the most reliable mood lifters there is.");
+    add("connect", "Reach out to one person.");
+  } else if (q === "green") {
+    add("savour", "Good moment. Stretch it out."); add("three", "Bank it: write down what went well."); add("mastery", "Calm is a good state for steady work.");
+  } else {
+    add("mastery", "Use the energy on your priority now, while it lasts.");
+    if (["excited", "inspired"].includes(w)) add("parking", "Excited about a new idea? Park it in two minutes so it doesn't hijack your day.");
+    add("gratitude", "Share the good mood: a gratitude letter.");
+  }
+  if (m.sleep != null && m.sleep <= 6) add("winddown", "You slept " + (m.sleep <= 5 ? "5 hours or less" : "about 6 hours") + ". Tonight's wind-down matters more than any trick today.");
+  if (w === "hopeless") add("help", "If hopelessness has lasted more than a couple of weeks, please talk to a GP or call Beyond Blue.");
+  return out.slice(0, w === "hopeless" ? 5 : 4);
+}
+function calmLabel(id, prio) {
+  if (CALM_TOOLS[id]) return CALM_TOOLS[id].t + " · " + CALM_TOOLS[id].min + " min";
+  if (id === "mastery") return prio ? `10 minutes on "${prio.title}"` : "10 minutes on your priority";
+  const L = LIFTERS.find(x => x.id === id); if (L) return L.t + " · " + L.min + " min";
+  return { parking: "Idea parking lot · 10 min", help: "Talk to someone" }[id] || id;
+}
+function liftStats(s) {
+  const by = {};
+  (s.lifts || []).forEach(x => { if (x.gain == null) return; const o = by[x.kind] || (by[x.kind] = { kind: x.kind, label: x.label, metric: x.metric, sum: 0, n: 0 }); o.sum += x.gain; o.n++; o.label = x.label; });
+  const arr = Object.values(by).map(o => Object.assign(o, { avg: o.sum / o.n }));
+  return { mood: arr.filter(o => o.metric === "mood").sort((a, b) => b.avg - a.avg), calm: arr.filter(o => o.metric === "anxiety").sort((a, b) => b.avg - a.avg), byKind: by };
+}
+
+/* ---------- small building blocks ---------- */
+function Rate({ id, label, value, onChange, lo, hi, min = 0, max = 10, unit }) {
+  return html`<label className="f" htmlFor=${id}>${label} <span className="mono" style=${{ color: "var(--fg)", fontSize: "18px" }}>${value}${unit || "/" + max}</span>
+    <input id=${id} type="range" min=${min} max=${max} value=${value} onInput=${e => onChange(Number(e.target.value))}/>
+    <span className="note" style=${{ display: "flex", justifyContent: "space-between", fontWeight: 500 }}><span>${lo}</span><span>${hi}</span></span></label>`;
+}
+function useCountdown(running, sec, onEnd) {
+  const [left, setLeft] = useState(sec);
+  const endRef = useRef(onEnd); endRef.current = onEnd;
+  useEffect(() => {
+    if (!running) return;
+    const t0 = Date.now(), base = left;
+    const iv = setInterval(() => { const l = Math.max(0, base - (Date.now() - t0) / 1000); setLeft(l); if (l <= 0) { clearInterval(iv); if (endRef.current) endRef.current(); } }, 200);
+    return () => clearInterval(iv);
+  }, [running]);
+  return [left, setLeft];
+}
+function TimerBlock({ sec, label, autoStart, onDone }) {
+  const [run, setRun] = useState(!!autoStart); const [fin, setFin] = useState(false);
+  const [left, setLeft] = useCountdown(run, sec, () => { setRun(false); setFin(true); softChime(); if (onDone) onDone(); });
+  return html`<div style=${{ display: "flex", alignItems: "center", gap: "16px", flexWrap: "wrap" }}>
+    <${Ring} value=${sec ? left / sec : 0} size=${84} stroke=${7} color="var(--calm)"><span className="mono" style=${{ fontSize: "15px", fontWeight: 700 }}>${fmtClock(left)}</span><//>
+    <div className="btn-row">
+      ${fin ? html`<span className="chip ok">Time's up</span>` : html`<button className="btn btn-sm btn-calm" onClick=${() => { unlockAudio(); setRun(!run); }}>${run ? "Pause" : left < sec ? "Resume" : (label || "Start timer")}</button>`}
+      ${left < sec || fin ? html`<button className="btn btn-sm btn-line" onClick=${() => { setRun(false); setFin(false); setLeft(sec); }}>Reset</button>` : null}
+    </div>
+  </div>`;
+}
+function FinishCard({ before, after, metric, prio, openBrief, back }) {
+  const g = before == null || after == null ? null : (metric === "anxiety" ? before - after : after - before);
+  return html`<div className="rx" style=${calmRx}>
+    <span className="eyebrow" style=${{ color: "var(--calm)" }}>Logged</span>
+    ${g != null ? html`<p style=${{ fontSize: "19px", fontWeight: 800 }}>${metric === "anxiety" ? "Tension" : "Mood"} ${before} → ${after}${g > 0 ? " · that helped" : g === 0 ? " · no change this time" : " · didn't help this time, which is useful to know"}</p>` : null}
+    <p className="dim">Every rating feeds your personal ranking of what actually works for you.</p>
+    <div className="btn-row">${prio ? html`<button className="btn btn-calm btn-sm" onClick=${() => openBrief(prio, { minutes: 2 })}>▶ Ease back in: 2 min on ${prio.title}</button>` : null}<button className="btn btn-line btn-sm" onClick=${back}>Back to the Green Room</button></div>
+  </div>`;
+}
+
+/* ---------- check-in (Mood Meter) ---------- */
+function MoodCheckIn({ s, coach, update, openCalm, prio }) {
+  const [p, setP] = useState(0); const [e, setE] = useState(0); const [placed, setPlaced] = useState(false);
+  const [word, setWord] = useState(null); const [tags, setTags] = useState([]); const [sleep, setSleep] = useState(null); const [note, setNote] = useState("");
+  const [saved, setSaved] = useState(null);
+  const ref = useRef(null);
+  const q = quadOf(p, e);
+  useEffect(() => { if (word && !QUADS[q].words.includes(word)) setWord(null); }, [q]);
+  const place = ev => { const r = ref.current.getBoundingClientRect(); const x = (ev.clientX - r.left) / r.width, y = (ev.clientY - r.top) / r.height; setP(clamp(Math.round(x * 10 - 5), -5, 5)); setE(clamp(Math.round(5 - y * 10), -5, 5)); setPlaced(true); };
+  const togTag = t => setTags(tags.includes(t) ? tags.filter(x => x !== t) : tags.concat([t]));
+  if (saved) return html`<${Prescription} m=${saved} coach=${coach} prio=${prio} openCalm=${openCalm} again=${() => { setSaved(null); setPlaced(false); setWord(null); setTags([]); setSleep(null); setNote(""); }}/>`;
+  const qd = (k, extra) => html`<div className="qd" style=${Object.assign({ color: QUADS[k].color, background: QUADS[k].color + "2e" }, extra || {})}>${QUADS[k].short}</div>`;
+  return html`<${React.Fragment}>
+    <div className="panel" style=${{ gap: "14px" }}>
+      <span className="eyebrow">1 · Where are you right now? Tap the square</span>
+      <div className="mm" ref=${ref} onClick=${place} role="img" aria-label="Mood meter. Left is unpleasant, right is pleasant, top is high energy, bottom is low energy. Use the sliders below to set it with a keyboard.">
+        ${qd("red")}${qd("yellow", { justifyContent: "flex-end" })}${qd("blue", { alignItems: "flex-end" })}${qd("green", { alignItems: "flex-end", justifyContent: "flex-end" })}
+        <i className="axis-x"></i><i className="axis-y"></i>
+        ${placed ? html`<span className="dot" style=${{ left: (p + 5) * 10 + "%", top: (5 - e) * 10 + "%" }}></span>` : null}
+      </div>
+      <div className="f-row">
+        <label className="f" htmlFor="mc-p">Pleasantness <span className="mono" style=${{ color: "var(--fg)" }}>${p > 0 ? "+" : ""}${p}</span><input id="mc-p" type="range" min="-5" max="5" value=${p} onInput=${ev => { setP(Number(ev.target.value)); setPlaced(true); }}/></label>
+        <label className="f" htmlFor="mc-e">Energy <span className="mono" style=${{ color: "var(--fg)" }}>${e > 0 ? "+" : ""}${e}</span><input id="mc-e" type="range" min="-5" max="5" value=${e} onInput=${ev => { setE(Number(ev.target.value)); setPlaced(true); }}/></label>
+      </div>
+    </div>
+    ${placed ? html`<div className="panel" style=${{ gap: "14px" }}>
+      <span className="eyebrow">2 · Name it precisely</span>
+      <p className="dim">Putting an exact word on a feeling (affect labelling) quietens the brain's alarm response a little (Lieberman et al., 2007). Pick the closest.</p>
+      <div className="chips">${QUADS[q].words.map(w => html`<button key=${w} aria-pressed=${word === w} style=${word === w ? { borderColor: QUADS[q].color, background: QUADS[q].color + "26" } : null} onClick=${() => setWord(word === w ? null : w)}>${w}</button>`)}</div>
+      <span className="eyebrow">3 · What's driving it? (optional)</span>
+      <div className="chips">${MOOD_TAGS.map(t => html`<button key=${t} aria-pressed=${tags.includes(t)} style=${tags.includes(t) ? { borderColor: "var(--calm)", background: "var(--calm-soft)" } : null} onClick=${() => togTag(t)}>${t}</button>`)}</div>
+      <span className="eyebrow">4 · Sleep last night (optional)</span>
+      <div className="seg" role="group" aria-label="Hours slept">${[[5, "5h or less"], [6, "6h"], [7, "7h"], [8, "8h"], [9, "9h+"]].map(([v, l]) => html`<button key=${v} aria-pressed=${sleep === v} onClick=${() => setSleep(sleep === v ? null : v)}>${l}</button>`)}</div>
+      <label className="f" htmlFor="mc-note">Note (optional)<input id="mc-note" value=${note} onInput=${ev => setNote(ev.target.value)} placeholder="Anything worth remembering about today"/></label>
+      <div><button className="btn btn-calm" disabled=${!word} onClick=${() => { const m = { id: uid(), ts: Date.now(), p, e, word, tags, sleep, note: note.trim() }; update(n => { n.moods.push(m); }); setSaved(m); try { window.scrollTo(0, 0); } catch (er) {} }}>Save check-in</button></div>
+      ${!word ? html`<p className="note">Pick a word to save.</p>` : null}
+    </div>` : null}
+  <//>`;
+}
+function Prescription({ m, coach, prio, openCalm, again }) {
+  const q = quadOf(m.p, m.e), rx = prescribe(m);
+  const intro = {
+    red: coach === "brutal" ? "Your body's in alarm mode. Settle it first; you can't think your way out of adrenaline." : "Your body is on high alert. Let's bring it down before anything else.",
+    blue: coach === "brutal" ? "Low mood wants you to wait until you feel better. That's backwards: action usually comes first and mood follows." : "Low energy and low mood often lift with gentle action. We'll start very small.",
+    green: "A calm, good place. Protect it, and use it.",
+    yellow: coach === "brutal" ? "Good energy. Spend it on the priority before a shiny new idea spends it for you." : "Lovely energy. Let's point it at something that matters."
+  }[q];
+  return html`<div className="panel calm-band" style=${{ gap: "14px" }}>
+    <span className="eyebrow">Your check-in · ${agoText(m.ts)}</span>
+    <h3 style=${{ fontSize: "30px", display: "flex", alignItems: "center" }}><span className="qdot" style=${{ background: QUADS[q].color, width: "14px", height: "14px" }}></span>${m.word || QUADS[q].short}</h3>
+    <p>${intro}</p>
+    <div style=${{ display: "grid", gap: "8px" }}>${rx.map((r, i) => html`<button key=${r.id} className=${"choice" + (i === 0 ? " calm-choice" : "")} onClick=${() => openCalm(r.id)}><span className="ic" aria-hidden="true">${i === 0 ? "▶" : "›"}</span><div><div>${calmLabel(r.id, prio)}</div><div className="note" style=${{ fontWeight: 500 }}>${r.why}</div></div></button>`)}</div>
+    ${again ? html`<div><button className="btn btn-sm btn-line" onClick=${again}>Check in again</button></div>` : null}
+  </div>`;
+}
+
+/* ---------- rescue ---------- */
+function Breathe({ s, update, logLift, prio, openBrief, back }) {
+  const [pat, setPat] = useState("sigh"); const [mins, setMins] = useState(2);
+  const [stage, setStage] = useState("setup");
+  const [before, setBefore] = useState(6); const [after, setAfter] = useState(4);
+  const [phase, setPhase] = useState(-1); const [left, setLeft] = useState(0);
+  const P = PATTERNS[pat].ph; const sound = !!(s.calm && s.calm.sound);
+  useEffect(() => {
+    if (stage !== "run") return;
+    const cycle = P.reduce((a, x) => a + x[1], 0), total = mins * 60, t0 = Date.now(); let last = -1;
+    const tick = () => {
+      const el = (Date.now() - t0) / 1000;
+      if (el >= total) { softChime(); setStage("after"); return; }
+      let t = el % cycle, i = 0; while (i < P.length - 1 && t >= P[i][1]) { t -= P[i][1]; i++; }
+      if (i !== last) { last = i; setPhase(i); if (sound) breathTone(P[i][3], P[i][1]); }
+      setLeft(Math.ceil(total - el));
+    };
+    tick(); const iv = setInterval(tick, 120);
+    let lock = null; (async () => { try { if (navigator.wakeLock) lock = await navigator.wakeLock.request("screen"); } catch (er) {} })();
+    return () => { clearInterval(iv); try { if (lock) lock.release(); } catch (er) {} };
+  }, [stage]);
+  if (stage === "done") return html`<${FinishCard} before=${before} after=${after} metric="anxiety" prio=${prio} openBrief=${openBrief} back=${back}/>`;
+  const cur = stage === "run" && phase >= 0 ? P[phase] : null;
+  return html`<div className="panel" style=${{ gap: "16px" }}>
+    ${stage === "setup" ? html`<${React.Fragment}>
+      <div className="seg" role="group" aria-label="Breathing pattern">${Object.entries(PATTERNS).map(([k, x]) => html`<button key=${k} aria-pressed=${pat === k} onClick=${() => setPat(k)}>${x.t}</button>`)}</div>
+      <p className="dim">${PATTERNS[pat].d}</p>
+      <div className="seg" role="group" aria-label="Length">${[1, 2, 5].map(n => html`<button key=${n} aria-pressed=${mins === n} onClick=${() => setMins(n)}>${n} min</button>`)}</div>
+      <${Rate} id="br-b" label="How tense or anxious are you?" value=${before} onChange=${setBefore} lo="Calm" hi="Extreme"/>
+      <label style=${{ display: "flex", gap: "10px", alignItems: "center", fontWeight: 600 }}><input id="br-sound" type="checkbox" style=${{ width: "20px", height: "20px", flex: "none" }} checked=${sound} onChange=${ev => { const v = ev.target.checked; update(n => { n.calm.sound = v; }); }}/>Soft sound cues so you can close your eyes (on iPhone, switch off silent mode)</label>
+    <//>` : null}
+    <div className="orb-wrap" aria-hidden="true"><div className="ring"></div><div className="orb2" style=${{ transform: "scale(" + (cur ? cur[2] : 0.42) + ")", transition: cur ? "transform " + cur[1] + "s ease-in-out" : "transform .6s ease" }}></div><div className="lbl">${cur ? cur[0] : stage === "setup" ? "Ready" : "Done"}</div></div>
+    ${stage === "run" ? html`<${React.Fragment}>
+      <p className="mono dim" style=${{ textAlign: "center" }} aria-live="polite">${cur ? cur[0] : ""} · ${fmtClock(left)} left</p>
+      <div style=${{ display: "flex", justifyContent: "center" }}><button className="btn btn-line btn-sm" onClick=${() => setStage("after")}>Finish early</button></div>
+    <//>` : null}
+    ${stage === "setup" ? html`<button className="btn btn-calm" onClick=${() => { unlockAudio(); setPhase(-1); setStage("run"); try { window.scrollTo(0, 0); } catch (er) {} }}>▶ Start ${mins} minute${mins > 1 ? "s" : ""}</button>` : null}
+    ${stage === "after" ? html`<${React.Fragment}>
+      <${Rate} id="br-a" label="How tense or anxious are you now?" value=${after} onChange=${setAfter} lo="Calm" hi="Extreme"/>
+      <div><button className="btn btn-calm" onClick=${() => { logLift({ kind: "breathe-" + pat, label: PATTERNS[pat].t + " breathing", metric: "anxiety", before, after, min: mins }); setStage("done"); }}>Save</button></div>
+    <//>` : null}
+  </div>`;
+}
+function Ground({ logLift, prio, openBrief, back }) {
+  const [stage, setStage] = useState("before"); const [before, setBefore] = useState(6); const [after, setAfter] = useState(4);
+  const [i, setI] = useState(0); const [taps, setTaps] = useState(0);
+  if (stage === "done") return html`<${FinishCard} before=${before} after=${after} metric="anxiety" prio=${prio} openBrief=${openBrief} back=${back}/>`;
+  const S = SENSES[i];
+  const nextSense = () => { if (i < SENSES.length - 1) { setI(i + 1); setTaps(0); } else setStage("after"); };
+  const tap = k => { if (k < taps) return; const nt = taps + 1; setTaps(nt); if (nt >= S[0]) setTimeout(nextSense, 450); };
+  return html`<div className="panel" style=${{ gap: "16px", textAlign: stage === "run" ? "center" : "left" }}>
+    ${stage === "before" ? html`<${React.Fragment}>
+      <p style=${{ fontSize: "16px" }}>Anxiety lives in the future. Your senses only work in the present. Name each thing out loud or in your head, then tap a circle.</p>
+      <${Rate} id="gr-b" label="How anxious are you?" value=${before} onChange=${setBefore} lo="Calm" hi="Extreme"/>
+      <div><button className="btn btn-calm" onClick=${() => setStage("run")}>▶ Start</button></div>
+    <//>` : null}
+    ${stage === "run" ? html`<${React.Fragment}>
+      <div className="steps">${SENSES.map((x, k) => html`<i key=${k} className=${k <= i ? "on" : ""}></i>`)}</div>
+      <div style=${{ fontFamily: "var(--display)", fontWeight: 900, fontSize: "96px", lineHeight: 1, color: "var(--calm)" }}>${S[0]}</div>
+      <h3 style=${{ fontSize: "28px" }}>${S[1]}</h3>
+      <p className="dim">${S[2]}</p>
+      <div className="tapdots">${Array.from({ length: S[0] }).map((_, k) => html`<button key=${i + "-" + k} aria-pressed=${k < taps} aria-label=${"Noticed thing " + (k + 1)} onClick=${() => tap(k)}>${k < taps ? "✓" : k + 1}</button>`)}</div>
+      <div><button className="btn btn-sm btn-line" onClick=${nextSense}>Skip</button></div>
+    <//>` : null}
+    ${stage === "after" ? html`<${React.Fragment}>
+      <${Rate} id="gr-a" label="How anxious are you now?" value=${after} onChange=${setAfter} lo="Calm" hi="Extreme"/>
+      <div><button className="btn btn-calm" onClick=${() => { logLift({ kind: "ground", label: "5-4-3-2-1 grounding", metric: "anxiety", before, after, min: 2 }); setStage("done"); }}>Save</button></div>
+    <//>` : null}
+  </div>`;
+}
+function Tipp({ logLift, prio, openBrief, back }) {
+  const [stage, setStage] = useState("before"); const [k, setK] = useState(0); const [before, setBefore] = useState(7); const [after, setAfter] = useState(4);
+  if (stage === "done") return html`<${FinishCard} before=${before} after=${after} metric="anxiety" prio=${prio} openBrief=${openBrief} back=${back}/>`;
+  const T = TIPP[k];
+  return html`<div className="panel" style=${{ gap: "16px" }}>
+    ${stage === "before" ? html`<${React.Fragment}>
+      <p style=${{ fontSize: "16px" }}>For when emotion is so intense you can't think straight. These skills change your body's state fast, so your mind can follow.</p>
+      <${Rate} id="tp-b" label="How intense is it?" value=${before} onChange=${setBefore} lo="Mild" hi="Overwhelming"/>
+      <div><button className="btn btn-calm" onClick=${() => { unlockAudio(); setStage("run"); }}>▶ Start</button></div>
+    <//>` : null}
+    ${stage === "run" ? html`<${React.Fragment}>
+      <div className="steps">${TIPP.map((_, j) => html`<i key=${j} className=${j <= k ? "on" : ""}></i>`)}</div>
+      <div style=${{ display: "flex", gap: "14px", alignItems: "center" }}><div style=${{ fontFamily: "var(--display)", fontWeight: 900, fontSize: "72px", lineHeight: 1, color: "var(--calm)" }}>${T[0]}</div><h3 style=${{ fontSize: "28px" }}>${T[1]}</h3></div>
+      <p style=${{ fontSize: "16px" }}>${T[3]}</p>
+      ${T[4] ? html`<p className="note" style=${{ color: "var(--warn)" }}>${T[4]}</p>` : null}
+      <${TimerBlock} key=${k} sec=${T[2]} label=${"Start " + T[2] + " seconds"}/>
+      <div><button className="btn btn-calm" onClick=${() => { if (k < TIPP.length - 1) setK(k + 1); else setStage("after"); }}>${k < TIPP.length - 1 ? "Next: " + TIPP[k + 1][1] : "Finish"}</button></div>
+    <//>` : null}
+    ${stage === "after" ? html`<${React.Fragment}>
+      <${Rate} id="tp-a" label="How intense is it now?" value=${after} onChange=${setAfter} lo="Mild" hi="Overwhelming"/>
+      <div><button className="btn btn-calm" onClick=${() => { logLift({ kind: "tipp", label: "TIPP skills", metric: "anxiety", before, after, min: 4 }); setStage("done"); }}>Save</button></div>
+    <//>` : null}
+  </div>`;
+}
+function Pmr({ logLift, prio, openBrief, back }) {
+  const G = 15, total = PMR.length * G;
+  const [stage, setStage] = useState("before"); const [before, setBefore] = useState(6); const [after, setAfter] = useState(3);
+  const [el, setEl] = useState(0); const [run, setRun] = useState(false);
+  useEffect(() => { if (!run) return; let last = Date.now(); const iv = setInterval(() => { const now = Date.now(), dt = (now - last) / 1000; last = now; setEl(x => Math.min(total, x + dt)); }, 200); return () => clearInterval(iv); }, [run]);
+  useEffect(() => { if (stage === "run" && el >= total) { setRun(false); softChime(); setStage("after"); } }, [el]);
+  if (stage === "done") return html`<${FinishCard} before=${before} after=${after} metric="anxiety" prio=${prio} openBrief=${openBrief} back=${back}/>`;
+  const gi = Math.min(PMR.length - 1, Math.floor(el / G)), within = el - gi * G, tense = within < 5;
+  const cnt = Math.max(1, Math.ceil(tense ? 5 - within : G - within));
+  return html`<div className="panel" style=${{ gap: "16px" }}>
+    ${stage === "before" ? html`<${React.Fragment}>
+      <p style=${{ fontSize: "16px" }}>Ten muscle groups. Tense each one for 5 seconds (firmly, not painfully), then release for 10 and notice the difference. About two and a half minutes.</p>
+      <${Rate} id="pm-b" label="How tense are you?" value=${before} onChange=${setBefore} lo="Loose" hi="Wound tight"/>
+      <div><button className="btn btn-calm" onClick=${() => { unlockAudio(); setEl(0); setRun(true); setStage("run"); }}>▶ Start</button></div>
+    <//>` : null}
+    ${stage === "run" ? html`<div style=${{ textAlign: "center", display: "grid", gap: "10px" }}>
+      <div className="xpbar"><i style=${{ width: (el / total) * 100 + "%", background: "var(--calm)" }}></i></div>
+      <span className="eyebrow">${gi + 1} of ${PMR.length} · ${PMR[gi][0]}</span>
+      <div style=${{ fontFamily: "var(--display)", fontWeight: 900, fontSize: "64px", lineHeight: 1, color: tense ? "var(--tungsten)" : "var(--calm)" }}>${tense ? "Tense" : "Release"}</div>
+      <p style=${{ fontSize: "18px", fontWeight: 700 }}>${tense ? PMR[gi][1] + "." : "Let it go. Notice the warmth and heaviness as the tension drains out."}</p>
+      <div className="mono" style=${{ fontSize: "28px" }}>${cnt}</div>
+      <div className="btn-row" style=${{ justifyContent: "center" }}><button className="btn btn-sm btn-line" onClick=${() => setRun(!run)}>${run ? "Pause" : "Resume"}</button><button className="btn btn-sm btn-line" onClick=${() => { setRun(false); setStage("after"); }}>Finish early</button></div>
+    </div>` : null}
+    ${stage === "after" ? html`<${React.Fragment}>
+      <${Rate} id="pm-a" label="How tense are you now?" value=${after} onChange=${setAfter} lo="Loose" hi="Wound tight"/>
+      <div><button className="btn btn-calm" onClick=${() => { logLift({ kind: "pmr", label: "Progressive muscle relaxation", metric: "anxiety", before, after, min: 3 }); setStage("done"); }}>Save</button></div>
+    <//>` : null}
+  </div>`;
+}
+function Panic({ openCalm, setOv }) {
+  return html`<div className="panel" style=${{ gap: "14px" }}>
+    <div className="rx" style=${calmRx}>
+      <p style=${{ fontSize: "20px", fontWeight: 800 }}>This is panic. It's uncomfortable, not dangerous. It will pass.</p>
+      <p className="dim">Say that to yourself, slowly.</p>
+    </div>
+    <h3>What's happening</h3>
+    <p>Your body's alarm system has fired. Adrenaline speeds up your heart and breathing, and can bring dizziness, tingling, a tight chest and a sense of dread. It's the system that would help you escape real danger, firing when there isn't any.</p>
+    <h3>What helps</h3>
+    <ul className="list">
+      <li><span>Don't fight it or run from it. Let the wave rise. It peaks and falls, usually within about 10 minutes.</span></li>
+      <li><span>Slow your breathing with a long out-breath. Avoid big gulps of air.</span></li>
+      <li><span>Stay where you are if you safely can. Leaving teaches your brain the place was dangerous.</span></li>
+      <li><span>Notice the sensations with curiosity, as if you were describing them to a doctor.</span></li>
+    </ul>
+    <div className="btn-row"><button className="btn btn-calm" onClick=${() => openCalm("breathe")}>▶ Slow breathing now</button><button className="btn btn-line" onClick=${() => openCalm("ground")}>Ground me</button></div>
+    <div className="banner nudge" style=${{ marginTop: 0 }}><div><b>When to call 000</b><p className="note">Chest pain or pressure, breathing trouble that doesn't settle, fainting, or symptoms that feel different from your usual panic. Get checked; don't assume it's panic.</p></div><button className="btn btn-sm btn-line" onClick=${() => setOv({ type: "help" })}>Support lines</button></div>
+    <p className="note">If panic attacks keep coming back, CBT for panic has strong evidence behind it. A GP can refer you.</p>
+  </div>`;
+}
+
+/* ---------- worry & stress ---------- */
+function Sorter({ s, calmTool, update, openBrief, openCalm, setCalmTool, goTool, back }) {
+  const [text, setText] = useState((calmTool && calmTool.text) || "");
+  const [step, setStep] = useState(0);
+  const [opts, setOpts] = useState(["", "", ""]); const [pick, setPick] = useState(null); const [when, setWhen] = useState(""); const [msg, setMsg] = useState("");
+  const wid = calmTool && calmTool.wid;
+  const choice = pick != null ? (opts[pick] || "").trim() : "";
+  const wt = fromMin(toMin((s.calm && s.calm.worryTime) || "18:30"));
+  const save = (type, status, extra) => update(n => {
+    const rec = Object.assign({ text: text.trim(), type, status, options: opts.map(x => x.trim()).filter(Boolean), choice, when: when.trim() }, extra || {});
+    if (wid) rec.reviewedAt = Date.now();
+    const ex = wid && n.worries.find(w => w.id === wid);
+    if (ex) Object.assign(ex, rec); else n.worries.push(Object.assign({ id: uid(), ts: Date.now() }, rec));
+  });
+  const mk = () => ({ id: uid(), season: 1, title: choice.slice(0, 70), desc: "From a worry: \"" + text.trim().slice(0, 140) + "\"", minutes: 10, difficulty: "Medium", attr: "courage", tags: ["other"], firstStep: choice, deliverable: "", repeat: false, status: "active" });
+  const prog = { 0: 0, 1: 1, 2: 2, 3: 2, 4: 3, 5: 2, 6: 3 }[step];
+  return html`<div className="panel" style=${{ gap: "16px" }}>
+    <div className="steps">${[0, 1, 2, 3].map(k => html`<i key=${k} className=${k <= prog ? "on" : ""}></i>`)}</div>
+    ${step === 0 ? html`<${React.Fragment}>
+      <label className="f" htmlFor="ws-t">What's the worry? Write it as one sentence.<textarea id="ws-t" value=${text} onInput=${e => setText(e.target.value)} placeholder="e.g. My CV isn't good enough for $150K roles."></textarea></label>
+      <div><button className="btn btn-calm btn-sm" disabled=${!text.trim()} onClick=${() => setStep(1)}>Next</button></div>
+    <//>` : null}
+    ${step === 1 ? html`<${React.Fragment}>
+      <p style=${{ fontSize: "16px" }}>Is this something you can actually do something about?</p>
+      <p className="note">Practical: "My CV is out of date." Hypothetical: "What if the market crashes right after I buy?"</p>
+      <button className="choice" onClick=${() => setStep(2)}><span className="ic" aria-hidden="true">✓</span><div><div>Yes, it's a practical problem</div><div className="note" style=${{ fontWeight: 500 }}>There's at least one thing I could do.</div></div></button>
+      <button className="choice" onClick=${() => setStep(5)}><span className="ic" aria-hidden="true">?</span><div><div>No, it's a "what if"</div><div className="note" style=${{ fontWeight: 500 }}>It's about something uncertain or out of my hands.</div></div></button>
+      <div><button className="btn btn-line btn-sm" onClick=${() => setStep(0)}>Back</button></div>
+    <//>` : null}
+    ${step === 2 ? html`<${React.Fragment}>
+      <p style=${{ fontSize: "16px" }}>List three things you could do. Quantity first, judge later. Imperfect options count.</p>
+      ${opts.map((o, k) => html`<input key=${k} id=${"ws-o" + k} value=${o} onInput=${e => { const v = e.target.value; setOpts(opts.map((x, j) => j === k ? v : x)); }} placeholder=${["e.g. Rewrite the top three bullets with numbers", "e.g. Ask a recruiter for blunt feedback", "e.g. Compare it with two strong CVs"][k]} aria-label=${"Option " + (k + 1)}/>`)}
+      <div className="btn-row"><button className="btn btn-line btn-sm" onClick=${() => setStep(1)}>Back</button><button className="btn btn-calm btn-sm" disabled=${!opts.some(x => x.trim())} onClick=${() => setStep(3)}>Next</button></div>
+    <//>` : null}
+    ${step === 3 ? html`<${React.Fragment}>
+      <p style=${{ fontSize: "16px" }}>Which one could you do soonest?</p>
+      ${opts.map((o, k) => o.trim() ? html`<button key=${k} className="choice" aria-pressed=${pick === k} onClick=${() => setPick(k)}>${o}</button>` : null)}
+      <div className="btn-row"><button className="btn btn-line btn-sm" onClick=${() => setStep(2)}>Back</button><button className="btn btn-calm btn-sm" disabled=${pick == null} onClick=${() => setStep(4)}>Next</button></div>
+    <//>` : null}
+    ${step === 4 ? html`<${React.Fragment}>
+      <p style=${{ fontSize: "16px" }}><b>${choice}</b>. Can you start it now?</p>
+      <div><button className="btn btn-calm" onClick=${() => { const m = mk(); save("practical", "action", { mid: m.id }); openBrief(m, { minutes: 10 }); }}>▶ Start now: 10 minutes</button></div>
+      <label className="f" htmlFor="ws-when">Not now? Decide exactly when and where<input id="ws-when" value=${when} onInput=${e => setWhen(e.target.value)} placeholder="e.g. Tuesday 7:30am at my desk, before email"/></label>
+      <div className="btn-row"><button className="btn btn-line btn-sm" onClick=${() => setStep(3)}>Back</button><button className="btn btn-line btn-sm" disabled=${!when.trim()} onClick=${() => { const m = mk(); update(n => { n.missions.push(Object.assign(m, { order: n.missions.length + 100, createdAt: Date.now() })); }); save("practical", "scheduled", { mid: m.id }); setMsg("Planned for " + when.trim() + ", and added as an episode in Season 1. When the worry comes back, tell it: there's a plan."); setStep(6); }}>Save the plan</button></div>
+    <//>` : null}
+    ${step === 5 ? html`<${React.Fragment}>
+      <p style=${{ fontSize: "16px" }}>Hypothetical worries can't be solved, only carried or set down. Choose how to set this one down.</p>
+      <button className="choice calm-choice" onClick=${() => { save("hypothetical", "boxed", { fromBox: true }); setMsg("Boxed until worry time (" + wt + "). If it pops back up before then, tell it: \"Not now. Later.\" Then bring your attention back to what's in front of you."); setStep(6); }}><span className="ic" aria-hidden="true">⏳</span><div><div>Postpone it to worry time</div><div className="note" style=${{ fontWeight: 500 }}>Recommended. Deal with it once, at ${wt}.</div></div></button>
+      <button className="choice" onClick=${() => { save("hypothetical", "decat"); setCalmTool({ id: "decat", text: text.trim() }); }}><span className="ic" aria-hidden="true">⚖</span><div><div>Decatastrophise it</div><div className="note" style=${{ fontWeight: 500 }}>Worst case, best case, most likely, and how you'd cope.</div></div></button>
+      <button className="choice" onClick=${() => { save("hypothetical", "defused"); goTool("defuse", { text: text.trim() }); }}><span className="ic" aria-hidden="true">🍃</span><div><div>Unhook from it</div><div className="note" style=${{ fontWeight: 500 }}>ACT defusion: watch the thought float past.</div></div></button>
+      <div><button className="btn btn-line btn-sm" onClick=${() => setStep(1)}>Back</button></div>
+    <//>` : null}
+    ${step === 6 ? html`<${React.Fragment}>
+      <h3>Handled.</h3><p>${msg}</p>
+      <div className="btn-row"><button className="btn btn-calm btn-sm" onClick=${() => openCalm("ground")}>Refocus: 5-4-3-2-1</button><button className="btn btn-line btn-sm" onClick=${back}>Back to the Green Room</button></div>
+    <//>` : null}
+  </div>`;
+}
+function WorryTime({ s, update, setCalmTool, flash }) {
+  const [txt, setTxt] = useState(""); const [on, setOn] = useState(false); const [kept, setKept] = useState([]);
+  const wt = (s.calm && s.calm.worryTime) || "18:30";
+  const boxed = s.worries.filter(w => w.status === "boxed").sort((a, b) => a.ts - b.ts);
+  const showing = boxed.filter(w => !kept.includes(w.id));
+  const reviewed = s.worries.filter(w => w.fromBox && w.reviewedAt);
+  const released = reviewed.filter(w => w.status === "released").length;
+  const now = new Date(), nowM = now.getHours() * 60 + now.getMinutes(), wtM = toMin(wt);
+  const isTime = nowM >= wtM && nowM < wtM + 45;
+  const review = (w, status) => { update(n => { const x = n.worries.find(y => y.id === w.id); if (x) { x.status = status; x.reviewedAt = Date.now(); if (status === "boxed") x.kept = (x.kept || 0) + 1; } }); if (status === "boxed") setKept(kept.concat([w.id])); };
+  const add = () => { const t = txt.trim(); if (!t) return; update(n => { n.worries.push({ id: uid(), ts: Date.now(), text: t, type: null, status: "boxed", fromBox: true }); }); setTxt(""); flash("Worry boxed", "It can wait until " + fromMin(wtM) + "."); };
+  return html`<${React.Fragment}>
+    ${isTime && boxed.length && !on ? html`<div className="rx" style=${calmRx}><b>It's worry time.</b><p className="dim">${boxed.length} worr${boxed.length === 1 ? "y is" : "ies are"} waiting.</p><div><button className="btn btn-calm btn-sm" onClick=${() => setOn(true)}>Start worry time</button></div></div>` : null}
+    <div className="panel">
+      <h3>The worry box</h3>
+      <p className="dim">When a worry shows up during the day, write it here and postpone it. You're not ignoring it; you're scheduling it.</p>
+      <form style=${{ display: "flex", gap: "8px" }} onSubmit=${e => { e.preventDefault(); add(); }}><input id="wt-add" value=${txt} onInput=${e => setTxt(e.target.value)} placeholder="e.g. What if I can't get a job in Melbourne?" aria-label="New worry"/><button className="btn btn-calm" type="submit" disabled=${!txt.trim()}>Postpone</button></form>
+      ${boxed.length && !on ? html`<ul className="list">${boxed.map(w => html`<li key=${w.id}><span>${w.text}</span><span>${niceDate(dayKey(new Date(w.ts)))}</span></li>`)}</ul>` : null}
+      <label className="f" htmlFor="wt-time" style=${{ maxWidth: "280px" }}>Daily worry time (15 minutes)<input id="wt-time" type="time" value=${wt} onChange=${e => { const v = e.target.value; if (v) update(n => { n.calm.worryTime = v; }); }}/></label>
+      <p className="note">Choose a time well before bed. Early evening suits most people.</p>
+      ${boxed.length && !on ? html`<div><button className="btn btn-calm" onClick=${() => setOn(true)}>Start worry time now</button></div>` : null}
+    </div>
+    ${on ? html`<div className="panel">
+      <h3>Worry time</h3>
+      <${TimerBlock} sec=${900} autoStart=${true}/>
+      <p className="dim">Go through each one. Plenty won't matter any more. Sort the rest: act on it, or let it go.</p>
+      ${showing.length ? html`<div style=${{ display: "grid", gap: "10px" }}>${showing.map(w => html`<div key=${w.id} className="slot" style=${{ gridTemplateColumns: "1fr" }}>
+        <div className="ti">${w.text}</div>
+        <div className="acts" style=${{ justifyContent: "flex-start" }}>
+          <button className="btn btn-sm btn-calm" onClick=${() => review(w, "released")}>Doesn't matter now</button>
+          <button className="btn btn-sm btn-line" onClick=${() => setCalmTool({ id: "sorter", text: w.text, wid: w.id })}>Sort it</button>
+          <button className="btn btn-sm btn-line" onClick=${() => review(w, "boxed")}>Keep for tomorrow</button>
+        </div></div>`)}</div>` : html`<p><b>All reviewed.</b> Worry time's over. Close it and get on with your evening.</p>`}
+      <div><button className="btn btn-sm btn-line" onClick=${() => setOn(false)}>End worry time</button></div>
+    </div>` : null}
+    ${reviewed.length ? html`<div className="panel"><p><b className="mono" style=${{ color: "var(--calm)", fontSize: "20px" }}>${released} of ${reviewed.length}</b> postponed worries no longer mattered by worry time.</p><p className="note">That's why postponing works: most worries feel urgent in the moment and shrink with a little time.</p></div>` : null}
+  <//>`;
+}
+function Decat({ calmTool, update, openBrief, back }) {
+  const [f, setF] = useState({ fear: (calmTool && calmTool.text) || "", likeB: 70, worst: "", best: "", likely: "", cope: "", evidence: "", likeA: 40, step: "" });
+  const [saved, setSaved] = useState(false);
+  const set = (k, v) => setF(x => Object.assign({}, x, { [k]: v }));
+  const valid = f.fear.trim() && f.likely.trim() && f.cope.trim();
+  const ta = (k, label, ph) => html`<label className="f" htmlFor=${"dc-" + k}>${label}<textarea id=${"dc-" + k} value=${f[k]} onInput=${e => set(k, e.target.value)} placeholder=${ph} style=${{ minHeight: "64px" }}></textarea></label>`;
+  if (saved) return html`<div className="rx" style=${calmRx}>
+    <span className="eyebrow" style=${{ color: "var(--calm)" }}>Saved</span>
+    <p style=${{ fontSize: "19px", fontWeight: 800 }}>How likely it feels: ${f.likeB}% → ${f.likeA}%</p>
+    <p><b>Most likely:</b> ${f.likely}</p><p><b>If the worst happened:</b> ${f.cope}</p>
+    <div className="btn-row">${f.step.trim() ? html`<button className="btn btn-calm btn-sm" onClick=${() => openBrief({ id: uid(), season: 1, title: f.step.trim().slice(0, 70), desc: "Makes the good outcome more likely: " + f.fear.trim().slice(0, 100), minutes: 10, difficulty: "Medium", attr: "courage", tags: ["other"], firstStep: f.step.trim(), deliverable: "", repeat: false, status: "active" }, { minutes: 10 })}>▶ Do it: 10 minutes</button>` : null}<button className="btn btn-line btn-sm" onClick=${back}>Back to the Green Room</button></div>
+  </div>`;
+  return html`<div className="panel" style=${{ gap: "14px" }}>
+    ${ta("fear", "What are you afraid will happen?", "e.g. I'll move to Melbourne and won't find work for months.")}
+    <${Rate} id="dc-lb" label="How likely does it feel?" value=${f.likeB} onChange=${v => set("likeB", v)} min=${0} max=${100} lo="Impossible" hi="Certain" unit="%"/>
+    ${ta("worst", "Worst realistic case", "")}
+    ${ta("best", "Best case", "")}
+    ${ta("likely", "Most likely case", "Usually somewhere in between.")}
+    ${ta("cope", "If the worst happened, how would you cope? Who or what would help?", "e.g. Savings cover four months, contract roles exist, I could stay in Perth until an offer lands.")}
+    ${ta("evidence", "Evidence it's less likely than it feels (optional)", "")}
+    <${Rate} id="dc-la" label="How likely does it feel now?" value=${f.likeA} onChange=${v => set("likeA", v)} min=${0} max=${100} lo="Impossible" hi="Certain" unit="%"/>
+    <label className="f" htmlFor="dc-step">One step that makes the good outcome more likely (optional)<input id="dc-step" value=${f.step} onInput=${e => set("step", e.target.value)} placeholder="e.g. Apply to two Melbourne roles before resigning"/></label>
+    <div><button className="btn btn-calm" disabled=${!valid} onClick=${() => { update(n => { n.thoughts.push(Object.assign({ id: uid(), ts: Date.now(), kind: "decat", distortions: [] }, f)); }); setSaved(true); }}>Save</button></div>
+    ${!valid ? html`<p className="note">Fill in the fear, the most likely case and how you'd cope to save.</p>` : null}
+  </div>`;
+}
+function ControlCircle({ update, openBrief, flash, back }) {
+  const [items, setItems] = useState([]); const [txt, setTxt] = useState(""); const [saved, setSaved] = useState(false);
+  const add = t => { t = (t || "").trim(); if (!t || items.some(x => x.text === t)) return; setItems(items.concat([{ text: t, zone: "control", act: "" }])); setTxt(""); setSaved(false); };
+  const upd = (i, k, v) => { setItems(items.map((x, j) => j === i ? Object.assign({}, x, { [k]: v }) : x)); setSaved(false); };
+  const by = z => items.map((x, i) => [x, i]).filter(([x]) => x.zone === z);
+  const mission = t => openBrief({ id: uid(), season: 1, title: t.slice(0, 70), desc: "A stressor that's yours to act on.", minutes: 10, difficulty: "Medium", attr: "courage", tags: ["other"], firstStep: t, deliverable: "", repeat: false, status: "active" }, { minutes: 10 });
+  return html`<${React.Fragment}>
+    <div className="panel" style=${{ gap: "12px" }}>
+      <p style=${{ fontSize: "16px" }}>List what's stressing you, then sort each one.</p>
+      <div className="chips">${["The Melbourne job market", "Interest rates", "My CV", "What recruiters think of me", "How much I save each month", "My sleep", "A restructure at work", "The economy"].map(c => html`<button key=${c} onClick=${() => add(c)}>${c}</button>`)}</div>
+      <form style=${{ display: "flex", gap: "8px" }} onSubmit=${e => { e.preventDefault(); add(txt); }}><input id="cc-add" value=${txt} onInput=${e => setTxt(e.target.value)} placeholder="Add a stressor" aria-label="Add a stressor"/><button className="btn btn-calm" type="submit" disabled=${!txt.trim()}>Add</button></form>
+      ${items.map((x, i) => html`<div key=${x.text} className="slot" style=${{ gridTemplateColumns: "1fr" }}><div className="ti">${x.text}</div>
+        <div className="seg" role="group" aria-label=${"Sort " + x.text}>${ZONES.map(([z, l]) => html`<button key=${z} aria-pressed=${x.zone === z} onClick=${() => upd(i, "zone", z)}>${l}</button>`)}<button onClick=${() => { setItems(items.filter((_, j) => j !== i)); setSaved(false); }} aria-label=${"Remove " + x.text}>×</button></div></div>`)}
+    </div>
+    ${items.length ? html`<div className="grid-2">
+      <div className="panel"><h3 style=${{ color: "var(--calm)" }}>Yours to act on</h3>${by("control").length ? by("control").map(([x]) => html`<div key=${x.text} style=${{ display: "flex", justifyContent: "space-between", gap: "8px", alignItems: "center", flexWrap: "wrap" }}><span>${x.text}</span><button className="btn btn-sm btn-calm" onClick=${() => mission(x.text)}>10-min mission</button></div>`) : html`<p className="note">Nothing here yet.</p>`}</div>
+      <div className="panel"><h3 style=${{ color: "var(--s4)" }}>You can nudge</h3>${by("influence").length ? by("influence").map(([x, i]) => html`<label key=${x.text} className="f" htmlFor=${"cc-i" + i}>${x.text}<input id=${"cc-i" + i} value=${x.act} onInput=${e => upd(i, "act", e.target.value)} placeholder="One thing you could do to influence it"/></label>`) : html`<p className="note">Nothing here yet.</p>`}</div>
+      <div className="panel"><h3 style=${{ color: "var(--fg-dim)" }}>Set down</h3>${by("none").length ? html`<${React.Fragment}><ul className="list">${by("none").map(([x]) => html`<li key=${x.text}><span>${x.text}</span></li>`)}</ul><p className="dim">"I can't control this. I can control how I respond." Attention spent here is attention taken from the other two lists.</p><//>` : html`<p className="note">Nothing here yet.</p>`}</div>
+    </div>` : null}
+    ${items.length ? html`<div className="btn-row"><button className="btn btn-calm" disabled=${saved} onClick=${() => { update(n => { n.circles.push({ id: uid(), ts: Date.now(), items }); }); setSaved(true); flash("Control circle saved", ""); }}>${saved ? "Saved" : "Save"}</button><button className="btn btn-line" onClick=${back}>Back to the Green Room</button></div>` : null}
+  <//>`;
+}
+function Reappraise({ logLift, back }) {
+  const [ev, setEv] = useState(""); const [step, setStep] = useState(0); const [before, setBefore] = useState(7); const [after, setAfter] = useState(5);
+  const [hard, setHard] = useState(""); const [plan, setPlan] = useState(""); const [line, setLine] = useState("");
+  return html`<div className="panel" style=${{ gap: "16px" }}>
+    <div className="steps">${[0, 1, 2, 3, 4, 5].map(k => html`<i key=${k} className=${k <= step ? "on" : ""}></i>`)}</div>
+    ${step === 0 ? html`<${React.Fragment}>
+      <p style=${{ fontSize: "16px" }}>What's coming up?</p>
+      <div className="chips">${PRESSURE.map(c => html`<button key=${c} aria-pressed=${ev === c} style=${ev === c ? { borderColor: "var(--calm)", background: "var(--calm-soft)" } : null} onClick=${() => setEv(c)}>${c}</button>`)}</div>
+      <input id="rp-ev" value=${ev} onInput=${e => setEv(e.target.value)} placeholder="Or describe it" aria-label="The event"/>
+      <${Rate} id="rp-b" label="How nervous are you?" value=${before} onChange=${setBefore} lo="Calm" hi="Extreme"/>
+      <div><button className="btn btn-calm btn-sm" disabled=${!ev.trim()} onClick=${() => setStep(1)}>Next</button></div>
+    <//>` : null}
+    ${step === 1 ? html`<${React.Fragment}>
+      <h3>Your body is getting ready</h3>
+      <p style=${{ fontSize: "16px" }}>The racing heart, the faster breathing, the buzz: that's your body sending more oxygen and energy to your brain and muscles. It's preparing you to perform, not warning you to run.</p>
+      <p className="note">In Jamieson et al. (2012), people taught that stress arousal is helpful had healthier cardiovascular responses and performed better than people told to ignore it.</p>
+      <div><button className="btn btn-calm btn-sm" onClick=${() => setStep(2)}>Next</button></div>
+    <//>` : null}
+    ${step === 2 ? html`<${React.Fragment}>
+      <h3>Say it out loud: "I'm excited."</h3>
+      <p style=${{ fontSize: "16px" }}>Not "calm down". Nerves and excitement feel almost identical in the body; only the label differs, and excitement points you towards the opportunity.</p>
+      <p className="note">In Brooks (2014), people who said "I am excited" before singing, public speaking or a maths test outperformed people who tried to calm down.</p>
+      <div><button className="btn btn-calm btn-sm" onClick=${() => setStep(3)}>I said it</button></div>
+    <//>` : null}
+    ${step === 3 ? html`<${React.Fragment}>
+      <h3>Two slow sighs</h3>
+      <p style=${{ fontSize: "16px" }}>Breathe in through your nose, top up with a second short inhale, then let it out slowly through your mouth. Do it twice.</p>
+      <${TimerBlock} sec=${20} autoStart=${true}/>
+      <div><button className="btn btn-calm btn-sm" onClick=${() => setStep(4)}>Next</button></div>
+    <//>` : null}
+    ${step === 4 ? html`<${React.Fragment}>
+      <h3>Cope ahead</h3>
+      <p className="dim">DBT's cope-ahead skill: rehearse the hard moment before it happens, so it isn't a surprise.</p>
+      <label className="f" htmlFor="rp-hard">The hardest moment will probably be…<input id="rp-hard" value=${hard} onInput=${e => setHard(e.target.value)} placeholder="e.g. They ask why I want to leave my current role"/></label>
+      <label className="f" htmlFor="rp-plan">I'll handle it by…<input id="rp-plan" value=${plan} onInput=${e => setPlan(e.target.value)} placeholder="e.g. Talking about bigger projects and renewables, not complaining"/></label>
+      <label className="f" htmlFor="rp-line">My opening line<input id="rp-line" value=${line} onInput=${e => setLine(e.target.value)} placeholder="e.g. Thanks for making the time. I've been looking forward to this."/></label>
+      <div><button className="btn btn-calm btn-sm" onClick=${() => setStep(5)}>Next</button></div>
+    <//>` : null}
+    ${step === 5 ? html`<${React.Fragment}>
+      <${Rate} id="rp-a" label="How nervous are you now?" value=${after} onChange=${setAfter} lo="Calm" hi="Extreme"/>
+      <div><button className="btn btn-calm" onClick=${() => { logLift({ kind: "reappraise", label: "Pressure reset", metric: "anxiety", before, after, min: 3, note: ev }); setStep(6); }}>Save</button></div>
+    <//>` : null}
+    ${step === 6 ? html`<div className="rx" style=${calmRx}>
+      <span className="eyebrow" style=${{ color: "var(--calm)" }}>Ready for: ${ev}</span>
+      ${line ? html`<p style=${{ fontSize: "19px", fontWeight: 800 }}>"${line}"</p>` : null}
+      ${hard ? html`<p><b>Hard moment:</b> ${hard}${plan ? html`<br/><b>Plan:</b> ${plan}` : null}</p>` : null}
+      <p>Nerves ${before} → ${after}. Whatever's left is fuel. Go get it.</p>
+      <div><button className="btn btn-line btn-sm" onClick=${back}>Back to the Green Room</button></div>
+    </div>` : null}
+  </div>`;
+}
+
+/* ---------- sleep ---------- */
+function WindDown({ s, update, openCalm }) {
+  const wake = (s.calm && s.calm.wake) || "06:30"; const need = (s.calm && s.calm.need) || 7.5;
+  const w = toMin(wake), bed = w - need * 60;
+  const rows = [["Caffeine cut-off", bed - 480, "In a lab study, caffeine taken 6 hours before bed still cut sleep by about an hour (Drake et al., 2013)."], ["Work and screens off", bed - 60, "Work email and scrolling keep your brain in problem-solving mode."], ["Dim the lights", bed - 30, "Low, warm light tells your body clock it's evening."], ["Lights out", bed, "That gives you " + need + " hours before the alarm."], ["Wake up", w, "Same time every day, weekends included. This anchors everything else."]];
+  const RULES = ["Keep the same wake time every day, even after a bad night. Don't sleep in to catch up.", "Use your bed only for sleep (and sex). No phone, laptop or worrying in bed.", "Can't sleep after what feels like 20 minutes? Get up, do something dull in dim light, and go back when you feel sleepy.", "Skip naps, or keep them under 30 minutes and before mid-afternoon.", "Alcohol helps you drop off but breaks up your sleep later in the night.", "Don't try to force sleep. Effort keeps you awake. Aim to rest and let sleep come."];
+  return html`<${React.Fragment}>
+    <div className="panel">
+      <div className="f-row">
+        <label className="f" htmlFor="wd-wake">Wake-up time (every day)<input id="wd-wake" type="time" value=${wake} onChange=${e => { const v = e.target.value; if (v) update(n => { n.calm.wake = v; }); }}/></label>
+        <div><div className="eyebrow" style=${{ marginBottom: "8px" }}>Sleep you need</div><div className="seg" role="group" aria-label="Hours of sleep you need">${[7, 7.5, 8, 8.5, 9].map(h => html`<button key=${h} aria-pressed=${need === h} onClick=${() => update(n => { n.calm.need = h; })}>${h}h</button>`)}</div></div>
+      </div>
+      <div style=${{ display: "grid", gap: "8px" }}>${rows.map(([l, m, why]) => html`<div key=${l} className="help-row"><div style=${{ minWidth: 0 }}><div style=${{ fontWeight: 800 }}>${l}</div><div className="note">${why}</div></div><div className="mono" style=${{ fontSize: "18px", fontWeight: 700, color: "var(--calm)", whiteSpace: "nowrap" }}>${fromMin(m)}</div></div>`)}</div>
+    </div>
+    <div className="panel"><h3>The rules that actually work</h3>
+      <ol style=${{ margin: 0, paddingLeft: "20px", display: "grid", gap: "8px" }}>${RULES.map((r, i) => html`<li key=${i}>${r}</li>`)}</ol>
+      <p className="note">These come from CBT for insomnia (CBT-I), which guidelines recommend as the first treatment for chronic insomnia, ahead of sleeping pills. Struggling to sleep most nights for three months or more? Ask your GP about CBT-I.</p>
+    </div>
+    <div className="btn-row"><button className="btn btn-calm btn-sm" onClick=${() => openCalm("braindump")}>Bedtime brain dump</button><button className="btn btn-line btn-sm" onClick=${() => openCalm("pmr")}>Release tension</button><button className="btn btn-line btn-sm" onClick=${() => openCalm("shuffle")}>Cognitive shuffle</button></div>
+  <//>`;
+}
+function BrainDump({ update, flash, back }) {
+  const [txt, setTxt] = useState(""); const [items, setItems] = useState(null); const [done, setDone] = useState({});
+  const split = () => setItems(txt.split(/\n+/).map(x => x.replace(/^\s*(?:[-*•]+|\d+[.)])\s*/, "").trim()).filter(Boolean).slice(0, 25));
+  const act = (i, kind) => {
+    const t = items[i];
+    if (kind === "mission") update(n => { n.missions.push({ id: uid(), season: 1, title: t.slice(0, 70), desc: "From your bedtime brain dump.", minutes: 10, difficulty: "Medium", attr: "discipline", tags: ["overdue"], firstStep: "", deliverable: "", repeat: false, status: "active", order: n.missions.length + 100, createdAt: Date.now() }); });
+    if (kind === "worry") update(n => { n.worries.push({ id: uid(), ts: Date.now(), text: t, type: null, status: "boxed", fromBox: true }); });
+    setDone(Object.assign({}, done, { [i]: kind }));
+  };
+  if (!items) return html`<div className="panel" style=${{ gap: "12px" }}>
+    <p style=${{ fontSize: "16px" }}>Five minutes. Write everything you need to do tomorrow and over the next few days, one per line. Be specific.</p>
+    <p className="note">Scullin et al. (2018): people who wrote a specific to-do list for five minutes before bed fell asleep faster than people who wrote about what they'd already done. The more specific the list, the faster they fell asleep.</p>
+    <textarea id="bd-txt" value=${txt} onInput=${e => setTxt(e.target.value)} placeholder=${"Email Sam about the ACB delivery date\nTailor CV bullet 2 for the Melbourne role\nBook the car service"} style=${{ minHeight: "180px" }} aria-label="Brain dump"></textarea>
+    <${TimerBlock} sec=${300} label="Start 5 minutes"/>
+    <div><button className="btn btn-calm" disabled=${!txt.trim()} onClick=${split}>Done writing</button></div>
+  </div>`;
+  const allDone = items.length > 0 && items.every((_, i) => done[i]);
+  return html`<${React.Fragment}>
+    <div className="panel" style=${{ gap: "10px" }}>
+      <p className="dim">Give each line a home so your brain can stop holding it.</p>
+      ${items.map((t, i) => html`<div key=${i} className="slot" style=${{ gridTemplateColumns: "1fr" }}><div className="ti">${t}</div>
+        ${done[i] ? html`<span className="chip ok" style=${{ alignSelf: "flex-start" }}>${done[i] === "mission" ? "Tomorrow's mission" : done[i] === "worry" ? "In the worry box" : "Written down"}</span>` : html`<div className="acts" style=${{ justifyContent: "flex-start" }}><button className="btn btn-sm btn-calm" onClick=${() => act(i, "mission")}>Tomorrow's mission</button><button className="btn btn-sm btn-line" onClick=${() => act(i, "worry")}>Worry box</button><button className="btn btn-sm btn-line" onClick=${() => act(i, "drop")}>Just needed writing</button></div>`}</div>`)}
+    </div>
+    ${allDone ? html`<div className="rx" style=${calmRx}><h3>Lights out.</h3><p>It's all written down. Nothing in your head needs guarding tonight. Phone on the bedside table, screen down.</p><div><button className="btn btn-line btn-sm" onClick=${back}>Back to the Green Room</button></div></div>` : null}
+  <//>`;
+}
+function Shuffle() {
+  const [w, setW] = useState(() => SHUFFLE[Math.floor(Math.random() * SHUFFLE.length)]); const [li, setLi] = useState(0);
+  const L = w[li];
+  return html`<div className="panel night" style=${{ gap: "14px" }}>
+    <p className="dim">For a racing mind in bed. Learn it here, then put the phone away and do it in your head with the lights off.</p>
+    <div className="mono" style=${{ textAlign: "center", letterSpacing: ".4em", color: "var(--fg-faint)" }}>${w.split("").map((c, i) => html`<span key=${i} style=${i === li ? { color: "var(--calm)" } : null}>${c}</span>`)}</div>
+    <div className="big-letter">${L}</div>
+    <p style=${{ textAlign: "center", fontSize: "16px" }}>Think of a word starting with <b>${L}</b> and picture it for a few seconds (${SHUFFLE_EG[L] || "anything at all"}). Then another ${L} word. When you run out, move to the next letter.</p>
+    <div className="btn-row" style=${{ justifyContent: "center" }}><button className="btn btn-ghost btn-sm" onClick=${() => setLi((li + 1) % w.length)}>Next letter</button><button className="btn btn-line btn-sm" onClick=${() => { setW(SHUFFLE[Math.floor(Math.random() * SHUFFLE.length)]); setLi(0); }}>New word</button></div>
+    <p className="note">Random, unrelated pictures mimic the drifting thoughts of falling asleep and crowd out worry. The evidence is early but promising (Beaudoin).</p>
+  </div>`;
+}
+
+/* ---------- check-ups (PHQ-9 / GAD-7) ---------- */
+function Checkup({ s, update, setOv }) {
+  const [kind, setKind] = useState(null); const [ans, setAns] = useState([]); const [res, setRes] = useState(null);
+  const Q = kind === "gad7" ? GAD7 : PHQ9;
+  const start = k => { setKind(k); setAns(Array((k === "gad7" ? GAD7 : PHQ9).length).fill(null)); setRes(null); try { window.scrollTo(0, 0); } catch (e) {} };
+  const hist = k => (s.screens || []).filter(x => x.kind === k).sort((a, b) => a.ts - b.ts);
+  const all = ans.length > 0 && ans.every(a => a != null);
+  const score = ans.reduce((a, b) => a + (b || 0), 0);
+  if (res) {
+    const k = res.kind, sc = res.score, risk = k === "phq9" && res.answers[8] > 0;
+    const prev = hist(k).filter(x => x.id !== res.id).pop();
+    return html`<${React.Fragment}>
+      ${risk ? html`<div className="rx" style=${{ borderColor: "rgba(255,123,123,.6)", background: "linear-gradient(120deg,rgba(255,123,123,.14),var(--ink-2) 70%)" }}>
+        <b style=${{ fontSize: "17px" }}>You said you've had thoughts of being better off dead or of hurting yourself.</b>
+        <p>Please don't carry that alone. Talk to someone today: call Lifeline on <b className="mono">13 11 14</b> (24/7), text <b className="mono">0477 13 11 14</b>, or call <b className="mono">000</b> if you're in danger. Your GP can help too.</p>
+        <div><button className="btn btn-calm btn-sm" onClick=${() => setOv({ type: "help" })}>Show support lines</button></div>
+      </div>` : null}
+      <div className="panel">
+        <span className="eyebrow">${k === "gad7" ? "GAD-7 · anxiety" : "PHQ-9 · mood"} · ${niceDate(dayKey(new Date(res.ts)))}</span>
+        <div style=${{ display: "flex", gap: "14px", alignItems: "baseline", flexWrap: "wrap" }}><div className="big-num">${sc}</div><div style=${{ fontWeight: 800, fontSize: "20px" }}>${screenBand(k, sc)}</div><span className="note">out of ${k === "gad7" ? 21 : 27}</span></div>
+        ${prev ? html`<p className="dim">Last time: ${prev.score} (${screenBand(k, prev.score).toLowerCase()}) on ${niceDate(dayKey(new Date(prev.ts)))}. ${sc < prev.score ? "Lower is better: that's an improvement." : sc > prev.score ? "That's higher than last time." : "About the same."}</p>` : null}
+        <p>${screenGuide(sc)}</p>
+        <p className="note">A screening questionnaire, not a diagnosis. Next check-up: ${niceDate(dayKey(new Date(res.ts + 14 * 86400000)))}.</p>
+        <div><button className="btn btn-line btn-sm" onClick=${() => { setRes(null); setKind(null); }}>Done</button></div>
+      </div>
+    <//>`;
+  }
+  if (kind) return html`<div className="panel" style=${{ gap: "18px" }}>
+    <span className="eyebrow">${kind === "gad7" ? "GAD-7" : "PHQ-9"} · Over the last 2 weeks, how often have you been bothered by the following?</span>
+    ${Q.map((q, i) => html`<div key=${i} style=${{ display: "grid", gap: "8px" }}>
+      <div style=${{ fontWeight: 700 }}>${i + 1}. ${q}</div>
+      <div className="seg" role="group" aria-label=${q}>${FREQ.map((fq, v) => html`<button key=${v} aria-pressed=${ans[i] === v} onClick=${() => setAns(ans.map((x, j) => j === i ? v : x))} style=${{ fontFamily: "var(--body)" }}>${fq}</button>`)}</div>
+    </div>`)}
+    <div className="btn-row"><button className="btn btn-calm" disabled=${!all} onClick=${() => { const r = { id: uid(), ts: Date.now(), kind, answers: ans.slice(), score }; update(n => { n.screens.push(r); }); setRes(r); try { window.scrollTo(0, 0); } catch (e) {} }}>See my score</button><button className="btn btn-line" onClick=${() => setKind(null)}>Cancel</button></div>
+    ${!all ? html`<p className="note">${ans.filter(a => a != null).length} of ${Q.length} answered.</p>` : null}
+  </div>`;
+  return html`<${React.Fragment}>
+    <div className="grid-2">${[["gad7", "Anxiety", "GAD-7 · 7 questions"], ["phq9", "Mood", "PHQ-9 · 9 questions"]].map(([k, l, sub]) => {
+      const h = hist(k), last = h[h.length - 1], due = !last || Date.now() - last.ts >= 13 * 86400000;
+      return html`<div key=${k} className="panel"><span className="eyebrow">${sub}</span><h3>${l}</h3>
+        ${last ? html`<p><b className="mono" style=${{ fontSize: "22px" }}>${last.score}</b> · ${screenBand(k, last.score)} · ${niceDate(dayKey(new Date(last.ts)))}</p>` : html`<p className="dim">Not taken yet.</p>`}
+        ${h.length > 1 ? html`<p className="note">History: ${h.slice(-6).map(x => x.score).join(" → ")}</p>` : null}
+        <div className="btn-row" style=${{ alignItems: "center" }}><button className=${"btn btn-sm " + (due ? "btn-calm" : "btn-line")} onClick=${() => start(k)}>${due ? "Take it now" : "Retake"}</button>${!due ? html`<span className="note">Next due ${niceDate(dayKey(new Date(last.ts + 14 * 86400000)))}</span>` : null}</div>
+      </div>`; })}</div>
+    <p className="note">Both ask about the last two weeks, so every two weeks is enough. A score of 10 or more is where a GP visit is usually recommended. PHQ-9 and GAD-7 were developed by Drs Robert L. Spitzer, Janet B. W. Williams, Kurt Kroenke and colleagues, with an educational grant from Pfizer Inc.; no permission is required to reproduce them.</p>
+  <//>`;
+}
+
+/* ---------- mood lifters ---------- */
+function LifterView({ s, prio, lifter: L, update, openBrief, logLift, back, flash }) {
+  const kind = L.kind || "timer";
+  const [stage, setStage] = useState("before");
+  const [before, setBefore] = useState(5); const [after, setAfter] = useState(6);
+  const [three, setThree] = useState([{ t: "", w: "" }, { t: "", w: "" }, { t: "", w: "" }]);
+  const [letter, setLetter] = useState({ who: "", body: "" });
+  const lm = latestMood(s);
+  const [opp, setOpp] = useState({ emo: lm && lm.word ? lm.word : "", urge: "", act: "" });
+  const [cs, setCs] = useState(0); const [mate, setMate] = useState("");
+  const [script, setScript] = useState(CONNECT_SCRIPTS[0]); const [who, setWho] = useState(""); const [copied, setCopied] = useState("");
+  const [bps, setBps] = useState({ vision: "", obstacle: "", ifs: "", then: "" });
+  const canFinish = kind === "three" ? three.some(x => x.t.trim()) : kind === "letter" ? letter.body.trim().length >= 20 : kind === "bestself" ? !!(bps.vision.trim() && bps.ifs.trim() && bps.then.trim()) : kind === "opposite" ? !!opp.act.trim() : true;
+  const copy = async t => { try { await navigator.clipboard.writeText(t); setCopied("Copied."); } catch (e) { setCopied("Copy is blocked here. Select the text and copy it."); } };
+  const toPlan = () => {
+    const today = dayKey(), base = "lift-" + L.id;
+    update(n => {
+      let m = n.missions.find(x => x.liftOf === L.id && !n.tomb.includes(x.id));
+      if (!m) { m = { id: n.tomb.includes(base) ? base + "-" + uid() : base, liftOf: L.id, season: 6, title: L.t, desc: L.d + " Source: " + L.src + ".", minutes: L.min <= 5 ? 2 : L.min <= 15 ? 10 : 25, difficulty: "Easy", attr: "health", tags: ["exercise"], firstStep: (L.steps && L.steps[0]) || L.d, deliverable: "", repeat: true, status: "active", order: n.missions.length + 100, createdAt: Date.now() }; n.missions.push(m); }
+      m.status = "active";
+      if (!n.daily[today]) n.daily[today] = genDaily(n, today);
+      n.daily[today].wellbeing = m.id;
+    });
+    flash("Added to today's plan", L.t + " is now today's wellbeing mission.");
+  };
+  const finish = () => {
+    logLift({ kind: L.id, label: L.t, metric: "mood", before, after, min: L.min, note: kind === "opposite" ? opp.act : kind === "connect" ? who : "" });
+    if (kind === "three") update(n => { n.goodThings.push({ id: uid(), ts: Date.now(), items: three.filter(x => x.t.trim()).map(x => ({ t: x.t.trim(), w: x.w.trim() })) }); });
+    if (kind === "bestself") update(n => { n.woop.push({ id: uid(), ts: Date.now(), createdAt: Date.now(), active: true, wish: bps.vision.trim().slice(0, 120), outcome: bps.vision.trim(), obstacle: bps.obstacle.trim(), ifs: bps.ifs.trim(), then: bps.then.trim() }); });
+    setStage("done");
+  };
+  const reel = (s.goodThings || []).slice().sort((a, b) => b.ts - a.ts).slice(0, 4);
+  if (stage === "done") return html`<${React.Fragment}>
+    <${FinishCard} before=${before} after=${after} metric="mood" prio=${prio} openBrief=${openBrief} back=${back}/>
+    ${kind === "three" && reel.length ? html`<div className="panel"><h3>Highlight reel</h3><ul className="list">${reel.flatMap(g => (g.items || []).map((it, i) => html`<li key=${g.id + "-" + i}><span>${it.t}${it.w ? html` <span className="dim">· ${it.w}</span>` : null}</span><span>${niceDate(dayKey(new Date(g.ts)))}</span></li>`))}</ul></div>` : null}
+    ${kind === "bestself" ? html`<p className="note">Your if-then plan is saved and will show up in mission briefings and urge fights.</p>` : null}
+  <//>`;
+  let kindUI = null;
+  if (kind === "three") kindUI = html`<div style=${{ display: "grid", gap: "12px" }}>${three.map((x, i) => html`<div key=${i} style=${{ display: "grid", gap: "6px" }}>
+      <input id=${"tg-t" + i} value=${x.t} onInput=${e => { const v = e.target.value; setThree(three.map((y, j) => j === i ? Object.assign({}, y, { t: v }) : y)); }} placeholder=${["e.g. The supplier confirmed the switchboard delivery date", "e.g. Good coffee with a colleague", "e.g. Finished the CV summary"][i]} aria-label=${"Good thing " + (i + 1)}/>
+      <input id=${"tg-w" + i} value=${x.w} onInput=${e => { const v = e.target.value; setThree(three.map((y, j) => j === i ? Object.assign({}, y, { w: v }) : y)); }} placeholder="Why did it happen? What was your part?" aria-label=${"Why good thing " + (i + 1) + " happened"} style=${{ fontSize: "13px" }}/>
+    </div>`)}<p className="note">Best done in the evening. Small things count; writing why they happened is what makes it work.</p></div>`;
+  else if (kind === "letter") kindUI = html`<${React.Fragment}>
+      <label className="f" htmlFor="gl-who">Who helped you?<input id="gl-who" value=${letter.who} onInput=${e => setLetter(Object.assign({}, letter, { who: e.target.value }))} placeholder="A mentor, a parent, a former boss, a friend"/></label>
+      <label className="f" htmlFor="gl-body">Your letter<textarea id="gl-body" value=${letter.body} onInput=${e => setLetter(Object.assign({}, letter, { body: e.target.value }))} style=${{ minHeight: "180px" }} placeholder="What they did, how it affected you, and where you are now because of it. Be specific."></textarea></label>
+      <p className="note">Delivering it, ideally by reading it to them in person or on a call, gave the biggest boost in the study.</p>
+      <div className="btn-row" style=${{ alignItems: "center" }}><button className="btn btn-sm btn-line" disabled=${!letter.body.trim()} onClick=${() => copy((letter.who ? "Dear " + letter.who + ",\n\n" : "") + letter.body)}>Copy letter</button>${copied ? html`<span className="note">${copied}</span>` : null}</div>
+    <//>`;
+  else if (kind === "compassion") kindUI = html`<div className="rx" style=${calmRx}>
+      <div className="steps">${COMPASSION.map((_, i) => html`<i key=${i} className=${i <= cs ? "on" : ""}></i>`)}</div>
+      <span className="eyebrow" style=${{ color: "var(--calm)" }}>${cs + 1} · ${COMPASSION[cs][0]}</span>
+      <p style=${{ fontSize: "18px", fontWeight: 700 }}>${COMPASSION[cs][1]}</p>
+      ${cs < COMPASSION.length - 1 ? html`<div><button className="btn btn-sm btn-calm" onClick=${() => setCs(cs + 1)}>Next</button></div>` : html`<label className="f" htmlFor="sc-mate">What would you say to a mate in exactly your situation? (optional)<input id="sc-mate" value=${mate} onInput=${e => setMate(e.target.value)} placeholder="e.g. You're carrying a lot. One bad week doesn't undo three years of good work."/></label>`}
+    </div>`;
+  else if (kind === "opposite") kindUI = html`<${React.Fragment}>
+      <label className="f" htmlFor="oa-e">The emotion<input id="oa-e" value=${opp.emo} onInput=${e => setOpp(Object.assign({}, opp, { emo: e.target.value }))} placeholder="e.g. Flat"/></label>
+      <label className="f" htmlFor="oa-u">What it's pushing you to do<input id="oa-u" value=${opp.urge} onInput=${e => setOpp(Object.assign({}, opp, { urge: e.target.value }))} placeholder="e.g. Stay on the couch, cancel plans, scroll"/></label>
+      <label className="f" htmlFor="oa-a">The opposite action, done all the way<input id="oa-a" value=${opp.act} onInput=${e => setOpp(Object.assign({}, opp, { act: e.target.value }))} placeholder="e.g. Shower, get properly dressed, walk to the café"/></label>
+      <p className="note">Linehan's key point: do it fully. Going through the motions while sulking doesn't shift the emotion.</p>
+    <//>`;
+  else if (kind === "connect") kindUI = html`<${React.Fragment}>
+      <label className="f" htmlFor="cn-who">Who?<input id="cn-who" value=${who} onInput=${e => setWho(e.target.value)} placeholder="Someone you haven't spoken to in a while"/></label>
+      <div className="chips">${CONNECT_SCRIPTS.map(c => html`<button key=${c} aria-pressed=${script === c} style=${script === c ? { borderColor: "var(--calm)", background: "var(--calm-soft)" } : null} onClick=${() => setScript(c)}>${c}</button>`)}</div>
+      <div className="btn-row" style=${{ alignItems: "center" }}><button className="btn btn-sm btn-line" onClick=${() => copy(script)}>Copy message</button>${copied ? html`<span className="note">${copied}</span>` : null}</div>
+      <p className="note">When you're low, a voice call beats a text, and a text beats nothing.</p>
+    <//>`;
+  else if (kind === "bestself") kindUI = html`<${React.Fragment}>
+      <label className="f" htmlFor="bp-v">It's late 2029. Things have gone about as well as they realistically could. Describe an ordinary Tuesday: work, home, money, people.<textarea id="bp-v" value=${bps.vision} onInput=${e => setBps(Object.assign({}, bps, { vision: e.target.value }))} style=${{ minHeight: "150px" }}></textarea></label>
+      <p className="note">Daydreaming on its own can quietly drain effort (Oettingen), and you've said planning can feel better than doing. So this finishes with a reality check.</p>
+      <label className="f" htmlFor="bp-o">What inside you is most likely to get in the way?<input id="bp-o" value=${bps.obstacle} onInput=${e => setBps(Object.assign({}, bps, { obstacle: e.target.value }))} placeholder="e.g. Chasing new ideas instead of finishing the current one"/></label>
+      <div className="f-row">
+        <label className="f" htmlFor="bp-if">If…<input id="bp-if" value=${bps.ifs} onInput=${e => setBps(Object.assign({}, bps, { ifs: e.target.value }))} placeholder="I catch myself researching a new business idea"/></label>
+        <label className="f" htmlFor="bp-then">…then I will<input id="bp-then" value=${bps.then} onInput=${e => setBps(Object.assign({}, bps, { then: e.target.value }))} placeholder="park it in the idea list and do 10 minutes on the current offer"/></label>
+      </div>
+    <//>`;
+  return html`<div className="panel" style=${{ gap: "14px" }}>
+    <p style=${{ fontSize: "16px" }}>${L.d}</p>
+    ${L.steps ? html`<ol style=${{ margin: 0, paddingLeft: "20px", display: "grid", gap: "6px" }}>${L.steps.map((x, i) => html`<li key=${i}>${x}</li>`)}</ol>` : null}
+    ${stage === "before" ? html`<${React.Fragment}>
+      <${Rate} id="lf-b" label="How's your mood right now?" value=${before} onChange=${setBefore} min=${1} max=${10} lo="Awful" hi="Great"/>
+      <div className="btn-row"><button className="btn btn-calm" onClick=${() => { unlockAudio(); setStage("do"); }}>▶ Start</button><button className="btn btn-line" onClick=${toPlan}>Put it in today's plan</button></div>
+    <//>` : null}
+    ${stage === "do" ? html`<${React.Fragment}>
+      ${kindUI}
+      ${L.timer ? html`<${TimerBlock} sec=${L.min * 60} label=${"Start " + L.min + "-minute timer"}/>` : null}
+      <div><button className="btn btn-calm" disabled=${!canFinish} onClick=${() => setStage("after")}>I did it</button></div>
+    <//>` : null}
+    ${stage === "after" ? html`<${React.Fragment}>
+      <${Rate} id="lf-a" label="How's your mood now?" value=${after} onChange=${setAfter} min=${1} max=${10} lo="Awful" hi="Great"/>
+      <div><button className="btn btn-calm" onClick=${finish}>Save</button></div>
+    <//>` : null}
+  </div>`;
+}
+
+/* ---------- patterns ---------- */
+function MoodScatter({ moods }) {
+  const X = p => 14 + (p + 5) / 10 * 212, Y = e => 14 + (5 - e) / 10 * 212;
+  const lbl = { fontSize: "9px", fontFamily: "var(--mono)", fontWeight: 700, letterSpacing: ".06em" };
+  return html`<svg viewBox="0 0 240 240" width="100%" style=${{ maxWidth: "280px", display: "block", margin: "0 auto" }} role="img" aria-label=${"Mood meter showing " + moods.length + " recent check-ins"}>
+    <rect x="0" y="0" width="120" height="120" style=${{ fill: "#ff7b7b", opacity: 0.16 }}/>
+    <rect x="120" y="0" width="120" height="120" style=${{ fill: "#ffcf3d", opacity: 0.14 }}/>
+    <rect x="0" y="120" width="120" height="120" style=${{ fill: "#4cc3ff", opacity: 0.14 }}/>
+    <rect x="120" y="120" width="120" height="120" style=${{ fill: "#47d18c", opacity: 0.14 }}/>
+    <line x1="120" y1="0" x2="120" y2="240" style=${{ stroke: "rgba(255,255,255,.22)" }}/>
+    <line x1="0" y1="120" x2="240" y2="120" style=${{ stroke: "rgba(255,255,255,.22)" }}/>
+    <text x="6" y="14" style=${Object.assign({ fill: "#ff9b9b" }, lbl)}>STRESSED</text>
+    <text x="234" y="14" textAnchor="end" style=${Object.assign({ fill: "#ffdb70" }, lbl)}>ENERGISED</text>
+    <text x="6" y="233" style=${Object.assign({ fill: "#7fd3ff" }, lbl)}>LOW</text>
+    <text x="234" y="233" textAnchor="end" style=${Object.assign({ fill: "#7fe0ae" }, lbl)}>CALM</text>
+    ${moods.map((m, i) => { const last = i === moods.length - 1; const jx = (hashStr(m.id) - 0.5) * 8, jy = (hashStr(m.id + "y") - 0.5) * 8; return html`<circle key=${m.id} cx=${X(m.p) + jx} cy=${Y(m.e) + jy} r=${last ? 7 : 4.5} style=${{ fill: "#f4efe7", opacity: 0.25 + 0.75 * (i + 1) / moods.length, stroke: last ? "#5fe0a0" : "none", strokeWidth: 2 }}/>`; })}
+  </svg>`;
+}
+function MoodPatterns({ s }) {
+  const moods = (s.moods || []).slice().sort((a, b) => a.ts - b.ts);
+  if (!moods.length) return html`<p className="dim">Check in a few times and your patterns appear here: where your mood usually sits, what lifts it, and how sleep and focus affect it.</p>`;
+  const recent = moods.filter(m => Date.now() - m.ts < 14 * 86400000);
+  const st = liftStats(s);
+  const avg = a => a.reduce((x, y) => x + y, 0) / a.length;
+  const dayP = {}; moods.forEach(m => { const k = dayKey(new Date(m.ts)); (dayP[k] = dayP[k] || []).push(m.p); });
+  const sl = moods.filter(m => m.sleep != null), lo = sl.filter(m => m.sleep < 7), hi = sl.filter(m => m.sleep >= 7);
+  const focusDay = k => Math.round(s.sessions.filter(x => x.day === k && productive(x)).reduce((a, x) => a + x.actual, 0) / 60);
+  const days = Object.keys(dayP), fHi = days.filter(k => focusDay(k) >= 25), fLo = days.filter(k => focusDay(k) < 25);
+  const tagC = {}; moods.filter(m => m.p < 0).forEach(m => (m.tags || []).forEach(t => { if (t !== "Nothing specific") tagC[t] = (tagC[t] || 0) + 1; }));
+  const tags = Object.entries(tagC).sort((a, b) => b[1] - a[1]).slice(0, 4);
+  const bars = (arr, color) => { const mx = Math.max(1, ...arr.map(o => o.avg)); return html`<div className="bars">${arr.slice(0, 5).map(o => html`<div key=${o.kind} className="bar-row"><span>${o.label}</span><div className="track"><i style=${{ width: clamp(o.avg / mx, 0, 1) * 100 + "%", background: color }}></i></div><span className="n">${sign(o.avg)}</span></div>`)}</div>`; };
+  return html`<div className="grid-2">
+    <div className="panel"><h3>Last 14 days</h3><${MoodScatter} moods=${recent.length ? recent : moods.slice(-10)}/>
+      <p className="note">${recent.length} check-in${recent.length === 1 ? "" : "s"} in the last two weeks. Brighter dots are more recent.</p></div>
+    <div className="panel"><h3>What works for you</h3>
+      ${st.mood.length || st.calm.length ? html`<${React.Fragment}>
+        ${st.mood.length ? html`<div><div className="eyebrow" style=${{ marginBottom: "8px" }}>Lifts your mood (points, 1–10 scale)</div>${bars(st.mood, "var(--calm)")}</div>` : null}
+        ${st.calm.length ? html`<div><div className="eyebrow" style=${{ marginBottom: "8px" }}>Calms you down (anxiety points dropped)</div>${bars(st.calm, "var(--s2)")}</div>` : null}
+        <p className="note">Averages of your own before-and-after ratings. A few tries aren't proof; the picture firms up over weeks.</p>
+      <//>` : html`<p className="dim">Rate before and after any lifter or rescue tool. Your personal ranking of what actually works appears here.</p>`}
+      ${lo.length >= 2 && hi.length >= 2 ? html`<p><b>Sleep:</b> after under 7 hours, your mood averaged ${sign(avg(lo.map(m => m.p)))}; after 7+ hours, ${sign(avg(hi.map(m => m.p)))}. <span className="note">(Scale −5 to +5; ${lo.length} vs ${hi.length} check-ins.)</span></p>` : null}
+      ${fHi.length >= 2 && fLo.length >= 2 ? html`<p><b>Focus:</b> on days with 25+ focused minutes, your mood averaged ${sign(avg(fHi.map(k => avg(dayP[k]))))}; on other days, ${sign(avg(fLo.map(k => avg(dayP[k]))))}. <span className="note">(${fHi.length} vs ${fLo.length} days.)</span></p>` : null}
+      ${tags.length ? html`<p><b>Most common drivers of unpleasant moods:</b> ${tags.map(([t, n]) => t + " (" + n + ")").join(", ")}.</p>` : null}
+    </div>
+  </div>`;
+}
+function MoodWeek({ s, ws, we }) {
+  const inW = ts => { const k = dayKey(new Date(ts)); return k >= ws && k <= we; };
+  const moods = (s.moods || []).filter(m => inW(m.ts)), lifts = (s.lifts || []).filter(x => inW(x.ts)), scr = (s.screens || []).filter(x => inW(x.ts));
+  if (!moods.length && !lifts.length && !scr.length) return null;
+  const avg = a => a.reduce((x, y) => x + y, 0) / a.length;
+  const words = {}; moods.forEach(m => { if (m.word) words[m.word] = (words[m.word] || 0) + 1; });
+  const topW = Object.entries(words).sort((a, b) => b[1] - a[1]).slice(0, 3);
+  const qc = { red: 0, blue: 0, green: 0, yellow: 0 }; moods.forEach(m => { qc[quadOf(m.p, m.e)]++; });
+  const grouped = {}; lifts.filter(x => x.gain != null).forEach(x => { const o = grouped[x.kind] || (grouped[x.kind] = { label: x.label, sum: 0, n: 0 }); o.sum += x.gain; o.n++; });
+  const best = Object.values(grouped).sort((a, b) => b.sum / b.n - a.sum / a.n)[0];
+  return html`<div className="panel calm-band">
+    <h3>Mood this week</h3>
+    <div className="grid-3" style=${{ gridTemplateColumns: "repeat(auto-fit,minmax(130px,1fr))" }}>
+      <div className="stat"><div className="k">Check-ins</div><div className="v">${moods.length}</div></div>
+      <div className="stat"><div className="k">Avg pleasantness</div><div className="v">${moods.length ? sign(avg(moods.map(m => m.p))) : "—"}</div></div>
+      <div className="stat"><div className="k">Lifters and resets</div><div className="v">${lifts.length}</div></div>
+    </div>
+    ${moods.length ? html`<div className="bars">${["red", "blue", "green", "yellow"].map(k => html`<div key=${k} className="bar-row"><span><span className="qdot" style=${{ background: QUADS[k].color }}></span>${QUADS[k].short}</span><div className="track"><i style=${{ width: qc[k] / moods.length * 100 + "%", background: QUADS[k].color }}></i></div><span className="n">${qc[k]}</span></div>`)}</div>` : null}
+    ${topW.length ? html`<p>Most named: ${topW.map(([w, n]) => w + " (" + n + ")").join(", ")}.</p>` : null}
+    ${best ? html`<p>What helped most: <b>${best.label}</b> (${sign(best.sum / best.n)} on average).</p>` : null}
+    ${scr.map(x => html`<p key=${x.id} className="note">${x.kind === "gad7" ? "GAD-7 (anxiety)" : "PHQ-9 (mood)"}: ${x.score}, ${screenBand(x.kind, x.score).toLowerCase()} · ${niceDate(dayKey(new Date(x.ts)))}</p>`)}
+  </div>`;
+}
+
+/* ---------- the Green Room hub ---------- */
+function GreenRoom(props) {
+  const { s, d, prio, coach, update, openBrief, flash, calmTool, setCalmTool, goTool, setOv } = props;
+  const back = () => { setCalmTool(null); try { window.scrollTo(0, 0); } catch (e) {} };
+  const logLift = x => {
+    const gain = x.before == null || x.after == null ? null : (x.metric === "anxiety" ? x.before - x.after : x.after - x.before);
+    const xp = clamp(Math.round((x.min || 2) * 3), 5, 60);
+    update(n => { n.lifts.push(Object.assign({ id: uid(), ts: Date.now(), gain, xp, gains: { health: xp } }, x)); });
+    flash("+" + xp + " Health", x.label);
+  };
+  const openCalm = id => {
+    if (id === "mastery") { if (prio) openBrief(prio, { minutes: 10 }); return; }
+    if (id === "parking") { const m = s.missions.find(x => x.title === "Idea Parking Lot" && x.status === "active"); if (m) openBrief(m, {}); return; }
+    if (id === "help") { setOv({ type: "help" }); return; }
+    setCalmTool({ id }); try { window.scrollTo(0, 0); } catch (e) {}
+  };
+  const pp = Object.assign({}, props, { back, logLift, openCalm });
+  if (calmTool && calmTool.id) {
+    const id = calmTool.id, L = LIFTERS.find(x => x.id === id);
+    const meta = id === "checkin" ? { t: "How are you, really?", src: "Mood Meter (Marc Brackett, Permission to Feel) · affect labelling (Lieberman et al., 2007)" } : (CALM_TOOLS[id] || L);
+    const MAP = { checkin: MoodCheckIn, breathe: Breathe, ground: Ground, tipp: Tipp, pmr: Pmr, panic: Panic, sorter: Sorter, worrytime: WorryTime, decat: Decat, control: ControlCircle, reappraise: Reappraise, winddown: WindDown, braindump: BrainDump, shuffle: Shuffle, checkup: Checkup };
+    const C = MAP[id] || (L ? LifterView : null);
+    if (C && meta) return html`<div className="wrap section" style=${{ display: "flex", flexDirection: "column", gap: "16px", maxWidth: "820px" }}>
+      <div style=${{ display: "flex", justifyContent: "space-between", gap: "10px", flexWrap: "wrap" }}><button className="btn btn-sm btn-line" onClick=${back}>‹ Green Room</button><button className="btn btn-sm btn-line" onClick=${() => setOv({ type: "help" })}>Need help now?</button></div>
+      <div><h2 style=${{ fontSize: "clamp(34px,6vw,56px)", textTransform: "uppercase" }}>${meta.t}</h2><p className="note" style=${{ marginTop: "8px", color: "var(--calm)", maxWidth: "70ch" }}>Based on: ${meta.src}</p></div>
+      <${C} key=${id + (calmTool.text || "") + (calmTool.wid || "")} ...${pp} lifter=${L}/>
+    </div>`;
+  }
+  const last = latestMood(s), fresh = last && Date.now() - last.ts < 12 * 3600000;
+  const st = liftStats(s);
+  const today = d.today, found = (s.daily[today] && s.daily[today].found) || {};
+  const nFound = FOUNDATIONS.filter(([k]) => found[k]).length;
+  const togFound = k => update(n => { if (!n.daily[today]) n.daily[today] = genDaily(n, today); const dd = n.daily[today]; dd.found = Object.assign({}, dd.found || {}); dd.found[k] = !dd.found[k]; });
+  const boxed = s.worries.filter(w => w.status === "boxed").length;
+  const lastScreen = k => (s.screens || []).filter(x => x.kind === k).sort((a, b) => a.ts - b.ts).pop();
+  const card = (id, extra) => { const m = CALM_TOOLS[id]; return html`<button key=${id} className=${"calm-card" + (m.sec === "rescue" ? " rescue" : "")} onClick=${() => openCalm(id)}><span className="cm">${m.min} min</span><span className="ct">${m.t}</span><span className="cd">${m.d}</span>${extra || null}</button>`; };
+  const liftCard = L => { const k = st.byKind[L.id]; return html`<button key=${L.id} className="calm-card" onClick=${() => openCalm(L.id)}><span className="cm">${L.min} min${k ? " · your avg " + sign(k.avg) : ""}</span><span className="ct">${L.t}</span><span className="cd">${L.d}</span></button>`; };
+  return html`<div className="wrap section" style=${{ display: "flex", flexDirection: "column", gap: "24px" }}>
+    <div className="green-hero">
+      <div className="grain"></div>
+      <span className="eyebrow" style=${{ color: "var(--calm)" }}>Backstage · anxiety · stress · mood</span>
+      <h2>The Green Room</h2>
+      <p style=${{ maxWidth: "62ch", fontSize: "16px", color: "var(--fg-dim)" }}>${coach === "brutal" ? "The Brutal Truth coach waits outside. In here the goal is to reset, not to perform." : "Where you reset before going back on set. Nothing to prove in here."}</p>
+      <div className="btn-row"><button className="btn btn-calm" onClick=${() => openCalm("checkin")}>How are you, really?</button><button className="btn btn-line" onClick=${() => setOv({ type: "help" })}>Need help now?</button></div>
+    </div>
+
+    ${fresh ? html`<${Prescription} m=${last} coach=${coach} prio=${prio} openCalm=${openCalm} again=${() => openCalm("checkin")}/>` : html`<button className="green-link" style=${{ marginTop: 0 }} onClick=${() => openCalm("checkin")}><span><b>30-second check-in.</b> <span className="dim">Name how you feel and get the two or three tools that fit right now.</span></span><span aria-hidden="true">›</span></button>`}
+
+    <section><div className="row-head"><h2>Right now</h2><span className="eyebrow">1–4 min</span></div>
+      <div className="calm-grid">${["breathe", "ground", "tipp", "pmr", "panic"].map(id => card(id))}</div></section>
+
+    <section><div className="row-head"><h2>Mood lifters</h2><span className="eyebrow">Research-backed</span></div>
+      <div className="calm-grid">${LIFTERS.map(liftCard)}</div></section>
+
+    <section className="panel">
+      <div style=${{ display: "flex", justifyContent: "space-between", gap: "10px", alignItems: "baseline", flexWrap: "wrap" }}><h3>Mood foundations today</h3><span className="mono dim">${nFound}/${FOUNDATIONS.length}</span></div>
+      <div className="found">${FOUNDATIONS.map(([k, l]) => html`<button key=${k} aria-pressed=${!!found[k]} onClick=${() => togFound(k)}>${found[k] ? "✓ " : ""}${l}</button>`)}</div>
+      <p className="note">From DBT's PLEASE skills: sleep, food, movement and substances set your emotional baseline. When these slip, everything feels harder, and no technique fully makes up for it.</p>
+    </section>
+
+    <section><div className="row-head"><h2>Worry & stress</h2><span className="eyebrow">CBT tools</span></div>
+      <div className="calm-grid">
+        ${card("sorter")}${card("worrytime", boxed ? html`<span className="chip amber" style=${{ alignSelf: "flex-start" }}>${boxed} boxed</span>` : null)}${card("decat")}${card("control")}${card("reappraise")}
+        <button className="calm-card" onClick=${() => goTool("thought")}><span className="cm">From Tools · 4 min</span><span className="ct">Thought record</span><span className="cd">Catch the thought, name the trap, answer it.</span></button>
+        <button className="calm-card" onClick=${() => goTool("defuse")}><span className="cm">From Tools · 2 min</span><span className="ct">Unhook from a thought</span><span className="cd">ACT defusion: watch the thought instead of obeying it.</span></button>
+      </div></section>
+
+    <section><div className="row-head"><h2>Sleep</h2><span className="eyebrow">CBT-I basics</span></div>
+      <div className="calm-grid">${["winddown", "braindump", "shuffle"].map(id => card(id))}</div></section>
+
+    <section className="panel">
+      <div style=${{ display: "flex", justifyContent: "space-between", gap: "10px", alignItems: "center", flexWrap: "wrap" }}><h3>Check-ups</h3><button className="btn btn-sm btn-calm" onClick=${() => openCalm("checkup")}>${lastScreen("gad7") || lastScreen("phq9") ? "Open check-ups" : "Take a check-up"}</button></div>
+      <p className="dim">GAD-7 (anxiety) and PHQ-9 (mood) are the questionnaires GPs use. Every two weeks is enough, and it shows whether things are getting better or worse.</p>
+      ${[["gad7", "Anxiety (GAD-7)"], ["phq9", "Mood (PHQ-9)"]].map(([k, l]) => { const x = lastScreen(k); return html`<div key=${k} className="bar-row" style=${{ gridTemplateColumns: "1fr auto" }}><span>${l}</span><span className="n">${x ? x.score + " · " + screenBand(k, x.score) + " · " + niceDate(dayKey(new Date(x.ts))) : "not taken"}</span></div>`; })}
+    </section>
+
+    <section><div className="row-head"><h2>Your patterns</h2><span className="eyebrow">Your data only</span></div><${MoodPatterns} s=${s}/></section>
+
+    <p className="note">Self-help techniques from CBT, DBT, ACT, positive psychology and sleep medicine, adapted for everyday use. They're not a diagnosis and not a replacement for professional care. If you're struggling most days for more than two weeks, see a GP.</p>
+  </div>`;
+}
+
+function HelpSheet({ onClose }) {
+  const [copied, setCopied] = useState("");
+  const copy = async n => { try { await navigator.clipboard.writeText(n.replace(/\s/g, "")); setCopied(n); } catch (e) { setCopied("blocked"); } };
+  return html`<div className="overlay" role="dialog" aria-modal="true" aria-label="Support lines">
+    <div className="sheet"><button className="close-x" onClick=${onClose} aria-label="Close">×</button>
+      <div className="sheet-body">
+        <span className="eyebrow" style=${{ color: "var(--calm)" }}>Australia · free and confidential</span>
+        <h2 style=${{ fontSize: "36px", textTransform: "uppercase" }}>Talk to a person</h2>
+        <p className="dim">When things feel unmanageable, a trained person on the phone can help more than any app. You don't need to be in crisis to call.</p>
+        ${CRISIS.map(c => html`<div key=${c.name} className="help-row"><div style=${{ minWidth: 0 }}><div style=${{ fontWeight: 800 }}>${c.name}</div><div className="num">${c.num}</div><div className="note">${c.note}</div></div>
+          <div style=${{ display: "flex", flexDirection: "column", gap: "6px" }}>${c.tel ? html`<a className="btn btn-sm btn-calm" href=${"tel:" + c.tel}>Call</a>` : c.sms ? html`<a className="btn btn-sm btn-calm" href=${"sms:" + c.sms}>Text</a>` : null}<button className="btn btn-sm btn-line" onClick=${() => copy(c.num)}>${copied === c.num ? "Copied" : "Copy"}</button></div></div>`)}
+        ${copied === "blocked" ? html`<p className="note">Copy is blocked in this view. Press and hold a number to select it.</p>` : null}
+        <p className="note">If Call or Text does nothing in this view, dial the number yourself. Not urgent but ongoing? See a GP and ask about a mental health treatment plan, which includes Medicare-rebated sessions with a psychologist.</p>
+      </div></div></div>`;
+}
+function MoreSheet({ view, onGo, onSettings, onClose }) {
+  const items = [["stats", "Player", "Level, attributes, achievements, patterns"], ["futures", "Two Futures", "What consistent action adds up to"], ["coach", "Coach", "Talk it through, scripted or live"], ["recap", "Recap", "Previously on your life…"]];
+  return html`<div className="overlay" role="dialog" aria-modal="true" aria-label="More">
+    <div className="sheet"><button className="close-x" onClick=${onClose} aria-label="Close">×</button>
+      <div className="sheet-body">
+        <span className="eyebrow">More</span>
+        <div style=${{ display: "grid", gap: "8px" }}>
+          ${items.map(([k, l, dsc]) => html`<button key=${k} className="choice" aria-pressed=${view === k} onClick=${() => onGo(k)}><span className="ic" aria-hidden="true"><${Icon} k=${k}/></span><div><div>${l}</div><div className="note" style=${{ fontWeight: 500 }}>${dsc}</div></div></button>`)}
+          <button className="choice" onClick=${onSettings}><span className="ic" aria-hidden="true">⚙</span><div><div>Settings and data</div><div className="note" style=${{ fontWeight: 500 }}>Sync, backup code, salary, No Mercy mode</div></div></button>
+        </div>
+      </div></div></div>`;
 }
 
 /* =========================================================
