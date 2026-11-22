@@ -298,6 +298,31 @@ hr.sep{border:0;border-top:1px solid var(--line);margin:4px 0}
 .hide-sm{} @media (max-width:560px){.hide-sm{display:none}}
 footer{padding:30px var(--gutR) 30px var(--gut);color:var(--fg-faint);font-size:12.5px;max-width:1400px;margin:0 auto}
 
+
+/* toolkit */
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:12px}
+.tool-card{display:flex;flex-direction:column;gap:8px;text-align:left;padding:16px;border-radius:12px;background:var(--ink-2);border:1px solid var(--line);transition:border-color .15s, transform .15s;position:relative;overflow:hidden}
+.tool-card:hover{border-color:var(--fg-faint);transform:translateY(-2px)}
+.tool-card .tt{font-family:var(--display);font-weight:900;font-size:24px;text-transform:uppercase;line-height:1}
+.tool-card .src{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--tungsten)}
+.tool-card .tool-n{position:absolute;right:12px;top:12px}
+.factor{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center}
+.factor .hint{grid-column:1/-1;font-size:12.5px;color:var(--fg-faint)}
+.meter{height:14px;border-radius:7px;background:linear-gradient(90deg,var(--bad),var(--warn) 50%,var(--ok));position:relative}
+.meter i{position:absolute;top:-4px;width:4px;height:22px;border-radius:2px;background:var(--fg);transform:translateX(-50%);transition:left .3s}
+.rx{border-radius:12px;padding:16px;background:linear-gradient(120deg,rgba(255,176,74,.12),var(--ink-2) 70%);border:1px solid rgba(255,176,74,.45);display:flex;flex-direction:column;gap:10px}
+.dchips{display:flex;flex-wrap:wrap;gap:8px}
+.dchips button{padding:8px 12px;border-radius:10px;background:var(--ink-3);border:1px solid var(--line);font-size:13px;font-weight:700;text-align:left}
+.dchips button[aria-pressed="true"]{border-color:var(--tungsten);background:rgba(255,176,74,.12)}
+.dchips small{display:block;font-weight:500;color:var(--fg-faint);font-size:11.5px}
+.stream{position:relative;height:200px;border-radius:12px;overflow:hidden;background:linear-gradient(180deg,#0f1d24,#0c0a0e);border:1px solid var(--line)}
+.stream .leaf{position:absolute;left:-60%;max-width:80%;padding:10px 14px;border-radius:40px 6px 40px 6px;background:rgba(71,209,140,.18);border:1px solid rgba(71,209,140,.45);font-weight:700;animation:drift 11s linear forwards}
+@keyframes drift{0%{transform:translateX(0) translateY(0) rotate(-3deg);opacity:0}10%{opacity:1}100%{transform:translateX(220%) translateY(-30px) rotate(4deg);opacity:0}}
+.steps{display:flex;gap:6px}
+.steps i{flex:1;height:4px;border-radius:2px;background:var(--ink-4)}
+.steps i.on{background:var(--tungsten)}
+.contract-doc{border-radius:12px;padding:20px;background:repeating-linear-gradient(0deg,transparent 0 31px,rgba(255,255,255,.035) 31px 32px),var(--ink-2);border:1px solid var(--line);display:flex;flex-direction:column;gap:12px}
+.signature{font-family:var(--display);font-style:italic;font-weight:800;font-size:34px;color:var(--tungsten);border-bottom:1px solid var(--fg-faint);padding-bottom:4px}
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
   .breath .orb{animation:none;transform:scale(.8)}
@@ -438,7 +463,9 @@ function freshState() {
     v: 1, createdAt: Date.now(), updatedAt: Date.now(), seasonStart: dayKey(), coach: null,
     missions: SEED.map(seedToMission), sessions: [], urges: [], checkins: [], daily: {}, milestones: {}, seenAch: [],
     sim: { target: 60, days: 6, avoid: null, split: { learn: 35, jobs: 30, biz: 25, money: 10 }, assume: { appHours: 1.5, p6Hours: 30, protHours: 40, bizHours: 60 } },
-    active: null, brk: null
+    active: null, brk: null,
+    diag: [], thoughts: [], woop: [], values: {}, slips: [], bundles: [], contracts: [], excuses: [], tomb: [],
+    profile: { salary: 115000, target: 150000 }, prefs: { noMercy: false }, epoch: uid(), resetAt: 0
   };
 }
 function normalize(s) {
@@ -447,13 +474,15 @@ function normalize(s) {
   out.sim = Object.assign({}, f.sim, out.sim || {});
   out.sim.split = Object.assign({}, f.sim.split, out.sim.split || {});
   out.sim.assume = Object.assign({}, f.sim.assume, out.sim.assume || {});
-  ["missions", "sessions", "urges", "checkins", "seenAch"].forEach(k => { if (!Array.isArray(out[k])) out[k] = f[k]; });
+  ["missions", "sessions", "urges", "checkins", "seenAch", "diag", "thoughts", "woop", "slips", "bundles", "contracts", "excuses", "tomb"].forEach(k => { if (!Array.isArray(out[k])) out[k] = f[k]; });
+  ["values", "profile", "prefs"].forEach(k => { out[k] = Object.assign({}, f[k], (out[k] && typeof out[k] === "object") ? out[k] : {}); });
+  if (s && !s.epoch) out.epoch = "v1";
   if (!out.daily || typeof out.daily !== "object") out.daily = {};
   if (!out.milestones || typeof out.milestones !== "object") out.milestones = {};
   return out;
 }
 const Store = {
-  local: "unknown", cloud: "off", lastSaved: 0, listeners: new Set(),
+  local: "unknown", cloud: "off", lastSaved: 0, lastSync: 0, listeners: new Set(),
   emit() { this.listeners.forEach(f => f()); },
   loadLocal() {
     try { const raw = localStorage.getItem(LS_KEY); this.local = "ok"; this.wasFresh = !raw; return raw ? JSON.parse(raw) : null; }
@@ -465,77 +494,117 @@ const Store = {
     this.emit();
   }
 };
-/* Cloud sync: private per-user documents in the artifact's database.
-   core doc = everything but the logs; logs are split by month to stay well under the size cap. */
+/* Cloud sync: private per-user documents in the artifact's database (path data/users/<id>/…, readable only by you).
+   core doc = everything but the logs; logs are split by month to stay well under the 256 KiB document cap.
+   Every device merges instead of overwriting: logs are unioned by id, settings follow the most recent edit. */
+const LOG_KEYS = ["sessions", "urges", "checkins", "diag", "thoughts", "slips", "excuses"];
+const UNION_KEYS = ["missions", "woop", "bundles", "contracts"];
+const byTsId = (x, y) => (x.ts || 0) - (y.ts || 0) || (x.id < y.id ? -1 : x.id > y.id ? 1 : 0);
+const byOrder = (x, y) => (x.order || 0) - (y.order || 0) || (x.createdAt || x.ts || 0) - (y.createdAt || y.ts || 0) || (x.id < y.id ? -1 : x.id > y.id ? 1 : 0);
+function stable(v) {
+  if (Array.isArray(v)) return "[" + v.map(stable).join(",") + "]";
+  if (v && typeof v === "object") return "{" + Object.keys(v).sort().filter(k => v[k] !== undefined).map(k => JSON.stringify(k) + ":" + stable(v[k])).join(",") + "}";
+  return JSON.stringify(v === undefined ? null : v);
+}
+function mergeStates(a, b, preferB) {
+  if (!a) return normalize(b); if (!b) return normalize(a);
+  if (a.epoch !== b.epoch && ((a.resetAt || 0) || (b.resetAt || 0)) && (a.resetAt || 0) !== (b.resetAt || 0)) return normalize(JSON.parse(JSON.stringify((a.resetAt || 0) > (b.resetAt || 0) ? a : b)));
+  const newer = preferB || (b.updatedAt || 0) > (a.updatedAt || 0) ? b : a, older = newer === a ? b : a;
+  const out = normalize(JSON.parse(JSON.stringify(newer)));
+  const tomb = new Set([].concat(older.tomb || [], newer.tomb || []));
+  out.tomb = Array.from(tomb).sort();
+  const uni = (k, cmp) => { const m = new Map(); (older[k] || []).forEach(x => { if (x && x.id) m.set(x.id, x); }); (newer[k] || []).forEach(x => { if (x && x.id) m.set(x.id, x); }); out[k] = JSON.parse(JSON.stringify(Array.from(m.values()).filter(x => !tomb.has(x.id)).sort(cmp))); };
+  LOG_KEYS.forEach(k => uni(k, byTsId));
+  UNION_KEYS.forEach(k => uni(k, byOrder));
+  out.seenAch = Array.from(new Set([].concat(older.seenAch || [], newer.seenAch || []))).sort();
+  out.daily = Object.assign({}, JSON.parse(JSON.stringify(older.daily || {})), out.daily);
+  return out;
+}
 const Cloud = {
-  col: null, hashes: {}, timer: null, chain: Promise.resolve(),
-  split(s) {
+  col: null, hashes: {}, timer: null, chain: Promise.resolve(), unsub: null, getState: null, onRemote: null,
+  canon(s) { const c = Object.assign({}, s); LOG_KEYS.forEach(k => { c[k] = (s[k] || []).slice().sort(byTsId); }); UNION_KEYS.forEach(k => { c[k] = (s[k] || []).slice().sort(byOrder); }); return c; },
+  split(s0) {
+    const s = this.canon(s0);
     const docs = {};
-    const core = Object.assign({}, s); delete core.sessions; delete core.urges; delete core.checkins;
-    docs.core = { kind: "core", body: JSON.stringify(core) };
+    const core = Object.assign({}, s); LOG_KEYS.forEach(k => delete core[k]);
+    docs.core = { kind: "core", body: stable(core) };
     const months = {};
-    const put = (arr, key) => arr.forEach(x => { const m = dayKey(new Date(x.ts)).slice(0, 7); (months[m] = months[m] || { sessions: [], urges: [], checkins: [] })[key].push(x); });
-    put(s.sessions, "sessions"); put(s.urges, "urges"); put(s.checkins, "checkins");
-    Object.keys(months).forEach(m => { docs["log-" + m] = { kind: "log", body: JSON.stringify(months[m]) }; });
+    LOG_KEYS.forEach(key => (s[key] || []).forEach(x => { const m = dayKey(new Date(x.ts)).slice(0, 7); if (!months[m]) { months[m] = { epoch: s.epoch }; LOG_KEYS.forEach(k => months[m][k] = []); } months[m][key].push(x); }));
+    Object.keys(months).forEach(m => { docs["log-" + m] = { kind: "log", body: stable(months[m]) }; });
     return docs;
   },
   join(docs) {
-    let core = null; const s = { sessions: [], urges: [], checkins: [] };
+    let core = null; const logs = [];
     docs.forEach(d => {
-      const v = d.data(); if (!v || !v.body) return;
-      try {
-        const b = JSON.parse(v.body);
-        if (d.id === "core") core = b;
-        else if (d.id.startsWith("log-")) { s.sessions.push(...(b.sessions || [])); s.urges.push(...(b.urges || [])); s.checkins.push(...(b.checkins || [])); }
-      } catch (e) {}
+      const v = d.data(); if (!v || typeof v.body !== "string") return;
+      try { const b = JSON.parse(v.body); if (d.id === "core") core = b; else if (d.id.startsWith("log-")) logs.push(b); } catch (e) {}
     });
     if (!core) return null;
-    const byTs = (a, b) => a.ts - b.ts;
-    return Object.assign(core, { sessions: s.sessions.sort(byTs), urges: s.urges.sort(byTs), checkins: s.checkins.sort(byTs) });
+    LOG_KEYS.forEach(k => core[k] = []);
+    logs.forEach(b => { if (b.epoch && core.epoch && b.epoch !== core.epoch && b.epoch !== "v1") return; LOG_KEYS.forEach(k => { if (Array.isArray(b[k])) core[k].push(...b[k]); }); });
+    LOG_KEYS.forEach(k => core[k].sort(byTsId));
+    return core;
   },
-  async init(getState, replaceState) {
+  async init(getState, onRemote) {
+    this.getState = getState; this.onRemote = onRemote;
     try {
-      if (!window.claude || typeof window.claude.use !== "function") return;
+      if (!window.claude || typeof window.claude.use !== "function") { Store.cloud = "unavailable"; Store.emit(); return; }
       const [db, user] = await Promise.all([window.claude.use("db"), window.claude.use("user")]);
-      if (!db || !user) return;
+      if (!db || !user) { Store.cloud = "unavailable"; Store.emit(); return; }
       const id = await user.id();
-      if (!id) return;
+      if (!id) { Store.cloud = "unavailable"; Store.emit(); return; }
       this.col = db.collection("data/users/" + id);
       Store.cloud = "connecting"; Store.emit();
-      const snap = await this.col.get();
-      const remote = this.join(snap.docs);
-      snap.docs.forEach(d => { const v = d.data(); if (v && v.body) this.hashes[d.id] = v.body; });
-      const local = getState();
-      const localEmpty = !local.sessions.length && !local.urges.length;
-      if (remote && (Store.wasFresh || localEmpty || (remote.updatedAt || 0) > (local.updatedAt || 0))) {
-        replaceState(normalize(remote));
-      } else {
-        this.schedule(local, 0);
-      }
-      Store.cloud = "ok"; Store.emit();
-    } catch (e) {
-      Store.cloud = "error"; Store.emit();
-    }
+      await this.pull();
+      this.subscribe();
+      document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") this.flushNow(); else this.pull(); });
+      window.addEventListener("pagehide", () => this.flushNow());
+    } catch (e) { Store.cloud = "error"; Store.emit(); }
   },
-  schedule(s, delay = 1800) {
+  async pull() {
+    if (!this.col) return;
+    try { const snap = await this.col.get(); this.absorb(snap, true); Store.cloud = "ok"; Store.lastSync = Date.now(); Store.emit(); }
+    catch (e) { Store.cloud = "error"; Store.emit(); }
+  },
+  absorb(snap, force) {
+    let changed = false;
+    snap.docs.forEach(d => { const v = d.data(); if (v && typeof v.body === "string" && this.hashes[d.id] !== v.body) changed = true; });
+    if (!changed && !force) return;
+    const remote = this.join(snap.docs);
+    snap.docs.forEach(d => { const v = d.data(); if (v && typeof v.body === "string") this.hashes[d.id] = v.body; });
+    // A device that started with no saved data defers to the account copy on its first pull.
+    const prefer = !!Store.wasFresh; Store.wasFresh = false;
+    if (remote) this.onRemote(remote, prefer); else this.schedule(this.getState(), 0);
+  },
+  subscribe() {
+    if (this.unsub || !this.col) return;
+    try {
+      this.unsub = this.col.onSnapshot(snap => {
+        if (snap.metadata && (snap.metadata.hasPendingWrites || snap.metadata.fromCache)) return;
+        this.absorb(snap, false); Store.cloud = "ok"; Store.lastSync = Date.now(); Store.emit();
+      }, err => { this.unsub = null; Store.cloud = "error"; Store.emit(); if (!err || err.code !== "revoked") setTimeout(() => this.subscribe(), 8000); });
+    } catch (e) { this.unsub = null; }
+  },
+  schedule(s, delay = 1500) {
     if (!this.col) return;
     clearTimeout(this.timer);
     this.timer = setTimeout(() => this.flush(s), delay);
   },
+  flushNow() { if (!this.col || !this.getState) return; clearTimeout(this.timer); this.flush(this.getState()); },
   flush(s) {
     const docs = this.split(s);
     Object.keys(docs).forEach(k => {
       if (this.hashes[k] === docs[k].body) return;
       const body = docs[k].body;
+      this.hashes[k] = body;
       this.chain = this.chain.then(() => this.col.doc(k).set({ kind: docs[k].kind, body, at: Date.now() }))
-        .then(() => { this.hashes[k] = body; Store.cloud = "ok"; Store.lastSaved = Date.now(); Store.emit(); })
-        .catch(() => { Store.cloud = "error"; Store.emit(); });
+        .then(() => { Store.cloud = "ok"; Store.lastSync = Date.now(); Store.emit(); })
+        .catch(e => { delete this.hashes[k]; Store.cloud = e && e.code === "quota_exceeded" ? "full" : "error"; Store.emit(); });
     });
   },
   async wipe() {
     if (!this.col) return;
-    const keys = Object.keys(this.hashes);
-    for (const k of keys) { try { await this.col.doc(k).delete(); } catch (e) {} }
+    for (const k of Object.keys(this.hashes)) { try { await this.col.doc(k).delete(); } catch (e) {} }
     this.hashes = {};
   }
 };
@@ -604,6 +673,9 @@ function achievements(s, d) {
     { id: "comeback", t: "The Comeback King", dsc: "Came back after two or more days away.", on: d.comeback, p: "" },
     { id: "deep", t: "Deep Cut", dsc: "Complete a 45-minute mission.", on: sess.some(x => x.outcome === "done" && x.planned >= 2700), p: "" },
     { id: "honest", t: "Honest Witness", dsc: "Logged a distracted session truthfully. Data beats pretending.", on: sess.some(x => x.outcome === "distracted"), p: "" },
+    { id: "word", t: "Kept My Word", dsc: "Keep a signed weekly Ulysses contract.", on: s.contracts.some(c => contractEval(s, c, dayKey()).status === "kept"), p: "" },
+    { id: "reframe", t: "Reframed", dsc: "Complete a thought record and act on it.", on: s.thoughts.some(t => t.kind !== "defuse"), p: "" },
+    { id: "kind", t: "Back on the Horse", dsc: "Run the slip recovery protocol instead of writing off the week.", on: s.slips.length > 0, p: "" },
     { id: "surfer", t: "Urge Surfer", dsc: "Fight ten urge bosses.", on: urges.length >= 10, p: Math.min(urges.length, 10) + "/10" }
   ];
 }
@@ -772,14 +844,14 @@ const INTENTS = [
     brutal: c => `Tired is a real obstacle. Respect it, but don't use it as a blanket excuse. Do one 2-minute task, then rest properly. Real rest, not three hours of scrolling.`,
     mentor: c => `Tiredness is real, and pushing through can backfire. Let's do a gentle 2-minute action, then a proper break or an early night.`,
     action: { label: "Take a planned 15-minute break", act: "break" } },
-  { id: "research", re: /research|business idea|compare|car|reading about/i,
+  { id: "research", re: /research|business idea|compare|\bcars?\b|reading about/i,
     brutal: c => `Research feels like progress and usually isn't. What decision will this research let you make in the next 7 days? No answer, no research. Produce a deliverable instead.`,
     mentor: c => `Research is satisfying because it's all possibility and no risk. Let's convert it into one tangible output: a chosen offer, a sent message, or a decision.`,
     action: { label: "Start: Contact one potential customer", act: "contact" } }
 ];
 function coachReply(coach, text, ctx) {
   const it = INTENTS.find(i => i.re.test(text));
-  if (it) return { text: it[coach](ctx), action: it.action };
+  if (it) return { text: it[coach](ctx), action: it.action, intent: it.id };
   return { text: coach === "brutal"
       ? `I don't do vague. What's the one task you're avoiding right now? Name it and I'll turn it into a 10-minute mission.`
       : `Thanks for telling me. Let's make it concrete: which task is weighing on you most? Use "What am I avoiding?" and I'll build a small mission around it.`,
@@ -849,7 +921,7 @@ function MissionCard({ s, m, onOpen, label }) {
 const ICONS = {
   home: "M3 11 12 3l9 8v10h-6v-6H9v6H3Z", today: "M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7Zm-2 8h14v10H5V10Z",
   stats: "M4 20V10h3v10H4Zm6.5 0V4h3v16h-3ZM17 20v-7h3v7h-3Z", futures: "M3 17 9 11l4 4 8-8v4h2V5h-6v2h4l-6 6-4-4-7 7Z",
-  coach: "M4 4h16v11H8l-4 4V4Z", recap: "M4 5h16v14H4V5Zm2 2v10h12V7H6Zm3 2 6 3-6 3V9Z"
+  coach: "M4 4h16v11H8l-4 4V4Z", tools: "M21.7 18.3 15 11.6a6 6 0 0 0-7.6-7.6l3.9 3.9-3.4 3.4L4 7.4A6 6 0 0 0 11.6 15l6.7 6.7a1 1 0 0 0 1.4 0l2-2a1 1 0 0 0 0-1.4Z", recap: "M4 5h16v14H4V5Zm2 2v10h12V7H6Zm3 2 6 3-6 3V9Z"
 };
 const Icon = ({ k }) => html`<svg viewBox="0 0 24 24" aria-hidden="true"><path d=${ICONS[k]} fill="currentColor"/></svg>`;
 
@@ -863,21 +935,23 @@ function App() {
   const [view, setView] = useState("home");
   const [ov, setOv] = useState(() => null);      // overlay: {type, ...}
   const [toast, setToast] = useState(null);
+  const [tool, setTool] = useState(null);
+  const goTool = (id, extra) => { setTool(Object.assign({ id }, extra || {})); setView("tools"); setOv(null); try { window.scrollTo(0, 0); } catch (e) {} };
   const [now, setNow] = useState(Date.now());
   const browseStart = useRef(Date.now());
   const [nudgeDismissed, setNudgeDismissed] = useState(0);
   const sample = useRef(null);
   const downloads = useRef(null);
 
-  const update = useCallback(fn => {
-    setS(prev => { const next = JSON.parse(JSON.stringify(prev)); fn(next); next.updatedAt = Date.now(); return next; });
+  const update = useCallback((fn, quiet) => {
+    setS(prev => { const next = JSON.parse(JSON.stringify(prev)); fn(next); if (!quiet) next.updatedAt = Date.now(); return next; });
   }, []);
 
   // persistence
   useEffect(() => { Store.saveLocal(s); Cloud.schedule(s); }, [s]);
   useEffect(() => {
     const f = () => force(x => x + 1); Store.listeners.add(f);
-    Cloud.init(() => sRef.current, next => setS(next));
+    Cloud.init(() => sRef.current, (remote, prefer) => setS(prev => mergeStates(prev, remote, prefer)));
     (async () => {
       try { if (window.claude && window.claude.use) { sample.current = await window.claude.use("sample"); downloads.current = await window.claude.use("downloads"); force(x => x + 1); } } catch (e) {}
     })();
@@ -894,11 +968,13 @@ function App() {
   }, []);
 
   const d = useMemo(() => derive(s), [s]);
+  // If account sync delivers a coach choice made on another device, skip the first-run picker here.
+  useEffect(() => { if (s.coach && ov && ov.type === "coachPick" && ov.first) setOv(s.active ? null : { type: "checkin" }); }, [s.coach]);
   const today = d.today;
 
   // ensure today's daily episode exists
   useEffect(() => {
-    if (!s.daily[today]) update(n => { n.daily[today] = genDaily(n, today); });
+    if (!s.daily[today]) update(n => { n.daily[today] = genDaily(n, today); }, true);
   }, [today, s.daily[today]]);
   const daily = s.daily[today] || genDaily(s, today);
   const byId = id => s.missions.find(m => m.id === id);
@@ -915,24 +991,25 @@ function App() {
     try { if (!window.__ac) window.__ac = new (window.AudioContext || window.webkitAudioContext)(); window.__ac.resume && window.__ac.resume(); } catch (e) {}
     update(n => {
       if (!n.missions.some(x => x.id === m.id)) n.missions.push(Object.assign({}, m, { order: n.missions.length + 100, createdAt: Date.now() }));
-      n.active = { mid: m.id, title: m.title, target: target || "", plannedSec: minutes * 60, startTs: Date.now(), pausedMs: 0, pausedAt: null, fromAvoid: !!opts.fromAvoid, viaBoss: !!opts.viaBoss };
+      n.active = { mid: m.id, title: m.title, target: target || "", plannedSec: minutes * 60, startTs: Date.now(), pausedMs: 0, pausedAt: null, fromAvoid: !!opts.fromAvoid, viaBoss: !!opts.viaBoss, moodBefore: opts.moodBefore == null ? null : opts.moodBefore };
       n.brk = null;
     });
     browseStart.current = Date.now();
     setOv(null);
   };
   const quickStart = (m, minutes, opts = {}) => startMission(m, minutes, m.firstStep, opts);
-  const finishReview = (outcome, note) => {
+  const finishReview = (outcome, note, moodAfter) => {
     const a = s.active; if (!a) return;
     const m = byId(a.mid) || { id: a.mid, title: a.title, attr: "courage", minutes: Math.round(a.plannedSec / 60), difficulty: "Medium", season: 1, tags: [] };
     const end = a.pausedAt || Date.now();
     const actual = Math.round(clamp((end - a.startTs - a.pausedMs) / 1000, 0, 6 * 3600));
     const gains = sessionGains(s, m, outcome, actual, a.plannedSec, a);
     const xp = Object.values(gains).reduce((x, y) => x + y, 0);
-    const sess = { id: uid(), mid: m.id, title: m.title, season: m.season, attr: m.attr, tags: m.tags || [], planned: a.plannedSec, actual, outcome, xp, gains, ts: Date.now(), day: dayKey(), note: note || "", target: a.target, fromAvoid: a.fromAvoid, viaBoss: a.viaBoss };
+    const sess = { id: uid(), mid: m.id, title: m.title, season: m.season, attr: m.attr, tags: m.tags || [], planned: a.plannedSec, actual, outcome, xp, gains, ts: Date.now(), day: dayKey(), note: note || "", target: a.target, fromAvoid: a.fromAvoid, viaBoss: a.viaBoss, moodBefore: a.moodBefore == null ? null : a.moodBefore, moodAfter: moodAfter == null ? null : moodAfter };
     const beforeAch = achievements(s, d).filter(x => x.on).map(x => x.id);
     const n = JSON.parse(JSON.stringify(s));
     n.sessions.push(sess); n.active = null;
+    if (note && outcome !== "done") n.excuses.push({ id: uid(), ts: Date.now(), text: note, src: outcome === "partial" ? "partial session" : "distracted session" });
     if (outcome === "done" && !m.repeat) { const mm = n.missions.find(x => x.id === m.id); if (mm) mm.status = "done"; }
     const after = achievements(n, derive(n)).filter(x => x.on).map(x => x.id);
     const newAch = after.filter(x => !beforeAch.includes(x) && !n.seenAch.includes(x));
@@ -950,6 +1027,10 @@ function App() {
     else if (act === "checkin") setOv({ type: "checkin" });
     else if (act === "break") startBreak(15, null);
     else if (act === "courage") openBrief(pickForCategory(s, "overdue"), { fromAvoid: true });
+    else if (act === "diag") goTool("diag", { mid: p && p.id });
+    else if (act === "thought") goTool("thought");
+    else if (act === "slip") goTool("slip");
+    else if (act === "woop") goTool("woop");
     else if (act === "contact") { const m = s.missions.find(x => x.title === "Contact One Potential Customer") || pickForCategory(s, "business"); openBrief(m, {}); }
   };
   const startBreak = (min, urgeId) => {
@@ -964,7 +1045,7 @@ function App() {
     else n.missions.push(Object.assign({ id: uid(), status: "active", order: n.missions.length + 100, createdAt: Date.now() }, m));
   });
   const deleteMission = (id) => update(n => {
-    n.missions = n.missions.filter(x => x.id !== id);
+    n.missions = n.missions.filter(x => x.id !== id); n.tomb.push(id);
     Object.values(n.daily).forEach(dd => { if (dd.priority === id) dd.priority = null; dd.support = (dd.support || []).filter(x => x !== id); if (dd.wellbeing === id) dd.wellbeing = null; });
     if (n.daily[dayKey()]) { const g = genDaily(n, dayKey()); const t = n.daily[dayKey()]; if (!t.priority) t.priority = g.priority; while (t.support.length < 2 && g.support.length) { const c = g.support.shift(); if (!t.support.includes(c) && c !== t.priority) t.support.push(c); } if (!t.wellbeing) t.wellbeing = g.wellbeing; }
   });
@@ -980,7 +1061,7 @@ function App() {
   const showNudge = !s.active && !s.brk && !ov && browsingMin >= 5 + nudgeDismissed * 5;
 
   const inPlayer = !!s.active;
-  const nav = [["home", "Home"], ["today", "Today"], ["stats", "Player"], ["futures", "Two Futures"], ["coach", "Coach"], ["recap", "Recap"]];
+  const nav = [["home", "Home"], ["today", "Today"], ["tools", "Tools"], ["stats", "Player"], ["futures", "Two Futures"], ["coach", "Coach"], ["recap", "Recap"]];
 
   return html`<${React.Fragment}>
     ${!inPlayer ? html`<header className="top">
@@ -1009,12 +1090,13 @@ function App() {
         <div className="btn-row"><button className="btn btn-sm btn-amber" onClick=${() => prio && openBrief(prio, { minutes: 10 })}>Start priority</button><button className="btn btn-sm btn-line" onClick=${() => { setNudgeDismissed(x => x + 1); }}>Dismiss</button></div>
       </div></div>` : null}
 
-      ${view === "home" ? html`<${Home} ...${ctx} coach=${coach} daily=${daily} byId=${byId} openBrief=${openBrief} setOv=${setOv} setView=${setView}/>` : null}
-      ${view === "today" ? html`<${Today} ...${ctx} coach=${coach} daily=${daily} byId=${byId} openBrief=${openBrief} setOv=${setOv} update=${update}/>` : null}
-      ${view === "stats" ? html`<${Stats} ...${ctx} coach=${coach} update=${update} flash=${flash}/>` : null}
+      ${view === "home" ? html`<${Home} ...${ctx} coach=${coach} daily=${daily} byId=${byId} openBrief=${openBrief} setOv=${setOv} setView=${setView} goTool=${goTool}/>` : null}
+      ${view === "today" ? html`<${Today} ...${ctx} coach=${coach} daily=${daily} byId=${byId} openBrief=${openBrief} setOv=${setOv} update=${update} goTool=${goTool}/>` : null}
+      ${view === "stats" ? html`<${Stats} ...${ctx} coach=${coach} update=${update} flash=${flash} goTool=${goTool}/>` : null}
       ${view === "futures" ? html`<${Futures} ...${ctx} update=${update}/>` : null}
-      ${view === "coach" ? html`<${CoachChat} ...${ctx} coach=${coach} runAct=${runAct} update=${update} sample=${sample.current}/>` : null}
-      ${view === "recap" ? html`<${Recap} ...${ctx} coach=${coach} byId=${byId}/>` : null}
+      ${view === "coach" ? html`<${CoachChat} ...${ctx} coach=${coach} runAct=${runAct} update=${update} sample=${sample.current} goTool=${goTool}/>` : null}
+      ${view === "recap" ? html`<${Recap} ...${ctx} coach=${coach} byId=${byId} update=${update} flash=${flash}/>` : null}
+      ${view === "tools" ? html`<${Tools} ...${ctx} coach=${coach} update=${update} openBrief=${openBrief} flash=${flash} tool=${tool} setTool=${setTool}/>` : null}
 
       <footer>
         <div style=${{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}><${SaveStatus}/></div>
@@ -1041,12 +1123,12 @@ function App() {
           else m = pickForCategory(s, cat);
           openBrief(m, { fromAvoid: true, avoidCat: cat });
         }}/>` : null}
-    ${ov && ov.type === "brief" ? html`<${Briefing} s=${s} m=${ov.m} opts=${ov.opts} coach=${coach} onStart=${startMission} onClose=${() => setOv(null)} onEdit=${() => setOv({ type: "edit", m: ov.m })} onDelete=${() => setOv({ type: "confirmDel", m: ov.m })}/>` : null}
+    ${ov && ov.type === "brief" ? html`<${Briefing} s=${s} d=${d} m=${ov.m} opts=${ov.opts} coach=${coach} onStart=${startMission} onClose=${() => setOv(null)} onEdit=${() => setOv({ type: "edit", m: ov.m })} onDelete=${() => setOv({ type: "confirmDel", m: ov.m })}/>` : null}
     ${ov && ov.type === "edit" ? html`<${EditMission} s=${s} m=${ov.m} season=${ov.season} onSave=${m => { saveMission(m); setOv(null); flash(ov.m ? "Episode updated" : "Episode added", m.title); }} onClose=${() => setOv(null)}/>` : null}
     ${ov && ov.type === "confirmDel" ? html`<${ConfirmDelete} m=${ov.m} onYes=${() => { deleteMission(ov.m.id); setOv(null); flash("Episode deleted", ov.m.title); }} onNo=${() => setOv({ type: "brief", m: ov.m, opts: {} })}/>` : null}
     ${ov && ov.type === "review" ? html`<${Review} s=${s} onSubmit=${finishReview} onBack=${() => { update(n => { if (n.active && n.active.pausedAt) { n.active.pausedMs += Date.now() - n.active.pausedAt; n.active.pausedAt = null; } }); setOv(null); }}/>` : null}
-    ${ov && ov.type === "result" ? html`<${Result} s=${s} d=${d} coach=${coach} res=${ov} prio=${prio} byId=${byId} daily=${daily} onNext=${(m, o) => openBrief(m, o || {})} onBreak=${() => startBreak(10, null)} onClose=${() => { setOv(null); setView("home"); browseStart.current = Date.now(); }}/>` : null}
-    ${ov && ov.type === "boss" ? html`<${BossFight} s=${s} coach=${coach} prio=${prio} fromPlayer=${ov.fromPlayer}
+    ${ov && ov.type === "result" ? html`<${Result} s=${s} d=${d} coach=${coach} res=${ov} prio=${prio} byId=${byId} daily=${daily} onNext=${(m, o) => openBrief(m, o || {})} onBreak=${() => startBreak(10, null)} goTool=${goTool} onClose=${() => { setOv(null); setView("home"); browseStart.current = Date.now(); }}/>` : null}
+    ${ov && ov.type === "boss" ? html`<${BossFight} s=${s} coach=${coach} goTool=${goTool} prio=${prio} fromPlayer=${ov.fromPlayer}
         onClose=${() => { if (ov.fromPlayer) update(n => { if (n.active && n.active.pausedAt) { n.active.pausedMs += Date.now() - n.active.pausedAt; n.active.pausedAt = null; } }); setOv(null); }}
         onDone=${(log, next) => {
           const gains = {}; if (log.choice === "return") gains.discipline = 10; if (log.choice === "shrink") gains.courage = 10;
@@ -1098,7 +1180,11 @@ function beep() {
 function SaveStatus() {
   const L = Store.local, C = Store.cloud;
   let cls = "save-dot", txt;
-  if (C === "ok") { cls += " cloud"; txt = "Saved to your Claude account and this device"; }
+  const ago = Store.lastSync ? Math.round((Date.now() - Store.lastSync) / 1000) : null;
+  const agoTxt = ago === null ? "" : ago < 60 ? ` · synced ${ago}s ago` : ago < 3600 ? ` · synced ${Math.round(ago / 60)} min ago` : ` · synced ${Math.round(ago / 3600)} h ago`;
+  if (C === "ok") { cls += " cloud"; txt = "Saved on this device and synced to your Claude account" + agoTxt; }
+  else if (C === "full") { cls += " bad"; txt = "Account storage is full; saved on this device only. Export a backup."; }
+  else if (C === "connecting") { cls += " ok"; txt = "Saved on this device · connecting to your account…"; }
   else if (L === "ok") { cls += " ok"; txt = C === "error" ? "Saved on this device only (account sync failed)" : "Saved on this device"; }
   else if (L === "blocked" && C !== "ok") { cls += " bad"; txt = "Not saved: browser storage is blocked here. Export your data before closing."; }
   else txt = "Checking storage…";
@@ -1108,7 +1194,7 @@ function SaveStatus() {
 /* =========================================================
    HOME
    ========================================================= */
-function Home({ s, d, prio, coach, daily, byId, openBrief, setOv, setView }) {
+function Home({ s, d, prio, coach, daily, byId, openBrief, setOv, setView, goTool }) {
   const se = SEASONS[0];
   const dayN = Math.min(d.dayN, 30);
   const strip = []; for (let i = 0; i < 30; i++) { const k = addDays(s.seasonStart, i); strip.push({ k, on: d.shown.has(k), today: k === d.today }); }
@@ -1149,8 +1235,9 @@ function Home({ s, d, prio, coach, daily, byId, openBrief, setOv, setView }) {
     <div className="wrap section" style=${{ paddingTop: "4px" }}>
       <div className=${"coach-band " + coach}>
         <span className=${"avatar " + coach}>${COACH[coach].init}</span>
-        <div><div className="who">${COACH[coach].name}</div><p>${coachHome(coach, s, d, prio)}</p></div>
+        <div><div className="who">${COACH[coach].name}</div><p>${(coach === "brutal" && s.prefs.noMercy && noMercyLine(s, d, prio)) || coachHome(coach, s, d, prio)}</p></div>
       </div>
+      <${HomeBanners} s=${s} d=${d} coach=${coach} goTool=${goTool}/>
     </div>
 
     <div className="wrap section">
@@ -1243,9 +1330,13 @@ function CheckIn({ s, d, coach, prio, onPick, onSkip }) {
 /* =========================================================
    BRIEFING (mission screen)
    ========================================================= */
-function Briefing({ s, m, opts, coach, onStart, onClose, onEdit, onDelete }) {
+function Briefing({ s, d, m, opts, coach, onStart, onClose, onEdit, onDelete }) {
   const [min, setMin] = useState(opts.minutes || m.minutes);
-  const [target, setTarget] = useState(m.firstStep || "");
+  const [target, setTarget] = useState(opts.target || m.firstStep || "");
+  const [mood, setMood] = useState(null);
+  const bundles = s.bundles.filter(b => b.attr === m.attr || b.attr === "any");
+  const plans = s.woop.filter(w => w.active).slice(-2);
+  const val = s.values[ATTR_DOMAIN[m.attr]];
   const se = seasonOf(m.season);
   const xp = xpFor(min, m.difficulty);
   const isSaved = s.missions.some(x => x.id === m.id);
@@ -1277,9 +1368,16 @@ function Briefing({ s, m, opts, coach, onStart, onClose, onEdit, onDelete }) {
           <input id="brief-target" value=${target} onInput=${e => setTarget(e.target.value)} placeholder="When I press start, I will…"/>
         </label>
         ${m.deliverable ? html`<div className="note"><b style=${{ color: "var(--fg-dim)" }}>Deliverable:</b> ${m.deliverable}</div>` : null}
+        ${val && val.text ? html`<div className="note"><b style=${{ color: "var(--fg-dim)" }}>Why it matters (your value):</b> ${val.text}</div>` : null}
+        ${bundles.length ? html`<div className="note"><b style=${{ color: "var(--s2)" }}>Temptation bundle:</b> ${bundles.map(b => b.want).join(" · ")} — allowed only during this mission.</div>` : null}
+        ${plans.length ? html`<div className="note"><b style=${{ color: "var(--tungsten)" }}>Your if-then plan${plans.length > 1 ? "s" : ""}:</b> ${plans.map(w => `If ${w.ifs}, then ${w.then}.`).join(" ")}</div>` : null}
+        <div>
+          <div className="eyebrow" style=${{ marginBottom: "8px" }}>Mood right now (optional, 1 = awful, 10 = great)</div>
+          <div className="seg" role="group" aria-label="Mood before">${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => html`<button key=${n} aria-pressed=${mood === n} onClick=${() => setMood(mood === n ? null : n)}>${n}</button>`)}</div>
+        </div>
         <div className="note">Reward is paid after an honest review. The timer finishing alone earns nothing. ${done ? `Completed ${done}× so far.` : ""}</div>
         <div className="btn-row">
-          <button className="btn btn-amber" style=${{ flex: "1 1 220px" }} onClick=${() => onStart(m, min, target, opts)}>▶ Start mission</button>
+          <button className="btn btn-amber" style=${{ flex: "1 1 220px" }} onClick=${() => onStart(m, min, target, Object.assign({}, opts, { moodBefore: mood }))}>▶ Start mission</button>
           ${min !== 2 ? html`<button className="btn btn-line" onClick=${() => { setMin(2); setTarget("Open it and do only the first visible step."); }}>Overwhelmed? Make it 2 min</button>` : null}
         </div>
         ${isSaved ? html`<div className="btn-row" style=${{ justifyContent: "flex-end" }}>
@@ -1388,9 +1486,11 @@ function Player({ s, coach, update, onReview, onEscape, hidden }) {
 /* =========================================================
    REVIEW
    ========================================================= */
-function Review({ s, onSubmit, onBack }) {
+function Review({ s, onSubmit: submit, onBack }) {
   const a = s.active;
   const [note, setNote] = useState("");
+  const [mood, setMood] = useState(null);
+  const onSubmit = (o, n) => submit(o, n, mood);
   if (!a) return null;
   const elapsed = Math.max(0, ((a.pausedAt || Date.now()) - a.startTs - a.pausedMs) / 1000);
   return html`<div className="fullscreen" role="dialog" aria-modal="true" aria-label="Mission review">
@@ -1398,6 +1498,9 @@ function Review({ s, onSubmit, onBack }) {
       <span className="eyebrow">Mission review · ${fmtClock(elapsed)} focused of ${fmtClock(a.plannedSec)}</span>
       <h1 style=${{ fontSize: "clamp(40px,8vw,76px)", textTransform: "uppercase" }}>How did it actually go?</h1>
       <p className="dim" style=${{ fontSize: "16px" }}>"${a.title}"${a.target ? html` · first action: ${a.target}` : null}. XP depends on your answer, not the timer. Nobody sees this but you, so the honest answer is the useful one.</p>
+      <div><div className="eyebrow" style=${{ marginBottom: "8px" }}>Mood now (optional${a.moodBefore ? `, it was ${a.moodBefore} before` : ""})</div>
+        <div className="seg" role="group" aria-label="Mood after">${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => html`<button key=${n} aria-pressed=${mood === n} onClick=${() => setMood(mood === n ? null : n)}>${n}</button>`)}</div>
+        <p className="note" style=${{ marginTop: "6px" }}>Behavioural activation: we track whether action lifts your mood.</p></div>
       <div style=${{ display: "grid", gap: "10px" }}>
         <button className="choice" onClick=${() => onSubmit("done", note)}><span className="ic" style=${{ color: "var(--ok)" }}>●</span><div><div>I completed it</div><div className="note" style=${{ fontWeight: 500 }}>The deliverable or target exists now.</div></div></button>
         <button className="choice" onClick=${() => onSubmit("partial", note)}><span className="ic" style=${{ color: "var(--warn)" }}>◐</span><div><div>I made partial progress</div><div className="note" style=${{ fontWeight: 500 }}>Real work happened, but it isn't finished.</div></div></button>
@@ -1414,7 +1517,7 @@ function Review({ s, onSubmit, onBack }) {
 /* =========================================================
    RESULT + EXIT TO REAL LIFE
    ========================================================= */
-function Result({ s, d, coach, res, prio, byId, daily, onNext, onBreak, onClose }) {
+function Result({ s, d, coach, res, prio, byId, daily, onNext, onBreak, onClose, goTool }) {
   const { sess, m, newAch } = res;
   const [shown, setShown] = useState(0);
   useEffect(() => { let v = 0; const step = Math.max(1, Math.round(sess.xp / 30)); const t = setInterval(() => { v = Math.min(sess.xp, v + step); setShown(v); if (v >= sess.xp) clearInterval(t); }, 25); return () => clearInterval(t); }, []);
@@ -1439,6 +1542,7 @@ function Result({ s, d, coach, res, prio, byId, daily, onNext, onBreak, onClose 
           ${smaller ? html`<button className="btn btn-amber" onClick=${() => onNext(smaller, { minutes: 2 })}>Retry as 2 minutes</button>` : null}
           ${nextM && !smaller ? html`<button className="btn btn-amber" onClick=${() => onNext(nextM)}>Start: ${nextM.title}</button>` : null}
           <button className="btn btn-ghost" onClick=${onBreak}>10-minute planned break</button>
+          ${sess.outcome !== "done" ? html`<button className="btn btn-ghost" onClick=${() => goTool("diag", { mid: m.id })}>Diagnose why (1 min)</button>` : null}
           <button className="btn btn-line" onClick=${onClose}>Done for now</button>
         </div>
       </div>
@@ -1449,7 +1553,7 @@ function Result({ s, d, coach, res, prio, byId, daily, onNext, onBreak, onClose 
 /* =========================================================
    URGE BOSS FIGHT
    ========================================================= */
-function BossFight({ s, coach, prio, fromPlayer, onClose, onDone }) {
+function BossFight({ s, coach, prio, fromPlayer, onClose, onDone, goTool }) {
   const [step, setStep] = useState(0);
   const [urge, setUrge] = useState(null);
   const [other, setOther] = useState("");
@@ -1525,6 +1629,8 @@ function BossFight({ s, coach, prio, fromPlayer, onClose, onDone }) {
           <button className="choice" aria-pressed=${choice === "shrink"} onClick=${() => setChoice("shrink")}><span className="ic">⇲</span><div><div>Change the task into a smaller action</div><div className="note" style=${{ fontWeight: 500 }}>Make it so small it's hard to refuse. +10 Courage</div></div></button>
         </div>
         ${choice === "break" ? html`<div><div className="eyebrow" style=${{ marginBottom: "8px" }}>Break length</div><div className="seg" role="group" aria-label="Break length">${[5, 10, 15, 20].map(n => html`<button key=${n} aria-pressed=${brkMin === n} onClick=${() => setBrkMin(n)}>${n} min</button>`)}</div>${fromPlayer ? html`<p className="note" style=${{ marginTop: "8px" }}>Your current mission will be logged as partial progress with the time you've actually spent.</p>` : null}</div>` : null}
+        ${s.woop.filter(w => w.active).length ? html`<div className="note"><b style=${{ color: "var(--tungsten)" }}>You planned for this moment:</b> ${s.woop.filter(w => w.active).slice(-2).map(w => `If ${w.ifs}, then ${w.then}.`).join(" ")}</div>` : null}
+        ${choice === "break" && s.bundles.length ? html`<div className="note"><b style=${{ color: "var(--s2)" }}>Better deal:</b> save "${s.bundles[0].want}" for your bundled mission instead of spending it now.</div>` : null}
         ${choice === "shrink" ? html`<label className="f" htmlFor="boss-shrink">The smaller action (2 minutes)
           <input id="boss-shrink" autoFocus value=${shrinkText} onInput=${e => setShrinkText(e.target.value)} placeholder=${"e.g. Write only the first sentence of " + curTask}/></label>` : null}
         <button className="btn btn-amber" disabled=${!choice || (choice === "shrink" && !shrinkText.trim())} onClick=${() => setStep(5)}>Lock it in</button>
@@ -1561,7 +1667,7 @@ function BreakOver({ s, coach, prio, onReturn, onExtend, onDone }) {
 /* =========================================================
    TODAY (daily episode engine)
    ========================================================= */
-function Today({ s, d, prio, coach, daily, byId, openBrief, setOv, update }) {
+function Today({ s, d, prio, coach, daily, byId, openBrief, setOv, update, goTool }) {
   const today = d.today;
   const [intent, setIntent] = useState(daily.intention || "");
   const [reviewing, setReviewing] = useState(false);
@@ -1614,6 +1720,7 @@ function Today({ s, d, prio, coach, daily, byId, openBrief, setOv, update }) {
             <button className="btn btn-sm btn-amber" onClick=${() => openBrief(m, {})}>▶ Start</button>
             ${key === "priority" ? html`<button className="btn btn-sm btn-line" onClick=${() => openBrief(m, { minutes: 2 })}>Overwhelmed: 2 min</button>` : null}
             <button className="btn btn-sm btn-line" onClick=${() => swap(key)} aria-label=${"Swap " + lab}>Swap</button>
+            <input type="time" id=${"slot-time-" + key} aria-label=${"Scheduled time for " + lab} value=${(daily.times || {})[key] || ""} onChange=${e => { const v = e.target.value; update(n => { const dd = n.daily[today]; if (dd) { dd.times = dd.times || {}; dd.times[key] = v; } }); }} style=${{ width: "auto", padding: "6px 8px", fontFamily: "var(--mono)", fontSize: "13px" }}/>
           </div>
         </div>`; })}
     </div>
@@ -1639,7 +1746,7 @@ function Today({ s, d, prio, coach, daily, byId, openBrief, setOv, update }) {
         ${daily.review ? html`<span className="chip ok">Reviewed</span>` : html`<button className="btn btn-sm btn-amber" onClick=${() => setReviewing(true)}>Review today</button>`}
       </div>
       ${reviewing || daily.review ? html`<${DayReview} s=${s} d=${d} coach=${coach} daily=${daily} byId=${byId} prioDone=${prioDone} plannedDone=${plannedDone} planned=${planned.length} doneIds=${doneIds}
-        onSave=${rv => { update(n => { n.daily[today].review = rv; const tk = addDays(today, 1); if (!n.daily[tk]) n.daily[tk] = genDaily(n, tk); if (rv.tomorrow) n.daily[tk].intention = rv.tomorrow; }); setReviewing(false); }}/>` : html`<p className="dim">At the end of the day, take two minutes to compare what you planned with what happened.</p>`}
+        onSave=${rv => { update(n => { n.daily[today].review = rv; if (rv.block) n.excuses.push({ id: uid(), ts: Date.now(), text: rv.block, src: "day review" }); const tk = addDays(today, 1); if (!n.daily[tk]) n.daily[tk] = genDaily(n, tk); if (rv.tomorrow) n.daily[tk].intention = rv.tomorrow; }); setReviewing(false); }}/>` : html`<p className="dim">At the end of the day, take two minutes to compare what you planned with what happened.</p>`}
     </div>
   </div>`;
 }
@@ -1670,7 +1777,7 @@ function DayReview({ s, d, coach, daily, byId, prioDone, plannedDone, planned, d
 /* =========================================================
    STATS / PLAYER DASHBOARD
    ========================================================= */
-function Stats({ s, d, coach, update, flash }) {
+function Stats({ s, d, coach, update, flash, goTool }) {
   const achs = achievements(s, d);
   const maxAttr = Math.max(...ATTR_KEYS.map(k => d.attr[k]), 1);
   const lvFrac = (d.total - d.lvStart) / Math.max(1, d.lvNext - d.lvStart);
@@ -1746,6 +1853,7 @@ function Stats({ s, d, coach, update, flash }) {
       </div>
     </div>
 
+    <${InsightPanels} s=${s} d=${d} goTool=${goTool}/>
     <div className="panel">
       <h3>Achievements · ${achs.filter(a => a.on).length}/${achs.length}</h3>
       <div style=${{ display: "grid", gap: "10px", gridTemplateColumns: "repeat(auto-fill,minmax(min(100%,260px),1fr))" }}>
@@ -1840,19 +1948,21 @@ function Futures({ s, d, update }) {
 /* =========================================================
    COACH CHAT
    ========================================================= */
-function CoachChat({ s, d, prio, coach, runAct, update, sample }) {
+function CoachChat({ s, d, prio, coach, runAct, update, sample, goTool }) {
   const [msgs, setMsgs] = useState(() => [{ who: "co", coach, text: coach === "brutal" ? "Talk to me. What's going on?" : "I'm here. What's happening right now?", action: null }]);
   const [text, setText] = useState("");
   const [live, setLive] = useState(false);
   const [busy, setBusy] = useState(false);
   const endRef = useRef(null);
   useEffect(() => { if (endRef.current) endRef.current.scrollTop = endRef.current.scrollHeight; }, [msgs]);
-  const QUICK = ["I'm bored.", "I don't feel like working.", "I wasted the whole morning.", "I want to watch YouTube.", "I have too many goals.", "I'll start tomorrow.", "I'm afraid I won't succeed."];
+  const QUICK = ["I keep researching instead of doing.", "I'm bored.", "I don't feel like working.", "I wasted the whole morning.", "I want to watch YouTube.", "I have too many goals.", "I'll start tomorrow.", "I'm afraid I won't succeed."];
   const send = async (t) => {
     t = (t || "").trim(); if (!t || busy) return;
     setText("");
     const ctx = { s, d, prio };
     const base = coachReply(coach, t, ctx);
+    if (base.intent) update(n => { n.excuses.push({ id: uid(), ts: Date.now(), text: t, src: "coach chat" }); });
+    if (coach === "brutal" && s.prefs.noMercy) { const nm = noMercyLine(s, d, prio); if (nm) base.text = base.text + "\n\n" + nm; }
     const next = msgs.concat([{ who: "me", text: t }]);
     if (live && sample) {
       const idx = next.length;
@@ -1885,6 +1995,7 @@ Tracked today: ${d.minsToday} focused minutes, ${d.doneToday} done, ${d.partialT
         <button aria-pressed=${coach === "brutal"} onClick=${() => update(n => { n.coach = "brutal"; })}>Brutal Truth</button>
         <button aria-pressed=${coach === "mentor"} onClick=${() => update(n => { n.coach = "mentor"; })}>Strategist</button>
       </div>
+      ${coach === "brutal" ? html`<label style=${{ display: "flex", gap: "8px", alignItems: "center", fontWeight: 700, fontSize: "14px" }}><input id="chat-nomercy" type="checkbox" style=${{ width: "20px", height: "20px" }} checked=${!!s.prefs.noMercy} onChange=${e => { const v = e.target.checked; update(n => { n.prefs.noMercy = v; }); }}/>No Mercy mode</label>` : null}
       ${sample ? html`<div className="seg" role="group" aria-label="Reply mode"><button aria-pressed=${!live} onClick=${() => setLive(false)}>Scripted</button><button aria-pressed=${live} onClick=${() => setLive(true)}>Live (Claude)</button></div>` : html`<span className="note">Live AI isn't available in this view; scripted coach active.</span>`}
     </div>
     <div className="panel" style=${{ padding: "14px" }}>
@@ -1907,7 +2018,7 @@ Tracked today: ${d.minsToday} focused minutes, ${d.doneToday} done, ${d.partialT
 /* =========================================================
    WEEKLY RECAP
    ========================================================= */
-function Recap({ s, d, coach, byId }) {
+function Recap({ s, d, coach, byId, update, flash }) {
   const [off, setOff] = useState(0);
   const ws = addDays(weekStartKey(d.today), off * 7), we = addDays(ws, 6);
   const inWeek = k => k >= ws && k <= we;
@@ -1961,6 +2072,7 @@ function Recap({ s, d, coach, byId }) {
       <div className="panel"><h3>Goals postponed</h3>${postponed.length ? html`<ul className="list">${postponed.map(m => html`<li key=${m.id}><span>${m.title}</span><span>daily priority, not done</span></li>`)}</ul>` : html`<p className="dim">No daily priorities slipped${off === 0 ? " so far (today isn't counted until it's over)" : ""}.</p>`}</div>
       <div className="panel"><h3>Most useful actions</h3>${useful.length ? html`<ul className="list">${useful.map(x => html`<li key=${x.id}><span>${x.title}</span><span>${fmtMin(x.actual / 60)} · ${ATTRS[x.attr] ? ATTRS[x.attr].label : ""}</span></li>`)}</ul>` : html`<p className="dim">Complete a mission to see it here.</p>`}</div>
     </div>
+    <${RecapExtras} s=${s} d=${d} coach=${coach} ws=${ws} we=${we} postponed=${postponed} update=${update} flash=${flash}/>
     <div className="panel"><h3>Three priorities for next week</h3><ol style=${{ margin: 0, paddingLeft: "20px", display: "grid", gap: "8px" }}>${prios.slice(0, 3).map((p, i) => html`<li key=${i} style=${{ fontWeight: 600 }}>${p}</li>`)}</ol>
       <p className="note">Generated from this week's tracked data. Progress is measured; your worth isn't.</p></div>
   </div>`;
@@ -1986,10 +2098,14 @@ function Settings({ s, update, setS, downloads, onClose, flash, openCoach }) {
     catch (e) { setCopied("File not saved" + (e && e.code ? " (" + e.code + ")" : "") + "."); }
   };
   const doImport = async () => {
-    try { const o = JSON.parse(imp); if (!o || !Array.isArray(o.missions) || !Array.isArray(o.sessions)) throw new Error("Missing missions or sessions."); const n = normalize(o); await Cloud.wipe(); n.updatedAt = Date.now(); setS(n); setImp(""); setImpErr(""); flash("Data imported", n.sessions.length + " sessions restored"); }
+    try { const o = JSON.parse(imp); if (!o || !Array.isArray(o.missions) || !Array.isArray(o.sessions)) throw new Error("Missing missions or sessions."); const n = normalize(o); await Cloud.wipe(); n.updatedAt = Date.now(); n.epoch = uid(); n.resetAt = Date.now(); setS(n); setImp(""); setImpErr(""); flash("Data imported", n.sessions.length + " sessions restored"); }
     catch (e) { setImpErr("That isn't a LIFEFLIX export: " + e.message); }
   };
-  const doReset = async () => { await Cloud.wipe(); const n = freshState(); n.coach = s.coach; setS(n); setReset(""); flash("Progress reset", "Season 1 starts today."); onClose(); };
+  const doMerge = () => {
+    try { const o = JSON.parse(imp); if (!o || !Array.isArray(o.missions) || !Array.isArray(o.sessions)) throw new Error("Missing missions or sessions."); setS(prev => { const n = mergeStates(prev, normalize(o)); n.updatedAt = Date.now(); return n; }); setImp(""); setImpErr(""); flash("Backup merged", "Both devices' history kept"); }
+    catch (e) { setImpErr("That isn't a LIFEFLIX backup: " + e.message); }
+  };
+  const doReset = async () => { await Cloud.wipe(); const n = freshState(); n.coach = s.coach; n.resetAt = Date.now(); setS(n); setReset(""); flash("Progress reset", "Season 1 starts today."); onClose(); };
   return html`<div className="overlay" role="dialog" aria-modal="true" aria-label="Settings and data">
     <div className="sheet">
       <button className="close-x" onClick=${onClose} aria-label="Close">×</button>
@@ -1998,9 +2114,18 @@ function Settings({ s, update, setS, downloads, onClose, flash, openCoach }) {
         <h2 style=${{ fontSize: "38px", textTransform: "uppercase" }}>Your data</h2>
         <div className="panel" style=${{ background: "var(--ink-3)" }}><${SaveStatus}/>
           <p className="note">${s.sessions.length} sessions · ${s.urges.length} urge fights · ${s.missions.length} episodes. Saved automatically after every change. On this device it lives in browser storage; when you're signed in to Claude it also syncs privately to your account so other devices can pick it up. Only you can read it.</p></div>
-        <div className="btn-row"><button className="btn btn-line btn-sm" onClick=${openCoach}>Re-read coach introductions</button></div>
+        <div className="btn-row"><button className="btn btn-line btn-sm" onClick=${openCoach}>Re-read coach introductions</button><button className="btn btn-sm btn-line" onClick=${() => { Cloud.pull(); Cloud.flushNow(); setCopied("Sync requested."); }} disabled=${Store.cloud === "unavailable" || Store.cloud === "off"}>Sync now</button></div>
+        <div className="panel" style=${{ background: "var(--ink-3)" }}>
+          <b>iPhone + browser</b>
+          <p className="note">Open this same link in the Claude iPhone app and in a browser signed in to the same Claude account. Changes sync within seconds while both are open, and again whenever you switch back to the app. If the dot at the bottom is green rather than blue, account sync isn't active in that view; use the backup code below to move your progress.</p>
+        </div>
+        <div className="f-row">
+          <label className="f" htmlFor="set-sal">Current salary (AUD)<input id="set-sal" type="number" min="0" step="1000" value=${s.profile.salary} onInput=${e => { const v = Number(e.target.value); if (v >= 0) update(n => { n.profile.salary = v; }); }}/></label>
+          <label className="f" htmlFor="set-tgt">Target salary (AUD)<input id="set-tgt" type="number" min="0" step="1000" value=${s.profile.target} onInput=${e => { const v = Number(e.target.value); if (v >= 0) update(n => { n.profile.target = v; }); }}/></label>
+        </div>
+        <label style=${{ display: "flex", gap: "10px", alignItems: "flex-start", fontWeight: 600 }}><input id="set-nomercy" type="checkbox" style=${{ width: "20px", height: "20px", flex: "none" }} checked=${!!s.prefs.noMercy} onChange=${e => { const v = e.target.checked; update(n => { n.prefs.noMercy = v; }); }}/><span>No Mercy mode (Brutal Truth coach)<br/><span className="note">Quotes your own logged excuses, postponed priorities and unpaid stakes back to you with dates. Facts only, no insults.</span></span></label>
         <hr className="sep"/>
-        <h3 style=${{ fontSize: "22px", textTransform: "uppercase" }}>Export</h3>
+        <h3 style=${{ fontSize: "22px", textTransform: "uppercase" }}>Backup code (export)</h3>
         <textarea id="set-export" ref=${taRef} readOnly value=${json} style=${{ minHeight: "110px", fontFamily: "var(--mono)", fontSize: "11px" }} aria-label="Export data as JSON"></textarea>
         <div className="btn-row"><button className="btn btn-sm btn-amber" onClick=${copy}>Copy JSON</button>${downloads ? html`<button className="btn btn-sm btn-line" onClick=${save}>Save as file</button>` : null}</div>
         ${copied ? html`<p className="note" role="status">${copied}</p>` : null}
@@ -2008,13 +2133,464 @@ function Settings({ s, update, setS, downloads, onClose, flash, openCoach }) {
         <h3 style=${{ fontSize: "22px", textTransform: "uppercase" }}>Import</h3>
         <textarea id="set-import" value=${imp} onInput=${e => setImp(e.target.value)} placeholder="Paste a LIFEFLIX export here" style=${{ minHeight: "80px", fontFamily: "var(--mono)", fontSize: "11px" }}></textarea>
         ${impErr ? html`<p className="note" style=${{ color: "var(--bad)" }}>${impErr}</p>` : null}
-        <div><button className="btn btn-sm btn-line" disabled=${!imp.trim()} onClick=${doImport}>Replace my data with this import</button></div>
+        <div className="btn-row"><button className="btn btn-sm btn-amber" disabled=${!imp.trim()} onClick=${doMerge}>Merge into my data</button><button className="btn btn-sm btn-line" disabled=${!imp.trim()} onClick=${doImport}>Replace my data</button></div>
+        <p className="note">Merge keeps everything from both devices. Replace throws away what's here.</p>
         <hr className="sep"/>
         <h3 style=${{ fontSize: "22px", textTransform: "uppercase", color: "var(--bad)" }}>Reset</h3>
         <p className="dim">Deletes every session, urge log, custom episode and milestone, here and in your account sync. Export first if you might want it back. Type RESET to confirm.</p>
         <div style=${{ display: "flex", gap: "8px" }}><input id="set-reset" value=${reset} onInput=${e => setReset(e.target.value)} placeholder="RESET" aria-label="Type RESET to confirm"/><button className="btn btn-danger" disabled=${reset !== "RESET"} onClick=${doReset}>Reset all</button></div>
       </div>
     </div>
+  </div>`;
+}
+
+
+/* =========================================================
+   CLINICAL TOOLKIT — techniques adapted from published CBT / ACT / motivation research.
+   Not therapy and not a diagnosis.
+   ========================================================= */
+const TOOLS = [
+  { id: "diag", t: "Why am I procrastinating?", src: "Piers Steel · The Procrastination Equation", min: "1 min", d: "Score expectancy, value, impulsiveness and delay for one task. Get the fix that targets your weakest factor.", why: "Steel's meta-analysis of hundreds of procrastination studies found that avoidance rises when you doubt success, find the task dull, are easily distracted, or the payoff is far away. Fix the weakest factor, not all of them." },
+  { id: "woop", t: "WOOP plan", src: "Gabriele Oettingen · Rethinking Positive Thinking", min: "3 min", d: "Wish, Outcome, Obstacle, Plan. Turns a fantasy into an if-then plan for the exact moment you usually bail.", why: "Positive fantasies alone can reduce effort: the brain enjoys the imagined future as if it already happened. Pairing the wish with your inner obstacle, then an if-then plan (Gollwitzer's implementation intentions), reliably increases follow-through. This is the direct antidote to 'planning feels better than doing'." },
+  { id: "thought", t: "Thought record", src: "David Burns · Feeling Good (TIC-TOC) · Bill Knaus · The Procrastination Workbook", min: "4 min", d: "Catch the task-interfering thought, name the distortion, write a task-oriented answer, then act.", why: "In cognitive therapy, avoidance is often driven by automatic thoughts ('I'll do it when I feel like it', 'it has to be perfect'). Writing them down and answering them weakens their grip. Burns calls these TICs (task-interfering cognitions) and TOCs (task-oriented cognitions)." },
+  { id: "defuse", t: "Unhook from a thought", src: "Russ Harris · The Happiness Trap · Steven Hayes (ACT)", min: "2 min", d: "Watch the thought instead of obeying it. Then do the next valued action with the thought still there.", why: "Acceptance and Commitment Therapy doesn't try to win the argument with a thought. It changes your relationship to it: 'I'm having the thought that I'll fail' is a thought, not an instruction." },
+  { id: "values", t: "Values compass", src: "Steven Hayes (ACT) · Wilson's Valued Living Questionnaire", min: "5 min", d: "Rate how important each life area is and how consistently you lived it this week. The biggest gap gets a mission.", why: "Goals end; values don't. When a task is linked to something you genuinely care about, it becomes easier to tolerate discomfort for it. The importance-vs-consistency gap shows where avoidance costs you most." },
+  { id: "slip", t: "Slip recovery protocol", src: "Kristin Neff · Self-Compassion · Marlatt & Gordon · Relapse Prevention", min: "3 min", d: "For after a lost day or week. Stops one slip turning into a collapse.", why: "Marlatt called it the abstinence violation effect: after one slip, people decide 'I've blown it' and give up entirely. Research on self-compassion (Neff; Wohl et al., 2010) shows that people who forgive a lapse procrastinate less afterwards, while self-criticism predicts more avoidance." },
+  { id: "bundle", t: "Temptation bundles", src: "Katy Milkman · How to Change", min: "1 min", d: "Lock a guilty pleasure to a task you avoid: the pleasure is only allowed during the task.", why: "In Milkman's gym study, people who could only listen to gripping audiobooks at the gym went more often. You turn the thing you'd escape into the reward for showing up." },
+  { id: "contract", t: "Ulysses contract", src: "Commitment devices: Giné, Karlan & Zinman (2010) · Milkman's fresh-start effect", min: "3 min", d: "Sign this week's commitment, set a real stake, name a referee. Binds future-you while present-you is willing.", why: "Ulysses had himself tied to the mast because he knew he'd give in to the Sirens later. Commitment contracts with a stake and a referee measurably improve follow-through. Loss aversion makes a stake you'd hate to pay more motivating than a reward." }
+];
+const DISTORTIONS = [
+  ["all", "All-or-nothing", "\"If I can't do it properly, there's no point starting.\""],
+  ["perfect", "Perfectionism", "\"My CV has to be perfect before I send anything.\""],
+  ["fortune", "Fortune telling", "\"I won't get the job anyway.\""],
+  ["should", "Should statements", "\"I should have done this weeks ago.\""],
+  ["label", "Labelling", "\"I'm just lazy. I'm a procrastinator.\""],
+  ["discount", "Discounting the positive", "\"Three years of switchboard projects doesn't count.\""],
+  ["emotional", "Emotional reasoning", "\"I feel overwhelmed, so it must be too big.\""],
+  ["manana", "Mañana thinking (Knaus)", "\"I'll feel more like it tomorrow.\""],
+  ["research", "Contingency mañana (Knaus)", "\"I need to research more before I can start.\""],
+  ["mind", "Mind reading", "\"Recruiters will think my experience is thin.\""]
+];
+const EMOTIONS = ["Anxious", "Bored", "Overwhelmed", "Ashamed", "Frustrated", "Tired", "Uncertain", "Flat", "Restless"];
+const TRIGGERS = ["Tired after work", "Phone within reach", "Task felt vague", "Task felt too big", "Fear of rejection", "Boredom", "Stress", "Late night", "Weekend drift", "A new idea grabbed me"];
+const DOMAINS = [
+  ["career", "Career & craft", "Become a technically respected electrical engineer who delivers."],
+  ["money", "Money & security", "Build a home and a safety net I control."],
+  ["health", "Health & energy", "Have the energy to do hard things well."],
+  ["relationships", "Relationships", "Show up for the people who matter."],
+  ["growth", "Growth & learning", "Keep getting better instead of just getting by."],
+  ["freedom", "Freedom & ownership", "Own something that earns without asking permission."]
+];
+const DOMAIN_ATTR = { career: "career", money: "wealth", health: "health", relationships: "health", growth: "discipline", freedom: "courage" };
+const ATTR_DOMAIN = { career: "career", wealth: "money", health: "health", discipline: "growth", focus: "growth", courage: "freedom" };
+const money = n => "$" + Math.round(n).toLocaleString("en-AU");
+const weeklyGap = s => Math.max(0, (s.profile.target || 0) - (s.profile.salary || 0)) / 52;
+const clockIn = min => { const t = new Date(Date.now() + min * 60000); return t.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }); };
+
+function contractEval(s, c, today) {
+  const we = addDays(c.week, 6);
+  // Only sessions with roughly two minutes or more of real focus count toward a contract.
+  const sess = s.sessions.filter(x => x.day >= c.week && x.day <= we && productive(x) && x.actual >= 110);
+  const count = sess.length, minutes = Math.round(sess.reduce((a, x) => a + x.actual, 0) / 60);
+  const ended = today > we;
+  let status = "active";
+  if (c.brokenEarly) status = "broken";
+  else if (ended) status = (count >= c.sessions && minutes >= c.minutes && (!c.must || c.mustDone)) ? "kept" : "broken";
+  return { we, count, minutes, ended, status };
+}
+function refereeReport(s, c, today) {
+  const e = contractEval(s, c, today);
+  return [
+    `LIFEFLIX weekly report: ${niceDate(c.week)} to ${niceDate(e.we)}`,
+    `Committed: ${c.sessions} focus sessions, ${c.minutes} focused minutes${c.must ? `, must-do: ${c.must}` : ""}.`,
+    `Actual so far: ${e.count} sessions, ${e.minutes} minutes${c.must ? `, must-do ${c.mustDone ? "done" : "not done"}` : ""}.`,
+    `Status: ${e.status === "active" ? "in progress" : e.status.toUpperCase()}.`,
+    `Stake if broken: ${c.stake || "none set"}${c.paid ? " (paid)" : ""}.`,
+    `Referee: ${c.referee || "none named"}. Self-reported from my tracker; please hold me to it.`
+  ].join("\n");
+}
+function noMercyLine(s, d, prio) {
+  const today = d.today; const facts = [];
+  let streak = 0;
+  for (let i = 1; i <= 7; i++) { const k = addDays(today, -i); const dd = s.daily[k]; if (!dd || !dd.priority) break; if (s.sessions.some(x => x.day === k && x.mid === dd.priority && x.outcome === "done")) break; streak++; }
+  if (streak >= 2) facts.push(`your daily priority has gone undone ${streak} days running`);
+  const cc = d.topCat ? d.catCounts[d.topCat] : 0;
+  if (cc >= 3) { const dn = s.sessions.filter(x => x.outcome === "done" && (x.tags || []).includes(d.topCat)).length; facts.push(`you've named "${CATS[d.topCat].label.toLowerCase()}" as the thing you're avoiding ${cc} times and completed ${dn} mission${dn === 1 ? "" : "s"} on it`); }
+  const broken = s.contracts.filter(c => contractEval(s, c, today).status === "broken" && !c.paid);
+  if (broken.length) facts.push(`you still owe "${broken[0].stake}" on a broken contract`);
+  const ex = s.excuses.filter(e => Date.now() - e.ts < 14 * 86400000).slice(-2);
+  if (!facts.length && !ex.length) return null;
+  const exTxt = ex.length ? " Your own words: " + ex.map(e => `${niceDate(dayKey(new Date(e.ts)))}, "${e.text.slice(0, 70)}"`).join("; ") + "." : "";
+  const f = facts.length ? facts.join("; ") + "." : "";
+  return `Receipts: ${f ? f.charAt(0).toUpperCase() + f.slice(1) : ""}${exTxt} You don't need more insight. You need ${prio ? prio.minutes : 10} minutes on "${prio ? prio.title : "the priority"}". Start.`;
+}
+
+function HomeBanners({ s, d, coach, goTool }) {
+  const today = d.today, ws = weekStartKey(today);
+  const c = s.contracts.find(x => x.week === ws);
+  const slipped = (d.daysSinceLast !== null && d.daysSinceLast >= 2 && d.todays.length === 0) || d.distractedToday >= 2;
+  const fresh = !c && (parseDay(today).getDay() === 1 || parseDay(today).getDate() === 1 || slipped);
+  const out = [];
+  if (slipped) out.push(html`<div key="slip" className="banner nudge"><div><div className="eyebrow" style=${{ color: "var(--crimson)" }}>Slip detected</div><div style=${{ fontWeight: 700 }}>${d.daysSinceLast >= 2 ? `${d.daysSinceLast} days since your last session.` : `${d.distractedToday} sessions lost to distraction today.`} One slip only becomes a collapse if you decide it already is one.</div></div><button className="btn btn-sm btn-amber" onClick=${() => goTool("slip")}>Run slip recovery (3 min)</button></div>`);
+  if (c) { const e = contractEval(s, c, today); out.push(html`<div key="c" className="banner"><div style=${{ minWidth: 0 }}><div className="eyebrow">This week's contract · stake: ${c.stake || "none"}</div><div style=${{ fontWeight: 700 }}><span className="mono">${e.count}/${c.sessions}</span> sessions · <span className="mono">${e.minutes}/${c.minutes}</span> min${c.must ? ` · must-do ${c.mustDone ? "✓" : "open"}` : ""}</div></div><button className="btn btn-sm btn-line" onClick=${() => goTool("contract")}>View contract</button></div>`); }
+  else if (fresh) out.push(html`<div key="f" className="banner"><div><div className="eyebrow" style=${{ color: "var(--tungsten)" }}>Fresh start</div><div style=${{ fontWeight: 700 }}>${slipped ? "A clean slate starts now, not next Monday." : parseDay(today).getDay() === 1 ? "New week. Fresh starts are when commitments stick best." : "New month. A natural reset point."} Sign this week's contract.</div></div><button className="btn btn-sm btn-amber" onClick=${() => goTool("contract")}>Sign contract</button></div>`);
+  return out.length ? html`<div>${out}</div>` : null;
+}
+
+function InsightPanels({ s, d, goTool }) {
+  const moods = s.sessions.filter(x => x.moodBefore != null && x.moodAfter != null);
+  const lift = moods.length ? moods.reduce((a, x) => a + (x.moodAfter - x.moodBefore), 0) / moods.length : null;
+  const liftDone = moods.filter(x => productive(x)); const liftD = liftDone.length ? liftDone.reduce((a, x) => a + (x.moodAfter - x.moodBefore), 0) / liftDone.length : null;
+  const wc = { E: 0, V: 0, I: 0, D: 0 }; s.diag.forEach(x => wc[x.weak] = (wc[x.weak] || 0) + 1);
+  const WN = { E: "Low confidence (expectancy)", V: "Low value", I: "High impulsiveness", D: "Distant payoff (delay)" };
+  const maxW = Math.max(1, ...Object.values(wc));
+  const tc = {}; s.slips.forEach(x => (x.triggers || []).forEach(t => tc[t] = (tc[t] || 0) + 1));
+  const dc = {}; s.thoughts.forEach(x => (x.distortions || []).forEach(t => dc[t] = (dc[t] || 0) + 1));
+  const tRows = Object.entries(tc).sort((a, b) => b[1] - a[1]).slice(0, 5), dRows = Object.entries(dc).sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const maxT = Math.max(1, ...tRows.map(x => x[1])), maxD = Math.max(1, ...dRows.map(x => x[1]));
+  return html`<div className="grid-2">
+    <div className="panel">
+      <h3>Action → mood</h3>
+      ${lift === null ? html`<p className="dim">Rate your mood before and after a mission to see this. Behavioural activation (Martell, Addis & Jacobson) rests on one finding: mood tends to follow action, not the other way round.</p>` : html`<${React.Fragment}>
+        <div style=${{ display: "flex", gap: "18px", alignItems: "baseline", flexWrap: "wrap" }}><div><div className="big-num" style=${{ color: lift >= 0 ? "var(--ok)" : "var(--bad)" }}>${lift >= 0 ? "+" : ""}${lift.toFixed(1)}</div><div className="note">average mood change, ${moods.length} rated sessions</div></div>
+        ${liftD !== null ? html`<div><div className="big-num" style=${{ fontSize: "30px" }}>${liftD >= 0 ? "+" : ""}${liftD.toFixed(1)}</div><div className="note">after real progress</div></div>` : null}</div>
+        <p className="note">${lift > 0.3 ? "Your own data says starting makes you feel better. Remember this the next time you wait to feel like it." : "No clear lift yet. Keep rating; a few sessions isn't enough to judge."}</p>
+      <//>`}
+    </div>
+    <div className="panel">
+      <h3>Why you procrastinate</h3>
+      ${s.diag.length ? html`<div className="bars">${Object.entries(wc).map(([k, n]) => html`<div key=${k} className="bar-row"><span>${WN[k]}</span><div className="track"><i style=${{ width: n / maxW * 100 + "%", background: "var(--s3)" }}></i></div><span className="n">${n}</span></div>`)}</div>` : html`<p className="dim">Run the procrastination diagnosis on a task to see which factor trips you most.</p>`}
+      ${tRows.length ? html`<div><div className="eyebrow" style=${{ marginBottom: "8px" }}>Slip triggers</div><div className="bars">${tRows.map(([k, n]) => html`<div key=${k} className="bar-row"><span>${k}</span><div className="track"><i style=${{ width: n / maxT * 100 + "%", background: "var(--crimson)" }}></i></div><span className="n">${n}</span></div>`)}</div></div>` : null}
+      ${dRows.length ? html`<div><div className="eyebrow" style=${{ marginBottom: "8px" }}>Thinking traps</div><div className="bars">${dRows.map(([k, n]) => { const dd = DISTORTIONS.find(x => x[0] === k); return html`<div key=${k} className="bar-row"><span>${dd ? dd[1] : k}</span><div className="track"><i style=${{ width: n / maxD * 100 + "%", background: "var(--tungsten)" }}></i></div><span className="n">${n}</span></div>`; })}</div></div>` : null}
+      <div><button className="btn btn-sm btn-line" onClick=${() => goTool("diag")}>Run a diagnosis</button></div>
+    </div>
+  </div>`;
+}
+
+function RecapExtras({ s, d, coach, ws, we, postponed, update, flash }) {
+  const c = s.contracts.find(x => x.week === ws);
+  const gap = weeklyGap(s);
+  const careerDone = s.sessions.filter(x => x.day >= ws && x.day <= we && productive(x) && x.attr === "career").length;
+  const ex = s.excuses.filter(e => { const k = dayKey(new Date(e.ts)); return k >= ws && k <= we; });
+  const [copied, setCopied] = useState("");
+  const copy = async (txt) => { try { await navigator.clipboard.writeText(txt); setCopied("Copied. Send it to your referee."); } catch (e) { setCopied("Copy blocked here; select the text and copy it manually."); } };
+  return html`<div className="grid-2">
+    <div className="panel">
+      <h3>Ulysses contract</h3>
+      ${c ? (() => { const e = contractEval(s, c, d.today); const rep = refereeReport(s, c, d.today); return html`<${React.Fragment}>
+        <div style=${{ display: "flex", gap: "8px", alignItems: "center" }}><span className=${"chip " + (e.status === "kept" ? "ok" : e.status === "broken" ? "bad" : "amber")}>${e.status === "active" ? "In progress" : e.status}</span><span className="dim">${e.count}/${c.sessions} sessions · ${e.minutes}/${c.minutes} min</span></div>
+        ${e.status === "broken" ? html`<p><b>Stake owed:</b> ${c.stake || "none set"}. ${c.paid ? "Marked paid." : coach === "brutal" ? "Pay it. A stake you don't pay is a stake that stops working." : "Paying it keeps future contracts meaningful. Then sign a smaller one for next week."}</p>` : null}
+        <textarea id="recap-report" readOnly value=${rep} style=${{ minHeight: "120px", fontFamily: "var(--mono)", fontSize: "12px" }} aria-label="Referee report"></textarea>
+        <div className="btn-row"><button className="btn btn-sm btn-amber" onClick=${() => copy(rep)}>Copy report for ${c.referee || "referee"}</button>${e.status === "broken" && !c.paid ? html`<button className="btn btn-sm btn-line" onClick=${() => update(n => { const x = n.contracts.find(y => y.id === c.id); if (x) x.paid = Date.now(); })}>I paid the stake</button>` : null}</div>
+        ${copied ? html`<p className="note" role="status">${copied}</p>` : null}
+      <//>`; })() : html`<p className="dim">No contract signed for this week.</p>`}
+    </div>
+    <div className="panel">
+      <h3>Cost of avoidance</h3>
+      ${gap > 0 ? html`<p>The gap between ${money(s.profile.salary)} and your ${money(s.profile.target)} target is about <b className="mono" style=${{ color: "var(--tungsten)" }}>${money(gap)}</b> a week before tax.</p>
+        <p className="dim">${careerDone === 0 ? `This week had zero career sessions. If a role at your target is attainable (an assumption, not a promise), every week the search waits pushes that money further away.` : `${careerDone} career session${careerDone > 1 ? "s" : ""} this week. That's how the gap starts closing.`}${postponed.length ? ` ${postponed.length} daily priorit${postponed.length > 1 ? "ies" : "y"} slipped.` : ""}</p>
+        <p className="note">Illustrative only. Edit your salary and target in Settings.</p>` : html`<p className="dim">Set a target salary above your current one in Settings to see this.</p>`}
+      ${ex.length ? html`<div><div className="eyebrow" style=${{ marginBottom: "8px" }}>${s.prefs.noMercy ? "Receipts: your words this week" : "Notes you logged this week"}</div><ul className="list">${ex.slice(-6).map(e => html`<li key=${e.id}><span>"${e.text}"</span><span>${niceDate(dayKey(new Date(e.ts)))} · ${e.src}</span></li>`)}</ul></div>` : null}
+    </div>
+  </div>`;
+}
+
+function Tools(props) {
+  const { s, tool, setTool } = props;
+  if (tool && tool.id) {
+    const map = { diag: Diagnose, woop: Woop, thought: ThoughtRecord, defuse: Defuse, values: Values, slip: Slip, bundle: Bundles, contract: Contract };
+    const C = map[tool.id]; const meta = TOOLS.find(t => t.id === tool.id);
+    return html`<div className="wrap section" style=${{ display: "flex", flexDirection: "column", gap: "16px", maxWidth: "900px" }}>
+      <div><button className="btn btn-sm btn-line" onClick=${() => setTool(null)}>‹ All tools</button></div>
+      <div><span className="eyebrow" style=${{ color: "var(--tungsten)" }}>${meta.src}</span><h2 style=${{ fontSize: "clamp(34px,6vw,56px)", marginTop: "6px", textTransform: "uppercase" }}>${meta.t}</h2>
+        <details style=${{ marginTop: "8px" }}><summary className="dim" style=${{ cursor: "pointer", fontWeight: 700 }}>Why this works</summary><p className="dim" style=${{ marginTop: "6px", maxWidth: "70ch" }}>${meta.why}</p></details></div>
+      <${C} key=${tool.id + (tool.mid || "")} ...${props}/>
+    </div>`;
+  }
+  const used = { diag: s.diag.length, woop: s.woop.length, thought: s.thoughts.filter(t => t.kind !== "defuse").length, defuse: s.thoughts.filter(t => t.kind === "defuse").length, values: Object.keys(s.values).length, slip: s.slips.length, bundle: s.bundles.length, contract: s.contracts.length };
+  return html`<div className="wrap section" style=${{ display: "flex", flexDirection: "column", gap: "16px" }}>
+    <div><span className="eyebrow">Clinical toolkit</span><h2 style=${{ fontSize: "clamp(38px,7vw,64px)", marginTop: "6px" }}>Tools</h2>
+      <p className="dim" style=${{ marginTop: "8px", maxWidth: "72ch" }}>Techniques from cognitive behavioural therapy, acceptance and commitment therapy and motivation research, adapted for self-use. Every tool ends in a real-world action. They're not therapy. If low mood or anxiety is persistent, talk to a GP or psychologist.</p></div>
+    <div className="tool-grid">${TOOLS.map(t => html`<button key=${t.id} className="tool-card" onClick=${() => setTool({ id: t.id })}>
+      ${used[t.id] ? html`<span className="chip amber tool-n">${used[t.id]}×</span>` : null}
+      <span className="src">${t.min} · ${t.src}</span><span className="tt">${t.t}</span><span className="dim" style=${{ fontSize: "14px" }}>${t.d}</span></button>`)}</div>
+  </div>`;
+}
+
+function MissionPick({ s, value, onChange, id }) {
+  const act = activeMissions(s);
+  return html`<select id=${id} value=${value || ""} onChange=${e => onChange(e.target.value)}>${act.map(m => html`<option key=${m.id} value=${m.id}>${seasonOf(m.season).code} · ${m.title}</option>`)}</select>`;
+}
+
+function Diagnose({ s, prio, coach, update, openBrief, tool }) {
+  const act = activeMissions(s);
+  const [mid, setMid] = useState((tool && tool.mid && act.some(x => x.id === tool.mid) && tool.mid) || (prio && prio.id) || (act[0] && act[0].id));
+  const [f, setF] = useState({ E: 5, V: 5, I: 5, D: 5 });
+  const m = s.missions.find(x => x.id === mid) || act[0];
+  const M = (f.E * f.V) / (f.I * f.D);
+  const pos = clamp((Math.log10(M) + 2) / 4, 0, 1);
+  const prob = { E: 10 - f.E, V: 10 - f.V, I: f.I - 1, D: f.D - 1 };
+  const weak = Object.entries(prob).sort((a, b) => b[1] - a[1])[0][0];
+  const past = s.sessions.filter(x => x.outcome === "done").length;
+  const FACT = [
+    ["E", "Expectancy", "How confident am I that I can do this well?", "Not at all", "Certain"],
+    ["V", "Value", "How rewarding or meaningful does it feel right now?", "Pointless", "Very"],
+    ["I", "Impulsiveness", "How distractible am I right now?", "Calm", "Scattered"],
+    ["D", "Delay", "How far away does the payoff or deadline feel?", "Today", "Months away"]
+  ];
+  const RX = {
+    E: { name: "Low expectancy", fix: "You doubt you can do it, so your brain avoids a likely failure. Steel's remedy is a success spiral: a task so small you're certain to finish, plus evidence you've done hard things before.", ev: past ? `Evidence: you've completed ${past} mission${past === 1 ? "" : "s"} in LIFEFLIX, and delivered switchboard and switchroom projects for three years.` : "Evidence: three years of delivering switchboard and switchroom projects in Australia.", btn: "Start a 2-minute certain win", o: () => ({ minutes: 2, target: "Only the first visible step: " + (m.firstStep || "open it") }) },
+    V: { name: "Low value", fix: "The task feels dull or pointless right now. Connect it to something you care about, turn it into a challenge, or bundle a temptation with it.", ev: s.values[ATTR_DOMAIN[m && m.attr]] && s.values[ATTR_DOMAIN[m.attr]].text ? `Your value: ${s.values[ATTR_DOMAIN[m.attr]].text}` : "Tip: fill in your values compass so every mission shows why it matters.", btn: "Start 10 minutes as a beat-the-clock challenge", o: () => ({ minutes: 10, target: "Beat the clock: " + (m.deliverable || "finish the first part") + " before the timer ends." }) },
+    I: { name: "High impulsiveness", fix: "Distraction is winning. Don't rely on willpower; change the environment. Phone in another room, one tab open, and an if-then plan for the urge you know is coming.", ev: s.urges.length ? `You've fought ${s.urges.length} urges so far. Your most common: ${URGES[Object.entries(s.urges.reduce((a, u) => (a[u.urge] = (a[u.urge] || 0) + 1, a), {})).sort((a, b) => b[1] - a[1])[0][0]].label.toLowerCase()}.` : "Stimulus control beats willpower every time.", btn: "Start 25 minutes, phone out of the room", o: () => ({ minutes: 25, target: "Phone in another room, all other tabs closed. Then: " + (m.firstStep || "start") }) },
+    D: { name: "Distant payoff", fix: "The reward feels too far away: a 2027 move, a future salary. Bring the deadline forward with one sub-goal due within the hour.", ev: weeklyGap(s) > 0 ? `Make it concrete: the salary gap to your target is about ${money(weeklyGap(s))} a week.` : "Short deadlines beat distant goals.", btn: "Start 10 minutes with a deadline", o: () => ({ minutes: 10, target: `Finish one sub-goal by ${clockIn(10)}: ` + (m.deliverable || m.title) }) }
+  };
+  const rx = RX[weak];
+  if (!m) return html`<p className="dim">Add a mission first.</p>`;
+  return html`<${React.Fragment}>
+    <label className="f" htmlFor="dg-m">Which task are you avoiding?<${MissionPick} id="dg-m" s=${s} value=${mid} onChange=${setMid}/></label>
+    <div className="panel">
+      ${FACT.map(([k, n, q, lo, hi]) => html`<div key=${k} className="factor">
+        <label htmlFor=${"dg-" + k} style=${{ fontWeight: 800 }}>${n}</label><span className="mono" style=${{ fontSize: "18px" }}>${f[k]}/10</span>
+        <input id=${"dg-" + k} type="range" min="1" max="10" value=${f[k]} onInput=${e => { const v = Number(e.target.value); setF(x => Object.assign({}, x, { [k]: v })); }} style=${{ gridColumn: "1/-1" }}/>
+        <span className="hint">${q} (1 = ${lo}, 10 = ${hi})</span></div>`)}
+      <div><div className="eyebrow" style=${{ marginBottom: "8px" }}>Motivation = (Expectancy × Value) ÷ (Impulsiveness × Delay) = <span className="mono" style=${{ color: "var(--fg)" }}>${M.toFixed(2)}</span></div>
+        <div className="meter" role="img" aria-label=${"Motivation score " + M.toFixed(2)}><i style=${{ left: pos * 100 + "%" }}></i></div>
+        <div style=${{ display: "flex", justifyContent: "space-between" }} className="note"><span>Avoid</span><span>Neutral</span><span>Go</span></div></div>
+    </div>
+    <div className="rx">
+      <span className="eyebrow" style=${{ color: "var(--tungsten)" }}>Weakest factor: ${rx.name}</span>
+      <p style=${{ fontSize: "16px" }}>${rx.fix}</p>
+      <p className="dim">${rx.ev}</p>
+      ${coach === "brutal" ? html`<p style=${{ fontWeight: 700 }}>Diagnosis done. Don't turn this into another research project. Apply the fix now.</p>` : null}
+      <div className="btn-row"><button className="btn btn-amber" onClick=${() => { update(n => { n.diag.push({ id: uid(), ts: Date.now(), mid: m.id, title: m.title, E: f.E, V: f.V, I: f.I, D: f.D, weak }); }); openBrief(m, rx.o()); }}>▶ ${rx.btn}</button>
+        <button className="btn btn-line" onClick=${() => { update(n => { n.diag.push({ id: uid(), ts: Date.now(), mid: m.id, title: m.title, E: f.E, V: f.V, I: f.I, D: f.D, weak }); }); }}>Save without starting</button></div>
+    </div>
+  <//>`;
+}
+
+function Woop({ s, coach, update, flash }) {
+  const blank = { wish: "", outcome: "", obstacle: "", ifs: "", then: "" };
+  const [f, setF] = useState(blank); const [step, setStep] = useState(0);
+  const set = (k, v) => setF(x => Object.assign({}, x, { [k]: v }));
+  const STEPS = [
+    ["wish", "Wish", "What do you want to achieve in the next 4 weeks? Challenging but realistic.", "e.g. Send three tailored applications for $140K+ roles"],
+    ["outcome", "Outcome", "What's the best outcome of fulfilling it? Close your eyes and picture it for 30 seconds before writing.", "e.g. Interviews booked, a real salary number, Melbourne on my terms"],
+    ["obstacle", "Obstacle", "What is it inside you that stops you? A feeling, a habit, a belief. Not 'no time'.", "e.g. When I sit down to tailor the CV I feel it isn't good enough and open YouTube"],
+    ["plan", "Plan", "If that obstacle shows up, what exactly will you do?", ""]
+  ];
+  const ok = step < 3 ? f[STEPS[step][0]].trim() : f.ifs.trim() && f.then.trim();
+  const save = () => { update(n => { n.woop.push(Object.assign({ id: uid(), ts: Date.now(), createdAt: Date.now(), active: true }, f)); }); setF(blank); setStep(0); flash("WOOP plan saved", "It will appear in mission briefings and urge fights."); };
+  return html`<${React.Fragment}>
+    <div className="panel">
+      <div className="steps">${STEPS.map((x, i) => html`<i key=${i} className=${i <= step ? "on" : ""}></i>`)}</div>
+      <span className="eyebrow">${STEPS[step][1]} · step ${step + 1} of 4</span>
+      <p style=${{ fontSize: "16px" }}>${STEPS[step][2]}</p>
+      ${step === 0 ? html`<div className="chips">${["Send 3 tailored applications this month", "Finish P6 fundamentals by January", "Get my first business customer", "Automate savings this payday"].map(c => html`<button key=${c} onClick=${() => set("wish", c)}>${c}</button>`)}</div>` : null}
+      ${step < 3 ? html`<textarea id=${"woop-" + STEPS[step][0]} value=${f[STEPS[step][0]]} onInput=${e => set(STEPS[step][0], e.target.value)} placeholder=${STEPS[step][3]} aria-label=${STEPS[step][1]}></textarea>` : html`<${React.Fragment}>
+        <label className="f" htmlFor="woop-if">If…<input id="woop-if" value=${f.ifs} onInput=${e => set("ifs", e.target.value)} placeholder=${f.obstacle ? f.obstacle.slice(0, 80) : "I feel the urge to open YouTube while editing my CV"}/></label>
+        <label className="f" htmlFor="woop-then">…then I will<input id="woop-then" value=${f.then} onInput=${e => set("then", e.target.value)} placeholder="write the ugliest first draft for 2 minutes before deciding anything"/></label>
+      <//>`}
+      <div className="btn-row">${step > 0 ? html`<button className="btn btn-line btn-sm" onClick=${() => setStep(step - 1)}>Back</button>` : null}
+        ${step < 3 ? html`<button className="btn btn-amber btn-sm" disabled=${!ok} onClick=${() => setStep(step + 1)}>Next</button>` : html`<button className="btn btn-amber btn-sm" disabled=${!ok} onClick=${save}>Save plan</button>`}</div>
+    </div>
+    ${s.woop.length ? html`<div className="panel"><h3>Your plans</h3><ul className="list">${s.woop.slice().reverse().map(w => html`<li key=${w.id} style=${{ flexDirection: "column", alignItems: "stretch", opacity: w.active ? 1 : .55 }}>
+      <div><b>${w.wish}</b></div><div className="dim">If ${w.ifs}, then ${w.then}.</div>
+      <div className="btn-row"><button className="btn btn-sm btn-line" onClick=${() => update(n => { const x = n.woop.find(y => y.id === w.id); if (x) x.active = !x.active; })}>${w.active ? "Pause" : "Activate"}</button><button className="btn btn-sm btn-line" style=${{ color: "var(--bad)" }} onClick=${() => update(n => { n.woop = n.woop.filter(y => y.id !== w.id); n.tomb.push(w.id); })}>Delete</button></div></li>`)}</ul></div>` : null}
+  <//>`;
+}
+
+function ThoughtRecord({ s, prio, coach, update, openBrief, flash }) {
+  const act = activeMissions(s);
+  const [f, setF] = useState({ mid: prio ? prio.id : (act[0] && act[0].id), thought: "", emotion: "Anxious", before: 7, distortions: [], against: "", answer: "", after: 5 });
+  const [saved, setSaved] = useState(false);
+  const set = (k, v) => setF(x => Object.assign({}, x, { [k]: v }));
+  const tog = k => set("distortions", f.distortions.includes(k) ? f.distortions.filter(x => x !== k) : f.distortions.concat([k]));
+  const m = s.missions.find(x => x.id === f.mid);
+  const valid = f.thought.trim() && f.answer.trim();
+  return html`<div className="panel" style=${{ gap: "16px" }}>
+    <label className="f" htmlFor="tr-m">1. The task you're avoiding<${MissionPick} id="tr-m" s=${s} value=${f.mid} onChange=${v => set("mid", v)}/></label>
+    <label className="f" htmlFor="tr-t">2. The thought that stops you (TIC)<textarea id="tr-t" value=${f.thought} onInput=${e => set("thought", e.target.value)} placeholder="Write it exactly as it sounds in your head. e.g. 'There's no point applying until my P6 is better.'"></textarea></label>
+    <div className="f-row">
+      <label className="f" htmlFor="tr-e">3. Feeling<select id="tr-e" value=${f.emotion} onChange=${e => set("emotion", e.target.value)}>${EMOTIONS.map(x => html`<option key=${x}>${x}</option>`)}</select></label>
+      <label className="f" htmlFor="tr-b">Strength <span className="mono" style=${{ color: "var(--fg)" }}>${f.before}/10</span><input id="tr-b" type="range" min="0" max="10" value=${f.before} onInput=${e => set("before", Number(e.target.value))}/></label>
+    </div>
+    <div><div className="eyebrow" style=${{ marginBottom: "8px" }}>4. Which thinking traps are in it?</div>
+      <div className="dchips">${DISTORTIONS.map(([k, n, ex]) => html`<button key=${k} aria-pressed=${f.distortions.includes(k)} onClick=${() => tog(k)}>${n}<small>${ex}</small></button>`)}</div></div>
+    <label className="f" htmlFor="tr-a">5. Evidence against the thought<textarea id="tr-a" value=${f.against} onInput=${e => set("against", e.target.value)} placeholder="What would you tell a colleague who said this? What facts don't fit?"></textarea></label>
+    <label className="f" htmlFor="tr-o">6. Task-oriented answer (TOC)<textarea id="tr-o" value=${f.answer} onInput=${e => set("answer", e.target.value)} placeholder="e.g. 'Plenty of $140K roles don't list P6. I can apply now and learn P6 in parallel.'"></textarea></label>
+    <label className="f" htmlFor="tr-af">7. Strength of the feeling now <span className="mono" style=${{ color: "var(--fg)" }}>${f.after}/10</span><input id="tr-af" type="range" min="0" max="10" value=${f.after} onInput=${e => set("after", Number(e.target.value))}/></label>
+    <div className="btn-row">
+      <button className="btn btn-amber" disabled=${!valid || !m} onClick=${() => { if (!saved) update(n => { n.thoughts.push(Object.assign({ id: uid(), ts: Date.now(), kind: "record", title: m ? m.title : "" }, f)); }); setSaved(true); openBrief(m, { minutes: 2, target: f.answer.slice(0, 120) }); }}>▶ Save and act: 2 minutes</button>
+      <button className="btn btn-line" disabled=${!valid || saved} onClick=${() => { update(n => { n.thoughts.push(Object.assign({ id: uid(), ts: Date.now(), kind: "record", title: m ? m.title : "" }, f)); }); setSaved(true); flash("Thought record saved", ""); }}>${saved ? "Saved" : "Save only"}</button>
+    </div>
+    <p className="note">${coach === "brutal" ? "A thought record you don't act on is just journaling. The 2-minute button is the point." : "You don't need to fully believe the new answer. Acting on it is what makes it believable."}</p>
+  </div>`;
+}
+
+function Defuse({ s, prio, coach, update, openBrief }) {
+  const [t, setT] = useState(""); const [stage, setStage] = useState(0); const [leafKey, setLeafKey] = useState(0);
+  const [hookB, setHookB] = useState(7); const [hookA, setHookA] = useState(5);
+  const clean = t.trim().replace(/^i('m| am) having the thought that\s*/i, "").replace(/[.!]+$/, "");
+  return html`<div className="panel" style=${{ gap: "16px" }}>
+    ${stage === 0 ? html`<${React.Fragment}>
+      <label className="f" htmlFor="df-t">Write the sticky thought<input id="df-t" value=${t} onInput=${e => setT(e.target.value)} placeholder="I'm going to fail at this"/></label>
+      <label className="f" htmlFor="df-hb">How much does it hook you? <span className="mono" style=${{ color: "var(--fg)" }}>${hookB}/10</span><input id="df-hb" type="range" min="0" max="10" value=${hookB} onInput=${e => setHookB(Number(e.target.value))}/></label>
+      <div><button className="btn btn-amber" disabled=${!clean} onClick=${() => setStage(1)}>Unhook</button></div>
+    <//>` : null}
+    ${stage >= 1 ? html`<${React.Fragment}>
+      <p style=${{ fontSize: "19px", fontWeight: 800 }}>${clean}.</p>
+      <p style=${{ fontSize: "17px" }} className="dim">I'm having the thought that ${clean.charAt(0).toLowerCase() + clean.slice(1)}.</p>
+      <p style=${{ fontSize: "16px" }} className="faint">I notice I'm having the thought that ${clean.charAt(0).toLowerCase() + clean.slice(1)}.</p>
+      <div className="stream" aria-hidden="true"><div className="leaf" key=${leafKey} style=${{ top: "40%" }}>${clean}</div></div>
+      <p className="dim">Imagine placing the thought on a leaf and watching it float down the stream. You don't push it away or argue with it. Thoughts come and go; you decide what your hands do.</p>
+      <div className="btn-row"><button className="btn btn-sm btn-line" onClick=${() => setLeafKey(k => k + 1)}>Float it again</button></div>
+      <label className="f" htmlFor="df-ha">How much does it hook you now? <span className="mono" style=${{ color: "var(--fg)" }}>${hookA}/10</span><input id="df-ha" type="range" min="0" max="10" value=${hookA} onInput=${e => setHookA(Number(e.target.value))}/></label>
+      <p style=${{ fontWeight: 700 }}>${coach === "brutal" ? "The thought can come with you. It doesn't get a vote. Two minutes, thought and all." : "Can you make room for this thought and still take one small step that matters to you?"}</p>
+      <div className="btn-row"><button className="btn btn-amber" disabled=${!prio} onClick=${() => { update(n => { n.thoughts.push({ id: uid(), ts: Date.now(), kind: "defuse", thought: clean, before: hookB, after: hookA, distortions: [] }); }); openBrief(prio, { minutes: 2, target: "Do the first step with the thought still there." }); }}>▶ 2 minutes on ${prio ? `"${prio.title}"` : "the priority"}</button></div>
+    <//>` : null}
+  </div>`;
+}
+
+function Values({ s, coach, update, openBrief }) {
+  const set = (k, field, v) => update(n => { n.values[k] = Object.assign({ text: "", imp: 8, con: 5 }, n.values[k] || {}, { [field]: v }); });
+  const rows = DOMAINS.map(([k, label, eg]) => { const v = s.values[k] || {}; const imp = v.imp == null ? 8 : v.imp, con = v.con == null ? 5 : v.con; return { k, label, eg, text: v.text || "", imp, con, gap: imp * (10 - con) / 10, set: !!s.values[k] }; });
+  const top = rows.filter(r => r.set).sort((a, b) => b.gap - a.gap)[0];
+  const mission = top ? activeMissions(s).filter(m => m.attr === DOMAIN_ATTR[top.k]).sort((a, b) => a.minutes - b.minutes)[0] : null;
+  return html`<${React.Fragment}>
+    ${top ? html`<div className="rx"><span className="eyebrow" style=${{ color: "var(--tungsten)" }}>Biggest gap: ${top.label}</span>
+      <p style=${{ fontSize: "16px" }}>Importance ${top.imp}/10, lived ${top.con}/10 this week. ${coach === "brutal" ? "This is where your actions contradict what you say matters." : "This is where a small action would mean the most to you."}</p>
+      ${mission ? html`<div><button className="btn btn-amber btn-sm" onClick=${() => openBrief(mission, {})}>▶ Act on it: ${mission.title}</button></div>` : null}</div>` : null}
+    ${rows.map(r => html`<div key=${r.k} className="panel" style=${{ gap: "10px" }}>
+      <div style=${{ display: "flex", justifyContent: "space-between", gap: "10px" }}><h3 style=${{ fontSize: "20px" }}>${r.label}</h3><span className="mono dim">gap ${r.gap.toFixed(1)}</span></div>
+      <label className="f" htmlFor=${"vl-t-" + r.k}>What do I want to stand for here?<input id=${"vl-t-" + r.k} defaultValue=${r.text} placeholder=${r.eg} onBlur=${e => set(r.k, "text", e.target.value)}/></label>
+      <div className="f-row">
+        <label className="f" htmlFor=${"vl-i-" + r.k}>Importance <span className="mono" style=${{ color: "var(--fg)" }}>${r.imp}/10</span><input id=${"vl-i-" + r.k} type="range" min="1" max="10" value=${r.imp} onInput=${e => set(r.k, "imp", Number(e.target.value))}/></label>
+        <label className="f" htmlFor=${"vl-c-" + r.k}>Lived it this week <span className="mono" style=${{ color: "var(--fg)" }}>${r.con}/10</span><input id=${"vl-c-" + r.k} type="range" min="1" max="10" value=${r.con} onInput=${e => set(r.k, "con", Number(e.target.value))}/></label>
+      </div>
+    </div>`)}
+    <p className="note">Your value statements appear on matching mission briefings as "why it matters".</p>
+  <//>`;
+}
+
+function Slip({ s, d, prio, coach, update, openBrief, flash }) {
+  const [step, setStep] = useState(0);
+  const auto = d.daysSinceLast !== null && d.daysSinceLast >= 2 ? `${d.daysSinceLast} days without a focus session.` : d.distractedToday ? `${d.distractedToday} distracted session${d.distractedToday > 1 ? "s" : ""} today.` : "";
+  const [what, setWhat] = useState(auto);
+  const [friend, setFriend] = useState("");
+  const [trig, setTrig] = useState([]);
+  const [plan, setPlan] = useState("");
+  const tog = t => setTrig(trig.includes(t) ? trig.filter(x => x !== t) : trig.concat([t]));
+  const finish = () => {
+    update(n => {
+      n.slips.push({ id: uid(), ts: Date.now(), what, friend, triggers: trig, plan });
+      if (what.trim()) n.excuses.push({ id: uid(), ts: Date.now(), text: what.trim(), src: "slip" });
+      if (plan.trim() && trig.length) n.woop.push({ id: uid(), ts: Date.now(), createdAt: Date.now(), active: true, wish: "Recover after slips", outcome: "One slip stays one slip", obstacle: trig.join(", "), ifs: trig[0].toLowerCase(), then: plan.trim() });
+    });
+    setStep(4);
+  };
+  const B = coach === "brutal";
+  return html`<div className="panel" style=${{ gap: "16px" }}>
+    <div className="steps">${[0, 1, 2, 3, 4].map(i => html`<i key=${i} className=${i <= step ? "on" : ""}></i>`)}</div>
+    ${step === 0 ? html`<${React.Fragment}>
+      <span className="eyebrow">1 · Name it (mindfulness)</span>
+      <p style=${{ fontSize: "16px" }}>${B ? "State what happened, plainly. No drama, no minimising." : "Describe what happened as you'd describe the weather: just facts, no verdict on yourself."}</p>
+      <textarea id="sl-what" value=${what} onInput=${e => setWhat(e.target.value)} placeholder="e.g. Planned to apply for two roles this week. Spent the evenings on car reviews instead."></textarea>
+      <div><button className="btn btn-amber btn-sm" disabled=${!what.trim()} onClick=${() => setStep(1)}>Next</button></div>
+    <//>` : null}
+    ${step === 1 ? html`<${React.Fragment}>
+      <span className="eyebrow">2 · Common humanity and self-kindness</span>
+      <p style=${{ fontSize: "16px" }}>${B ? "You're not uniquely broken. Avoidance is one of the most common human patterns there is. Self-attack doesn't fix it; research links it to more procrastination, not less. So skip the self-pity and the self-flogging. Both waste time." : "Everyone who has ever pursued something hard has had weeks like this. Slipping is part of changing, not proof you can't."}</p>
+      <label className="f" htmlFor="sl-friend">What would you say to a mate who told you exactly this?<textarea id="sl-friend" value=${friend} onInput=${e => setFriend(e.target.value)} placeholder="e.g. One bad week doesn't cancel three years of delivering projects. Pick it back up tonight."></textarea></label>
+      <p className="note">Now read it back as if it's addressed to you. It is.</p>
+      <div className="btn-row"><button className="btn btn-line btn-sm" onClick=${() => setStep(0)}>Back</button><button className="btn btn-amber btn-sm" disabled=${!friend.trim()} onClick=${() => setStep(2)}>Next</button></div>
+    <//>` : null}
+    ${step === 2 ? html`<${React.Fragment}>
+      <span className="eyebrow">3 · Trigger chain (relapse prevention)</span>
+      <p style=${{ fontSize: "16px" }}>What set it off? Slips have patterns. Pick all that apply.</p>
+      <div className="chips">${TRIGGERS.map(t => html`<button key=${t} aria-pressed=${trig.includes(t)} style=${trig.includes(t) ? { borderColor: "var(--tungsten)", background: "rgba(255,176,74,.12)" } : null} onClick=${() => tog(t)}>${t}</button>`)}</div>
+      <div className="btn-row"><button className="btn btn-line btn-sm" onClick=${() => setStep(1)}>Back</button><button className="btn btn-amber btn-sm" disabled=${!trig.length} onClick=${() => setStep(3)}>Next</button></div>
+    <//>` : null}
+    ${step === 3 ? html`<${React.Fragment}>
+      <span className="eyebrow">4 · Coping plan</span>
+      <label className="f" htmlFor="sl-plan">Next time "${trig[0]}" happens, I will…<input id="sl-plan" value=${plan} onInput=${e => setPlan(e.target.value)} placeholder="e.g. do the 2-minute version before I sit on the couch"/></label>
+      <p className="note">This becomes an active if-then plan that shows up in briefings and urge fights.</p>
+      <div className="btn-row"><button className="btn btn-line btn-sm" onClick=${() => setStep(2)}>Back</button><button className="btn btn-amber btn-sm" disabled=${!plan.trim()} onClick=${finish}>Save plan</button></div>
+    <//>` : null}
+    ${step === 4 ? html`<${React.Fragment}>
+      <span className="eyebrow">5 · Re-entry</span>
+      <h3>The slip is logged. Now break the chain.</h3>
+      <p className="dim">${B ? "The fastest way to end a bad run is to do something small in the next five minutes. Not tomorrow." : "The goal right now isn't to make up for lost time. It's just to show yourself you can start again."}</p>
+      <div className="btn-row">${prio ? html`<button className="btn btn-amber" onClick=${() => openBrief(prio, { minutes: 2, target: "Re-entry: just the first visible step." })}>▶ 2 minutes on ${prio.title}</button>` : null}</div>
+    <//>` : null}
+  </div>`;
+}
+
+function Bundles({ s, coach, update, flash }) {
+  const [want, setWant] = useState(""); const [attr, setAttr] = useState("health");
+  return html`<${React.Fragment}>
+    <div className="panel">
+      <p style=${{ fontSize: "16px" }}>Rule: the pleasure is only allowed <b>during</b> the task. Never outside it.</p>
+      <div className="chips">${["Watch YouTube car reviews", "Listen to my favourite podcast", "Good coffee from the café", "Browse business-idea threads"].map(c => html`<button key=${c} onClick=${() => setWant(c)}>${c}</button>`)}</div>
+      <div className="f-row">
+        <label className="f" htmlFor="bd-w">I only allow myself…<input id="bd-w" value=${want} onInput=${e => setWant(e.target.value)} placeholder="Listen to true-crime podcasts"/></label>
+        <label className="f" htmlFor="bd-a">…during missions that build<select id="bd-a" value=${attr} onChange=${e => setAttr(e.target.value)}>${ATTR_KEYS.map(k => html`<option key=${k} value=${k}>${ATTRS[k].label}</option>`)}<option value="any">Any mission</option></select></label>
+      </div>
+      <div><button className="btn btn-amber btn-sm" disabled=${!want.trim()} onClick=${() => { update(n => { n.bundles.push({ id: uid(), ts: Date.now(), createdAt: Date.now(), want: want.trim(), attr }); }); setWant(""); flash("Bundle created", "It shows on matching mission briefings."); }}>Create bundle</button></div>
+      <p className="note">Works best with low-focus tasks (exercise, admin, filing, chores). For deep work like P6 or CV writing, keep the bundle as the reward straight after.</p>
+    </div>
+    ${s.bundles.length ? html`<div className="panel"><h3>Active bundles</h3><ul className="list">${s.bundles.map(b => html`<li key=${b.id}><span>${b.want} <span className="dim">→ only during ${b.attr === "any" ? "any mission" : ATTRS[b.attr].label + " missions"}</span></span><button className="btn btn-sm btn-line" style=${{ color: "var(--bad)" }} onClick=${() => update(n => { n.bundles = n.bundles.filter(x => x.id !== b.id); n.tomb.push(b.id); })}>Remove</button></li>`)}</ul></div>` : null}
+  <//>`;
+}
+
+function Contract({ s, d, coach, update, flash }) {
+  const today = d.today, ws = weekStartKey(today);
+  const cur = s.contracts.find(c => c.week === ws);
+  const lastWeek = s.contracts.filter(c => c.week < ws).sort((a, b) => a.week < b.week ? 1 : -1)[0];
+  const sugSessions = Math.max(3, Math.min(14, Math.round((d.week.filter(w => w.min > 0).length || 2) * 1.5)));
+  const [f, setF] = useState({ sessions: sugSessions, minutes: Math.max(60, Math.round(d.avg14 * 7 * 1.2 / 10) * 10 || 150), must: "", stake: "", referee: "", sig: "", understand: false });
+  const set = (k, v) => setF(x => Object.assign({}, x, { [k]: v }));
+  const [confirmBreak, setConfirmBreak] = useState(false);
+  const [copied, setCopied] = useState("");
+  if (cur) {
+    const e = contractEval(s, cur, today); const rep = refereeReport(s, cur, today);
+    return html`<${React.Fragment}>
+      <div className="contract-doc">
+        <span className="eyebrow">Ulysses contract · ${niceDate(cur.week)} – ${niceDate(e.we)}</span>
+        <p style=${{ fontSize: "16px" }}>I commit to <b>${cur.sessions} focus sessions</b> and <b>${cur.minutes} focused minutes</b> this week${cur.must ? html`, including: <b>${cur.must}</b>` : ""}. If I break this contract, I will <b>${cur.stake || "(no stake)"}</b>. My referee is <b>${cur.referee || "(none)"}</b>.</p>
+        <div className="signature">${cur.sig}</div><span className="note">Signed ${new Date(cur.ts).toLocaleString()}</span>
+      </div>
+      <div className="panel">
+        <div style=${{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}><span className=${"chip " + (e.status === "kept" ? "ok" : e.status === "broken" ? "bad" : "amber")}>${e.status === "active" ? "In progress" : e.status}</span><span className="dim">Ends ${niceDate(e.we)}</span></div>
+        <div className="bars">
+          <div className="bar-row"><span>Sessions</span><div className="track"><i style=${{ width: clamp(e.count / cur.sessions, 0, 1) * 100 + "%", background: "var(--tungsten)" }}></i></div><span className="n">${e.count}/${cur.sessions}</span></div>
+          <div className="bar-row"><span>Minutes</span><div className="track"><i style=${{ width: clamp(e.minutes / cur.minutes, 0, 1) * 100 + "%", background: "var(--tungsten)" }}></i></div><span className="n">${e.minutes}/${cur.minutes}</span></div>
+        </div>
+        ${cur.must ? html`<label style=${{ display: "flex", gap: "10px", alignItems: "center", fontWeight: 700 }}><input id="ct-mustdone" type="checkbox" style=${{ width: "20px", height: "20px" }} checked=${!!cur.mustDone} disabled=${e.ended} onChange=${ev => { const v = ev.target.checked; update(n => { const x = n.contracts.find(y => y.id === cur.id); if (x) x.mustDone = v; }); }}/>Must-do done: ${cur.must}</label>` : null}
+        <textarea id="ct-report" readOnly value=${rep} style=${{ minHeight: "120px", fontFamily: "var(--mono)", fontSize: "12px" }} aria-label="Referee report"></textarea>
+        <div className="btn-row"><button className="btn btn-sm btn-amber" onClick=${async () => { try { await navigator.clipboard.writeText(rep); setCopied("Copied. Message it to " + (cur.referee || "your referee") + "."); } catch (er) { setCopied("Copy blocked here; select the text and copy it manually."); } }}>Copy report for referee</button>
+          ${e.status === "broken" && !cur.paid ? html`<button className="btn btn-sm btn-line" onClick=${() => update(n => { const x = n.contracts.find(y => y.id === cur.id); if (x) x.paid = Date.now(); })}>I paid the stake</button>` : null}
+          ${e.status === "active" ? (confirmBreak ? html`<button className="btn btn-sm btn-danger" onClick=${() => { update(n => { const x = n.contracts.find(y => y.id === cur.id); if (x) x.brokenEarly = Date.now(); }); setConfirmBreak(false); }}>Yes, I'm breaking it. Stake owed.</button>` : html`<button className="btn btn-sm btn-line" onClick=${() => setConfirmBreak(true)}>Break contract</button>`) : null}</div>
+        ${copied ? html`<p className="note" role="status">${copied}</p>` : null}
+        <p className="note">LIFEFLIX can't take money or message anyone. Your referee enforces the stake; this page keeps the record honest.</p>
+      </div>
+    <//>`;
+  }
+  const valid = f.sessions > 0 && f.minutes > 0 && f.stake.trim() && f.sig.trim().length >= 2 && f.understand;
+  return html`<div className="contract-doc">
+    <span className="eyebrow">New contract · ${niceDate(ws)} – ${niceDate(addDays(ws, 6))}</span>
+    ${lastWeek ? html`<p className="note">Last contract: ${contractEval(s, lastWeek, today).status}${contractEval(s, lastWeek, today).status === "broken" && !lastWeek.paid ? `, stake "${lastWeek.stake}" not yet paid` : ""}.</p>` : null}
+    <div className="f-row">
+      <label className="f" htmlFor="ct-s">Focus sessions this week<input id="ct-s" type="number" min="1" max="50" value=${f.sessions} onInput=${e => set("sessions", Number(e.target.value))}/></label>
+      <label className="f" htmlFor="ct-m">Focused minutes this week<input id="ct-m" type="number" min="10" step="10" value=${f.minutes} onInput=${e => set("minutes", Number(e.target.value))}/></label>
+    </div>
+    <p className="note">Suggested from your recent pace, plus a stretch. ${coach === "brutal" ? "Set it so you'd be embarrassed to miss it, not so high that missing is guaranteed." : "Ambitious but realistic beats heroic. A kept small contract builds more than a broken big one."}</p>
+    <label className="f" htmlFor="ct-must">One must-do (optional)<input id="ct-must" value=${f.must} onInput=${e => set("must", e.target.value)} placeholder="e.g. Submit one application for a Melbourne project engineer role"/></label>
+    <label className="f" htmlFor="ct-stake">If I break it, I will…<input id="ct-stake" value=${f.stake} onInput=${e => set("stake", e.target.value)} placeholder="e.g. donate $50 to a charity I wouldn't choose / pay for my referee's dinner"/></label>
+    <div className="chips">${["donate $50 to a cause I dislike", "pay for my referee's dinner", "give up streaming for a week", "do my referee's least favourite chore"].map(c => html`<button key=${c} onClick=${() => set("stake", c)}>${c}</button>`)}</div>
+    <label className="f" htmlFor="ct-ref">Referee (someone who'll actually hold you to it)<input id="ct-ref" value=${f.referee} onInput=${e => set("referee", e.target.value)} placeholder="Name"/></label>
+    <label className="f" htmlFor="ct-sig">Signature: type your full name<input id="ct-sig" value=${f.sig} onInput=${e => set("sig", e.target.value)} style=${{ fontFamily: "var(--display)", fontStyle: "italic", fontSize: "22px" }}/></label>
+    <label style=${{ display: "flex", gap: "10px", alignItems: "flex-start", fontWeight: 600 }}><input id="ct-und" type="checkbox" style=${{ width: "20px", height: "20px", flex: "none" }} checked=${f.understand} onChange=${e => set("understand", e.target.checked)}/><span>I understand this contract can't be edited once signed. I'll send my referee the weekly report and pay the stake if I break it.</span></label>
+    <div><button className="btn btn-amber" disabled=${!valid} onClick=${() => { update(n => { n.contracts.push({ id: uid(), ts: Date.now(), createdAt: Date.now(), week: ws, sessions: f.sessions, minutes: f.minutes, must: f.must.trim(), stake: f.stake.trim(), referee: f.referee.trim(), sig: f.sig.trim(), mustDone: false, paid: null }); }); flash("Contract signed", "Tell " + (f.referee || "your referee") + " today."); }}>Sign contract</button></div>
   </div>`;
 }
 
