@@ -1,0 +1,2026 @@
+<title>LIFEFLIX</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: a dark screening-room shell — sticky marquee bar, a key-art hero, horizontal episode rails, full-screen mission overlays. Single committed dark look. */
+:root{
+  color-scheme: dark;
+  --ink:#0c0a0e; --ink-2:#151219; --ink-3:#1f1b25; --ink-4:#2a2532; --line:#322c3b;
+  --fg:#f4efe7; --fg-dim:#b1aaba; --fg-faint:#776f82;
+  --tungsten:#ffb04a; --tungsten-deep:#e57a2c; --crimson:#e8414a; --crimson-deep:#9e1d2c;
+  --ok:#5fd39a; --warn:#f2c14e; --bad:#ef6464;
+  --s1:#ff7a3d; --s2:#4cc3ff; --s3:#b48cff; --s4:#ffcf3d; --s5:#47d18c; --s6:#ff6b9a;
+  --a-focus:#4cc3ff; --a-discipline:#b48cff; --a-career:#ffb04a; --a-wealth:#47d18c; --a-health:#ff6b9a; --a-courage:#ff5a4a;
+  --display:"Big Shoulders Display","Oswald","Arial Narrow",Impact,sans-serif;
+  --body:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --r:10px; --gut:max(16px, env(safe-area-inset-left, 0px)); --gutR:max(16px, env(safe-area-inset-right, 0px));
+}
+*{box-sizing:border-box}
+html,body{background:var(--ink);color:var(--fg)}
+body{font-family:var(--body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--ink)}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:disabled{cursor:not-allowed;opacity:.45}
+input,textarea,select{font:inherit;color:var(--fg);background:var(--ink-3);border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%}
+textarea{resize:vertical;min-height:80px}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--tungsten);outline-offset:1px;border-color:transparent}
+:focus-visible{outline:2px solid var(--tungsten);outline-offset:2px}
+h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:.01em;line-height:.95;margin:0;text-wrap:balance}
+p{margin:0}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-dim)}
+.dim{color:var(--fg-dim)} .faint{color:var(--fg-faint)}
+.grain{position:absolute;inset:0;pointer-events:none;opacity:.18;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.9'/></svg>")}
+
+/* ---------- top bar ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:linear-gradient(var(--ink) 55%, rgba(12,10,14,.0));padding-left:var(--gut);padding-right:var(--gutR);padding-block:12px 18px}
+.top-in{display:flex;align-items:center;gap:20px;max-width:1400px;margin:0 auto}
+.logo{font-family:var(--display);font-weight:900;font-size:30px;letter-spacing:.04em;line-height:1;background:linear-gradient(180deg,var(--tungsten),var(--tungsten-deep));-webkit-background-clip:text;background-clip:text;color:transparent;transform:scaleY(1.08);white-space:nowrap}
+.nav{display:flex;gap:4px;flex:1;min-width:0}
+.nav button{padding:8px 12px;border-radius:999px;color:var(--fg-dim);font-weight:600;font-size:14px;white-space:nowrap}
+.nav button[aria-current="page"]{color:var(--fg);background:var(--ink-3)}
+.nav button:hover{color:var(--fg)}
+.coach-pill{display:flex;align-items:center;gap:8px;padding:5px 6px 5px 5px;border-radius:999px;background:var(--ink-3);border:1px solid var(--line);font-size:13px;font-weight:700;white-space:nowrap}
+.avatar{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:14px;letter-spacing:.02em;flex:none}
+.avatar.brutal{background:var(--crimson);color:#fff}
+.avatar.mentor{background:var(--tungsten);color:#2a1606}
+.save-dot{width:8px;height:8px;border-radius:50%;display:inline-block;background:var(--fg-faint)}
+.save-dot.ok{background:var(--ok)} .save-dot.cloud{background:var(--s2)} .save-dot.bad{background:var(--bad)}
+.icon-btn{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--ink-3);border:1px solid var(--line);flex:none}
+
+.tabbar{display:none}
+@media (max-width:820px){
+  .nav{display:none}
+  .top-in{gap:10px}
+  .logo{font-size:26px;flex:1}
+  .coach-pill .lbl{display:none}
+  .tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:55;background:rgba(15,13,18,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:6px max(6px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(6px,env(safe-area-inset-left,0px))}
+  .tabbar button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10.5px;font-weight:700;color:var(--fg-faint);padding:6px 0;letter-spacing:.02em}
+  .tabbar button[aria-current="page"]{color:var(--tungsten)}
+  .tabbar svg{width:22px;height:22px}
+  main{padding-bottom:calc(150px + env(safe-area-inset-bottom,0px))}
+}
+
+/* ---------- layout ---------- */
+main{max-width:1400px;margin:0 auto;padding-bottom:120px}
+.wrap{padding-left:var(--gut);padding-right:var(--gutR)}
+.section{padding-block:22px 6px}
+.row-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+.row-head h2{font-size:26px;text-transform:uppercase}
+.row-head .eyebrow{white-space:nowrap}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;margin-top:calc(-1 * env(safe-area-inset-top,0px) - 70px);padding-top:calc(env(safe-area-inset-top,0px) + 110px);padding-bottom:36px;isolation:isolate}
+.hero-bg{position:absolute;inset:0;z-index:-1;background:
+  radial-gradient(60% 70% at 78% 30%, rgba(255,122,61,.55), transparent 62%),
+  radial-gradient(40% 50% at 92% 70%, rgba(232,65,74,.45), transparent 60%),
+  radial-gradient(70% 60% at 10% 100%, rgba(76,195,255,.12), transparent 60%),
+  linear-gradient(180deg,#120d12 0%, var(--ink) 100%)}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--ink) 0%, rgba(12,10,14,.85) 35%, rgba(12,10,14,.1) 70%), linear-gradient(0deg,var(--ink) 0%, transparent 35%)}
+.leak{position:absolute;width:70vmax;height:70vmax;right:-20vmax;top:-25vmax;border-radius:50%;background:conic-gradient(from 0deg, rgba(255,176,74,.0), rgba(255,176,74,.35), rgba(232,65,74,.0), rgba(255,122,61,.3), rgba(255,176,74,0));filter:blur(50px);animation:leak 18s linear infinite;z-index:-1;opacity:.7}
+@keyframes leak{to{transform:rotate(360deg)}}
+.silhouette{position:absolute;right:4%;bottom:0;height:88%;z-index:-1;opacity:.95}
+.hero-in{position:relative;max-width:760px;display:flex;flex-direction:column;gap:16px}
+.hero h1{font-size:clamp(46px,8.4vw,108px);text-transform:uppercase;font-weight:900;line-height:.86}
+.hero h1 .l2{display:block;color:var(--tungsten)}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:13px;color:var(--fg-dim);font-weight:600}
+.badge-rating{border:1px solid var(--fg-dim);padding:1px 7px;border-radius:3px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--fg)}
+.season-tag{font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:var(--tungsten);text-transform:uppercase}
+.hero-title2{font-size:clamp(24px,3.4vw,38px);text-transform:uppercase}
+.hero p.lede{font-size:16px;max-width:60ch;color:var(--fg-dim)}
+.btn-row{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:8px;font-weight:800;font-size:15px;letter-spacing:.01em;transition:transform .12s ease, background .2s ease}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--fg);color:var(--ink)}
+.btn-primary:hover{background:#fff}
+.btn-amber{background:var(--tungsten);color:#241304}
+.btn-ghost{background:rgba(244,239,231,.12);color:var(--fg)}
+.btn-ghost:hover{background:rgba(244,239,231,.2)}
+.btn-line{border:1px solid var(--line);color:var(--fg)}
+.btn-danger{background:var(--crimson);color:#fff}
+.btn-sm{padding:8px 12px;font-size:13px;border-radius:7px}
+.btn-block{width:100%}
+
+/* day strip */
+.day-strip{display:flex;gap:3px;margin-top:6px;max-width:520px}
+.day-strip i{flex:1;height:6px;border-radius:2px;background:var(--ink-4)}
+.day-strip i.on{background:var(--tungsten)}
+.day-strip i.today{outline:1px solid var(--fg);outline-offset:1px}
+
+/* coach band */
+.coach-band{display:flex;gap:14px;align-items:flex-start;background:var(--ink-2);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.coach-band .who{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-faint);margin-bottom:4px}
+.coach-band p{font-size:16px;line-height:1.5;max-width:75ch}
+.coach-band.brutal{border-left:3px solid var(--crimson)}
+.coach-band.mentor{border-left:3px solid var(--tungsten)}
+
+/* ---------- escape ---------- */
+.escape-big{position:relative;width:100%;padding:22px 18px;border-radius:12px;background:linear-gradient(120deg,var(--crimson-deep),var(--crimson));color:#fff;font-family:var(--display);font-weight:900;font-size:clamp(26px,4vw,40px);letter-spacing:.03em;text-transform:uppercase;overflow:hidden;box-shadow:0 10px 40px rgba(232,65,74,.25)}
+.escape-big small{display:block;font-family:var(--body);font-size:13px;font-weight:600;letter-spacing:0;text-transform:none;opacity:.85;margin-top:4px}
+.escape-big::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.18) 50%,transparent 70%);transform:translateX(-100%);animation:sheen 4.5s ease-in-out infinite}
+@keyframes sheen{60%,100%{transform:translateX(100%)}}
+.fab{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:45;display:flex;align-items:center;gap:8px;padding:12px 16px;border-radius:999px;background:var(--crimson);color:#fff;font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase;box-shadow:0 8px 28px rgba(232,65,74,.45)}
+@media (max-width:820px){.fab{bottom:calc(76px + env(safe-area-inset-bottom,0px))}}
+
+/* ---------- rails ---------- */
+.rail-wrap{position:relative}
+.rail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-block:6px 14px;padding-left:var(--gut);padding-right:var(--gutR);scroll-padding-left:var(--gut);scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.rail-arrow{position:absolute;top:6px;bottom:14px;width:44px;z-index:3;display:grid;place-items:center;background:linear-gradient(90deg,rgba(12,10,14,.92),transparent);font-size:28px;color:var(--fg);opacity:0;transition:opacity .2s}
+.rail-arrow.r{right:0;background:linear-gradient(270deg,rgba(12,10,14,.92),transparent)}
+.rail-arrow.l{left:0}
+.rail-wrap:hover .rail-arrow{opacity:1}
+@media (hover:none){.rail-arrow{display:none}}
+.card{scroll-snap-align:start;flex:none;width:clamp(230px,23vw,300px);text-align:left;border-radius:var(--r);background:var(--ink-2);overflow:hidden;transition:transform .2s ease, box-shadow .2s ease;position:relative}
+.card:hover{transform:translateY(-3px) scale(1.015);box-shadow:0 14px 40px rgba(0,0,0,.5)}
+.card .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:4px}
+.card .t{font-weight:800;font-size:15px;line-height:1.25}
+.card .d{font-size:13px;color:var(--fg-dim);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .m{display:flex;gap:10px;font-family:var(--mono);font-size:11px;color:var(--fg-faint);letter-spacing:.04em;margin-top:2px;flex-wrap:wrap}
+.card.add{display:grid;place-items:center;min-height:200px;border:1.5px dashed var(--line);background:transparent;color:var(--fg-dim);font-weight:700}
+.card.done-card{opacity:.72}
+.thumb{position:relative;aspect-ratio:16/9;max-width:100%;overflow:hidden;isolation:isolate}
+.thumb .num{position:absolute;left:10px;bottom:2px;font-family:var(--display);font-weight:900;font-size:64px;line-height:.9;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.55)}
+.thumb .glyph{position:absolute;right:12px;top:12px;width:36px;height:36px;opacity:.95}
+.thumb .code{position:absolute;right:10px;bottom:8px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.75)}
+.thumb .chip{position:absolute;left:10px;top:10px}
+.prog{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.18)}
+.prog>i{display:block;height:100%;background:var(--crimson)}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.04em;background:rgba(12,10,14,.75);color:var(--fg);text-transform:uppercase}
+.chip.ok{background:rgba(95,211,154,.18);color:var(--ok)}
+.chip.warn{background:rgba(242,193,78,.16);color:var(--warn)}
+.chip.bad{background:rgba(239,100,100,.16);color:var(--bad)}
+.chip.amber{background:rgba(255,176,74,.16);color:var(--tungsten)}
+
+/* ---------- overlays ---------- */
+.overlay{position:fixed;inset:0;z-index:80;background:rgba(6,5,8,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);overflow-y:auto;padding:calc(env(safe-area-inset-top,0px) + 16px) var(--gutR) calc(env(safe-area-inset-bottom,0px) + 24px) var(--gut);animation:fade .25s ease}
+@keyframes fade{from{opacity:0}}
+.sheet{position:relative;max-width:720px;margin:24px auto;background:var(--ink-2);border:1px solid var(--line);border-radius:14px;overflow:hidden;animation:rise .35s cubic-bezier(.2,.8,.2,1)}
+.sheet.wide{max-width:980px}
+@keyframes rise{from{transform:translateY(24px);opacity:0}}
+.sheet-body{padding:22px;display:flex;flex-direction:column;gap:16px}
+.close-x{position:absolute;right:12px;top:12px;z-index:5;width:38px;height:38px;border-radius:50%;background:rgba(12,10,14,.75);display:grid;place-items:center;font-size:20px}
+.fullscreen{position:fixed;inset:0;z-index:90;background:var(--ink);overflow-y:auto;padding:calc(env(safe-area-inset-top,0px) + 18px) var(--gutR) calc(env(safe-area-inset-bottom,0px) + 24px) var(--gut);display:flex;flex-direction:column;animation:fade .3s ease}
+.fs-in{width:100%;max-width:760px;margin:auto;display:flex;flex-direction:column;gap:20px}
+
+.choice-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.choice{display:flex;align-items:center;gap:12px;text-align:left;padding:14px;border-radius:10px;background:var(--ink-3);border:1px solid var(--line);font-weight:700;transition:border-color .15s, background .15s}
+.choice:hover{border-color:var(--fg-faint)}
+.choice[aria-pressed="true"]{border-color:var(--tungsten);background:rgba(255,176,74,.1)}
+.choice .ic{font-size:20px;width:28px;text-align:center;flex:none}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{padding:9px 14px;border-radius:8px;background:var(--ink-3);border:1px solid var(--line);font-weight:700;font-family:var(--mono);font-size:13px}
+.seg button[aria-pressed="true"]{background:var(--fg);color:var(--ink);border-color:var(--fg)}
+label.f{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:700;color:var(--fg-dim)}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:560px){.f-row{grid-template-columns:1fr}}
+
+/* briefing */
+.brief-art{position:relative;min-height:220px;padding:22px;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;isolation:isolate;overflow:hidden}
+.brief-art h2{font-size:clamp(34px,6vw,56px);text-transform:uppercase}
+.stat-line{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.stat{background:var(--ink-3);border-radius:8px;padding:10px 12px}
+.stat .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-faint)}
+.stat .v{font-family:var(--display);font-weight:800;font-size:24px;line-height:1.1}
+
+/* player */
+.player-ring{position:relative;width:min(78vw,380px);aspect-ratio:1;max-width:100%;margin:0 auto}
+.player-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.player-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center}
+.player-time{font-family:var(--mono);font-weight:700;font-size:clamp(46px,12vw,76px);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.rec{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--crimson)}
+.rec::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--crimson);animation:blink 1.2s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.paused .rec{color:var(--fg-faint)} .paused .rec::before{animation:none;background:var(--fg-faint)}
+
+/* boss */
+.boss-hp{height:14px;border-radius:3px;background:var(--ink-4);overflow:hidden;border:1px solid var(--line)}
+.boss-hp>i{display:block;height:100%;background:linear-gradient(90deg,var(--crimson-deep),var(--crimson));transition:width .8s ease}
+.breath{position:relative;width:min(64vw,260px);aspect-ratio:1;max-width:100%;margin:10px auto;display:grid;place-items:center}
+.breath .orb{position:absolute;inset:12%;border-radius:50%;background:radial-gradient(circle at 40% 35%, rgba(255,176,74,.9), rgba(229,122,44,.55) 45%, rgba(232,65,74,.15) 75%);box-shadow:0 0 80px rgba(255,176,74,.35);animation:breathe 12s ease-in-out infinite}
+.breath .ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(255,176,74,.35)}
+@keyframes breathe{0%{transform:scale(.55)}33%{transform:scale(1)}50%{transform:scale(1)}100%{transform:scale(.55)}}
+.breath .lbl{position:relative;font-family:var(--display);font-weight:900;font-size:30px;text-transform:uppercase;letter-spacing:.06em;color:#1d0f04;mix-blend-mode:normal}
+input[type=range]{padding:0;border:0;background:transparent;accent-color:var(--tungsten);height:28px}
+
+/* stats */
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.panel{background:var(--ink-2);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.panel h3{font-size:22px;text-transform:uppercase}
+.attr{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:12px 6px;border-radius:10px;background:var(--ink-3)}
+.attr .nm{font-weight:800;font-size:14px}
+.attr .lv{font-family:var(--mono);font-size:11px;color:var(--fg-faint);letter-spacing:.06em}
+.badge{display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;background:var(--ink-3);border:1px solid var(--line)}
+.badge .medal{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none;font-family:var(--display);font-weight:900;font-size:18px;background:var(--ink-4);color:var(--fg-faint)}
+.badge.on .medal{background:radial-gradient(circle at 35% 30%, #ffd894, var(--tungsten) 50%, var(--tungsten-deep));color:#2b1504;box-shadow:0 0 22px rgba(255,176,74,.35)}
+.badge .bt{font-weight:800;font-size:14px}
+.badge .bd{font-size:12.5px;color:var(--fg-dim)}
+.badge:not(.on){opacity:.7}
+.bars{display:flex;flex-direction:column;gap:8px}
+.bar-row{display:grid;grid-template-columns:minmax(90px,150px) 1fr 44px;gap:10px;align-items:center;font-size:13px}
+.bar-row .track{height:10px;border-radius:3px;background:var(--ink-4);overflow:hidden}
+.bar-row .track i{display:block;height:100%;border-radius:3px}
+.bar-row .n{font-family:var(--mono);text-align:right;color:var(--fg-dim)}
+.week-chart{display:flex;align-items:flex-end;gap:8px;height:150px;padding-top:16px}
+.week-chart .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end;min-width:0}
+.week-chart .b{width:100%;max-width:38px;border-radius:4px 4px 1px 1px;background:var(--tungsten);min-height:2px;position:relative}
+.week-chart .b.zero{background:var(--ink-4)}
+.week-chart .v{font-family:var(--mono);font-size:10.5px;color:var(--fg-dim)}
+.week-chart .dl{font-family:var(--mono);font-size:10.5px;color:var(--fg-faint);letter-spacing:.06em}
+.cal{display:grid;grid-template-columns:repeat(10,1fr);gap:5px}
+.cal i{aspect-ratio:1;border-radius:4px;background:var(--ink-4);display:grid;place-items:center;font-family:var(--mono);font-style:normal;font-size:10px;color:var(--fg-faint)}
+.cal i.on{background:var(--tungsten);color:#2b1504;font-weight:700}
+.cal i.future{background:transparent;border:1px dashed var(--line)}
+.cal i.today{outline:2px solid var(--fg);outline-offset:1px}
+.big-num{font-family:var(--display);font-weight:900;font-size:44px;line-height:1}
+.xpbar{height:8px;border-radius:4px;background:var(--ink-4);overflow:hidden}
+.xpbar i{display:block;height:100%;background:linear-gradient(90deg,var(--tungsten-deep),var(--tungsten))}
+
+/* today */
+.slot{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:14px;border-radius:12px;background:var(--ink-2);border:1px solid var(--line)}
+.slot .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-faint)}
+.slot .ti{font-weight:800;font-size:16px;line-height:1.3}
+.slot .acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.slot.prio{border-color:rgba(255,176,74,.5);background:linear-gradient(120deg,rgba(255,176,74,.08),var(--ink-2) 60%)}
+.slot-thumb{width:96px;border-radius:7px;overflow:hidden;flex:none}
+@media (max-width:620px){.slot{grid-template-columns:1fr}.slot-thumb{display:none}.slot .acts{justify-content:flex-start}}
+.challenge{border-radius:12px;padding:16px;background:linear-gradient(120deg,rgba(232,65,74,.14),var(--ink-2));border:1px solid rgba(232,65,74,.4);display:flex;flex-direction:column;gap:10px}
+
+/* futures */
+.tl{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media (max-width:760px){.tl{grid-template-columns:1fr 1fr}}
+@media (max-width:420px){.tl{grid-template-columns:1fr}}
+.tl-card{background:var(--ink-3);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.tl-card .when{font-family:var(--display);font-weight:900;font-size:26px;text-transform:uppercase}
+.hbar{display:flex;flex-direction:column;gap:3px;font-size:12px}
+.hbar .tr{height:9px;border-radius:3px;background:var(--ink-4);overflow:hidden}
+.hbar .tr i{display:block;height:100%}
+.future-col{display:flex;flex-direction:column;gap:10px}
+.future-col .item{padding:12px;border-radius:10px;background:var(--ink-3);border-left:3px solid var(--line);font-size:14px}
+.future-col.a .item{border-left-color:var(--fg-faint);color:var(--fg-dim)}
+.future-col.b .item{border-left-color:var(--tungsten)}
+.future-col .item b{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;color:var(--fg)}
+
+/* coach chat */
+.chat{display:flex;flex-direction:column;gap:10px;max-height:min(58vh,560px);overflow-y:auto;padding:4px}
+.msg{max-width:85%;padding:11px 14px;border-radius:14px;font-size:15px;line-height:1.5;white-space:pre-wrap}
+.msg.me{align-self:flex-end;background:var(--ink-4);border-bottom-right-radius:4px}
+.msg.co{align-self:flex-start;background:var(--ink-3);border:1px solid var(--line);border-bottom-left-radius:4px}
+.msg.co.brutal{border-left:3px solid var(--crimson)}
+.msg.co.mentor{border-left:3px solid var(--tungsten)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{padding:7px 12px;border-radius:999px;background:var(--ink-3);border:1px solid var(--line);font-size:13px;font-weight:600}
+.chips button:hover{border-color:var(--fg-faint)}
+
+/* recap */
+.recap-open{position:relative;overflow:hidden;border-radius:14px;padding:40px 22px;text-align:center;isolation:isolate;background:radial-gradient(70% 90% at 50% 0%, rgba(255,176,74,.18), transparent 60%), var(--ink-2);border:1px solid var(--line)}
+.recap-open h2{font-size:clamp(40px,8vw,84px);text-transform:uppercase;font-style:italic;font-weight:900;animation:title-in 1.4s cubic-bezier(.2,.8,.2,1) both}
+@keyframes title-in{from{letter-spacing:.4em;opacity:.15;filter:blur(6px)}}
+.list{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+.list li{padding:10px 12px;border-radius:8px;background:var(--ink-3);font-size:14px;display:flex;justify-content:space-between;gap:10px}
+.list li span:last-child{font-family:var(--mono);font-size:12px;color:var(--fg-dim);white-space:nowrap}
+
+/* toast + banners */
+.toast{position:fixed;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top,0px) + 14px);z-index:120;background:var(--ink-3);border:1px solid var(--tungsten);border-radius:12px;padding:12px 16px;display:flex;gap:12px;align-items:center;max-width:min(92vw,460px);box-shadow:0 20px 50px rgba(0,0,0,.6);animation:drop .5s cubic-bezier(.2,.8,.2,1)}
+@keyframes drop{from{transform:translate(-50%,-30px);opacity:0}}
+.banner{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:12px 14px;border-radius:10px;background:var(--ink-3);border:1px solid var(--line);margin-top:12px}
+.banner.break{border-color:rgba(76,195,255,.5);background:linear-gradient(120deg,rgba(76,195,255,.12),var(--ink-3))}
+.banner.nudge{border-color:rgba(232,65,74,.5)}
+.xp-pop{font-family:var(--display);font-weight:900;font-size:clamp(64px,16vw,120px);line-height:.9;color:var(--tungsten);animation:pop .7s cubic-bezier(.2,1.4,.4,1) both;text-align:center}
+@keyframes pop{from{transform:scale(.4);opacity:0}}
+.gain{display:flex;justify-content:space-between;padding:8px 12px;border-radius:8px;background:var(--ink-3);font-weight:700;font-size:14px;animation:rise .4s ease both}
+.note{font-size:12.5px;color:var(--fg-faint)}
+hr.sep{border:0;border-top:1px solid var(--line);margin:4px 0}
+.hide-sm{} @media (max-width:560px){.hide-sm{display:none}}
+footer{padding:30px var(--gutR) 30px var(--gut);color:var(--fg-faint);font-size:12.5px;max-width:1400px;margin:0 auto}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .breath .orb{animation:none;transform:scale(.8)}
+}
+</style>
+
+<div id="root"><div style="padding:40px 20px;font-family:system-ui;color:#b1aaba">Loading LIFEFLIX…</div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/htm@3.1.1/dist/htm.umd.js"></script>
+<script>
+(function(){
+"use strict";
+const { useState, useEffect, useRef, useMemo, useCallback } = React;
+const html = htm.bind(React.createElement);
+
+/* =========================================================
+   UTILITIES
+   ========================================================= */
+const uid = () => Math.random().toString(36).slice(2, 9) + Date.now().toString(36).slice(-4);
+const pad = n => String(n).padStart(2, "0");
+const dayKey = (d = new Date()) => { const x = new Date(d); return x.getFullYear() + "-" + pad(x.getMonth() + 1) + "-" + pad(x.getDate()); };
+const parseDay = k => { const [y, m, d] = k.split("-").map(Number); return new Date(y, m - 1, d); };
+const addDays = (k, n) => { const d = parseDay(k); d.setDate(d.getDate() + n); return dayKey(d); };
+const daysBetween = (a, b) => Math.round((parseDay(b) - parseDay(a)) / 86400000);
+const weekStartKey = (k) => { const d = parseDay(k); const wd = (d.getDay() + 6) % 7; d.setDate(d.getDate() - wd); return dayKey(d); };
+const fmtClock = sec => { sec = Math.max(0, Math.round(sec)); const h = Math.floor(sec / 3600), m = Math.floor(sec % 3600 / 60), s = sec % 60; return (h ? h + ":" + pad(m) : pad(m)) + ":" + pad(s); };
+const fmtMin = min => { min = Math.round(min); if (min < 60) return min + " min"; const h = Math.floor(min / 60), m = min % 60; return h + "h" + (m ? " " + pad(m) + "m" : ""); };
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const hashStr = s => { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return (h >>> 0) / 4294967295; };
+const DOW = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const niceDate = k => parseDay(k).toLocaleDateString(undefined, { weekday: "short", day: "numeric", month: "short" });
+const hourNow = () => new Date().getHours();
+const timeStr = () => new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+
+/* =========================================================
+   GAME DATA
+   ========================================================= */
+const ATTRS = {
+  focus:      { label: "Focus",      color: "var(--a-focus)",      how: "Completing distraction-free sessions" },
+  discipline: { label: "Discipline", color: "var(--a-discipline)", how: "Returning to important tasks consistently" },
+  career:     { label: "Career",     color: "var(--a-career)",     how: "Engineering learning and job-search missions" },
+  wealth:     { label: "Wealth",     color: "var(--a-wealth)",     how: "Measurable financial and business actions" },
+  health:     { label: "Health",     color: "var(--a-health)",     how: "Wellbeing routines" },
+  courage:    { label: "Courage",    color: "var(--a-courage)",    how: "Starting tasks you've been avoiding" }
+};
+const ATTR_KEYS = Object.keys(ATTRS);
+
+const SEASONS = [
+  { id: 1, code: "S01", title: "The Comeback", sub: "30 Days to Take Back Control", hue: "#ff7a3d", hue2: "#e8414a", blurb: "Escape the dopamine trap. Spot avoidance, beat the urge, and finish what matters." },
+  { id: 2, code: "S02", title: "The $200K Engineer", sub: "Skills, CV, applications, interviews", hue: "#4cc3ff", hue2: "#2a5cff", blurb: "Protection, commissioning, P6, a sharper CV, and applications that actually get sent." },
+  { id: 3, code: "S03", title: "Melbourne 2027", sub: "Relocation without chaos", hue: "#b48cff", hue2: "#5b3bd6", blurb: "Job first, then the move. Dates, money, leases, suburbs." },
+  { id: 4, code: "S04", title: "Build the Empire", sub: "One offer. One customer.", hue: "#ffcf3d", hue2: "#e58a1f", blurb: "Pick one realistic side business, validate demand, land the first paying customer." },
+  { id: 5, code: "S05", title: "Financial Freedom", sub: "Deposit, discipline, capital", hue: "#47d18c", hue2: "#178a5a", blurb: "Savings on autopilot, a real deposit target, and money decisions you can measure." },
+  { id: 6, code: "S06", title: "The Disciplined Life", sub: "Body, sleep, people, play", hue: "#ff6b9a", hue2: "#b8306b", blurb: "Exercise, sleep, relationships and guilt-free recreation that you plan on purpose." }
+];
+const seasonOf = id => SEASONS.find(s => s.id === id) || SEASONS[0];
+
+const CATS = {
+  jobs:     { label: "Applying for jobs",            ic: "📄" },
+  study:    { label: "Studying engineering",         ic: "⚡" },
+  overdue:  { label: "Completing an overdue task",   ic: "⏰" },
+  business: { label: "Working on a business",        ic: "🏗" },
+  exercise: { label: "Exercising",                   ic: "🏃" },
+  admin:    { label: "Personal administration",      ic: "🗂" },
+  money:    { label: "Money and savings",            ic: "💰" },
+  move:     { label: "Planning the Melbourne move",  ic: "🧳" },
+  other:    { label: "Something else",               ic: "✏️" }
+};
+
+const URGES = {
+  social:  { label: "Scrolling social media",      boss: "The Scroll Wraith" },
+  videos:  { label: "Watching videos",             boss: "The Autoplay Siren" },
+  products:{ label: "Researching cars or products", boss: "The Spec-Sheet Hydra" },
+  ideas:   { label: "Browsing business ideas",     boss: "The Shiny Idea Phantom" },
+  games:   { label: "Playing games",               boss: "The Respawn Demon" },
+  food:    { label: "Eating out of boredom",       boss: "The Snack Goblin" },
+  other:   { label: "Something else",              boss: "The Unnamed Fog" }
+};
+
+const DIFFS = ["Easy", "Medium", "Hard"];
+const LENGTHS = [2, 10, 25, 45];
+const BASE_XP = { 2: 25, 10: 100, 25: 200, 45: 320 };
+const DIFF_MULT = { Easy: 1, Medium: 1.2, Hard: 1.5 };
+const xpFor = (min, diff) => Math.round((BASE_XP[min] || Math.round(min * 7)) * (DIFF_MULT[diff] || 1) / 5) * 5;
+
+// season, title, desc, minutes, difficulty, attr, tags, firstStep, deliverable, repeat
+const SEED = [
+  [1, "The Task You Keep Escaping", "Spend 10 minutes updating your engineering CV. Start with the top third: the summary a recruiter reads in six seconds.", 10, "Medium", "courage", ["jobs", "overdue"], "Open the CV file and put the cursor in the summary.", "A rewritten 3-line summary naming switchboards, switchrooms, procurement and scheduling.", true],
+  [1, "Two-Minute Start", "The smallest possible entry point. Open the thing you are avoiding and do the first visible step. Stopping after two minutes is allowed.", 2, "Easy", "courage", ["overdue", "admin", "jobs", "study", "business"], "Open the file, email or form you've been avoiding.", "One line written or one field filled in.", true],
+  [1, "Open Loops Dump", "Get every unfinished commitment out of your head and onto one list. Then circle the single one that matters most this week.", 10, "Easy", "discipline", ["overdue", "admin"], "Open a blank note titled 'Open loops'.", "A list of every open loop with one item circled.", true],
+  [1, "Phone in Another Room", "One distraction-free block on today's priority. Phone physically out of reach, one tab open.", 25, "Medium", "focus", ["overdue", "study", "jobs"], "Put the phone in another room before pressing start.", "Visible progress on today's priority.", true],
+  [1, "The Overdue One", "Pick the oldest overdue task. Either finish it, or define the exact next physical action and do that.", 25, "Hard", "discipline", ["overdue", "admin"], "Write the overdue task's name in the target box below.", "Task finished, or next action done and dated.", true],
+  [1, "Kill One Feed", "Remove the single biggest time sink from your phone's home screen and set a daily screen-time limit on it.", 10, "Medium", "focus", ["other"], "Open Screen Time and look at yesterday's top app.", "Top app moved off the home screen with a daily limit set.", false],
+  [1, "Design Tomorrow's First 30 Minutes", "Write an implementation intention: when, where, and the exact first action for tomorrow's most important task.", 10, "Easy", "discipline", ["overdue", "admin"], "Write: 'Tomorrow at __ in __, I will __.'", "One written when-where-what plan.", true],
+  [1, "Walk Before Screens", "A 10-minute walk outside with no phone in hand. Reset your attention before deep work.", 10, "Easy", "health", ["exercise"], "Shoes on, phone stays home.", "", true],
+
+  [2, "Quantify Three Wins", "Rewrite three CV bullets with numbers: switchboard or switchroom value delivered, procurement lead time cut, schedule recovered.", 25, "Medium", "career", ["jobs"], "List your last three projects with their dollar value.", "Three CV bullets, each with at least one number.", true],
+  [2, "Protection Fundamentals", "25 minutes on electrical protection: overcurrent and earth-fault coordination basics. Finish by writing a 5-line summary in your own words.", 25, "Hard", "career", ["study"], "Open your protection notes or course to the coordination section.", "A 5-line summary of what you learned.", true],
+  [2, "P6 Hour Zero", "Build a 15-activity schedule for a switchroom project in Primavera P6 (or a trial or free scheduling tool): WBS, durations, logic links, critical path.", 45, "Hard", "career", ["study"], "Create a new project called 'Switchroom Demo'.", "A linked 15-activity schedule with a visible critical path.", true],
+  [2, "Commissioning Checklist", "Draft a low-voltage switchboard commissioning and ITP checklist from memory, then compare it against AS/NZS 61439 requirements and your company's ITPs.", 25, "Medium", "career", ["study"], "Write the headings: visual, mechanical, electrical, functional, documentation.", "A one-page checklist with the gaps you found marked.", true],
+  [2, "Send One Tailored Application", "One application to a project engineer role targeting your next salary band, with the CV tweaked to the ad's top three requirements.", 45, "Hard", "career", ["jobs"], "Open the job ad and copy its top three requirements.", "One application submitted.", true],
+  [2, "Salary Reality Check", "Timeboxed research: find three advertised roles with listed salary ranges that match your experience, then write your target number.", 25, "Medium", "career", ["jobs"], "Search one job board for 'project engineer electrical' with salary shown.", "Three roles with ranges and one written target number.", false],
+  [2, "One STAR Story", "Write one interview story in STAR format: a schedule recovery, a procurement problem, or a manufacturing delay you resolved.", 25, "Medium", "career", ["jobs"], "Pick the hardest project problem you solved this year.", "One STAR story under 250 words.", true],
+  [2, "LinkedIn Headline Rewrite", "Rewrite your headline and About section for the role you want next, not the one you have.", 10, "Easy", "career", ["jobs"], "Open your LinkedIn profile in edit mode.", "New headline published.", false],
+
+  [3, "Set the Move Window", "Pick a target month in early 2027 and write the three conditions that must be true before you go (job offer? lease end? savings?).", 25, "Medium", "discipline", ["move"], "Write 'Target month:' and fill it in.", "Target month plus three written conditions.", false],
+  [3, "Melbourne Employer Map", "List 10 Melbourne employers that hire your profile: switchboard manufacturers, EPCs, renewables developers, utilities, data-centre builders.", 25, "Medium", "career", ["move", "jobs"], "Start a table with columns: company, sector, open roles, contact.", "A list of 10 employers with one open role or contact each.", false],
+  [3, "Relocation Budget", "Estimate the real cost of moving: bond, removalists, overlap rent, travel, setup. Then the monthly saving needed to cover it.", 25, "Medium", "wealth", ["move", "money"], "Open a sheet and write the five cost lines.", "A total moving cost and a monthly savings figure.", false],
+  [3, "Lease and Notice Check", "Find your current lease end date and notice terms so the move date isn't decided by accident.", 10, "Easy", "discipline", ["move", "admin"], "Find the lease document or the agent's email.", "Lease end and notice period written in your plan.", false],
+  [3, "Suburb Shortlist", "Shortlist three suburbs by commute to your target employer clusters, rent range and lifestyle.", 25, "Easy", "discipline", ["move"], "Mark your top three employer locations on a map.", "Three suburbs with rent and commute noted.", false],
+
+  [4, "Pick One Offer", "Score your business ideas (demand, your edge, time to first dollar) and choose ONE. Archive the rest. No new research allowed.", 25, "Hard", "courage", ["business"], "List every idea you have explored in one column.", "One chosen offer, the rest parked.", false],
+  [4, "Contact One Potential Customer", "Send one real message to one person who might pay for your offer. Not research. Contact.", 25, "Hard", "courage", ["business"], "Write the name of one person or company to contact.", "One message sent.", true],
+  [4, "One-Page Offer", "Write the offer on one page: who it's for, the problem, what you deliver, the price, how to start.", 45, "Medium", "wealth", ["business"], "Write the headline: 'I help __ do __.'", "A one-page offer document.", false],
+  [4, "Idea Parking Lot", "Dump every new business idea into one list and close the tabs. Ideas get parked, not researched.", 10, "Easy", "focus", ["business"], "Open your idea list and paste in every open tab.", "All idea tabs closed.", true],
+
+  [5, "Net Worth Snapshot", "Add up cash, super, investments and debts. One number, dated today.", 25, "Medium", "wealth", ["money"], "Log in to your main bank account.", "A dated net worth number.", true],
+  [5, "Deposit Target", "Work out your first-home deposit target and the monthly saving needed to hit it, and check current first-home buyer schemes on official government sites.", 25, "Medium", "wealth", ["money", "move"], "Write a realistic price range for your first home.", "Deposit target and monthly saving figure.", false],
+  [5, "Automate the Savings", "Set an automatic transfer to savings on payday so discipline doesn't depend on mood.", 10, "Easy", "wealth", ["money", "admin"], "Open your banking app's scheduled transfers.", "A recurring transfer set up.", false],
+  [5, "Subscription Audit", "List every subscription and cancel at least one you don't use.", 10, "Easy", "wealth", ["money", "admin"], "Search your bank statement for recurring charges.", "One subscription cancelled.", true],
+
+  [6, "Phone Bedtime", "Set a downtime schedule so the phone locks distracting apps an hour before bed.", 2, "Easy", "health", ["exercise", "admin"], "Open Screen Time and tap Downtime.", "Downtime scheduled.", false],
+  [6, "Strength Session", "25 minutes of strength training. Anything counts: gym, bodyweight, bands.", 25, "Medium", "health", ["exercise"], "Put your training clothes on.", "", true],
+  [6, "Call Someone", "Call a friend or family member you've been meaning to call.", 10, "Easy", "health", ["other"], "Pick the person and open their contact.", "", true],
+  [6, "Weekly Planning", "Plan next week: three priorities, when each happens, and one planned fun block.", 25, "Medium", "discipline", ["admin", "overdue"], "Open your calendar for next week.", "Three priorities placed in the calendar.", true],
+  [6, "Schedule Guilt-Free Fun", "Put one recreation block in the calendar. Planned fun beats accidental scrolling.", 2, "Easy", "health", ["other"], "Open your calendar.", "One fun block booked.", true]
+];
+const seedToMission = (r, i) => ({ id: "seed" + i, season: r[0], title: r[1], desc: r[2], minutes: r[3], difficulty: r[4], attr: r[5], tags: r[6], firstStep: r[7], deliverable: r[8], repeat: r[9], status: "active", order: i, createdAt: Date.now() });
+
+/* =========================================================
+   STATE + PERSISTENCE
+   ========================================================= */
+const LS_KEY = "lifeflix.v1";
+function freshState() {
+  return {
+    v: 1, createdAt: Date.now(), updatedAt: Date.now(), seasonStart: dayKey(), coach: null,
+    missions: SEED.map(seedToMission), sessions: [], urges: [], checkins: [], daily: {}, milestones: {}, seenAch: [],
+    sim: { target: 60, days: 6, avoid: null, split: { learn: 35, jobs: 30, biz: 25, money: 10 }, assume: { appHours: 1.5, p6Hours: 30, protHours: 40, bizHours: 60 } },
+    active: null, brk: null
+  };
+}
+function normalize(s) {
+  const f = freshState();
+  const out = Object.assign({}, f, s || {});
+  out.sim = Object.assign({}, f.sim, out.sim || {});
+  out.sim.split = Object.assign({}, f.sim.split, out.sim.split || {});
+  out.sim.assume = Object.assign({}, f.sim.assume, out.sim.assume || {});
+  ["missions", "sessions", "urges", "checkins", "seenAch"].forEach(k => { if (!Array.isArray(out[k])) out[k] = f[k]; });
+  if (!out.daily || typeof out.daily !== "object") out.daily = {};
+  if (!out.milestones || typeof out.milestones !== "object") out.milestones = {};
+  return out;
+}
+const Store = {
+  local: "unknown", cloud: "off", lastSaved: 0, listeners: new Set(),
+  emit() { this.listeners.forEach(f => f()); },
+  loadLocal() {
+    try { const raw = localStorage.getItem(LS_KEY); this.local = "ok"; this.wasFresh = !raw; return raw ? JSON.parse(raw) : null; }
+    catch (e) { this.local = "blocked"; this.wasFresh = true; return null; }
+  },
+  saveLocal(s) {
+    try { localStorage.setItem(LS_KEY, JSON.stringify(s)); this.local = "ok"; this.lastSaved = Date.now(); }
+    catch (e) { this.local = "blocked"; }
+    this.emit();
+  }
+};
+/* Cloud sync: private per-user documents in the artifact's database.
+   core doc = everything but the logs; logs are split by month to stay well under the size cap. */
+const Cloud = {
+  col: null, hashes: {}, timer: null, chain: Promise.resolve(),
+  split(s) {
+    const docs = {};
+    const core = Object.assign({}, s); delete core.sessions; delete core.urges; delete core.checkins;
+    docs.core = { kind: "core", body: JSON.stringify(core) };
+    const months = {};
+    const put = (arr, key) => arr.forEach(x => { const m = dayKey(new Date(x.ts)).slice(0, 7); (months[m] = months[m] || { sessions: [], urges: [], checkins: [] })[key].push(x); });
+    put(s.sessions, "sessions"); put(s.urges, "urges"); put(s.checkins, "checkins");
+    Object.keys(months).forEach(m => { docs["log-" + m] = { kind: "log", body: JSON.stringify(months[m]) }; });
+    return docs;
+  },
+  join(docs) {
+    let core = null; const s = { sessions: [], urges: [], checkins: [] };
+    docs.forEach(d => {
+      const v = d.data(); if (!v || !v.body) return;
+      try {
+        const b = JSON.parse(v.body);
+        if (d.id === "core") core = b;
+        else if (d.id.startsWith("log-")) { s.sessions.push(...(b.sessions || [])); s.urges.push(...(b.urges || [])); s.checkins.push(...(b.checkins || [])); }
+      } catch (e) {}
+    });
+    if (!core) return null;
+    const byTs = (a, b) => a.ts - b.ts;
+    return Object.assign(core, { sessions: s.sessions.sort(byTs), urges: s.urges.sort(byTs), checkins: s.checkins.sort(byTs) });
+  },
+  async init(getState, replaceState) {
+    try {
+      if (!window.claude || typeof window.claude.use !== "function") return;
+      const [db, user] = await Promise.all([window.claude.use("db"), window.claude.use("user")]);
+      if (!db || !user) return;
+      const id = await user.id();
+      if (!id) return;
+      this.col = db.collection("data/users/" + id);
+      Store.cloud = "connecting"; Store.emit();
+      const snap = await this.col.get();
+      const remote = this.join(snap.docs);
+      snap.docs.forEach(d => { const v = d.data(); if (v && v.body) this.hashes[d.id] = v.body; });
+      const local = getState();
+      const localEmpty = !local.sessions.length && !local.urges.length;
+      if (remote && (Store.wasFresh || localEmpty || (remote.updatedAt || 0) > (local.updatedAt || 0))) {
+        replaceState(normalize(remote));
+      } else {
+        this.schedule(local, 0);
+      }
+      Store.cloud = "ok"; Store.emit();
+    } catch (e) {
+      Store.cloud = "error"; Store.emit();
+    }
+  },
+  schedule(s, delay = 1800) {
+    if (!this.col) return;
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => this.flush(s), delay);
+  },
+  flush(s) {
+    const docs = this.split(s);
+    Object.keys(docs).forEach(k => {
+      if (this.hashes[k] === docs[k].body) return;
+      const body = docs[k].body;
+      this.chain = this.chain.then(() => this.col.doc(k).set({ kind: docs[k].kind, body, at: Date.now() }))
+        .then(() => { this.hashes[k] = body; Store.cloud = "ok"; Store.lastSaved = Date.now(); Store.emit(); })
+        .catch(() => { Store.cloud = "error"; Store.emit(); });
+    });
+  },
+  async wipe() {
+    if (!this.col) return;
+    const keys = Object.keys(this.hashes);
+    for (const k of keys) { try { await this.col.doc(k).delete(); } catch (e) {} }
+    this.hashes = {};
+  }
+};
+
+/* =========================================================
+   DERIVED STATS
+   ========================================================= */
+const levelFrom = (xp, k = 50) => Math.floor((1 + Math.sqrt(1 + 4 * xp / k)) / 2);
+const levelStart = (L, k = 50) => k * L * (L - 1);
+const RANKS = [[1, "Extra"], [2, "Background Character"], [3, "Supporting Role"], [5, "Co-Star"], [8, "Lead"], [12, "Main Character"], [18, "Franchise"]];
+const rankFor = L => RANKS.filter(r => L >= r[0]).pop()[1];
+const productive = s => s.outcome === "done" || s.outcome === "partial";
+
+function derive(s) {
+  const today = dayKey();
+  const attr = {}; ATTR_KEYS.forEach(k => attr[k] = 0);
+  let total = 0;
+  s.sessions.forEach(x => { total += x.xp || 0; Object.entries(x.gains || {}).forEach(([k, v]) => attr[k] = (attr[k] || 0) + v); });
+  s.urges.forEach(x => { total += x.xp || 0; Object.entries(x.gains || {}).forEach(([k, v]) => attr[k] = (attr[k] || 0) + v); });
+  const level = levelFrom(total);
+  const shown = new Set(s.sessions.filter(productive).map(x => x.day));
+  // runs
+  let cur = 0; { let k = shown.has(today) ? today : addDays(today, -1); while (shown.has(k)) { cur++; k = addDays(k, -1); } }
+  const sortedDays = [...shown].sort();
+  let best = 0, run = 0, prev = null, comeback = false;
+  sortedDays.forEach(d => { if (prev && daysBetween(prev, d) === 1) run++; else { if (prev && daysBetween(prev, d) >= 3) comeback = true; run = 1; } best = Math.max(best, run); prev = d; });
+  const last = sortedDays[sortedDays.length - 1] || null;
+  const daysSinceLast = last ? daysBetween(last, today) : null;
+  const todays = s.sessions.filter(x => x.day === today);
+  const focusSec = arr => arr.filter(productive).reduce((a, x) => a + (x.actual || 0), 0);
+  const minsToday = Math.round(focusSec(todays) / 60);
+  const week = []; for (let i = 6; i >= 0; i--) { const k = addDays(today, -i); week.push({ k, min: Math.round(focusSec(s.sessions.filter(x => x.day === k)) / 60) }); }
+  const last14 = s.sessions.filter(x => daysBetween(x.day, today) < 14);
+  const firstDay = s.sessions.length ? s.sessions[0].day : today;
+  const span14 = clamp(daysBetween(firstDay, today) + 1, 1, 14);
+  const avg14 = Math.round(focusSec(last14) / 60 / span14);
+  const urgeCounts = {}; s.urges.forEach(u => urgeCounts[u.urge] = (urgeCounts[u.urge] || 0) + 1);
+  const catCounts = {}; s.checkins.forEach(c => { if (c.cat !== "none") catCounts[c.cat] = (catCounts[c.cat] || 0) + 1; });
+  const topUrge = Object.entries(urgeCounts).sort((a, b) => b[1] - a[1])[0];
+  const topCat = Object.entries(catCounts).sort((a, b) => b[1] - a[1])[0];
+  const dayN = clamp(daysBetween(s.seasonStart, today) + 1, 1, 9999);
+  const urgesToday = s.urges.filter(u => dayKey(new Date(u.ts)) === today);
+  const totalFocusMin = Math.round(focusSec(s.sessions) / 60);
+  return {
+    today, attr, total, level, rank: rankFor(level), lvStart: levelStart(level), lvNext: levelStart(level + 1),
+    shown, cur, best, comeback, daysSinceLast, todays, minsToday, week, avg14, urgeCounts, catCounts,
+    topUrge: topUrge ? topUrge[0] : null, topCat: topCat ? topCat[0] : null, dayN, urgesToday, totalFocusMin,
+    doneToday: todays.filter(x => x.outcome === "done").length,
+    partialToday: todays.filter(x => x.outcome === "partial").length,
+    distractedToday: todays.filter(x => x.outcome === "distracted").length
+  };
+}
+
+/* Achievements: computed from tracked data only. */
+function achievements(s, d) {
+  const sess = s.sessions, urges = s.urges;
+  const tagDone = (tag) => sess.filter(x => x.outcome === "done" && (x.tags || []).includes(tag)).length;
+  const studyMin = Math.round(sess.filter(x => productive(x) && (x.tags || []).includes("study")).reduce((a, x) => a + x.actual, 0) / 60);
+  return [
+    { id: "first10", t: "The First 10 Minutes", dsc: "One session with 10+ honest focused minutes.", on: sess.some(x => productive(x) && x.actual >= 600), p: "" },
+    { id: "scroll", t: "Escaped the Scroll", dsc: "Beat an urge boss and went back to the mission.", on: urges.some(u => u.choice === "return" || u.choice === "shrink"), p: "" },
+    { id: "seven", t: "Seven Days of Showing Up", dsc: "Seven days with real progress. They don't need to be in a row.", on: d.shown.size >= 7, p: Math.min(d.shown.size, 7) + "/7" },
+    { id: "hunter", t: "The Job Hunter", dsc: "Complete three job-search missions.", on: tagDone("jobs") >= 3, p: Math.min(tagDone("jobs"), 3) + "/3" },
+    { id: "upgrade", t: "The Engineer's Upgrade", dsc: "Five hours of focused technical study.", on: studyMin >= 300, p: fmtMin(Math.min(studyMin, 300)) + " / 5h" },
+    { id: "customer", t: "First Business Customer", dsc: "A real person paid you. Self-reported in Milestones.", on: !!s.milestones.customer, p: "" },
+    { id: "comeback", t: "The Comeback King", dsc: "Came back after two or more days away.", on: d.comeback, p: "" },
+    { id: "deep", t: "Deep Cut", dsc: "Complete a 45-minute mission.", on: sess.some(x => x.outcome === "done" && x.planned >= 2700), p: "" },
+    { id: "honest", t: "Honest Witness", dsc: "Logged a distracted session truthfully. Data beats pretending.", on: sess.some(x => x.outcome === "distracted"), p: "" },
+    { id: "surfer", t: "Urge Surfer", dsc: "Fight ten urge bosses.", on: urges.length >= 10, p: Math.min(urges.length, 10) + "/10" }
+  ];
+}
+
+/* =========================================================
+   MISSION LOGIC
+   ========================================================= */
+const activeMissions = s => s.missions.filter(m => m.status === "active");
+const lastDoneDay = (s, mid) => { const x = s.sessions.filter(z => z.mid === mid && z.outcome === "done").pop(); return x ? x.day : null; };
+const lastSession = (s, mid) => s.sessions.filter(z => z.mid === mid).pop() || null;
+const epNumber = (s, m) => { const list = s.missions.filter(x => x.season === m.season).sort((a, b) => a.order - b.order); return list.findIndex(x => x.id === m.id) + 1; };
+const epCode = (s, m) => seasonOf(m.season).code + ":E" + pad(Math.max(1, epNumber(s, m)));
+
+function pickForCategory(s, cat) {
+  const today = dayKey();
+  const pool = activeMissions(s).filter(m => (m.tags || []).includes(cat));
+  const list = (pool.length ? pool : activeMissions(s).filter(m => m.attr === "courage" || m.attr === "discipline"));
+  return list.map(m => {
+    const ld = lastDoneDay(s, m.id);
+    let sc = 10 - Math.abs(m.minutes - 10) / 4 + (m.attr === "career" || m.attr === "courage" ? 2 : 0);
+    if (ld && daysBetween(ld, today) < 2) sc -= 6;
+    sc += hashStr(m.id + today) * 1.5;
+    return [sc, m];
+  }).sort((a, b) => b[0] - a[0]).map(x => x[1])[0] || activeMissions(s)[0];
+}
+
+function genDaily(s, date) {
+  const act = activeMissions(s);
+  const recentCats = new Set(s.checkins.filter(c => daysBetween(dayKey(new Date(c.ts)), date) <= 3).map(c => c.cat));
+  const score = m => {
+    let sc = (m.attr === "career" || m.attr === "wealth" || m.attr === "courage") ? 3 : 1;
+    if ((m.tags || []).some(t => recentCats.has(t))) sc += 4;
+    const ld = lastDoneDay(s, m.id); if (ld && daysBetween(ld, date) < 3) sc -= 5;
+    const ls = lastSession(s, m.id); if (ls && ls.outcome === "partial") sc += 2;
+    if (m.minutes >= 25) sc += 1;
+    return sc + hashStr(m.id + date) * 2.5;
+  };
+  const nonHealth = act.filter(m => m.attr !== "health").map(m => [score(m), m]).sort((a, b) => b[0] - a[0]).map(x => x[1]);
+  const priority = nonHealth.find(m => m.minutes >= 10) || nonHealth[0];
+  const support = [];
+  for (const m of nonHealth) { if (support.length >= 2) break; if (m === priority) continue; if (support.some(x => x.attr === m.attr) || m.attr === (priority && priority.attr)) continue; support.push(m); }
+  for (const m of nonHealth) { if (support.length >= 2) break; if (m !== priority && !support.includes(m)) support.push(m); }
+  const health = act.filter(m => m.attr === "health" && m.minutes <= 10);
+  const well = health.length ? health[Math.floor(hashStr(date) * health.length)] : act.find(m => m.attr === "health");
+  return { priority: priority && priority.id, support: support.map(m => m.id), wellbeing: well && well.id, intention: "", review: null };
+}
+
+function sessionGains(s, m, outcome, actualSec, plannedSec, flags) {
+  const g = {}; const add = (k, v) => { v = Math.round(v); if (v > 0) g[k] = (g[k] || 0) + v; };
+  const xpBase = xpFor(Math.round(plannedSec / 60) in BASE_XP ? Math.round(plannedSec / 60) : m.minutes, m.difficulty);
+  const today = dayKey();
+  const firstToday = !s.sessions.some(x => x.day === today && productive(x));
+  // Bonuses need real time on task: at least half the mission, capped at 5 minutes (60s for a 2-minute mission).
+  const real = actualSec >= Math.min(plannedSec * 0.5, 300);
+  if (outcome === "done") add(m.attr, actualSec >= 30 ? xpBase : xpBase * 0.25);
+  else if (outcome === "partial" && actualSec >= 60) add(m.attr, xpBase * 0.5 * clamp(actualSec / plannedSec, 0, 1));
+  else if (outcome === "distracted" && actualSec >= 60) add("courage", 10);
+  if (outcome !== "distracted" && (real || outcome === "done" && actualSec >= 30)) {
+    add("focus", Math.min(actualSec, plannedSec + 600) / 60 * 3);
+    if (flags.fromAvoid) add("courage", 25);
+    if (flags.viaBoss) add("discipline", 20);
+    if (firstToday) add("discipline", 15);
+  }
+  return g;
+}
+
+/* =========================================================
+   COACH ENGINE (rule-based, uses tracked data)
+   ========================================================= */
+const COACH = {
+  brutal: { name: "The Brutal Truth", short: "Brutal Truth", init: "BT",
+    intro: [
+      "I'm going to be direct with you. You don't have an ambition problem. You have a follow-through problem, and pretending otherwise is part of the problem.",
+      "Here's how I work. I look at what you actually did, not what you planned. I'll call out avoidance when I see it: researching another business idea is not launching a business, and comparing cars is not increasing your income.",
+      "I'll separate genuine obstacles from excuses. Tired after a 10-hour site day is real. 'I'll start tomorrow' for the fourth day running is not.",
+      "I won't humiliate you, and I won't flatter you. Every challenge comes with a next action you can take in the next ten minutes."
+    ] },
+  mentor: { name: "The Strategist", short: "Strategist", init: "ST",
+    intro: [
+      "I'm your strategic mentor. Avoidance isn't laziness; it's usually your brain steering away from something that feels uncertain, boring or too big.",
+      "My job is to make starting easier. We shrink the task until it's obvious, decide exactly when and where it happens, and protect the first ten minutes.",
+      "Dopamine isn't the enemy. You need reward to function. We just point it at real progress and plan breaks on purpose instead of falling into them.",
+      "I'll stay calm and honest with you, and I'll always end with one concrete step."
+    ] }
+};
+
+function coachHome(coach, s, d, prio) {
+  const p = prio ? `"${prio.title}"` : "your priority";
+  const prioDone = prio && d.todays.some(x => x.mid === prio.id && x.outcome === "done");
+  const h = hourNow();
+  if (coach === "brutal") {
+    if (d.daysSinceLast !== null && d.daysSinceLast >= 2 && d.todays.length === 0) return `${d.daysSinceLast} days off the board. No lecture: the gap is data, and it doesn't erase your XP. What matters is the next 10 minutes. Start ${p}.`;
+    if (prioDone) return `Priority done. ${d.minsToday} focused minutes today. That's a professional day. Close this app and get on with your evening.`;
+    if (d.todays.length === 0 && h >= 12) return `It's ${timeStr()}. Zero focused minutes so far. The morning's gone; the afternoon isn't. Start ${p} for 10 minutes, before one more video.`;
+    if (d.todays.length === 0) return `Day ${d.dayN}. Opening this app isn't progress yet. ${p} is waiting. Start it before you scroll this page.`;
+    if (d.distractedToday > d.doneToday) return `${d.distractedToday} sessions lost to distraction today vs ${d.doneToday} finished. The plan's too big or the phone's too close. Go shorter: 10 minutes, phone in another room.`;
+    if (d.doneToday >= 1 && !prioDone) return `${d.doneToday} mission${d.doneToday > 1 ? "s" : ""} done, but not the priority. Easy wins are still avoidance if the hard one waits. ${p} next.`;
+    return `${d.minsToday} focused minutes today. Decent, not finished. ${p} is still open.`;
+  }
+  if (d.daysSinceLast !== null && d.daysSinceLast >= 2 && d.todays.length === 0) return `Welcome back. ${d.daysSinceLast} days away happens, and nothing you've built has been lost. Let's make re-entry tiny: two minutes on ${p}, then decide.`;
+  if (prioDone) return `You did the important thing today. ${d.minsToday} focused minutes. Let that be enough and enjoy your evening; rest is part of the plan.`;
+  if (d.todays.length === 0 && h >= 12) return `The morning slipped away, and that's fine. It's recoverable. Pick ${p}, set 10 minutes, and let starting be the whole goal.`;
+  if (d.todays.length === 0) return `Morning. You don't need to solve your whole future today. One important action: ${p}. Ten focused minutes is enough to begin.`;
+  if (d.distractedToday > d.doneToday) return `Focus has been slippery today. That tells us the missions are too long right now. Let's drop to a 10-minute version and move the phone out of reach.`;
+  if (d.doneToday >= 1 && !prioDone) return `Good momentum: ${d.doneToday} done. Use it. ${p} is the one that moves your life forward; a 10-minute start is enough.`;
+  return `${d.minsToday} focused minutes so far. You're in motion. Keep the next step small and specific.`;
+}
+
+function coachReview(coach, outcome, m, actualMin) {
+  const B = {
+    done: [`Done. ${actualMin} minutes, real output. That's how the gap between plans and life closes. Now leave the app.`, `Finished. No applause needed; the result is the reward. What's the next real-world action?`],
+    partial: [`Partial counts, but be precise: what stopped you? If it was the task's size, cut it smaller next time. If it was your phone, move it.`, `Some progress. Better than zero, short of done. Book the next session now while you still know where you left off.`],
+    distracted: [`Thanks for being honest. Most people lie to their tracker. The distraction won this round. Shorter mission, phone out of the room, and go again within the hour.`, `You got pulled away. No drama, just data. Run a 2-minute restart now rather than "later".`]
+  };
+  const M = {
+    done: [`That's a real win. You chose meaningful progress over easy pleasure. Notice how it feels, then step away from the screen.`, `Well done. You started, you stayed, you finished. Take that feeling into the rest of the day.`],
+    partial: [`Partial progress is still progress, and you've already broken the inertia. Write one line on where to resume so restarting is easy.`, `You moved it forward. Next time we'll shrink the target so finishing feels within reach.`],
+    distracted: [`Getting distracted doesn't make you a failure. It means the mission was harder than it looked. Logging it honestly helps us spot the pattern. Try two minutes now.`, `It happens to everyone. You noticed, and you came back to report it. That's the skill. Let's try a smaller version.`]
+  };
+  const pool = (coach === "brutal" ? B : M)[outcome];
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+function coachBoss(coach, choice, urgeKey, genuine) {
+  const u = URGES[urgeKey] ? URGES[urgeKey].label.toLowerCase() : "that";
+  if (coach === "brutal") {
+    if (choice === "return") return `Good. The urge peaked and passed, as urges do. Two minutes. If you want to stop after that, you can. You won't.`;
+    if (choice === "break") return genuine === "want" ? `You decided you genuinely want a break. Fine; that's a choice, not an escape. The timer's running. When it ends, you come back.` : `A deliberate break beats a disguised one. It's on the clock. When it ends, no "one more". Come back.`;
+    return `Smart move. The task wasn't the problem; its size was. Do the small version now.`;
+  }
+  if (choice === "return") return `You rode the urge out instead of obeying it. That's the whole skill. Just two minutes; you're allowed to stop after.`;
+  if (choice === "break") return `Taking a planned break is a healthy choice, not a failure. Enjoy it fully. I'll remind you when it's time to come back.`;
+  return `Great reframe. When a task feels heavy, shrinking it is the most strategic thing you can do. Let's start the small version.`;
+}
+
+const INTENTS = [
+  { id: "bored", re: /\bbor(ed|ing)\b|dull|repetitive|tedious/i,
+    brutal: c => `Bored is information, not a stop sign. Boring tasks still pay. Most of your $150K–$200K jump sits in boring work: CV bullets, applications, P6 practice. Make it a game: 10 minutes, then judge.`,
+    mentor: c => `Boredom often means the task has no clear next step or no visible finish. Let's give it both: a 10-minute timer and one tiny deliverable. ${c.prio ? `Try "${c.prio.title}".` : ""}`,
+    action: { label: "Start 10 minutes on my priority", act: "prio10" } },
+  { id: "nomood", re: /don'?t feel like|not in the mood|can'?t be bothered|no motivation|unmotivated|lazy/i,
+    brutal: c => `Motivation follows action; it rarely comes first. You don't need to feel like it. You need to start. Two minutes, right now.`,
+    mentor: c => `That's normal. Waiting to feel ready keeps us stuck. Let's lower the bar to two minutes. Starting is the only goal.`,
+    action: { label: "Start a 2-minute mission", act: "prio2" } },
+  { id: "wasted", re: /wast(ed|ing)|lost the (whole )?(morning|day)|blew (it|the day)|ruined/i,
+    brutal: c => `${c.d.minsToday ? `You've logged ${c.d.minsToday} focused minutes today, so not entirely.` : `Yes, the morning's gone.`} Writing off the rest of the day is the second mistake, and it's optional. Next 25 minutes, starting now.`,
+    mentor: c => `A lost morning doesn't make a lost day. Spiralling about it costs more than the morning did. Let's salvage one thing: a single 10-minute mission.`,
+    action: { label: "Salvage the day: 10 minutes", act: "prio10" } },
+  { id: "youtube", re: /youtube|netflix|watch (a |some )?video|tiktok|instagram|reels|scroll/i,
+    brutal: c => `${c.d.topUrge ? `Your most common urge so far is "${URGES[c.d.topUrge].label.toLowerCase()}".` : "Classic escape."} You can watch it, after you've earned it. Fight the urge boss first, then decide.`,
+    mentor: c => `Wanting a video is your brain asking for an easy reward. Let's check whether you need a break or you're escaping something. The urge exercise takes about 90 seconds.`,
+    action: { label: "Fight the urge boss", act: "boss" } },
+  { id: "toomany", re: /too many (goals|things|ideas)|everything at once|where (do|to) (i )?start|overwhelm/i,
+    brutal: c => `You have six seasons of goals and one brain. Pick ONE for today: ${c.prio ? `"${c.prio.title}"` : "the career one"}. Everything else is parked, not abandoned.`,
+    mentor: c => `When everything feels important, nothing gets done. Today's episode already picked one priority for you. Let's trust it and do a small piece.`,
+    action: { label: "Open today's episode", act: "today" } },
+  { id: "tomorrow", re: /tomorrow|later|next week|monday/i,
+    brutal: c => `"Tomorrow" is the most expensive word in your vocabulary. If tomorrow-you is so reliable, today-you can do two minutes as a deposit. Prove it.`,
+    mentor: c => `If tomorrow genuinely makes sense, let's make it real: write exactly when and where. But first, a 2-minute start today makes tomorrow far easier.`,
+    action: { label: "2-minute deposit now", act: "prio2" } },
+  { id: "afraid", re: /afraid|scared|fear|won'?t succeed|fail|not good enough|imposter|anxious/i,
+    brutal: c => `Fear of failing is why you research instead of apply. You can't think your way to confidence; it comes from evidence. One application or one customer message is evidence.`,
+    mentor: c => `That fear makes sense. These goals matter to you. Courage isn't feeling unafraid; it's acting while afraid in small, safe steps. What's the smallest brave step?`,
+    action: { label: "Start a courage mission", act: "courage" } },
+  { id: "tired", re: /tired|exhausted|drained|sleepy|burnt? ?out/i,
+    brutal: c => `Tired is a real obstacle. Respect it, but don't use it as a blanket excuse. Do one 2-minute task, then rest properly. Real rest, not three hours of scrolling.`,
+    mentor: c => `Tiredness is real, and pushing through can backfire. Let's do a gentle 2-minute action, then a proper break or an early night.`,
+    action: { label: "Take a planned 15-minute break", act: "break" } },
+  { id: "research", re: /research|business idea|compare|car|reading about/i,
+    brutal: c => `Research feels like progress and usually isn't. What decision will this research let you make in the next 7 days? No answer, no research. Produce a deliverable instead.`,
+    mentor: c => `Research is satisfying because it's all possibility and no risk. Let's convert it into one tangible output: a chosen offer, a sent message, or a decision.`,
+    action: { label: "Start: Contact one potential customer", act: "contact" } }
+];
+function coachReply(coach, text, ctx) {
+  const it = INTENTS.find(i => i.re.test(text));
+  if (it) return { text: it[coach](ctx), action: it.action };
+  return { text: coach === "brutal"
+      ? `I don't do vague. What's the one task you're avoiding right now? Name it and I'll turn it into a 10-minute mission.`
+      : `Thanks for telling me. Let's make it concrete: which task is weighing on you most? Use "What am I avoiding?" and I'll build a small mission around it.`,
+    action: { label: "What am I avoiding?", act: "checkin" } };
+}
+
+/* =========================================================
+   SMALL COMPONENTS
+   ========================================================= */
+const GLYPHS = {
+  focus: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 4a6 6 0 1 1 0 12 6 6 0 0 1 0-12Zm0 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z",
+  discipline: "M3 20h4v-4h4v-4h4V8h4V4h2v2h-2v4h-4v4h-4v4H9v4H3Z",
+  career: "M13 2 4 14h6l-1 8 9-12h-6l1-8Z",
+  wealth: "M4 20V12h3v8H4Zm6 0V8h3v12h-3Zm6 0V4h3v16h-3Z",
+  health: "M2 12h4l2-5 4 10 3-7 2 2h5v2h-6l-1-1-3 7-4-10-1 2H2Z",
+  courage: "M12 2c1 4 6 6 6 12a6 6 0 1 1-12 0c0-3 2-5 3-6 0 2 1 3 2 3 0-4 1-6 1-9Z"
+};
+function Glyph({ k, size = 24, color = "#fff" }) {
+  return html`<svg viewBox="0 0 24 24" width=${size} height=${size} aria-hidden="true"><path d=${GLYPHS[k] || GLYPHS.focus} fill=${color}/></svg>`;
+}
+function Thumb({ s, m, progress }) {
+  const se = seasonOf(m.season);
+  const h = hashStr(m.id);
+  const bg = `radial-gradient(90% 120% at ${20 + h * 60}% ${10 + h * 40}%, ${se.hue}cc, transparent 60%), radial-gradient(70% 90% at ${90 - h * 30}% 100%, ${se.hue2}aa, transparent 65%), linear-gradient(135deg, #1a1420, #0c0a0e)`;
+  return html`<div className="thumb" style=${{ background: bg }}>
+    <div className="grain"></div>
+    <div className="num">${pad(Math.max(1, epNumber(s, m)))}</div>
+    <div className="glyph"><${Glyph} k=${m.attr} size=${36} color="rgba(255,255,255,.92)"/></div>
+    <div className="code">${se.code} · ${m.minutes} MIN</div>
+    ${progress != null ? html`<div className="prog"><i style=${{ width: clamp(progress, 0, 1) * 100 + "%" }}></i></div>` : null}
+  </div>`;
+}
+function Ring({ value, size = 64, stroke = 6, color = "var(--tungsten)", children }) {
+  const r = (size - stroke) / 2, c = 2 * Math.PI * r;
+  return html`<div style=${{ position: "relative", width: size + "px", height: size + "px" }}>
+    <svg width=${size} height=${size} style=${{ transform: "rotate(-90deg)" }} aria-hidden="true">
+      <circle cx=${size / 2} cy=${size / 2} r=${r} fill="none" stroke="var(--ink-4)" strokeWidth=${stroke}/>
+      <circle cx=${size / 2} cy=${size / 2} r=${r} fill="none" stroke=${color} strokeWidth=${stroke} strokeLinecap="round" strokeDasharray=${c} strokeDashoffset=${c * (1 - clamp(value, 0, 1))} style=${{ transition: "stroke-dashoffset .8s ease" }}/>
+    </svg>
+    <div style=${{ position: "absolute", inset: 0, display: "grid", placeItems: "center" }}>${children}</div>
+  </div>`;
+}
+function Rail({ children }) {
+  const ref = useRef(null);
+  const go = dir => { const el = ref.current; if (el) el.scrollBy({ left: dir * el.clientWidth * 0.85, behavior: "smooth" }); };
+  return html`<div className="rail-wrap">
+    <button className="rail-arrow l" aria-label="Scroll left" onClick=${() => go(-1)}>‹</button>
+    <div className="rail" ref=${ref}>${children}</div>
+    <button className="rail-arrow r" aria-label="Scroll right" onClick=${() => go(1)}>›</button>
+  </div>`;
+}
+function MissionCard({ s, m, onOpen, label }) {
+  const ls = lastSession(s, m.id);
+  const done = s.sessions.filter(x => x.mid === m.id && x.outcome === "done").length;
+  const progress = m.status === "done" ? 1 : ls && ls.outcome === "partial" ? clamp(ls.actual / ls.planned, 0.1, 0.9) : null;
+  return html`<button className=${"card" + (m.status === "done" ? " done-card" : "")} onClick=${() => onOpen(m)} aria-label=${"Open episode " + m.title}>
+    <${Thumb} s=${s} m=${m} progress=${progress}/>
+    <div className="body">
+      ${label ? html`<span className="eyebrow" style=${{ color: "var(--tungsten)" }}>${label}</span>` : null}
+      <div className="t">${m.title}</div>
+      <div className="d">${m.desc}</div>
+      <div className="m"><span>${epCode(s, m)}</span><span>${m.difficulty.toUpperCase()}</span><span style=${{ color: ATTRS[m.attr].color }}>${ATTRS[m.attr].label.toUpperCase()}</span><span>${xpFor(m.minutes, m.difficulty)} XP</span>${done ? html`<span style=${{ color: "var(--ok)" }}>✓ ${done}</span>` : null}</div>
+    </div>
+  </button>`;
+}
+
+const ICONS = {
+  home: "M3 11 12 3l9 8v10h-6v-6H9v6H3Z", today: "M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7Zm-2 8h14v10H5V10Z",
+  stats: "M4 20V10h3v10H4Zm6.5 0V4h3v16h-3ZM17 20v-7h3v7h-3Z", futures: "M3 17 9 11l4 4 8-8v4h2V5h-6v2h4l-6 6-4-4-7 7Z",
+  coach: "M4 4h16v11H8l-4 4V4Z", recap: "M4 5h16v14H4V5Zm2 2v10h12V7H6Zm3 2 6 3-6 3V9Z"
+};
+const Icon = ({ k }) => html`<svg viewBox="0 0 24 24" aria-hidden="true"><path d=${ICONS[k]} fill="currentColor"/></svg>`;
+
+/* =========================================================
+   APP
+   ========================================================= */
+function App() {
+  const [s, setS] = useState(() => normalize(Store.loadLocal()));
+  const sRef = useRef(s); sRef.current = s;
+  const [, force] = useState(0);
+  const [view, setView] = useState("home");
+  const [ov, setOv] = useState(() => null);      // overlay: {type, ...}
+  const [toast, setToast] = useState(null);
+  const [now, setNow] = useState(Date.now());
+  const browseStart = useRef(Date.now());
+  const [nudgeDismissed, setNudgeDismissed] = useState(0);
+  const sample = useRef(null);
+  const downloads = useRef(null);
+
+  const update = useCallback(fn => {
+    setS(prev => { const next = JSON.parse(JSON.stringify(prev)); fn(next); next.updatedAt = Date.now(); return next; });
+  }, []);
+
+  // persistence
+  useEffect(() => { Store.saveLocal(s); Cloud.schedule(s); }, [s]);
+  useEffect(() => {
+    const f = () => force(x => x + 1); Store.listeners.add(f);
+    Cloud.init(() => sRef.current, next => setS(next));
+    (async () => {
+      try { if (window.claude && window.claude.use) { sample.current = await window.claude.use("sample"); downloads.current = await window.claude.use("downloads"); force(x => x + 1); } } catch (e) {}
+    })();
+    return () => Store.listeners.delete(f);
+  }, []);
+  useEffect(() => { const t = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(t); }, []);
+
+  // first-run + daily check-in
+  useEffect(() => {
+    if (!s.coach) setOv({ type: "coachPick", first: true });
+    else if (s.active) setOv(null);
+    else setOv({ type: "checkin" });
+    // eslint-disable-next-line
+  }, []);
+
+  const d = useMemo(() => derive(s), [s]);
+  const today = d.today;
+
+  // ensure today's daily episode exists
+  useEffect(() => {
+    if (!s.daily[today]) update(n => { n.daily[today] = genDaily(n, today); });
+  }, [today, s.daily[today]]);
+  const daily = s.daily[today] || genDaily(s, today);
+  const byId = id => s.missions.find(m => m.id === id);
+  const prio = byId(daily.priority);
+
+  const ctx = { s, d, prio };
+  const coach = s.coach || "mentor";
+
+  const flash = (t, sub) => { setToast({ t, sub, id: uid() }); setTimeout(() => setToast(null), 3800); };
+
+  /* ---------- actions ---------- */
+  const openBrief = (m, opts = {}) => setOv({ type: "brief", m, opts });
+  const startMission = (m, minutes, target, opts = {}) => {
+    try { if (!window.__ac) window.__ac = new (window.AudioContext || window.webkitAudioContext)(); window.__ac.resume && window.__ac.resume(); } catch (e) {}
+    update(n => {
+      if (!n.missions.some(x => x.id === m.id)) n.missions.push(Object.assign({}, m, { order: n.missions.length + 100, createdAt: Date.now() }));
+      n.active = { mid: m.id, title: m.title, target: target || "", plannedSec: minutes * 60, startTs: Date.now(), pausedMs: 0, pausedAt: null, fromAvoid: !!opts.fromAvoid, viaBoss: !!opts.viaBoss };
+      n.brk = null;
+    });
+    browseStart.current = Date.now();
+    setOv(null);
+  };
+  const quickStart = (m, minutes, opts = {}) => startMission(m, minutes, m.firstStep, opts);
+  const finishReview = (outcome, note) => {
+    const a = s.active; if (!a) return;
+    const m = byId(a.mid) || { id: a.mid, title: a.title, attr: "courage", minutes: Math.round(a.plannedSec / 60), difficulty: "Medium", season: 1, tags: [] };
+    const end = a.pausedAt || Date.now();
+    const actual = Math.round(clamp((end - a.startTs - a.pausedMs) / 1000, 0, 6 * 3600));
+    const gains = sessionGains(s, m, outcome, actual, a.plannedSec, a);
+    const xp = Object.values(gains).reduce((x, y) => x + y, 0);
+    const sess = { id: uid(), mid: m.id, title: m.title, season: m.season, attr: m.attr, tags: m.tags || [], planned: a.plannedSec, actual, outcome, xp, gains, ts: Date.now(), day: dayKey(), note: note || "", target: a.target, fromAvoid: a.fromAvoid, viaBoss: a.viaBoss };
+    const beforeAch = achievements(s, d).filter(x => x.on).map(x => x.id);
+    const n = JSON.parse(JSON.stringify(s));
+    n.sessions.push(sess); n.active = null;
+    if (outcome === "done" && !m.repeat) { const mm = n.missions.find(x => x.id === m.id); if (mm) mm.status = "done"; }
+    const after = achievements(n, derive(n)).filter(x => x.on).map(x => x.id);
+    const newAch = after.filter(x => !beforeAch.includes(x) && !n.seenAch.includes(x));
+    n.seenAch = Array.from(new Set(n.seenAch.concat(newAch)));
+    n.updatedAt = Date.now();
+    setS(n);
+    setOv({ type: "result", sess, m, newAch });
+  };
+  const runAct = (act) => {
+    const p = prio || activeMissions(s)[0];
+    if (act === "prio10" && p) openBrief(p, { minutes: 10 });
+    else if (act === "prio2" && p) openBrief(p, { minutes: 2 });
+    else if (act === "boss") setOv({ type: "boss" });
+    else if (act === "today") { setOv(null); setView("today"); }
+    else if (act === "checkin") setOv({ type: "checkin" });
+    else if (act === "break") startBreak(15, null);
+    else if (act === "courage") openBrief(pickForCategory(s, "overdue"), { fromAvoid: true });
+    else if (act === "contact") { const m = s.missions.find(x => x.title === "Contact One Potential Customer") || pickForCategory(s, "business"); openBrief(m, {}); }
+  };
+  const startBreak = (min, urgeId) => {
+    update(n => { n.brk = { start: Date.now(), until: Date.now() + min * 60000, min, extended: false }; });
+    setOv(null);
+    flash(`Planned break: ${min} minutes`, "Enjoy it fully. LIFEFLIX will call you back.");
+  };
+
+  const saveMission = (m) => update(n => {
+    const i = n.missions.findIndex(x => x.id === m.id);
+    if (i >= 0) n.missions[i] = Object.assign({}, n.missions[i], m);
+    else n.missions.push(Object.assign({ id: uid(), status: "active", order: n.missions.length + 100, createdAt: Date.now() }, m));
+  });
+  const deleteMission = (id) => update(n => {
+    n.missions = n.missions.filter(x => x.id !== id);
+    Object.values(n.daily).forEach(dd => { if (dd.priority === id) dd.priority = null; dd.support = (dd.support || []).filter(x => x !== id); if (dd.wellbeing === id) dd.wellbeing = null; });
+    if (n.daily[dayKey()]) { const g = genDaily(n, dayKey()); const t = n.daily[dayKey()]; if (!t.priority) t.priority = g.priority; while (t.support.length < 2 && g.support.length) { const c = g.support.shift(); if (!t.support.includes(c) && c !== t.priority) t.support.push(c); } if (!t.wellbeing) t.wellbeing = g.wellbeing; }
+  });
+
+  // break end
+  const brkLeft = s.brk ? Math.max(0, Math.round((s.brk.until - now) / 1000)) : 0;
+  useEffect(() => {
+    if (s.brk && brkLeft === 0 && (!ov || ov.type !== "breakOver")) { beep(); setOv({ type: "breakOver" }); }
+  }, [brkLeft, s.brk]);
+
+  // browsing nudge: 5 min in the app without a mission
+  const browsingMin = (now - browseStart.current) / 60000;
+  const showNudge = !s.active && !s.brk && !ov && browsingMin >= 5 + nudgeDismissed * 5;
+
+  const inPlayer = !!s.active;
+  const nav = [["home", "Home"], ["today", "Today"], ["stats", "Player"], ["futures", "Two Futures"], ["coach", "Coach"], ["recap", "Recap"]];
+
+  return html`<${React.Fragment}>
+    ${!inPlayer ? html`<header className="top">
+      <div className="top-in">
+        <button className="logo" onClick=${() => setView("home")} aria-label="LIFEFLIX home">LIFEFLIX</button>
+        <nav className="nav" aria-label="Main">
+          ${nav.map(([k, l]) => html`<button key=${k} aria-current=${view === k ? "page" : undefined} onClick=${() => setView(k)}>${l}</button>`)}
+        </nav>
+        <button className="coach-pill" onClick=${() => update(n => { n.coach = n.coach === "brutal" ? "mentor" : "brutal"; })} aria-label=${"Coach: " + COACH[coach].name + ". Tap to switch."} title="Switch coach">
+          <span className=${"avatar " + coach}>${COACH[coach].init}</span><span className="lbl">${COACH[coach].short}</span><span className="faint" aria-hidden="true">⇄</span>
+        </button>
+        <button className="icon-btn" aria-label="Settings and data" onClick=${() => setOv({ type: "settings" })}>
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm9 5.5v-3l-2.4-.5a7 7 0 0 0-.8-1.9l1.4-2-2.1-2.1-2 1.4a7 7 0 0 0-1.9-.8L12.5 2h-3l-.5 2.4a7 7 0 0 0-1.9.8l-2-1.4L3 5.9l1.4 2a7 7 0 0 0-.8 1.9L1 10.5v3l2.4.5c.2.7.5 1.3.8 1.9l-1.4 2 2.1 2.1 2-1.4c.6.3 1.2.6 1.9.8l.5 2.4h3l.5-2.4c.7-.2 1.3-.5 1.9-.8l2 1.4 2.1-2.1-1.4-2c.3-.6.6-1.2.8-1.9Z"/></svg>
+        </button>
+      </div>
+    </header>` : null}
+
+    ${!inPlayer ? html`<main>
+      ${s.brk ? html`<div className="wrap"><div className="banner break" role="status">
+        <div><div className="eyebrow" style=${{ color: "var(--s2)" }}>Planned break</div><div style=${{ fontWeight: 800 }}><span className="mono">${fmtClock(brkLeft)}</span> left. Enjoy it without guilt.</div></div>
+        <button className="btn btn-sm btn-line" onClick=${() => update(n => { n.brk = null; })}>End break early</button>
+      </div></div>` : null}
+      ${showNudge ? html`<div className="wrap"><div className="banner nudge" role="status">
+        <div style=${{ display: "flex", gap: "10px", alignItems: "center" }}><span className=${"avatar " + coach}>${COACH[coach].init}</span>
+          <span>${coach === "brutal" ? `You've been browsing LIFEFLIX for ${Math.floor(browsingMin)} minutes without starting anything. This app is now the procrastination.` : `You've spent ${Math.floor(browsingMin)} minutes in here. Let's turn that into action: one small mission, then step away.`}</span></div>
+        <div className="btn-row"><button className="btn btn-sm btn-amber" onClick=${() => prio && openBrief(prio, { minutes: 10 })}>Start priority</button><button className="btn btn-sm btn-line" onClick=${() => { setNudgeDismissed(x => x + 1); }}>Dismiss</button></div>
+      </div></div>` : null}
+
+      ${view === "home" ? html`<${Home} ...${ctx} coach=${coach} daily=${daily} byId=${byId} openBrief=${openBrief} setOv=${setOv} setView=${setView}/>` : null}
+      ${view === "today" ? html`<${Today} ...${ctx} coach=${coach} daily=${daily} byId=${byId} openBrief=${openBrief} setOv=${setOv} update=${update}/>` : null}
+      ${view === "stats" ? html`<${Stats} ...${ctx} coach=${coach} update=${update} flash=${flash}/>` : null}
+      ${view === "futures" ? html`<${Futures} ...${ctx} update=${update}/>` : null}
+      ${view === "coach" ? html`<${CoachChat} ...${ctx} coach=${coach} runAct=${runAct} update=${update} sample=${sample.current}/>` : null}
+      ${view === "recap" ? html`<${Recap} ...${ctx} coach=${coach} byId=${byId}/>` : null}
+
+      <footer>
+        <div style=${{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}><${SaveStatus}/></div>
+        <p style=${{ marginTop: "8px" }}>LIFEFLIX rewards what you do outside the screen. XP comes only from missions you report honestly. Projections are illustrative, not guarantees.</p>
+      </footer>
+    </main>` : null}
+
+    ${!inPlayer && !ov ? html`<button className="fab" onClick=${() => setOv({ type: "boss" })} aria-label="I want to escape my task">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M13 3h-2v10h2V3Zm4.8 2.2-1.4 1.4A7 7 0 1 1 7.6 6.6L6.2 5.2A9 9 0 1 0 17.8 5.2Z"/></svg>
+      Escape?</button>` : null}
+
+    ${!inPlayer ? html`<nav className="tabbar" aria-label="Main">
+      ${nav.map(([k, l]) => html`<button key=${k} aria-current=${view === k ? "page" : undefined} onClick=${() => setView(k)}><${Icon} k=${k === "stats" ? "stats" : k}/>${l === "Two Futures" ? "Futures" : l}</button>`)}
+    </nav>` : null}
+
+    ${inPlayer && (!ov || ov.type === "boss") ? html`<${Player} s=${s} coach=${coach} update=${update} onReview=${() => setOv({ type: "review" })} onEscape=${() => { update(n => { if (n.active && !n.active.pausedAt) n.active.pausedAt = Date.now(); }); setOv({ type: "boss", fromPlayer: true }); }} hidden=${ov && ov.type === "boss"}/>` : null}
+
+    ${ov && ov.type === "coachPick" ? html`<${CoachPick} first=${ov.first} current=${s.coach} onPick=${c => { update(n => { n.coach = c; }); setOv(ov.first ? { type: "checkin" } : null); }} onClose=${() => setOv(null)}/>` : null}
+    ${ov && ov.type === "checkin" ? html`<${CheckIn} s=${s} d=${d} coach=${coach} prio=${prio} onSkip=${() => { update(n => { n.checkins.push({ id: uid(), ts: Date.now(), cat: "none" }); }); setOv(null); }}
+        onPick=${(cat, text) => {
+          update(n => { n.checkins.push({ id: uid(), ts: Date.now(), cat, text: text || "" }); });
+          let m;
+          if (cat === "other" && text) m = { id: uid(), season: 1, title: text.slice(0, 70), desc: "The task you named when LIFEFLIX asked what you're avoiding.", minutes: 10, difficulty: "Medium", attr: "courage", tags: ["other"], firstStep: "Open whatever you need for this task.", deliverable: "One visible step forward.", repeat: true, status: "active" };
+          else m = pickForCategory(s, cat);
+          openBrief(m, { fromAvoid: true, avoidCat: cat });
+        }}/>` : null}
+    ${ov && ov.type === "brief" ? html`<${Briefing} s=${s} m=${ov.m} opts=${ov.opts} coach=${coach} onStart=${startMission} onClose=${() => setOv(null)} onEdit=${() => setOv({ type: "edit", m: ov.m })} onDelete=${() => setOv({ type: "confirmDel", m: ov.m })}/>` : null}
+    ${ov && ov.type === "edit" ? html`<${EditMission} s=${s} m=${ov.m} season=${ov.season} onSave=${m => { saveMission(m); setOv(null); flash(ov.m ? "Episode updated" : "Episode added", m.title); }} onClose=${() => setOv(null)}/>` : null}
+    ${ov && ov.type === "confirmDel" ? html`<${ConfirmDelete} m=${ov.m} onYes=${() => { deleteMission(ov.m.id); setOv(null); flash("Episode deleted", ov.m.title); }} onNo=${() => setOv({ type: "brief", m: ov.m, opts: {} })}/>` : null}
+    ${ov && ov.type === "review" ? html`<${Review} s=${s} onSubmit=${finishReview} onBack=${() => { update(n => { if (n.active && n.active.pausedAt) { n.active.pausedMs += Date.now() - n.active.pausedAt; n.active.pausedAt = null; } }); setOv(null); }}/>` : null}
+    ${ov && ov.type === "result" ? html`<${Result} s=${s} d=${d} coach=${coach} res=${ov} prio=${prio} byId=${byId} daily=${daily} onNext=${(m, o) => openBrief(m, o || {})} onBreak=${() => startBreak(10, null)} onClose=${() => { setOv(null); setView("home"); browseStart.current = Date.now(); }}/>` : null}
+    ${ov && ov.type === "boss" ? html`<${BossFight} s=${s} coach=${coach} prio=${prio} fromPlayer=${ov.fromPlayer}
+        onClose=${() => { if (ov.fromPlayer) update(n => { if (n.active && n.active.pausedAt) { n.active.pausedMs += Date.now() - n.active.pausedAt; n.active.pausedAt = null; } }); setOv(null); }}
+        onDone=${(log, next) => {
+          const gains = {}; if (log.choice === "return") gains.discipline = 10; if (log.choice === "shrink") gains.courage = 10;
+          const xp = Object.values(gains).reduce((a, b) => a + b, 0);
+          update(n => { n.urges.push(Object.assign({ id: uid(), ts: Date.now(), gains, xp }, log)); });
+          if (next.type === "return") {
+            if (ov.fromPlayer && s.active) { update(n => { if (n.active) { if (n.active.pausedAt) { n.active.pausedMs += Date.now() - n.active.pausedAt; n.active.pausedAt = null; } n.active.viaBoss = true; } }); setOv(null); }
+            else { const m = prio || activeMissions(s)[0]; if (m) startMission(m, 2, m.firstStep, { viaBoss: true }); else setOv(null); }
+          } else if (next.type === "break") {
+            if (ov.fromPlayer && s.active) finishBreakFromPlayer();
+            startBreak(next.min, null);
+          } else if (next.type === "shrink") {
+            const base = (ov.fromPlayer && s.active && byId(s.active.mid)) || prio || activeMissions(s)[0];
+            const small = { id: uid(), season: base ? base.season : 1, title: next.text.slice(0, 70), desc: "A shrunken version of " + (base ? `"${base.title}"` : "your task") + ", made during an urge boss fight.", minutes: 2, difficulty: "Easy", attr: base ? base.attr : "courage", tags: base ? base.tags : ["other"], firstStep: next.text, deliverable: "", repeat: false, status: "active" };
+            if (ov.fromPlayer && s.active) finishBreakFromPlayer("Swapped for a smaller action during an urge fight.");
+            startMission(small, next.min || 2, next.text, { viaBoss: true });
+          }
+        }}/>` : null}
+    ${ov && ov.type === "breakOver" ? html`<${BreakOver} s=${s} coach=${coach} prio=${prio}
+        onReturn=${() => { update(n => { n.brk = null; }); const m = prio || activeMissions(s)[0]; if (m) startMission(m, 2, m.firstStep, { viaBoss: true }); else setOv(null); }}
+        onExtend=${() => { update(n => { n.brk = { start: n.brk ? n.brk.start : Date.now(), until: Date.now() + 5 * 60000, min: 5, extended: true }; }); setOv(null); }}
+        onDone=${() => { update(n => { n.brk = null; }); setOv(null); }}/>` : null}
+    ${ov && ov.type === "settings" ? html`<${Settings} s=${s} update=${update} setS=${setS} downloads=${downloads.current} onClose=${() => setOv(null)} flash=${flash} openCoach=${() => setOv({ type: "coachPick" })}/>` : null}
+
+    ${toast ? html`<div className="toast" role="status" key=${toast.id}><span className="avatar mentor" aria-hidden="true">★</span><div><div style=${{ fontWeight: 800 }}>${toast.t}</div>${toast.sub ? html`<div className="dim" style=${{ fontSize: "13px" }}>${toast.sub}</div>` : null}</div></div>` : null}
+  <//>`;
+
+  function finishBreakFromPlayer(why) {
+    // The player chose a break mid-mission: close the session as partial progress, honestly timed.
+    const a = sRef.current.active; if (!a) return;
+    const m = byId(a.mid); if (!m) { update(n => { n.active = null; }); return; }
+    const end = a.pausedAt || Date.now();
+    const actual = Math.round(clamp((end - a.startTs - a.pausedMs) / 1000, 0, 6 * 3600));
+    const outcome = actual >= 60 ? "partial" : "distracted";
+    const gains = sessionGains(sRef.current, m, outcome, actual, a.plannedSec, a);
+    const xp = Object.values(gains).reduce((x, y) => x + y, 0);
+    update(n => { n.sessions.push({ id: uid(), mid: m.id, title: m.title, season: m.season, attr: m.attr, tags: m.tags || [], planned: a.plannedSec, actual, outcome, xp, gains, ts: Date.now(), day: dayKey(), note: why || "Stopped for a planned break.", target: a.target, fromAvoid: a.fromAvoid, viaBoss: a.viaBoss }); n.active = null; });
+  }
+}
+
+function beep() {
+  try {
+    const ac = window.__ac || new (window.AudioContext || window.webkitAudioContext)(); window.__ac = ac;
+    [0, 0.25, 0.5].forEach((t, i) => { const o = ac.createOscillator(), g = ac.createGain(); o.type = "sine"; o.frequency.value = [660, 880, 990][i]; g.gain.setValueAtTime(0.0001, ac.currentTime + t); g.gain.exponentialRampToValueAtTime(0.25, ac.currentTime + t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + t + 0.35); o.connect(g).connect(ac.destination); o.start(ac.currentTime + t); o.stop(ac.currentTime + t + 0.4); });
+    if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+  } catch (e) {}
+}
+
+function SaveStatus() {
+  const L = Store.local, C = Store.cloud;
+  let cls = "save-dot", txt;
+  if (C === "ok") { cls += " cloud"; txt = "Saved to your Claude account and this device"; }
+  else if (L === "ok") { cls += " ok"; txt = C === "error" ? "Saved on this device only (account sync failed)" : "Saved on this device"; }
+  else if (L === "blocked" && C !== "ok") { cls += " bad"; txt = "Not saved: browser storage is blocked here. Export your data before closing."; }
+  else txt = "Checking storage…";
+  return html`<span style=${{ display: "inline-flex", gap: "8px", alignItems: "center" }}><span className=${cls}></span><span>${txt}</span></span>`;
+}
+
+/* =========================================================
+   HOME
+   ========================================================= */
+function Home({ s, d, prio, coach, daily, byId, openBrief, setOv, setView }) {
+  const se = SEASONS[0];
+  const dayN = Math.min(d.dayN, 30);
+  const strip = []; for (let i = 0; i < 30; i++) { const k = addDays(s.seasonStart, i); strip.push({ k, on: d.shown.has(k), today: k === d.today }); }
+  const todayIds = [daily.priority, ...(daily.support || []), daily.wellbeing].filter(Boolean);
+  const todays = todayIds.map(byId).filter(Boolean);
+  const partials = activeMissions(s).filter(m => { const ls = lastSession(s, m.id); return ls && ls.outcome === "partial"; });
+  const quick = activeMissions(s).filter(m => m.minutes <= 10);
+  const completed = s.missions.filter(m => m.status === "done");
+  const labels = ["PRIORITY", "SUPPORT", "SUPPORT", "WELLBEING"];
+  return html`<${React.Fragment}>
+    <section className="hero">
+      <div className="hero-bg"></div><div className="leak"></div>
+      <svg className="silhouette hide-sm" viewBox="0 0 400 520" aria-hidden="true">
+        <defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb04a" stop-opacity=".0"/><stop offset=".6" stop-color="#0c0a0e" stop-opacity=".85"/><stop offset="1" stop-color="#0c0a0e"/></linearGradient></defs>
+        <path d="M200 40c38 0 64 30 64 70 0 30-14 52-30 62l6 22c56 14 104 46 120 110l20 216H20l20-216c16-64 64-96 120-110l6-22c-16-10-30-32-30-62 0-40 26-70 64-70Z" fill="#0c0a0e" opacity=".92"/>
+        <path d="M200 40c38 0 64 30 64 70 0 30-14 52-30 62l6 22c56 14 104 46 120 110l20 216H20l20-216c16-64 64-96 120-110l6-22c-16-10-30-32-30-62 0-40 26-70 64-70Z" fill="none" stroke="#ffb04a" stroke-opacity=".55" stroke-width="2"/>
+        <rect width="400" height="520" fill="url(#sg)"/>
+      </svg>
+      <div className="wrap"><div className="hero-in">
+        <span className="season-tag">A LIFEFLIX Original Series · ${se.code}</span>
+        <h1>Your life is the series.<span className="l2">You are the main character.</span></h1>
+        <div className="hero-title2">${se.title}: ${se.sub}</div>
+        <div className="meta-row">
+          <span className="badge-rating">R · REAL LIFE</span>
+          <span>Day ${dayN} of 30</span><span>·</span>
+          <span>Perth → Melbourne 2027</span><span>·</span>
+          <span>Level ${d.level} ${d.rank}</span>
+        </div>
+        <div className="day-strip" aria-label=${`Season 1 progress: ${strip.filter(x => x.on).length} of 30 days shown up`}>${strip.map(x => html`<i key=${x.k} className=${(x.on ? "on " : "") + (x.today ? "today" : "")}></i>`)}</div>
+        <p className="lede">${prio ? html`Today's episode: <b style=${{ color: "var(--fg)" }}>${prio.title}</b>. ${prio.desc}` : se.blurb}</p>
+        <div className="btn-row">
+          ${prio ? html`<button className="btn btn-primary" onClick=${() => openBrief(prio, {})}>▶ Play today's episode</button>` : null}
+          <button className="btn btn-ghost" onClick=${() => setOv({ type: "checkin" })}>What am I avoiding?</button>
+        </div>
+      </div></div>
+    </section>
+
+    <div className="wrap section" style=${{ paddingTop: "4px" }}>
+      <div className=${"coach-band " + coach}>
+        <span className=${"avatar " + coach}>${COACH[coach].init}</span>
+        <div><div className="who">${COACH[coach].name}</div><p>${coachHome(coach, s, d, prio)}</p></div>
+      </div>
+    </div>
+
+    <div className="wrap section">
+      <button className="escape-big" onClick=${() => setOv({ type: "boss" })}>I want to escape my task<small>Start the Urge Boss Fight: 90 seconds to decide on purpose instead of on impulse.</small></button>
+    </div>
+
+    <section className="section">
+      <div className="wrap row-head"><h2>Today's Episode</h2><button className="eyebrow" onClick=${() => setView("today")}>Open planner ›</button></div>
+      <${Rail}>${todays.map((m, i) => html`<${MissionCard} key=${m.id + i} s=${s} m=${m} onOpen=${x => openBrief(x, {})} label=${labels[i]}/>`)}<//>
+    </section>
+
+    ${partials.length ? html`<section className="section">
+      <div className="wrap row-head"><h2>Continue Watching</h2><span className="eyebrow">Started, not finished</span></div>
+      <${Rail}>${partials.map(m => html`<${MissionCard} key=${m.id} s=${s} m=${m} onOpen=${x => openBrief(x, {})}/>`)}<//>
+    </section>` : null}
+
+    ${SEASONS.map(se2 => {
+      const list = s.missions.filter(m => m.season === se2.id && m.status === "active").sort((a, b) => a.order - b.order);
+      return html`<section className="section" key=${se2.id}>
+        <div className="wrap row-head"><h2><span style=${{ color: se2.hue }}>${se2.code}</span> ${se2.title}</h2><span className="eyebrow hide-sm">${se2.sub}</span></div>
+        <${Rail}>
+          ${list.map(m => html`<${MissionCard} key=${m.id} s=${s} m=${m} onOpen=${x => openBrief(x, {})}/>`)}
+          <button className="card add" onClick=${() => setOv({ type: "edit", m: null, season: se2.id })}>+ Add episode</button>
+        <//>
+      </section>`;
+    })}
+
+    <section className="section">
+      <div className="wrap row-head"><h2>Under 10 Minutes</h2><span className="eyebrow">For low-energy moments</span></div>
+      <${Rail}>${quick.map(m => html`<${MissionCard} key=${m.id} s=${s} m=${m} onOpen=${x => openBrief(x, {})}/>`)}<//>
+    </section>
+
+    ${completed.length ? html`<section className="section">
+      <div className="wrap row-head"><h2>Completed</h2><span className="eyebrow">One-off episodes you finished</span></div>
+      <${Rail}>${completed.map(m => html`<${MissionCard} key=${m.id} s=${s} m=${m} onOpen=${x => openBrief(x, {})}/>`)}<//>
+    </section>` : null}
+  <//>`;
+}
+
+/* =========================================================
+   COACH PICK
+   ========================================================= */
+function CoachPick({ first, current, onPick, onClose }) {
+  const [sel, setSel] = useState(current || "brutal");
+  return html`<div className="overlay" role="dialog" aria-modal="true" aria-label="Choose your coach">
+    <div className="sheet wide">
+      ${!first ? html`<button className="close-x" onClick=${onClose} aria-label="Close">×</button>` : null}
+      <div className="sheet-body">
+        <span className="eyebrow">${first ? "Before episode one" : "Coach"}</span>
+        <h2 style=${{ fontSize: "clamp(34px,6vw,54px)", textTransform: "uppercase" }}>Choose your coach</h2>
+        <p className="dim">You can switch at any time with the coach button in the top bar. Both coaches react to what you actually do, not to a quote list.</p>
+        <div className="grid-2">
+          ${["brutal", "mentor"].map(k => html`<button key=${k} className="choice" aria-pressed=${sel === k} onClick=${() => setSel(k)} style=${{ flexDirection: "column", alignItems: "stretch", gap: "10px" }}>
+            <div style=${{ display: "flex", gap: "10px", alignItems: "center" }}><span className=${"avatar " + k} style=${{ width: "40px", height: "40px", fontSize: "18px" }}>${COACH[k].init}</span><span style=${{ fontFamily: "var(--display)", fontSize: "26px", fontWeight: 900, textTransform: "uppercase" }}>${COACH[k].name}</span></div>
+            ${COACH[k].intro.map((p, i) => html`<p key=${i} style=${{ fontWeight: 500, fontSize: "14px", color: "var(--fg-dim)" }}>${p}</p>`)}
+          </button>`)}
+        </div>
+        <button className="btn btn-amber btn-block" onClick=${() => onPick(sel)}>Continue with ${COACH[sel].name}</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* =========================================================
+   CHECK-IN
+   ========================================================= */
+function CheckIn({ s, d, coach, prio, onPick, onSkip }) {
+  const [cat, setCat] = useState(null);
+  const [text, setText] = useState("");
+  return html`<div className="fullscreen" role="dialog" aria-modal="true" aria-label="What are you avoiding right now?">
+    <div className="fs-in">
+      <span className="eyebrow">${seasonOf(1).code} · Day ${Math.min(d.dayN, 30)} · ${niceDate(d.today)} · ${timeStr()}</span>
+      <h1 style=${{ fontSize: "clamp(44px,9vw,92px)", textTransform: "uppercase" }}>What are you avoiding right now?</h1>
+      <p className="dim" style=${{ fontSize: "16px" }}>${coach === "brutal" ? "Be honest. Naming it takes three seconds. Pretending you aren't avoiding anything takes all day." : "No judgement. Naming what you're avoiding takes away some of its power, and lets us make it smaller."}</p>
+      <div className="choice-grid">
+        ${Object.entries(CATS).map(([k, c]) => html`<button key=${k} className="choice" aria-pressed=${cat === k} onClick=${() => { setCat(k); if (k !== "other") onPick(k); }}><span className="ic" aria-hidden="true">${c.ic}</span>${c.label}</button>`)}
+      </div>
+      ${cat === "other" ? html`<form onSubmit=${e => { e.preventDefault(); if (text.trim()) onPick("other", text.trim()); }} style=${{ display: "flex", gap: "8px" }}>
+        <input id="checkin-other" autoFocus placeholder="Name the task, e.g. 'Reply to the supplier about the ACB lead time'" value=${text} onInput=${e => setText(e.target.value)}/>
+        <button className="btn btn-amber" type="submit" disabled=${!text.trim()}>Go</button>
+      </form>` : null}
+      <div className="btn-row" style=${{ justifyContent: "space-between", alignItems: "center" }}>
+        <button className="btn btn-line btn-sm" onClick=${onSkip}>Nothing right now. Show me the app</button>
+        ${d.catCounts && Object.keys(d.catCounts).length ? html`<span className="note">Most named so far: ${CATS[d.topCat] ? CATS[d.topCat].label : "—"}</span>` : null}
+      </div>
+    </div>
+  </div>`;
+}
+
+/* =========================================================
+   BRIEFING (mission screen)
+   ========================================================= */
+function Briefing({ s, m, opts, coach, onStart, onClose, onEdit, onDelete }) {
+  const [min, setMin] = useState(opts.minutes || m.minutes);
+  const [target, setTarget] = useState(m.firstStep || "");
+  const se = seasonOf(m.season);
+  const xp = xpFor(min, m.difficulty);
+  const isSaved = s.missions.some(x => x.id === m.id);
+  const epTitle = opts.fromAvoid ? "The Task You Keep Escaping" : m.title;
+  const done = s.sessions.filter(x => x.mid === m.id && x.outcome === "done").length;
+  const bg = `radial-gradient(80% 120% at 85% 0%, ${se.hue}bb, transparent 60%), radial-gradient(60% 90% at 0% 100%, ${se.hue2}88, transparent 60%), linear-gradient(160deg,#1a1420,#0c0a0e)`;
+  return html`<div className="overlay" role="dialog" aria-modal="true" aria-label=${"Mission briefing: " + m.title}>
+    <div className="sheet">
+      <button className="close-x" onClick=${onClose} aria-label="Close">×</button>
+      <div className="brief-art" style=${{ background: bg }}>
+        <div className="grain"></div>
+        <span className="eyebrow" style=${{ color: "rgba(255,255,255,.85)" }}>${isSaved ? epCode(s, m) : se.code + ":NEW"} · ${se.title}</span>
+        <h2>Episode ${pad(isSaved ? epNumber(s, m) : 1)}: ${epTitle}</h2>
+        ${opts.fromAvoid && m.title !== epTitle ? html`<div style=${{ fontWeight: 700 }}>Mission: ${m.title}</div>` : null}
+      </div>
+      <div className="sheet-body">
+        <p style=${{ fontSize: "16px" }}>${m.desc}</p>
+        <div className="stat-line">
+          <div className="stat"><div className="k">Difficulty</div><div className="v">${m.difficulty}</div></div>
+          <div className="stat"><div className="k">Focus time</div><div className="v">${min} min</div></div>
+          <div className="stat"><div className="k">Reward</div><div className="v" style=${{ color: "var(--tungsten)" }}>${xp} XP</div></div>
+          <div className="stat"><div className="k">Builds</div><div className="v" style=${{ color: ATTRS[m.attr].color }}>${ATTRS[m.attr].label}</div></div>
+        </div>
+        <div>
+          <div className="eyebrow" style=${{ marginBottom: "8px" }}>Mission length</div>
+          <div className="seg" role="group" aria-label="Mission length">${LENGTHS.map(L => html`<button key=${L} aria-pressed=${min === L} onClick=${() => setMin(L)}>${L} min</button>`)}</div>
+        </div>
+        <label className="f" htmlFor="brief-target">Your first physical action (implementation intention)
+          <input id="brief-target" value=${target} onInput=${e => setTarget(e.target.value)} placeholder="When I press start, I will…"/>
+        </label>
+        ${m.deliverable ? html`<div className="note"><b style=${{ color: "var(--fg-dim)" }}>Deliverable:</b> ${m.deliverable}</div>` : null}
+        <div className="note">Reward is paid after an honest review. The timer finishing alone earns nothing. ${done ? `Completed ${done}× so far.` : ""}</div>
+        <div className="btn-row">
+          <button className="btn btn-amber" style=${{ flex: "1 1 220px" }} onClick=${() => onStart(m, min, target, opts)}>▶ Start mission</button>
+          ${min !== 2 ? html`<button className="btn btn-line" onClick=${() => { setMin(2); setTarget("Open it and do only the first visible step."); }}>Overwhelmed? Make it 2 min</button>` : null}
+        </div>
+        ${isSaved ? html`<div className="btn-row" style=${{ justifyContent: "flex-end" }}>
+          <button className="btn btn-sm btn-line" onClick=${onEdit}>Edit episode</button>
+          <button className="btn btn-sm btn-line" style=${{ color: "var(--bad)" }} onClick=${onDelete}>Delete</button>
+        </div>` : null}
+      </div>
+    </div>
+  </div>`;
+}
+
+function ConfirmDelete({ m, onYes, onNo }) {
+  return html`<div className="overlay" role="alertdialog" aria-modal="true" aria-label="Delete episode">
+    <div className="sheet"><div className="sheet-body">
+      <h2 style=${{ fontSize: "34px", textTransform: "uppercase" }}>Delete "${m.title}"?</h2>
+      <p className="dim">The episode is removed from every row and plan. Sessions you already logged stay in your history and keep their XP.</p>
+      <div className="btn-row"><button className="btn btn-danger" onClick=${onYes}>Delete episode</button><button className="btn btn-line" onClick=${onNo}>Keep it</button></div>
+    </div></div>
+  </div>`;
+}
+
+/* =========================================================
+   EDIT / ADD
+   ========================================================= */
+function EditMission({ s, m, season, onSave, onClose }) {
+  const [f, setF] = useState(() => m ? Object.assign({}, m) : { season: season || 1, title: "", desc: "", minutes: 10, difficulty: "Medium", attr: "career", tags: ["other"], firstStep: "", deliverable: "", repeat: true });
+  const set = (k, v) => setF(x => Object.assign({}, x, { [k]: v }));
+  const valid = f.title.trim().length > 0;
+  return html`<div className="overlay" role="dialog" aria-modal="true" aria-label=${m ? "Edit episode" : "Add episode"}>
+    <div className="sheet">
+      <button className="close-x" onClick=${onClose} aria-label="Close">×</button>
+      <form className="sheet-body" onSubmit=${e => { e.preventDefault(); if (valid) onSave(Object.assign({}, f, { title: f.title.trim() })); }}>
+        <span className="eyebrow">${m ? "Edit episode" : "New episode"}</span>
+        <h2 style=${{ fontSize: "34px", textTransform: "uppercase" }}>${m ? f.title || "Untitled" : "Add a mission"}</h2>
+        <label className="f" htmlFor="em-title">Title<input id="em-title" required value=${f.title} onInput=${e => set("title", e.target.value)} placeholder="e.g. Apply to the Jacobs project engineer role"/></label>
+        <label className="f" htmlFor="em-desc">Description<textarea id="em-desc" value=${f.desc} onInput=${e => set("desc", e.target.value)} placeholder="What does done look like?"></textarea></label>
+        <div className="f-row">
+          <label className="f" htmlFor="em-season">Season<select id="em-season" value=${f.season} onChange=${e => set("season", Number(e.target.value))}>${SEASONS.map(x => html`<option key=${x.id} value=${x.id}>${x.code} ${x.title}</option>`)}</select></label>
+          <label className="f" htmlFor="em-attr">Builds attribute<select id="em-attr" value=${f.attr} onChange=${e => set("attr", e.target.value)}>${ATTR_KEYS.map(k => html`<option key=${k} value=${k}>${ATTRS[k].label}</option>`)}</select></label>
+        </div>
+        <div className="f-row">
+          <label className="f" htmlFor="em-min">Default length<select id="em-min" value=${f.minutes} onChange=${e => set("minutes", Number(e.target.value))}>${LENGTHS.map(L => html`<option key=${L} value=${L}>${L} minutes</option>`)}</select></label>
+          <label className="f" htmlFor="em-diff">Difficulty<select id="em-diff" value=${f.difficulty} onChange=${e => set("difficulty", e.target.value)}>${DIFFS.map(x => html`<option key=${x} value=${x}>${x}</option>`)}</select></label>
+        </div>
+        <label className="f" htmlFor="em-cat">Matches this avoidance<select id="em-cat" value=${(f.tags || ["other"])[0]} onChange=${e => set("tags", [e.target.value])}>${Object.entries(CATS).map(([k, c]) => html`<option key=${k} value=${k}>${c.label}</option>`)}</select></label>
+        <label className="f" htmlFor="em-first">First physical action<input id="em-first" value=${f.firstStep} onInput=${e => set("firstStep", e.target.value)} placeholder="Open the file / put shoes on / write the subject line"/></label>
+        <label className="f" htmlFor="em-del">Tangible deliverable<input id="em-del" value=${f.deliverable} onInput=${e => set("deliverable", e.target.value)} placeholder="What will exist at the end that didn't before?"/></label>
+        <label style=${{ display: "flex", gap: "10px", alignItems: "center", fontWeight: 600 }}><input id="em-rep" type="checkbox" style=${{ width: "20px", height: "20px" }} checked=${!!f.repeat} onChange=${e => set("repeat", e.target.checked)}/>Repeatable (stays in the row after completion)</label>
+        <div className="note">Reward: ${xpFor(f.minutes, f.difficulty)} XP at ${f.minutes} min, ${f.difficulty.toLowerCase()}.</div>
+        <div className="btn-row"><button className="btn btn-amber" type="submit" disabled=${!valid}>${m ? "Save changes" : "Add episode"}</button><button type="button" className="btn btn-line" onClick=${onClose}>Cancel</button></div>
+      </form>
+    </div>
+  </div>`;
+}
+
+/* =========================================================
+   PLAYER (distraction-free mission screen)
+   ========================================================= */
+function Player({ s, coach, update, onReview, onEscape, hidden }) {
+  const a = s.active;
+  const [t, setT] = useState(Date.now());
+  const fired = useRef(false);
+  useEffect(() => { const i = setInterval(() => setT(Date.now()), 250); return () => clearInterval(i); }, []);
+  useEffect(() => {
+    let lock = null;
+    (async () => { try { if (navigator.wakeLock) lock = await navigator.wakeLock.request("screen"); } catch (e) {} })();
+    return () => { try { lock && lock.release(); } catch (e) {} };
+  }, []);
+  if (!a) return null;
+  const elapsed = Math.max(0, ((a.pausedAt || t) - a.startTs - a.pausedMs) / 1000);
+  const left = Math.max(0, a.plannedSec - elapsed);
+  const paused = !!a.pausedAt;
+  if (left <= 0 && !fired.current && !hidden) { fired.current = true; setTimeout(() => { beep(); update(n => { if (n.active && !n.active.pausedAt) n.active.pausedAt = n.active.startTs + n.active.pausedMs + n.active.plannedSec * 1000; }); onReview(); }, 0); }
+  const size = 380, stroke = 10, r = (size - stroke) / 2, c = 2 * Math.PI * r;
+  const frac = a.plannedSec ? left / a.plannedSec : 0;
+  const togglePause = () => update(n => { const x = n.active; if (!x) return; if (x.pausedAt) { x.pausedMs += Date.now() - x.pausedAt; x.pausedAt = null; } else x.pausedAt = Date.now(); });
+  const addFive = () => { fired.current = false; update(n => { if (n.active) n.active.plannedSec += 300; }); };
+  const endEarly = () => { update(n => { if (n.active && !n.active.pausedAt) n.active.pausedAt = Date.now(); }); onReview(); };
+  if (hidden) return null;
+  return html`<div className=${"fullscreen" + (paused ? " paused" : "")} role="main" aria-label="Mission in progress">
+    <div className="fs-in" style=${{ textAlign: "center", gap: "18px" }}>
+      <div><span className="rec">${paused ? "PAUSED" : "MISSION LIVE"}</span></div>
+      <h1 style=${{ fontSize: "clamp(30px,6vw,52px)", textTransform: "uppercase" }}>${a.title}</h1>
+      ${a.target ? html`<p className="dim" style=${{ fontSize: "16px" }}>First action: <b style=${{ color: "var(--fg)" }}>${a.target}</b></p>` : null}
+      <div className="player-ring">
+        <svg viewBox=${`0 0 ${size} ${size}`} aria-hidden="true">
+          <circle cx=${size / 2} cy=${size / 2} r=${r} fill="none" stroke="var(--ink-3)" strokeWidth=${stroke}/>
+          <circle cx=${size / 2} cy=${size / 2} r=${r} fill="none" stroke=${paused ? "var(--fg-faint)" : "var(--tungsten)"} strokeWidth=${stroke} strokeLinecap="round" strokeDasharray=${c} strokeDashoffset=${c * (1 - frac)} style=${{ transition: "stroke-dashoffset .25s linear" }}/>
+        </svg>
+        <div className="player-center">
+          <div className="player-time" role="timer" aria-live="off">${fmtClock(left)}</div>
+          <div className="eyebrow">of ${fmtClock(a.plannedSec)} · ${fmtClock(elapsed)} focused</div>
+        </div>
+      </div>
+      <div className="btn-row" style=${{ justifyContent: "center" }}>
+        <button className="btn btn-primary" onClick=${togglePause}>${paused ? "▶ Resume" : "❚❚ Pause"}</button>
+        <button className="btn btn-ghost" onClick=${addFive}>+5 min</button>
+        <button className="btn btn-ghost" onClick=${endEarly}>Finish & review</button>
+      </div>
+      <button className="btn btn-danger" style=${{ alignSelf: "center" }} onClick=${onEscape}>I want to escape this task</button>
+      <p className="note">${coach === "brutal" ? "Close every other tab. This screen is all you need. The phone stays face down." : "Just this one thing. If your mind wanders, notice it and come back to the first action."}</p>
+    </div>
+  </div>`;
+}
+
+/* =========================================================
+   REVIEW
+   ========================================================= */
+function Review({ s, onSubmit, onBack }) {
+  const a = s.active;
+  const [note, setNote] = useState("");
+  if (!a) return null;
+  const elapsed = Math.max(0, ((a.pausedAt || Date.now()) - a.startTs - a.pausedMs) / 1000);
+  return html`<div className="fullscreen" role="dialog" aria-modal="true" aria-label="Mission review">
+    <div className="fs-in">
+      <span className="eyebrow">Mission review · ${fmtClock(elapsed)} focused of ${fmtClock(a.plannedSec)}</span>
+      <h1 style=${{ fontSize: "clamp(40px,8vw,76px)", textTransform: "uppercase" }}>How did it actually go?</h1>
+      <p className="dim" style=${{ fontSize: "16px" }}>"${a.title}"${a.target ? html` · first action: ${a.target}` : null}. XP depends on your answer, not the timer. Nobody sees this but you, so the honest answer is the useful one.</p>
+      <div style=${{ display: "grid", gap: "10px" }}>
+        <button className="choice" onClick=${() => onSubmit("done", note)}><span className="ic" style=${{ color: "var(--ok)" }}>●</span><div><div>I completed it</div><div className="note" style=${{ fontWeight: 500 }}>The deliverable or target exists now.</div></div></button>
+        <button className="choice" onClick=${() => onSubmit("partial", note)}><span className="ic" style=${{ color: "var(--warn)" }}>◐</span><div><div>I made partial progress</div><div className="note" style=${{ fontWeight: 500 }}>Real work happened, but it isn't finished.</div></div></button>
+        <button className="choice" onClick=${() => onSubmit("distracted", note)}><span className="ic" style=${{ color: "var(--bad)" }}>○</span><div><div>I got distracted</div><div className="note" style=${{ fontWeight: 500 }}>Most of the time went elsewhere.</div></div></button>
+      </div>
+      <label className="f" htmlFor="rv-note">Optional note: where to resume, or what got in the way
+        <input id="rv-note" value=${note} onInput=${e => setNote(e.target.value)} placeholder="e.g. Stopped at bullet 2, need the project value from the FAT report"/>
+      </label>
+      <button className="btn btn-line btn-sm" style=${{ alignSelf: "flex-start" }} onClick=${onBack}>← Back to the timer</button>
+    </div>
+  </div>`;
+}
+
+/* =========================================================
+   RESULT + EXIT TO REAL LIFE
+   ========================================================= */
+function Result({ s, d, coach, res, prio, byId, daily, onNext, onBreak, onClose }) {
+  const { sess, m, newAch } = res;
+  const [shown, setShown] = useState(0);
+  useEffect(() => { let v = 0; const step = Math.max(1, Math.round(sess.xp / 30)); const t = setInterval(() => { v = Math.min(sess.xp, v + step); setShown(v); if (v >= sess.xp) clearInterval(t); }, 25); return () => clearInterval(t); }, []);
+  const line = useMemo(() => coachReview(coach, sess.outcome, m, Math.round(sess.actual / 60)), []);
+  const ach = achievements(s, d).filter(a => newAch.includes(a.id));
+  const ids = [daily.priority, ...(daily.support || []), daily.wellbeing].filter(Boolean);
+  const nextM = ids.map(byId).filter(x => x && x.status === "active" && !d.todays.some(z => z.mid === x.id && z.outcome === "done"))[0];
+  const smaller = sess.outcome === "distracted" ? Object.assign({}, m) : null;
+  return html`<div className="fullscreen" role="dialog" aria-modal="true" aria-label="Mission result">
+    <div className="fs-in">
+      <span className="eyebrow">${sess.outcome === "done" ? "Episode complete" : sess.outcome === "partial" ? "Partial progress logged" : "Logged honestly"} · ${fmtMin(sess.actual / 60)} focused</span>
+      <div className="xp-pop" aria-label=${sess.xp + " XP earned"}>+${shown} XP</div>
+      ${Object.keys(sess.gains).length ? html`<div style=${{ display: "grid", gap: "6px", gridTemplateColumns: "repeat(auto-fit,minmax(150px,1fr))" }}>
+        ${Object.entries(sess.gains).map(([k, v], i) => html`<div key=${k} className="gain" style=${{ animationDelay: i * 0.08 + "s" }}><span style=${{ color: ATTRS[k].color }}>${ATTRS[k].label}</span><span className="mono">+${v}</span></div>`)}
+      </div>` : html`<p className="dim" style=${{ textAlign: "center" }}>No XP this time. That's the honest result, and it's still useful data.</p>`}
+      ${ach.map(a => html`<div key=${a.id} className="badge on" style=${{ animation: "pop .7s cubic-bezier(.2,1.4,.4,1) both" }}><div className="medal">★</div><div><div className="eyebrow" style=${{ color: "var(--tungsten)" }}>Achievement unlocked</div><div className="bt">${a.t}</div><div className="bd">${a.dsc}</div></div></div>`)}
+      <div className=${"coach-band " + coach}><span className=${"avatar " + coach}>${COACH[coach].init}</span><div><div className="who">${COACH[coach].name}</div><p>${line}</p></div></div>
+      <div className="panel" style=${{ background: "var(--ink-2)" }}>
+        <h3>Now leave the app</h3>
+        <p className="dim">${nextM ? html`The next real-world action is <b style=${{ color: "var(--fg)" }}>${nextM.title}</b>. Start it now, take a planned break, or close LIFEFLIX and get on with your day.` : "Today's episode is covered. Close LIFEFLIX and go live the part of the series that happens off-screen."}</p>
+        <div className="btn-row">
+          ${smaller ? html`<button className="btn btn-amber" onClick=${() => onNext(smaller, { minutes: 2 })}>Retry as 2 minutes</button>` : null}
+          ${nextM && !smaller ? html`<button className="btn btn-amber" onClick=${() => onNext(nextM)}>Start: ${nextM.title}</button>` : null}
+          <button className="btn btn-ghost" onClick=${onBreak}>10-minute planned break</button>
+          <button className="btn btn-line" onClick=${onClose}>Done for now</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* =========================================================
+   URGE BOSS FIGHT
+   ========================================================= */
+function BossFight({ s, coach, prio, fromPlayer, onClose, onDone }) {
+  const [step, setStep] = useState(0);
+  const [urge, setUrge] = useState(null);
+  const [other, setOther] = useState("");
+  const [before, setBefore] = useState(7);
+  const [after, setAfter] = useState(5);
+  const [genuine, setGenuine] = useState(null);
+  const [choice, setChoice] = useState(null);
+  const [secs, setSecs] = useState(0);
+  const [shrinkText, setShrinkText] = useState("");
+  const [brkMin, setBrkMin] = useState(10);
+  const BREATH = 72;
+  useEffect(() => { if (step !== 2) return; const t0 = Date.now(); const i = setInterval(() => setSecs(Math.min(BREATH, (Date.now() - t0) / 1000)), 200); return () => clearInterval(i); }, [step]);
+  const boss = urge ? URGES[urge].boss : "The Urge";
+  const phase = (() => { const c = secs % 12; return c < 4 ? "Breathe in" : c < 6 ? "Hold" : "Breathe out"; })();
+  const hp = step < 2 ? before * 10 : step === 2 ? Math.round(before * 10 - (before * 10 * 0.6) * (secs / BREATH)) : after * 10;
+  const curTask = fromPlayer && s.active ? s.active.title : prio ? prio.title : "your task";
+  const pastUrges = s.urges.filter(u => u.urge === urge);
+  const log = () => ({ urge, urgeText: urge === "other" ? other : "", before, after, genuine, choice, mid: (fromPlayer && s.active) ? s.active.mid : prio ? prio.id : null, fromPlayer: !!fromPlayer });
+  return html`<div className="fullscreen" role="dialog" aria-modal="true" aria-label="Urge boss fight" style=${{ background: "radial-gradient(80% 60% at 50% 0%, rgba(232,65,74,.18), transparent 60%), var(--ink)" }}>
+    <div className="fs-in">
+      <div style=${{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px" }}>
+        <span className="eyebrow" style=${{ color: "var(--crimson)" }}>Urge boss fight · Round ${Math.min(step + 1, 5)} of 5</span>
+        <button className="btn btn-sm btn-line" onClick=${onClose}>${fromPlayer ? "Back to mission" : "Close"}</button>
+      </div>
+      <div>
+        <div style=${{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}><b style=${{ fontFamily: "var(--display)", fontSize: "24px", textTransform: "uppercase", letterSpacing: ".03em" }}>${boss}</b><span className="mono dim">${Math.max(0, hp)} HP</span></div>
+        <div className="boss-hp" role="progressbar" aria-label="Urge strength" aria-valuemin="0" aria-valuemax="100" aria-valuenow=${Math.max(0, hp)}><i style=${{ width: clamp(hp, 0, 100) + "%" }}></i></div>
+      </div>
+
+      ${step === 0 ? html`<${React.Fragment}>
+        <h1 style=${{ fontSize: "clamp(36px,7vw,64px)", textTransform: "uppercase" }}>What do you feel like doing instead?</h1>
+        <p className="dim">You were about to leave "${curTask}". Name the urge. Urges are normal; acting on them automatically is the habit we're changing.</p>
+        <div className="choice-grid">${Object.entries(URGES).map(([k, u]) => html`<button key=${k} className="choice" aria-pressed=${urge === k} onClick=${() => { setUrge(k); if (k !== "other") setStep(1); }}>${u.label}</button>`)}</div>
+        ${urge === "other" ? html`<div style=${{ display: "flex", gap: "8px" }}><input id="boss-other" autoFocus placeholder="What's pulling at you?" value=${other} onInput=${e => setOther(e.target.value)}/><button className="btn btn-amber" disabled=${!other.trim()} onClick=${() => setStep(1)}>Next</button></div>` : null}
+      <//>` : null}
+
+      ${step === 1 ? html`<${React.Fragment}>
+        <h1 style=${{ fontSize: "clamp(36px,7vw,64px)", textTransform: "uppercase" }}>How strong is the urge?</h1>
+        <label className="f" htmlFor="boss-before">Urge intensity: <span className="mono" style=${{ color: "var(--fg)", fontSize: "20px" }}>${before}/10</span>
+          <input id="boss-before" type="range" min="0" max="10" value=${before} onInput=${e => setBefore(Number(e.target.value))}/>
+        </label>
+        ${pastUrges.length ? html`<p className="note">You've faced ${boss} ${pastUrges.length} time${pastUrges.length > 1 ? "s" : ""} before. Average intensity after breathing: ${(pastUrges.reduce((a, u) => a + u.after, 0) / pastUrges.length).toFixed(1)}/10.</p>` : null}
+        <p className="dim">Next: 72 seconds of slow breathing. Urges rise, peak and fade like a wave, usually within a few minutes, if you don't feed them.</p>
+        <button className="btn btn-amber" onClick=${() => { setSecs(0); setStep(2); }}>Start breathing</button>
+      <//>` : null}
+
+      ${step === 2 ? html`<${React.Fragment}>
+        <div className="breath" aria-hidden="true"><div className="ring"></div><div className="orb"></div><div className="lbl">${phase}</div></div>
+        <p className="sr" aria-live="polite" style=${{ textAlign: "center", fontWeight: 700 }}>${phase} · <span className="mono">${Math.ceil(BREATH - secs)}s</span></p>
+        <p className="dim" style=${{ textAlign: "center" }}>In for 4, hold for 2, out for 6. Notice where the urge sits in your body. You don't have to do anything about it.</p>
+        <button className="btn btn-amber" style=${{ alignSelf: "center" }} disabled=${secs < BREATH && secs < 45} onClick=${() => { setAfter(Math.max(0, before - 2)); setStep(3); }}>${secs >= BREATH ? "Continue" : secs >= 45 ? "I'm ready" : "Keep breathing…"}</button>
+      <//>` : null}
+
+      ${step === 3 ? html`<${React.Fragment}>
+        <h1 style=${{ fontSize: "clamp(32px,6vw,56px)", textTransform: "uppercase" }}>Is this something you genuinely want, or are you escaping discomfort?</h1>
+        <label className="f" htmlFor="boss-after">Urge intensity now: <span className="mono" style=${{ color: "var(--fg)", fontSize: "20px" }}>${after}/10</span> <span className="faint">(was ${before})</span>
+          <input id="boss-after" type="range" min="0" max="10" value=${after} onInput=${e => setAfter(Number(e.target.value))}/>
+        </label>
+        <div className="seg" role="group" aria-label="Genuine want or escape">
+          <button aria-pressed=${genuine === "want"} onClick=${() => setGenuine("want")}>I genuinely want it</button>
+          <button aria-pressed=${genuine === "escape"} onClick=${() => setGenuine("escape")}>I'm escaping discomfort</button>
+          <button aria-pressed=${genuine === "unsure"} onClick=${() => setGenuine("unsure")}>Not sure</button>
+        </div>
+        <button className="btn btn-amber" disabled=${!genuine} onClick=${() => setStep(4)}>Choose your move</button>
+      <//>` : null}
+
+      ${step === 4 ? html`<${React.Fragment}>
+        <h1 style=${{ fontSize: "clamp(36px,7vw,64px)", textTransform: "uppercase" }}>Your move</h1>
+        <p className="dim">${coach === "brutal" ? "All three are legitimate. Choosing beats drifting. Pick on purpose." : "There's no wrong answer here. A planned break is a good choice. Drifting is the only thing we're avoiding."}</p>
+        <div style=${{ display: "grid", gap: "10px" }}>
+          <button className="choice" aria-pressed=${choice === "return"} onClick=${() => setChoice("return")}><span className="ic">↩</span><div><div>Return to my mission for just 2 minutes</div><div className="note" style=${{ fontWeight: 500 }}>${fromPlayer ? "Your paused timer resumes." : `Starts 2 minutes on "${curTask}".`} +10 Discipline</div></div></button>
+          <button className="choice" aria-pressed=${choice === "break"} onClick=${() => setChoice("break")}><span className="ic">☕</span><div><div>Take a deliberate, time-limited break</div><div className="note" style=${{ fontWeight: 500 }}>Enjoy it fully. A timer calls you back.</div></div></button>
+          <button className="choice" aria-pressed=${choice === "shrink"} onClick=${() => setChoice("shrink")}><span className="ic">⇲</span><div><div>Change the task into a smaller action</div><div className="note" style=${{ fontWeight: 500 }}>Make it so small it's hard to refuse. +10 Courage</div></div></button>
+        </div>
+        ${choice === "break" ? html`<div><div className="eyebrow" style=${{ marginBottom: "8px" }}>Break length</div><div className="seg" role="group" aria-label="Break length">${[5, 10, 15, 20].map(n => html`<button key=${n} aria-pressed=${brkMin === n} onClick=${() => setBrkMin(n)}>${n} min</button>`)}</div>${fromPlayer ? html`<p className="note" style=${{ marginTop: "8px" }}>Your current mission will be logged as partial progress with the time you've actually spent.</p>` : null}</div>` : null}
+        ${choice === "shrink" ? html`<label className="f" htmlFor="boss-shrink">The smaller action (2 minutes)
+          <input id="boss-shrink" autoFocus value=${shrinkText} onInput=${e => setShrinkText(e.target.value)} placeholder=${"e.g. Write only the first sentence of " + curTask}/></label>` : null}
+        <button className="btn btn-amber" disabled=${!choice || (choice === "shrink" && !shrinkText.trim())} onClick=${() => setStep(5)}>Lock it in</button>
+      <//>` : null}
+
+      ${step === 5 ? html`<${React.Fragment}>
+        <h1 style=${{ fontSize: "clamp(36px,7vw,64px)", textTransform: "uppercase" }}>${before - after >= 2 ? boss + " weakened" : "You chose on purpose"}</h1>
+        <p className="mono dim">Urge ${before}/10 → ${after}/10</p>
+        <div className=${"coach-band " + coach}><span className=${"avatar " + coach}>${COACH[coach].init}</span><div><div className="who">${COACH[coach].name}</div><p>${coachBoss(coach, choice, urge, genuine)}</p></div></div>
+        <button className="btn btn-amber" onClick=${() => onDone(log(), choice === "return" ? { type: "return" } : choice === "break" ? { type: "break", min: brkMin } : { type: "shrink", text: shrinkText.trim(), min: 2 })}>
+          ${choice === "return" ? "▶ Back to it: 2 minutes" : choice === "break" ? `Start ${brkMin}-minute break` : "▶ Start the small version"}
+        </button>
+      <//>` : null}
+    </div>
+  </div>`;
+}
+
+function BreakOver({ s, coach, prio, onReturn, onExtend, onDone }) {
+  const ext = s.brk && s.brk.extended;
+  return html`<div className="fullscreen" role="dialog" aria-modal="true" aria-label="Break is over">
+    <div className="fs-in">
+      <span className="eyebrow" style=${{ color: "var(--s2)" }}>Planned break complete</span>
+      <h1 style=${{ fontSize: "clamp(44px,9vw,88px)", textTransform: "uppercase" }}>Break's over.</h1>
+      <p style=${{ fontSize: "17px" }}>${coach === "brutal" ? `You took the break you chose. That was the deal. Now honour the other half: two minutes on "${prio ? prio.title : "your priority"}".` : `Hope that was a good break. Let's ease back in. Just two minutes on "${prio ? prio.title : "your priority"}" and see how it feels.`}</p>
+      <div className="btn-row">
+        <button className="btn btn-amber" onClick=${onReturn}>▶ Return for 2 minutes</button>
+        ${!ext ? html`<button className="btn btn-ghost" onClick=${onExtend}>Extend 5 minutes (once)</button>` : null}
+        <button className="btn btn-line" onClick=${onDone}>I'm done for today</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* =========================================================
+   TODAY (daily episode engine)
+   ========================================================= */
+function Today({ s, d, prio, coach, daily, byId, openBrief, setOv, update }) {
+  const today = d.today;
+  const [intent, setIntent] = useState(daily.intention || "");
+  const [reviewing, setReviewing] = useState(false);
+  useEffect(() => setIntent(daily.intention || ""), [today]);
+  const slots = [["priority", "High-impact priority", daily.priority], ["support0", "Supporting mission", (daily.support || [])[0]], ["support1", "Supporting mission", (daily.support || [])[1]], ["wellbeing", "Wellbeing action", daily.wellbeing]];
+  const doneIds = new Set(d.todays.filter(x => x.outcome === "done").map(x => x.mid));
+  const partIds = new Set(d.todays.filter(x => x.outcome === "partial").map(x => x.mid));
+  const swap = (key) => update(n => {
+    const dd = n.daily[today]; if (!dd) return;
+    const cur = key === "priority" ? dd.priority : key === "wellbeing" ? dd.wellbeing : dd.support[Number(key.slice(-1))];
+    const used = new Set([dd.priority, dd.wellbeing, ...(dd.support || [])]);
+    const curM = n.missions.find(x => x.id === cur);
+    const wantHealth = key === "wellbeing";
+    const pool = n.missions.filter(m => m.status === "active" && !used.has(m.id) && (wantHealth ? m.attr === "health" : m.attr !== "health"));
+    if (!pool.length) return;
+    const idx = Math.floor(hashStr(cur + Date.now()) * pool.length);
+    const pick = pool[idx].id;
+    if (key === "priority") dd.priority = pick; else if (key === "wellbeing") dd.wellbeing = pick; else dd.support[Number(key.slice(-1))] = pick;
+  });
+  // research trap + car question
+  const wk = s.urges.filter(u => (Date.now() - u.ts) < 7 * 86400000);
+  const ideaUrges = wk.filter(u => u.urge === "ideas").length;
+  const bizPartials = s.sessions.filter(x => (x.tags || []).includes("business") && x.outcome === "partial" && (Date.now() - x.ts) < 7 * 86400000).length;
+  const carUrges = wk.filter(u => u.urge === "products").length;
+  const contact = s.missions.find(x => x.title === "Contact One Potential Customer" && x.status === "active");
+  const [carAns, setCarAns] = useState(null);
+  const planned = slots.map(x => x[2]).filter(Boolean);
+  const plannedDone = planned.filter(id => doneIds.has(id)).length;
+  const prioDone = prio && doneIds.has(prio.id);
+  return html`<div className="wrap section">
+    <div className="row-head" style=${{ alignItems: "flex-end", flexWrap: "wrap" }}>
+      <div><span className="eyebrow">${seasonOf(1).code}:E${pad(Math.min(d.dayN, 30))} · ${niceDate(today)}</span><h2 style=${{ fontSize: "clamp(38px,7vw,64px)", marginTop: "6px" }}>Today's Episode</h2></div>
+      <div className="mono dim" style=${{ fontSize: "13px" }}>${plannedDone}/${planned.length} done · ${d.minsToday} focused min · ${d.urgesToday.length} urges fought</div>
+    </div>
+
+    <div className="panel" style=${{ marginBottom: "14px" }}>
+      <label className="f" htmlFor="today-intent">Implementation intention: when and where will the priority happen?
+        <input id="today-intent" value=${intent} placeholder=${prio ? `When I sit down after breakfast at my desk, I will ${(prio.firstStep || "start " + prio.title).replace(/\.$/, "").toLowerCase()}.` : "When ___ at ___, I will ___."} onInput=${e => setIntent(e.target.value)} onBlur=${() => update(n => { if (n.daily[today]) n.daily[today].intention = intent; })}/>
+      </label>
+      <p className="note">Plans that name a time, a place and a first action are far more likely to happen than "I'll do it today".</p>
+    </div>
+
+    <div style=${{ display: "grid", gap: "10px" }}>
+      ${slots.map(([key, lab, id]) => { const m = byId(id); if (!m) return html`<div key=${key} className="slot"><div></div><div className="dim">No mission available for this slot. Add one from Home.</div><div></div></div>`;
+        const st = doneIds.has(m.id) ? html`<span className="chip ok">Done</span>` : partIds.has(m.id) ? html`<span className="chip warn">Partial</span>` : null;
+        return html`<div key=${key} className=${"slot" + (key === "priority" ? " prio" : "")}>
+          <div className="slot-thumb"><${Thumb} s=${s} m=${m}/></div>
+          <div style=${{ minWidth: 0 }}><div className="lab">${lab} · ${m.minutes} min · ${xpFor(m.minutes, m.difficulty)} XP</div><div className="ti">${m.title} ${st}</div><div className="note">${m.deliverable || m.desc}</div></div>
+          <div className="acts">
+            <button className="btn btn-sm btn-amber" onClick=${() => openBrief(m, {})}>▶ Start</button>
+            ${key === "priority" ? html`<button className="btn btn-sm btn-line" onClick=${() => openBrief(m, { minutes: 2 })}>Overwhelmed: 2 min</button>` : null}
+            <button className="btn btn-sm btn-line" onClick=${() => swap(key)} aria-label=${"Swap " + lab}>Swap</button>
+          </div>
+        </div>`; })}
+    </div>
+
+    ${(ideaUrges >= 2 || bizPartials >= 2) ? html`<div className="challenge" style=${{ marginTop: "16px" }}>
+      <span className="eyebrow" style=${{ color: "var(--crimson)" }}>Research trap detected</span>
+      <b style=${{ fontSize: "17px" }}>${ideaUrges >= 2 ? `You've wanted to browse business ideas ${ideaUrges} times this week.` : `${bizPartials} business sessions this week ended as "partial".`}</b>
+      <p className="dim">${coach === "brutal" ? "More research won't produce a customer. Choose one offer and contact one potential customer. Today." : "Exploring feels productive because it's safe. Let's trade one research session for one real conversation."}</p>
+      ${contact ? html`<div><button className="btn btn-sm btn-amber" onClick=${() => openBrief(contact, {})}>▶ Contact one potential customer</button></div>` : null}
+    </div>` : null}
+
+    ${carUrges >= 1 ? html`<div className="challenge" style=${{ marginTop: "16px" }}>
+      <span className="eyebrow" style=${{ color: "var(--crimson)" }}>Spec-Sheet Hydra check</span>
+      <b style=${{ fontSize: "17px" }}>You've wanted to research cars or products ${carUrges} time${carUrges > 1 ? "s" : ""} this week. Is this research needed for a decision you're ready to make in the next 30 days?</b>
+      ${carAns === null ? html`<div className="btn-row"><button className="btn btn-sm btn-line" onClick=${() => setCarAns("yes")}>Yes, I'm deciding soon</button><button className="btn btn-sm btn-line" onClick=${() => setCarAns("no")}>No, honestly</button></div>` : null}
+      ${carAns === "yes" ? html`<p className="dim">Then make it a decision session, not a browsing session: 25 minutes, a written budget ceiling, three options, one choice. Add it as an episode.</p><div><button className="btn btn-sm btn-amber" onClick=${() => setOv({ type: "edit", m: null, season: 5 })}>Add a 25-min decision episode</button></div>` : null}
+      ${carAns === "no" ? html`<p className="dim">${coach === "brutal" ? "Then it's entertainment wearing a productivity costume. Park it until the $150K offer lands." : "That's an honest answer. Park the browsing for a planned break, and treat it as fun rather than progress."}</p>` : null}
+    </div>` : null}
+
+    <div className="panel" style=${{ marginTop: "16px" }}>
+      <div style=${{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
+        <h3>End-of-day review</h3>
+        ${daily.review ? html`<span className="chip ok">Reviewed</span>` : html`<button className="btn btn-sm btn-amber" onClick=${() => setReviewing(true)}>Review today</button>`}
+      </div>
+      ${reviewing || daily.review ? html`<${DayReview} s=${s} d=${d} coach=${coach} daily=${daily} byId=${byId} prioDone=${prioDone} plannedDone=${plannedDone} planned=${planned.length} doneIds=${doneIds}
+        onSave=${rv => { update(n => { n.daily[today].review = rv; const tk = addDays(today, 1); if (!n.daily[tk]) n.daily[tk] = genDaily(n, tk); if (rv.tomorrow) n.daily[tk].intention = rv.tomorrow; }); setReviewing(false); }}/>` : html`<p className="dim">At the end of the day, take two minutes to compare what you planned with what happened.</p>`}
+    </div>
+  </div>`;
+}
+
+function DayReview({ s, d, coach, daily, byId, prioDone, plannedDone, planned, doneIds, onSave }) {
+  const [rating, setRating] = useState(daily.review ? daily.review.rating : 0);
+  const [block, setBlock] = useState(daily.review ? daily.review.block : "");
+  const [tomorrow, setTomorrow] = useState(daily.review ? daily.review.tomorrow : "");
+  const prio = byId(daily.priority);
+  const lines = [];
+  lines.push(`You planned ${planned} missions and completed ${plannedDone}.`);
+  lines.push(prioDone ? `The priority, "${prio.title}", is done.` : prio ? `The priority, "${prio.title}", was not completed.` : "");
+  lines.push(`${d.minsToday} focused minutes across ${d.todays.length} session${d.todays.length === 1 ? "" : "s"}${d.distractedToday ? `, ${d.distractedToday} lost to distraction` : ""}.`);
+  if (d.urgesToday.length) lines.push(`${d.urgesToday.length} urge${d.urgesToday.length > 1 ? "s" : ""} fought: ${d.urgesToday.filter(u => u.choice !== "break").length} turned back to work, ${d.urgesToday.filter(u => u.choice === "break").length} planned break${d.urgesToday.filter(u => u.choice === "break").length === 1 ? "" : "s"}.`);
+  const verdict = prioDone ? (coach === "brutal" ? "Verdict: a day that moved your life forward. Repeat it." : "Verdict: you did what mattered. That's a good day.")
+    : d.minsToday >= 25 ? (coach === "brutal" ? "Verdict: busy, but the priority waited. Tomorrow it goes first, before anything easy." : "Verdict: real effort, just not on the main thing. Tomorrow, let's put the priority first.")
+    : (coach === "brutal" ? "Verdict: not much moved today. That's a fact about today, not about who you are. Tomorrow's first action decides the next one." : "Verdict: a quiet day. It happens. The most useful thing now is a tiny, specific plan for tomorrow morning.");
+  return html`<div style=${{ display: "flex", flexDirection: "column", gap: "12px" }}>
+    <div style=${{ display: "grid", gap: "4px" }}>${lines.filter(Boolean).map((l, i) => html`<p key=${i}>${l}</p>`)}<p style=${{ fontWeight: 800, marginTop: "4px" }}>${verdict}</p></div>
+    <div><div className="eyebrow" style=${{ marginBottom: "6px" }}>How did today go, by your own standard?</div>
+      <div className="seg" role="group" aria-label="Rating">${[1, 2, 3, 4, 5].map(n => html`<button key=${n} aria-pressed=${rating === n} onClick=${() => setRating(n)}>${n}</button>`)}</div></div>
+    <label className="f" htmlFor="dr-block">What got in the way? (genuine obstacle or avoidance? Be specific)<input id="dr-block" value=${block} onInput=${e => setBlock(e.target.value)}/></label>
+    <label className="f" htmlFor="dr-tom">Tomorrow's first action (becomes tomorrow's intention)<input id="dr-tom" value=${tomorrow} onInput=${e => setTomorrow(e.target.value)} placeholder="When I get to my desk at 7:30, I will open the CV and fix bullet 2."/></label>
+    <div><button className="btn btn-amber btn-sm" disabled=${!rating} onClick=${() => onSave({ rating, block, tomorrow, at: Date.now(), planned, plannedDone, mins: d.minsToday })}>${daily.review ? "Update review" : "Save review"}</button></div>
+  </div>`;
+}
+
+/* =========================================================
+   STATS / PLAYER DASHBOARD
+   ========================================================= */
+function Stats({ s, d, coach, update, flash }) {
+  const achs = achievements(s, d);
+  const maxAttr = Math.max(...ATTR_KEYS.map(k => d.attr[k]), 1);
+  const lvFrac = (d.total - d.lvStart) / Math.max(1, d.lvNext - d.lvStart);
+  const maxWeek = Math.max(...d.week.map(w => w.min), 1);
+  const urgeRows = Object.entries(d.urgeCounts).sort((a, b) => b[1] - a[1]);
+  const catRows = Object.entries(d.catCounts).sort((a, b) => b[1] - a[1]);
+  const maxU = Math.max(1, ...urgeRows.map(x => x[1])), maxC = Math.max(1, ...catRows.map(x => x[1]));
+  const genuineEsc = s.urges.filter(u => u.genuine === "escape").length;
+  const cal = []; for (let i = 0; i < 30; i++) { const k = addDays(s.seasonStart, i); cal.push({ k, i, on: d.shown.has(k), future: k > d.today, today: k === d.today }); }
+  const MS = [["application", "First application sent"], ["interview", "First interview booked"], ["customer", "First paying business customer"], ["savings", "Savings automated"], ["moveDate", "Melbourne move date set"]];
+  return html`<div className="wrap section" style=${{ display: "flex", flexDirection: "column", gap: "16px" }}>
+    <div className="row-head"><h2 style=${{ fontSize: "clamp(38px,7vw,64px)" }}>Player</h2><span className="eyebrow">Real data only</span></div>
+    <div className="grid-2">
+      <div className="panel">
+        <div style=${{ display: "flex", gap: "16px", alignItems: "center" }}>
+          <${Ring} value=${lvFrac} size=${96} stroke=${8}><div style=${{ textAlign: "center" }}><div className="big-num" style=${{ fontSize: "36px" }}>${d.level}</div><div className="eyebrow" style=${{ fontSize: "9px" }}>Level</div></div><//>
+          <div style=${{ minWidth: 0 }}><div className="eyebrow">Rank</div><div style=${{ fontFamily: "var(--display)", fontWeight: 900, fontSize: "32px", textTransform: "uppercase", lineHeight: 1 }}>${d.rank}</div>
+            <div className="mono dim" style=${{ fontSize: "13px", marginTop: "6px" }}>${d.total} XP · ${d.lvNext - d.total} to level ${d.level + 1}</div></div>
+        </div>
+        <div className="grid-3" style=${{ gridTemplateColumns: "repeat(3,1fr)" }}>
+          <div className="stat"><div className="k">Days shown up</div><div className="v">${d.shown.size}</div></div>
+          <div className="stat"><div className="k">Current run</div><div className="v">${d.cur}</div></div>
+          <div className="stat"><div className="k">Best run</div><div className="v">${d.best}</div></div>
+          <div className="stat"><div className="k">Focus total</div><div className="v">${fmtMin(d.totalFocusMin)}</div></div>
+          <div className="stat"><div className="k">Missions done</div><div className="v">${s.sessions.filter(x => x.outcome === "done").length}</div></div>
+          <div className="stat"><div className="k">Urges fought</div><div className="v">${s.urges.length}</div></div>
+        </div>
+        <p className="note">Runs end; progress doesn't. Missing a day never removes XP, levels or badges.</p>
+      </div>
+      <div className="panel">
+        <h3>Attributes</h3>
+        <div className="grid-3" style=${{ gridTemplateColumns: "repeat(auto-fill,minmax(100px,1fr))" }}>
+          ${ATTR_KEYS.map(k => { const xp = d.attr[k]; const L = levelFrom(xp, 25); const fr = (xp - levelStart(L, 25)) / Math.max(1, levelStart(L + 1, 25) - levelStart(L, 25));
+            return html`<div key=${k} className="attr" title=${ATTRS[k].how}><${Ring} value=${fr} size=${64} stroke=${6} color=${ATTRS[k].color}><${Glyph} k=${k} size=${22} color=${ATTRS[k].color}/><//><div className="nm">${ATTRS[k].label}</div><div className="lv">LV ${L} · ${xp} XP</div></div>`; })}
+        </div>
+        <p className="note">${ATTR_KEYS.map(k => ATTRS[k].label + ": " + ATTRS[k].how.toLowerCase()).join(". ")}.</p>
+      </div>
+    </div>
+
+    <div className="grid-2">
+      <div className="panel">
+        <h3>Focus, last 7 days</h3>
+        <div className="week-chart" role="img" aria-label=${"Focused minutes per day: " + d.week.map(w => w.min).join(", ")}>
+          ${d.week.map(w => html`<div key=${w.k} className="col"><span className="v">${w.min || ""}</span><div className=${"b" + (w.min ? "" : " zero")} style=${{ height: (w.min / maxWeek) * 100 + "%" }}></div><span className="dl">${DOW[(parseDay(w.k).getDay() + 6) % 7]}</span></div>`)}
+        </div>
+        <p className="note">14-day average: ${d.avg14} focused min/day (honest sessions only: completed or partial).</p>
+      </div>
+      <div className="panel">
+        <h3>Season 1: The Comeback</h3>
+        <div className="cal">${cal.map(c => html`<i key=${c.k} className=${(c.on ? "on " : "") + (c.future ? "future " : "") + (c.today ? "today" : "")} title=${niceDate(c.k)}>${c.i + 1}</i>`)}</div>
+        <p className="note">Lit days = at least one completed or partial mission. Season started ${niceDate(s.seasonStart)}.</p>
+      </div>
+    </div>
+
+    <div className="grid-2">
+      <div className="panel">
+        <h3>Avoidance patterns</h3>
+        ${urgeRows.length || catRows.length ? html`<${React.Fragment}>
+          ${urgeRows.length ? html`<div><div className="eyebrow" style=${{ marginBottom: "8px" }}>What you wanted to escape into</div><div className="bars">${urgeRows.map(([k, n]) => html`<div key=${k} className="bar-row"><span>${URGES[k] ? URGES[k].label : k}</span><div className="track"><i style=${{ width: n / maxU * 100 + "%", background: "var(--crimson)" }}></i></div><span className="n">${n}</span></div>`)}</div></div>` : null}
+          ${catRows.length ? html`<div><div className="eyebrow" style=${{ marginBottom: "8px" }}>What you said you were avoiding</div><div className="bars">${catRows.map(([k, n]) => html`<div key=${k} className="bar-row"><span>${CATS[k] ? CATS[k].label : k}</span><div className="track"><i style=${{ width: n / maxC * 100 + "%", background: "var(--tungsten)" }}></i></div><span className="n">${n}</span></div>`)}</div></div>` : null}
+          ${s.urges.length ? html`<p className="note">${genuineEsc} of ${s.urges.length} urges you judged as escaping discomfort. Average urge drop after breathing: ${(s.urges.reduce((a, u) => a + (u.before - u.after), 0) / s.urges.length).toFixed(1)} points.</p>` : null}
+        <//>` : html`<p className="dim">No patterns yet. They appear after you answer "What are you avoiding?" or fight an urge boss.</p>`}
+      </div>
+      <div className="panel">
+        <h3>Real-world milestones</h3>
+        <p className="note">Self-reported, dated, and only when it really happened.</p>
+        <div style=${{ display: "grid", gap: "8px" }}>
+          ${MS.map(([k, l]) => html`<div key=${k} className=${"badge" + (s.milestones[k] ? " on" : "")} style=${{ justifyContent: "space-between" }}>
+            <div style=${{ display: "flex", gap: "12px", alignItems: "center" }}><div className="medal" style=${{ width: "34px", height: "34px", fontSize: "14px" }}>${s.milestones[k] ? "✓" : "·"}</div><div><div className="bt">${l}</div>${s.milestones[k] ? html`<div className="bd">${niceDate(dayKey(new Date(s.milestones[k])))}</div>` : null}</div></div>
+            <button className="btn btn-sm btn-line" onClick=${() => { update(n => { if (n.milestones[k]) delete n.milestones[k]; else n.milestones[k] = Date.now(); }); if (!s.milestones[k]) flash("Milestone recorded", l); }}>${s.milestones[k] ? "Undo" : "It happened"}</button>
+          </div>`)}
+        </div>
+      </div>
+    </div>
+
+    <div className="panel">
+      <h3>Achievements · ${achs.filter(a => a.on).length}/${achs.length}</h3>
+      <div style=${{ display: "grid", gap: "10px", gridTemplateColumns: "repeat(auto-fill,minmax(min(100%,260px),1fr))" }}>
+        ${achs.map(a => html`<div key=${a.id} className=${"badge" + (a.on ? " on" : "")}><div className="medal">${a.on ? "★" : "?"}</div><div><div className="bt">${a.t}</div><div className="bd">${a.dsc}${!a.on && a.p ? " · " + a.p : ""}</div></div></div>`)}
+      </div>
+    </div>
+  </div>`;
+}
+
+/* =========================================================
+   TWO FUTURES
+   ========================================================= */
+function Futures({ s, d, update }) {
+  const sim = s.sim;
+  const avoidPace = sim.avoid != null ? sim.avoid : (d.avg14 || 10);
+  const setSim = (k, v) => update(n => { n.sim[k] = v; });
+  const setA = (k, v) => update(n => { n.sim.assume[k] = v; });
+  const setSplit = (k, v) => update(n => { n.sim.split[k] = v; });
+  const splitTotal = Object.values(sim.split).reduce((a, b) => a + b, 0) || 1;
+  const sh = k => sim.split[k] / splitTotal;
+  const hours = (minPerDay, days) => minPerDay * (sim.days / 7) * days / 60;
+  const points = [["30 days", 30], ["90 days", 90], ["1 year", 365], ["3 years", 1095]];
+  const A = sim.assume;
+  const outB = days => { const h = hours(sim.target, days); return { h, learn: h * sh("learn"), apps: Math.floor(h * sh("jobs") / A.appHours), biz: h * sh("biz"), money: h * sh("money") }; };
+  const outA = days => { const h = hours(avoidPace, days); return { h, learn: h * sh("learn"), apps: Math.floor(h * sh("jobs") / A.appHours), biz: h * sh("biz"), money: h * sh("money") }; };
+  const courses = learnH => { const out = []; if (learnH >= A.p6Hours) out.push("P6 fundamentals"); if (learnH >= A.p6Hours + A.protHours) out.push("protection fundamentals"); if (learnH >= (A.p6Hours + A.protHours) * 2.5) out.push("deeper commissioning / advanced P6"); return out; };
+  const num = (id, label, val, onC, step = 1, suffix) => html`<label className="f" htmlFor=${id}>${label}<div style=${{ display: "flex", gap: "6px", alignItems: "center" }}><input id=${id} type="number" min="0" step=${step} value=${val} onInput=${e => { const v = parseFloat(e.target.value); if (!isNaN(v) && v >= 0) onC(v); }} style=${{ maxWidth: "110px" }}/>${suffix ? html`<span className="faint">${suffix}</span>` : null}</div></label>`;
+  const b90 = outB(90), b365 = outB(365), b1095 = outB(1095), b30 = outB(30), a365 = outA(365), a1095 = outA(1095);
+  const fmtH = h => h < 10 ? h.toFixed(1) + "h" : Math.round(h) + "h";
+  return html`<div className="wrap section" style=${{ display: "flex", flexDirection: "column", gap: "16px" }}>
+    <div><span className="eyebrow">Consequence simulator</span><h2 style=${{ fontSize: "clamp(38px,7vw,64px)", marginTop: "6px" }}>Two Futures: which one are you building?</h2>
+      <p className="dim" style=${{ marginTop: "8px", maxWidth: "70ch" }}>These are illustrative projections of cumulative focused hours, built from assumptions you can edit. They are not predictions of salary, job offers or income. Hours are the one thing you control; outcomes also depend on the market, luck and quality of work.</p></div>
+
+    <div className="panel">
+      <div className="grid-2">
+        <label className="f" htmlFor="fx-target">Timeline B: focused minutes per day <span className="mono" style=${{ color: "var(--tungsten)", fontSize: "22px" }}>${sim.target} min</span>
+          <input id="fx-target" type="range" min="0" max="240" step="5" value=${sim.target} onInput=${e => setSim("target", Number(e.target.value))}/></label>
+        <label className="f" htmlFor="fx-avoid">Timeline A: pace if avoidance continues <span className="mono" style=${{ color: "var(--fg)", fontSize: "22px" }}>${avoidPace} min</span>
+          <input id="fx-avoid" type="range" min="0" max="120" step="5" value=${avoidPace} onInput=${e => setSim("avoid", Number(e.target.value))}/></label>
+      </div>
+      <div className="btn-row" style=${{ alignItems: "center" }}>
+        <button className="btn btn-sm btn-line" onClick=${() => setSim("avoid", d.avg14)}>Set A to my real 14-day average (${d.avg14} min)</button>
+        <label className="f" htmlFor="fx-days" style=${{ flexDirection: "row", alignItems: "center", gap: "8px" }}>Days per week<select id="fx-days" value=${sim.days} onChange=${e => setSim("days", Number(e.target.value))} style=${{ width: "auto" }}>${[3, 4, 5, 6, 7].map(n => html`<option key=${n} value=${n}>${n}</option>`)}</select></label>
+      </div>
+    </div>
+
+    <div className="tl">
+      ${points.map(([lab, days]) => { const a = outA(days), b = outB(days); const mx = Math.max(a.h, b.h, 1);
+        return html`<div key=${lab} className="tl-card"><div className="when">${lab}</div>
+          <div className="hbar"><span className="dim">A · avoidance</span><div className="tr"><i style=${{ width: a.h / mx * 100 + "%", background: "var(--fg-faint)" }}></i></div><span className="mono">${fmtH(a.h)}</span></div>
+          <div className="hbar"><span>B · consistent action</span><div className="tr"><i style=${{ width: b.h / mx * 100 + "%", background: "var(--tungsten)" }}></i></div><span className="mono" style=${{ color: "var(--tungsten)" }}>${fmtH(b.h)}</span></div>
+          <div className="note">Gap: <b className="mono" style=${{ color: "var(--fg)" }}>${fmtH(b.h - a.h)}</b>${b.h - a.h > 40 ? ` ≈ ${Math.round((b.h - a.h) / 38)} full work weeks` : ""}</div>
+        </div>`; })}
+    </div>
+
+    <div className="grid-2">
+      <div className="panel future-col a">
+        <h3 style=${{ color: "var(--fg-dim)" }}>Timeline A · Avoidance continues</h3>
+        <div className="item"><b>30 days</b>Same CV. ${outA(30).apps} tailored application${outA(30).apps === 1 ? "" : "s"} at most. Another business idea researched, none launched. The plan for Melbourne still lives in your head.</div>
+        <div className="item"><b>90 days</b>${outA(90).learn < A.p6Hours ? "P6 still on the someday list." : "Some P6 progress, unevenly."} Salary likely unchanged around today's level. Early 2027 approaches with the job search not started.</div>
+        <div className="item"><b>1 year</b>${fmtH(a365.h)} of focused effort in total. Possible outcome: you move to Melbourne on hope rather than an offer, or the move slips again. The $150K–$200K band stays "next year".</div>
+        <div className="item"><b>3 years</b>${fmtH(a1095.h)}. The ambition is intact, and so is the gap. Age 36 with the same plans, refined many times.</div>
+      </div>
+      <div className="panel future-col b">
+        <h3 style=${{ color: "var(--tungsten)" }}>Timeline B · Consistent action</h3>
+        <div className="item"><b>30 days · ${fmtH(b30.h)}</b>Enough time for a rebuilt CV and LinkedIn, ~${b30.apps} tailored applications, and ${fmtH(b30.learn)} of technical study. One business offer chosen and ${b30.biz >= 2 ? "first customers contacted" : "a first message drafted"}.</div>
+        <div className="item"><b>90 days · ${fmtH(b90.h)}</b>${courses(b90.learn).length ? "Time to complete " + courses(b90.learn).join(" and ") + "." : `${fmtH(b90.learn)} of study banked toward P6 (assumed ${A.p6Hours}h).`} ~${b90.apps} applications sent, which means real interview practice and real salary data. ${fmtH(b90.biz)} on the business: ${b90.biz >= A.bizHours ? "enough to have tested the offer with real customers." : "validation under way."}</div>
+        <div className="item"><b>1 year · ${fmtH(b365.h)}</b>${courses(b365.learn).length ? "Learning milestones reachable: " + courses(b365.learn).join(", ") + "." : ""} A Melbourne move timed around an offer rather than hope. Possible (not guaranteed): a role in the $150K+ band, given your degree, master's and switchboard experience.</div>
+        <div className="item"><b>3 years · ${fmtH(b1095.h)}</b>Compounding: deeper technical credibility, a tested side business with ${fmtH(b1095.biz)} invested, a deposit plan with ${fmtH(b1095.money)} of deliberate money management behind it. The $300K combined-income goal becomes a plan with evidence instead of a wish.</div>
+      </div>
+    </div>
+
+    <details className="panel">
+      <summary style=${{ cursor: "pointer", fontWeight: 800 }}>Edit assumptions</summary>
+      <div style=${{ display: "flex", flexDirection: "column", gap: "14px", marginTop: "12px" }}>
+        <div className="eyebrow">How focused time is split (normalised to 100%)</div>
+        <div className="grid-2">
+          ${[["learn", "Technical learning"], ["jobs", "Job search"], ["biz", "Business"], ["money", "Money & admin"]].map(([k, l]) => html`<label key=${k} className="f" htmlFor=${"fx-sp-" + k}>${l}: <span className="mono" style=${{ color: "var(--fg)" }}>${Math.round(sh(k) * 100)}%</span><input id=${"fx-sp-" + k} type="range" min="0" max="100" step="5" value=${sim.split[k]} onInput=${e => setSplit(k, Number(e.target.value))}/></label>`)}
+        </div>
+        <div className="grid-2">
+          ${num("fx-app", "Hours per tailored application", A.appHours, v => setA("appHours", Math.max(0.25, v)), 0.25, "hours")}
+          ${num("fx-p6", "Hours to P6 fundamentals", A.p6Hours, v => setA("p6Hours", v), 1, "hours")}
+          ${num("fx-prot", "Hours to protection fundamentals", A.protHours, v => setA("protHours", v), 1, "hours")}
+          ${num("fx-biz", "Hours to test an offer with real customers", A.bizHours, v => setA("bizHours", v), 1, "hours")}
+        </div>
+        <p className="note">Defaults are rough planning guesses, not course specifications. Replace them with figures from the actual courses or programs you choose.</p>
+      </div>
+    </details>
+  </div>`;
+}
+
+/* =========================================================
+   COACH CHAT
+   ========================================================= */
+function CoachChat({ s, d, prio, coach, runAct, update, sample }) {
+  const [msgs, setMsgs] = useState(() => [{ who: "co", coach, text: coach === "brutal" ? "Talk to me. What's going on?" : "I'm here. What's happening right now?", action: null }]);
+  const [text, setText] = useState("");
+  const [live, setLive] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const endRef = useRef(null);
+  useEffect(() => { if (endRef.current) endRef.current.scrollTop = endRef.current.scrollHeight; }, [msgs]);
+  const QUICK = ["I'm bored.", "I don't feel like working.", "I wasted the whole morning.", "I want to watch YouTube.", "I have too many goals.", "I'll start tomorrow.", "I'm afraid I won't succeed."];
+  const send = async (t) => {
+    t = (t || "").trim(); if (!t || busy) return;
+    setText("");
+    const ctx = { s, d, prio };
+    const base = coachReply(coach, t, ctx);
+    const next = msgs.concat([{ who: "me", text: t }]);
+    if (live && sample) {
+      const idx = next.length;
+      setMsgs(next.concat([{ who: "co", coach, text: "…", action: base.action, live: true }]));
+      setBusy(true);
+      const persona = coach === "brutal"
+        ? "You are 'The Brutal Truth' coach: direct, firm, evidence-based, challenges excuses, distinguishes real obstacles from avoidance. Never humiliating or abusive. No flattery."
+        : "You are 'The Strategist' coach: calm, warm, intelligent, understands task avoidance, makes starting easier with small concrete steps.";
+      const facts = `User profile: 33, Perth, electrical & electronics engineering degree, master's in engineering management, ~3 years Australian project engineering (switchboards, switchrooms, procurement, manufacturing, scheduling). Earns about AUD 115k, aims for 150-200k, relocating to Melbourne early 2027, long-term 300k combined income, first home. Struggles with novelty-seeking, research instead of action, avoidance. No clinical diagnosis assumed.
+Tracked today: ${d.minsToday} focused minutes, ${d.doneToday} done, ${d.partialToday} partial, ${d.distractedToday} distracted, ${d.urgesToday.length} urges fought. 14-day average ${d.avg14} min/day. Most common urge: ${d.topUrge ? URGES[d.topUrge].label : "none yet"}. Most avoided: ${d.topCat ? CATS[d.topCat].label : "none yet"}. Today's priority mission: ${prio ? prio.title + " (" + prio.minutes + " min)" : "none"}.`;
+      const history = next.slice(-6).map(m => (m.who === "me" ? "User: " : "Coach: ") + m.text).join("\n");
+      const prompt = `${persona}\n\n${facts}\n\nConversation so far:\n${history}\n\nReply as the coach in under 110 words, plain text, no lists or headings. Use the tracked data where relevant, never invent completed actions, and end with exactly one concrete next action the user can start within 10 minutes.`;
+      try {
+        const r = await sample(prompt, { modelTier: "quick", cache: false, onText: ({ text }) => setMsgs(cur => cur.map((m, i) => i === idx ? Object.assign({}, m, { text }) : m)) });
+        setMsgs(cur => cur.map((m, i) => i === idx ? Object.assign({}, m, { text: r.text }) : m));
+      } catch (e) {
+        setMsgs(cur => cur.map((m, i) => i === idx ? Object.assign({}, m, { text: base.text, live: false, err: e && e.code === "not_granted" ? "Live coach not allowed; showing the scripted coach." : "Live coach unavailable; showing the scripted coach." }) : m));
+        if (e && e.code === "not_granted") setLive(false);
+      }
+      setBusy(false);
+    } else {
+      setMsgs(next.concat([{ who: "co", coach, text: base.text, action: base.action }]));
+    }
+  };
+  return html`<div className="wrap section" style=${{ display: "flex", flexDirection: "column", gap: "14px", maxWidth: "860px" }}>
+    <div><span className="eyebrow">Coach</span><h2 style=${{ fontSize: "clamp(38px,7vw,64px)", marginTop: "6px" }}>Talk it through</h2>
+      <p className="dim" style=${{ marginTop: "6px" }}>${live ? "Live mode: replies come from Claude using your tracked stats. The first reply asks your permission." : "Scripted mode: instant rule-based replies that use your tracked data. This is not live AI."}</p></div>
+    <div className="btn-row" style=${{ alignItems: "center" }}>
+      <div className="seg" role="group" aria-label="Coach personality">
+        <button aria-pressed=${coach === "brutal"} onClick=${() => update(n => { n.coach = "brutal"; })}>Brutal Truth</button>
+        <button aria-pressed=${coach === "mentor"} onClick=${() => update(n => { n.coach = "mentor"; })}>Strategist</button>
+      </div>
+      ${sample ? html`<div className="seg" role="group" aria-label="Reply mode"><button aria-pressed=${!live} onClick=${() => setLive(false)}>Scripted</button><button aria-pressed=${live} onClick=${() => setLive(true)}>Live (Claude)</button></div>` : html`<span className="note">Live AI isn't available in this view; scripted coach active.</span>`}
+    </div>
+    <div className="panel" style=${{ padding: "14px" }}>
+      <div className="chat" ref=${endRef} aria-live="polite">
+        ${msgs.map((m, i) => html`<div key=${i} className=${"msg " + m.who + (m.who === "co" ? " " + (m.coach || coach) : "")}>
+          ${m.text}
+          ${m.err ? html`<div className="note" style=${{ marginTop: "6px" }}>${m.err}</div>` : null}
+          ${m.action ? html`<div style=${{ marginTop: "10px" }}><button className="btn btn-sm btn-amber" onClick=${() => runAct(m.action.act)}>${m.action.label}</button></div>` : null}
+        </div>`)}
+      </div>
+      <div className="chips">${QUICK.map(q => html`<button key=${q} onClick=${() => send(q)} disabled=${busy}>${q}</button>`)}</div>
+      <form style=${{ display: "flex", gap: "8px" }} onSubmit=${e => { e.preventDefault(); send(text); }}>
+        <input id="coach-input" value=${text} onInput=${e => setText(e.target.value)} placeholder="Tell your coach what's going on…" aria-label="Message your coach"/>
+        <button className="btn btn-amber" type="submit" disabled=${!text.trim() || busy}>Send</button>
+      </form>
+    </div>
+  </div>`;
+}
+
+/* =========================================================
+   WEEKLY RECAP
+   ========================================================= */
+function Recap({ s, d, coach, byId }) {
+  const [off, setOff] = useState(0);
+  const ws = addDays(weekStartKey(d.today), off * 7), we = addDays(ws, 6);
+  const inWeek = k => k >= ws && k <= we;
+  const sess = s.sessions.filter(x => inWeek(x.day));
+  const urges = s.urges.filter(u => inWeek(dayKey(new Date(u.ts))));
+  const checks = s.checkins.filter(c => inWeek(dayKey(new Date(c.ts))) && c.cat !== "none");
+  const done = sess.filter(x => x.outcome === "done");
+  const focusMin = Math.round(sess.filter(productive).reduce((a, x) => a + x.actual, 0) / 60);
+  const daysShown = new Set(sess.filter(productive).map(x => x.day)).size;
+  const byAttr = {}; sess.filter(productive).forEach(x => byAttr[x.attr] = (byAttr[x.attr] || 0) + 1);
+  const uc = {}; urges.forEach(u => uc[u.urge] = (uc[u.urge] || 0) + 1);
+  const cc = {}; checks.forEach(c => cc[c.cat] = (cc[c.cat] || 0) + 1);
+  const topU = Object.entries(uc).sort((a, b) => b[1] - a[1]);
+  const topC = Object.entries(cc).sort((a, b) => b[1] - a[1]);
+  const postponed = []; for (let i = 0; i < 7; i++) { const k = addDays(ws, i); if (k >= d.today) break; const dd = s.daily[k]; if (!dd || !dd.priority) continue; const ok = s.sessions.some(x => x.day === k && x.mid === dd.priority && x.outcome === "done"); if (!ok) { const m = byId(dd.priority); if (m && !postponed.some(p => p.id === m.id)) postponed.push(m); } }
+  const useful = done.slice().sort((a, b) => b.xp - a.xp).slice(0, 3);
+  const partialsOpen = activeMissions(s).filter(m => { const ls = lastSession(s, m.id); return ls && ls.outcome === "partial"; });
+  const prios = [];
+  if ((byAttr.career || 0) < 3) prios.push("Book three 25-minute career sessions (CV, one application, P6) into specific calendar slots.");
+  if (topC[0]) prios.push(`Face "${CATS[topC[0][0]].label.toLowerCase()}" first thing Monday with a 10-minute mission, before email.`);
+  if (partialsOpen[0]) prios.push(`Finish "${partialsOpen[0].title}". It's started; don't let it stall.`);
+  if ((uc.ideas || 0) >= 1) prios.push("Turn business research into contact: message one potential customer.");
+  if ((byAttr.health || 0) < 2) prios.push("Two wellbeing missions (walk or strength) to protect your energy.");
+  ["Send one tailored application to a role in your target salary band.", "Set up an automatic savings transfer on payday.", "Plan next week on Sunday in a 25-minute weekly planning session."].forEach(x => { if (prios.length < 3 && !prios.includes(x)) prios.push(x); });
+  const verdict = sess.length === 0
+    ? (coach === "brutal" ? "Nothing logged this week. Either it happened off the record, or it didn't happen. Either way, next week starts with one 10-minute mission." : "A blank week on the tracker. That says nothing about your worth; it just means next week starts small. One 10-minute mission on Monday.")
+    : (coach === "brutal" ? `${done.length} missions done, ${fmtMin(focusMin)} focused, ${daysShown} of 7 days shown up. ${postponed.length ? `The priority slipped ${postponed.length} time${postponed.length > 1 ? "s" : ""}; that's the pattern to break.` : "You did the priorities. Raise the bar slightly."}` : `${done.length} missions done and ${fmtMin(focusMin)} of focus across ${daysShown} days. ${postponed.length ? "Some priorities slipped, which tells us where to make things smaller next week." : "You kept your priorities. That's real consistency."}`);
+  return html`<div className="wrap section" style=${{ display: "flex", flexDirection: "column", gap: "16px" }}>
+    <div className="recap-open">
+      <div className="grain"></div>
+      <span className="eyebrow">${niceDate(ws)} – ${niceDate(we)}</span>
+      <h2 key=${ws} style=${{ marginTop: "10px" }}>Previously on your life…</h2>
+      <div className="btn-row" style=${{ justifyContent: "center", marginTop: "16px" }}>
+        <button className="btn btn-sm btn-line" onClick=${() => setOff(off - 1)}>‹ Earlier week</button>
+        <button className="btn btn-sm btn-line" disabled=${off >= 0} onClick=${() => setOff(off + 1)}>Later week ›</button>
+      </div>
+    </div>
+    <div className=${"coach-band " + coach}><span className=${"avatar " + coach}>${COACH[coach].init}</span><div><div className="who">${COACH[coach].name} · weekly verdict</div><p>${verdict}</p></div></div>
+    <div className="grid-3" style=${{ gridTemplateColumns: "repeat(auto-fit,minmax(140px,1fr))" }}>
+      <div className="stat"><div className="k">Missions done</div><div className="v">${done.length}</div></div>
+      <div className="stat"><div className="k">Focus time</div><div className="v">${fmtMin(focusMin)}</div></div>
+      <div className="stat"><div className="k">Days shown up</div><div className="v">${daysShown}/7</div></div>
+      <div className="stat"><div className="k">Urges fought</div><div className="v">${urges.length}</div></div>
+      <div className="stat"><div className="k">Career sessions</div><div className="v">${byAttr.career || 0}</div></div>
+      <div className="stat"><div className="k">Wealth / business</div><div className="v">${byAttr.wealth || 0}</div></div>
+    </div>
+    <div className="grid-2">
+      <div className="panel"><h3>Missions completed</h3>${done.length ? html`<ul className="list">${done.map(x => html`<li key=${x.id}><span>${x.title}</span><span>${niceDate(x.day)} · +${x.xp}</span></li>`)}</ul>` : html`<p className="dim">None this week.</p>`}</div>
+      <div className="panel"><h3>Avoidance patterns</h3>
+        ${topU.length || topC.length ? html`<ul className="list">${topU.map(([k, n]) => html`<li key=${"u" + k}><span>Urge: ${URGES[k] ? URGES[k].label : k}</span><span>${n}×</span></li>`)}${topC.map(([k, n]) => html`<li key=${"c" + k}><span>Avoided: ${CATS[k] ? CATS[k].label : k}</span><span>${n}×</span></li>`)}</ul>` : html`<p className="dim">No avoidance data logged this week.</p>`}</div>
+      <div className="panel"><h3>Goals postponed</h3>${postponed.length ? html`<ul className="list">${postponed.map(m => html`<li key=${m.id}><span>${m.title}</span><span>daily priority, not done</span></li>`)}</ul>` : html`<p className="dim">No daily priorities slipped${off === 0 ? " so far (today isn't counted until it's over)" : ""}.</p>`}</div>
+      <div className="panel"><h3>Most useful actions</h3>${useful.length ? html`<ul className="list">${useful.map(x => html`<li key=${x.id}><span>${x.title}</span><span>${fmtMin(x.actual / 60)} · ${ATTRS[x.attr] ? ATTRS[x.attr].label : ""}</span></li>`)}</ul>` : html`<p className="dim">Complete a mission to see it here.</p>`}</div>
+    </div>
+    <div className="panel"><h3>Three priorities for next week</h3><ol style=${{ margin: 0, paddingLeft: "20px", display: "grid", gap: "8px" }}>${prios.slice(0, 3).map((p, i) => html`<li key=${i} style=${{ fontWeight: 600 }}>${p}</li>`)}</ol>
+      <p className="note">Generated from this week's tracked data. Progress is measured; your worth isn't.</p></div>
+  </div>`;
+}
+
+/* =========================================================
+   SETTINGS / DATA
+   ========================================================= */
+function Settings({ s, update, setS, downloads, onClose, flash, openCoach }) {
+  const [imp, setImp] = useState("");
+  const [impErr, setImpErr] = useState("");
+  const [reset, setReset] = useState("");
+  const [copied, setCopied] = useState("");
+  const json = useMemo(() => JSON.stringify(s, null, 1), [s]);
+  const taRef = useRef(null);
+  const copy = async () => {
+    try { await navigator.clipboard.writeText(json); setCopied("Copied to clipboard."); }
+    catch (e) { if (taRef.current) { taRef.current.focus(); taRef.current.select(); } setCopied("Copy blocked here. The text is selected; copy it manually."); }
+  };
+  const save = async () => {
+    if (!downloads) return;
+    try { await downloads.save({ filename: "lifeflix-" + dayKey() + ".json", data: json }); setCopied("File saved."); }
+    catch (e) { setCopied("File not saved" + (e && e.code ? " (" + e.code + ")" : "") + "."); }
+  };
+  const doImport = async () => {
+    try { const o = JSON.parse(imp); if (!o || !Array.isArray(o.missions) || !Array.isArray(o.sessions)) throw new Error("Missing missions or sessions."); const n = normalize(o); await Cloud.wipe(); n.updatedAt = Date.now(); setS(n); setImp(""); setImpErr(""); flash("Data imported", n.sessions.length + " sessions restored"); }
+    catch (e) { setImpErr("That isn't a LIFEFLIX export: " + e.message); }
+  };
+  const doReset = async () => { await Cloud.wipe(); const n = freshState(); n.coach = s.coach; setS(n); setReset(""); flash("Progress reset", "Season 1 starts today."); onClose(); };
+  return html`<div className="overlay" role="dialog" aria-modal="true" aria-label="Settings and data">
+    <div className="sheet">
+      <button className="close-x" onClick=${onClose} aria-label="Close">×</button>
+      <div className="sheet-body">
+        <span className="eyebrow">Settings</span>
+        <h2 style=${{ fontSize: "38px", textTransform: "uppercase" }}>Your data</h2>
+        <div className="panel" style=${{ background: "var(--ink-3)" }}><${SaveStatus}/>
+          <p className="note">${s.sessions.length} sessions · ${s.urges.length} urge fights · ${s.missions.length} episodes. Saved automatically after every change. On this device it lives in browser storage; when you're signed in to Claude it also syncs privately to your account so other devices can pick it up. Only you can read it.</p></div>
+        <div className="btn-row"><button className="btn btn-line btn-sm" onClick=${openCoach}>Re-read coach introductions</button></div>
+        <hr className="sep"/>
+        <h3 style=${{ fontSize: "22px", textTransform: "uppercase" }}>Export</h3>
+        <textarea id="set-export" ref=${taRef} readOnly value=${json} style=${{ minHeight: "110px", fontFamily: "var(--mono)", fontSize: "11px" }} aria-label="Export data as JSON"></textarea>
+        <div className="btn-row"><button className="btn btn-sm btn-amber" onClick=${copy}>Copy JSON</button>${downloads ? html`<button className="btn btn-sm btn-line" onClick=${save}>Save as file</button>` : null}</div>
+        ${copied ? html`<p className="note" role="status">${copied}</p>` : null}
+        <hr className="sep"/>
+        <h3 style=${{ fontSize: "22px", textTransform: "uppercase" }}>Import</h3>
+        <textarea id="set-import" value=${imp} onInput=${e => setImp(e.target.value)} placeholder="Paste a LIFEFLIX export here" style=${{ minHeight: "80px", fontFamily: "var(--mono)", fontSize: "11px" }}></textarea>
+        ${impErr ? html`<p className="note" style=${{ color: "var(--bad)" }}>${impErr}</p>` : null}
+        <div><button className="btn btn-sm btn-line" disabled=${!imp.trim()} onClick=${doImport}>Replace my data with this import</button></div>
+        <hr className="sep"/>
+        <h3 style=${{ fontSize: "22px", textTransform: "uppercase", color: "var(--bad)" }}>Reset</h3>
+        <p className="dim">Deletes every session, urge log, custom episode and milestone, here and in your account sync. Export first if you might want it back. Type RESET to confirm.</p>
+        <div style=${{ display: "flex", gap: "8px" }}><input id="set-reset" value=${reset} onInput=${e => setReset(e.target.value)} placeholder="RESET" aria-label="Type RESET to confirm"/><button className="btn btn-danger" disabled=${reset !== "RESET"} onClick=${doReset}>Reset all</button></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* =========================================================
+   BOOT
+   ========================================================= */
+ReactDOM.createRoot(document.getElementById("root")).render(html`<${App}/>`);
+})();
+</script>
