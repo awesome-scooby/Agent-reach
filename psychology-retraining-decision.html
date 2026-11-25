@@ -1,0 +1,672 @@
+<title>Psychology retraining decision</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+/* VOICE work: a decision brief for one engineer, dense and exact
+   IDEA a project programme plus cost estimate, the documents a project engineer already reads
+   PICTURE Gantt programme 2027-2035: three plans, a study lane and a paid-work lane, P and G milestones
+   COLOUR white ground, near-black ink, cobalt stage ramp, vermilion for independent practice and your package line
+   TYPE Space Grotesk 600 + Inter
+   LAYOUT cobalt title strip with key figures, full-width programme beneath; on a phone the lanes narrow and labels drop to a legend */
+:root{color-scheme:light dark;--lab:118px;
+--bg:light-dark(#ffffff,#0a0d18);--ink:light-dark(#0b1020,#e9edf8);--ink2:light-dark(#4b5570,#a8b2c9);
+--rule:light-dark(#dfe5f2,#232c45);--zone:light-dark(#eef2ff,#111a33);--strip:light-dark(#1240e0,#152a9e);
+--co:light-dark(#1240e0,#7d96ff);
+--s1:light-dark(#c3d0ff,#26357a);--t1:light-dark(#0b1020,#e9edf8);
+--s2:light-dark(#7d96ff,#3d5ad6);--t2:light-dark(#0b1020,#ffffff);
+--s3:light-dark(#1240e0,#7d96ff);--t3:light-dark(#ffffff,#0a0d18);
+--s4:light-dark(#071a66,#c9d4ff);--t4:light-dark(#ffffff,#0a0d18);
+--hot:light-dark(#d93a1a,#ff6a4d);--amb:light-dark(#d98a00,#f2b13c);--ambt:light-dark(#7a4d00,#f2b13c);
+--job:light-dark(#d3d8e4,#343d57);--ok:light-dark(#0f7a45,#4cc787)}
+:root[data-theme=light]{color-scheme:light}
+:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:'Space Grotesk',Inter,system-ui,sans-serif;font-weight:600;letter-spacing:-.02em;line-height:1.08;margin:0;text-wrap:balance}
+h2{font-size:clamp(24px,3vw,34px);max-width:30ch}
+h3{font-size:20px;margin:34px 0 10px}
+p{margin:0 0 12px;max-width:72ch}
+a{color:var(--co)}
+.band{padding-block:clamp(30px,4vw,56px);padding-left:max(5vw,16px,env(safe-area-inset-left,0px));padding-right:max(5vw,16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1240px;margin:0 auto}
+.alt{background:var(--zone)}
+.lede{font-size:17px;color:var(--ink2);margin:12px 0 22px}
+.hd{display:grid;gap:12px 40px;align-items:end;margin-bottom:22px}
+.hd .lede{margin:0}
+@media(min-width:900px){.hd{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}.hd h2{max-width:none}}
+.src{font-size:13px;color:var(--ink2);margin-top:10px;max-width:none}
+.strip{background:var(--strip);color:#fff;margin-top:calc(-1*env(safe-area-inset-top,0px));padding-top:calc(env(safe-area-inset-top,0px) + 2rem);padding-bottom:26px}
+.strip .who{font-size:14px;color:#d6deff;margin-bottom:10px}
+.strip h1{font-size:clamp(34px,5vw,52px);color:#fff}
+.strip .find{font-size:clamp(17px,1.7vw,20px);max-width:62ch;margin:14px 0 0;color:#eef1ff}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(11em,1fr));gap:1px;background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.25);margin-top:20px}
+.kpi{background:var(--strip);padding:14px 16px}
+.kpi b{display:block;font:600 clamp(24px,2.6vw,31px)/1.1 'Space Grotesk',sans-serif;white-space:nowrap}
+.kpi span{font-size:13.5px;color:#dbe2ff;line-height:1.35;display:block;margin-top:4px}
+.nav{display:flex;flex-wrap:wrap;gap:6px;padding-top:12px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.nav a{font-size:13.5px;text-decoration:none;color:var(--ink2);padding:5px 10px;border:1px solid var(--rule);border-radius:999px}
+.nav a:hover{color:var(--co);border-color:var(--co)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13.5px;color:var(--ink2);margin:16px 0 10px}
+.legend i{display:inline-block;width:16px;height:12px;border-radius:2px;vertical-align:-1px;margin-right:6px}
+.gantt{position:relative;margin-top:4px}
+.ln{display:grid;grid-template-columns:var(--lab) minmax(0,1fr);align-items:center}
+.ln>span{font-size:13px;color:var(--ink2);padding-right:10px}
+.tr{position:relative;height:30px;background-image:linear-gradient(to right,var(--rule) 1px,transparent 1px);background-size:calc(100% / 8.5) 100%}
+.axis .tr{height:24px;background:none}
+.axis i{position:absolute;top:2px;font-style:normal;font-size:12.5px;color:var(--ink2);padding-left:5px;border-left:1px solid var(--rule);line-height:20px}
+.ys{display:none}
+.gp{padding:14px 0 12px;border-top:1px solid var(--rule)}
+.gp-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 16px;margin-bottom:8px}
+.gp-h b{font:600 18px/1.2 'Space Grotesk',sans-serif}
+.gp-h span{font-size:14px;color:var(--ink2)}
+.gp-h em{font-style:normal;color:var(--ink);font-weight:600;white-space:nowrap}
+.gp-h .best{font-size:12.5px;font-weight:600;color:var(--t3);background:var(--s3);padding:1px 8px;border-radius:999px}
+.bar{position:absolute;top:3px;bottom:3px;border-radius:3px;font-size:12.5px;line-height:24px;padding:0 7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
+.bar.tight{color:transparent!important}
+.k1{background:var(--s1);color:var(--t1)}.k2{background:var(--s2);color:var(--t2)}.k3{background:var(--s3);color:var(--t3)}.k4{background:var(--s4);color:var(--t4)}
+.k4h{background:repeating-linear-gradient(135deg,var(--s4) 0 2px,transparent 2px 6px);border:1px solid var(--s4);color:var(--ink)}
+.je{background:var(--job);color:var(--ink)}.jp{background:var(--s4);color:var(--t4)}
+.jx{background:repeating-linear-gradient(135deg,var(--ink2) 0 2px,transparent 2px 7px);border:1px solid var(--ink2);color:var(--ink)}
+.jr{background:color-mix(in srgb,var(--hot) 13%,var(--bg));border:1px solid var(--hot);color:var(--ink)}
+.lv{background:var(--amb);min-width:4px;padding:0;z-index:1}
+.kt{background:var(--bg);border:1.5px dashed var(--co);color:var(--ink)}
+.kr{background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--amb) 45%,transparent) 0 3px,transparent 3px 8px);color:var(--ink)}
+.ms{position:absolute;top:50%;width:20px;height:20px;transform:translate(-50%,-50%);display:grid;place-items:center;z-index:3}
+.ms b{font:700 11px/1 Inter,sans-serif}
+.ms.p{border-radius:50%;background:var(--bg);border:2px solid var(--co);color:var(--co)}
+.ms.g{background:var(--hot);color:#fff;transform:translate(-50%,-50%) rotate(45deg);border-radius:3px;width:18px;height:18px}
+.ms.g b{transform:rotate(-45deg)}
+.ms.t{background:var(--ink);color:var(--bg);border-radius:3px}
+.vline{position:absolute;top:24px;bottom:0;border-left:2px dashed var(--ink);pointer-events:none;z-index:4;opacity:.7}
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:18px 0}
+.trio>div{background:var(--zone);padding:16px 18px;border-radius:6px}
+.alt .trio>div{background:var(--bg)}
+.trio b{display:block;font:600 17px/1.25 'Space Grotesk',sans-serif;margin-bottom:6px}
+.trio p{font-size:15px;margin:0}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14.5px;margin-top:6px}
+th{font-weight:600;text-align:left;font-size:13.5px;color:var(--ink2);border-bottom:1.5px solid var(--ink);padding:8px 10px;vertical-align:bottom}
+td{padding:9px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+td:first-child{font-weight:600}
+.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;font-size:12.5px;font-weight:600;padding:1px 8px;border-radius:999px;white-space:nowrap}
+.y{background:color-mix(in srgb,var(--ok) 15%,transparent);color:var(--ok)}
+.m{background:color-mix(in srgb,var(--amb) 20%,transparent);color:var(--ambt)}
+.no{background:color-mix(in srgb,var(--hot) 13%,transparent);color:var(--hot)}
+.cc .row,.ic{display:grid;grid-template-columns:minmax(0,15em) minmax(0,1fr) 8.5em;gap:6px 14px;align-items:center}
+.cc .row{margin:10px 0}
+.cc .lb,.ic .lb{font-size:14px;line-height:1.3}
+.cc .tk{display:flex;height:30px;border-radius:3px;overflow:hidden;background:var(--zone)}
+.alt .cc .tk{background:var(--bg)}
+.cc .tk>i{height:100%;display:block}
+.vl{font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right;font-weight:600}
+.c-tu{background:var(--s3)}.c-fe{background:var(--s1)}.c-lv{background:var(--amb)}.c-in{background:var(--s2)}
+.c-yo{background:repeating-linear-gradient(135deg,var(--ink2) 0 2px,transparent 2px 7px)}
+.c-rg{background:repeating-linear-gradient(135deg,var(--ink2) 0 1px,transparent 1px 5px);opacity:.7}
+.c-ss{background:color-mix(in srgb,var(--hot) 55%,var(--bg))}
+.tog{display:flex;align-items:center;gap:10px;font-size:15px;margin-top:12px;cursor:pointer}
+.tog input{width:20px;height:20px;accent-color:var(--co)}
+.ic .gh{grid-column:1/-1;font-weight:600;font-size:14.5px;margin-top:12px;padding-top:8px;border-top:1px solid var(--rule)}
+.ic .lb{color:var(--ink2)}
+.ic .tk{position:relative;height:24px}
+.ic .rb{position:absolute;top:4px;bottom:4px;border-radius:2px}
+.n-lo{background:var(--job)}.n-hi{background:var(--ink2)}.c-lo{background:var(--s1)}.c-hi{background:var(--co)}
+.pk{position:absolute;top:-4px;bottom:-4px;border-left:2px solid var(--hot)}
+.ic .ax{position:relative;height:20px;font-size:12.5px;color:var(--ink2)}
+.ic .ax i{position:absolute;font-style:normal;transform:translateX(-50%)}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;align-items:start}
+.wf{margin-top:8px}
+.wf .r{display:grid;grid-template-columns:minmax(0,1fr) 7em;gap:12px;align-items:center;margin:6px 0}
+.wf .r>div:first-child{font-size:14px}
+.wf .bx{height:16px;background:var(--co);border-radius:2px;margin-top:4px}
+.wf .pkgb{background:transparent;border:2px solid var(--hot)}
+.calc{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:28px;border:1px solid var(--rule);padding:22px;border-radius:8px;background:var(--bg);margin-top:18px}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.f label{display:block;font-size:13.5px;color:var(--ink2);margin-bottom:4px}
+.f input{width:100%;font:16px Inter,sans-serif;padding:9px 10px;border:1px solid var(--ink2);border-radius:4px;background:var(--bg);color:var(--ink)}
+.f input:focus{outline:2px solid var(--co);outline-offset:1px}
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.presets button{font:500 14px Inter,sans-serif;padding:8px 13px;border:1px solid var(--co);background:transparent;color:var(--co);border-radius:999px;cursor:pointer;min-height:40px}
+.presets button:hover{background:color-mix(in srgb,var(--co) 10%,transparent)}
+.presets button[aria-pressed=true]{background:var(--co);color:var(--bg)}
+.out .big{font:600 clamp(32px,4vw,46px)/1 'Space Grotesk',sans-serif;font-variant-numeric:tabular-nums}
+.out .gap{font-size:16px;font-weight:600;margin-top:6px}
+.meter{position:relative;height:24px;background:var(--zone);border-radius:4px;margin:14px 0 6px}
+.meter .fill{position:absolute;left:0;top:0;bottom:0;background:var(--co);border-radius:4px;transition:width .25s}
+.meter .pk{top:-5px;bottom:-5px}
+.out ul{margin:12px 0 0;padding-left:18px;font-size:14.5px}
+.out li{margin:4px 0}
+.brk{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;margin-top:16px}
+.brk>div{padding:12px 14px;border-radius:4px;font-size:14px;line-height:1.4}
+.brk b{display:block;font-weight:600;margin-bottom:4px}
+.brk strong{display:block;font:600 17px/1.2 'Space Grotesk',sans-serif;margin-bottom:6px}
+.b-y{background:color-mix(in srgb,var(--ok) 15%,var(--bg))}.b-m{background:color-mix(in srgb,var(--amb) 22%,var(--bg))}.b-n{background:color-mix(in srgb,var(--hot) 15%,var(--bg))}
+.who3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin:16px 0}
+.who3>div{background:var(--bg);padding:16px;border-radius:4px}
+.who3 b{display:block;font:600 17px 'Space Grotesk',sans-serif}
+.who3 small{display:block;color:var(--ink2);font-size:13.5px;margin:2px 0 8px}
+.verdict{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}
+.verdict>div{padding:18px;border-radius:6px;border:1px solid var(--rule)}
+.verdict .lead{background:var(--strip);color:#fff;border-color:var(--strip)}
+.verdict .lead p{color:#eef1ff}
+.verdict b{display:block;font:600 19px/1.25 'Space Grotesk',sans-serif;margin-bottom:8px}
+.verdict p{margin:0;font-size:15.5px}
+.dec{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:18px 0 26px}
+.dec>div{background:var(--zone);padding:16px 18px;border-radius:6px}
+.dec b{display:block;font:600 17px/1.25 'Space Grotesk',sans-serif;margin:6px 0}
+.dec p{font-size:15px;margin:0}
+.tag{display:inline-block;font-size:12.5px;font-weight:600;padding:1px 9px;border-radius:999px;white-space:nowrap}
+.d1{background:var(--s1);color:var(--t1)}.d2{background:var(--s2);color:var(--t2)}.d3{background:var(--job);color:var(--ink)}
+.sched{display:grid;grid-template-columns:max-content minmax(0,1fr);margin:0}
+.sched dt{font:600 17px/1.3 'Space Grotesk',sans-serif;white-space:nowrap;padding:11px 22px 11px 0;border-top:1px solid var(--rule)}
+.sched dd{margin:0;padding:11px 0;border-top:1px solid var(--rule);font-size:15px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:14px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--zone);padding:18px 20px;border-radius:6px;margin:12px 0 0}
+.cpy{font:600 15px Inter,sans-serif;padding:10px 16px;min-height:44px;background:var(--co);color:var(--bg);border:0;border-radius:6px;cursor:pointer}
+.cpy:hover{opacity:.9}
+.cpmsg{font-size:14px;color:var(--ink2);margin-left:10px}
+details{margin-top:18px;border-top:1px solid var(--rule);padding-top:12px}
+summary{cursor:pointer;font-weight:600;font-size:15.5px}
+footer{font-size:13.5px;color:var(--ink2)}
+@media(max-width:900px){.trio,.dec,.who3{grid-template-columns:1fr}.cols{grid-template-columns:1fr}.brk{grid-template-columns:1fr}.verdict{grid-template-columns:1fr}}
+@media(max-width:760px){.calc{grid-template-columns:1fr;padding:16px}}
+@media(max-width:600px){:root{--lab:46px}.yl{display:none}.ys{display:inline}.ln>span{font-size:12px;padding-right:6px}
+.cc .row,.ic{grid-template-columns:minmax(0,1fr) auto}.cc .lb,.ic .lb{grid-column:1/-1;margin-bottom:-2px}
+table{font-size:13.5px}th,td{padding:7px 5px}
+.stack thead{display:none}.stack tr{display:block;padding:10px 0;border-bottom:1px solid var(--rule)}
+.stack td{display:grid;grid-template-columns:6.6em minmax(0,1fr);gap:10px;border:0;padding:3px 0;text-align:left;white-space:normal}
+.stack td::before{content:attr(data-l);color:var(--ink2);font-weight:500;font-size:12.5px}
+.stack td:first-child{display:block;font-size:15px;padding-bottom:6px}.stack td:first-child::before{content:none}
+.sched{grid-template-columns:1fr}.sched dt{padding-bottom:0}.sched dd{border-top:0;padding-top:2px}
+.fields{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){.meter .fill{transition:none}}
+</style>
+
+<header class="strip band">
+ <div class="wrap">
+  <p class="who">Decision brief for a Perth electrical project engineer, possibly in Melbourne from 2027. Checked against university, APAC, Ahpra and Psychology Board sources on 25 November 2026.</p>
+  <h1>Psychology retraining decision</h1>
+  <p class="find">Take a switchgear tendering or estimating job in 2027, test client work cheaply alongside it, and decide on 31 October 2027. Psychology is a 5 to 8 year detour that ends at about the pay you earn now, so do it only if you want the work itself.</p>
+  <div class="kpis">
+   <div class="kpi"><b>5 to 8 years</b><span>to independent practice (general registration)</span></div>
+   <div class="kpi"><b>$122k–$261k</b><span>all-in cost in today's dollars, before any slow start</span></div>
+   <div class="kpi"><b>Late 2031</b><span>earliest general registration, and only with a year out of work</span></div>
+   <div class="kpi"><b>15.4 a week</b><span>completed solo sessions at $200 to match your $126,148 package</span></div>
+   <div class="kpi"><b>$110k–$150k</b><span>switchgear tendering and estimating, often hybrid, within months</span></div>
+  </div>
+ </div>
+</header>
+
+<nav class="nav band" aria-label="Sections">
+ <a href="#programme">Programme</a><a href="#plans">Three plans</a><a href="#options">Course options</a><a href="#income">Income</a><a href="#cert">Cert IV and testing fit</a><a href="#pakistan">Pakistan credit</a><a href="#verdict">Recommendation</a><a href="#next">Decisions and deadlines</a><a href="#email">UNE email</a><a href="#checks">What changed</a>
+</nav>
+
+<section class="band" id="programme" style="padding-top:28px">
+ <div class="wrap">
+<div class="hd">  <h2>Independent practice arrives between late 2031 and late 2034, and every plan ends your engineering pay at the internship</h2>
+  <p class="lede">The first four years are online and fit around a 38-hour job. The fifth year needs a weekday placement, and the 1,500-hour internship only counts psychological work, so engineering stops counting there.</p></div>
+  <div class="legend">
+   <span><i style="background:var(--s1)"></i>Years 1–3 sequence</span><span><i style="background:var(--s2)"></i>Fourth year</span><span><i style="background:var(--s3)"></i>Fifth year (master's)</span><span><i style="background:var(--s4)"></i>Internship or paid psych role</span><span><i style="background:var(--job)"></i>Engineering, 38 h</span><span><i style="background:var(--amb)"></i>Unpaid leave or reduced days</span><span><i class="jx" style="border:1px solid var(--ink2)"></i>No engineering pay</span><span><b style="color:var(--co)">P</b> supervised work starts</span><span><b style="color:var(--hot)">G</b> independent practice</span><span>Dashed line: go or no-go, 31 Oct 2027</span>
+  </div>
+  <div class="gantt" id="gantt"></div>
+  <p class="src">Dates use real 2027 intakes, closing dates and results dates where published; later years are projected. Plan A uses UNE's standard part-time plan; with one full-time trimester in T2 2027 every Plan A date moves a year earlier. Hover a bar for detail.</p>
+ </div>
+</section>
+
+<section class="band alt" id="plans">
+ <div class="wrap">
+  <h2>Plan C balances speed and keeping your job; Plan A is cheapest but finishes three years later than Plan B</h2>
+  <div class="scroll"><table class="stack" id="tPlans"></table></div>
+  <h3>All-in cost to general registration</h3>
+  <p style="font-size:15px;color:var(--ink2)">Tuition at 2027 rates plus fees, unpaid leave at $2,426 a week ($2,166 pay plus 12% super), any year out of work, and the internship-year pay drop against $126,148. The hatched end shows the range.</p>
+  <div class="legend"><span><i class="c-tu"></i>Tuition</span><span><i class="c-fe"></i>Registration and exam</span><span><i class="c-lv"></i>Unpaid leave</span><span><i class="c-yo" style="border:1px solid var(--ink2)"></i>Full-time year out</span><span><i class="c-in"></i>Internship pay drop</span><span><i class="c-rg" style="border:1px solid var(--ink2)"></i>Upper range</span><span><i class="c-ss"></i>Slow-start solo years</span></div>
+  <div class="cc" id="cost"></div>
+  <label class="tog"><input type="checkbox" id="ss"> Add two slow-start years in your own practice (8, then 14 sessions a week): +$76,700</label>
+  <p class="src">You can avoid the slow-start cost by working as an employed psychologist first, for example in a WA school at $121,875 with super, while building a private list.</p>
+
+  <h3>Where the 38-hour week holds, and where it breaks</h3>
+  <div class="brk">
+   <div class="b-y"><b>Years 1–3 online</b><strong>Holds</strong>Online, no placement, exams online. $0 to about $5k optional leave.</div>
+   <div class="b-m"><b>Fourth year online</b><strong>Holds, with strain</strong>17–20 h a week; thesis peaks. 4–6 weeks leave: $10k–$15k.</div>
+   <div class="b-m"><b>Fifth year, online part-time</b><strong>Only partly</strong>300 placement hours; UNE sets 3 days a week for a trimester. $18k–$30k.</div>
+   <div class="b-n"><b>Fifth year, campus or clinical</b><strong>Breaks</strong>Full-time weekday classes and placements. About $126k a year.</div>
+   <div class="b-n"><b>5+1 internship</b><strong>Breaks</strong>1,500 h in a psychological role, 44 weeks minimum full-time. $21k–$40k below engineering.</div>
+  </div>
+  <p class="src">Source: <a href="https://www.ahpra.gov.au/documents/default.aspx?record=WD25%2f35126&dbid=AP&chksum=Lp1IB6VqmRgsP7bWS05iGg%3d%3d">Psychology Board 5+1 internship guidelines, effective 1 Dec 2025</a>. Work in "another professional field" is expressly rejected. Telehealth client contact and video supervision do count, so the internship itself can be largely from home if the employer allows it.</p>
+
+  <h3>Funding that applies</h3>
+  <div class="scroll"><table class="stack" id="tFund"></table></div>
+ </div>
+</section>
+
+<section class="band" id="options">
+ <div class="wrap">
+<div class="hd">  <h2>Only UNE offers a cheap Commonwealth-supported first stage; every other online conversion course is full fee</h2>
+  <p class="lede">Online courses are what you can start in Perth and keep after a move to Melbourne. Campus programs in Perth (Murdoch, UWA, Curtin) would force a transfer or a restart.</p></div>
+  <div class="trio">
+   <div><b>Rule B has no time limit in its wording</b><p>UNE's 2027 handbook: "You have completed a Bachelor qualification (AQF Level 7 or overseas equivalent) in any discipline." It grants 72 credit points automatically and leaves 12 psychology units. <a href="https://handbook.une.edu.au/courses/2027/BPSYSC">UNE Handbook 2027</a></p></div>
+   <div><b>The ten-year risk sits in another document</b><p>UNE's general advanced-standing guideline says previous studies "must be less than 10 years old". Your 2016 degree is over that line at any 2027 start. No UNE page says whether it applies to Rule B. Get it in writing.</p></div>
+   <div><b>Your master's is not a backup for Rule B</b><p>Postgraduate degrees go to Rule A, the full 24-unit degree. If UNE refuses the 2016 B.E., the real fallback is UNE's Graduate Diploma (no recency rule, about $22,531 CSP) or ECU Online.</p></div>
+  </div>
+
+  <h3>Stage 1: the three-year sequence</h3>
+  <div class="scroll"><table class="stack" id="tS1"></table></div>
+  <p class="src">CSP rates: psychology units in an approved bachelor-level "professional pathway" course are Band 2, $9,880 a full-time year in 2027 ($1,235 a unit). Graduate diploma units are Band 4, $18,025 ($2,253 a unit). If UNE's units were charged at Band 4, Rule B would cost about $27,000. Sources: <a href="https://handbook.une.edu.au/courses/2027/GDPSY">UNE GDPSY</a>, <a href="https://www.studyonline.ecu.edu.au/online-courses/graduate-diploma-psychology">ECU Online</a>, <a href="https://www.newcastle.edu.au/__data/assets/pdf_file/0008/1159883/2027-Domestic-Full-Fee-Postgraduate-Program-Indicative-Annual-Fees.pdf">Newcastle 2027 fees</a>, <a href="https://www.deakin.edu.au/course/graduate-diploma-psychological-science">Deakin H603</a>, <a href="https://apac.au/accredited-programs/search-a-program/download/?provider%5B%5D=70">APAC register (UNE)</a>.</p>
+
+  <h3>Stage 2: fourth year, where marks decide everything</h3>
+  <div class="scroll"><table class="stack" id="tS2"></table></div>
+  <div class="trio">
+   <div><b>Late results cost a year</b><p>Most February fourth years close October to December. UNE Honours runs in T1 only, closes 31 October, and needs the whole sequence finished before you apply.</p></div>
+   <div><b>Deakin's sequence finishes too late for February</b><p>A full-time 2027 start ends T3 with assessment to 11 Feb 2028; results around 24 Feb 2028 (plausible, not published). Only mid-year fourth years remain: Deakin H650 (July), Federation (late July), and the six-intake online diplomas.</p></div>
+   <div><b>Rule for a working student</b><p>Finish the sequence by the end of a year's second study period, so results are in by about early December, if you want the next February honours round.</p></div>
+  </div>
+
+  <h3>Stage 3: the fifth year, the hardest gate</h3>
+  <p style="font-size:15.5px">The APS says the sector has room for <b>about 10% of postgraduate applicants</b> (<a href="https://psychology.org.au/insights/psychology-student-grants-first-step-in-%E2%80%98future-pr">APS, Sept 2024</a>). A cheap campus CSP place that forces a year off work costs far more overall than a full-fee online one that keeps you employed.</p>
+  <div class="scroll"><table class="stack" id="tS3"></table></div>
+  <p class="src">Sources: <a href="https://www.curtin.edu.au/study/offering/course-pg-master-of-psychology-professional--mc-psychp/">Curtin MPP</a>, <a href="https://www.une.edu.au/study/courses/2027/master-of-professional-psychology">UNE MPP</a>, <a href="https://www.cairnmillar.org.au/course/master-professional-psychology/">Cairnmillar MPP</a>, <a href="https://www.federation.edu.au/courses/DYM9-Master-of-Professional-Psychology">Federation MPP</a>, <a href="https://www.swinburne.edu.au/course/postgraduate/master-of-psychology-clinical-psychology">Swinburne clinical</a>, <a href="https://www.psychologyboard.gov.au/Registration/Provisional.aspx">PsyBA provisional registration</a>. Provisional registration needs actual enrolment in the fifth year; an offer letter is not enough.</p>
+ </div>
+</section>
+
+<section class="band alt" id="income">
+ <div class="wrap">
+<div class="hd">  <h2>Psychology matches your $126,148 package only in your own practice at about 15 or more completed sessions a week</h2>
+  <p class="lede">All figures are yearly, before tax, on a package basis: salaries include 12% super; contractor and own-practice figures are after costs, out of which you fund your own super and leave.</p></div>
+  <div class="ic" id="inc"></div>
+  <p class="src">Sources: <a href="https://www.robertwalters.com.au/content/dam/robert-walters-redesign/country/australia/files/salary-survey/salary-guide-2026.pdf">Robert Walters 2026</a> and SEEK ads for tendering; <a href="https://www.education.wa.edu.au/school-psychologist-benefits-and-salaries">WA Department of Education</a>; <a href="https://healthcareaustralia.com.au/?p=39876">Healthcare Australia</a>; <a href="https://calculate.fairwork.gov.au/payguides/pact/MA000100/20260701">Fair Work SCHADS pay guide</a>. Own-practice rows assume $200 a session, 44 weeks and $9,000 of costs.</p>
+
+  <div class="cols" style="margin-top:28px">
+   <div>
+    <h3 style="margin-top:0">Your $115,920 is about $30,000 short</h3>
+    <div class="wf" id="wf"></div>
+    <p style="font-size:14.5px;margin-top:10px">If your 18 are already completed sessions, skip the no-show step: you land at <b>$106,880</b>, still <b>$19,268</b> short. The $95,792 equals a salary of about $85,500 once you set aside your own 12% super.</p>
+   </div>
+   <div>
+    <h3 style="margin-top:0">What a practice costs each year</h3>
+    <div class="scroll"><table id="tCost"></table></div>
+   </div>
+  </div>
+
+  <div class="calc" id="calc">
+   <div>
+    <h3 style="margin-top:0">Session calculator</h3>
+    <div class="presets" id="presets">
+     <button type="button" data-p="you">Your calculation</button>
+     <button type="button" data-p="con">Contractor, realistic</button>
+     <button type="button" data-p="y1">Own practice, year 1</button>
+     <button type="button" data-p="est">Own practice, established</button>
+    </div>
+    <div class="fields">
+     <div class="f"><label for="fee">Fee per session ($)</label><input id="fee" type="number" inputmode="decimal" min="0" step="10" value="200"></div>
+     <div class="f"><label for="bk">Sessions booked a week</label><input id="bk" type="number" inputmode="decimal" min="0" step="1" value="18"></div>
+     <div class="f"><label for="ns">No-shows and late cancels (%)</label><input id="ns" type="number" inputmode="decimal" min="0" max="90" step="1" value="10"></div>
+     <div class="f"><label for="wk">Weeks worked a year</label><input id="wk" type="number" inputmode="decimal" min="0" max="52" step="1" value="44"></div>
+     <div class="f"><label for="sh">Your share of the fee (%)</label><input id="sh" type="number" inputmode="decimal" min="0" max="100" step="5" value="70"></div>
+     <div class="f"><label for="co">Your yearly costs ($)</label><input id="co" type="number" inputmode="decimal" min="0" step="500" value="4000"></div>
+    </div>
+    <p class="src">Medicare pays clients $101.55 a session (items 80110 in person, 91170 by video), capped at 10 sessions a year, so a $200 fee leaves a $98.45 gap. The APS suggests $330.</p>
+   </div>
+   <div class="out" aria-live="polite">
+    <span style="font-size:14px;color:var(--ink2)">Your income after costs, before tax and super</span>
+    <div class="big" id="oNet">$0</div>
+    <div class="gap" id="oGap"></div>
+    <div class="meter"><div class="fill" id="oFill"></div><div class="pk" id="oPk"></div></div>
+    <div style="font-size:12.5px;color:var(--ink2)">Red line: your engineering package, $126,148</div>
+    <ul id="oList"></ul>
+   </div>
+  </div>
+
+  <h3>Contracting at a 60–70% split needs 21 to 25 completed sessions a week</h3>
+  <div class="scroll"><table id="tCon"></table></div>
+  <p class="src">$200 fee, 44 weeks, 10% lost sessions, before about $5,000 of contractor costs. Splits of 60/40 to 70/30 come from practice-finance blogs; no authoritative survey exists. Telehealth ads offer $100 to $200 per attended session. The APS 2022 survey found private practitioners average 23 paid hours plus 17 unpaid hours a week.</p>
+
+  <h3>Before you count on a full diary</h3>
+  <div class="trio">
+   <div><b>Client turnover is high</b><p>With most clients capped at 10 rebated sessions, 16 sessions a week over 44 weeks is about 70 clients a year: more than one new referral every week.</p></div>
+   <div><b>Referrals run through GPs</b><p>Since 1 Nov 2025, Medicare referrals must come from the client's usual GP or MyMedicare practice. Telehealth means competing nationally on price. <a href="https://www.health.gov.au/sites/default/files/2025-10/better-access-redesign-from-1-november-2025_0.pdf">Health Department</a></p></div>
+   <div><b>Demand is real, burnout too</b><p>The April 2026 government study found a 57.3% shortfall in access in 2025. A 2022 survey found 26.4% of psychologists burned out. No data on telehealth saturation was found.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="band" id="cert">
+ <div class="wrap">
+<div class="hd">  <h2>Your Cert IV can pay $45 to $63 an hour casual now; paid psychology work starts in 2030 at the earliest</h2>
+  <p class="lede">First confirm the Cert IV is awarded: your placement is outstanding, and ads for these roles ask for the qualification. Peer worker roles also need lived experience.</p></div>
+  <div class="cols">
+   <div>
+    <h3 style="margin-top:0">SCHADS award rates from 1 July 2026</h3>
+    <div class="scroll"><table id="tSch"></table></div>
+    <p class="src">Ads: Perth casual support from $46.70/h with a Cert IV; Neami Melbourne $46.74–$50.11. One 8-hour casual Saturday a week for 48 weeks earns about $24,300 (Level 2.1) to $27,200 (Level 3.1). The award's pay structure changes on 1 Oct 2027.</p>
+   </div>
+   <div>
+    <h3 style="margin-top:0">Paid psychology work, from provisional registration</h3>
+    <div class="scroll"><table id="tProv"></table></div>
+    <p class="src">Provisional psychologists can work in paid, supervised psychological roles, including telehealth, but cannot bill Medicare. That is 2030 in Plans B and C, 2032 in Plan A.</p>
+   </div>
+  </div>
+  <h3>The degree will not tell you whether you enjoy client work; these will</h3>
+  <p style="font-size:15.5px">The first three or four years are research-heavy academic psychology: two research-methods and statistics units, then a thesis that is half the fourth year. Counselling-practice units arrive only in year four.</p>
+  <div class="scroll"><table class="stack" id="tTest"></table></div>
+ </div>
+</section>
+
+<section class="band alt" id="pakistan">
+ <div class="wrap">
+<div class="hd">  <h2>Parallel Pakistani online study will not shorten your pathway</h2>
+  <p class="lede">A Pakistani BS Psychology is a four-year program; the Australian graduate route to the end of fourth year is about two years full-time or three to four part-time. Under Rule B your 12 remaining units are all core psychology, so you would do the same work twice.</p></div>
+  <div class="who3">
+   <div><b>The Australian university</b><small>Decides credit inside its course</small>Deakin grants no credit from non-APAC study. UTS credits at most 2 introductory subjects, and only from APAC-accredited programs within 10 years. Cairnmillar caps credit at 50% and wants an APS assessment first.</div>
+   <div><b>The APS</b><small>Judges comparability for postgraduate entry</small>Outcomes are only "three-year" or "four-year" comparable; four-year needs a research project. The APS says universities make the final credit decision.</div>
+   <div><b>Psychology Board and Ahpra</b><small>Judges equivalence at registration</small>Only UK, Irish and US accredited degrees are pre-recognised. An overseas assessment costs $718, non-refundable. Only onshore placement hours count.</div>
+  </div>
+  <p style="font-size:15.5px"><b>Before paying a Pakistani provider anything, get in writing:</b> (1) a unit-by-unit credit assessment from the specific Australian university, naming the course version; (2) an APS comparability outcome for that exact program and transcript; (3) for registration certainty, an Ahpra assessment, which in practice needs the formal $718 application. The Cert IV earns no credit into accredited psychology units either.</p>
+  <p class="src">Sources: <a href="https://psychology.org.au/about-us/what-we-do/assessments/assessment-overseas-qualifications/australian-university-postgraduate-course">APS overseas assessment</a>, <a href="https://www.cairnmillar.org.au/about/policies/advanced-standing-and-recognition-of-prior-learning-policy/">Cairnmillar RPL policy</a>, <a href="https://studyonline.uts.edu.au/online-courses/graduate-diploma-psychology">UTS Online</a>, <a href="https://www.psychologyboard.gov.au/Registration/Overseas-Applicants/registration-requirements.aspx">PsyBA overseas applicants</a>.</p>
+ </div>
+</section>
+
+<section class="band" id="verdict">
+ <div class="wrap">
+  <h2>Take the tendering job now; retrain only if a test year confirms you want client work</h2>
+  <div class="verdict">
+   <div class="lead"><b>If the goal is less site work and more flexibility</b><p>Switchgear tendering, estimating and proposals deliver it within months: $110k–$150k entry ($123k–$168k with super), senior roles $170k–$200k, often hybrid, paid leave kept, no retraining cost. Fully remote is rare. A predictable office role is also a far better base for evening study than commissioning.</p></div>
+   <div><b>If you genuinely love client work</b><p>Retraining is defensible, but it is not a money move. You pay $122k–$261k and five to eight years of 55–65 hour weeks, pass a gate that admits about one in ten, and land at about today's pay unless an own practice reaches 16+ completed sessions a week. Plan C is the best balance for someone who will not quit early; Plan A if money is tight and time is not.</p></div>
+  </div>
+  <h3>Six assumptions that do not hold up</h3>
+  <div class="scroll"><table class="stack" id="tAss"></table></div>
+ </div>
+</section>
+
+<section class="band alt" id="next">
+ <div class="wrap">
+  <h2>Three decisions to make before 5 February 2027</h2>
+  <div class="dec">
+   <div><span class="tag d1">Decision 1</span><b>UNE or ECU for stage 1, by 5 Feb 2027</b><p>Email UNE this week. If UNE confirms Rule B in writing, apply by 8 Feb (advanced standing) and 12 Feb. If speed is worth about $16,500 more tuition, start ECU Online in January. ECU SP2 in March is the fallback.</p></div>
+   <div><span class="tag d2">Decision 2</span><b>Make 2027 a paid test year, review 31 Oct 2027</b><p>Finish the Cert IV placement, take casual weekend support shifts, apply for Lifeline training, and take only two units. After 100+ hours of client contact, make a go or no-go call before the expensive stages.</p></div>
+   <div><span class="tag d3">Decision 3</span><b>Land a tendering offer by 30 Apr 2027</b><p>Right whichever way psychology goes. Negotiate hybrid days, unpaid study leave, and a written option to drop to about 0.6 FTE for one placement trimester later. Do it before T2 starts on 21 June and before any Melbourne move.</p></div>
+  </div>
+  <dl class="sched" id="sched"></dl>
+ </div>
+</section>
+
+<section class="band" id="email">
+ <div class="wrap">
+<div class="hd">  <h2>The email to send UNE admissions this week</h2>
+  <p class="lede">Send through AskUNE or Future Students. Fill in the bracketed details, and ask for the reply in writing before you pay anything.</p></div>
+  <button type="button" class="cpy" id="cp">Copy email</button><span class="cpmsg" id="cpmsg"></span>
+<pre id="mail">Subject: Rule B eligibility and study-plan questions – Bachelor of Psychological Science, T1 2027
+
+Dear UNE Admissions,
+
+I plan to apply for the Bachelor of Psychological Science (BPSYSC) under Rule B for Trimester 1 2027, studying online part-time while working full-time. Before the 8 February advanced-standing and 12 February on-time closing dates, could you please confirm the following in writing:
+
+1. Rule B eligibility: I hold a four-year Bachelor of Electrical Engineering from [university], Pakistan, completed in 2016 (HEC-recognised). Will UNE assess it as a "Bachelor qualification (AQF Level 7 or overseas equivalent)" and grant the 72 credit points of block advanced standing?
+2. Recency: UNE's Advanced Standing Application Guidelines say previous studies "must be less than 10 years old". Does any ten-year limit apply to Rule B block credit for a 2016 degree?
+3. Alternative basis: If the B.E. is not accepted, can my Master of Engineering Management (La Trobe University, 2020) be used for Rule B, or only for Rule A?
+4. Documents: What do you need, e.g. HEC-attested degree and transcripts, certified copies, La Trobe transcript, English-language evidence?
+5. Fees: Is a Commonwealth supported place available for Rule B in 2027, and what is the 2027 student contribution per 6 cp PSYC unit? Please also confirm CSP availability (quota) and the per-unit contribution for the Graduate Diploma in Psychology in 2027.
+6. Fastest part-time schedule: May I take T3 listed units (PSYC315 in T3 2027, PSYC309 in T3 2028) to finish in T1 2029? May I take four units in T2 2027 to finish by T2 2028?
+7. Honours timing: If my final units finish in T2, can I apply for Honours by 31 October that year if results are released after the closing date? If my final units are in T3, must I wait a further year?
+8. Results to date: Are Honours applications assessed on results to date, with offers conditional on final results?
+9. Intensives: Do any Rule B or Honours units have mandatory intensive schools (online or on campus), placements or in-person exams, and when are they usually held?
+10. Confirmation: Could you provide these answers as a written assessment (email or letter referencing my enquiry or application number) that I can rely on at enrolment?
+
+Kind regards,
+[Your name]
+[Phone] | [Email] | [UNE application or enquiry number, if any]</pre>
+ </div>
+</section>
+
+<section class="band alt" id="checks">
+ <div class="wrap">
+  <h2>What changed from your November figures</h2>
+  <div class="scroll"><table class="stack" id="tChg"></table></div>
+  <h3>How firm each figure is</h3>
+  <div class="scroll"><table class="stack" id="tVer"></table></div>
+  <details>
+   <summary>Registration rules in brief</summary>
+   <p style="margin-top:10px;font-size:15px">Provisional registration lasts 12 months, renewable twice; $0 to apply, $493 a year. General registration costs $604 plus $493 a year; the National Psychology Exam is $450, sat in Feb, May, Aug or Nov, pass mark 70%. The internship needs 1,500 hours including 500 client contact, 80 supervision (50 one-on-one) and 60 training, over at least 44 weeks full-time; part-time has no maximum. Higher-degree graduates do not sit the exam. The old 4+2 pathway closed to new entrants on 30 June 2022. In September 2026 the Board said it will recommend a single five-year degree leading straight to general registration, with no internship, exam or provisional registration; it needs government approval, has no transition rules yet, and current rules still apply. Recheck before applying for any fifth year. <a href="https://www.psychologyboard.gov.au/Registration/Fees.aspx">PsyBA fees</a>, <a href="https://www.aapi.org.au/Web/Web/About-AAPi/News/Articles/2026/Sept/Psychology_Board_Education_and_Training_Reform_Update.aspx">reform update</a>.</p>
+  </details>
+ </div>
+</section>
+
+<footer class="band">
+ <div class="wrap">
+  <p>Full report with every source: <b>reports/Psychology retraining pathway Australia.md</b>. Research notes: <b>research_notes/Psychology retraining pathway Australia/</b>. Several university sites blocked automated reading, so some figures come from search previews of official pages; they are marked in the table above. Confirm fees and dates on the live pages before paying. Figures in Australian dollars, at 2027 rates unless stated.</p>
+ </div>
+</footer>
+
+<script>
+{
+const Y0=2027,SP=8.5;
+const pc=t=>((t-Y0)/SP*100).toFixed(3)+'%';
+const wd=(a,b)=>((b-a)/SP*100).toFixed(3)+'%';
+const bar=(a,b,c,l,tip)=>`<div class="bar ${c}" style="left:${pc(a)};width:${wd(a,b)}" title="${tip||l||''}">${l||''}</div>`;
+const ms=(t,k,tip)=>`<div class="ms ${k}" style="left:${pc(t)}" title="${tip}"><b>${k.toUpperCase()}</b></div>`;
+const lane=(lab,inner)=>`<div class="ln"><span>${lab}</span><div class="tr">${inner}</div></div>`;
+const PLANS=[
+ {n:'Plan A: cheapest',r:'UNE Rule B, UNE Honours, UNE online master’s, internship',pl:'mid-2032',gl:'about late 2034',c:'$122k–$141k',p:2032.45,g:2034.85,
+  s:[[2027.14,2029.72,'k1','UNE Rule B, 12 units part-time','T1 2027 to T2 2029, 2 units a trimester, about $14,820 CSP'],[2030.15,2031.92,'k2','UNE Honours part-time','T1 2030 start (T1-only intake, closes 31 Oct 2029), about $9,880 CSP'],[2032.45,2033.72,'k3','UNE online MPP part-time','Enrol T2 2032, $37,728 full fee, final-trimester placement 3 days a week'],[2033.77,2034.65,'k4','Internship','5+1 internship, 44 weeks full-time in a paid psych role, then the national exam']],
+  j:[[2027,2033.75,'je','Engineering 38 h (tendering role from 2027)'],[2033.77,2034.65,'jp','Paid psych role'],[2034.85,2035.5,'jr','Registered']],
+  l:[[2030.45,2030.5,'About 2 weeks leave'],[2031.55,2031.63,'About 4 weeks leave, thesis'],[2033.47,2033.72,'Placement trimester: about 7.5 weeks pay lost']]},
+ {n:'Plan B: fastest',r:'ECU Online diploma, ECU online fourth year, full-time master’s, full-time internship',pl:'Feb–Mar 2030',gl:'about late 2031',c:'$216k–$261k',p:2030.12,g:2031.9,
+  s:[[2027.03,2028.35,'k1','ECU Online diploma, 1 unit per 7 weeks','SP1 Jan 2027 to about May 2028, $31,280 full fee'],[2028.36,2029.8,'k2','ECU online fourth year','From May 2028, $33,920, WAM 65 minimum, six intakes a year'],[2030.12,2030.9,'k3','Full-time MPP','Feb 2030, e.g. Curtin CSP $18,100 (limited places)'],[2030.92,2031.8,'k4','Internship','Full-time 44 weeks, exam Aug or Nov 2031']],
+  j:[[2027,2030.1,'je','Engineering 38 h (tendering role from 2027)'],[2030.1,2030.92,'jx','No engineering pay','Full-time study year: about $100k–$126k forgone'],[2030.92,2031.8,'jp','Paid psych role'],[2031.9,2035.5,'jr','Registered psychologist']],
+  l:[[2029.4,2029.48,'About 4 weeks leave, thesis']]},
+ {n:'Plan C: best while keeping the job',r:'ECU Online diploma, ECU online fourth year, UNE online master’s part-time, internship',pl:'Feb–Jun 2030',gl:'late 2032 to mid-2033',c:'$155k–$177k',p:2030.45,g:2032.75,best:1,
+  s:[[2027.03,2028.35,'k1','ECU Online diploma','SP1 Jan 2027 to about May 2028, $31,280'],[2028.5,2030.1,'k2','ECU online fourth year','Jul 2028 to early 2030, skipping a period for thesis or work peaks, $33,920'],[2030.45,2031.72,'k3','UNE online MPP part-time','T2 2030, $37,728, 300 placement hours at 3 days a week in the final trimester'],[2031.77,2032.62,'k4','Internship, full-time','44 weeks full-time'],[2032.62,2033.45,'k4h','or half-time to mid-2033','Half psych role, half engineering, about 80 weeks']],
+  j:[[2027,2031.75,'je','Engineering 38 h (tendering role from 2027)'],[2031.77,2032.62,'jp','Paid psych role'],[2032.75,2035.5,'jr','Registered psychologist']],
+  l:[[2029.55,2029.63,'About 4 weeks leave, thesis'],[2031.45,2031.72,'Placement trimester: 2 days a week engineering, or 12.5 weeks leave']]}
+];
+let h='',ax='';
+for(let y=2027;y<=2035;y++)ax+=`<i style="left:${pc(y)}"><span class="yl">${y}</span><span class="ys">’${String(y).slice(2)}</span></i>`;
+h+=`<div class="ln axis"><span></span><div class="tr">${ax}</div></div>`;
+h+=`<div class="gp"><div class="gp-h"><b>All plans</b><span>First step, and the rule-change risk</span></div>`+
+ lane('First',bar(2027,2027.83,'kt','2027 test year: Cert IV, weekend shifts, two units','Jan to 31 Oct 2027')+ms(2027.33,'t','Tendering or estimating offer by 30 Apr 2027'))+
+ lane('Rules',bar(2029.5,2035.5,'kr','Board proposes a five-year degree; steps after year four may change','Psychology Board, Sept 2026: recommendation only, needs government approval'))+`</div>`;
+PLANS.forEach(p=>{
+ h+=`<div class="gp"><div class="gp-h"><b>${p.n}</b>${p.best?'<span class="best">Best balance</span>':''}<span>${p.r}</span><span>Supervised work <em>${p.pl}</em></span><span>Independent <em>${p.gl}</em></span><span>All-in <em>${p.c}</em></span></div>`+
+ lane('Study',p.s.map(b=>bar(b[0],b[1],b[2],b[3],b[4])).join('')+ms(p.p,'p','Provisional registration: '+p.pl)+ms(p.g,'g','General registration: '+p.gl))+
+ lane('Work',p.j.map(b=>bar(b[0],b[1],b[2],b[3],b[4])).join('')+p.l.map(b=>bar(b[0],b[1],'lv','',b[2])).join(''))+`</div>`;
+});
+h+=`<div class="vline" style="left:calc(var(--lab) + (100% - var(--lab)) * ${((2027.83-Y0)/SP).toFixed(4)})"></div>`;
+const G=document.getElementById('gantt');G.innerHTML=h;
+const fit=()=>G.querySelectorAll('.bar').forEach(b=>{b.classList.toggle('tight',b.clientWidth<46)});
+const roG=new ResizeObserver(fit);roG.observe(G);
+
+const T=(id,heads,rows,num)=>{const el=document.getElementById(id);if(!el)return;num=num||[];
+ el.innerHTML='<thead><tr>'+heads.map((x,i)=>`<th${num.includes(i)?' class="n"':''}>${x}</th>`).join('')+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+r.map((c,i)=>`<td data-l="${heads[i]}"${num.includes(i)?' class="n"':''}>${c}</td>`).join('')+'</tr>').join('')+'</tbody>';};
+const Y='<span class="pill y">Yes</span>',N='<span class="pill no">No</span>',M=t=>`<span class="pill m">${t}</span>`;
+
+T('tPlans',['','Plan A: cheapest','Plan B: fastest','Plan C: best with the job'],[
+ ['Route','UNE Rule B, UNE Honours, UNE online MPP part-time, internship','ECU Online diploma, ECU online fourth year, full-time CSP MPP, full-time internship','ECU Online diploma, ECU online fourth year, UNE online MPP part-time, internship'],
+ ['Supervised work (provisional)','Mid-2032 (mid-2031 with one full-time trimester)','<b>Feb–Mar 2030</b>','Feb–Jun 2030'],
+ ['Independent practice (general)','About late 2034 (late 2033)','<b>About late 2031</b>','Late 2032 to mid-2033'],
+ ['Tuition, 2027 rates','<b>$62,428</b> ($42,725 with a Federation CSP MPP)','$83,300 ($107,242 without a CSP)','$102,928, all FEE-HELP'],
+ ['Unpaid leave','About 15 weeks','About 4 weeks plus a full year out','About 13 weeks'],
+ ['Engineering job kept until','2033','Feb 2030','2031'],
+ ['All-in cost','$122k–$141k','$216k–$261k','$155k–$177k'],
+ ['Main risk','UNE refuses Rule B for a 2016 degree; UNE Honours cut-off 78','Curtin CSP missed (full fee $42,042); a year with no income','Highest tuition; employer must agree to 2 days a week for one trimester']
+]);
+T('tFund',['Support','What it covers','Catch'],[
+ ['HECS-HELP and FEE-HELP','Every stage can be deferred: CSP units by HECS-HELP, full-fee courses by FEE-HELP','Plan B or C FEE-HELP totals are large; check the lifetime HELP limit, especially if La Trobe used FEE-HELP'],
+ ['Student Learning Entitlement','7 full-time years of CSP; Rule B (1.5) and Honours (1.0) use about 2.5','Your pre-2022 study does not count against it'],
+ ['Commonwealth Prac Payment','About $338 a week during placements, extended to psychology from 1 Jul 2027, including 5+1 master’s','Eligibility for someone also earning a salary is unconfirmed'],
+ ['Internship grants','About 500 funded internships a year, $47.6m','Funded only to 2028–29, before any plan here reaches the internship'],
+ ['Supervision scholarships','Run through 2030; one is for part-time interns at 17–29 h a week','Paying privately for 80 supervision hours at $340 costs up to $27,200; WA school roles supply it free'],
+ ['Clinical master’s CSP','Lowest band: $4,908 a year (Swinburne $9,816 total)','Needs about 80% marks and two largely full-time years']
+]);
+T('tS1',['Course','Mode and fit with 38 h','2027 intakes','Tuition','CSP','Into fourth year'],[
+ ['UNE Bachelor of Psychological Science, Rule B','Fully online, exams online, no placement; 2 units a trimester is 24–30 h a week','T1 starts 22 Feb; on-time close <b>12 Feb</b> (final 23 Feb); advanced standing closes <b>8 Feb</b>; T2 21 Jun; T3 18 Oct','<b>About $14,820</b>',Y+' uncapped','UNE Honours (WAM 75+, 2026 cut-off 78)'],
+ ['UNE Graduate Diploma in Psychology','Online, no compulsory intensives; part-time finishes T1 2029','T1, T2, T3','About $22,531 CSP; $39,120 full fee',M('Quota'),'As above'],
+ ['ECU Online Graduate Diploma of Psychology','100% online, one unit per 7-week period, 15–20 h a week; 16 months minimum','Six intakes: O-week 11–17 Jan (census 28 Jan), 8–14 Mar (census 25 Mar), then May, Jul, Aug, Oct','<b>$31,280</b> verified',N,'ECU online fourth year, WAM 65, six intakes'],
+ ['Newcastle Graduate Diploma of Psychological Science','100% online assessment; online entry exam required','Semester 1 closes 31 Jan 2027','<b>$36,850</b> verified',M('Unconfirmed'),'Honours not guaranteed (GPA 5.0)'],
+ ['Deakin Graduate Diploma of Psychological Science (H603)','Online or campus; one year full-time over three trimesters, too heavy beside 38 h','T1, T2','Full fee, amount unverified ($32,800–$41,400 listed)',N,'Counts as internal for Deakin honours (65% bar)'],
+ ['Cairnmillar Graduate Diploma','Online; 1 year full-time or 2 part-time','Semesters 1 and 2','$26,129',N,'Guaranteed honours at WAM 70+'],
+ ['RMIT Online Graduate Diploma','100% online; 10-week terms, 10–12 h a week','Jan, Apr, Jul, Sep; next closes 14 Dec 2026','$44,400',N,'75% average to apply for RMIT Melbourne honours'],
+ ['Others online','ACU (accredited with conditions), Monash, Swinburne, JCU, UTS, Adelaide; Torrens APAC status unconfirmed','Various','$31,440 ACU; ~$39,875 Monash; $39,750 Swinburne; $45,013 UTS',N,'Mostly their own Advanced diplomas']
+]);
+T('tS2',['Program','Mode','Entry bar','Intakes','2027 cost'],[
+ ['UNE Bachelor of Psychology with Honours','Online only, compulsory online intensives, 2 years part-time','WAM 75+ across 8 named units; cut-off 78 for 2026','<b>T1 only, closes 31 Oct</b>','About $9,880 CSP'],
+ ['Deakin BPsychSc (Honours) H452','Online or campus, part-time allowed','External: 75% plus 65% research methods, 20 places; Deakin H603 graduates: 65%','T1 only (2027 round closed 18 Nov 2026)','$9,880 CSP'],
+ ['Deakin Graduate Diploma of Psychology (Advanced) H650','Online, limited places','65% minimum; recent cut-offs 72%+','T1 and <b>T2 (July)</b>','About $34,400'],
+ ['ECU Online Graduate Diploma of Psychology (Advanced)','100% online, 16 months minimum','WAM 65','<b>Six a year</b>','$33,920'],
+ ['Federation BPsychSc (Honours)','Online or campus','GPA 5.0; accepts a graduate-diploma sequence','Sem 1 (1 Mar), <b>Sem 2 (26 Jul)</b>','$9,880 CSP'],
+ ['UniSQ BSc (Honours)(Psychology)','Online','GPA 5.0; recency tied to when your undergraduate degree began, so confirm','Feb; May part-time if places remain','$9,880 CSP'],
+ ['Monash, Swinburne, UTS, UNSW online','Online','70% / 70% / GPA 5 of 7 / WAM 65','Six / Mar, Jul, Nov / six / two','$39,740 / $31,800 / $36,010 / $39,000'],
+ ['Perth campus only: Murdoch, UWA, Curtin','On campus, so not portable','Credit average / 5% cap on outsiders / own students','Sem 1 and 2 / Sem 1 / closes 7 Dec 2026','$25,560 / CSP / CSP']
+]);
+T('tS3',['Program','Mode and work fit','Entry','Placement','2027 tuition','Intake'],[
+ ['UNE Master of Professional Psychology','Online, part-time up to 4 years, compulsory intensives; <b>best fit with a job</b>','Fourth-year ranking, quota','300 h in final trimester at 3 days a week; cannot be shortened','$37,728, no CSP','T1 (closes 19 Oct), T2, T3'],
+ ['Cairnmillar MPP (Melbourne)','Online or mixed, 2 years part-time','WAM 70, interview','300 h incl. industry placement','$36,856','Sem 1 (closes 30 Nov)'],
+ ['Federation MPP (Victoria)','Flexible learning or campus, part-time equivalent','GPA 5.0 plus credit average, interview','315 h unpaid','Mainly CSP, about $18,025','Sem 1 and 2'],
+ ['Curtin MPP (Perth)','Campus, 1 year full-time','Whole record ranked, interview','Fieldwork','$18,100 CSP (limited) / $42,042','Sem 1, opens about 1 May'],
+ ['Curtin Master of Clinical Psychology (sixth year)','Campus, 1 year','Fifth-year qualification, interview','Two 50-day placements','$5,000 CSP / $40,458','2028 intake: 30 Apr to 2 Sep 2027'],
+ ['UWA MPP or Master of Clinical Psychology','Campus; MPP full-time only','H2A, interview','8 weeks full-time / 3 placements','CSP implied for clinical','Close about 30 Sep / 11 Nov'],
+ ['Murdoch M1388 (years 4 and 5 combined)','Campus, 2 years full-time','Distinction average','Two practica','$72,000 total','Closes mid-Aug'],
+ ['Swinburne or RMIT clinical (2 years)','Swinburne 2 years full-time or 4 part-time; RMIT full-time only','Second class or above / 80%+','1,000 h / 132+ days','$4,908 a year CSP','Mid-Oct / mid-Sep']
+]);
+
+const INC=[
+ ['g','Engineering'],
+ ['Your job now, 38 h, with 12% super',126148,126148,'n'],
+ ['Tendering or estimating, entry (Perth, Melbourne)',123000,168000,'n'],
+ ['Senior estimator or tendering engineer',190000,224000,'n'],
+ ['g','While training'],
+ ['Cert IV support worker, full-time',80200,103400,'c'],
+ ['Provisional psychologist or intern',86240,104951,'c'],
+ ['g','After general registration'],
+ ['Employed, WA school psychologist (8 weeks leave)',121875,153858,'c'],
+ ['Employed, private practice or Vic public',105816,138774,'c'],
+ ['Contractor, your scenario: 70% of $200, 18 booked',95792,95792,'c'],
+ ['Contractor, 20–25 booked at 65–70%',97960,133600,'c'],
+ ['Own practice, year 1 (8 sessions a week)',61400,61400,'c'],
+ ['Own practice, year 2 (14 a week)',114200,114200,'c'],
+ ['Own practice, established (18–22 a week)',149400,184600,'c']
+];
+const MX=240000,PKG=126148,ps=v=>(v/MX*100).toFixed(2)+'%',kk=v=>'$'+Math.round(v/1000)+'k';
+let ih=INC.map(r=>{if(r[0]==='g')return `<div class="gh">${r[1]}</div>`;
+ const t=r[3],one=r[1]===r[2];
+ const bars=one?`<div class="rb ${t}-hi" style="left:0;width:${ps(r[1])}"></div>`:`<div class="rb ${t}-lo" style="left:0;width:${ps(r[1])}"></div><div class="rb ${t}-hi" style="left:${ps(r[1])};width:${ps(r[2]-r[1])}"></div>`;
+ return `<div class="lb">${r[0]}</div><div class="tk">${bars}<div class="pk" style="left:${ps(PKG)}"></div></div><div class="vl">${one?kk(r[1]):kk(r[1])+'–'+kk(r[2])}</div>`;}).join('');
+ih+=`<div></div><div class="ax">${[0,50000,100000,150000,200000].map(v=>`<i style="left:${ps(v)}">${v?kk(v):'$0'}</i>`).join('')}</div><div></div>`;
+document.getElementById('inc').innerHTML=ih;
+
+const WF=[['Your calculation: $200 × 70% × 18 × 46 weeks',115920],['Use 44 working weeks (holidays, sick days unpaid)',110880],['Allow 10% no-shows and late cancels',99792],['Less about $4,000 of contractor costs',95792],['Your engineering package, salary plus super',PKG,1]];
+document.getElementById('wf').innerHTML=WF.map(w=>`<div class="r"><div>${w[0]}<div class="bx${w[2]?' pkgb':''}" style="width:${(w[1]/130000*100).toFixed(1)}%"></div></div><div class="vl">$${w[1].toLocaleString('en-AU')}</div></div>`).join('');
+
+T('tCost',['Yearly cost','Low','High'],[
+ ['Ahpra general registration','$493','$493'],['Indemnity and liability insurance','$400','$600'],['Practice software','$0','$720'],['Psychology Today listing','$150','$300'],['Video platform','$0','$600'],['Peer consultation and CPD (30 h)','$2,000','$4,000'],['Accountant and tax','$1,200','$2,500'],['Equipment, phone, internet','$1,000','$1,500'],['Website, booking, payment fees','$700','$1,500'],['<b>Total</b> (income protection extra)','<b>~$6,000</b>','<b>~$12,000</b>']
+],[1,2]);
+T('tCon',['Booked a week','Completed','At 60%','At 65%','At 70%'],[
+ ['15','13.5','$71,280','$77,220','$83,160'],['20','18','$95,040','$102,960','$110,880'],['25','22.5','$118,800','$128,700','$138,600'],['<b>Break-even</b>','completed','<b>24.8</b>','<b>22.9</b>','<b>21.3</b>']
+],[1,2,3,4]);
+T('tSch',['Level','Hourly','Casual','Sat','Sun'],[
+ ['2.1','$36.22','$45.28','$63.39','$81.50'],['3.1','$40.49','$50.61','$70.86','$91.10'],['4.1','$46.70','$58.38','$81.73','$105.08'],['4.4','$50.25','$62.81','$87.94','$113.06']
+],[1,2,3,4]);
+T('tProv',['Provisional role','Base pay'],[
+ ['WA school psychologist','$93,706'],['Victorian Education','$72,189–$98,955'],['Private graduate, WA / VIC','$90,000 / $88,000'],['Remote telehealth (MedHealth)','$77,000']
+],[1]);
+T('tTest',['Test','Cost','What it tells you'],[
+ ['Finish the Cert IV placement','Your time','Real client exposure; unlocks paid roles'],
+ ['One or two casual weekend support shifts a month','Paid, about $500–$650 a shift','Sustained contact with distress and recovery work; gives you referees for master’s applications'],
+ ['Lifeline crisis-line volunteering','Training contribution','Phone crisis work, the closest thing to telehealth practice'],
+ ['UNE PSYC101 + PSYC102 in T1 2027','About $2,470 on HECS-HELP; withdraw by 22 Mar census to pay nothing','Whether you can sustain 24–30 study hours a week beside work'],
+ ['One ECU unit in SP1 or SP2','$3,910; census 28 Jan or 25 Mar','The same, at 15–20 hours a week']
+]);
+T('tAss',['Assumption','What the evidence says'],[
+ ['"I can keep the 38-hour job throughout."',`${N} Internship hours must come from a psychological role, and every fifth year needs 300+ placement hours in business hours.`],
+ ['"$200 × 18 sessions beats engineering."',`${N} At a 70% split it is about $30k short. Only an own practice keeping the full fee, at about 16+ completed sessions a week, clears it.`],
+ ['"Telehealth at $200 is easy to fill."',`${M('Not automatic')} Demand is real, but referrals depend on clients’ usual GPs, the 10-session cap churns clients, and you compete nationally.`],
+ ['"The rules will stay put."',`${M('Uncertain')} The Board will recommend a five-year degree with no internship, exam or provisional registration. Government must approve it; current rules apply until then.`],
+ ['"Getting in is a formality."',`${N} About 10% of postgraduate applicants get a place system-wide. UNE Honours needed 78; Deakin gives outsiders 20 places. Aim for 75–80%.`],
+ ['"The Cert IV is done."',`${M('Not yet')} It is not awarded until the placement is complete, and paid support roles ask for it.`]
+]);
+T('tChg',['Item','Your November figure','Corrected or confirmed'],[
+ ['UNE Rule B cost','About $14,760','<b>About $14,820</b> at 2027 Band 2; about $27,000 if charged Band 4'],
+ ['UNE Graduate Diploma','About $21,000 CSP / $39,100 full','<b>About $22,531</b> CSP at Band 4; $39,120 full fee; CSP quota-limited'],
+ ['Ten-year limit on the bachelor’s','From an older FAQ','Not in the 2023–2027 Rule B wording; UNE’s general credit guideline still needs written clearance'],
+ ['Master’s as the Rule B basis','Assumed possible','<b>No.</b> Postgraduate degrees go to Rule A, the full 24 units'],
+ ['T1 2027 deadline','12 Feb 2027','Confirmed; final close 23 Feb; advanced standing <b>8 Feb</b>; OUA 14 Feb'],
+ ['Deakin diploma fee','$41,000','<b>Unverified</b>; listings give $32,800–$41,400'],
+ ['Deakin results date','24 Feb 2028','Plausible (assessment ends 11 Feb 2028), not published'],
+ ['Deakin fourth-year code','H652','<b>H650</b> (Advanced diploma); honours is H452'],
+ ['Deakin honours','~$9,900 CSP, 75% external','$9,880 (2027); also 65% in research methods and a <b>20-place</b> external quota'],
+ ['Newcastle','$36,850','<b>Verified</b> 2027 full fee; CSP unconfirmed; entry exam'],
+ ['ECU Online','$31,280','<b>Verified</b>; 16-month minimum'],
+ ['Two-year clinical master’s route','$34,500','Adds up ($34,516) but needs ~80% marks and two largely full-time years'],
+ ['Curtin MPP route','$42,700','Adds up ($42,800) but CSPs are limited (~$66,700 full fee) and it is full-time on campus'],
+ ['Private practice income','$115,920','<b>About $95,800</b> at 44 weeks, 10% no-shows and costs, against $126,148']
+]);
+const V='<span class="pill y">Verified</span>',S='<span class="pill m">Search preview</span>',U='<span class="pill no">Unverified</span>';
+T('tVer',['Figure','Status'],[
+ ['UNE Rule B wording, 72 cp credit, 12 units, study plans; Honours T1-only, 31 Oct close, WAM 75+',V],
+ ['UNE Honours cut-off 78; UNE 10-year guideline; 12, 23 and 8 Feb dates; UNE MPP $37,728 and 3-day placement',S],
+ ['ECU $31,280 and $33,920 and 2027 study periods; Newcastle $36,850',V],
+ ['Deakin H603 fee; Deakin results on 24 Feb 2028',U],
+ ['Curtin MPP $18,100 / $42,042; Swinburne clinical $4,908 a year; Cairnmillar $36,856',V],
+ ['Psychology Board rules and fees ($493, $604, $450); Medicare $101.55; SCHADS rates; WA school salaries',V],
+ ['Prac Payment about $338 a week from 1 Jul 2027',V+' eligibility unclear'],
+ ['Tendering pay','Robert Walters '+V+', job ads '+S],
+ ['Contractor splits, 10% no-show rate, accountant and CPD costs','<span class="pill m">Estimate</span>']
+]);
+
+const SCH=[
+ ['14 Dec 2026','d1','RMIT Online intake closes, only if you want the RMIT Melbourne honours link'],
+ ['This week','d1','Email UNE (below). Contact Insight Training to finish the Cert IV placement'],
+ ['11–17 Jan 2027','d1','ECU Online SP1 orientation week; census 28 Jan. Plan B and C start'],
+ ['31 Jan 2027','d2','Commit to the test year. Newcastle Semester 1 applications close'],
+ ['5 Feb 2027','d1','Decide UNE or ECU'],
+ ['8 Feb 2027','d1','UNE advanced standing applications close'],
+ ['12 Feb 2027','d1','UNE on-time close (final 23 Feb). Classes start 22 Feb'],
+ ['8–14 Mar 2027','d1','ECU SP2 orientation week, the fallback if UNE is slow; census 25 Mar'],
+ ['22 Mar 2027','d2','UNE census: last day to withdraw without being charged'],
+ ['30 Apr 2027','d3','Target date for a tendering or estimating offer'],
+ ['21 Jun 2027','d3','UNE T2 starts; be settled in the new role'],
+ ['31 Oct 2027','d2','Go or no-go review after 100+ hours of client contact']
+];
+document.getElementById('sched').innerHTML=SCH.map(s=>`<dt>${s[0]}</dt><dd><span class="tag ${s[1]}">${s[1]==='d1'?'Decision 1':s[1]==='d2'?'Decision 2':'Decision 3'}</span> ${s[2]}</dd>`).join('');
+
+const COST=[
+ ['Plan A: cheapest',[['tu',62428],['fe',2500],['lv',36400],['in',21000]],19000,122328],
+ ['Plan B: fastest',[['tu',83300],['fe',2000],['lv',9700],['yo',100000],['in',21000]],45000,216000],
+ ['Plan C: best with the job',[['tu',102928],['fe',2500],['lv',31500],['in',18000]],22000,154928],
+ ['Move into tendering instead',[],0,0]
+];
+const SS=76700,ssEl=document.getElementById('ss');
+const drawCost=()=>{const on=ssEl.checked,mx=on?350000:270000,w=v=>(v/mx*100).toFixed(2)+'%';
+ document.getElementById('cost').innerHTML=COST.map(c=>{
+  if(!c[1].length)return `<div class="row"><div class="lb"><b>${c[0]}</b></div><div class="tk"></div><div class="vl">$0, within months</div></div>`;
+  const segs=c[1].map(s=>`<i class="c-${s[0]}" style="width:${w(s[1])}" title="${s[0]}: $${s[1].toLocaleString('en-AU')}"></i>`).join('')+`<i class="c-rg" style="width:${w(c[2])}"></i>`+(on?`<i class="c-ss" style="width:${w(SS)}"></i>`:'');
+  const lo=c[3]+(on?SS:0),hi=c[3]+c[2]+(on?SS:0);
+  return `<div class="row"><div class="lb"><b>${c[0]}</b></div><div class="tk">${segs}</div><div class="vl">$${Math.round(lo/1000)}k–$${Math.round(hi/1000)}k</div></div>`;}).join('');};
+ssEl.addEventListener('change',drawCost);drawCost();
+
+const F=['fee','bk','ns','wk','sh','co'];
+const PR={you:[200,18,0,46,70,0],con:[200,18,10,44,70,4000],y1:[200,9,10,44,100,9000],est:[200,20,10,44,100,9000]};
+const $=v=>(v<0?'−$':'$')+Math.abs(Math.round(v)).toLocaleString('en-AU');
+const calc=()=>{const [fee,bk,ns,wk,sh,co]=F.map(i=>Math.max(0,+document.getElementById(i).value||0));
+ const done=bk*(1-Math.min(ns,95)/100),gross=fee*done*wk,mine=gross*sh/100,net=mine-co,gap=net-PKG;
+ const per=fee*sh/100*wk,be=per>0?(PKG+co)/per:0,beb=ns<95?be/(1-ns/100):0;
+ document.getElementById('oNet').textContent=$(net);
+ const g=document.getElementById('oGap');g.textContent=(gap>=0?'Beats':'Short of')+' your package by '+$(Math.abs(gap)).replace('−','');g.style.color=gap>=0?'var(--ok)':'var(--hot)';
+ const top=Math.max(PKG*1.5,net*1.05);
+ document.getElementById('oFill').style.width=(Math.max(0,net)/top*100).toFixed(1)+'%';
+ document.getElementById('oPk').style.left=(PKG/top*100).toFixed(1)+'%';
+ document.getElementById('oList').innerHTML=[
+  `Completed sessions a week: <b>${done.toFixed(1)}</b>`,
+  `Fees billed ${$(gross)}, your share ${$(mine)}, after costs ${$(net)}`,
+  `Equals a salary of about <b>${$(net/1.12)}</b> once you fund 12% super yourself, with no paid leave`,
+  be?`Break-even: <b>${be.toFixed(1)}</b> completed sessions a week (about ${beb.toFixed(1)} booked)`:'Break-even: enter a fee, share and weeks',
+  `Working week: about <b>${Math.round(done*(1+1/4.5))} h</b> with 1 h admin per 4–5 sessions, or about ${Math.round(done*1.74)} h at the APS survey ratio`
+ ].map(x=>`<li>${x}</li>`).join('');};
+F.forEach(i=>document.getElementById(i).addEventListener('input',()=>{document.querySelectorAll('#presets button').forEach(b=>b.setAttribute('aria-pressed','false'));calc();}));
+document.querySelectorAll('#presets button').forEach(b=>b.addEventListener('click',()=>{const v=PR[b.dataset.p];F.forEach((id,i)=>document.getElementById(id).value=v[i]);document.querySelectorAll('#presets button').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));calc();}));
+document.querySelector('#presets [data-p="con"]').click();
+
+document.getElementById('cp').addEventListener('click',async()=>{const m=document.getElementById('cpmsg');
+ try{await navigator.clipboard.writeText(document.getElementById('mail').textContent);m.textContent='Copied.';}
+ catch(e){m.textContent='Copy is blocked here: select the text below and copy it.';}});
+}
+</script>
