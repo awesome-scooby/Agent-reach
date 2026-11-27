@@ -1,0 +1,16 @@
+{
+  "_note": "Employer job feeds that answered from the cloud scanner on 2026-11-27. Add more with the same shape; run `python3 scan.py --probe` to test them.",
+  "greenhouse": [
+    {"company": "AirTrunk", "board": "airtrunk", "sector": "data centre"},
+    {"company": "Akaysha Energy", "board": "akayshaenergy", "sector": "BESS"},
+    {"company": "Firmus", "board": "firmus", "sector": "data centre"}
+  ],
+  "workday": [
+    {"company": "Hitachi Energy", "host": "hitachi.wd1.myworkdayjobs.com", "tenant": "hitachi", "site": "hitachi", "sector": "HV / grid"},
+    {"company": "Equinix", "host": "equinix.wd1.myworkdayjobs.com", "tenant": "equinix", "site": "External", "sector": "data centre"},
+    {"company": "Aurecon", "host": "aurecongroup.wd3.myworkdayjobs.com", "tenant": "aurecongroup", "site": "aurecon", "sector": "consulting"},
+    {"company": "Lendlease", "host": "lendlease.wd3.myworkdayjobs.com", "tenant": "lendlease", "site": "LendleaseCareers", "sector": "construction"},
+    {"company": "Rio Tinto", "host": "riotinto.wd3.myworkdayjobs.com", "tenant": "riotinto", "site": "RioTinto_Careers", "sector": "mining"}
+  ],
+  "workday_terms": ["electrical", "project engineer", "commissioning", "high voltage", "data centre", "estimator", "substation"]
+}

@@ -1,0 +1,338 @@
+<title>Job Sprint</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&display=swap">
+<style>
+/* VOICE work: a daily tool, dense and exact
+   IDEA a station departures board: every job is a departure with a grade, a platform (city) and a status
+   PICTURE the pipeline drawn as a rail line, five stations with large hanging counts, filled to where your jobs are
+   COLOUR white, black, signal red for A-grade and actions, one grey; night #0e0e0e
+   TYPE Archivo wide 800 for numerals and titles, Archivo for text
+   LAYOUT title row with scan status at right; rail line full width; then the board; reference panels in three columns below. Phone stacks title, rail, board */
+:root{color-scheme:light dark;--bg:light-dark(#fff,#0e0e0e);--ink:light-dark(#111,#f2f2f2);--mute:light-dark(#5f5f5f,#a3a3a3);--line:light-dark(#d9d9d9,#2c2c2c);--soft:light-dark(#f4f4f4,#181818);--red:light-dark(#e4002b,#ff4d5e);--redw:light-dark(#fde6ea,#3a1218);--ok:light-dark(#0b7a43,#4cc38a);--okw:light-dark(#e3f3ea,#10301f);--warn:light-dark(#9a6200,#e0a640);--warnw:light-dark(#fbf0db,#33270f)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 Archivo,system-ui,sans-serif;margin:0;overflow-x:clip}
+.band{padding-block:clamp(18px,3vw,36px);padding-left:max(5vw,16px,env(safe-area-inset-left,0px));padding-right:max(5vw,16px,env(safe-area-inset-right,0px))}
+.in{max-width:1240px;margin:0 auto}
+h1,h2,h3{margin:0;font-stretch:112%;letter-spacing:-.02em;line-height:1.05}
+h1{font-size:clamp(34px,5vw,52px);font-weight:800}
+h2{font-size:24px;font-weight:800}
+h3{font-size:17px;font-weight:700}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+.top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 32px;align-items:end;border-bottom:4px solid var(--ink);padding-bottom:16px}
+.top p{margin:6px 0 0;color:var(--mute);max-width:60ch}
+.scan{font-size:14px;color:var(--mute);text-align:right;line-height:1.45}
+.scan b{color:var(--ink)}
+.rail{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));position:relative;margin-top:22px}
+.rail::before{content:"";position:absolute;left:0;right:0;top:15px;height:6px;background:var(--line)}
+.rail .fill{position:absolute;left:0;top:15px;height:6px;background:var(--red);transition:width .4s}
+.st{position:relative;padding-right:10px}
+.st i{display:block;width:36px;height:36px;border-radius:50%;background:var(--bg);border:6px solid var(--line);position:relative}
+.st.on i{border-color:var(--red)}
+.st .n{font-size:clamp(34px,6vw,64px);font-weight:800;font-stretch:118%;line-height:1;margin-top:10px;font-variant-numeric:tabular-nums}
+.st .l{font-weight:700;margin-top:2px}
+.st .s{font-size:14px;color:var(--mute)}
+.due{margin-top:18px;border:2px solid var(--red);background:var(--redw);padding:12px 14px;display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline}
+.due b{color:var(--red)}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 12px}
+.tab{border:1px solid var(--line);background:var(--bg);padding:8px 13px;min-height:40px;cursor:pointer;font-size:15px}
+.tab[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:700}
+.tab .c{opacity:.7;margin-left:4px}
+.bar select{border:1px solid var(--line);background:var(--bg);padding:8px 10px;min-height:40px;font-size:15px}
+.bar label{display:flex;gap:6px;align-items:center;font-size:15px;cursor:pointer}
+.bar .grow{flex:1}
+.board{border-top:2px solid var(--ink)}
+.row{display:grid;grid-template-columns:76px minmax(0,1fr) auto;gap:4px 16px;padding:14px 0;border-bottom:1px solid var(--line);align-items:start}
+.sc{font-size:40px;font-weight:800;font-stretch:118%;line-height:.95;font-variant-numeric:tabular-nums}
+.sc small{display:block;font-size:13px;font-weight:700;font-stretch:100%;letter-spacing:0;margin-top:4px}
+.gA .sc{color:var(--red)}
+.ti{font-size:18px;font-weight:700;line-height:1.25;cursor:pointer;background:none;border:0;padding:0;text-align:left}
+.ti:hover{text-decoration:underline}
+.mt{font-size:15px;color:var(--mute);margin-top:2px}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.tg{font-size:13px;padding:2px 7px;border:1px solid var(--line);white-space:nowrap}
+.tg.w{border-color:var(--warn);color:var(--warn);background:var(--warnw)}
+.tg.new{border-color:var(--red);color:var(--red)}
+.tg.s{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.b{border:1px solid var(--line);background:var(--bg);padding:7px 11px;min-height:40px;cursor:pointer;font-size:14px;white-space:nowrap}
+.b:hover{border-color:var(--ink)}
+.b.p{background:var(--red);border-color:var(--red);color:#fff;font-weight:700}
+.b.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.det{grid-column:2/4;background:var(--soft);padding:14px 16px;margin-top:8px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px}
+.det ul{margin:4px 0 0;padding-left:18px;font-size:15px}
+.det p{margin:6px 0;font-size:15px;color:var(--mute);white-space:pre-line;max-height:12em;overflow:auto}
+.det label{display:block;font-size:14px;font-weight:700;margin-top:8px}
+.det textarea,.det input,.form input,.form select{width:100%;border:1px solid var(--line);background:var(--bg);padding:8px 10px;font-size:16px;margin-top:3px}
+.det textarea{min-height:70px;resize:vertical}
+.stat{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.draft{white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);padding:10px 12px;font-size:15px;margin-top:8px;max-height:24em;overflow:auto}
+.empty{padding:36px 0;color:var(--mute);font-size:17px}
+.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;border-top:4px solid var(--ink);padding-top:20px}
+.cols h2{margin-bottom:10px}
+.form{display:grid;gap:8px}
+.form label{font-size:14px;font-weight:700}
+.form .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.note{font-size:14px;color:var(--mute);margin:8px 0 0}
+.src{width:100%;border-collapse:collapse;font-size:15px}
+.src td{padding:6px 0;border-bottom:1px solid var(--line)}
+.src td+td{text-align:right;font-variant-numeric:tabular-nums}
+.weeks{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px;align-items:end;height:90px;margin:8px 0 4px}
+.weeks div{background:var(--line);position:relative}
+.weeks div.cur{background:var(--red)}
+.weeks span{position:absolute;top:-20px;left:0;right:0;text-align:center;font-size:13px;font-weight:700}
+.links a{display:block;padding:10px 0;border-bottom:1px solid var(--line);text-decoration:none;font-weight:700}
+.links a span{display:block;font-weight:400;font-size:14px;color:var(--mute)}
+.links a:hover{color:var(--red)}
+.toast{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;font-size:15px;z-index:9}
+@media(max-width:900px){.cols{grid-template-columns:1fr 1fr}.det{grid-template-columns:1fr}}
+@media(max-width:640px){.top{grid-template-columns:1fr}.scan{text-align:left}.cols{grid-template-columns:1fr}.row{grid-template-columns:54px minmax(0,1fr)}.sc{font-size:30px}.acts{grid-column:1/3;justify-content:flex-start}.det{grid-column:1/3}.st .l{font-size:14px}.st .s{display:none}.st i{width:28px;height:28px;border-width:5px}.rail::before,.rail .fill{top:11px}}
+@media(prefers-reduced-motion:reduce){.rail .fill{transition:none}}
+</style>
+
+<div class="band"><div class="in">
+  <header class="top">
+    <div>
+      <h1>Job Sprint</h1>
+      <p>Electrical and critical power roles in Melbourne and Perth, scored against your $135k package floor. New jobs land every evening at 7pm.</p>
+    </div>
+    <div class="scan" id="scan">Connecting to your job database…</div>
+  </header>
+  <div class="rail" id="rail" aria-label="Pipeline"></div>
+  <div id="due"></div>
+</div></div>
+
+<div class="band" style="padding-top:0"><div class="in">
+  <div class="bar" role="group" aria-label="Views">
+    <span id="tabs" style="display:contents"></span>
+    <span class="grow"></span>
+    <select id="fCity" aria-label="City"><option value="">Both cities</option><option>Melbourne</option><option>Perth</option></select>
+    <select id="fGrade" aria-label="Minimum grade"><option value="0">Any grade</option><option value="65">B or better</option><option value="80">A only</option></select>
+    <label><input type="checkbox" id="fContract"> Hide contract</label>
+  </div>
+  <div class="board" id="board"><div class="empty">Loading jobs…</div></div>
+</div></div>
+
+<div class="band"><div class="in cols">
+  <section>
+    <h2>Add a job</h2>
+    <form class="form" id="add">
+      <label for="aUrl">Link (SEEK, LinkedIn, anywhere)</label><input id="aUrl" type="url" placeholder="https://www.seek.com.au/job/..." required>
+      <label for="aTitle">Job title</label><input id="aTitle" required>
+      <div class="two"><div><label for="aCo">Company</label><input id="aCo" required></div>
+      <div><label for="aCity">City</label><select id="aCity"><option>Melbourne</option><option>Perth</option></select></div></div>
+      <div class="two"><div><label for="aSal">Salary text</label><input id="aSal" placeholder="$130k + super"></div>
+      <div><label for="aType">Type</label><select id="aType"><option value="perm">Permanent</option><option value="contract">Contract</option></select></div></div>
+      <button class="b p" type="submit">Score and add</button>
+    </form>
+    <p class="note">SEEK blocks automated scanning, so paste the ones you find. They get the same score as the nightly feed.</p>
+  </section>
+  <section>
+    <h2>Applications per week</h2>
+    <div class="weeks" id="weeks"></div>
+    <p class="note" id="weeksNote"></p>
+    <h3 style="margin-top:18px">Nightly sources</h3>
+    <table class="src" id="src"><tr><td>Waiting for first scan</td><td></td></tr></table>
+    <p class="note">Not covered automatically: SEEK, LinkedIn, Indeed and contractors without a feed (Fredon, Stowe, Nilsen, SKS). Check those yourself and add them here.</p>
+  </section>
+  <section class="links">
+    <h2>Your career apps</h2>
+    <a href="https://claude.ai/artifact/T9optXFt2cWeQr25vNFncW">Switchroom to Critical Power<span>Why $135k pkg is the floor, who to target, negotiation</span></a>
+    <a href="https://claude.ai/artifact/GzvmgK6exKsPGn8bafS4Mn">ENGINEER OS<span>50 roles ranked, salary simulator, 90-day plan</span></a>
+    <a href="https://claude.ai/artifact/CVyB7arXbpigd9hE3FkuKW">Engineer's Career Risk Register<span>What could derail the move</span></a>
+    <a href="https://claude.ai/artifact/3P6E6gN3VVLoDLjpwAw3Bb">Trajectory 2076<span>The long view</span></a>
+    <p class="note">Floor check: $135k package = $120.5k base + 12% super. Anything with a lower ceiling is flagged on the board as a pay-cut risk.</p>
+  </section>
+</div></div>
+
+<script>
+{
+const ST=[["new","Found"],["short","Shortlisted"],["applied","Applied"],["interview","Interview"],["offer","Offer"]];
+const OUT=["rejected","skipped"];
+const VIEWS=[["review","To review"],["short","Shortlist"],["pipe","In progress"],["all","All"],["closed","Closed"]];
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const safeUrl=u=>/^https:\/\//.test(u||"")?u:"";
+const today=()=>new Date().toISOString().slice(0,10);
+const addDays=(d,n)=>{const x=new Date(d+"T00:00:00Z");x.setUTCDate(x.getUTCDate()+n);return x.toISOString().slice(0,10)};
+let jobs={},trk={},meta=null,db=null,sample=null,view="review",open=null;
+let pref={};try{pref=JSON.parse(localStorage.getItem("js.pref")||"{}")}catch(e){}
+const $=id=>document.getElementById(id);
+if(pref.view)view=pref.view;
+if(pref.city)$("fCity").value=pref.city;
+if(pref.grade)$("fGrade").value=pref.grade;
+if(pref.nc)$("fContract").checked=true;
+function savePref(){try{localStorage.setItem("js.pref",JSON.stringify({view,city:$("fCity").value,grade:$("fGrade").value,nc:$("fContract").checked}))}catch(e){}}
+function toast(t){const d=document.createElement("div");d.className="toast";d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)}
+const statusOf=id=>(trk[id]&&trk[id].status)||"new";
+
+function list(){
+  const c=$("fCity").value,g=+$("fGrade").value,nc=$("fContract").checked;
+  return Object.entries(jobs).map(([id,j])=>({id,...j,st:statusOf(id)})).filter(j=>{
+    if(c&&j.city!==c)return false;
+    if((j.score||0)<g)return false;
+    if(nc&&(j.flags||[]).some(f=>/contract/i.test(f)))return false;
+    return true;
+  });
+}
+function inView(j,v){
+  if(v==="review")return j.st==="new";
+  if(v==="short")return j.st==="short";
+  if(v==="pipe")return ["applied","interview","offer"].includes(j.st);
+  if(v==="closed")return OUT.includes(j.st);
+  return true;
+}
+function render(){
+  const all=list();
+  $("tabs").innerHTML=VIEWS.map(([k,l])=>`<button class="tab" data-v="${k}" aria-pressed="${view===k}">${l}<span class="c">${all.filter(j=>inView(j,k)).length}</span></button>`).join("");
+  const rows=all.filter(j=>inView(j,view)).sort((a,b)=>view==="pipe"?String(b.updated||"").localeCompare(String(a.updated||"")):(b.score||0)-(a.score||0));
+  const seen=pref.seen||"";
+  $("board").innerHTML=rows.length?rows.map(j=>rowHtml(j,seen)).join(""):`<div class="empty">${view==="review"?"Nothing new to review. The next scan runs at 7pm Melbourne time, or paste a SEEK job below.":"No jobs here yet."}</div>`;
+  renderRail();renderDue();renderWeeks();
+}
+function rowHtml(j,seen){
+  const t=trk[j.id]||{};
+  const fresh=j.st==="new"&&j.firstSeen&&j.firstSeen>=today().slice(0,10)&&true;
+  const tags=[];
+  if(j.st!=="new")tags.push(`<span class="tg s">${esc((ST.find(s=>s[0]===j.st)||[0,j.st==="rejected"?"Rejected":"Skipped"])[1])}</span>`);
+  if(fresh)tags.push(`<span class="tg new">New today</span>`);
+  if(j.salary)tags.push(`<span class="tg">${esc(j.salary)}</span>`);
+  (j.flags||[]).forEach(f=>tags.push(`<span class="tg w">${esc(f)}</span>`));
+  if(t.followUp&&j.st==="applied")tags.push(`<span class="tg${t.followUp<=today()?" w":""}">Follow up ${esc(t.followUp)}</span>`);
+  const url=safeUrl(j.url);
+  const quick=j.st==="new"?`<button class="b" data-a="short" data-id="${esc(j.id)}">Shortlist</button><button class="b p" data-a="applied" data-id="${esc(j.id)}">Applied</button><button class="b" data-a="skipped" data-id="${esc(j.id)}">Skip</button>`
+    :j.st==="short"?`<button class="b p" data-a="applied" data-id="${esc(j.id)}">Applied</button><button class="b" data-a="skipped" data-id="${esc(j.id)}">Skip</button>`
+    :j.st==="applied"?`<button class="b p" data-a="interview" data-id="${esc(j.id)}">Interview</button><button class="b" data-a="rejected" data-id="${esc(j.id)}">Rejected</button>`
+    :j.st==="interview"?`<button class="b p" data-a="offer" data-id="${esc(j.id)}">Offer</button><button class="b" data-a="rejected" data-id="${esc(j.id)}">Rejected</button>`:"";
+  return `<div class="row g${esc(j.grade)}">
+    <div class="sc">${esc(j.score)}<small>Grade ${esc(j.grade)}</small></div>
+    <div><button class="ti" data-open="${esc(j.id)}" aria-expanded="${open===j.id}">${esc(j.title)}</button>
+      <div class="mt">${esc(j.company)} · ${esc(j.location||j.city)}${j.firstSeen?" · found "+esc(j.firstSeen):""}</div>
+      <div class="tags">${tags.join("")}</div></div>
+    <div class="acts">${url?`<a class="b" href="${esc(url)}" target="_blank" rel="noopener">Open ad</a>`:""}${quick}</div>
+    ${open===j.id?detHtml(j,t):""}
+  </div>`;
+}
+function detHtml(j,t){
+  return `<div class="det">
+    <div><h3>Why it scored ${esc(j.score)}</h3><ul>${(j.reasons||[]).map(r=>`<li>${esc(r)}</li>`).join("")}${(j.flags||[]).map(r=>`<li>${esc(r)}</li>`).join("")}</ul>
+      ${j.summary?`<h3 style="margin-top:12px">From the ad</h3><p>${esc(j.summary)}</p>`:""}
+      <h3 style="margin-top:12px">Tailored draft</h3>
+      ${t.draft?`<div class="draft">${esc(t.draft)}</div>`:`<p>${sample?"A CV headline, three bullets and a short cover note written for this ad from your switchroom background.":"Drafts need the Claude app's ask-Claude permission. You can also ask me in chat."}</p>`}
+      ${sample?`<button class="b" data-draft="${esc(j.id)}" style="margin-top:6px">${t.draft?"Redraft":"Write draft"}</button>`:""}
+    </div>
+    <div><h3>Status</h3><div class="stat">${[...ST,["rejected","Rejected"],["skipped","Skipped"]].map(([k,l])=>`<button class="b${j.st===k?" on":""}" data-a="${k}" data-id="${esc(j.id)}">${l}</button>`).join("")}</div>
+      <label for="fu-${esc(j.id)}">Follow-up date</label><input type="date" id="fu-${esc(j.id)}" data-fu="${esc(j.id)}" value="${esc(t.followUp||"")}">
+      <label for="nt-${esc(j.id)}">Notes (contact, recruiter, salary talk)</label><textarea id="nt-${esc(j.id)}" data-note="${esc(j.id)}">${esc(t.notes||"")}</textarea>
+      ${t.appliedAt?`<p>Applied ${esc(t.appliedAt)}</p>`:""}
+    </div></div>`;
+}
+function renderRail(){
+  const all=Object.keys(jobs).map(id=>statusOf(id));
+  const reach=k=>{const order=ST.map(s=>s[0]);const i=order.indexOf(k);return all.filter(s=>order.indexOf(s)>=i).length};
+  const counts=ST.map(([k])=>k==="new"?all.length:reach(k));
+  const last=counts.reduce((a,c,i)=>c>0?i:a,0);
+  $("rail").innerHTML=`<div class="fill" style="width:${last/4*100}%"></div>`+ST.map(([k,l],i)=>`<div class="st${counts[i]>0?" on":""}"><i></i><div class="n">${counts[i]}</div><div class="l">${l}</div><div class="s">${["every job scanned or added","worth a closer look","applications sent","interviews landed","offers on the table"][i]}</div></div>`).join("");
+}
+function renderDue(){
+  const d=Object.entries(trk).filter(([id,t])=>t.status==="applied"&&t.followUp&&t.followUp<=today()&&jobs[id]);
+  $("due").innerHTML=d.length?`<div class="due"><b>${d.length} follow-up${d.length>1?"s":""} due</b>${d.map(([id])=>`<button class="ti" style="font-size:15px" data-open="${esc(id)}">${esc(jobs[id].title)} · ${esc(jobs[id].company)}</button>`).join("")}</div>`:"";
+}
+function weekStart(d){const x=new Date(d+"T00:00:00Z");const w=(x.getUTCDay()+6)%7;x.setUTCDate(x.getUTCDate()-w);return x.toISOString().slice(0,10)}
+function renderWeeks(){
+  const cur=weekStart(today()),wk=[];
+  for(let i=7;i>=0;i--)wk.push(addDays(cur,-7*i));
+  const n=wk.map(w=>Object.values(trk).filter(t=>t.appliedAt&&weekStart(t.appliedAt)===w).length);
+  const mx=Math.max(5,...n);
+  $("weeks").innerHTML=n.map((v,i)=>`<div class="${i===7?"cur":""}" style="height:${Math.max(3,v/mx*100)}%" title="Week of ${wk[i]}"><span>${v||""}</span></div>`).join("");
+  const tot=Object.values(trk).filter(t=>t.appliedAt).length;
+  $("weeksNote").textContent=`This week: ${n[7]} sent. ${tot} applications in total. Aim for 3 to 5 good ones a week, not volume.`;
+}
+function renderMeta(){
+  if(!meta){$("scan").innerHTML="No scan yet.<br>First run tonight at 7pm.";return}
+  const when=new Date(meta.lastRun);
+  $("scan").innerHTML=`Last scan <b>${esc(when.toLocaleString("en-AU",{weekday:"short",hour:"numeric",minute:"2-digit",timeZone:"Australia/Melbourne"}))}</b><br>${esc(meta.new)} new · ${esc(meta.kept)} matched · next 7pm`;
+  const s=meta.sources||{};
+  $("src").innerHTML=Object.keys(s).map(k=>`<tr><td>${esc(k)}</td><td>${s[k]==="down"?"down":esc(s[k])+" jobs"}</td></tr>`).join("");
+}
+
+async function setStatus(id,st){
+  const t={...(trk[id]||{})};
+  t.status=st;t.updated=new Date().toISOString();
+  if(st==="applied"&&!t.appliedAt){t.appliedAt=today();t.followUp=t.followUp||addDays(today(),7)}
+  trk[id]=t;render();
+  try{await db.doc("tracker/"+id).set(t);toast(st==="applied"?"Marked applied. Follow-up set for "+t.followUp:"Saved")}
+  catch(e){toast("Could not save: "+(e.code||"error"))}
+}
+async function patch(id,fields){
+  const t={...(trk[id]||{status:"new"}),...fields,updated:new Date().toISOString()};trk[id]=t;
+  try{await db.doc("tracker/"+id).set(t)}catch(e){toast("Could not save")}
+}
+
+/* scoring for pasted jobs: same rules as the nightly scanner, simplified */
+const TIERS=[[40,/electrical project engineer|senior project engineer|package manager|commissioning|critical (power|facilities)|data cent|high voltage|\bhv\b|substation|switch(gear|board|room)|bess|battery|electrical site engineer|electrical design manager|mep/i],[30,/electrical engineer|estimator|design engineer|application|sales engineer|technical sales|project engineer|protection|power systems/i],[15,/project manager|construction manager|site engineer|planner|scheduler|contracts/i]];
+function scoreManual(title,city,sal,type){
+  let pts=0;const reasons=[],flags=[];
+  const t=TIERS.find(x=>x[1].test(title));
+  pts+=t?t[0]:5;reasons.push(t?`Role match (+${t[0]})`:"Role outside target list (+5)");
+  const sec=(title.match(/data cent|critical|hv|high voltage|substation|switch|bess|battery|grid|renewable|ups/gi)||[]).length;
+  if(sec){pts+=Math.min(20,8*sec);reasons.push(`Target sector (+${Math.min(20,8*sec)})`)}
+  pts+=city==="Melbourne"?15:12;reasons.push(`${city} (+${city==="Melbourne"?15:12})`);
+  if(/senior|lead/i.test(title)){pts+=10;reasons.push("Senior level (+10)")}else pts+=6;
+  if(/graduate|junior|technician|assistant/i.test(title)){pts-=30;flags.push("Junior role")}
+  let pkgHigh=null;const m=String(sal||"").match(/\$?\s?(\d{2,3})(?:[,.]?(\d{3}))?\s?k?/gi);
+  if(m){const nums=m.map(x=>{const n=parseFloat(x.replace(/[^\d.]/g,""));return n<1000?n*1000:n}).filter(n=>n>=60000&&n<450000);
+    if(nums.length){const hi=Math.max(...nums);pkgHigh=/package|incl|total/i.test(sal)?hi:hi*1.12;
+      if(pkgHigh>=135000){pts+=15;reasons.push("Pay clears $135k pkg floor (+15)")}else flags.push(`Pay cut risk: tops out ~$${Math.round(pkgHigh/1000)}k pkg`)}}
+  if(pkgHigh==null){pts+=7;reasons.push("Pay not stated (+7)")}
+  if(type==="contract"){pts-=5;flags.push("Contract / fixed-term")}
+  pts=Math.max(0,Math.min(100,pts));
+  return{score:pts,grade:pts>=80?"A":pts>=65?"B":pts>=50?"C":"D",reasons,flags,salary_pkg_high:pkgHigh?Math.round(pkgHigh):null};
+}
+$("add").addEventListener("submit",async e=>{
+  e.preventDefault();
+  if(!db){toast("Database not connected");return}
+  const title=$("aTitle").value.trim(),city=$("aCity").value,sal=$("aSal").value.trim();
+  const s=scoreManual(title,city,sal,$("aType").value);
+  const doc={title,company:$("aCo").value.trim(),city,location:city,url:$("aUrl").value.trim(),source:"manual",sector:"",posted:today(),firstSeen:today(),salary:sal||null,summary:"",...s};
+  const id="m"+Date.now().toString(36);
+  jobs[id]=doc;open=id;view="review";render();
+  try{await db.doc("jobs/"+id).set(doc);e.target.reset();toast(`Added: scored ${s.score} (grade ${s.grade})`)}catch(err){toast("Could not add: "+(err.code||"error"))}
+});
+
+const PROFILE=`Candidate: Electrical Project Engineer, about 3 years' experience, at a Melbourne switchboard and switchroom manufacturer. Current package A$123k incl. super. Strengths: AS/NZS 61439 assemblies and design verification (2026 edition), writing and running factory acceptance tests (FAT) and client witnessing, procurement and long-lead switchgear lead times, BOM build-up and supplier pricing, vendor and subcontractor coordination, LV distribution, form segregation trade-offs, drawings and specifications, QA/ITPs. Gaps: no MV/HV ownership yet, UPS/STS/generator topology at concept level, no named data centre project. Targets: critical power, data centre electrical delivery, HV/substation, BESS, estimator, OEM design roles.`;
+async function draft(id){
+  const j=jobs[id];if(!j||!sample)return;
+  const btn=document.querySelector(`[data-draft="${CSS.escape(id)}"]`);if(btn){btn.disabled=true;btn.textContent="Writing…"}
+  const prompt=`${PROFILE}\n\nJob: ${j.title} at ${j.company}, ${j.location||j.city}.\nAd text: ${(j.summary||"(not captured; infer only from title and company)").slice(0,1500)}\n\nWrite, in Australian English, plain and specific, no clichés, never inventing experience the profile does not state:\n1. CV headline (one line)\n2. Three CV bullets reworded to match this ad, using only the strengths above\n3. Cover note, max 150 words, opening with why this company, naming one real gap honestly and how it is being closed\n4. One question to ask the recruiter about salary or scope\nPlain text with numbered headings.`;
+  try{const r=await sample(prompt,{modelTier:"default"});await patch(id,{draft:r.text});render()}
+  catch(e){toast(e.code==="not_granted"?"Ask-Claude permission was declined":"Draft failed: "+(e.code||"error"));render()}
+}
+
+document.addEventListener("click",e=>{
+  const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.v){view=b.dataset.v;open=null;savePref();render();return}
+  if(b.dataset.open){open=open===b.dataset.open?null:b.dataset.open;if(!jobs[open])open=null;const j=open&&jobs[open];if(j&&!["review","all"].includes(view)&&!inView({...j,st:statusOf(open)},view)){view="all"}render();return}
+  if(b.dataset.a&&b.dataset.id){if(!db){toast("Database not connected");return}setStatus(b.dataset.id,b.dataset.a);return}
+  if(b.dataset.draft)draft(b.dataset.draft);
+});
+document.addEventListener("change",e=>{
+  const el=e.target;
+  if(el.dataset.fu)patch(el.dataset.fu,{followUp:el.value});
+  else if(el.dataset.note)patch(el.dataset.note,{notes:el.value});
+  else if(["fCity","fGrade","fContract"].includes(el.id)){savePref();render()}
+});
+
+render();renderMeta();
+(async()=>{
+  db=window.claude?await window.claude.use("db"):null;
+  if(!db){$("scan").textContent="Database unavailable in this view.";$("board").innerHTML='<div class="empty">Open this page in claude.ai to load your jobs.</div>';return}
+  db.collection("jobs").onSnapshot(s=>{jobs={};s.docs.forEach(d=>jobs[d.id]=d.data());render()},e=>toast("Jobs feed stopped: "+e.code));
+  db.collection("tracker").onSnapshot(s=>{trk={};s.docs.forEach(d=>trk[d.id]=d.data());render()},()=>{});
+  db.doc("meta/scan").onSnapshot(d=>{meta=d.exists?d.data():null;renderMeta()},()=>{});
+  sample=await window.claude.use("sample");if(open)render();
+})();
+}
+</script>
