@@ -370,6 +370,16 @@ footer{padding:30px var(--gutR) 30px var(--gut);color:var(--fg-faint);font-size:
 .nav{overflow-x:auto;scrollbar-width:none}
 .nav::-webkit-scrollbar{display:none}
 @media (max-width:820px){.fab{padding:10px 14px;font-size:12px;gap:6px}}
+
+/* ADHD programs */
+.prog-card{border-color:rgba(255,176,74,.45);background:linear-gradient(150deg,rgba(255,176,74,.12),var(--ink-2) 65%)}
+.park{display:flex;gap:8px;width:100%;max-width:560px;margin:0 auto}
+.daypick{display:flex;flex-wrap:wrap;gap:6px}
+.daypick button{width:48px;padding:9px 0;border-radius:8px;background:var(--ink-3);border:1px solid var(--line);font-family:var(--mono);font-weight:700;font-size:12.5px}
+.daypick button[aria-pressed="true"]{background:var(--tungsten);color:#241304;border-color:var(--tungsten)}
+.rule{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:start;padding:14px;border-radius:12px;background:var(--ink-2);border:1px solid var(--line)}
+.rule .n{font-family:var(--display);font-weight:900;font-size:40px;line-height:.9;color:var(--tungsten);grid-row:span 3}
+.quote{font-family:var(--display);font-weight:800;font-size:clamp(24px,4.4vw,34px);line-height:1.05;text-transform:uppercase;color:#f8dfb8}
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
   .breath .orb{animation:none;transform:scale(.8)}
@@ -513,6 +523,8 @@ function freshState() {
     sim: { target: 60, days: 6, avoid: null, split: { learn: 35, jobs: 30, biz: 25, money: 10 }, assume: { appHours: 1.5, p6Hours: 30, protHours: 40, bizHours: 60 } },
     active: null, brk: null,
     diag: [], thoughts: [], woop: [], values: {}, slips: [], bundles: [], contracts: [], excuses: [], tomb: [],
+    spends: [], spans: [], parked: [], reviews: [],
+    programs: { gym: { on: false, days: [1, 3, 5], time: "17:30", where: "", straight: true, min: "Gym clothes on, out the door, 10 minutes. I'm allowed to leave after 10.", bundle: "", bag: true, imp: 8, con: 4, whyNot: "", upOne: "" }, learn: { on: false, course: "", link: "", days: [1, 2, 3, 4], time: "07:00", minutes: 25, imp: 8, con: 4, whyNot: "", upOne: "" }, bank: { on: false, rate: 0.5, start: 0 } },
     moods: [], lifts: [], worries: [], screens: [], goodThings: [], circles: [], calm: { sound: false, worryTime: "18:30", wake: "06:30", need: 7.5 },
     profile: { salary: 115000, target: 150000 }, prefs: { noMercy: false }, epoch: uid(), resetAt: 0
   };
@@ -523,7 +535,9 @@ function normalize(s) {
   out.sim = Object.assign({}, f.sim, out.sim || {});
   out.sim.split = Object.assign({}, f.sim.split, out.sim.split || {});
   out.sim.assume = Object.assign({}, f.sim.assume, out.sim.assume || {});
-  ["missions", "sessions", "urges", "checkins", "seenAch", "diag", "thoughts", "woop", "slips", "bundles", "contracts", "excuses", "tomb", "moods", "lifts", "worries", "screens", "goodThings", "circles"].forEach(k => { if (!Array.isArray(out[k])) out[k] = f[k]; });
+  ["missions", "sessions", "urges", "checkins", "seenAch", "diag", "thoughts", "woop", "slips", "bundles", "contracts", "excuses", "tomb", "moods", "lifts", "worries", "screens", "goodThings", "circles", "spends", "spans", "parked", "reviews"].forEach(k => { if (!Array.isArray(out[k])) out[k] = f[k]; });
+  out.programs = Object.assign({}, f.programs, (out.programs && typeof out.programs === "object") ? out.programs : {});
+  ["gym", "learn", "bank"].forEach(k => { out.programs[k] = Object.assign({}, f.programs[k], (out.programs[k] && typeof out.programs[k] === "object") ? out.programs[k] : {}); });
   ["values", "profile", "prefs", "calm"].forEach(k => { out[k] = Object.assign({}, f[k], (out[k] && typeof out[k] === "object") ? out[k] : {}); });
   if (s && !s.epoch) out.epoch = "v1";
   if (!out.daily || typeof out.daily !== "object") out.daily = {};
@@ -546,7 +560,7 @@ const Store = {
 /* Cloud sync: private per-user documents in the artifact's database (path data/users/<id>/…, readable only by you).
    core doc = everything but the logs; logs are split by month to stay well under the 256 KiB document cap.
    Every device merges instead of overwriting: logs are unioned by id, settings follow the most recent edit. */
-const LOG_KEYS = ["sessions", "urges", "checkins", "diag", "thoughts", "slips", "excuses", "moods", "lifts", "worries", "screens", "goodThings", "circles"];
+const LOG_KEYS = ["sessions", "urges", "checkins", "diag", "thoughts", "slips", "excuses", "moods", "lifts", "worries", "screens", "goodThings", "circles", "spends", "spans", "parked", "reviews"];
 const UNION_KEYS = ["missions", "woop", "bundles", "contracts"];
 const byTsId = (x, y) => (x.ts || 0) - (y.ts || 0) || (x.id < y.id ? -1 : x.id > y.id ? 1 : 0);
 const byOrder = (x, y) => (x.order || 0) - (y.order || 0) || (x.createdAt || x.ts || 0) - (y.createdAt || y.ts || 0) || (x.id < y.id ? -1 : x.id > y.id ? 1 : 0);
@@ -723,6 +737,8 @@ function achievements(s, d) {
     { id: "comeback", t: "The Comeback King", dsc: "Came back after two or more days away.", on: d.comeback, p: "" },
     { id: "deep", t: "Deep Cut", dsc: "Complete a 45-minute mission.", on: sess.some(x => x.outcome === "done" && x.planned >= 2700), p: "" },
     { id: "honest", t: "Honest Witness", dsc: "Logged a distracted session truthfully. Data beats pretending.", on: sess.some(x => x.outcome === "distracted"), p: "" },
+    { id: "gym8", t: "Showed Up Anyway", dsc: "Log eight gym sessions. The minimum version counts.", on: progSessions(s, "gym").length >= 8, p: Math.min(progSessions(s, "gym").length, 8) + "/8" },
+    { id: "recall", t: "It Stuck", dsc: "Complete ten spaced reviews of what you learned.", on: s.reviews.reduce((a, r) => a + (r.done || []).length, 0) >= 10, p: Math.min(s.reviews.reduce((a, r) => a + (r.done || []).length, 0), 10) + "/10" },
     { id: "word", t: "Kept My Word", dsc: "Keep a signed weekly Ulysses contract.", on: s.contracts.some(c => contractEval(s, c, dayKey()).status === "kept"), p: "" },
     { id: "reframe", t: "Reframed", dsc: "Complete a thought record and act on it.", on: s.thoughts.some(t => t.kind !== "defuse"), p: "" },
     { id: "kind", t: "Back on the Horse", dsc: "Run the slip recovery protocol instead of writing off the week.", on: s.slips.length > 0, p: "" },
@@ -864,6 +880,14 @@ function coachBoss(coach, choice, urgeKey, genuine) {
 // Only avoidance phrases are logged as "excuses" for No Mercy receipts. Feelings never are.
 const EXCUSE_INTENTS = ["bored", "nomood", "wasted", "youtube", "toomany", "tomorrow", "research"];
 const INTENTS = [
+  { id: "gym", re: /\bgym\b|work ?out|exercis|training session|lift weights/i,
+    brutal: c => `You don't need motivation for the gym. You need the minimum version and a fixed time. Clothes on, out the door, ten minutes. That's the whole commitment.`,
+    mentor: c => `Starting is the hard part, not the workout. Let's make it tiny: get changed and do ten minutes. Leaving after that still counts.`,
+    action: { label: "Open my gym program", act: "gym" } },
+  { id: "lesson", re: /lesson|course|studying|\bstudy\b|learn(ing)?\b|\bp6\b|protection/i,
+    brutal: c => `You don't avoid the lesson. You avoid the moment of opening it. Make that the only goal: open it and press play.`,
+    mentor: c => `Let's lower the bar to opening the lesson and pressing play. Once it's running, staying is much easier than starting.`,
+    action: { label: "Open my learning program", act: "learn" } },
   { id: "anxious", re: /anxious|anxiety|panic|nervous|on edge|heart('s| is)? racing|can'?t calm down/i,
     brutal: c => `Anxiety isn't weakness, and it isn't a reason to quit either. Settle your body first: two minutes of cyclic sighing. Then we pick the next step.`,
     mentor: c => `That sounds really uncomfortable. Let's settle your nervous system first. A long, slow out-breath is the fastest lever you have. Two minutes.`,
@@ -1105,6 +1129,7 @@ function App() {
     else if (act === "break") startBreak(15, null);
     else if (act === "courage") openBrief(pickForCategory(s, "overdue"), { fromAvoid: true });
     else if (act === "diag") goTool("diag", { mid: p && p.id });
+    else if (act === "gym" || act === "learn" || act === "asrs" || act === "bank") goTool(act);
     else if (act === "thought") goTool("thought");
     else if (act === "slip") goTool("slip");
     else if (act === "woop") goTool("woop");
@@ -1116,6 +1141,14 @@ function App() {
     flash(`Planned break: ${min} minutes`, "Enjoy it fully. LIFEFLIX will call you back.");
   };
 
+  const quickLog = (m, minutes, note) => {
+    const planned = minutes * 60;
+    const gains = sessionGains(s, m, "done", planned, planned, {});
+    const xp = Object.values(gains).reduce((a, b) => a + b, 0);
+    const sess = { id: uid(), mid: m.id, title: m.title, season: m.season, attr: m.attr, tags: m.tags || [], planned, actual: planned, outcome: "done", xp, gains, ts: Date.now(), day: dayKey(), note: note || "Logged after doing it.", target: "", fromAvoid: false, viaBoss: false, quick: true };
+    update(n => { if (!n.missions.some(x => x.id === m.id)) n.missions.push(Object.assign({}, m, { order: n.missions.length + 100, createdAt: Date.now() })); n.sessions.push(sess); });
+    flash("+" + xp + " XP", m.title + " · " + minutes + " min logged");
+  };
   const saveMission = (m) => update(n => {
     const i = n.missions.findIndex(x => x.id === m.id);
     if (i >= 0) n.missions[i] = Object.assign({}, n.missions[i], m);
@@ -1169,13 +1202,13 @@ function App() {
       </div></div>` : null}
 
       ${view === "home" ? html`<${Home} ...${ctx} coach=${coach} daily=${daily} byId=${byId} openBrief=${openBrief} setOv=${setOv} setView=${setView} goTool=${goTool} goCalm=${goCalm}/>` : null}
-      ${view === "today" ? html`<${Today} ...${ctx} coach=${coach} daily=${daily} byId=${byId} openBrief=${openBrief} setOv=${setOv} update=${update} goTool=${goTool}/>` : null}
+      ${view === "today" ? html`<${Today} ...${ctx} coach=${coach} daily=${daily} byId=${byId} openBrief=${openBrief} setOv=${setOv} update=${update} goTool=${goTool} quickLog=${quickLog}/>` : null}
       ${view === "stats" ? html`<${Stats} ...${ctx} coach=${coach} update=${update} flash=${flash} goTool=${goTool}/>` : null}
       ${view === "futures" ? html`<${Futures} ...${ctx} update=${update}/>` : null}
       ${view === "coach" ? html`<${CoachChat} ...${ctx} coach=${coach} runAct=${runAct} update=${update} sample=${sample.current} goTool=${goTool}/>` : null}
       ${view === "recap" ? html`<${Recap} ...${ctx} coach=${coach} byId=${byId} update=${update} flash=${flash}/>` : null}
       ${view === "calm" ? html`<${GreenRoom} ...${ctx} coach=${coach} update=${update} openBrief=${openBrief} flash=${flash} calmTool=${calmTool} setCalmTool=${setCalmTool} goTool=${goTool} setOv=${setOv}/>` : null}
-      ${view === "tools" ? html`<${Tools} ...${ctx} coach=${coach} update=${update} openBrief=${openBrief} flash=${flash} tool=${tool} setTool=${setTool}/>` : null}
+      ${view === "tools" ? html`<${Tools} ...${ctx} coach=${coach} update=${update} openBrief=${openBrief} flash=${flash} tool=${tool} setTool=${setTool} quickLog=${quickLog} startBreak=${startBreak} downloads=${downloads.current} goCalm=${goCalm}/>` : null}
 
       <footer>
         <div style=${{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}><${SaveStatus}/></div>
@@ -1193,7 +1226,7 @@ function App() {
       <button aria-current=${["stats", "futures", "coach", "recap"].includes(view) ? "page" : undefined} onClick=${() => setOv({ type: "more" })}><${Icon} k="more"/>More</button>
     </nav>` : null}
 
-    ${inPlayer && (!ov || ov.type === "boss") ? html`<${Player} s=${s} coach=${coach} update=${update} onReview=${() => setOv({ type: "review" })} onEscape=${() => { update(n => { if (n.active && !n.active.pausedAt) n.active.pausedAt = Date.now(); }); setOv({ type: "boss", fromPlayer: true }); }} hidden=${ov && ov.type === "boss"}/>` : null}
+    ${inPlayer && (!ov || ov.type === "boss") ? html`<${Player} s=${s} coach=${coach} update=${update} byId=${byId} onReview=${() => setOv({ type: "review" })} onEscape=${() => { update(n => { if (n.active && !n.active.pausedAt) n.active.pausedAt = Date.now(); }); setOv({ type: "boss", fromPlayer: true }); }} hidden=${ov && ov.type === "boss"}/>` : null}
 
     ${ov && ov.type === "coachPick" ? html`<${CoachPick} first=${ov.first} current=${s.coach} onPick=${c => { update(n => { n.coach = c; }); setOv(ov.first ? { type: "checkin" } : null); }} onClose=${() => setOv(null)}/>` : null}
     ${ov && ov.type === "checkin" ? html`<${CheckIn} s=${s} d=${d} coach=${coach} prio=${prio} onMood=${logQuickMood} onCalm=${q => goCalm(q === "red" ? "breathe" : null)} onSkip=${() => { update(n => { n.checkins.push({ id: uid(), ts: Date.now(), cat: "none" }); }); setOv(null); }}
@@ -1202,7 +1235,7 @@ function App() {
           if (cat === "mood") { goCalm(null); return; }
           let m;
           if (cat === "other" && text) m = { id: uid(), season: 1, title: text.slice(0, 70), desc: "The task you named when LIFEFLIX asked what you're avoiding.", minutes: 10, difficulty: "Medium", attr: "courage", tags: ["other"], firstStep: "Open whatever you need for this task.", deliverable: "One visible step forward.", repeat: true, status: "active" };
-          else m = pickForCategory(s, cat);
+          else m = (cat === "exercise" && progMission(s, "gym")) || (cat === "study" && progMission(s, "learn")) || pickForCategory(s, cat);
           openBrief(m, { fromAvoid: true, avoidCat: cat });
         }}/>` : null}
     ${ov && ov.type === "brief" ? html`<${Briefing} s=${s} d=${d} m=${ov.m} opts=${ov.opts} coach=${coach} onStart=${startMission} onClose=${() => setOv(null)} onEdit=${() => setOv({ type: "edit", m: ov.m })} onDelete=${() => setOv({ type: "confirmDel", m: ov.m })}/>` : null}
@@ -1459,7 +1492,9 @@ function Briefing({ s, d, m, opts, coach, onStart, onClose, onEdit, onDelete }) 
         <label className="f" htmlFor="brief-target">Your first physical action (implementation intention)
           <input id="brief-target" value=${target} onInput=${e => setTarget(e.target.value)} placeholder="When I press start, I will…"/>
         </label>
+        ${m.link ? html`<a className="btn btn-line" href=${m.link} target="_blank" rel="noopener noreferrer" style=${{ alignSelf: "flex-start", textDecoration: "none" }}>Open the lesson ↗</a>` : null}
         ${m.deliverable ? html`<div className="note"><b style=${{ color: "var(--fg-dim)" }}>Deliverable:</b> ${m.deliverable}</div>` : null}
+        ${spanMin(s) && min > spanMin(s) * 1.5 ? html`<div className="note"><b style=${{ color: "var(--s3)" }}>Your measured attention span:</b> about ${spanMin(s)} min on dull tasks. Consider ${spanMin(s) <= 10 ? 10 : 25} minutes, a 1-minute stretch, then go again.</div>` : null}
         ${val && val.text ? html`<div className="note"><b style=${{ color: "var(--fg-dim)" }}>Why it matters (your value):</b> ${val.text}</div>` : null}
         ${bundles.length ? html`<div className="note"><b style=${{ color: "var(--s2)" }}>Temptation bundle:</b> ${bundles.map(b => b.want).join(" · ")} — allowed only during this mission.</div>` : null}
         ${plans.length ? html`<div className="note"><b style=${{ color: "var(--tungsten)" }}>Your if-then plan${plans.length > 1 ? "s" : ""}:</b> ${plans.map(w => `If ${w.ifs}, then ${w.then}.`).join(" ")}</div>` : null}
@@ -1528,8 +1563,11 @@ function EditMission({ s, m, season, onSave, onClose }) {
 /* =========================================================
    PLAYER (distraction-free mission screen)
    ========================================================= */
-function Player({ s, coach, update, onReview, onEscape, hidden }) {
+function Player({ s, coach, update, onReview, onEscape, hidden, byId }) {
   const a = s.active;
+  const [park, setPark] = useState("");
+  const [parkedN, setParkedN] = useState(0);
+  const pm = a && byId ? byId(a.mid) : null;
   const [t, setT] = useState(Date.now());
   const fired = useRef(false);
   useEffect(() => { const i = setInterval(() => setT(Date.now()), 250); return () => clearInterval(i); }, []);
@@ -1569,6 +1607,12 @@ function Player({ s, coach, update, onReview, onEscape, hidden }) {
         <button className="btn btn-ghost" onClick=${addFive}>+5 min</button>
         <button className="btn btn-ghost" onClick=${endEarly}>Finish & review</button>
       </div>
+      ${pm && pm.link ? html`<a className="btn btn-line" href=${pm.link} target="_blank" rel="noopener noreferrer" style=${{ alignSelf: "center", textDecoration: "none" }}>Open the lesson ↗</a>` : null}
+      <form className="park" onSubmit=${e => { e.preventDefault(); const t = park.trim(); if (!t) return; update(n => { n.parked.push({ id: uid(), ts: Date.now(), text: t, mid: a.mid, status: "inbox" }); }); setPark(""); setParkedN(parkedN + 1); }}>
+        <input id="player-park" value=${park} onInput=${e => setPark(e.target.value)} placeholder="Stray thought? Park it here instead of acting on it" aria-label="Park a stray thought"/>
+        <button className="btn btn-ghost" type="submit" disabled=${!park.trim()}>Park</button>
+      </form>
+      ${parkedN ? html`<p className="note" style=${{ marginTop: "-10px" }}>${parkedN} parked. You'll sort them after the mission.</p>` : null}
       <button className="btn btn-danger" style=${{ alignSelf: "center" }} onClick=${onEscape}>I want to escape this task</button>
       <p className="note">${coach === "brutal" ? "Close every other tab. This screen is all you need. The phone stays face down." : "Just this one thing. If your mind wanders, notice it and come back to the first action."}</p>
     </div>
@@ -1615,6 +1659,7 @@ function Result({ s, d, coach, res, prio, byId, daily, onNext, onBreak, onClose,
   useEffect(() => { let v = 0; const step = Math.max(1, Math.round(sess.xp / 30)); const t = setInterval(() => { v = Math.min(sess.xp, v + step); setShown(v); if (v >= sess.xp) clearInterval(t); }, 25); return () => clearInterval(t); }, []);
   const line = useMemo(() => coachReview(coach, sess.outcome, m, Math.round(sess.actual / 60)), []);
   const ach = achievements(s, d).filter(a => newAch.includes(a.id));
+  const parkedNow = s.parked.filter(x => x.mid === m.id && x.status === "inbox" && x.ts >= sess.ts - sess.actual * 1000 - 120000);
   const ids = [daily.priority, ...(daily.support || []), daily.wellbeing].filter(Boolean);
   const nextM = ids.map(byId).filter(x => x && x.status === "active" && !d.todays.some(z => z.mid === x.id && z.outcome === "done"))[0];
   const smaller = sess.outcome === "distracted" ? Object.assign({}, m) : null;
@@ -1625,6 +1670,8 @@ function Result({ s, d, coach, res, prio, byId, daily, onNext, onBreak, onClose,
       ${Object.keys(sess.gains).length ? html`<div style=${{ display: "grid", gap: "6px", gridTemplateColumns: "repeat(auto-fit,minmax(150px,1fr))" }}>
         ${Object.entries(sess.gains).map(([k, v], i) => html`<div key=${k} className="gain" style=${{ animationDelay: i * 0.08 + "s" }}><span style=${{ color: ATTRS[k].color }}>${ATTRS[k].label}</span><span className="mono">+${v}</span></div>`)}
       </div>` : html`<p className="dim" style=${{ textAlign: "center" }}>No XP this time. That's the honest result, and it's still useful data.</p>`}
+      ${parkedNow.length ? html`<div className="panel"><h3>You parked ${parkedNow.length} thought${parkedNow.length > 1 ? "s" : ""}</h3><ul className="list">${parkedNow.map(x => html`<li key=${x.id}><span>${x.text}</span></li>`)}</ul><div><button className="btn btn-sm btn-line" onClick=${() => goTool("parked")}>Sort them now</button></div></div>` : null}
+      ${m.prog === "learn" && sess.outcome !== "distracted" ? html`<div className="rx"><span className="eyebrow" style=${{ color: "var(--tungsten)" }}>Make it stick</span><p>Before you close the lesson tab: write the three key points from memory. Recalling it now is what moves it into long-term memory.</p><div><button className="btn btn-sm btn-amber" onClick=${() => goTool("learn", { recall: true })}>Recall check (2 min)</button></div></div>` : null}
       ${ach.map(a => html`<div key=${a.id} className="badge on" style=${{ animation: "pop .7s cubic-bezier(.2,1.4,.4,1) both" }}><div className="medal">★</div><div><div className="eyebrow" style=${{ color: "var(--tungsten)" }}>Achievement unlocked</div><div className="bt">${a.t}</div><div className="bd">${a.dsc}</div></div></div>`)}
       <div className=${"coach-band " + coach}><span className=${"avatar " + coach}>${COACH[coach].init}</span><div><div className="who">${COACH[coach].name}</div><p>${line}</p></div></div>
       <div className="panel" style=${{ background: "var(--ink-2)" }}>
@@ -1722,6 +1769,7 @@ function BossFight({ s, coach, prio, fromPlayer, onClose, onDone, goTool }) {
         </div>
         ${choice === "break" ? html`<div><div className="eyebrow" style=${{ marginBottom: "8px" }}>Break length</div><div className="seg" role="group" aria-label="Break length">${[5, 10, 15, 20].map(n => html`<button key=${n} aria-pressed=${brkMin === n} onClick=${() => setBrkMin(n)}>${n} min</button>`)}</div>${fromPlayer ? html`<p className="note" style=${{ marginTop: "8px" }}>Your current mission will be logged as partial progress with the time you've actually spent.</p>` : null}</div>` : null}
         ${s.woop.filter(w => w.active).length ? html`<div className="note"><b style=${{ color: "var(--tungsten)" }}>You planned for this moment:</b> ${s.woop.filter(w => w.active).slice(-2).map(w => `If ${w.ifs}, then ${w.then}.`).join(" ")}</div>` : null}
+        ${choice === "break" && s.programs.bank.on ? html`<div className="note"><b style=${{ color: "var(--s2)" }}>Screen bank:</b> ${bankBalance(s)} min earned and available. Spend it from Tools › Screen-time bank, and it's guilt-free.</div>` : null}
         ${choice === "break" && s.bundles.length ? html`<div className="note"><b style=${{ color: "var(--s2)" }}>Better deal:</b> save "${s.bundles[0].want}" for your bundled mission instead of spending it now.</div>` : null}
         ${choice === "shrink" ? html`<label className="f" htmlFor="boss-shrink">The smaller action (2 minutes)
           <input id="boss-shrink" autoFocus value=${shrinkText} onInput=${e => setShrinkText(e.target.value)} placeholder=${"e.g. Write only the first sentence of " + curTask}/></label>` : null}
@@ -1759,7 +1807,7 @@ function BreakOver({ s, coach, prio, onReturn, onExtend, onDone }) {
 /* =========================================================
    TODAY (daily episode engine)
    ========================================================= */
-function Today({ s, d, prio, coach, daily, byId, openBrief, setOv, update, goTool }) {
+function Today({ s, d, prio, coach, daily, byId, openBrief, setOv, update, goTool, quickLog }) {
   const today = d.today;
   const [intent, setIntent] = useState(daily.intention || "");
   const [reviewing, setReviewing] = useState(false);
@@ -1795,6 +1843,7 @@ function Today({ s, d, prio, coach, daily, byId, openBrief, setOv, update, goToo
       <div className="mono dim" style=${{ fontSize: "13px" }}>${plannedDone}/${planned.length} done · ${d.minsToday} focused min · ${d.urgesToday.length} urges fought</div>
     </div>
 
+    <${ProgramsToday} s=${s} d=${d} coach=${coach} openBrief=${openBrief} quickLog=${quickLog} goTool=${goTool}/>
     <div className="panel" style=${{ marginBottom: "14px" }}>
       <label className="f" htmlFor="today-intent">Implementation intention: when and where will the priority happen?
         <input id="today-intent" value=${intent} placeholder=${prio ? `When I sit down after breakfast at my desk, I will ${(prio.firstStep || "start " + prio.title).replace(/\.$/, "").toLowerCase()}.` : "When ___ at ___, I will ___."} onInput=${e => setIntent(e.target.value)} onBlur=${() => update(n => { if (n.daily[today]) n.daily[today].intention = intent; })}/>
@@ -2264,7 +2313,10 @@ const DISTORTIONS = [
   ["emotional", "Emotional reasoning", "\"I feel overwhelmed, so it must be too big.\""],
   ["manana", "Mañana thinking (Knaus)", "\"I'll feel more like it tomorrow.\""],
   ["research", "Contingency mañana (Knaus)", "\"I need to research more before I can start.\""],
-  ["mind", "Mind reading", "\"Recruiters will think my experience is thin.\""]
+  ["mind", "Mind reading", "\"Recruiters will think my experience is thin.\""],
+  ["pressure", "\"Better under pressure\" (common in ADHD)", "\"I work best at the last minute, so I'll wait.\""],
+  ["quick", "\"Just one quick thing first\" (common in ADHD)", "\"I'll check email and YouTube quickly, then start.\""],
+  ["mood", "Waiting for the right mood (common in ADHD)", "\"I'll study when I'm in the zone.\""]
 ];
 const EMOTIONS = ["Anxious", "Bored", "Overwhelmed", "Ashamed", "Frustrated", "Tired", "Uncertain", "Flat", "Restless"];
 const TRIGGERS = ["Tired after work", "Phone within reach", "Task felt vague", "Task felt too big", "Fear of rejection", "Boredom", "Stress", "Late night", "Weekend drift", "A new idea grabbed me"];
@@ -2327,6 +2379,7 @@ function HomeBanners({ s, d, coach, goTool }) {
   const fresh = !c && (parseDay(today).getDay() === 1 || parseDay(today).getDate() === 1 || slipped);
   const out = [];
   if (slipped) out.push(html`<div key="slip" className="banner nudge"><div><div className="eyebrow" style=${{ color: "var(--crimson)" }}>Slip detected</div><div style=${{ fontWeight: 700 }}>${d.daysSinceLast >= 2 ? `${d.daysSinceLast} days since your last session.` : `${d.distractedToday} sessions lost to distraction today.`} One slip only becomes a collapse if you decide it already is one.</div></div><button className="btn btn-sm btn-amber" onClick=${() => goTool("slip")}>Run slip recovery (3 min)</button></div>`);
+  ["gym", "learn"].forEach(k => { const st = progToday(s, k); if (st && !st.done) out.push(html`<div key=${"p" + k} className=${"banner" + (st.missedLast ? " nudge" : "")}><div><div className="eyebrow" style=${{ color: st.missedLast ? "var(--crimson)" : "var(--tungsten)" }}>${k === "gym" ? "Gym day" : "Lesson day"} · ${fromMin(toMin(s.programs[k].time))}${st.missedLast ? " · never miss twice" : ""}</div><div style=${{ fontWeight: 700 }}>${k === "gym" ? (st.missedLast ? "You missed the last one. Today the minimum is the whole goal." : "The minimum counts: " + s.programs.gym.min) : "The only goal is to open it and press play."}</div></div><button className="btn btn-sm btn-amber" onClick=${() => goTool(k)}>${k === "gym" ? "Go" : "Open lesson"}</button></div>`); });
   if (c) { const e = contractEval(s, c, today); out.push(html`<div key="c" className="banner"><div style=${{ minWidth: 0 }}><div className="eyebrow">This week's contract · stake: ${c.stake || "none"}</div><div style=${{ fontWeight: 700 }}><span className="mono">${e.count}/${c.sessions}</span> sessions · <span className="mono">${e.minutes}/${c.minutes}</span> min${c.must ? ` · must-do ${c.mustDone ? "✓" : "open"}` : ""}</div></div><button className="btn btn-sm btn-line" onClick=${() => goTool("contract")}>View contract</button></div>`); }
   else if (fresh) out.push(html`<div key="f" className="banner"><div><div className="eyebrow" style=${{ color: "var(--tungsten)" }}>Fresh start</div><div style=${{ fontWeight: 700 }}>${slipped ? "A clean slate starts now, not next Monday." : parseDay(today).getDay() === 1 ? "New week. Fresh starts are when commitments stick best." : "New month. A natural reset point."} Sign this week's contract.</div></div><button className="btn btn-sm btn-amber" onClick=${() => goTool("contract")}>Sign contract</button></div>`);
   return out.length ? html`<div>${out}</div>` : null;
@@ -2393,18 +2446,28 @@ function RecapExtras({ s, d, coach, ws, we, postponed, update, flash }) {
 function Tools(props) {
   const { s, tool, setTool } = props;
   if (tool && tool.id) {
-    const map = { diag: Diagnose, woop: Woop, thought: ThoughtRecord, defuse: Defuse, values: Values, slip: Slip, bundle: Bundles, contract: Contract };
-    const C = map[tool.id]; const meta = TOOLS.find(t => t.id === tool.id);
+    const map = { diag: Diagnose, woop: Woop, thought: ThoughtRecord, defuse: Defuse, values: Values, slip: Slip, bundle: Bundles, contract: Contract, gym: GymProgram, learn: LearnProgram, asrs: Asrs, barkley: Barkley, span: AttentionSpan, bank: ScreenBank, stop: StopSkill, parked: ParkedInbox };
+    const C = map[tool.id]; const meta = TOOLS.concat(ADHD_TOOLS).find(t => t.id === tool.id);
+    if (!C || !meta) { setTimeout(() => setTool(null), 0); return null; }
     return html`<div className="wrap section" style=${{ display: "flex", flexDirection: "column", gap: "16px", maxWidth: "900px" }}>
       <div><button className="btn btn-sm btn-line" onClick=${() => setTool(null)}>‹ All tools</button></div>
       <div><span className="eyebrow" style=${{ color: "var(--tungsten)" }}>${meta.src}</span><h2 style=${{ fontSize: "clamp(34px,6vw,56px)", marginTop: "6px", textTransform: "uppercase" }}>${meta.t}</h2>
         <details style=${{ marginTop: "8px" }}><summary className="dim" style=${{ cursor: "pointer", fontWeight: 700 }}>Why this works</summary><p className="dim" style=${{ marginTop: "6px", maxWidth: "70ch" }}>${meta.why}</p></details></div>
-      <${C} key=${tool.id + (tool.mid || "")} ...${props}/>
+      <${C} key=${tool.id + (tool.mid || "") + (tool.recall ? "r" : "")} ...${props} goTool=${(id, extra) => { setTool(Object.assign({ id }, extra || {})); try { window.scrollTo(0, 0); } catch (e) {} }}/>
     </div>`;
   }
   const used = { diag: s.diag.length, woop: s.woop.length, thought: s.thoughts.filter(t => !t.kind || t.kind === "record").length, defuse: s.thoughts.filter(t => t.kind === "defuse").length, values: Object.keys(s.values).length, slip: s.slips.length, bundle: s.bundles.length, contract: s.contracts.length };
+  const adhdUsed = { gym: progSessions(s, "gym").length, learn: progSessions(s, "learn").length, asrs: s.screens.filter(x => x.kind === "asrs").length, span: s.spans.length, bank: s.spends.length, parked: s.parked.filter(x => x.status === "inbox").length };
+  const adCard = t => html`<button key=${t.id} className=${"tool-card" + (t.group === "program" ? " prog-card" : "")} onClick=${() => setTool({ id: t.id })}>
+      ${adhdUsed[t.id] ? html`<span className="chip amber tool-n">${t.id === "parked" ? adhdUsed[t.id] + " waiting" : adhdUsed[t.id] + "×"}</span>` : null}
+      <span className="src">${t.min} · ${t.src}</span><span className="tt">${t.t}</span><span className="dim" style=${{ fontSize: "14px" }}>${t.d}</span></button>`;
   return html`<div className="wrap section" style=${{ display: "flex", flexDirection: "column", gap: "16px" }}>
-    <div><span className="eyebrow">Clinical toolkit</span><h2 style=${{ fontSize: "clamp(38px,7vw,64px)", marginTop: "6px" }}>Tools</h2>
+    <div><span className="eyebrow">For the two things you keep skipping</span><h2 style=${{ fontSize: "clamp(38px,7vw,64px)", marginTop: "6px" }}>Your programs</h2></div>
+    <div className="tool-grid">${ADHD_TOOLS.filter(t => t.group === "program").map(adCard)}</div>
+    <div><span className="eyebrow">ADHD-specific therapy tools</span><h2 style=${{ fontSize: "clamp(32px,6vw,52px)", marginTop: "6px" }}>ADHD toolkit</h2>
+      <p className="dim" style=${{ marginTop: "8px", maxWidth: "72ch" }}>Adapted from the main books on adult ADHD treatment: Barkley's <i>Taking Charge of Adult ADHD</i>, Safren's <i>Mastering Your Adult ADHD</i>, Solanto's <i>Cognitive-Behavioral Therapy for Adult ADHD</i> and Zylowska's <i>The Mindfulness Prescription for Adult ADHD</i>. Useful with or without a diagnosis.</p></div>
+    <div className="tool-grid">${ADHD_TOOLS.filter(t => t.group === "adhd").map(adCard)}</div>
+    <div><span className="eyebrow">Clinical toolkit</span><h2 style=${{ fontSize: "clamp(32px,6vw,52px)", marginTop: "6px" }}>Procrastination tools</h2>
       <p className="dim" style=${{ marginTop: "8px", maxWidth: "72ch" }}>Techniques from cognitive behavioural therapy, acceptance and commitment therapy and motivation research, adapted for self-use. Every tool ends in a real-world action. They're not therapy. If low mood or anxiety is persistent, talk to a GP or psychologist.</p></div>
     <div className="tool-grid">${TOOLS.map(t => html`<button key=${t.id} className="tool-card" onClick=${() => setTool({ id: t.id })}>
       ${used[t.id] ? html`<span className="chip amber tool-n">${used[t.id]}×</span>` : null}
@@ -2780,6 +2843,7 @@ const CALM_TOOLS = {
   winddown: { t: "Wind-down plan", sec: "sleep", min: 3, src: "CBT for insomnia, the first-line treatment in sleep-medicine guidelines (AASM, 2021) · Drake et al., 2013 on caffeine", d: "Bedtime, screens-off and caffeine cut-off, worked back from your wake time." },
   braindump: { t: "Bedtime brain dump", sec: "sleep", min: 5, src: "Scullin et al., 2018: a 5-minute to-do list before bed helped people fall asleep faster", d: "Get tomorrow's list out of your head and onto the screen." },
   shuffle: { t: "Cognitive shuffle", sec: "sleep", min: 10, src: "Luc Beaudoin's serial diverse imagining (early but promising evidence)", d: "A deliberately boring word game for a racing mind." },
+  asrs: { t: "ADHD screener", sec: "check", min: 3, src: "Adult ADHD Self-Report Scale (ASRS-V1.1) Screener, developed with the World Health Organization", d: "The six-question adult ADHD screener." },
   checkup: { t: "Mood check-up", sec: "check", min: 4, src: "PHQ-9 and GAD-7, the questionnaires GPs use (Kroenke, Spitzer & Williams)", d: "Track anxiety and depression symptoms every two weeks." }
 };
 const LIFTERS = [
@@ -3356,7 +3420,7 @@ function Shuffle() {
 }
 
 /* ---------- check-ups (PHQ-9 / GAD-7) ---------- */
-function Checkup({ s, update, setOv }) {
+function Checkup({ s, update, setOv, openCalm }) {
   const [kind, setKind] = useState(null); const [ans, setAns] = useState([]); const [res, setRes] = useState(null);
   const Q = kind === "gad7" ? GAD7 : PHQ9;
   const start = k => { setKind(k); setAns(Array((k === "gad7" ? GAD7 : PHQ9).length).fill(null)); setRes(null); try { window.scrollTo(0, 0); } catch (e) {} };
@@ -3399,6 +3463,9 @@ function Checkup({ s, update, setOv }) {
         ${h.length > 1 ? html`<p className="note">History: ${h.slice(-6).map(x => x.score).join(" → ")}</p>` : null}
         <div className="btn-row" style=${{ alignItems: "center" }}><button className=${"btn btn-sm " + (due ? "btn-calm" : "btn-line")} onClick=${() => start(k)}>${due ? "Take it now" : "Retake"}</button>${!due ? html`<span className="note">Next due ${niceDate(dayKey(new Date(last.ts + 14 * 86400000)))}</span>` : null}</div>
       </div>`; })}</div>
+    <div className="panel"><span className="eyebrow">ASRS-V1.1 screener · 6 questions</span><h3>ADHD</h3>
+      ${(() => { const x = s.screens.filter(y => y.kind === "asrs").sort((a, b) => a.ts - b.ts).pop(); return x ? html`<p><b className="mono" style=${{ fontSize: "22px" }}>${x.shaded}/6</b> · ${x.shaded >= 4 ? "Screens positive" : "Below the screening threshold"} · ${niceDate(dayKey(new Date(x.ts)))}</p>` : html`<p className="dim">Not taken yet. Asks about the past 6 months, so once is enough for now.</p>`; })()}
+      <div><button className="btn btn-sm btn-calm" onClick=${() => openCalm("asrs")}>${s.screens.some(y => y.kind === "asrs") ? "View or retake" : "Take it now"}</button></div></div>
     <p className="note">Both ask about the last two weeks, so every two weeks is enough. A score of 10 or more is where a GP visit is usually recommended. PHQ-9 and GAD-7 were developed by Drs Robert L. Spitzer, Janet B. W. Williams, Kurt Kroenke and colleagues, with an educational grant from Pfizer Inc.; no permission is required to reproduce them.</p>
   <//>`;
 }
@@ -3587,7 +3654,7 @@ function GreenRoom(props) {
   if (calmTool && calmTool.id) {
     const id = calmTool.id, L = LIFTERS.find(x => x.id === id);
     const meta = id === "checkin" ? { t: "How are you, really?", src: "Mood Meter (Marc Brackett, Permission to Feel) · affect labelling (Lieberman et al., 2007)" } : (CALM_TOOLS[id] || L);
-    const MAP = { checkin: MoodCheckIn, breathe: Breathe, ground: Ground, tipp: Tipp, pmr: Pmr, panic: Panic, sorter: Sorter, worrytime: WorryTime, decat: Decat, control: ControlCircle, reappraise: Reappraise, winddown: WindDown, braindump: BrainDump, shuffle: Shuffle, checkup: Checkup };
+    const MAP = { checkin: MoodCheckIn, breathe: Breathe, ground: Ground, tipp: Tipp, pmr: Pmr, panic: Panic, sorter: Sorter, worrytime: WorryTime, decat: Decat, control: ControlCircle, reappraise: Reappraise, winddown: WindDown, braindump: BrainDump, shuffle: Shuffle, checkup: Checkup, asrs: Asrs };
     const C = MAP[id] || (L ? LifterView : null);
     if (C && meta) return html`<div className="wrap section" style=${{ display: "flex", flexDirection: "column", gap: "16px", maxWidth: "820px" }}>
       <div style=${{ display: "flex", justifyContent: "space-between", gap: "10px", flexWrap: "wrap" }}><button className="btn btn-sm btn-line" onClick=${back}>‹ Green Room</button><button className="btn btn-sm btn-line" onClick=${() => setOv({ type: "help" })}>Need help now?</button></div>
@@ -3675,6 +3742,419 @@ function MoreSheet({ view, onGo, onSettings, onClose }) {
           <button className="choice" onClick=${onSettings}><span className="ic" aria-hidden="true">⚙</span><div><div>Settings and data</div><div className="note" style=${{ fontWeight: 500 }}>Sync, backup code, salary, No Mercy mode</div></div></button>
         </div>
       </div></div></div>`;
+}
+
+
+/* =========================================================
+   ADHD PROGRAMS + THERAPY TOOLS
+   Adapted from Barkley (Taking Charge of Adult ADHD), Safren et al. (Mastering Your Adult ADHD),
+   Solanto (CBT for Adult ADHD), Zylowska (The Mindfulness Prescription for Adult ADHD),
+   habit research (Lally et al., 2010; Wood) and learning science (Dunlosky et al., 2013).
+   ========================================================= */
+const ADHD_TOOLS = [
+  { id: "gym", group: "program", t: "Gym program", min: "Set up once", src: "Habit research · temptation bundling · implementation intentions", d: "Fixed days and time, a minimum version that always counts, never miss twice, and calendar alerts.", why: "Habits form when the same action happens in the same context. Lally et al. (2010) found it took a median of 66 days to become automatic (18 to 254 depending on the person), and missing one day didn't derail it. So: a fixed time and cue, a minimum version so there's no all-or-nothing, and a 'never miss twice' rule. Milkman's gym study found that saving a gripping audiobook for the gym increased visits. Gollwitzer's if-then plans tie the action to a cue so it doesn't depend on motivation." },
+  { id: "learn", group: "program", t: "Learning program", min: "Set up once", src: "Learning science: Dunlosky et al. (2013) · Roediger & Karpicke (2006)", d: "One-tap lesson launch, then a recall check and spaced reviews so it actually sticks.", why: "You don't avoid learning; you avoid the moment of opening the lesson. So the first action is just 'open it and press play', with the link one tap away. Then retrieval practice: writing what you remember without looking. In Dunlosky et al.'s 2013 review of ten study techniques, practice testing and spaced practice were the only two rated high utility. Rereading and highlighting were rated low." },
+  { id: "asrs", group: "adhd", t: "ADHD screener", min: "3 min", src: "ASRS-V1.1 Screener · WHO Workgroup on Adult ADHD", d: "The six-question adult ADHD screener GPs use, with a summary you can take to your appointment.", why: "The ASRS-V1.1 Screener was developed with the World Health Organization. Its six questions were found to be the most predictive of adult ADHD symptoms. It can't diagnose ADHD, but it tells you whether a proper assessment is worth pursuing." },
+  { id: "barkley", group: "adhd", t: "Barkley's 8 rules", min: "3 min read", src: "Russell Barkley · Taking Charge of Adult ADHD", d: "The executive-function rules behind most adult ADHD treatment, each linked to a tool here.", why: "Barkley describes ADHD as a problem of self-regulation and executive function: knowing what to do but not being able to make yourself do it at the right moment. His fix is to move what your brain doesn't hold internally (time, plans, motivation) into the outside world, at the point where you need it." },
+  { id: "span", group: "adhd", t: "Attention span test", min: "10–30 min", src: "Safren et al. · Mastering Your Adult ADHD (distractibility module)", d: "Measure how long you actually focus on a dull task, then size your missions to fit.", why: "Safren's CBT program for adult ADHD has you time how long you can stay on a boring task before drifting, then break work into chunks of that length with short planned breaks. Working with your real span beats fighting it, and you stretch it gradually." },
+  { id: "parked", group: "adhd", t: "Parked thoughts", min: "2 min", src: "Distractibility delay (Safren; Solanto) · idea cooling-off", d: "Thoughts you parked during missions. New ideas sit for 7 days before you're allowed to research them.", why: "With ADHD, a stray thought ('I should look up that car', 'what about a solar consulting business?') turns into action straight away. Distractibility delay means writing it down and postponing it, so the thought is kept but not acted on. Most lose their pull after a delay, and the 7-day cooling-off targets your habit of jumping to new ideas." },
+  { id: "bank", group: "adhd", t: "Screen-time bank", min: "Set up once", src: "Contingency management · Premack principle · Barkley's 'external motivation'", d: "Focused minutes earn guilt-free entertainment minutes. YouTube becomes a reward, not an escape.", why: "ADHD brains discount delayed rewards steeply, so 'a better career in two years' barely registers against YouTube now. Barkley's advice is to add immediate, external rewards. This is a token economy, a well-established behavioural method: entertainment you earn first doesn't come with guilt, and it's always there as an alternative to escaping mid-task." },
+  { id: "stop", group: "adhd", t: "STOP: a one-minute pause", min: "1 min", src: "MBSR STOP practice · mindful awareness for adult ADHD (Zylowska)", d: "Stop, take a breath, observe, proceed. A gap between the impulse and the action.", why: "Mindful awareness practices have been studied as a treatment for adult ADHD (Zylowska and colleagues at UCLA). The core skill is noticing the impulse before acting on it. STOP is the shortest version, and the pause is what Barkley's first rule calls stopping the action." }
+];
+const DOW_ORDER = [[1, "Mon"], [2, "Tue"], [3, "Wed"], [4, "Thu"], [5, "Fri"], [6, "Sat"], [0, "Sun"]];
+const ASRS_Q = [
+  "How often do you have trouble wrapping up the final details of a project, once the challenging parts have been done?",
+  "How often do you have difficulty getting things in order when you have to do a task that requires organization?",
+  "How often do you have problems remembering appointments or obligations?",
+  "When you have a task that requires a lot of thought, how often do you avoid or delay getting started?",
+  "How often do you fidget or squirm with your hands or feet when you have to sit down for a long time?",
+  "How often do you feel overly active and compelled to do things, like you were driven by a motor?"
+];
+const ASRS_OPT = ["Never", "Rarely", "Sometimes", "Often", "Very Often"];
+const ASRS_SHADE = [2, 2, 2, 3, 3, 3];
+const ASRS_AREAS = ["Work", "Study", "Home and chores", "Relationships", "Money", "Driving or safety"];
+
+const progMission = (s, k) => s.missions.find(m => m.prog === k && m.status === "active" && !(s.tomb || []).includes(m.id)) || null;
+const progSessions = (s, k) => { const ids = new Set(s.missions.filter(m => m.prog === k).map(m => m.id)); return s.sessions.filter(x => ids.has(x.mid) && productive(x)); };
+function progToday(s, k) {
+  const p = s.programs && s.programs[k]; if (!p || !p.on) return null;
+  const today = dayKey(); if (!p.days.includes(parseDay(today).getDay())) return null;
+  const sess = progSessions(s, k), done = sess.some(x => x.day === today);
+  let missedLast = false;
+  const since = p.since ? dayKey(new Date(p.since)) : today;
+  for (let i = 1; i <= 7; i++) { const k2 = addDays(today, -i); if (k2 < since) break; if (p.days.includes(parseDay(k2).getDay())) { missedLast = !sess.some(x => x.day === k2); break; } }
+  return { done, missedLast };
+}
+const spanMin = s => { const r = (s.spans || []).slice(-3); return r.length ? Math.max(2, Math.round(r.reduce((a, x) => a + x.sec, 0) / r.length / 60)) : null; };
+function bankBalance(s) {
+  const b = s.programs.bank; if (!b.on) return 0;
+  const earned = Math.floor(s.sessions.filter(x => x.ts >= (b.start || 0) && productive(x)).reduce((a, x) => a + x.actual / 60, 0) * b.rate);
+  const spent = s.spends.filter(x => x.ts >= (b.start || 0)).reduce((a, x) => a + x.min, 0);
+  return earned - spent;
+}
+function ensureProg(n, k) {
+  const p = n.programs[k], tomb = n.tomb || [];
+  let m = n.missions.find(x => x.prog === k && !tomb.includes(x.id));
+  if (!m) { const base = "prog-" + k; m = { id: (tomb.includes(base) || n.missions.some(x => x.id === base)) ? base + "-" + uid() : base, prog: k, repeat: true, order: n.missions.length + 100, createdAt: Date.now() }; n.missions.push(m); }
+  if (k === "gym") Object.assign(m, { season: 6, title: "Gym session" + (p.where ? " · " + p.where : ""), desc: "Your gym program. The minimum version always counts: " + p.min, minutes: 25, difficulty: "Medium", attr: "health", tags: ["exercise"], firstStep: p.min, deliverable: "Showed up." });
+  else Object.assign(m, { season: 2, title: p.course ? "Lesson · " + p.course : "Lesson", desc: "Your learning program: one lesson, then a recall check from memory.", minutes: LENGTHS.includes(p.minutes) ? p.minutes : 25, difficulty: "Medium", attr: "career", tags: ["study"], firstStep: "Open the lesson and press play.", deliverable: "Lesson done and three key points recalled from memory.", link: p.link || "" });
+  m.status = "active";
+  const dayNames = DOW_ORDER.filter(([dnum]) => p.days.includes(dnum)).map(x => x[1]).join(", ");
+  const plan = k === "gym"
+    ? { wish: "Go to the gym on " + dayNames, ifs: "it's " + fromMin(toMin(p.time)) + " on a gym day" + (p.straight ? " and I'm leaving work" : ""), then: p.straight ? "I drive straight to the gym without going home first, and do at least the minimum" : "I put my gym clothes on straight away and do at least the minimum" }
+    : { wish: "Do my lessons on " + dayNames, ifs: "it's " + fromMin(toMin(p.time)) + " on a lesson day", then: "I open the lesson and press play before anything else" };
+  let w = p.woopId && n.woop.find(x => x.id === p.woopId);
+  if (!w) { w = { id: uid(), ts: Date.now(), createdAt: Date.now() }; n.woop.push(w); p.woopId = w.id; }
+  Object.assign(w, plan, { outcome: "", obstacle: k === "gym" ? "Deciding in the moment whether I feel like it" : "Opening something else first", active: true });
+  return m;
+}
+function icsText(title, days, time, minutes, desc, url) {
+  if (!days.length) return null;
+  const [h, mi] = time.split(":").map(Number);
+  const d = new Date(); d.setHours(h, mi, 0, 0);
+  for (let i = 0; i < 8 && (!days.includes(d.getDay()) || d < new Date()); i++) d.setDate(d.getDate() + 1);
+  const f = x => x.getFullYear() + pad(x.getMonth() + 1) + pad(x.getDate()) + "T" + pad(x.getHours()) + pad(x.getMinutes()) + "00";
+  const end = new Date(d.getTime() + minutes * 60000), now = new Date();
+  const stamp = now.getUTCFullYear() + pad(now.getUTCMonth() + 1) + pad(now.getUTCDate()) + "T" + pad(now.getUTCHours()) + pad(now.getUTCMinutes()) + pad(now.getUTCSeconds()) + "Z";
+  const esc = t => String(t).replace(/\\/g, "\\\\").replace(/;/g, "\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
+  const by = ["SU", "MO", "TU", "WE", "TH", "FR", "SA"];
+  const L = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//LIFEFLIX//EN", "CALSCALE:GREGORIAN", "BEGIN:VEVENT", "UID:" + uid() + "@lifeflix", "DTSTAMP:" + stamp, "DTSTART:" + f(d), "DTEND:" + f(end), "RRULE:FREQ=WEEKLY;BYDAY=" + days.map(x => by[x]).join(","), "SUMMARY:" + esc(title), "DESCRIPTION:" + esc(desc)];
+  if (url) L.push("URL:" + url);
+  L.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + esc(title + " in 15 minutes"), "TRIGGER:-PT15M", "END:VALARM", "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + esc(title + ": start now"), "TRIGGER:PT0M", "END:VALARM", "END:VEVENT", "END:VCALENDAR");
+  return L.join("\r\n") + "\r\n";
+}
+async function saveIcs(downloads, filename, text, setMsg) {
+  if (!text) { setMsg("Pick at least one day first."); return; }
+  if (!downloads) { setMsg("Calendar files can't be saved in this view. Open LIFEFLIX in a browser on your computer and try again, then send the file to your phone."); return; }
+  try { await downloads.save({ filename, data: text }); setMsg("Saved. Open the file to add the repeating event, with alerts 15 minutes before and at the start."); }
+  catch (e) { setMsg("Not saved" + (e && e.code ? " (" + e.code + ")" : "") + "."); }
+}
+
+function DayPick({ days, onChange }) {
+  return html`<div className="daypick" role="group" aria-label="Days">${DOW_ORDER.map(([n, l]) => html`<button key=${n} aria-pressed=${days.includes(n)} onClick=${() => onChange(days.includes(n) ? days.filter(x => x !== n) : days.concat([n]))}>${l}</button>`)}</div>`;
+}
+function MiRuler({ f, set, what }) {
+  return html`<div className="panel" style=${{ gap: "12px" }}>
+    <span className="eyebrow">Motivation check (motivational interviewing)</span>
+    <div className="f-row">
+      <${Rate} id=${"mi-i-" + what} label=${"How important is " + what + " to you?"} value=${f.imp} onChange=${v => set("imp", v)} lo="Not at all" hi="Extremely"/>
+      <${Rate} id=${"mi-c-" + what} label="How confident are you that you'll do it?" value=${f.con} onChange=${v => set("con", v)} lo="Not at all" hi="Certain"/>
+    </div>
+    <label className="f" htmlFor=${"mi-w-" + what}>Why ${f.imp} and not ${Math.max(0, f.imp - 3)}? What makes it matter?<input id=${"mi-w-" + what} value=${f.whyNot} onInput=${e => set("whyNot", e.target.value)} placeholder=${what === "the gym" ? "e.g. I want energy for site days and to feel good in my own body" : "e.g. P6 and protection skills are what $150K roles ask for"}/></label>
+    <label className="f" htmlFor=${"mi-u-" + what}>What would move your confidence from ${f.con} to ${Math.min(10, f.con + 1)}?<input id=${"mi-u-" + what} value=${f.upOne} onInput=${e => set("upOne", e.target.value)} placeholder="e.g. Packing my bag the night before"/></label>
+    <p className="note">Motivational interviewing (Miller & Rollnick) asks why your score isn't lower, not why it isn't higher. Your own reasons persuade you more than anyone else's.</p>
+  </div>`;
+}
+
+function ProgramsToday({ s, d, coach, openBrief, quickLog, goTool }) {
+  const P = s.programs, any = P.gym.on || P.learn.on;
+  const today = dayKey();
+  const due = s.reviews.reduce((a, r) => a + (r.due || []).filter(k => k <= today && !(r.done || []).includes(k)).length, 0);
+  if (!any) return html`<div className="banner" style=${{ marginTop: 0, marginBottom: "14px" }}><div><div className="eyebrow" style=${{ color: "var(--tungsten)" }}>Gym and lessons</div><div style=${{ fontWeight: 700 }}>Set up your gym and learning programs so they turn up here on the right days.</div></div><div className="btn-row"><button className="btn btn-sm btn-amber" onClick=${() => goTool("gym")}>Gym</button><button className="btn btn-sm btn-amber" onClick=${() => goTool("learn")}>Lessons</button></div></div>`;
+  const rows = [];
+  ["gym", "learn"].forEach(k => {
+    const st = progToday(s, k), m = progMission(s, k); if (!st || !m) return;
+    rows.push(html`<div key=${k} className=${"slot" + (st.done ? "" : " prio")} style=${{ gridTemplateColumns: "1fr auto" }}>
+      <div style=${{ minWidth: 0 }}><div className="lab">${k === "gym" ? "Gym" : "Lesson"} · ${fromMin(toMin(P[k].time))}${st.missedLast && !st.done ? " · never miss twice" : ""}</div><div className="ti">${m.title} ${st.done ? html`<span className="chip ok">Done</span>` : null}</div><div className="note">${k === "gym" ? "Minimum: " + P.gym.min : "First action: open it and press play."}</div></div>
+      <div className="acts">${st.done ? null : k === "gym" ? html`<button className="btn btn-sm btn-amber" onClick=${() => openBrief(m, { minutes: 25, target: P.gym.min })}>▶ Go</button><button className="btn btn-sm btn-line" onClick=${() => quickLog(m, 10, "Minimum version")}>Did the minimum</button>` : html`<button className="btn btn-sm btn-amber" onClick=${() => openBrief(m, {})}>▶ Start lesson</button>`}</div>
+    </div>`);
+  });
+  if (due) rows.push(html`<div key="rev" className="slot" style=${{ gridTemplateColumns: "1fr auto" }}><div><div className="lab">Spaced review</div><div className="ti">${due} review${due > 1 ? "s" : ""} due</div><div className="note">Two minutes each. This is what makes lessons stick.</div></div><div className="acts"><button className="btn btn-sm btn-amber" onClick=${() => goTool("learn")}>Review</button></div></div>`);
+  if (!rows.length) return null;
+  return html`<div style=${{ display: "grid", gap: "10px", marginBottom: "14px" }}>${rows}</div>`;
+}
+
+function ProgramStatus({ s, k }) {
+  const P = s.programs[k], sess = progSessions(s, k), ws = weekStartKey(dayKey());
+  const wk = sess.filter(x => x.day >= ws).length, mins = Math.round(sess.reduce((a, x) => a + x.actual, 0) / 60);
+  const weeks = []; for (let i = 3; i >= 0; i--) { const a = addDays(ws, -7 * i), b = addDays(a, 6); weeks.push({ a, n: sess.filter(x => x.day >= a && x.day <= b).length }); }
+  return html`<div className="grid-3" style=${{ gridTemplateColumns: "repeat(auto-fit,minmax(130px,1fr))" }}>
+    <div className="stat"><div className="k">This week</div><div className="v">${wk}/${P.days.length}</div></div>
+    <div className="stat"><div className="k">Total</div><div className="v">${sess.length}</div></div>
+    <div className="stat"><div className="k">Time</div><div className="v">${fmtMin(mins)}</div></div>
+    <div className="stat"><div className="k">Last 4 weeks</div><div className="v mono" style=${{ fontSize: "18px" }}>${weeks.map(w => w.n).join(" · ")}</div></div>
+  </div>`;
+}
+
+function GymProgram({ s, coach, update, openBrief, quickLog, downloads, flash }) {
+  const P = s.programs.gym;
+  const [f, setF] = useState(() => Object.assign({}, P));
+  const [edit, setEdit] = useState(!P.on);
+  const [msg, setMsg] = useState("");
+  const set = (k, v) => setF(x => Object.assign({}, x, { [k]: v }));
+  const m = progMission(s, "gym"), st = progToday(s, "gym");
+  const save = () => { update(n => { n.programs.gym = Object.assign({}, n.programs.gym, f, { on: true, since: n.programs.gym.since || Date.now() }); ensureProg(n, "gym"); }); setEdit(false); flash("Gym program saved", "Your if-then plan is active."); };
+  const ics = () => saveIcs(downloads, "lifeflix-gym.ics", icsText("Gym" + (P.where ? " · " + P.where : ""), P.days, P.time, 60, "Minimum version counts: " + P.min + (P.bundle ? "\nBundle: " + P.bundle + " only at the gym." : ""), ""), setMsg);
+  return html`<${React.Fragment}>
+    <div className="rx"><p className="quote">"ADHD is not a problem of knowing what to do. It's a problem of doing what you know."</p><p className="note">Paraphrasing Russell Barkley. You already know the gym matters. This program is about the moment of starting.</p></div>
+    ${P.on && m && !edit ? html`<div className="panel">
+      <div style=${{ display: "flex", justifyContent: "space-between", gap: "10px", flexWrap: "wrap", alignItems: "baseline" }}><h3>Your plan</h3><span className="mono dim">${DOW_ORDER.filter(([n]) => P.days.includes(n)).map(x => x[1]).join(" ")} · ${fromMin(toMin(P.time))}</span></div>
+      ${st && st.missedLast && !st.done ? html`<div className="banner nudge" style=${{ marginTop: 0 }}><div><b>Never miss twice.</b> <span className="dim">You missed the last session. Missing one barely affects a habit; missing two starts a new pattern. Today, the minimum is the whole goal.</span></div></div>` : null}
+      <p><b>Minimum version:</b> ${P.min}</p>
+      ${P.bundle ? html`<p><b>Gym-only treat:</b> ${P.bundle}</p>` : null}
+      ${P.bag ? html`<p className="note">Pack the gym bag the night before and put it by the door or in the car.</p>` : null}
+      <${ProgramStatus} s=${s} k="gym"/>
+      <div className="btn-row"><button className="btn btn-amber" onClick=${() => openBrief(m, { minutes: 25, target: P.min })}>▶ Start a gym session</button><button className="btn btn-line" onClick=${() => quickLog(m, 10, "Minimum version")}>I did the minimum (10 min)</button></div>
+      <div><div className="eyebrow" style=${{ marginBottom: "8px" }}>Already went? Log it</div><div className="seg" role="group" aria-label="Log a gym session">${[20, 30, 45, 60, 90].map(n => html`<button key=${n} onClick=${() => quickLog(m, n, "Gym session")}>${n} min</button>`)}</div></div>
+      <div className="btn-row" style=${{ alignItems: "center" }}><button className="btn btn-sm btn-line" onClick=${ics}>Add to my calendar</button><button className="btn btn-sm btn-line" onClick=${() => { setF(Object.assign({}, P)); setEdit(true); }}>Edit plan</button></div>
+      ${msg ? html`<p className="note" role="status">${msg}</p>` : null}
+      <p className="note">The calendar is the part that matters most for ADHD: it reminds you where you are, at the time you need to start, instead of waiting for you to open LIFEFLIX.</p>
+    </div>` : null}
+    ${edit ? html`<${React.Fragment}>
+      <div className="panel" style=${{ gap: "14px" }}>
+        <h3>${P.on ? "Edit your plan" : "Build your plan"}</h3>
+        <div><div className="eyebrow" style=${{ marginBottom: "8px" }}>Which days?</div><${DayPick} days=${f.days} onChange=${v => set("days", v)}/><p className="note" style=${{ marginTop: "6px" }}>Three days you'll actually do beats five you won't.</p></div>
+        <div className="f-row">
+          <label className="f" htmlFor="gp-time">What time?<input id="gp-time" type="time" value=${f.time} onChange=${e => { if (e.target.value) set("time", e.target.value); }}/></label>
+          <label className="f" htmlFor="gp-where">Where?<input id="gp-where" value=${f.where} onInput=${e => set("where", e.target.value)} placeholder="e.g. Anytime Fitness, home garage"/></label>
+        </div>
+        <label style=${{ display: "flex", gap: "10px", alignItems: "flex-start", fontWeight: 600 }}><input id="gp-straight" type="checkbox" style=${{ width: "20px", height: "20px", flex: "none" }} checked=${!!f.straight} onChange=${e => set("straight", e.target.checked)}/><span>Go straight from work, without going home first<br/><span className="note">The couch is where gym plans go to die. A fixed cue (leaving work) beats a decision.</span></span></label>
+        <label className="f" htmlFor="gp-min">Minimum version (on bad days, this still counts)<input id="gp-min" value=${f.min} onInput=${e => set("min", e.target.value)}/></label>
+        <label className="f" htmlFor="gp-bundle">Gym-only treat (temptation bundle, optional)<input id="gp-bundle" value=${f.bundle} onInput=${e => set("bundle", e.target.value)} placeholder="e.g. My favourite podcast, only at the gym"/></label>
+        <label style=${{ display: "flex", gap: "10px", alignItems: "center", fontWeight: 600 }}><input id="gp-bag" type="checkbox" style=${{ width: "20px", height: "20px", flex: "none" }} checked=${!!f.bag} onChange=${e => set("bag", e.target.checked)}/>Pack my bag the night before</label>
+      </div>
+      <${MiRuler} f=${f} set=${set} what="the gym"/>
+      <div className="btn-row"><button className="btn btn-amber" disabled=${!f.days.length || !f.min.trim()} onClick=${save}>${P.on ? "Save changes" : "Start my gym program"}</button>${P.on ? html`<button className="btn btn-line" onClick=${() => setEdit(false)}>Cancel</button>` : null}</div>
+    <//>` : null}
+    ${P.on && (P.whyNot || P.upOne) && !edit ? html`<div className="panel"><span className="eyebrow">Your reasons</span>${P.whyNot ? html`<p>"${P.whyNot}"</p>` : null}${P.upOne ? html`<p className="dim">What helps: ${P.upOne}</p>` : null}</div>` : null}
+  <//>`;
+}
+
+function ReviewCard({ r, dueKey, update }) {
+  const [att, setAtt] = useState(""); const [show, setShow] = useState(false);
+  const mark = ok => update(n => { const x = n.reviews.find(y => y.id === r.id); if (!x) return; x.done = (x.done || []).concat([dueKey]); if (!ok) x.due = (x.due || []).concat([addDays(dayKey(), 1)]); });
+  return html`<div className="slot" style=${{ gridTemplateColumns: "1fr" }}>
+    <div><div className="lab">Review · learned ${niceDate(dayKey(new Date(r.ts)))}</div><div className="ti">${r.topic}</div></div>
+    ${!show ? html`<${React.Fragment}><textarea id=${"rv-" + r.id + dueKey} value=${att} onInput=${e => setAtt(e.target.value)} placeholder="From memory first: what were the key points?" style=${{ minHeight: "70px" }} aria-label=${"Recall " + r.topic}></textarea><div><button className="btn btn-sm btn-amber" onClick=${() => setShow(true)}>Check against my notes</button></div><//>`
+      : html`<${React.Fragment}><div className="note" style=${{ whiteSpace: "pre-wrap", color: "var(--fg)" }}>${r.notes}</div><div className="btn-row"><button className="btn btn-sm btn-amber" onClick=${() => mark(true)}>I remembered it</button><button className="btn btn-sm btn-line" onClick=${() => mark(false)}>Shaky: again tomorrow</button></div><//>`}
+  </div>`;
+}
+function LearnProgram({ s, coach, update, openBrief, quickLog, downloads, flash, tool }) {
+  const P = s.programs.learn;
+  const [f, setF] = useState(() => Object.assign({}, P));
+  const [edit, setEdit] = useState(!P.on);
+  const [msg, setMsg] = useState("");
+  const [recall, setRecall] = useState(!!(tool && tool.recall));
+  const [topic, setTopic] = useState(""); const [notes, setNotes] = useState("");
+  const set = (k, v) => setF(x => Object.assign({}, x, { [k]: v }));
+  const m = progMission(s, "learn"), today = dayKey();
+  const linkOk = !f.link.trim() || /^https?:\/\//i.test(f.link.trim());
+  const save = () => { update(n => { n.programs.learn = Object.assign({}, n.programs.learn, f, { link: f.link.trim(), course: f.course.trim(), on: true, since: n.programs.learn.since || Date.now() }); ensureProg(n, "learn"); }); setEdit(false); flash("Learning program saved", "Your if-then plan is active."); };
+  const dueItems = []; s.reviews.forEach(r => (r.due || []).forEach(k => { if (k <= today && !(r.done || []).includes(k) && !dueItems.some(x => x.r.id === r.id)) dueItems.push({ r, k }); }));
+  const upcoming = s.reviews.reduce((a, r) => a + (r.due || []).filter(k => k > today && !(r.done || []).includes(k)).length, 0);
+  const ics = () => saveIcs(downloads, "lifeflix-lesson.ics", icsText(P.course ? "Lesson · " + P.course : "Lesson", P.days, P.time, P.minutes, "First action: open the lesson and press play." + (P.link ? "\n" + P.link : ""), P.link), setMsg);
+  const saveRecall = () => { update(n => { n.reviews.push({ id: uid(), ts: Date.now(), topic: topic.trim(), notes: notes.trim(), mid: m ? m.id : null, due: [1, 3, 7, 14].map(x => addDays(dayKey(), x)), done: [] }); }); setTopic(""); setNotes(""); setRecall(false); flash("Recall saved", "Reviews scheduled for 1, 3, 7 and 14 days from now."); };
+  return html`<${React.Fragment}>
+    ${P.on && m && !edit ? html`<div className="panel">
+      <div style=${{ display: "flex", justifyContent: "space-between", gap: "10px", flexWrap: "wrap", alignItems: "baseline" }}><h3>${P.course || "Your lessons"}</h3><span className="mono dim">${DOW_ORDER.filter(([n]) => P.days.includes(n)).map(x => x[1]).join(" ")} · ${fromMin(toMin(P.time))} · ${P.minutes} min</span></div>
+      <p className="dim">${coach === "brutal" ? "Your only job is to open it and press play. Everything after that is easier than you think." : "The goal is just to press play. Starting is the hard part; staying is easier."}</p>
+      <${ProgramStatus} s=${s} k="learn"/>
+      <div className="btn-row">
+        <button className="btn btn-amber" onClick=${() => openBrief(m, {})}>▶ Start a lesson</button>
+        ${P.link ? html`<a className="btn btn-line" href=${P.link} target="_blank" rel="noopener noreferrer" style=${{ textDecoration: "none" }}>Open the lesson ↗</a>` : null}
+        <button className="btn btn-line" onClick=${() => setRecall(true)}>Recall check</button>
+      </div>
+      <div className="btn-row" style=${{ alignItems: "center" }}><button className="btn btn-sm btn-line" onClick=${ics}>Add to my calendar</button><button className="btn btn-sm btn-line" onClick=${() => { setF(Object.assign({}, P)); setEdit(true); }}>Edit plan</button></div>
+      ${msg ? html`<p className="note" role="status">${msg}</p>` : null}
+    </div>` : null}
+    ${recall ? html`<div className="rx">
+      <span className="eyebrow" style=${{ color: "var(--tungsten)" }}>Recall check · no peeking</span>
+      <p>Close the lesson. From memory, write the key points as if explaining them to a junior engineer. Gaps you find now are the parts to rewatch.</p>
+      <label className="f" htmlFor="lp-topic">Topic<input id="lp-topic" value=${topic} onInput=${e => setTopic(e.target.value)} placeholder="e.g. Overcurrent relay coordination"/></label>
+      <label className="f" htmlFor="lp-notes">What I remember<textarea id="lp-notes" value=${notes} onInput=${e => setNotes(e.target.value)} placeholder=${"1. Discrimination margin between relays\n2. Time-current curves and grading\n3. ..."} style=${{ minHeight: "120px" }}></textarea></label>
+      <div className="btn-row"><button className="btn btn-amber" disabled=${!topic.trim() || !notes.trim()} onClick=${saveRecall}>Save and schedule reviews</button><button className="btn btn-line" onClick=${() => setRecall(false)}>Cancel</button></div>
+    </div>` : null}
+    ${dueItems.length ? html`<div className="panel"><h3>Reviews due · ${dueItems.length}</h3><p className="note">Try to recall before checking. Effortful recall is the point; easy rereading is not.</p><div style=${{ display: "grid", gap: "10px" }}>${dueItems.map(({ r, k }) => html`<${ReviewCard} key=${r.id + k} r=${r} dueKey=${k} update=${update}/>`)}</div></div>` : P.on && !edit ? html`<p className="note">${upcoming ? upcoming + " reviews scheduled in the coming days." : "No reviews yet. After each lesson, do a recall check."}</p>` : null}
+    ${edit ? html`<${React.Fragment}>
+      <div className="panel" style=${{ gap: "14px" }}>
+        <h3>${P.on ? "Edit your plan" : "Build your plan"}</h3>
+        <label className="f" htmlFor="lp-course">What are you learning?<input id="lp-course" value=${f.course} onInput=${e => set("course", e.target.value)} placeholder="e.g. Primavera P6 fundamentals, electrical protection course"/></label>
+        <label className="f" htmlFor="lp-link">Link to the lesson or course (optional, but it removes a step)<input id="lp-link" value=${f.link} onInput=${e => set("link", e.target.value)} placeholder="https://"/></label>
+        ${!linkOk ? html`<p className="note" style=${{ color: "var(--bad)" }}>The link needs to start with https://</p>` : null}
+        <div><div className="eyebrow" style=${{ marginBottom: "8px" }}>Which days?</div><${DayPick} days=${f.days} onChange=${v => set("days", v)}/></div>
+        <div className="f-row">
+          <label className="f" htmlFor="lp-time">What time?<input id="lp-time" type="time" value=${f.time} onChange=${e => { if (e.target.value) set("time", e.target.value); }}/></label>
+          <div><div className="eyebrow" style=${{ marginBottom: "8px" }}>Lesson length</div><div className="seg" role="group" aria-label="Lesson length">${[10, 25, 45].map(n => html`<button key=${n} aria-pressed=${f.minutes === n} onClick=${() => set("minutes", n)}>${n} min</button>`)}</div></div>
+        </div>
+        <p className="note">Mornings before work usually beat evenings for ADHD: fewer distractions and less decision fatigue.</p>
+      </div>
+      <${MiRuler} f=${f} set=${set} what="learning"/>
+      <div className="btn-row"><button className="btn btn-amber" disabled=${!f.days.length || !linkOk} onClick=${save}>${P.on ? "Save changes" : "Start my learning program"}</button>${P.on ? html`<button className="btn btn-line" onClick=${() => setEdit(false)}>Cancel</button>` : null}</div>
+    <//>` : null}
+  <//>`;
+}
+
+function Asrs({ s, update, setOv }) {
+  const hist = s.screens.filter(x => x.kind === "asrs").sort((a, b) => a.ts - b.ts);
+  const [mode, setMode] = useState(hist.length ? "result" : "intro");
+  const [ans, setAns] = useState(Array(6).fill(null));
+  const [child, setChild] = useState(null); const [areas, setAreas] = useState([]);
+  const [res, setRes] = useState(hist[hist.length - 1] || null);
+  const [copied, setCopied] = useState("");
+  const all = ans.every(a => a != null);
+  const submit = () => {
+    const shaded = ans.filter((a, i) => a >= ASRS_SHADE[i]).length, total = ans.reduce((a, b) => a + b, 0);
+    const r = { id: uid(), ts: Date.now(), kind: "asrs", answers: ans.slice(), shaded, total, child, areas: areas.slice() };
+    update(n => { n.screens.push(r); }); setRes(r); setMode("result"); try { window.scrollTo(0, 0); } catch (e) {}
+  };
+  const summary = r => {
+    const gad = s.screens.filter(x => x.kind === "gad7").sort((a, b) => a.ts - b.ts).pop(), phq = s.screens.filter(x => x.kind === "phq9").sort((a, b) => a.ts - b.ts).pop();
+    return ["ASRS-V1.1 Screener, completed " + niceDate(dayKey(new Date(r.ts))) + " (past 6 months):"].concat(ASRS_Q.map((q, i) => (i + 1) + ". " + q + " " + ASRS_OPT[r.answers[i]] + (r.answers[i] >= ASRS_SHADE[i] ? " [shaded]" : "")))
+      .concat(["Shaded responses: " + r.shaded + " of 6 (4 or more screens positive).", "Total (2024 scoring update, 0-24): " + r.total + ".", "Noticeable before age 12: " + (r.child || "not answered") + ".", "Areas affected: " + (r.areas && r.areas.length ? r.areas.join(", ") : "not answered") + "."])
+      .concat(gad ? ["GAD-7 (anxiety): " + gad.score + " on " + niceDate(dayKey(new Date(gad.ts))) + "."] : []).concat(phq ? ["PHQ-9 (mood): " + phq.score + " on " + niceDate(dayKey(new Date(phq.ts))) + "."] : [])
+      .concat(["Main concerns: procrastination, starting tasks, jumping between new ideas, not following through on study and exercise despite wanting to."]).join("\n");
+  };
+  const copy = async t => { try { await navigator.clipboard.writeText(t); setCopied("Copied. Paste it into your notes for the GP."); } catch (e) { setCopied("Copy is blocked here. Select the text and copy it."); } };
+  const attrib = html`<p className="note">ASRS-V1.1 Screener, © 2023, New York University and President and Fellows of Harvard College. All rights reserved. Developed with the World Health Organization Workgroup on Adult ADHD (Adler, Kessler, Spencer and colleagues). The two questions about childhood and areas of life are LIFEFLIX additions, not part of the ASRS.</p>`;
+  if (mode === "intro") return html`<div className="panel" style=${{ gap: "12px" }}>
+    <p style=${{ fontSize: "16px" }}>Six questions about the <b>past 6 months</b>. Takes about two minutes. For adults 18 and over.</p>
+    <p className="dim">An accurate diagnosis can only be made through a clinical evaluation. This tells you whether one is worth booking. Answer for how you usually are, not your best weeks.</p>
+    <div><button className="btn btn-amber" onClick=${() => setMode("q")}>Start</button></div>
+    ${attrib}
+  </div>`;
+  if (mode === "q") return html`<div className="panel" style=${{ gap: "18px" }}>
+    <span className="eyebrow">Check the answer that best describes how you have felt and conducted yourself over the past 6 months.</span>
+    ${ASRS_Q.map((q, i) => html`<div key=${i} style=${{ display: "grid", gap: "8px" }}><div style=${{ fontWeight: 700 }}>${i + 1}. ${q}</div>
+      <div className="seg" role="group" aria-label=${q}>${ASRS_OPT.map((o, v) => html`<button key=${v} aria-pressed=${ans[i] === v} onClick=${() => setAns(ans.map((x, j) => j === i ? v : x))} style=${{ fontFamily: "var(--body)" }}>${o}</button>`)}</div></div>`)}
+    <hr className="sep"/>
+    <span className="eyebrow">Two extra questions for your GP (not part of the ASRS)</span>
+    <div style=${{ display: "grid", gap: "8px" }}><div style=${{ fontWeight: 700 }}>Were problems like these noticeable before age 12? (school reports, what family remembers)</div>
+      <div className="seg" role="group" aria-label="Before age 12">${["Yes", "No", "Not sure"].map(o => html`<button key=${o} aria-pressed=${child === o} onClick=${() => setChild(o)} style=${{ fontFamily: "var(--body)" }}>${o}</button>`)}</div></div>
+    <div style=${{ display: "grid", gap: "8px" }}><div style=${{ fontWeight: 700 }}>Where do they cause real problems? (pick all that apply)</div>
+      <div className="chips">${ASRS_AREAS.map(a => html`<button key=${a} aria-pressed=${areas.includes(a)} style=${areas.includes(a) ? { borderColor: "var(--tungsten)", background: "rgba(255,176,74,.12)" } : null} onClick=${() => setAreas(areas.includes(a) ? areas.filter(x => x !== a) : areas.concat([a]))}>${a}</button>`)}</div></div>
+    <div className="btn-row"><button className="btn btn-amber" disabled=${!all} onClick=${submit}>See my result</button><button className="btn btn-line" onClick=${() => setMode(hist.length ? "result" : "intro")}>Cancel</button></div>
+    ${!all ? html`<p className="note">${ans.filter(a => a != null).length} of 6 answered.</p>` : null}
+  </div>`;
+  const r = res; if (!r) return null;
+  const pos = r.shaded >= 4;
+  const band = r.total >= 18 ? "highest band (18–24)" : r.total >= 14 ? "at or above the proposed cutpoint (14+)" : r.total >= 10 ? "below the cutpoint (10–13)" : "lowest band (0–9)";
+  const txt = summary(r);
+  return html`<${React.Fragment}>
+    <div className=${"panel" + (pos ? "" : "")} style=${{ gap: "12px" }}>
+      <span className="eyebrow">ASRS-V1.1 screener · ${niceDate(dayKey(new Date(r.ts)))}</span>
+      <div style=${{ display: "flex", gap: "14px", alignItems: "baseline", flexWrap: "wrap" }}><div className="big-num">${r.shaded}/6</div><div style=${{ fontWeight: 800, fontSize: "20px", color: pos ? "var(--tungsten)" : "var(--fg)" }}>${pos ? "Screens positive" : "Below the screening threshold"}</div></div>
+      <p style=${{ fontSize: "16px" }}>${pos ? "Your answers are consistent with adult ADHD symptoms. It's worth talking to a healthcare provider about a proper evaluation." : "Your answers are below the screener's threshold. That doesn't rule ADHD out, since screeners miss some people. If these problems are seriously affecting your work or life, it's still worth raising with a GP."}</p>
+      <p className="note">How it's scored: questions 1–3 count if you answered Sometimes or more often; questions 4–6 count at Often or more often. Four or more counting answers is a positive screen. Your total on the 2024 Harvard scoring update (0–24) is ${r.total}, ${band}; that update was proposed mainly for research and prevalence studies.</p>
+      ${r.child || (r.areas && r.areas.length) ? html`<p className="dim">${r.child ? "Before age 12: " + r.child.toLowerCase() + ". " : ""}${r.areas && r.areas.length ? "Affects: " + r.areas.join(", ").toLowerCase() + "." : ""} A diagnosis needs symptoms from childhood that cause problems in more than one area of life, so these answers matter to the assessor.</p>` : null}
+    </div>
+    <div className="panel" style=${{ gap: "10px" }}>
+      <h3>Next steps in Australia</h3>
+      <ol style=${{ margin: 0, paddingLeft: "20px", display: "grid", gap: "8px" }}>
+        <li>Book a GP appointment and say you'd like to be assessed for adult ADHD. Ask for a longer appointment if you can.</li>
+        <li>Bring the summary below, and any old school reports. Assessors often ask about childhood.</li>
+        <li>The GP can refer you to a psychiatrist for assessment. Waiting times and costs vary a lot, so ask your GP about options and expected costs.</li>
+        <li>Anxiety, low mood and poor sleep can look like ADHD or sit alongside it. Your GAD-7 and PHQ-9 check-ups in the Green Room help the GP see the full picture.</li>
+      </ol>
+      <textarea id="asrs-summary" readOnly value=${txt} style=${{ minHeight: "150px", fontFamily: "var(--mono)", fontSize: "11.5px" }} aria-label="Summary for your GP"></textarea>
+      <div className="btn-row" style=${{ alignItems: "center" }}><button className="btn btn-sm btn-amber" onClick=${() => copy(txt)}>Copy summary for my GP</button><button className="btn btn-sm btn-line" onClick=${() => { setAns(Array(6).fill(null)); setChild(null); setAreas([]); setMode("q"); }}>Retake</button></div>
+      ${copied ? html`<p className="note" role="status">${copied}</p>` : null}
+      ${hist.length > 1 ? html`<p className="note">History: ${hist.map(x => x.shaded + "/6").join(" → ")}</p>` : null}
+    </div>
+    ${attrib}
+  <//>`;
+}
+
+function Barkley({ goTool, goCalm }) {
+  const R = [
+    ["Stop the action", "Put a pause between the impulse and the action. Even five seconds lets the thinking part of your brain catch up.", ["STOP pause", () => goTool("stop")]],
+    ["See the past, then the future", "Before starting, picture how this went last time, then picture how you want it to go this time.", ["WOOP plan", () => goTool("woop")]],
+    ["Say the past, then the future", "Talk yourself through it out loud: \"Last time I opened YouTube first. This time: open the file, write the heading.\" Self-talk guides behaviour.", null],
+    ["Externalise key information", "Your working memory leaks, so don't trust it. Plans, reminders and cues go where you'll see them at the moment you need them.", ["Gym calendar alerts", () => goTool("gym")]],
+    ["Feel the future", "Distant rewards don't register for an ADHD brain. Bring a reward close: something good straight after the work.", ["Screen-time bank", () => goTool("bank")]],
+    ["Break it down and make it matter", "Cut tasks into small chunks with frequent wins, and link each one to something you care about.", ["Values compass", () => goTool("values")]],
+    ["Make problems external, physical and manual", "Don't solve problems in your head. Write them, list them, sort them on paper or screen.", ["Worry sorter", () => goCalm("sorter")]],
+    ["Have a sense of humour", "You'll slip. Laugh at it, then restart. Beating yourself up drains the energy you need to try again.", ["Slip recovery", () => goTool("slip")]]
+  ];
+  return html`<${React.Fragment}>
+    <div className="rx"><p className="quote">"ADHD is not a problem of knowing what to do. It's a problem of doing what you know."</p><p className="note">Paraphrasing Russell Barkley. The fix is to stop relying on willpower inside your head, and change the world around the task instead.</p></div>
+    <div style=${{ display: "grid", gap: "10px" }}>${R.map(([t, d, a], i) => html`<div key=${i} className="rule"><span className="n">${i + 1}</span><b style=${{ fontSize: "16px" }}>${t}</b><span className="dim">${d}</span>${a ? html`<div><button className="btn btn-sm btn-line" onClick=${a[1]}>${a[0]} ›</button></div>` : html`<span></span>`}</div>`)}</div>
+    <p className="note">Rule names follow Barkley's eight rules in <i>Taking Charge of Adult ADHD</i> (Guilford, 2010); the descriptions are summaries.</p>
+  <//>`;
+}
+
+function AttentionSpan({ s, update, flash }) {
+  const [task, setTask] = useState(""); const [run, setRun] = useState(false); const [t0, setT0] = useState(0); const [now, setNow] = useState(Date.now());
+  const [runs, setRuns] = useState([]);
+  useEffect(() => { if (!run) return; const iv = setInterval(() => setNow(Date.now()), 500); return () => clearInterval(iv); }, [run]);
+  const el = run ? Math.round((now - t0) / 1000) : 0;
+  const drift = () => { const sec = Math.max(10, Math.round((Date.now() - t0) / 1000)); setRun(false); setRuns(runs.concat([sec])); update(n => { n.spans.push({ id: uid(), ts: Date.now(), sec, task: task.trim() }); }); };
+  const cur = spanMin(s);
+  return html`<${React.Fragment}>
+    ${cur ? html`<div className="rx"><span className="eyebrow" style=${{ color: "var(--tungsten)" }}>Your current attention span on dull tasks</span><div className="big-num">~${cur} min</div><p>Work in ${cur}-minute chunks with a one-minute stretch between them. Mission briefings will remind you if a mission is much longer than this. Over weeks, nudge it up a minute or two.</p></div>` : null}
+    <div className="panel" style=${{ gap: "12px" }}>
+      <p style=${{ fontSize: "16px" }}>Pick a real, boring task (admin, a CV edit, reading a standard). Start the clock and work normally. The moment you notice your mind has wandered or you've switched to something else, tap <b>I drifted</b>. Do this three times over the next few days.</p>
+      <label className="f" htmlFor="sp-task">The task<input id="sp-task" value=${task} onInput=${e => setTask(e.target.value)} placeholder="e.g. Reading the commissioning ITP"/></label>
+      ${run ? html`<div style=${{ textAlign: "center", display: "grid", gap: "10px" }}><div className="player-time" style=${{ fontSize: "56px" }}>${fmtClock(el)}</div><div><button className="btn btn-danger" onClick=${drift}>I drifted</button></div><p className="note">Phone face down. Don't watch this clock; work.</p></div>`
+        : html`<div><button className="btn btn-amber" disabled=${!task.trim()} onClick=${() => { setT0(Date.now()); setNow(Date.now()); setRun(true); }}>▶ Start the clock</button></div>`}
+      ${runs.length ? html`<p className="note">This session: ${runs.map(x => fmtClock(x)).join(", ")}.</p>` : null}
+    </div>
+    ${s.spans.length ? html`<div className="panel"><h3>History</h3><ul className="list">${s.spans.slice(-8).reverse().map(x => html`<li key=${x.id}><span>${x.task || "Task"}</span><span>${fmtClock(x.sec)} · ${niceDate(dayKey(new Date(x.ts)))}</span></li>`)}</ul></div>` : null}
+  <//>`;
+}
+
+function ScreenBank({ s, coach, update, startBreak, flash }) {
+  const B = s.programs.bank, bal = bankBalance(s);
+  const [what, setWhat] = useState("YouTube"); const [debit, setDebit] = useState(15);
+  if (!B.on) return html`<div className="panel" style=${{ gap: "14px" }}>
+    <p style=${{ fontSize: "16px" }}>Every focused minute earns entertainment minutes. Spend them guilt-free on YouTube, games or scrolling. Run out, and you earn more the same way.</p>
+    <div><div className="eyebrow" style=${{ marginBottom: "8px" }}>Exchange rate</div><div className="seg" role="group" aria-label="Exchange rate">${[[0.25, "1 : 4"], [0.5, "1 : 2"], [1, "1 : 1"]].map(([r, l]) => html`<button key=${r} aria-pressed=${B.rate === r} onClick=${() => update(n => { n.programs.bank.rate = r; })}>${l}</button>`)}</div><p className="note" style=${{ marginTop: "6px" }}>At 1 : 2, a 25-minute session earns about 12 minutes of entertainment. Start generous; tighten later.</p></div>
+    <div><button className="btn btn-amber" onClick=${() => { update(n => { n.programs.bank.on = true; n.programs.bank.start = Date.now(); }); flash("Screen bank open", "Focused minutes from now on earn entertainment time."); }}>Open my screen bank</button></div>
+  </div>`;
+  const recent = s.spends.filter(x => x.ts >= B.start).slice(-6).reverse();
+  return html`<${React.Fragment}>
+    <div className="rx"><span className="eyebrow" style=${{ color: "var(--tungsten)" }}>Balance</span><div className="big-num" style=${{ color: bal < 0 ? "var(--bad)" : "var(--fg)" }}>${bal} min</div><p className="dim">Rate ${B.rate === 1 ? "1 : 1" : B.rate === 0.5 ? "1 : 2" : "1 : 4"}. Earned from focus sessions since ${niceDate(dayKey(new Date(B.start)))}.</p></div>
+    <div className="panel" style=${{ gap: "12px" }}>
+      <h3>Spend it</h3>
+      <label className="f" htmlFor="sb-what">On what?<input id="sb-what" value=${what} onInput=${e => setWhat(e.target.value)}/></label>
+      <div className="seg" role="group" aria-label="Spend minutes">${[10, 15, 30, 60].map(n => html`<button key=${n} disabled=${n > bal} onClick=${() => { update(x => { x.spends.push({ id: uid(), ts: Date.now(), min: n, what: what.trim() || "Entertainment" }); }); startBreak(n, null); }}>${n} min</button>`)}</div>
+      <p className="note">Spending starts a timed break. When it ends, LIFEFLIX calls you back.${bal < 10 ? " Not enough yet: one 25-minute mission tops it up." : ""}</p>
+    </div>
+    <div className="panel" style=${{ gap: "10px" }}>
+      <h3>Honest debit</h3>
+      <p className="dim">${coach === "brutal" ? "Watched without earning it? Log it. The balance only works if it's true." : "Slipped into a video without earning it? Log it without guilt. Honest numbers make the system work."}</p>
+      <div style=${{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}><div className="seg" role="group" aria-label="Unearned minutes">${[15, 30, 60, 120].map(n => html`<button key=${n} aria-pressed=${debit === n} onClick=${() => setDebit(n)}>${n} min</button>`)}</div><button className="btn btn-sm btn-line" onClick=${() => { update(x => { x.spends.push({ id: uid(), ts: Date.now(), min: debit, what: "Unearned", debit: true }); }); flash("Logged honestly", debit + " min debited"); }}>Log it</button></div>
+    </div>
+    ${recent.length ? html`<div className="panel"><h3>Recent</h3><ul className="list">${recent.map(x => html`<li key=${x.id}><span>${x.debit ? "Unearned · " : ""}${x.what}</span><span>−${x.min} min · ${niceDate(dayKey(new Date(x.ts)))}</span></li>`)}</ul></div>` : null}
+  <//>`;
+}
+
+function StopSkill({ prio, openBrief }) {
+  const S = [["S", "Stop", "Freeze whatever you're doing. Hands off the phone."], ["T", "Take a breath", "One slow breath in through your nose, and a longer one out."], ["O", "Observe", "What's happening? A thought, a feeling, an urge to escape? Name it: \"I'm noticing the urge to open YouTube.\""], ["P", "Proceed", "Choose on purpose: what's the one thing that matters right now?"]];
+  const [i, setI] = useState(0); const [one, setOne] = useState("");
+  const st = S[i];
+  return html`<div className="panel" style=${{ gap: "16px", textAlign: "center" }}>
+    <div className="steps">${S.map((_, k) => html`<i key=${k} className=${k <= i ? "on" : ""}></i>`)}</div>
+    <div style=${{ fontFamily: "var(--display)", fontWeight: 900, fontSize: "96px", lineHeight: 1, color: "var(--tungsten)" }}>${st[0]}</div>
+    <h3 style=${{ fontSize: "30px" }}>${st[1]}</h3>
+    <p style=${{ fontSize: "17px" }}>${st[2]}</p>
+    ${i < 3 ? html`<${TimerBlock} key=${i} sec=${15} autoStart=${true}/>` : html`<input id="stop-one" value=${one} onInput=${e => setOne(e.target.value)} placeholder="The one thing" aria-label="The one thing that matters right now"/>`}
+    <div className="btn-row" style=${{ justifyContent: "center" }}>${i < 3 ? html`<button className="btn btn-amber" onClick=${() => setI(i + 1)}>Next</button>` : html`${prio ? html`<button className="btn btn-amber" onClick=${() => openBrief(one.trim() ? { id: uid(), season: 1, title: one.trim().slice(0, 70), desc: "Chosen on purpose after a STOP pause.", minutes: 10, difficulty: "Medium", attr: "courage", tags: ["other"], firstStep: one.trim(), deliverable: "", repeat: false, status: "active" } : prio, { minutes: 10 })}>▶ Do it: 10 minutes</button>` : null}<button className="btn btn-line" onClick=${() => { setI(0); setOne(""); }}>Again</button>`}</div>
+  </div>`;
+}
+
+function ParkedInbox({ s, update, openBrief, flash }) {
+  const now = Date.now();
+  const inbox = s.parked.filter(x => x.status === "inbox").sort((a, b) => a.ts - b.ts);
+  const cooling = s.parked.filter(x => x.status === "cooling").sort((a, b) => a.until - b.until);
+  const setSt = (id, st, extra) => update(n => { const x = n.parked.find(y => y.id === id); if (x) Object.assign(x, { status: st }, extra || {}); });
+  const toMission = x => { const m = { id: uid(), season: 1, title: x.text.slice(0, 70), desc: "From a thought you parked during a mission.", minutes: 10, difficulty: "Medium", attr: "discipline", tags: ["other"], firstStep: "", deliverable: "", repeat: false, status: "active" }; update(n => { n.missions.push(Object.assign(m, { order: n.missions.length + 100, createdAt: Date.now() })); const y = n.parked.find(z => z.id === x.id); if (y) y.status = "mission"; }); flash("Added as an episode", x.text.slice(0, 50)); };
+  return html`<${React.Fragment}>
+    <div className="panel" style=${{ gap: "10px" }}>
+      <h3>Inbox · ${inbox.length}</h3>
+      ${inbox.length ? inbox.map(x => html`<div key=${x.id} className="slot" style=${{ gridTemplateColumns: "1fr" }}><div className="ti">${x.text}</div><div className="note">${niceDate(dayKey(new Date(x.ts)))}</div>
+        <div className="acts" style=${{ justifyContent: "flex-start" }}>
+          <button className="btn btn-sm btn-amber" onClick=${() => toMission(x)}>Make it a task</button>
+          <button className="btn btn-sm btn-line" onClick=${() => setSt(x.id, "cooling", { until: now + 7 * 86400000 })}>New idea: cool off 7 days</button>
+          <button className="btn btn-sm btn-line" onClick=${() => setSt(x.id, "done")}>Done or doesn't matter</button>
+        </div></div>`) : html`<p className="dim">Empty. During a mission, type stray thoughts into the box under the timer instead of acting on them.</p>`}
+    </div>
+    ${cooling.length ? html`<div className="panel" style=${{ gap: "10px" }}>
+      <h3>Ideas cooling off</h3>
+      <p className="dim">No research until the date shown. If it still excites you then, it has to beat your current priorities, not just be new.</p>
+      ${cooling.map(x => { const ready = now >= x.until; return html`<div key=${x.id} className="slot" style=${{ gridTemplateColumns: "1fr" }}><div className="ti">${x.text}</div><div className="note">${ready ? "Cooling-off finished." : "Research allowed from " + niceDate(dayKey(new Date(x.until))) + "."}</div>
+        ${ready ? html`<div className="acts" style=${{ justifyContent: "flex-start" }}><button className="btn btn-sm btn-line" onClick=${() => toMission(x)}>Still worth it: make it a task</button><button className="btn btn-sm btn-line" onClick=${() => setSt(x.id, "done")}>Let it go</button></div>` : null}</div>`; })}
+    </div>` : null}
+  <//>`;
 }
 
 /* =========================================================
