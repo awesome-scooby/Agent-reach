@@ -87,7 +87,7 @@ def from_workday(f):
         loc = p.get("locationsText", "")
         title = p.get("title", "").strip()
         # cheap pre-filter before fetching the detail page
-        if city_of(loc + " " + p.get("externalPath", "")) is None and "australia" not in (loc + p.get("externalPath", "")).lower():
+        if city_of(loc + " " + p.get("externalPath", "").replace("-", " ")) is None and "locations" not in loc.lower():
             continue
         if role_tier(title)[0] == 0:
             continue
@@ -100,6 +100,111 @@ def from_workday(f):
             posted=(info.get("startDate") or "")[:10],
             text=(strip_html(info.get("jobDescription", "")) + " " + (info.get("timeType") or ""))[:6000],
             ext_id=info.get("jobReqId") or p["externalPath"].rsplit("_", 1)[-1]))
+    return out
+
+
+def get_text(url):
+    for attempt in range(2):
+        try:
+            r = Fetcher.get(url, timeout=30, retries=1)
+            if r.status == 200:
+                return r.body.decode("utf-8", "ignore") if isinstance(r.body, bytes) else str(r.body)
+            return None
+        except Exception:
+            time.sleep(1.5)
+    return None
+
+
+def keep_early(title, loc):
+    """Cheap filter before fetching a detail page: Australian city we score, and a role we score."""
+    return city_of(loc) is not None and role_tier(title)[0] > 0
+
+
+def from_oracle(f):
+    """Oracle Recruiting Cloud public candidate-experience API (Downer, GHD, Honeywell)."""
+    base = f"https://{f['host']}/hcmRestApi/resources/latest"
+    seen, rows, answered = set(), [], False
+    for term in FEEDS.get("oracle_terms", ["electrical"]):
+        for offset in (0, 25, 50, 75):
+            d = get_json(f"{base}/recruitingCEJobRequisitions?onlyData=true&expand=requisitionList&finder=findReqs;"
+                         f"siteNumber={f['site']},facetsList=NONE,limit=25,offset={offset},keyword={term.replace(' ', '%20')},location=Australia")
+            if not d or not d.get("items"):
+                break
+            answered = True
+            reqs = d["items"][0].get("requisitionList", [])
+            for r in reqs:
+                if r["Id"] not in seen:
+                    seen.add(r["Id"]); rows.append(r)
+            if len(reqs) < 25:
+                break
+    if not answered:
+        return None
+    out = []
+    for r in rows:
+        title, loc = r.get("Title", ""), r.get("PrimaryLocation", "")
+        if not keep_early(title, loc):
+            continue
+        det = get_json(f"{base}/recruitingCEJobRequisitionDetails?expand=all&onlyData=true&finder=ById;Id=%22{r['Id']}%22,siteNumber={f['site']}") or {}
+        di = (det.get("items") or [{}])[0]
+        text = " ".join(strip_html(di.get(k) or "") for k in ("ExternalDescriptionStr", "ExternalResponsibilitiesStr", "ExternalQualificationsStr"))
+        out.append(dict(source="oracle:" + f["site"], company=f["company"], sector=f.get("sector", ""), title=title,
+                        location=loc, url=f"https://{f['host']}/hcmUI/CandidateExperience/en/sites/{f['site']}/job/{r['Id']}",
+                        posted=r.get("PostedDate") or "", text=((r.get("ShortDescriptionStr") or "") + " " + text)[:6000], ext_id=r["Id"]))
+    return out
+
+
+def from_amazon(f):
+    seen, out, answered = set(), [], False
+    for term in f.get("terms", ["data center"]):
+        d = get_json("https://www.amazon.jobs/en/search.json?base_query=" + term.replace(" ", "%20") +
+                     "&normalized_country_code%5B%5D=AUS&result_limit=100")
+        if d is None:
+            continue
+        answered = True
+        for j in d.get("jobs", []):
+            if j["id_icims"] in seen:
+                continue
+            seen.add(j["id_icims"])
+            text = strip_html(" ".join(j.get(k) or "" for k in ("description_short", "basic_qualifications", "preferred_qualifications")))
+            out.append(dict(source="amazon", company="Amazon / AWS", sector=f.get("sector", ""), title=j["title"],
+                            location=j.get("normalized_location", ""), url="https://www.amazon.jobs" + j["job_path"],
+                            posted=j.get("posted_date", ""), text=text[:6000], ext_id=j["id_icims"]))
+    return out if answered else None
+
+
+def from_smartrecruiters(f):
+    d = get_json(f"https://api.smartrecruiters.com/v1/companies/{f['id']}/postings?country=au&limit=100")
+    if d is None:
+        return None
+    out = []
+    for j in d.get("content", []):
+        loc = ", ".join(x for x in (j["location"].get("city"), j["location"].get("region"), "Australia") if x)
+        if not keep_early(j["name"], loc):
+            continue
+        det = get_json(f"https://api.smartrecruiters.com/v1/companies/{f['id']}/postings/{j['id']}") or {}
+        secs = (det.get("jobAd") or {}).get("sections") or {}
+        text = " ".join(strip_html((secs.get(k) or {}).get("text", "")) for k in ("jobDescription", "qualifications"))
+        out.append(dict(source="smartrecruiters:" + f["id"], company=f["company"], sector=f.get("sector", ""), title=j["name"],
+                        location=loc, url=f"https://jobs.smartrecruiters.com/{f['id']}/{j['id']}",
+                        posted=(j.get("releasedDate") or "")[:10], text=text[:6000], ext_id=j["id"]))
+    return out
+
+
+def from_pageup(f):
+    page = get_text(f"https://careers.pageuppeople.com/{f['id']}/{f['site']}/en/listing/")
+    if page is None:
+        return None
+    out = []
+    for blk in page.split('class="job-listing-title"')[1:]:
+        m = re.search(r'href="([^"]+)">([^<]+)</a>', blk)
+        if not m:
+            continue
+        loc = re.search(r'class="location">([^<]*)<', blk)
+        desc = re.search(r"<p>(.*?)</p>", blk, re.S)
+        out.append(dict(source="pageup:" + f["id"], company=f["company"], sector=f.get("sector", ""), title=html.unescape(m.group(2)).strip(),
+                        location=(loc.group(1) if loc else "").replace("Aus - ", "") + ", Australia",
+                        url="https://careers.pageuppeople.com" + m.group(1), posted="",
+                        text=strip_html(desc.group(1) if desc else ""), ext_id=m.group(1).split("/job/")[-1].split("/")[0]))
     return out
 
 
@@ -169,12 +274,12 @@ def score(job):
     city = city_of(job["location"]) or city_of(title)
     if city is None:
         return None
-    l_pts = 15 if city == "Melbourne" else 12
+    l_pts = P.get("city_points", {}).get(city, 8)
     reasons.append(f"{city} (+{l_pts})")
     pts += l_pts
 
     t = title.lower()
-    if has(t, P["junior_terms"]):
+    if has(t, P["junior_terms"]) or has(" " + t + " ", P.get("exclude_terms", [])):
         return None
     if has(t + " ", P.get("off_discipline_terms", [])):
         pts -= 25; flags.append("Different discipline (not electrical)")
@@ -222,8 +327,9 @@ def main():
     ap.add_argument("--min-score", type=int, default=45)
     a = ap.parse_args()
 
-    tasks = [("greenhouse", f) for f in FEEDS["greenhouse"]] + [("workday", f) for f in FEEDS["workday"]]
-    fn = {"greenhouse": from_greenhouse, "workday": from_workday}
+    fn = {"greenhouse": from_greenhouse, "workday": from_workday, "oracle": from_oracle, "amazon": from_amazon,
+          "smartrecruiters": from_smartrecruiters, "pageup": from_pageup}
+    tasks = [(k, f) for k in fn for f in FEEDS.get(k, [])]
     with ThreadPoolExecutor(8) as ex:
         results = list(ex.map(lambda t: (t, fn[t[0]](t[1])), tasks))
 

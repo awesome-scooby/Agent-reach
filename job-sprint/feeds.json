@@ -1,16 +1,166 @@
 {
-  "_note": "Employer job feeds that answered from the cloud scanner on 2026-11-27. Add more with the same shape; run `python3 scan.py --probe` to test them.",
-  "greenhouse": [
-    {"company": "AirTrunk", "board": "airtrunk", "sector": "data centre"},
-    {"company": "Akaysha Energy", "board": "akayshaenergy", "sector": "BESS"},
-    {"company": "Firmus", "board": "firmus", "sector": "data centre"}
-  ],
-  "workday": [
-    {"company": "Hitachi Energy", "host": "hitachi.wd1.myworkdayjobs.com", "tenant": "hitachi", "site": "hitachi", "sector": "HV / grid"},
-    {"company": "Equinix", "host": "equinix.wd1.myworkdayjobs.com", "tenant": "equinix", "site": "External", "sector": "data centre"},
-    {"company": "Aurecon", "host": "aurecongroup.wd3.myworkdayjobs.com", "tenant": "aurecongroup", "site": "aurecon", "sector": "consulting"},
-    {"company": "Lendlease", "host": "lendlease.wd3.myworkdayjobs.com", "tenant": "lendlease", "site": "LendleaseCareers", "sector": "construction"},
-    {"company": "Rio Tinto", "host": "riotinto.wd3.myworkdayjobs.com", "tenant": "riotinto", "site": "RioTinto_Careers", "sector": "mining"}
-  ],
-  "workday_terms": ["electrical", "project engineer", "commissioning", "high voltage", "data centre", "estimator", "substation"]
+ "_note": "Employer job feeds tested from the cloud scanner on 2026-11-27. Add more with the same shape; `python3 scan.py --probe` tests they answer.",
+ "greenhouse": [
+  {
+   "company": "AirTrunk",
+   "board": "airtrunk",
+   "sector": "data centre"
+  },
+  {
+   "company": "Akaysha Energy",
+   "board": "akayshaenergy",
+   "sector": "BESS"
+  },
+  {
+   "company": "Firmus",
+   "board": "firmus",
+   "sector": "data centre"
+  }
+ ],
+ "workday": [
+  {
+   "company": "Hitachi Energy",
+   "host": "hitachi.wd1.myworkdayjobs.com",
+   "tenant": "hitachi",
+   "site": "hitachi",
+   "sector": "HV / grid"
+  },
+  {
+   "company": "Equinix",
+   "host": "equinix.wd1.myworkdayjobs.com",
+   "tenant": "equinix",
+   "site": "External",
+   "sector": "data centre"
+  },
+  {
+   "company": "Aurecon",
+   "host": "aurecongroup.wd3.myworkdayjobs.com",
+   "tenant": "aurecongroup",
+   "site": "aurecon",
+   "sector": "consulting"
+  },
+  {
+   "company": "Lendlease",
+   "host": "lendlease.wd3.myworkdayjobs.com",
+   "tenant": "lendlease",
+   "site": "LendleaseCareers",
+   "sector": "construction"
+  },
+  {
+   "company": "Rio Tinto",
+   "host": "riotinto.wd3.myworkdayjobs.com",
+   "tenant": "riotinto",
+   "site": "RioTinto_Careers",
+   "sector": "mining"
+  },
+  {
+   "company": "Vantage Data Centers",
+   "host": "vantagedc.wd1.myworkdayjobs.com",
+   "tenant": "vantagedc",
+   "site": "Vantage",
+   "sector": "data centre"
+  },
+  {
+   "company": "GE Vernova",
+   "host": "gevernova.wd5.myworkdayjobs.com",
+   "tenant": "gevernova",
+   "site": "Vernova_ExternalSite",
+   "sector": "HV / grid"
+  },
+  {
+   "company": "Johnson Controls",
+   "host": "jci.wd5.myworkdayjobs.com",
+   "tenant": "jci",
+   "site": "JCI",
+   "sector": "building services"
+  },
+  {
+   "company": "APA Group",
+   "host": "apa.wd105.myworkdayjobs.com",
+   "tenant": "apa",
+   "site": "APA-Careers",
+   "sector": "energy"
+  },
+  {
+   "company": "Beca",
+   "host": "beca.wd105.myworkdayjobs.com",
+   "tenant": "beca",
+   "site": "Beca",
+   "sector": "consulting"
+  },
+  {
+   "company": "Alcoa",
+   "host": "alcoa.wd5.myworkdayjobs.com",
+   "tenant": "alcoa",
+   "site": "Careers",
+   "sector": "resources"
+  }
+ ],
+ "workday_terms": [
+  "electrical",
+  "project engineer",
+  "commissioning",
+  "high voltage",
+  "data centre",
+  "estimator",
+  "substation",
+  "project manager",
+  "asset engineer"
+ ],
+ "oracle": [
+  {
+   "company": "Downer",
+   "host": "fa-exfs-saasfaprod1.fa.ocs.oraclecloud.com",
+   "site": "CareersAtDowner",
+   "sector": "infrastructure"
+  },
+  {
+   "company": "GHD",
+   "host": "ejov.fa.ca2.oraclecloud.com",
+   "site": "CX",
+   "sector": "consulting"
+  },
+  {
+   "company": "Honeywell",
+   "host": "ibqbjb.fa.ocs.oraclecloud.com",
+   "site": "Honeywell",
+   "sector": "building services"
+  }
+ ],
+ "oracle_terms": [
+  "electrical",
+  "project engineer",
+  "commissioning",
+  "high voltage",
+  "data centre",
+  "estimator",
+  "project manager"
+ ],
+ "amazon": [
+  {
+   "company": "Amazon / AWS",
+   "terms": [
+    "data center",
+    "electrical",
+    "critical facilities",
+    "infrastructure delivery"
+   ],
+   "sector": "data centre"
+  }
+ ],
+ "smartrecruiters": [
+  {
+   "company": "BESIX Watpac",
+   "id": "BESIX",
+   "sector": "construction"
+  }
+ ],
+ "pageup": [
+  {
+   "company": "CPB Contractors",
+   "id": "434",
+   "site": "caw",
+   "sector": "construction"
+  }
+ ]
 }

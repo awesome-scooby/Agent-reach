@@ -40,6 +40,80 @@
    "joondalup",
    "jandakot",
    "canning vale"
+  ],
+  "Regional VIC": [
+   "ballarat",
+   "bendigo",
+   "shepparton",
+   "latrobe",
+   "traralgon",
+   "morwell",
+   "portland, vic",
+   "portland",
+   "mildura",
+   "warrnambool",
+   "wodonga",
+   "horsham",
+   "gippsland",
+   "moorabool"
+  ],
+  "Regional WA": [
+   "pinjarra",
+   "bunbury",
+   "collie",
+   "kalgoorlie",
+   "port hedland",
+   "karratha",
+   "geraldton",
+   "albany",
+   "newman",
+   "kwinana beach",
+   "emu downs",
+   "gruyere",
+   "pilbara",
+   "goldfields",
+   "esperance",
+   "busselton",
+   "wagerup"
+  ],
+  "Sydney": [
+   "sydney",
+   "new south wales",
+   ", nsw",
+   " nsw ",
+   "western sydney",
+   "north sydney",
+   "parramatta",
+   "rydalmere",
+   "eastern creek",
+   "macquarie park",
+   "north shore",
+   "alexandria",
+   "silverwater",
+   "kemps creek",
+   "newcastle"
+  ],
+  "Brisbane": [
+   "brisbane",
+   "queensland",
+   ", qld",
+   " qld ",
+   "windsor-queensland",
+   "gold coast",
+   "ipswich"
+  ],
+  "Adelaide": [
+   "adelaide",
+   "south australia",
+   ", sa",
+   " sa ",
+   "regency park"
+  ],
+  "Canberra": [
+   "canberra",
+   "australian capital territory",
+   ", act",
+   " act "
   ]
  },
  "role_tiers": [
@@ -72,7 +146,15 @@
     "electrical design manager",
     "services coordinator",
     "mep coordinator",
-    "mep manager"
+    "mep manager",
+    "data center engineer",
+    "critical environment",
+    "electrical commissioning",
+    "electrical package",
+    "infrastructure delivery",
+    "electrical construction",
+    "senior electrical engineer",
+    "lead electrical"
    ]
   },
   {
@@ -93,7 +175,23 @@
     "electrical lead",
     "protection engineer",
     "power systems engineer",
-    "electrical supervisor"
+    "electrical supervisor",
+    "asset engineer",
+    "reliability engineer",
+    "maintenance engineer",
+    "facilities engineer",
+    "operations engineer",
+    "electrical inspector",
+    "quality engineer",
+    "project controls",
+    "cost engineer",
+    "engineering manager",
+    "technical solution",
+    "solution consultant",
+    "field service engineer",
+    "service engineer",
+    "account manager - electrical",
+    "product manager"
    ]
   },
   {
@@ -108,7 +206,22 @@
     "delivery manager",
     "contracts administrator",
     "planner",
-    "scheduler"
+    "scheduler",
+    "site manager",
+    "project coordinator",
+    "contracts manager",
+    "commercial manager",
+    "business development",
+    "bid manager",
+    "tender",
+    "construction lead",
+    "program manager",
+    "programme manager",
+    "instrumentation",
+    "automation engineer",
+    "controls engineer",
+    "project director",
+    "delivery lead"
    ]
   }
  ],
@@ -162,9 +275,12 @@
   "fitter",
   "machinist",
   "administrator",
-  "coordinator - admin",
   "expression of interest",
-  "vacation"
+  "vacation",
+  "tradesperson",
+  "electrician",
+  "operator",
+  "casual"
  ],
  "contract_terms": [
   "contract role",
@@ -198,6 +314,59 @@
   "structural",
   "geotech",
   "controls)",
-  "bms "
+  "bms ",
+  "corrosion",
+  "geotechnical",
+  "ports and maritime",
+  "pipeline",
+  "mechanical"
+ ],
+ "city_points": {
+  "Melbourne": 15,
+  "Perth": 13,
+  "Regional VIC": 9,
+  "Regional WA": 9,
+  "Sydney": 8,
+  "Brisbane": 7,
+  "Adelaide": 7,
+  "Canberra": 6
+ },
+ "exclude_terms": [
+  "hrp",
+  "human resources",
+  " hr ",
+  "talent",
+  "recruit",
+  "it support",
+  "it specialist",
+  "it operations",
+  "it technician",
+  "software",
+  "developer",
+  "network engineer",
+  "cyber",
+  "security",
+  "finance",
+  "accountant",
+  "legal",
+  "counsel",
+  "marketing",
+  "payroll",
+  "rack",
+  "architecture",
+  "architect",
+  "heritage",
+  "environmental",
+  "ehs",
+  "hse ",
+  "safety advisor",
+  "embedded",
+  "data scientist",
+  "analyst",
+  "executive assistant",
+  "procurement service",
+  "workplace coordinator",
+  "customer success",
+  "sales leader"
  ]
 }
