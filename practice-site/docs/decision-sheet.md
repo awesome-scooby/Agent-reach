@@ -16,7 +16,7 @@ Status: **open**. Every public fact is a placeholder until it's confirmed. Owner
 | 3 | Booking system and referral route | [Fill in] | Owner | Booking provider not named. Referrals: TBC |
 | 3 | GitHub owner for the site repository | [Fill in] | Owner | Temporarily in a personal repo |
 | 3 | Monthly budget ceiling | [Fill in] | Owner | AUD 25–75/month for the website |
-| — | Style direction: A Eucalypt or B Dusk | [Fill in] | Both | A |
+| — | Style direction | **Clarity (Apple-like)**, chosen 28 Nov 2026 | Both | Eucalypt and Dusk kept as one-click alternatives |
 
 ## Content inventory
 
@@ -32,3 +32,13 @@ Status: **open**. Every public fact is a placeholder until it's confirmed. Owner
 | Rebates, referral requirements | Fees page | Hidden until approved |
 | Referral instructions | For GPs and referrers page | Stage 3 |
 | Privacy, complaints, accessibility, cancellation | Policy pages | Stage 3. Need an owner and review date |
+
+## Working assumptions (shown on the site as "draft" or in [brackets])
+
+- Adults 18+, English only, telehealth across Australia, no consulting room at launch
+- Services: Anxiety and stress · Low mood · Life changes and relationships
+- No referral needed to book; GP plan and referral needed for a Medicare rebate; rebate amount and session count left as placeholders
+- Hours Mon–Thu, Perth time (AWST); replies within 2 business days; 48-hour cancellation notice
+- No website form; contact is by phone, email or the booking provider
+- Referrals by secure messaging or fax (route to confirm); nothing uploaded through the website
+- Draft Perth and Melbourne room pages exist but aren't public

@@ -6,11 +6,11 @@ Block theme plus setup scripts for the psychology practice website. Every public
 
 | Stage | Deliverable | Status |
 |---|---|---|
-| 1. Agree the brief | `docs/decision-sheet.md`, `docs/persuasion-principles.md`, costed plan | Draft, waiting on your answers |
-| 2. Prove the design and editor | Theme with two style directions, Home and Fees pages, shared blocks, editing test | **Built, waiting on your feedback** |
-| 3. Build the launch site | Remaining pages and templates, referral route, room template, policies | Starts after you approve stage 2 |
-| 4. Test and hand over | Accessibility and browser tests, Lighthouse, editor guide, backup/restore drill, owner exercise | After stage 3 |
-| 5. Launch | Domain, HTTPS, redirects, indexing | Only when you instruct |
+| 1. Agree the brief | `docs/decision-sheet.md` (with assumptions), `docs/persuasion-principles.md`, costed plan | Done, with assumptions marked |
+| 2. Prove the design and editor | Clarity style (Apple-like, default), plus Eucalypt and Dusk variations; editing test | Done |
+| 3. Build the launch site | All pages, service/profile/room/policy starter patterns, draft Perth and Melbourne rooms, referral route | Done on local staging, with placeholders |
+| 4. Test and hand over | `tests/site_checks.py` (38 checks), `tests/editing_contract.py` (17), Lighthouse, `docs/editor-guide.md`, `docs/operations.md` | Automated tests pass. Owner exercise and restore drill need a real host |
+| 5. Launch | `docs/launch-checklist.md` | Waiting for your instruction, a host and approved content |
 
 ## Where business content lives
 
@@ -37,5 +37,6 @@ Then open http://127.0.0.1:9400. Each run starts from a fresh site.
 
 ```bash
 python3 -I tests/editing_contract.py   # fee changed once, intake paused, both restored
+python3 -I tests/site_checks.py axe.min.js   # accessibility, reflow, keyboard, journeys, drafts, noindex
 python3 -I tests/screens.py OUT_DIR a  # phone and desktop screenshots
 ```

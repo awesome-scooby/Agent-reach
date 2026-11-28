@@ -3,25 +3,15 @@
  * Title: Practitioner introduction
  * Slug: practice/practitioner-intro
  * Categories: practice
- * Description: Portrait, approved name and title, short first-person introduction. Layout is locked; text and image stay editable.
+ * Description: Portrait, approved name and title, short first-person introduction. Layout locked; text and image editable.
  */
 ?>
-<!-- wp:group {"metadata":{"name":"Practitioner introduction"},"templateLock":"contentOnly","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"}}},"layout":{"type":"constrained","contentSize":"60rem"}} -->
-<div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50)">
-<!-- wp:columns {"verticalAlignment":"center"} -->
-<div class="wp-block-columns are-vertically-aligned-center">
-<!-- wp:column {"verticalAlignment":"center","width":"34%"} -->
-<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:34%"><!-- wp:html --><div class="practice-portrait-placeholder" role="img" aria-label="Placeholder: approved portrait">Approved portrait</div><!-- /wp:html --></div>
-<!-- /wp:column -->
-<!-- wp:column {"verticalAlignment":"center","width":"66%"} -->
-<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:66%">
-<!-- wp:heading --><h2 class="wp-block-heading">Hi, I'm [Name]</h2><!-- /wp:heading -->
-<!-- wp:paragraph {"textColor":"muted"} --><p class="has-muted-color has-text-color">[Title exactly as on the Ahpra register] · [Qualifications] · Speaks [languages] <span class="practice-draft">draft</span></p><!-- /wp:paragraph -->
-<!-- wp:paragraph --><p>[Two or three sentences in her own voice about how she works and who she works with. For example: what a session with her feels like, and what she pays attention to.]</p><!-- /wp:paragraph -->
-<!-- wp:paragraph --><p><a href="/meet/">More about [Name] and how she works</a></p><!-- /wp:paragraph -->
-</div>
-<!-- /wp:column -->
-</div>
-<!-- /wp:columns -->
+<!-- wp:group {"metadata":{"name":"Practitioner introduction"},"templateLock":"contentOnly","align":"full","className":"practice-center","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained","contentSize":"38rem"}} -->
+<div class="wp-block-group alignfull practice-center" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)">
+<!-- wp:html --><div class="practice-portrait-placeholder" role="img" aria-label="Placeholder: approved portrait of the practitioner">Approved portrait goes here</div><!-- /wp:html -->
+<!-- wp:heading --><h2 class="wp-block-heading">Hi, I'm [Name].</h2><!-- /wp:heading -->
+<!-- wp:paragraph {"textColor":"muted"} --><p class="has-muted-color has-text-color">[Title exactly as on the Ahpra register] <span class="practice-draft">verify</span></p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"practice-lead"} --><p class="practice-lead">[Two or three sentences in her own voice. For example: “I work with adults who are finding life harder than usual. Sessions are a calm, practical space to understand what's going on and work out what helps.”]</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"practice-more"} --><p class="practice-more"><a href="/meet/">More about [Name]</a></p><!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->

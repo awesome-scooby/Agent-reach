@@ -55,7 +55,8 @@
 		"custom": {
 			"radius": {
 				"leaf": "0.25rem",
-				"soft": "0.25rem"
+				"soft": "0.25rem",
+				"tile": "0.25rem"
 			},
 			"font": {
 				"heading": "var(--wp--preset--font-family--alt)"
@@ -94,6 +95,9 @@
 					"fontSize": "1.25rem"
 				}
 			}
+		},
+		"color": {
+			"background": "var(--wp--preset--color--paper)"
 		}
 	}
 }

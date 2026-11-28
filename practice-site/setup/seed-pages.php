@@ -1,6 +1,6 @@
 <?php
 /**
- * Step 2 of 2: create pages from the theme's patterns, the menu and the front page.
+ * Step 2 of 2: create pages from the theme’s patterns, the menu and the front page.
  *
  * Patterns are expanded into real blocks and saved as page content, so pages
  * belong to the database (and survive a redesign), not to the theme.
@@ -11,13 +11,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	require_once '/wordpress/wp-load.php';
 }
 
-function practice_pattern( $slug ) {
+function practice_pattern( $slug, $replace = array() ) {
 	$p = WP_Block_Patterns_Registry::get_instance()->get_registered( 'practice/' . $slug );
-	return $p ? $p['content'] : '';
+	return $p ? strtr( $p['content'], $replace ) : '';
 }
 
 function practice_page( $slug, $title, $content, $args = array() ) {
-	$existing = get_page_by_path( isset( $args['path'] ) ? $args['path'] : $slug );
+	$existing = get_page_by_path( isset( $args['path'] ) ? $args['path'] : $slug, OBJECT, 'page' );
+	if ( ! $existing && isset( $args['post_status'] ) && 'publish' !== $args['post_status'] ) {
+		$found    = get_posts( array( 'post_type' => 'page', 'name' => $slug, 'post_status' => 'any', 'numberposts' => 1 ) );
+		$existing = $found ? $found[0] : null;
+	}
 	if ( $existing ) {
 		return $existing->ID;
 	}
@@ -34,64 +38,84 @@ function practice_page( $slug, $title, $content, $args = array() ) {
 	return $id;
 }
 
-function practice_stub( $what ) {
-	return '<!-- wp:paragraph --><p>' . $what . ' <span class="practice-draft">stage 3</span></p><!-- /wp:paragraph -->';
+function practice_h2( $text, $anchor = '' ) {
+	$a = $anchor ? ',"anchor":"' . $anchor . '"' : '';
+	$i = $anchor ? ' id="' . $anchor . '"' : '';
+	return '<!-- wp:heading {' . ltrim( $a, ',' ) . '} --><h2 class="wp-block-heading"' . $i . '>' . $text . '</h2><!-- /wp:heading -->';
 }
 
-function practice_ref( $slug ) {
-	return practice_synced( $slug );
+function practice_p( $html, $class = '' ) {
+	$attr = $class ? ' {"className":"' . $class . '"}' : '';
+	$c    = $class ? ' class="' . $class . '"' : '';
+	return '<!-- wp:paragraph' . $attr . ' --><p' . $c . '>' . $html . '</p><!-- /wp:paragraph -->';
 }
 
+$draft = ' <span class="practice-draft">draft</span>';
+
+/* Home */
 $home = practice_page( 'home', 'Home', implode( "\n\n", array(
 	practice_pattern( 'hero' ),
+	practice_pattern( 'highlights' ),
 	practice_pattern( 'is-this-for-you' ),
 	practice_pattern( 'practitioner-intro' ),
 	practice_pattern( 'service-list' ),
 	practice_pattern( 'fee-summary' ),
 	practice_pattern( 'what-happens-next' ),
+	practice_pattern( 'closing-cta' ),
 ) ), array( 'template' => 'page-no-title' ) );
 
-$fees_content = '<!-- wp:paragraph {"fontSize":"large"} --><p class="has-large-font-size">Here is what a session costs, what happens at your first appointment, and what to do if you need to cancel.</p><!-- /wp:paragraph -->
+/* Fees */
+$fees = practice_page( 'fees', 'Fees and first appointment', implode( "\n", array(
+	practice_p( 'What a session costs, what’s covered, and what happens at your first appointment.', 'practice-lead' ),
+	practice_h2( 'Session fees' ),
+	practice_synced( 'fee-standard-session' ),
+	practice_synced( 'fee-extended-session' ),
+	practice_h2( 'Medicare rebates', 'rebates' ),
+	practice_p( 'If your GP gives you a Mental Health Treatment Plan and a referral, you may be able to claim a Medicare rebate of $[rebate] per session for up to [10] sessions a calendar year. Your out-of-pocket cost would be about $[gap]. <span class="practice-draft">draft: practitioner to confirm service, eligibility and amounts before publishing</span>' ),
+	practice_p( 'Private health insurance: some extras policies cover psychology. Check with your insurer. You can’t claim Medicare and private health for the same session.' . $draft ),
+	practice_h2( 'Do I need a referral?', 'referral' ),
+	practice_p( 'No. You can book directly and pay the full fee. You only need a GP referral if you want to claim a Medicare rebate.' . $draft ),
+	practice_h2( 'Paying' ),
+	practice_p( 'Payment is taken by card at the end of each session through [booking provider]. You’ll get a receipt by email.' . $draft ),
+	practice_h2( 'Cancelling or changing an appointment', 'cancellations' ),
+	practice_p( 'Give at least [48] hours’ notice and there’s no fee. With less notice, a fee of $[cancellation fee] applies. If something unexpected happens, get in touch.' . $draft ),
+	practice_h2( 'Your first appointment' ),
+	'<!-- wp:list --><ul class="wp-block-list"><!-- wp:list-item --><li>It takes [50] minutes by secure video. You’ll need a private space and a phone, tablet or computer.</li><!-- /wp:list-item --><!-- wp:list-item --><li>You’ll talk about what’s brought you here, at a pace that suits you. You don’t have to share anything you’re not ready to.</li><!-- /wp:list-item --><!-- wp:list-item --><li>Towards the end, you’ll decide together whether to keep going and how often.</li><!-- /wp:list-item --></ul><!-- /wp:list -->',
+	practice_synced( 'booking-action' ),
+	practice_pattern( 'urgent-help-banner' ),
+) ) );
 
-<!-- wp:heading --><h2 class="wp-block-heading">Session fees</h2><!-- /wp:heading -->
-' . practice_ref( 'fee-standard-session' ) . '
-' . practice_ref( 'fee-extended-session' ) . '
-
-<!-- wp:heading --><h2 class="wp-block-heading">Medicare and rebates</h2><!-- /wp:heading -->
-<!-- wp:paragraph --><p>[Rebate wording appears here only after the practitioner confirms the exact service, eligibility and amount.] <span class="practice-draft">draft, hidden until approved</span></p><!-- /wp:paragraph -->
-
-<!-- wp:heading --><h2 class="wp-block-heading">Do I need a referral?</h2><!-- /wp:heading -->
-<!-- wp:paragraph --><p>You can book without a referral and pay the full fee. [If rebates are offered: what a referral is, who provides it and what to bring.] <span class="practice-draft">draft</span></p><!-- /wp:paragraph -->
-
-<!-- wp:heading --><h2 class="wp-block-heading">Paying</h2><!-- /wp:heading -->
-<!-- wp:paragraph --><p>[Payment is taken by card at the end of each session through the booking system.] <span class="practice-draft">confirm</span></p><!-- /wp:paragraph -->
-
-<!-- wp:heading {"anchor":"cancellations"} --><h2 class="wp-block-heading" id="cancellations">Cancelling or changing an appointment</h2><!-- /wp:heading -->
-<!-- wp:paragraph --><p>Give at least [x] hours\' notice and there\'s no fee. With less notice, [the cancellation fee] applies. Life happens, so get in touch if something unexpected comes up. <span class="practice-draft">terms to confirm</span></p><!-- /wp:paragraph -->
-
-<!-- wp:heading --><h2 class="wp-block-heading">Your first appointment</h2><!-- /wp:heading -->
-<!-- wp:list --><ul class="wp-block-list"><!-- wp:list-item --><li>It takes [50] minutes by secure video. You\'ll need a private space and a phone, tablet or computer.</li><!-- /wp:list-item --><!-- wp:list-item --><li>You\'ll talk about what\'s brought you here, at a pace that suits you. You don\'t have to share anything you\'re not ready to.</li><!-- /wp:list-item --><!-- wp:list-item --><li>Towards the end, you\'ll decide together whether to keep going and how often.</li><!-- /wp:list-item --></ul><!-- /wp:list -->
-
-' . practice_ref( 'booking-action' ) . '
-
-' . practice_pattern( 'urgent-help-banner' );
-
-$fees     = practice_page( 'fees', 'Fees and first appointment', $fees_content );
-$meet     = practice_page( 'meet', 'Meet [Name]', practice_pattern( 'practitioner-intro' ) . practice_stub( 'Full profile: qualifications, approach, client groups.' ) );
-$services = practice_page( 'services', 'Services', practice_pattern( 'service-list' ) );
-practice_page( 'service-1', '[Service 1]', practice_stub( 'Who it\'s for, what a session involves, delivery mode.' ) . practice_ref( 'fee-standard-session' ) . practice_ref( 'booking-action' ), array( 'post_parent' => $services, 'path' => 'services/service-1' ) );
-practice_page( 'service-2', '[Service 2]', practice_stub( 'Who it\'s for, what a session involves, delivery mode.' ) . practice_ref( 'fee-standard-session' ) . practice_ref( 'booking-action' ), array( 'post_parent' => $services, 'path' => 'services/service-2' ) );
-$how      = practice_page( 'how-sessions-work', 'How sessions work', practice_stub( 'Telehealth process and where clients can join from. Room details only once a room is confirmed.' ) );
-$ref      = practice_page( 'for-referrers', 'For GPs and referrers', practice_stub( 'Verified eligibility, referral instructions, the named secure destination for referral documents.' ) );
-$contact  = practice_page( 'contact', 'Contact and appointments', practice_ref( 'booking-action' ) . practice_pattern( 'contact-banner' ) . practice_pattern( 'urgent-help-banner' ) );
-foreach ( array( 'privacy' => 'Privacy policy', 'complaints' => 'Feedback and complaints', 'accessibility' => 'Accessibility' ) as $s => $t ) {
-	practice_page( $s, $t, practice_stub( 'Policy text, owner and review date.' ) );
+/* People and services */
+$meet     = practice_page( 'meet', 'Meet [Name]', practice_pattern( 'practitioner-profile' ) . practice_synced( 'booking-action' ) );
+$services = practice_page( 'services', 'Services', practice_p( 'Approved services only. Each one is delivered by telehealth.', 'practice-lead' ) . practice_pattern( 'service-list' ) );
+$svc      = array(
+	'anxiety-and-stress' => array( 'Anxiety and stress', 'For worry that’s hard to switch off, tension, or stress that’s affecting sleep, work or relationships.' ),
+	'low-mood'           => array( 'Low mood', 'For feeling flat, unmotivated or not like yourself for a while.' ),
+	'life-changes'       => array( 'Life changes and relationships', 'For a move, a loss, a break-up, a new role, or patterns that keep repeating with people.' ),
+);
+foreach ( $svc as $slug => $s ) {
+	practice_page( $slug, $s[0], practice_pattern( 'service-detail', array( '[One sentence on who this is for.]' => $s[1] ) ), array( 'post_parent' => $services, 'path' => 'services/' . $slug ) );
 }
+
+/* Sessions, referrers, contact */
+$how     = practice_page( 'how-sessions-work', 'How sessions work', practice_pattern( 'telehealth-info' ) );
+$ref     = practice_page( 'for-referrers', 'For GPs and referrers', practice_pattern( 'referrer-info' ) );
+$contact = practice_page( 'contact', 'Contact and appointments', practice_pattern( 'contact-page' ) . practice_pattern( 'urgent-help-banner' ) );
+
+/* Rooms: drafts only. Nothing public until a room is confirmed. */
+practice_page( 'perth-room', 'Perth room', practice_pattern( 'room', array( '[Suburb STATE Postcode]' => '[Suburb] WA [6000]', '[AWST, Perth time / AEST or AEDT, Melbourne time]' => 'AWST (Perth time)' ) ), array( 'post_status' => 'draft' ) );
+practice_page( 'melbourne-room', 'Melbourne room', practice_pattern( 'room', array( '[Suburb STATE Postcode]' => '[Suburb] VIC [3000]', '[AWST, Perth time / AEST or AEDT, Melbourne time]' => 'AEST/AEDT (Melbourne time)' ) ), array( 'post_status' => 'draft' ) );
+
+/* Policies */
+$policy = practice_pattern( 'policy' );
+practice_page( 'privacy', 'Privacy policy', $policy . practice_h2( 'What this policy covers' ) . practice_p( 'How [Practice legal name] collects, uses, stores and discloses personal and health information under the Privacy Act 1988 and the Australian Privacy Principles. [Template headings below; final wording to come from the practice’s actual privacy commitments.]' ) . practice_h2( 'This website' ) . practice_p( 'This website has no contact form, analytics or advertising trackers. Booking happens on [booking provider]’s site, which has its own privacy policy. [Hosting provider] keeps standard server logs for [x] days.' . $draft ) . practice_h2( 'Clinical records' ) . practice_p( '[What’s collected, why, where it’s stored, who can access it, how long it’s kept, how to request access or correction, and how to complain.]' ) );
+practice_page( 'complaints', 'Feedback and complaints', $policy . practice_p( 'If you’re unhappy with any part of your care, please tell [Name] first. Email [admin@example.invalid] or call [0000 000 000]. You’ll get a response within [x] business days.' ) . practice_p( 'If you’re not satisfied, you can contact [the health complaints body for your state, e.g. HaDSCO in WA or the Health Complaints Commissioner in Victoria] or Ahpra. <span class="practice-draft">verify bodies and links for the live jurisdiction</span>' ) );
+practice_page( 'accessibility', 'Accessibility', $policy . practice_p( 'This website aims to meet WCAG 2.2 level AA. It works with keyboard navigation, screen readers and text enlarged to 200%. If something doesn’t work for you, tell us at [admin@example.invalid] and we’ll fix it or give you the information another way.' ) );
 
 update_option( 'show_on_front', 'page' );
 update_option( 'page_on_front', $home );
 
-// Main menu (Navigation block uses the most recent menu).
+/* Main menu (the Navigation block uses the most recent menu). */
 if ( ! get_posts( array( 'post_type' => 'wp_navigation', 'numberposts' => 1 ) ) ) {
 	$items = array( $meet => 'Meet [Name]', $services => 'Services', $fees => 'Fees', $how => 'How sessions work', $ref => 'For GPs', $contact => 'Contact' );
 	$nav   = '';
