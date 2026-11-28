@@ -1,0 +1,23 @@
+/* Small additions theme.json cannot express. Colours come from the palette. */
+.is-style-leaf img{border-radius:var(--wp--custom--radius--leaf);aspect-ratio:4/5;object-fit:cover}
+.is-style-card{background:var(--wp--preset--color--surface);border:1px solid var(--wp--preset--color--line);border-radius:var(--wp--custom--radius--soft);padding:1.25rem}
+.practice-status{display:flex;gap:.55rem;align-items:center;font-weight:700}
+.practice-status::before{content:"";width:.7rem;height:.7rem;border-radius:50%;background:currentColor;flex:none}
+.practice-status.is-open{color:var(--wp--preset--color--primary)}
+.practice-status.is-waitlist{color:var(--wp--preset--color--accent)}
+.practice-status.is-closed{color:var(--wp--preset--color--muted)}
+.practice-fee{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:.25rem 1rem;border-bottom:1px solid var(--wp--preset--color--line);padding-block:.6rem}
+.practice-fee>*{margin:0!important}
+.practice-fee .practice-fee__amount{font-family:var(--wp--custom--font--heading);font-size:1.6rem;font-weight:600;color:var(--wp--preset--color--primary-deep);white-space:nowrap;font-variant-numeric:tabular-nums}
+.practice-portrait-placeholder{aspect-ratio:4/5;border-radius:var(--wp--custom--radius--leaf);background:var(--wp--preset--color--tint);display:grid;place-items:center;text-align:center;padding:1rem;color:var(--wp--preset--color--muted)}
+.practice-steps{counter-reset:step;list-style:none;padding:0}
+.practice-steps li{counter-increment:step;position:relative;padding:0 0 1rem 3rem}
+.practice-steps li::before{content:counter(step);position:absolute;left:0;top:0;width:2rem;height:2rem;border-radius:50%;background:var(--wp--preset--color--primary);color:#fff;display:grid;place-items:center;font-weight:700}
+.practice-draft{border:1px dashed var(--wp--preset--color--accent);padding:.15rem .4rem;border-radius:.25rem;font-size:.85em;color:var(--wp--preset--color--accent);white-space:nowrap}
+.practice-urgent{border-left:4px solid var(--wp--preset--color--primary)}
+.wp-block-navigation__responsive-container.is-menu-open{padding:1.5rem}
+:where(a,button,input,summary):focus-visible{outline:3px solid var(--wp--preset--color--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+.practice-footer :where(h1,h2,h3,h4),.practice-footer .practice-status{color:var(--wp--preset--color--paper)}
+.practice-footer .practice-draft{color:var(--wp--preset--color--paper);border-color:var(--wp--preset--color--paper)}
+@media (max-width:781px){.practice-portrait-placeholder,.is-style-leaf img{max-width:14rem}}
