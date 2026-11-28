@@ -57,6 +57,26 @@
 					"slug": "line",
 					"name": "Lines",
 					"color": "#D2D2D7"
+				},
+				{
+					"slug": "tile-a",
+					"name": "Tile colour A",
+					"color": "#F5F5F7"
+				},
+				{
+					"slug": "tile-b",
+					"name": "Tile colour B",
+					"color": "#F5F5F7"
+				},
+				{
+					"slug": "tile-c",
+					"name": "Tile colour C",
+					"color": "#F5F5F7"
+				},
+				{
+					"slug": "tile-d",
+					"name": "Tile colour D",
+					"color": "#F5F5F7"
 				}
 			]
 		},

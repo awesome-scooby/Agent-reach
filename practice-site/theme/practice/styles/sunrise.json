@@ -1,0 +1,76 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Sunrise (warm coral)",
+	"settings": {
+		"color": {
+			"palette": [
+				{
+					"slug": "paper",
+					"name": "Background",
+					"color": "#FFF9F5"
+				},
+				{
+					"slug": "surface",
+					"name": "Tile",
+					"color": "#FDEEE6"
+				},
+				{
+					"slug": "ink",
+					"name": "Text",
+					"color": "#2B1D2A"
+				},
+				{
+					"slug": "muted",
+					"name": "Secondary text",
+					"color": "#6A5560"
+				},
+				{
+					"slug": "primary",
+					"name": "Primary",
+					"color": "#B03A48"
+				},
+				{
+					"slug": "primary-deep",
+					"name": "Headings",
+					"color": "#3D1F3A"
+				},
+				{
+					"slug": "tint",
+					"name": "Band",
+					"color": "#FDEEE6"
+				},
+				{
+					"slug": "accent",
+					"name": "Accent",
+					"color": "#9A4A12"
+				},
+				{
+					"slug": "line",
+					"name": "Lines",
+					"color": "#EBD9CF"
+				},
+				{
+					"slug": "tile-a",
+					"name": "Tile colour A",
+					"color": "#FDE6DC"
+				},
+				{
+					"slug": "tile-b",
+					"name": "Tile colour B",
+					"color": "#FBEFD6"
+				},
+				{
+					"slug": "tile-c",
+					"name": "Tile colour C",
+					"color": "#F6E3EC"
+				},
+				{
+					"slug": "tile-d",
+					"name": "Tile colour D",
+					"color": "#E8EEF6"
+				}
+			]
+		}
+	}
+}

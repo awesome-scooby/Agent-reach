@@ -1,0 +1,76 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Botanical (eucalyptus and wattle)",
+	"settings": {
+		"color": {
+			"palette": [
+				{
+					"slug": "paper",
+					"name": "Background",
+					"color": "#FBFAF4"
+				},
+				{
+					"slug": "surface",
+					"name": "Tile",
+					"color": "#EEF2E6"
+				},
+				{
+					"slug": "ink",
+					"name": "Text",
+					"color": "#1E2A22"
+				},
+				{
+					"slug": "muted",
+					"name": "Secondary text",
+					"color": "#536156"
+				},
+				{
+					"slug": "primary",
+					"name": "Primary",
+					"color": "#2F6B4F"
+				},
+				{
+					"slug": "primary-deep",
+					"name": "Headings",
+					"color": "#183A2B"
+				},
+				{
+					"slug": "tint",
+					"name": "Band",
+					"color": "#EEF2E6"
+				},
+				{
+					"slug": "accent",
+					"name": "Accent",
+					"color": "#8A5A00"
+				},
+				{
+					"slug": "line",
+					"name": "Lines",
+					"color": "#DCE2D2"
+				},
+				{
+					"slug": "tile-a",
+					"name": "Tile colour A",
+					"color": "#E7F0E2"
+				},
+				{
+					"slug": "tile-b",
+					"name": "Tile colour B",
+					"color": "#FBF1C9"
+				},
+				{
+					"slug": "tile-c",
+					"name": "Tile colour C",
+					"color": "#E3EEF0"
+				},
+				{
+					"slug": "tile-d",
+					"name": "Tile colour D",
+					"color": "#F3E7DA"
+				}
+			]
+		}
+	}
+}

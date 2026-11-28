@@ -1,0 +1,76 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Lavender (soft dusk)",
+	"settings": {
+		"color": {
+			"palette": [
+				{
+					"slug": "paper",
+					"name": "Background",
+					"color": "#FBFAFE"
+				},
+				{
+					"slug": "surface",
+					"name": "Tile",
+					"color": "#EFEBFA"
+				},
+				{
+					"slug": "ink",
+					"name": "Text",
+					"color": "#221F33"
+				},
+				{
+					"slug": "muted",
+					"name": "Secondary text",
+					"color": "#5D5873"
+				},
+				{
+					"slug": "primary",
+					"name": "Primary",
+					"color": "#5B4BA6"
+				},
+				{
+					"slug": "primary-deep",
+					"name": "Headings",
+					"color": "#2C2357"
+				},
+				{
+					"slug": "tint",
+					"name": "Band",
+					"color": "#EFEBFA"
+				},
+				{
+					"slug": "accent",
+					"name": "Accent",
+					"color": "#9A4E1F"
+				},
+				{
+					"slug": "line",
+					"name": "Lines",
+					"color": "#DDD7F0"
+				},
+				{
+					"slug": "tile-a",
+					"name": "Tile colour A",
+					"color": "#ECE7FA"
+				},
+				{
+					"slug": "tile-b",
+					"name": "Tile colour B",
+					"color": "#E3EFFA"
+				},
+				{
+					"slug": "tile-c",
+					"name": "Tile colour C",
+					"color": "#FBE8EF"
+				},
+				{
+					"slug": "tile-d",
+					"name": "Tile colour D",
+					"color": "#E7F4EC"
+				}
+			]
+		}
+	}
+}
