@@ -12,6 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	require_once '/wordpress/wp-load.php';
 }
 
+// Save as the first administrator so trusted markup (e.g. the decorative SVG) isn't stripped by the content filter.
+wp_set_current_user( 1 );
+
 function practice_seed_block( $slug, $title, $content ) {
 	$existing = get_page_by_path( $slug, OBJECT, 'wp_block' );
 	if ( $existing ) {

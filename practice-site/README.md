@@ -33,6 +33,16 @@ npx @wp-playground/cli@3.1.66 server --port 9400 \
 
 Then open http://127.0.0.1:9400. Each run starts from a fresh site.
 
+## Draft preview (static, for review only)
+
+```bash
+# start the site with setup/blueprint-visitor.json (logged out), then:
+python3 -I tools/export_preview.py OUT_DIR
+python3 -I tests/preview_checks.py OUT_DIR
+```
+
+The export is a snapshot for sharing a draft. The real site stays in WordPress.
+
 ## Tests
 
 ```bash

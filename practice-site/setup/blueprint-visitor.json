@@ -1,0 +1,23 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"landingPage": "/",
+	"preferredVersions": {
+		"php": "8.3",
+		"wp": "latest"
+	},
+	"login": false,
+	"steps": [
+		{
+			"step": "activateTheme",
+			"themeFolderName": "practice"
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require '/wordpress/practice-setup/seed-shared-blocks.php';"
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require '/wordpress/practice-setup/seed-pages.php';"
+		}
+	]
+}

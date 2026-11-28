@@ -2,9 +2,10 @@
    so the Eucalypt and Dusk style variations restyle this file too. */
 
 /* Header: thin, sticky, translucent */
-.practice-header{position:sticky;top:0;z-index:50;padding-block:.55rem;background:color-mix(in srgb,var(--wp--preset--color--paper) 82%,transparent);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid color-mix(in srgb,var(--wp--preset--color--line) 70%,transparent)}
-.admin-bar .practice-header{top:var(--wp-admin--admin-bar--height,0)}
-@media (max-height:520px){.practice-header{position:static}}
+.wp-block-template-part:has(> .practice-header){position:sticky;top:0;z-index:50}
+.admin-bar .wp-block-template-part:has(> .practice-header){top:var(--wp-admin--admin-bar--height,0)}
+.practice-header{padding-block:.55rem;background:color-mix(in srgb,var(--wp--preset--color--paper) 82%,transparent);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid color-mix(in srgb,var(--wp--preset--color--line) 70%,transparent)}
+@media (max-height:520px){.wp-block-template-part:has(> .practice-header){position:static}}
 .practice-header .wp-block-navigation a{color:var(--wp--preset--color--ink);opacity:.86}
 .practice-header .wp-block-navigation a:hover{opacity:1;text-decoration:none}
 .practice-btn-small .wp-block-button__link{padding:.4rem .95rem!important;font-size:.875rem!important}
@@ -76,3 +77,20 @@ main .practice-more a:hover{text-decoration:underline}
 /* Comfortable tap targets in lists (WCAG 2.5.8). */
 main .wp-block-list li{margin-block:.45rem}
 .practice-draft{white-space:normal}
+
+/* Hero illustration */
+.practice-hero-art{margin-top:var(--wp--preset--spacing--50)!important;border-radius:var(--wp--custom--radius--tile);overflow:hidden;aspect-ratio:12/4.4;max-width:64rem;margin-inline:auto!important}
+.practice-hero .practice-hero-art{max-width:none}
+.practice-hero-art svg{display:block;width:100%;height:100%}
+@media (max-width:600px){.practice-hero-art{aspect-ratio:4/3}}
+
+/* Portrait placeholder: soft, intentional */
+.practice-portrait-placeholder{background:radial-gradient(120% 90% at 30% 20%,color-mix(in srgb,var(--wp--preset--color--primary) 22%,var(--wp--preset--color--surface)),var(--wp--preset--color--surface) 70%);font-weight:500}
+
+/* Common questions */
+.practice-faq{border-bottom:1px solid var(--wp--preset--color--line);padding-block:1rem;margin:0!important}
+.practice-faq summary{cursor:pointer;font-weight:600;font-size:1.1875rem;letter-spacing:-.015em;list-style:none;display:flex;justify-content:space-between;gap:1rem;min-height:44px;align-items:center}
+.practice-faq summary::-webkit-details-marker{display:none}
+.practice-faq summary::after{content:"+";font-size:1.5rem;font-weight:400;color:var(--wp--preset--color--primary);flex:none}
+.practice-faq[open] summary::after{content:"–"}
+.practice-faq p{margin-top:.5rem;color:var(--wp--preset--color--muted)}

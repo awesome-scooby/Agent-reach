@@ -11,6 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	require_once '/wordpress/wp-load.php';
 }
 
+// Save as the first administrator so trusted markup (e.g. the decorative SVG) isn't stripped by the content filter.
+wp_set_current_user( 1 );
+
 function practice_pattern( $slug, $replace = array() ) {
 	$p = WP_Block_Patterns_Registry::get_instance()->get_registered( 'practice/' . $slug );
 	return $p ? strtr( $p['content'], $replace ) : '';
@@ -61,6 +64,7 @@ $home = practice_page( 'home', 'Home', implode( "\n\n", array(
 	practice_pattern( 'service-list' ),
 	practice_pattern( 'fee-summary' ),
 	practice_pattern( 'what-happens-next' ),
+	practice_pattern( 'faq-teaser' ),
 	practice_pattern( 'closing-cta' ),
 ) ), array( 'template' => 'page-no-title' ) );
 
@@ -101,6 +105,8 @@ foreach ( $svc as $slug => $s ) {
 $how     = practice_page( 'how-sessions-work', 'How sessions work', practice_pattern( 'telehealth-info' ) );
 $ref     = practice_page( 'for-referrers', 'For GPs and referrers', practice_pattern( 'referrer-info' ) );
 $contact = practice_page( 'contact', 'Contact and appointments', practice_pattern( 'contact-page' ) . practice_pattern( 'urgent-help-banner' ) );
+
+$questions = practice_page( 'questions', 'Common questions', practice_p( 'Answers to what people often ask before their first appointment.', 'practice-lead' ) . practice_pattern( 'faq' ) . practice_synced( 'booking-action' ) );
 
 /* Rooms: drafts only. Nothing public until a room is confirmed. */
 practice_page( 'perth-room', 'Perth room', practice_pattern( 'room', array( '[Suburb STATE Postcode]' => '[Suburb] WA [6000]', '[AWST, Perth time / AEST or AEDT, Melbourne time]' => 'AWST (Perth time)' ) ), array( 'post_status' => 'draft' ) );

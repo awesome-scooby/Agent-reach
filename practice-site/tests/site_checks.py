@@ -9,7 +9,7 @@ from playwright.sync_api import sync_playwright
 BASE = "http://127.0.0.1:9400"
 AXE = open(sys.argv[1]).read()
 PAGES = ["/", "/fees/", "/meet/", "/services/", "/services/anxiety-and-stress/", "/services/low-mood/",
-         "/services/life-changes/", "/how-sessions-work/", "/for-referrers/", "/contact/", "/privacy/",
+         "/services/life-changes/", "/how-sessions-work/", "/for-referrers/", "/questions/", "/contact/", "/privacy/",
          "/complaints/", "/accessibility/", "/?page_id=999999"]
 results = []
 
